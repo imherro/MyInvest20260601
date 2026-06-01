@@ -1,0 +1,151 @@
+{
+  "module": "market_position",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "session": "premarket|intraday|close|weekend",
+  "data_sources": [],
+  "summary": {
+    "market_state": "",
+    "one_line_conclusion": "",
+    "equity_allocation_range": "",
+    "bond_cash_allocation_range": "",
+    "offensive_bucket_status": "expand|maintain|reduce|pause_new"
+  },
+  "scores": {
+    "index_trend": {
+      "weight": 20,
+      "score": null,
+      "evidence": ""
+    },
+    "market_breadth": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "volume_liquidity": {
+      "weight": 10,
+      "score": null,
+      "evidence": ""
+    },
+    "fund_flow_risk_appetite": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "theme_strength": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "macro_policy": {
+      "weight": 10,
+      "score": null,
+      "evidence": ""
+    },
+    "opportunity_score": null,
+    "crowding_penalty": {
+      "score": null,
+      "evidence": "",
+      "operation_limit": ""
+    },
+    "market_position_score": null
+  },
+  "allocation_mapping": {
+    "base_equity_range": "",
+    "final_equity_range": "",
+    "final_bond_cash_range": "",
+    "applied_bucket": ""
+  },
+  "hard_constraints": [
+    {
+      "name": "普通账户权益仓位上限85%",
+      "triggered": null,
+      "impact": ""
+    },
+    {
+      "name": "没有明确牛市主升浪证据不超过75%",
+      "triggered": null,
+      "impact": ""
+    },
+    {
+      "name": "没有A级主线不超过65%",
+      "triggered": null,
+      "impact": ""
+    },
+    {
+      "name": "市场广度低于45%不超过60%",
+      "triggered": null,
+      "impact": ""
+    },
+    {
+      "name": "指数趋势低于10分不超过60%",
+      "triggered": null,
+      "impact": ""
+    },
+    {
+      "name": "主线强度低于8分时进攻仓不超过股票仓25%",
+      "triggered": null,
+      "impact": ""
+    },
+    {
+      "name": "拥挤惩罚高于15不新增进攻仓",
+      "triggered": null,
+      "impact": ""
+    },
+    {
+      "name": "单一行业或主线不超过权益仓位30%-35%",
+      "triggered": null,
+      "impact": ""
+    },
+    {
+      "name": "主题仓不超过权益仓位10%",
+      "triggered": null,
+      "impact": ""
+    }
+  ],
+  "equity_bucket_suggestion": {
+    "core": {
+      "range": "",
+      "status": "increase|maintain|decrease",
+      "note": ""
+    },
+    "offensive": {
+      "range": "",
+      "status": "increase|maintain|decrease|pause_new",
+      "note": ""
+    },
+    "defensive": {
+      "range": "",
+      "status": "increase|maintain|decrease",
+      "note": ""
+    },
+    "theme": {
+      "range": "",
+      "status": "trial|pause|clean_up",
+      "note": ""
+    }
+  },
+  "operation_implications": {
+    "equity_total": "",
+    "bond_cash": "",
+    "offensive_bucket": "",
+    "defensive_bucket": "",
+    "theme_bucket": ""
+  },
+  "risks": [],
+  "watchlist": [],
+  "needs_theme_module_confirmation": [],
+  "comparison_with_previous": {
+    "previous_date": "",
+    "previous_market_position_score": null,
+    "previous_equity_allocation_range": "",
+    "change_type": "maintain|upgrade|downgrade",
+    "change_reasons": []
+  },
+  "decision_log_entry": ""
+}

@@ -414,7 +414,7 @@ research/
 
 第一阶段先完成：
 
-1. 市场仓位模块模板
+1. 市场仓位模块模板（已建立：`docs/modules/MARKET_POSITION.md`、`templates/market_score_template.md`、`templates/market_score_template.json`）
 2. 主线研究模块模板
 3. ETF 档案模板
 4. 个股档案模板

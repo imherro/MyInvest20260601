@@ -262,3 +262,4 @@ research/
 - 确定研究成果应使用 Markdown + JSON 保存，后期再考虑 SQLite。
 - 确定本项目需要 README + 项目记忆 + 协作规则，以支持多台电脑协同。
 - 确定新增 `docs/MODULES.md`，用于固定九个模块的职责、输入、输出、更新频率和禁止事项。
+- 确定市场仓位模块 1.0：新增 `docs/modules/MARKET_POSITION.md`、`templates/market_score_template.md`、`templates/market_score_template.json`，并建立 `research/market/` 作为市场仓位研究产物目录。
