@@ -1,13 +1,17 @@
 {
   "module": "market_position",
-  "version": "1.0",
+  "version": "1.1",
   "date": "2026-06-01",
   "session": "close",
   "data_sources": [
     {
-      "name": "东方财富行情接口",
-      "usage": "主要指数日线、全A涨跌家数、涨跌幅中位数、涨跌停数量、主力资金流",
+      "name": "Tushare Pro",
+      "usage": "交易日历、主要指数日线、A股日线行情、全市场涨跌家数、涨跌幅中位数、涨跌停近似数量、两市成交额、20日成交均值、个股资金流",
       "collection_time": "2026-06-01 盘后"
+    },
+    {
+      "name": "Tushare Pro接口缺口",
+      "usage": "index_dailybasic未返回本次主要指数估值数据；margin在2026-06-01未返回两融汇总行；limit_list_d未返回涨跌停明细，相关数据保留公开来源交叉验证。"
     },
     {
       "name": "每日经济新闻",
@@ -35,7 +39,7 @@
   ],
   "summary": {
     "market_state": "中性修复，偏强广度与短线指数回落并存",
-    "one_line_conclusion": "2026-06-01 的 A 股仍有 A 档科技主线和较好市场广度支撑，但主要指数短线跌回 20 日线附近、成交缩量且科技硬件资金分歧加大，首次正式仓位结论定为中性修复，权益总仓位控制在 50%-60%。",
+    "one_line_conclusion": "按 Tushare 优先口径重算后，2026-06-01 的 A 股仍有 A 档科技主线和较好市场广度支撑，但主要指数短线跌回 20 日线附近、成交低于20日均值且科技硬件资金分歧加大，仓位结论维持中性修复，权益总仓位控制在 50%-60%。",
     "equity_allocation_range": "50%-60%",
     "bond_cash_allocation_range": "40%-50%",
     "offensive_bucket_status": "maintain"
@@ -44,70 +48,92 @@
     "indices": [
       {
         "name": "沪深300",
-        "close": 4846.31,
-        "pct_change": -0.94,
+        "ts_code": "000300.SH",
+        "close": 4844.26,
+        "pct_change": -0.98,
+        "ma20": 4886.14,
         "above_ma20": false,
+        "ma60": 4714.3,
         "above_ma60": true
       },
       {
         "name": "中证500",
-        "close": 8282.85,
-        "pct_change": -0.92,
+        "ts_code": "000905.SH",
+        "close": 8274.21,
+        "pct_change": -1.02,
+        "ma20": 8600.26,
         "above_ma20": false,
+        "ma60": 8220.03,
         "above_ma60": true
       },
       {
         "name": "中证1000",
-        "close": 8361.35,
-        "pct_change": -0.56,
+        "ts_code": "000852.SH",
+        "close": 8345.13,
+        "pct_change": -0.76,
+        "ma20": 8674.16,
         "above_ma20": false,
+        "ma60": 8250.14,
         "above_ma60": true
       },
       {
         "name": "创业板指",
-        "close": 3956.56,
-        "pct_change": -2.02,
+        "ts_code": "399006.SZ",
+        "close": 3950.94,
+        "pct_change": -2.15,
+        "ma20": 3930.21,
         "above_ma20": true,
+        "ma60": 3572.11,
         "above_ma60": true
       },
       {
         "name": "科创50",
-        "close": 1672.47,
-        "pct_change": -4.5,
+        "ts_code": "000688.SH",
+        "close": 1663.69,
+        "pct_change": -5.0,
+        "ma20": 1744.49,
         "above_ma20": false,
+        "ma60": 1495.37,
         "above_ma60": true
       },
       {
         "name": "上证指数",
-        "close": 4060.3,
-        "pct_change": -0.2,
+        "ts_code": "000001.SH",
+        "close": 4057.74,
+        "pct_change": -0.27,
+        "ma20": 4144.89,
         "above_ma20": false,
+        "ma60": 4060.84,
         "above_ma60": false
       }
     ],
     "breadth": {
-      "sample_count": 5510,
-      "advancers": 3797,
-      "decliners": 1658,
-      "flat": 55,
-      "advance_ratio_pct": 68.91,
-      "median_pct_change": 1.28,
-      "limit_up_count_approx": 148,
-      "limit_down_count_approx": 51
+      "source": "Tushare daily, SH/SZ A-share sample",
+      "sample_count": 5192,
+      "advancers": 3513,
+      "decliners": 1629,
+      "flat": 50,
+      "advance_ratio_pct": 67.66,
+      "median_pct_change": 1.23,
+      "limit_up_count_approx_daily_pct": 144,
+      "limit_down_count_approx_daily_pct": 55
     },
     "turnover": {
-      "sh_sz_total_amount_yuan": 2599760746773,
-      "sh_sz_total_amount_trillion_yuan": 2.6,
-      "twenty_day_average_trillion_yuan": 3.129,
-      "amount_vs_20d_average": 0.83,
-      "amount_vs_previous_pct": -21.67
+      "source": "Tushare daily.amount summed over SH/SZ A shares; amount converted from thousand yuan to yuan",
+      "sh_sz_total_amount_yuan": 2877238764901,
+      "sh_sz_total_amount_trillion_yuan": 2.877,
+      "twenty_day_average_trillion_yuan": 3.143,
+      "amount_vs_20d_average": 0.92,
+      "amount_vs_previous_pct": -13.3
     },
     "fund_flow": {
-      "all_a_main_net_flow_yuan_approx": -50089484505,
-      "all_a_main_net_flow_billion_yuan_approx": -50.09,
+      "source": "Tushare moneyflow, net_mf_amount; raw unit interpreted as 10k yuan",
+      "sample_count": 5192,
+      "net_mf_amount_raw": -315057.06,
+      "net_mf_amount_billion_yuan_approx": -3.15,
       "notes": [
-        "早盘半导体板块主力资金净流出超过百亿元。",
-        "开盘口径两融余额环比下降。",
+        "公开盘面口径显示半导体等科技硬件方向资金分歧仍大。",
+        "Tushare margin在2026-06-01未返回两融汇总行，开盘口径两融余额采用公开来源交叉验证。",
         "人民币中间价小幅调升，汇率压力不大。"
       ]
     },
@@ -140,22 +166,22 @@
     "index_trend": {
       "weight": 20,
       "score": 12,
-      "evidence": "多数主要指数仍在60日均线上方，但沪深300、中证500、中证1000、科创50收盘低于20日均线，上证指数接近60日线，短线趋势转弱。"
+      "evidence": "Tushare指数日线显示，多数主要指数仍在60日均线上方，但沪深300、中证500、中证1000、科创50收盘低于20日均线，上证指数低于20日线并略低于60日线，短线趋势转弱。"
     },
     "market_breadth": {
       "weight": 15,
       "score": 12,
-      "evidence": "全A上涨3797只、下跌1658只，上涨占比68.91%，涨跌幅中位数+1.28%；但约51只跌停提示结构分化。"
+      "evidence": "Tushare沪深A股样本上涨3513只、下跌1629只，上涨占比67.66%，涨跌幅中位数+1.23%；按日涨跌幅近似估算约55只跌停，提示结构分化。"
     },
     "volume_liquidity": {
       "weight": 10,
-      "score": 5,
-      "evidence": "沪深两市成交额约2.60万亿元，仅为20日均值0.83倍，较上一交易日下降约21.67%。"
+      "score": 6,
+      "evidence": "Tushare沪深A股日线成交额汇总约2.877万亿元，为20日均值0.92倍，较上一交易日下降约13.30%。"
     },
     "fund_flow_risk_appetite": {
       "weight": 15,
-      "score": 6,
-      "evidence": "全A主力资金估算净流出约501亿元；科技硬件和半导体方向资金分歧加大；两融余额开盘口径下降。"
+      "score": 7,
+      "evidence": "Tushare moneyflow覆盖5192只样本，net_mf_amount汇总约-31.51亿元；公开盘面口径显示科技硬件和半导体方向资金分歧加大；两融余额采用公开口径交叉验证。"
     },
     "theme_strength": {
       "weight": 15,
@@ -172,13 +198,13 @@
       "score": 8,
       "evidence": "货币环境中性偏稳，7天逆回购利率维持1.40%；政策端继续支持人工智能+、算力网、新型电网和稳定资本市场信心。"
     },
-    "opportunity_score": 62,
+    "opportunity_score": 64,
     "crowding_penalty": {
       "score": 8,
       "evidence": "AI硬件、半导体设备、CPO/PCB等前期强势方向分歧加大，局部偏热到主线拥挤之间。",
       "operation_limit": "可以持有核心暴露，但谨慎追涨，不提高总权益仓位。"
     },
-    "market_position_score": 54
+    "market_position_score": 56
   },
   "allocation_mapping": {
     "base_equity_range": "45%-60%",
@@ -205,7 +231,7 @@
     {
       "name": "市场广度低于45%不超过60%",
       "triggered": false,
-      "impact": "全A上涨占比约68.91%。"
+      "impact": "Tushare沪深A股样本上涨占比约67.66%。"
     },
     {
       "name": "指数趋势低于10分不超过60%",
@@ -265,7 +291,7 @@
   "risks": [
     "多数主要指数短线低于20日线，若继续跌破60日线，指数趋势分需要下调。",
     "科技硬件和半导体设备方向资金分歧加大，可能拖累A档主线强度。",
-    "成交额低于20日均值且主力资金净流出，不适合用缩量反弹直接加仓。",
+    "成交额低于20日均值且Tushare资金流小幅净流出，不适合用缩量反弹直接加仓。",
     "部分指数估值分位偏热，限制仓位上限。"
   ],
   "watchlist": [
@@ -281,14 +307,15 @@
     "机器人、商业航天事件落地后资金是否留存，若不能留存仍保持C档主题口径。"
   ],
   "comparison_with_previous": {
-    "previous_date": "",
-    "previous_market_position_score": null,
-    "previous_equity_allocation_range": "",
-    "change_type": "new",
+    "previous_date": "2026-06-01 v1.0",
+    "previous_market_position_score": 54,
+    "previous_equity_allocation_range": "50%-60%",
+    "change_type": "maintain",
     "change_reasons": [
-      "本次为首次正式A股市场仓位报告，作为后续比较基准。",
+      "v1.1按docs/DATA_SOURCES.md要求改用Tushare作为结构化行情主数据源。",
+      "Tushare口径下市场机会分数由62调整为64，市场仓位分数由54调整为56，但仍落在46-60的中性修复区间。",
       "已读取2026-06-01最新主线登记册，并保持AI、半导体A档等既有评级不变。"
     ]
   },
-  "decision_log_entry": "2026-06-01 市场仓位：\n- 市场机会分数：62\n- 拥挤惩罚：8\n- 市场仓位分数：54\n- 建议权益仓位：50%-60%\n- 建议债券/现金仓位：40%-50%\n- 变化类型：new\n- 主要原因：市场广度较好且存在 AI、半导体 A 档主线，但主要指数短线回落、成交缩量、主力资金净流出且科技硬件拥挤分歧加大。\n- 操作含义：维持中性修复仓位，不放大进攻仓，不推荐具体股票，不改写主线评级。"
+  "decision_log_entry": "2026-06-01 市场仓位：\n- 市场机会分数：64\n- 拥挤惩罚：8\n- 市场仓位分数：56\n- 建议权益仓位：50%-60%\n- 建议债券/现金仓位：40%-50%\n- 变化类型：maintain\n- 主要原因：按 Tushare 优先口径重算后，市场广度较好且存在 AI、半导体 A 档主线，但主要指数短线回落、成交低于20日均值、资金流小幅净流出且科技硬件拥挤分歧加大。\n- 操作含义：维持中性修复仓位，不放大进攻仓，不推荐具体股票，不改写主线评级。"
 }
