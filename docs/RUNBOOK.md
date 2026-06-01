@@ -6,14 +6,16 @@
 
 1. 拉取最新项目。
 2. 阅读 `README.md`、`docs/PROJECT_MEMORY.md`、`docs/MODULES.md`。
-3. 查看 `research/logs/decision_log.md` 的最近记录。
-4. 确认本次要做的是盘前、盘中、盘后、周末，还是临时事件更新。
-5. 完成后提交并推送。
+3. 阅读 `docs/DATA_SOURCES.md`，确认 Tushare 等数据源权限。
+4. 查看 `research/logs/decision_log.md` 的最近记录。
+5. 确认本次要做的是盘前、盘中、盘后、周末，还是临时事件更新。
+6. 完成后提交并推送。
 
 推荐开场指令：
 
 ```text
-请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md 和 research/logs/decision_log.md，然后按今天的任务继续。
+请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DATA_SOURCES.md 和 research/logs/decision_log.md，然后按今天的任务继续。
+本项目已知可使用 Tushare 数据权限；做 A 股结构化数据研究时请优先检查并使用本地 Tushare token。
 ```
 
 ## 2. 盘前流程

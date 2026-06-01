@@ -6,9 +6,10 @@
 
 1. 克隆项目到本地。
 2. 先阅读 [项目记忆](docs/PROJECT_MEMORY.md)，了解已经确定的策略、规则和历史决议。
-3. 再阅读 [协作规则](docs/WORKFLOW.md)，按固定流程继续工作。
-4. 每次和 Codex 形成新的重要决议后，更新 `docs/PROJECT_MEMORY.md` 或对应研究文件。
-5. 每次更新后提交 Git commit，保持多台电脑之间的上下文一致。
+3. 阅读 [数据源与权限](docs/DATA_SOURCES.md)，确认本地数据权限配置。
+4. 再阅读 [协作规则](docs/WORKFLOW.md)，按固定流程继续工作。
+5. 每次和 Codex 形成新的重要决议后，更新 `docs/PROJECT_MEMORY.md` 或对应研究文件。
+6. 每次更新后提交 Git commit，保持多台电脑之间的上下文一致。
 
 ## 核心原则
 
@@ -23,6 +24,7 @@
 - [docs/PROJECT_MEMORY.md](docs/PROJECT_MEMORY.md)：项目长期记忆，记录策略框架、已确定规则、历史决议和错误教训。
 - [docs/MODULES.md](docs/MODULES.md)：模块架构，定义每个投资研究模块的职责、输入、输出和边界。
 - [docs/RUNBOOK.md](docs/RUNBOOK.md)：日常运行手册，说明盘前、盘中、盘后、周末如何运行项目。
+- [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)：数据源与权限，记录 Tushare 等数据源的使用规则和本地配置方式。
 - [docs/WORKFLOW.md](docs/WORKFLOW.md)：多电脑协同、Codex 使用、更新和提交规则。
 
 ## 当前阶段
