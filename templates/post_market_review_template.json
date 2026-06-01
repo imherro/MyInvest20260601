@@ -1,0 +1,91 @@
+{
+  "module": "post_market_review",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "review_type": "daily_brief|full_daily|weekly|event_driven|rule_review",
+  "data_sources": {
+    "market_position": "",
+    "action_plan": "",
+    "intraday_alerts": [],
+    "execution_records": "",
+    "portfolio_snapshot": ""
+  },
+  "summary": {
+    "review_conclusion": "correct|partially_correct|judgment_bias|execution_bias|insufficient_information",
+    "needs_research_update": null,
+    "needs_rule_revision": null,
+    "one_line_conclusion": ""
+  },
+  "market_review": {
+    "premarket_judgment": "",
+    "close_performance": "",
+    "bias_assessment": "",
+    "reason": ""
+  },
+  "theme_review": [
+    {
+      "theme": "",
+      "premarket_rating": "",
+      "daily_performance": "",
+      "matched_expectation": "yes|no|partial",
+      "needs_update": null,
+      "note": ""
+    }
+  ],
+  "action_plan_review": [
+    {
+      "subject": "",
+      "premarket_suggestion": "",
+      "trigger_condition": "",
+      "triggered": null,
+      "executed": null,
+      "result": "",
+      "bias": ""
+    }
+  ],
+  "intraday_alert_review": [
+    {
+      "alert": "",
+      "trigger_state": "",
+      "suggested_action": "",
+      "actual_handling": "",
+      "was_useful": "yes|no|partial",
+      "note": ""
+    }
+  ],
+  "execution_review": {
+    "actual_actions": [],
+    "followed_plan": null,
+    "execution_deviation": "",
+    "improvement_needed": ""
+  },
+  "portfolio_risk_changes": {
+    "equity_allocation_change": "",
+    "theme_industry_concentration_change": "",
+    "single_security_risk_change": "",
+    "hard_constraints_triggered": []
+  },
+  "biases": [
+    {
+      "type": "market_misread|theme_misread|valuation_misread|execution_deviation|emotional_trade|missed_trigger|false_trigger|missing_research|no_issue",
+      "exists": null,
+      "description": "",
+      "follow_up": ""
+    }
+  ],
+  "research_updates_needed": [
+    {
+      "module_or_file": "market_position|theme_research|etf_profile|stock_profile|portfolio_analysis|action_plan",
+      "needs_update": null,
+      "reason": "",
+      "priority": "high|medium|low"
+    }
+  ],
+  "next_day_watch_points": [],
+  "rule_revision_suggestion": {
+    "suggested": null,
+    "reason": "",
+    "files_to_update": []
+  },
+  "decision_log_entry": ""
+}
