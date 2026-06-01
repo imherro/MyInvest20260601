@@ -1,0 +1,294 @@
+{
+  "module": "market_position",
+  "version": "1.0",
+  "date": "2026-06-01",
+  "session": "close",
+  "data_sources": [
+    {
+      "name": "东方财富行情接口",
+      "usage": "主要指数日线、全A涨跌家数、涨跌幅中位数、涨跌停数量、主力资金流",
+      "collection_time": "2026-06-01 盘后"
+    },
+    {
+      "name": "每日经济新闻",
+      "url": "https://www.nbd.com.cn/articles/2026-06-01/4413659.html",
+      "usage": "2026-06-01 A股早盘复盘、成交和盘面热点"
+    },
+    {
+      "name": "新浪财经",
+      "url": "https://finance.sina.com.cn/jjxw/2026-06-01/doc-inhzwist5257816.shtml",
+      "usage": "开盘涨跌家数、两融余额、逆回购和人民币中间价口径"
+    },
+    {
+      "name": "澎湃新闻",
+      "url": "https://www.thepaper.cn/newsDetail_forward_33263277",
+      "usage": "上一交易日市场分化、成交和拥挤风险参考"
+    },
+    {
+      "name": "ETF.run / 百分位",
+      "usage": "指数估值分位近似参考，最近更新日至2026-05下旬"
+    },
+    {
+      "name": "research/themes/theme_registry.json",
+      "usage": "最新主线登记册，last_updated=2026-06-01"
+    }
+  ],
+  "summary": {
+    "market_state": "中性修复，偏强广度与短线指数回落并存",
+    "one_line_conclusion": "2026-06-01 的 A 股仍有 A 档科技主线和较好市场广度支撑，但主要指数短线跌回 20 日线附近、成交缩量且科技硬件资金分歧加大，首次正式仓位结论定为中性修复，权益总仓位控制在 50%-60%。",
+    "equity_allocation_range": "50%-60%",
+    "bond_cash_allocation_range": "40%-50%",
+    "offensive_bucket_status": "maintain"
+  },
+  "market_observations": {
+    "indices": [
+      {
+        "name": "沪深300",
+        "close": 4846.31,
+        "pct_change": -0.94,
+        "above_ma20": false,
+        "above_ma60": true
+      },
+      {
+        "name": "中证500",
+        "close": 8282.85,
+        "pct_change": -0.92,
+        "above_ma20": false,
+        "above_ma60": true
+      },
+      {
+        "name": "中证1000",
+        "close": 8361.35,
+        "pct_change": -0.56,
+        "above_ma20": false,
+        "above_ma60": true
+      },
+      {
+        "name": "创业板指",
+        "close": 3956.56,
+        "pct_change": -2.02,
+        "above_ma20": true,
+        "above_ma60": true
+      },
+      {
+        "name": "科创50",
+        "close": 1672.47,
+        "pct_change": -4.5,
+        "above_ma20": false,
+        "above_ma60": true
+      },
+      {
+        "name": "上证指数",
+        "close": 4060.3,
+        "pct_change": -0.2,
+        "above_ma20": false,
+        "above_ma60": false
+      }
+    ],
+    "breadth": {
+      "sample_count": 5510,
+      "advancers": 3797,
+      "decliners": 1658,
+      "flat": 55,
+      "advance_ratio_pct": 68.91,
+      "median_pct_change": 1.28,
+      "limit_up_count_approx": 148,
+      "limit_down_count_approx": 51
+    },
+    "turnover": {
+      "sh_sz_total_amount_yuan": 2599760746773,
+      "sh_sz_total_amount_trillion_yuan": 2.6,
+      "twenty_day_average_trillion_yuan": 3.129,
+      "amount_vs_20d_average": 0.83,
+      "amount_vs_previous_pct": -21.67
+    },
+    "fund_flow": {
+      "all_a_main_net_flow_yuan_approx": -50089484505,
+      "all_a_main_net_flow_billion_yuan_approx": -50.09,
+      "notes": [
+        "早盘半导体板块主力资金净流出超过百亿元。",
+        "开盘口径两融余额环比下降。",
+        "人民币中间价小幅调升，汇率压力不大。"
+      ]
+    },
+    "theme_registry_snapshot": {
+      "last_updated": "2026-06-01",
+      "a_rated_themes": [
+        "AI",
+        "半导体"
+      ],
+      "b_rated_themes": [
+        "电力设备",
+        "高端装备",
+        "有色",
+        "电池",
+        "储能"
+      ],
+      "c_rated_themes": [
+        "机器人",
+        "商业航天",
+        "化工",
+        "能源"
+      ],
+      "d_rated_or_watch": [
+        "无人驾驶"
+      ],
+      "rating_policy": "本报告只读取登记册，不改写任何主线评级。"
+    }
+  },
+  "scores": {
+    "index_trend": {
+      "weight": 20,
+      "score": 12,
+      "evidence": "多数主要指数仍在60日均线上方，但沪深300、中证500、中证1000、科创50收盘低于20日均线，上证指数接近60日线，短线趋势转弱。"
+    },
+    "market_breadth": {
+      "weight": 15,
+      "score": 12,
+      "evidence": "全A上涨3797只、下跌1658只，上涨占比68.91%，涨跌幅中位数+1.28%；但约51只跌停提示结构分化。"
+    },
+    "volume_liquidity": {
+      "weight": 10,
+      "score": 5,
+      "evidence": "沪深两市成交额约2.60万亿元，仅为20日均值0.83倍，较上一交易日下降约21.67%。"
+    },
+    "fund_flow_risk_appetite": {
+      "weight": 15,
+      "score": 6,
+      "evidence": "全A主力资金估算净流出约501亿元；科技硬件和半导体方向资金分歧加大；两融余额开盘口径下降。"
+    },
+    "theme_strength": {
+      "weight": 15,
+      "score": 13,
+      "evidence": "最新主线登记册存在AI、半导体两条A档主线和多条B档副线，但科技硬件分歧与局部拥挤限制新增进攻空间。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 6,
+      "evidence": "沪深300 PE分位偏高但PB中性，中证500 PE/PB分位偏热；估值不支持高仓位追涨。"
+    },
+    "macro_policy": {
+      "weight": 10,
+      "score": 8,
+      "evidence": "货币环境中性偏稳，7天逆回购利率维持1.40%；政策端继续支持人工智能+、算力网、新型电网和稳定资本市场信心。"
+    },
+    "opportunity_score": 62,
+    "crowding_penalty": {
+      "score": 8,
+      "evidence": "AI硬件、半导体设备、CPO/PCB等前期强势方向分歧加大，局部偏热到主线拥挤之间。",
+      "operation_limit": "可以持有核心暴露，但谨慎追涨，不提高总权益仓位。"
+    },
+    "market_position_score": 54
+  },
+  "allocation_mapping": {
+    "base_equity_range": "45%-60%",
+    "final_equity_range": "50%-60%",
+    "final_bond_cash_range": "40%-50%",
+    "applied_bucket": "46-60 中性修复"
+  },
+  "hard_constraints": [
+    {
+      "name": "普通账户权益仓位上限85%",
+      "triggered": false,
+      "impact": "本次建议低于上限。"
+    },
+    {
+      "name": "没有明确牛市主升浪证据不超过75%",
+      "triggered": true,
+      "impact": "本次不使用60%以上进攻区间。"
+    },
+    {
+      "name": "没有A级主线不超过65%",
+      "triggered": false,
+      "impact": "最新登记册存在AI、半导体两条A档主线，评级不改写。"
+    },
+    {
+      "name": "市场广度低于45%不超过60%",
+      "triggered": false,
+      "impact": "全A上涨占比约68.91%。"
+    },
+    {
+      "name": "指数趋势低于10分不超过60%",
+      "triggered": false,
+      "impact": "指数趋势得分12。"
+    },
+    {
+      "name": "主线强度低于8分时进攻仓不超过股票仓25%",
+      "triggered": false,
+      "impact": "主线强度得分13。"
+    },
+    {
+      "name": "拥挤惩罚高于15不新增进攻仓",
+      "triggered": false,
+      "impact": "拥挤惩罚为8，但仍需谨慎追涨。"
+    },
+    {
+      "name": "单一行业或主线不超过权益仓位30%-35%",
+      "triggered": true,
+      "impact": "常设约束，避免AI/半导体单线过度集中。"
+    },
+    {
+      "name": "主题仓不超过权益仓位10%",
+      "triggered": true,
+      "impact": "常设约束，C档主题只按试错口径处理。"
+    }
+  ],
+  "equity_bucket_suggestion": {
+    "core": {
+      "range": "30%-36%",
+      "status": "maintain",
+      "note": "以宽基和已固化A/B档主线的组合暴露为主，不新增具体标的建议。"
+    },
+    "offensive": {
+      "range": "10%-14%",
+      "status": "maintain",
+      "note": "AI、半导体仍为A档依据，但因短线拥挤和资金分歧，不放大进攻仓。"
+    },
+    "defensive": {
+      "range": "5%-8%",
+      "status": "maintain",
+      "note": "用于平衡科技主线波动。"
+    },
+    "theme": {
+      "range": "0%-3%",
+      "status": "trial",
+      "note": "C档主题只允许小比例观察，不能临时升级为主攻。"
+    }
+  },
+  "operation_implications": {
+    "equity_total": "控制在50%-60%，不因存在A档主线而上调到强进攻区。",
+    "bond_cash": "维持40%-50%，等待指数重新站稳短期趋势或主线分歧后的确认。",
+    "offensive_bucket": "维持，不追涨放大；新增进攻仓需等待成交、资金和指数趋势重新确认。",
+    "defensive_bucket": "维持，作为科技波动的缓冲。",
+    "theme_bucket": "只保留试错上限，C档主题不得替代A档主线。"
+  },
+  "risks": [
+    "多数主要指数短线低于20日线，若继续跌破60日线，指数趋势分需要下调。",
+    "科技硬件和半导体设备方向资金分歧加大，可能拖累A档主线强度。",
+    "成交额低于20日均值且主力资金净流出，不适合用缩量反弹直接加仓。",
+    "部分指数估值分位偏热，限制仓位上限。"
+  ],
+  "watchlist": [
+    "主要指数能否重新站上20日线。",
+    "全A上涨占比能否维持在50%以上且跌停数量下降。",
+    "两市成交额能否回到20日均值附近且不是高位放量滞涨。",
+    "主力资金是否重新流入宽基或主线ETF。",
+    "AI、半导体能否从硬件分歧切换为应用、设备、材料等健康轮动。"
+  ],
+  "needs_theme_module_confirmation": [
+    "AI、半导体确认期是否延续，是否出现进入分歧期的证据。",
+    "电力设备、储能是否能从B档副线转为更高持续性的主线，本模块不临时上调。",
+    "机器人、商业航天事件落地后资金是否留存，若不能留存仍保持C档主题口径。"
+  ],
+  "comparison_with_previous": {
+    "previous_date": "",
+    "previous_market_position_score": null,
+    "previous_equity_allocation_range": "",
+    "change_type": "new",
+    "change_reasons": [
+      "本次为首次正式A股市场仓位报告，作为后续比较基准。",
+      "已读取2026-06-01最新主线登记册，并保持AI、半导体A档等既有评级不变。"
+    ]
+  },
+  "decision_log_entry": "2026-06-01 市场仓位：\n- 市场机会分数：62\n- 拥挤惩罚：8\n- 市场仓位分数：54\n- 建议权益仓位：50%-60%\n- 建议债券/现金仓位：40%-50%\n- 变化类型：new\n- 主要原因：市场广度较好且存在 AI、半导体 A 档主线，但主要指数短线回落、成交缩量、主力资金净流出且科技硬件拥挤分歧加大。\n- 操作含义：维持中性修复仓位，不放大进攻仓，不推荐具体股票，不改写主线评级。"
+}

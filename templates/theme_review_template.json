@@ -23,13 +23,23 @@
       "change_type": "maintain|upgrade|downgrade|new|remove",
       "bucket_role": "offensive_core|offensive_candidate|secondary|theme_trial|watch|avoid",
       "cycle": {
-        "stage": "germination|launch|confirmation|acceleration|climax|divergence|decline|repair|unknown",
-        "first_watch_date": "",
-        "first_confirmation_date": "",
-        "current_stage_start_date": "",
-        "estimated_effective_window": "",
-        "next_stage_review_date": "",
-        "stage_invalidation_conditions": []
+        "long_term_industry_cycle": {
+          "judgment": "",
+          "start_or_approx_start": "",
+          "drivers": [],
+          "invalidation_conditions": []
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "germination|launch|confirmation|acceleration|climax|divergence|decline|repair|unknown",
+          "system_first_watch_date": "",
+          "first_watch_date": "",
+          "first_confirmation_date": "",
+          "current_stage_start_date": "",
+          "date_evidence": [],
+          "estimated_effective_window": "",
+          "next_stage_review_date": "",
+          "stage_invalidation_conditions": []
+        }
       },
       "scores": {
         "industry_logic": {
@@ -86,8 +96,10 @@
       "change_type": "maintain|upgrade|downgrade|new|remove",
       "previous_conclusion": "",
       "new_conclusion": "",
-      "previous_cycle_stage": "",
-      "new_cycle_stage": "",
+      "previous_long_term_cycle": "",
+      "new_long_term_cycle": "",
+      "previous_trading_cycle_stage": "",
+      "new_trading_cycle_stage": "",
       "reason": "",
       "position_impact": ""
     }
