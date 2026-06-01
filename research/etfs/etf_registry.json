@@ -1,0 +1,63 @@
+{
+  "module": "etf_registry",
+  "version": "1.0",
+  "last_updated": "2026-06-01",
+  "notes": "当前文件保存 ETF 研究模块的总览登记。正式 ETF 研究前，候选 ETF 均为待研究状态。",
+  "etfs": [
+    {
+      "code": "510300",
+      "name": "沪深300ETF",
+      "bucket_role": "core",
+      "status": "to_research",
+      "related_theme": "",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "核心仓候选，待首次 ETF 研究确认",
+      "last_profile_file": ""
+    },
+    {
+      "code": "510500",
+      "name": "中证500ETF",
+      "bucket_role": "core",
+      "status": "to_research",
+      "related_theme": "",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "核心仓候选，待首次 ETF 研究确认",
+      "last_profile_file": ""
+    },
+    {
+      "code": "A500",
+      "name": "中证A500相关ETF",
+      "bucket_role": "core",
+      "status": "to_research",
+      "related_theme": "",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "核心仓候选，具体基金代码待确认",
+      "last_profile_file": ""
+    },
+    {
+      "code": "QQQ",
+      "name": "纳斯达克100ETF/QQQ",
+      "bucket_role": "core",
+      "status": "to_research",
+      "related_theme": "海外科技",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "少量海外科技核心仓候选，待确认参与比例和工具",
+      "last_profile_file": ""
+    }
+  ],
+  "change_log": [
+    {
+      "date": "2026-06-01",
+      "change": "建立 ETF 登记册，先放入策略讨论中提到的核心仓候选 ETF。",
+      "impact": "后续 ETF 研究必须在登记册基础上更新，不在操作建议中临时新增主仓工具。"
+    }
+  ]
+}

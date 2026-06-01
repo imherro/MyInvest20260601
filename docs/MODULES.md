@@ -416,7 +416,7 @@ research/
 
 1. 市场仓位模块模板（已建立：`docs/modules/MARKET_POSITION.md`、`templates/market_score_template.md`、`templates/market_score_template.json`）
 2. 主线研究模块模板（已建立：`docs/modules/THEME_RESEARCH.md`、`templates/theme_review_template.md`、`templates/theme_review_template.json`、`research/themes/theme_registry.json`）
-3. ETF 档案模板
+3. ETF 档案模板（已建立：`docs/modules/ETF_RESEARCH.md`、`templates/etf_profile_template.md`、`templates/etf_profile_template.json`、`research/etfs/etf_registry.json`）
 4. 个股档案模板
 5. 决策日志模板
 

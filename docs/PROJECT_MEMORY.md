@@ -264,3 +264,4 @@ research/
 - 确定新增 `docs/MODULES.md`，用于固定九个模块的职责、输入、输出、更新频率和禁止事项。
 - 确定市场仓位模块 1.0：新增 `docs/modules/MARKET_POSITION.md`、`templates/market_score_template.md`、`templates/market_score_template.json`，并建立 `research/market/` 作为市场仓位研究产物目录。
 - 确定主线研究模块 1.0：新增 `docs/modules/THEME_RESEARCH.md`、`templates/theme_review_template.md`、`templates/theme_review_template.json`，并建立 `research/themes/theme_registry.json` 作为当前主线结论登记册。
+- 确定 ETF 研究模块 1.0：新增 `docs/modules/ETF_RESEARCH.md`、`templates/etf_profile_template.md`、`templates/etf_profile_template.json`，并建立 `research/etfs/etf_registry.json` 作为 ETF 总览登记册。

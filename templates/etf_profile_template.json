@@ -1,0 +1,119 @@
+{
+  "module": "etf_research",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "code": "",
+  "name": "",
+  "data_sources": [],
+  "summary": {
+    "bucket_role": "core|offensive|defensive|theme|bond_cash",
+    "action_rating": "Buy|Add|Hold|Reduce|Sell|Watch",
+    "etf_score": null,
+    "target_position_range": "",
+    "one_line_conclusion": ""
+  },
+  "basic_info": {
+    "fund_code": "",
+    "fund_name": "",
+    "tracked_index_or_asset": "",
+    "fund_company": "",
+    "aum": "",
+    "average_daily_turnover": "",
+    "fee": "",
+    "long_term_holding_suitable": null
+  },
+  "position_role": {
+    "bucket_role": "core|offensive|defensive|theme|bond_cash",
+    "related_theme": "",
+    "theme_rating": "",
+    "allocation_purpose": "",
+    "alternative_etfs": [],
+    "overlap_with_existing_holdings": ""
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": null,
+      "evidence": ""
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": null,
+      "evidence": ""
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": null,
+      "evidence": ""
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": null,
+      "evidence": ""
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": null,
+      "evidence": ""
+    },
+    "base_score": null,
+    "crowding_structure_risk": {
+      "score": null,
+      "evidence": "",
+      "operation_limit": ""
+    },
+    "final_score": null
+  },
+  "valuation": {
+    "status": "",
+    "historical_percentile": "",
+    "relative_value": ""
+  },
+  "trend_and_flow": {
+    "trend_status": "",
+    "fund_flow": "",
+    "liquidity": ""
+  },
+  "holdings_structure": {
+    "top_holdings": [],
+    "concentration_risk": "",
+    "portfolio_overlap": ""
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [],
+    "reduce_conditions": [],
+    "sell_or_invalidation_conditions": []
+  },
+  "position_suggestions_by_scenario": {
+    "market_position_below_45": "",
+    "market_position_45_60": "",
+    "market_position_60_75": "",
+    "market_position_above_75": "",
+    "theme_a": "",
+    "theme_downgrade_to_b": "",
+    "theme_downgrade_to_c_or_d": ""
+  },
+  "risks": [],
+  "risk_monitors": [],
+  "next_update_triggers": [
+    "theme_rating_change",
+    "valuation_percentile_change",
+    "trend_break_or_recovery",
+    "fund_flow_reversal",
+    "holdings_structure_change",
+    "portfolio_overlap_change"
+  ],
+  "decision_log_entry": ""
+}
