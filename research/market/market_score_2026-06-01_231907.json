@@ -1,0 +1,169 @@
+{
+  "module": "market_position",
+  "version": "1.2",
+  "date": "2026-06-01",
+  "session": "close",
+  "generated_at": "2026-06-01_231907",
+  "data_sources": [
+    {
+      "name": "Tushare Pro",
+      "version": "1.4.29",
+      "usage": "交易日历、指数日线、A股日线、全市场广度、涨跌停明细、成交额、资金流、基础估值、部分指数估值",
+      "trade_date": "20260601"
+    },
+    {
+      "name": "research/themes/theme_registry.json",
+      "usage": "最新主线评级和交易阶段，只读取不改写",
+      "last_updated": "2026-06-01"
+    },
+    {
+      "name": "research/market/market_score_2026-06-01_171647.md",
+      "usage": "上一版市场仓位报告，用于对比"
+    }
+  ],
+  "data_gaps": [
+    "Tushare margin 在 2026-06-01 未返回两融汇总行。",
+    "Tushare index_dailybasic 未返回中证1000、科创50估值行。",
+    "估值分位为近60个交易日近似分位，不等同于长期历史分位。"
+  ],
+  "summary": {
+    "market_state": "中性修复，偏防守",
+    "one_line_conclusion": "今日 A 股广度仍好、成交仍有量，但主要指数短线弱于20日线，最新主线登记册显示 AI 处于分歧、半导体已降为 B 档，进攻主线质量下降；权益仓位从上一版 50%-60% 下修至 45%-55%。",
+    "equity_allocation_range": "45%-55%",
+    "bond_cash_allocation_range": "45%-55%",
+    "offensive_bucket_status": "reduce"
+  },
+  "market_observations": {
+    "trade_date": "20260601",
+    "indices": [
+      {"name": "沪深300", "ts_code": "000300.SH", "close": 4844.26, "pct_chg": -0.98, "ma20": 4886.14, "above_ma20": false, "ma60": 4714.3, "above_ma60": true},
+      {"name": "中证500", "ts_code": "000905.SH", "close": 8274.21, "pct_chg": -1.02, "ma20": 8600.26, "above_ma20": false, "ma60": 8220.03, "above_ma60": true},
+      {"name": "中证1000", "ts_code": "000852.SH", "close": 8345.13, "pct_chg": -0.76, "ma20": 8674.16, "above_ma20": false, "ma60": 8250.14, "above_ma60": true},
+      {"name": "创业板指", "ts_code": "399006.SZ", "close": 3950.94, "pct_chg": -2.15, "ma20": 3930.21, "above_ma20": true, "ma60": 3572.11, "above_ma60": true},
+      {"name": "科创50", "ts_code": "000688.SH", "close": 1663.69, "pct_chg": -5.0, "ma20": 1744.49, "above_ma20": false, "ma60": 1495.37, "above_ma60": true},
+      {"name": "上证指数", "ts_code": "000001.SH", "close": 4057.74, "pct_chg": -0.27, "ma20": 4144.89, "above_ma20": false, "ma60": 4060.84, "above_ma60": false}
+    ],
+    "breadth": {
+      "source": "Tushare daily, SH/SZ A-share sample",
+      "sample_count": 5192,
+      "advancers": 3513,
+      "decliners": 1629,
+      "flat": 50,
+      "advance_ratio_pct": 67.66,
+      "median_pct_change": 1.23,
+      "limit_up_or_one_word_limit_up": 161,
+      "limit_down": 21
+    },
+    "turnover": {
+      "source": "Tushare daily.amount summed over SH/SZ A shares; amount converted from thousand yuan to yuan",
+      "total_amount_yuan": 2877238764901,
+      "total_amount_trillion_yuan": 2.877,
+      "twenty_day_average_trillion_yuan": 3.143,
+      "amount_vs_20d_average": 0.92,
+      "amount_vs_previous_pct": -13.3
+    },
+    "fund_flow": {
+      "source": "Tushare moneyflow, net_mf_amount; raw unit interpreted as 10k yuan",
+      "sample_count": 5192,
+      "net_mf_amount_raw": -315057.06,
+      "net_mf_amount_billion_yuan_approx": -3.15
+    },
+    "valuation": {
+      "source": "Tushare daily_basic and index_dailybasic",
+      "all_a_median_pe_ttm": 47.6,
+      "all_a_median_pb": 2.95,
+      "all_a_weighted_harmonic_pe_ttm": 18.73,
+      "all_a_weighted_harmonic_pb": 1.89,
+      "all_a_60d_pe_percentile_approx": 58.3,
+      "all_a_60d_pb_percentile_approx": 36.7,
+      "index_rows": [
+        {"name": "沪深300", "pe_ttm": 14.52, "pb": 1.45, "pe_ttm_60d_percentile": 60.0, "pb_60d_percentile": 38.3},
+        {"name": "中证500", "pe_ttm": 36.35, "pb": 2.53, "pe_ttm_60d_percentile": 33.3, "pb_60d_percentile": 46.7},
+        {"name": "创业板指", "pe_ttm": 47.3, "pb": 6.2, "pe_ttm_60d_percentile": 81.7, "pb_60d_percentile": 90.0}
+      ]
+    },
+    "theme_registry_snapshot": {
+      "a_rated_themes": [{"name": "AI", "score": 80, "trading_stage": "divergence"}],
+      "b_rated_themes": ["半导体", "电力设备", "高端装备", "能源"],
+      "c_rated_themes": ["有色", "电池", "储能", "机器人", "商业航天", "化工"],
+      "d_rated_or_watch": ["无人驾驶"],
+      "rating_policy": "本报告只读取登记册，不改写任何主线评级。"
+    }
+  },
+  "scores": {
+    "index_trend": {"weight": 20, "score": 11, "evidence": "多数主要指数低于20日线但仍高于60日线，科创50当日-5.00%，上证指数略低于60日线。"},
+    "market_breadth": {"weight": 15, "score": 12, "evidence": "Tushare样本上涨占比67.66%，涨跌幅中位数+1.23%，涨跌停结构仍偏正。"},
+    "volume_liquidity": {"weight": 10, "score": 6, "evidence": "两市成交额约2.877万亿元，为20日均值0.92倍，较上一交易日下降13.30%。"},
+    "fund_flow_risk_appetite": {"weight": 15, "score": 7, "evidence": "Tushare moneyflow小幅净流出约31.51亿元，资金不是系统性外流，但科技硬件风险偏好较弱。"},
+    "theme_strength": {"weight": 15, "score": 10, "evidence": "AI为唯一A档且处于分歧；半导体降为B；能源上调为B但偏防御/周期，进攻主线质量下降。"},
+    "valuation_odds": {"weight": 15, "score": 7, "evidence": "沪深300和全A估值近60日中性，中证500不贵，创业板估值处于近60日高分位，整体中性偏贵。"},
+    "macro_policy": {"weight": 10, "score": 8, "evidence": "政策端仍支持人工智能+、算力网、新型电网和稳定资本市场信心；货币环境未见明显收紧。"},
+    "opportunity_score": 61,
+    "crowding_penalty": {
+      "score": 8,
+      "evidence": "科技硬件、半导体、机器人等高弹性方向出现分歧和回撤；能源短线加速需防追高。",
+      "operation_limit": "可以持有核心暴露，但不提高总权益仓位，暂停新增进攻仓。"
+    },
+    "market_position_score": 53
+  },
+  "allocation_mapping": {
+    "base_equity_range": "45%-60%",
+    "final_equity_range": "45%-55%",
+    "final_bond_cash_range": "45%-55%",
+    "applied_bucket": "46-60 中性修复"
+  },
+  "hard_constraints": [
+    {"name": "普通账户权益仓位上限85%", "triggered": false, "impact": "本次建议低于上限。"},
+    {"name": "没有明确牛市主升浪证据不超过75%", "triggered": true, "impact": "不使用60%以上进攻区间。"},
+    {"name": "没有A级主线不超过65%", "triggered": false, "impact": "仍有AI为A档，但处于分歧。"},
+    {"name": "市场广度低于45%不超过60%", "triggered": false, "impact": "Tushare样本上涨占比67.66%。"},
+    {"name": "指数趋势低于10分不超过60%", "triggered": false, "impact": "指数趋势得分11。"},
+    {"name": "主线强度低于8分时进攻仓不超过股票仓25%", "triggered": false, "impact": "主线强度得分10，但进攻仓应收缩。"},
+    {"name": "拥挤惩罚高于15不新增进攻仓", "triggered": false, "impact": "拥挤惩罚8，限制追涨但不强制清仓。"},
+    {"name": "单一行业或主线不超过权益仓位30%-35%", "triggered": true, "impact": "常设约束，AI单线不得过度集中。"},
+    {"name": "主题仓不超过权益仓位10%", "triggered": true, "impact": "常设约束，C/D档方向不扩大。"}
+  ],
+  "equity_bucket_suggestion": {
+    "core": {"range": "28%-33%", "status": "maintain", "note": "以宽基和低换手核心暴露为主。"},
+    "offensive": {"range": "7%-10%", "status": "decrease", "note": "AI可保留核心暴露，半导体降为B后不再作为新增进攻核心。"},
+    "defensive": {"range": "7%-10%", "status": "increase", "note": "用于平衡科技分歧，能源B档不替代科技进攻主线。"},
+    "theme": {"range": "0%-2%", "status": "pause", "note": "C/D档主题暂停新增。"}
+  },
+  "operation_implications": {
+    "equity_total": "从上一版50%-60%下修至45%-55%。",
+    "bond_cash": "提高至45%-55%。",
+    "offensive_bucket": "收缩，暂停新增。",
+    "defensive_bucket": "维持或小幅增加。",
+    "theme_bucket": "暂停新增，已有主题仓必须有退出条件。"
+  },
+  "risks": [
+    "科创50、半导体和机器人相关ETF回撤较大，可能继续拖累科技风险偏好。",
+    "AI硬件和应用分化，若应用扩散回落，主线强度需要下调。",
+    "成交低于20日均值，若指数继续跌破60日线，仓位需再下修。",
+    "能源短线加速，若放量滞涨或上涨占比快速回落，不宜替代进攻主线。"
+  ],
+  "watchlist": [
+    "主要指数能否重新站上20日线。",
+    "AI应用端能否延续扩散，AI硬件是否止跌。",
+    "半导体ETF是否止跌并恢复上涨占比。",
+    "两市成交额能否回到20日均值上方。",
+    "Tushare两融和指数估值缺口是否能在下一次更新中补齐。"
+  ],
+  "needs_theme_module_confirmation": [
+    "AI当前分歧是否转为修复，还是进入退潮。",
+    "半导体B档能否止跌并重新成为A档候选。",
+    "能源B档是防御轮动还是可持续副线。"
+  ],
+  "comparison_with_previous": {
+    "previous_file": "research/market/market_score_2026-06-01_171647.md",
+    "previous_market_position_score": 56,
+    "previous_equity_allocation_range": "50%-60%",
+    "change_type": "downgrade",
+    "change_reasons": [
+      "最新主线登记册显示半导体由A下调为B，AI维持A但交易阶段为分歧。",
+      "指数和广度变化不大，但主线强度从上一版偏强支撑降为中性支撑。",
+      "市场仓位分数从56下调至53，建议区间收敛到45%-55%。"
+    ]
+  },
+  "decision_log_entry": "2026-06-01 市场仓位：\n- 生成文件：research/market/market_score_2026-06-01_231907.md\n- 读取前置文件：research/market/market_score_2026-06-01_171647.md、research/themes/theme_registry.json\n- 市场机会分数：61\n- 拥挤惩罚：8\n- 市场仓位分数：53\n- 建议权益仓位：45%-55%\n- 建议债券/现金仓位：45%-55%\n- 变化类型：downgrade\n- 主要原因：最新主线登记册显示 AI 处于分歧、半导体降为 B，进攻主线质量下降；指数短线弱于20日线，成交低于20日均值。\n- 操作含义：收缩进攻仓，暂停新增，不推荐具体股票，不改写主线评级。"
+}
