@@ -1,0 +1,47 @@
+{
+  "module": "intraday_alerts",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "time": "HH:MM",
+  "source_plan": "",
+  "summary": {
+    "alert_state": "triggered|no_trigger|review_needed|blocked",
+    "highest_priority": "high|medium|low|none",
+    "one_line_conclusion": ""
+  },
+  "alerts": [
+    {
+      "priority": "high|medium|low",
+      "subject": {
+        "code": "",
+        "name": "",
+        "type": "etf|stock|portfolio|theme|market"
+      },
+      "alert_type": "buy_trigger|add_trigger|reduce_trigger|sell_trigger|invalidation_trigger|risk_trigger|watch_trigger|no_trigger|blocked",
+      "trigger_condition": "",
+      "current_state": "",
+      "suggested_action": "execute|wait|cancel|review|log_only",
+      "needs_manual_confirmation": true,
+      "evidence": [],
+      "risks": [],
+      "execution_boundary": "",
+      "invalidation_condition": "",
+      "review_point": ""
+    }
+  ],
+  "near_triggers": [
+    {
+      "subject": "",
+      "near_condition": "",
+      "watch_point": ""
+    }
+  ],
+  "missing_preconditions": [
+    {
+      "missing_content": "premarket_plan|etf_profile|stock_profile|market_position|theme_registry|portfolio_analysis",
+      "impact": "",
+      "next_step": ""
+    }
+  ],
+  "decision_log_entry": ""
+}

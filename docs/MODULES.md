@@ -421,6 +421,7 @@ research/
 5. 决策日志模板（已建立：`docs/modules/DECISION_LOG.md`、`templates/decision_log_entry_template.md`、`templates/decision_log_entry_template.json`、`research/logs/decision_log.md`）
 6. 组合分析模块模板（已建立：`docs/modules/PORTFOLIO_ANALYSIS.md`、`templates/portfolio_snapshot_template.md`、`templates/portfolio_snapshot_template.json`、`research/portfolio/current_holdings_template.md`）
 7. 操作建议模块模板（已建立：`docs/modules/ACTION_PLAN.md`、`templates/action_plan_template.md`、`templates/action_plan_template.json`）
+8. 盘中提醒模块模板（已建立：`docs/modules/INTRADAY_ALERTS.md`、`templates/intraday_alert_template.md`、`templates/intraday_alert_template.json`）
 
 暂时不做：
 
