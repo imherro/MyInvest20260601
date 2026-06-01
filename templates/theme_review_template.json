@@ -22,6 +22,15 @@
       "theme_score": null,
       "change_type": "maintain|upgrade|downgrade|new|remove",
       "bucket_role": "offensive_core|offensive_candidate|secondary|theme_trial|watch|avoid",
+      "cycle": {
+        "stage": "germination|launch|confirmation|acceleration|climax|divergence|decline|repair|unknown",
+        "first_watch_date": "",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      },
       "scores": {
         "industry_logic": {
           "weight": 20,
@@ -77,6 +86,8 @@
       "change_type": "maintain|upgrade|downgrade|new|remove",
       "previous_conclusion": "",
       "new_conclusion": "",
+      "previous_cycle_stage": "",
+      "new_cycle_stage": "",
       "reason": "",
       "position_impact": ""
     }

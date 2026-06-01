@@ -56,10 +56,26 @@
     }
   ],
   "summary": {
-    "a_themes": ["AI", "半导体"],
-    "b_themes": ["电力设备", "高端装备", "有色", "电池", "储能"],
-    "c_themes": ["机器人", "商业航天", "化工", "能源"],
-    "d_themes": ["无人驾驶"],
+    "a_themes": [
+      "AI",
+      "半导体"
+    ],
+    "b_themes": [
+      "电力设备",
+      "高端装备",
+      "有色",
+      "电池",
+      "储能"
+    ],
+    "c_themes": [
+      "机器人",
+      "商业航天",
+      "化工",
+      "能源"
+    ],
+    "d_themes": [
+      "无人驾驶"
+    ],
     "one_line_conclusion": "A股当前仍以科技成长为核心主线，其中AI和半导体具备主仓方向条件；算电协同、电力设备、储能、有色和高端装备构成强副线，机器人、商业航天等仍以事件和主题催化为主。",
     "offensive_bucket_impact": "maintain",
     "theme_bucket_impact": "trial",
@@ -74,24 +90,91 @@
       "change_type": "new",
       "bucket_role": "offensive_core",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 19, "evidence": "AI从模型、算力、应用扩散到端侧设备、软件、能源和制造。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 14, "evidence": "政治局会议提出全面实施人工智能+行动，四部门推动AI与能源双向赋能。"},
-        "fund_participation": {"weight": 20, "score": 17, "evidence": "科技主题ETF、计算机、电子、机械设备方向资金活跃，AI应用和AI PC继续表现。"},
-        "trend_strength": {"weight": 20, "score": 17, "evidence": "AI硬件前期强势，近期转向AI应用和端侧，内部轮动加快。"},
-        "breadth_diffusion": {"weight": 15, "score": 14, "evidence": "算力、应用、AI PC、通信、电力配套均有轮动扩散。"},
-        "earnings_validation": {"weight": 10, "score": 8, "evidence": "硬件链和部分应用端有业绩或订单验证，应用端盈利兑现仍需观察。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 19,
+          "evidence": "AI从模型、算力、应用扩散到端侧设备、软件、能源和制造。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 14,
+          "evidence": "政治局会议提出全面实施人工智能+行动，四部门推动AI与能源双向赋能。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 17,
+          "evidence": "科技主题ETF、计算机、电子、机械设备方向资金活跃，AI应用和AI PC继续表现。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 17,
+          "evidence": "AI硬件前期强势，近期转向AI应用和端侧，内部轮动加快。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 14,
+          "evidence": "算力、应用、AI PC、通信、电力配套均有轮动扩散。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "硬件链和部分应用端有业绩或订单验证，应用端盈利兑现仍需观察。"
+        },
         "base_score": 89,
-        "crowding_risk": {"score": 6, "evidence": "硬件、CPO、PCB、半导体设备阶段性波动较大。", "operation_limit": "可持有，谨慎追涨。"},
+        "crowding_risk": {
+          "score": 6,
+          "evidence": "硬件、CPO、PCB、半导体设备阶段性波动较大。",
+          "operation_limit": "可持有，谨慎追涨。"
+        },
         "final_score": 83
       },
-      "conclusion_evidence": ["政策端从人工智能+扩展到算力网、AI能源协同和应用场景。", "AI应用、AI PC、软件、传媒、游戏等方向在6月1日继续活跃。", "资金从硬件向应用端轮动，说明不是单点行情。"],
-      "risks": ["AI硬件高位波动拖累科技风险偏好。", "AI应用缺少业绩兑现会削弱A档强度。", "海外AI资本开支或供应链扰动影响国内算力链预期。"],
-      "next_watch_conditions": ["AI应用能否扩散为持续趋势。", "AI硬件调整后是否缩量企稳。", "算力网、AI能源协同是否出现订单、招标、项目落地证据。"],
-      "related_etfs": ["人工智能ETF", "云计算ETF", "软件ETF", "通信ETF", "游戏ETF", "传媒ETF"],
-      "representative_stocks": ["寒武纪", "海光信息", "工业富联", "软通动力", "华勤技术", "掌阅科技", "视觉中国"],
+      "conclusion_evidence": [
+        "政策端从人工智能+扩展到算力网、AI能源协同和应用场景。",
+        "AI应用、AI PC、软件、传媒、游戏等方向在6月1日继续活跃。",
+        "资金从硬件向应用端轮动，说明不是单点行情。"
+      ],
+      "risks": [
+        "AI硬件高位波动拖累科技风险偏好。",
+        "AI应用缺少业绩兑现会削弱A档强度。",
+        "海外AI资本开支或供应链扰动影响国内算力链预期。"
+      ],
+      "next_watch_conditions": [
+        "AI应用能否扩散为持续趋势。",
+        "AI硬件调整后是否缩量企稳。",
+        "算力网、AI能源协同是否出现订单、招标、项目落地证据。"
+      ],
+      "related_etfs": [
+        "人工智能ETF",
+        "云计算ETF",
+        "软件ETF",
+        "通信ETF",
+        "游戏ETF",
+        "传媒ETF"
+      ],
+      "representative_stocks": [
+        "寒武纪",
+        "海光信息",
+        "工业富联",
+        "软通动力",
+        "华勤技术",
+        "掌阅科技",
+        "视觉中国"
+      ],
       "upgrade_conditions": [],
-      "downgrade_conditions": ["AI硬件和AI应用同时跌破趋势。", "资金连续流出，板块扩散失败。"],
-      "position_impact": "进攻仓核心依据，但不支持无条件追高。"
+      "downgrade_conditions": [
+        "AI硬件和AI应用同时跌破趋势。",
+        "资金连续流出，板块扩散失败。"
+      ],
+      "position_impact": "进攻仓核心依据，但不支持无条件追高。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "半导体",
@@ -101,24 +184,90 @@
       "change_type": "new",
       "bucket_role": "offensive_core",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 18, "evidence": "AI算力、国产替代、存储周期、先进封装、设备材料共同支撑。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 13, "evidence": "科技自立自强、产业链自主可控和国产算力适配是中期政策方向。"},
-        "fund_participation": {"weight": 20, "score": 18, "evidence": "半导体主力资金和半导体设备、科创芯片相关ETF获得持续关注。"},
-        "trend_strength": {"weight": 20, "score": 17, "evidence": "5月电子、通信、机械等硬科技方向领涨，半导体设备、材料、AI芯片轮动较强。"},
-        "breadth_diffusion": {"weight": 15, "score": 13, "evidence": "设备、材料、存储、先进封装、国产算力均有表现，但部分芯片方向有回调。"},
-        "earnings_validation": {"weight": 10, "score": 8, "evidence": "一季报和产业景气提供部分验证，仍需跟踪二季度订单和价格。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 18,
+          "evidence": "AI算力、国产替代、存储周期、先进封装、设备材料共同支撑。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 13,
+          "evidence": "科技自立自强、产业链自主可控和国产算力适配是中期政策方向。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 18,
+          "evidence": "半导体主力资金和半导体设备、科创芯片相关ETF获得持续关注。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 17,
+          "evidence": "5月电子、通信、机械等硬科技方向领涨，半导体设备、材料、AI芯片轮动较强。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 13,
+          "evidence": "设备、材料、存储、先进封装、国产算力均有表现，但部分芯片方向有回调。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "一季报和产业景气提供部分验证，仍需跟踪二季度订单和价格。"
+        },
         "base_score": 87,
-        "crowding_risk": {"score": 6, "evidence": "科技硬件已有阶段性抱团，短线分歧加大。", "operation_limit": "可持有，谨慎追涨。"},
+        "crowding_risk": {
+          "score": 6,
+          "evidence": "科技硬件已有阶段性抱团，短线分歧加大。",
+          "operation_limit": "可持有，谨慎追涨。"
+        },
         "final_score": 81
       },
-      "conclusion_evidence": ["半导体受益于AI算力投资、国产替代和全球存储景气改善。", "机构策略在6月配置中继续把电子半导体列为重点方向。", "ETF和主力资金对芯片、半导体设备、材料方向有持续确认。"],
-      "risks": ["科创50、芯片ETF连续跌破趋势。", "设备、材料扩散不足。", "外部限制、价格周期反复和估值过高。"],
-      "next_watch_conditions": ["半导体设备ETF、芯片ETF是否维持中期均线之上。", "存储、先进封装、AI芯片、材料是否继续轮动。", "资金能否在调整中保持净流入或缩量承接。"],
-      "related_etfs": ["芯片ETF", "半导体ETF", "科创芯片ETF", "半导体设备ETF", "科创半导体ETF"],
-      "representative_stocks": ["中微公司", "北方华创", "寒武纪", "海光信息", "华虹公司", "沪电股份"],
+      "conclusion_evidence": [
+        "半导体受益于AI算力投资、国产替代和全球存储景气改善。",
+        "机构策略在6月配置中继续把电子半导体列为重点方向。",
+        "ETF和主力资金对芯片、半导体设备、材料方向有持续确认。"
+      ],
+      "risks": [
+        "科创50、芯片ETF连续跌破趋势。",
+        "设备、材料扩散不足。",
+        "外部限制、价格周期反复和估值过高。"
+      ],
+      "next_watch_conditions": [
+        "半导体设备ETF、芯片ETF是否维持中期均线之上。",
+        "存储、先进封装、AI芯片、材料是否继续轮动。",
+        "资金能否在调整中保持净流入或缩量承接。"
+      ],
+      "related_etfs": [
+        "芯片ETF",
+        "半导体ETF",
+        "科创芯片ETF",
+        "半导体设备ETF",
+        "科创半导体ETF"
+      ],
+      "representative_stocks": [
+        "中微公司",
+        "北方华创",
+        "寒武纪",
+        "海光信息",
+        "华虹公司",
+        "沪电股份"
+      ],
       "upgrade_conditions": [],
-      "downgrade_conditions": ["芯片ETF跌破关键趋势。", "资金持续流出。", "设备、材料、存储扩散失败。"],
-      "position_impact": "进攻仓核心依据，需跟踪科技硬件拥挤风险。"
+      "downgrade_conditions": [
+        "芯片ETF跌破关键趋势。",
+        "资金持续流出。",
+        "设备、材料、存储扩散失败。"
+      ],
+      "position_impact": "进攻仓核心依据，需跟踪科技硬件拥挤风险。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "电力设备",
@@ -128,24 +277,87 @@
       "change_type": "new",
       "bucket_role": "secondary",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 17, "evidence": "算电协同、电网设备、绿电、变压器出海逻辑明确。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 14, "evidence": "AI与能源双向赋能方案强化电力系统升级。"},
-        "fund_participation": {"weight": 20, "score": 14, "evidence": "电力、电网、绿电方向阶段性活跃。"},
-        "trend_strength": {"weight": 20, "score": 14, "evidence": "趋势改善，但设备端承接仍需确认。"},
-        "breadth_diffusion": {"weight": 15, "score": 11, "evidence": "电网、绿电、储能、变压器均有表现，但扩散仍不稳定。"},
-        "earnings_validation": {"weight": 10, "score": 8, "evidence": "招标、出口和订单逻辑有验证。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 17,
+          "evidence": "算电协同、电网设备、绿电、变压器出海逻辑明确。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 14,
+          "evidence": "AI与能源双向赋能方案强化电力系统升级。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "电力、电网、绿电方向阶段性活跃。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "趋势改善，但设备端承接仍需确认。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 11,
+          "evidence": "电网、绿电、储能、变压器均有表现，但扩散仍不稳定。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "招标、出口和订单逻辑有验证。"
+        },
         "base_score": 78,
-        "crowding_risk": {"score": 3, "evidence": "拥挤主要在短线电力连板方向。", "operation_limit": "可低配或观察。"},
+        "crowding_risk": {
+          "score": 3,
+          "evidence": "拥挤主要在短线电力连板方向。",
+          "operation_limit": "可低配或观察。"
+        },
         "final_score": 75
       },
-      "conclusion_evidence": ["AI与能源双向赋能方案强化算电协同、绿电直连、构网型储能和电力系统升级。", "电网设备、变压器、绿电、电力运营商多次活跃。"],
-      "risks": ["短线电力股退潮后资金不能回流设备端。", "算电协同停留在政策预期。"],
-      "next_watch_conditions": ["电网设备、储能、电力运营能否从事件轮动转为连续趋势。", "招标、订单、出口数据继续验证。"],
-      "related_etfs": ["电力设备ETF", "电网ETF", "储能ETF", "绿电ETF"],
-      "representative_stocks": ["宁德时代", "特锐德", "平高电气", "特变电工", "东方电气"],
-      "upgrade_conditions": ["行业指数持续强于沪深300和创业板。", "设备、储能、绿电形成连续扩散。"],
-      "downgrade_conditions": ["电力设备ETF跌破趋势。", "政策预期无项目兑现。"],
-      "position_impact": "副线，可作为A档科技主线之外的结构平衡。"
+      "conclusion_evidence": [
+        "AI与能源双向赋能方案强化算电协同、绿电直连、构网型储能和电力系统升级。",
+        "电网设备、变压器、绿电、电力运营商多次活跃。"
+      ],
+      "risks": [
+        "短线电力股退潮后资金不能回流设备端。",
+        "算电协同停留在政策预期。"
+      ],
+      "next_watch_conditions": [
+        "电网设备、储能、电力运营能否从事件轮动转为连续趋势。",
+        "招标、订单、出口数据继续验证。"
+      ],
+      "related_etfs": [
+        "电力设备ETF",
+        "电网ETF",
+        "储能ETF",
+        "绿电ETF"
+      ],
+      "representative_stocks": [
+        "宁德时代",
+        "特锐德",
+        "平高电气",
+        "特变电工",
+        "东方电气"
+      ],
+      "upgrade_conditions": [
+        "行业指数持续强于沪深300和创业板。",
+        "设备、储能、绿电形成连续扩散。"
+      ],
+      "downgrade_conditions": [
+        "电力设备ETF跌破趋势。",
+        "政策预期无项目兑现。"
+      ],
+      "position_impact": "副线，可作为A档科技主线之外的结构平衡。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "高端装备",
@@ -155,24 +367,80 @@
       "change_type": "new",
       "bucket_role": "secondary",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 16, "evidence": "自动化设备、AI数据中心配套设备、高端制造出海构成长期逻辑。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 12, "evidence": "高端制造、设备更新和新质生产力方向持续受政策支持。"},
-        "fund_participation": {"weight": 20, "score": 14, "evidence": "机械设备被多家策略报告列入6月关注方向。"},
-        "trend_strength": {"weight": 20, "score": 13, "evidence": "机械设备与AI、电力、机器人交叉活跃，但独立趋势仍需确认。"},
-        "breadth_diffusion": {"weight": 15, "score": 10, "evidence": "分支较多，尚未形成单一强主线。"},
-        "earnings_validation": {"weight": 10, "score": 8, "evidence": "出海和订单具备局部验证。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 16,
+          "evidence": "自动化设备、AI数据中心配套设备、高端制造出海构成长期逻辑。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 12,
+          "evidence": "高端制造、设备更新和新质生产力方向持续受政策支持。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "机械设备被多家策略报告列入6月关注方向。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 13,
+          "evidence": "机械设备与AI、电力、机器人交叉活跃，但独立趋势仍需确认。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "分支较多，尚未形成单一强主线。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "出海和订单具备局部验证。"
+        },
         "base_score": 73,
-        "crowding_risk": {"score": 2, "evidence": "整体拥挤度低于AI硬件。", "operation_limit": "可低配或观察。"},
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "整体拥挤度低于AI硬件。",
+          "operation_limit": "可低配或观察。"
+        },
         "final_score": 71
       },
-      "conclusion_evidence": ["机械设备、自动化设备、AI数据中心配套设备和高端制造出海被列入6月关注方向。"],
-      "risks": ["主题分散，容易跟随机器人或AI事件短炒。"],
-      "next_watch_conditions": ["机械设备ETF或自动化设备方向形成持续超额收益。"],
-      "related_etfs": ["机械ETF", "高端装备ETF", "工业母机ETF"],
-      "representative_stocks": ["杰普特", "日联科技", "杰瑞股份", "新雷能"],
-      "upgrade_conditions": ["出海订单、AI电力设备、工控复苏形成更明确的业绩共振。"],
-      "downgrade_conditions": ["缺少独立资金沉淀，只跟随事件波动。"],
-      "position_impact": "副线，可低配观察。"
+      "conclusion_evidence": [
+        "机械设备、自动化设备、AI数据中心配套设备和高端制造出海被列入6月关注方向。"
+      ],
+      "risks": [
+        "主题分散，容易跟随机器人或AI事件短炒。"
+      ],
+      "next_watch_conditions": [
+        "机械设备ETF或自动化设备方向形成持续超额收益。"
+      ],
+      "related_etfs": [
+        "机械ETF",
+        "高端装备ETF",
+        "工业母机ETF"
+      ],
+      "representative_stocks": [
+        "杰普特",
+        "日联科技",
+        "杰瑞股份",
+        "新雷能"
+      ],
+      "upgrade_conditions": [
+        "出海订单、AI电力设备、工控复苏形成更明确的业绩共振。"
+      ],
+      "downgrade_conditions": [
+        "缺少独立资金沉淀，只跟随事件波动。"
+      ],
+      "position_impact": "副线，可低配观察。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "有色",
@@ -182,24 +450,81 @@
       "change_type": "new",
       "bucket_role": "secondary",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 14, "evidence": "工业金属、金属新材料和黄金受资源周期与制造需求支撑。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 11, "evidence": "新材料和制造上游需求改善。"},
-        "fund_participation": {"weight": 20, "score": 15, "evidence": "有色板块近期多次领涨，相关ETF有资金配置。"},
-        "trend_strength": {"weight": 20, "score": 14, "evidence": "阶段趋势较强。"},
-        "breadth_diffusion": {"weight": 15, "score": 10, "evidence": "工业金属、黄金、小金属分支轮动，但扩散稳定性一般。"},
-        "earnings_validation": {"weight": 10, "score": 8, "evidence": "价格和盈利修复具备局部验证。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "工业金属、金属新材料和黄金受资源周期与制造需求支撑。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 11,
+          "evidence": "新材料和制造上游需求改善。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 15,
+          "evidence": "有色板块近期多次领涨，相关ETF有资金配置。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "阶段趋势较强。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "工业金属、黄金、小金属分支轮动，但扩散稳定性一般。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "价格和盈利修复具备局部验证。"
+        },
         "base_score": 72,
-        "crowding_risk": {"score": 2, "evidence": "未见极端拥挤。", "operation_limit": "可低配或观察。"},
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "未见极端拥挤。",
+          "operation_limit": "可低配或观察。"
+        },
         "final_score": 70
       },
-      "conclusion_evidence": ["有色兼具资源价格、全球供需和科技制造上游属性。"],
-      "risks": ["大宗价格回落或美元利率扰动导致资源品退潮。"],
-      "next_watch_conditions": ["工业金属价格和A股有色ETF是否同步走强。"],
-      "related_etfs": ["有色金属ETF", "工业有色ETF", "黄金股ETF", "稀土ETF"],
-      "representative_stocks": ["中国铝业", "紫金矿业", "洛阳钼业", "北方稀土"],
-      "upgrade_conditions": ["资金从短线防御轮动转为持续配置。"],
-      "downgrade_conditions": ["商品价格回落或ETF跌破趋势。"],
-      "position_impact": "副线，可作为科技拥挤时的平衡线。"
+      "conclusion_evidence": [
+        "有色兼具资源价格、全球供需和科技制造上游属性。"
+      ],
+      "risks": [
+        "大宗价格回落或美元利率扰动导致资源品退潮。"
+      ],
+      "next_watch_conditions": [
+        "工业金属价格和A股有色ETF是否同步走强。"
+      ],
+      "related_etfs": [
+        "有色金属ETF",
+        "工业有色ETF",
+        "黄金股ETF",
+        "稀土ETF"
+      ],
+      "representative_stocks": [
+        "中国铝业",
+        "紫金矿业",
+        "洛阳钼业",
+        "北方稀土"
+      ],
+      "upgrade_conditions": [
+        "资金从短线防御轮动转为持续配置。"
+      ],
+      "downgrade_conditions": [
+        "商品价格回落或ETF跌破趋势。"
+      ],
+      "position_impact": "副线，可作为科技拥挤时的平衡线。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "电池",
@@ -209,24 +534,80 @@
       "change_type": "new",
       "bucket_role": "secondary",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 16, "evidence": "锂电、固态电池、储能需求和AIDC供电链条带来景气改善。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 11, "evidence": "新能源、储能、算电协同政策支撑。"},
-        "fund_participation": {"weight": 20, "score": 13, "evidence": "电池和储能相关ETF有资金关注。"},
-        "trend_strength": {"weight": 20, "score": 13, "evidence": "趋势修复但尚非最强主线。"},
-        "breadth_diffusion": {"weight": 15, "score": 10, "evidence": "电芯、材料、固态电池、储能分支轮动。"},
-        "earnings_validation": {"weight": 10, "score": 8, "evidence": "排产和需求改善提供部分验证。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 16,
+          "evidence": "锂电、固态电池、储能需求和AIDC供电链条带来景气改善。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 11,
+          "evidence": "新能源、储能、算电协同政策支撑。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 13,
+          "evidence": "电池和储能相关ETF有资金关注。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 13,
+          "evidence": "趋势修复但尚非最强主线。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "电芯、材料、固态电池、储能分支轮动。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "排产和需求改善提供部分验证。"
+        },
         "base_score": 71,
-        "crowding_risk": {"score": 2, "evidence": "拥挤度较低。", "operation_limit": "可低配或观察。"},
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "拥挤度较低。",
+          "operation_limit": "可低配或观察。"
+        },
         "final_score": 69
       },
-      "conclusion_evidence": ["锂电排产、固态电池、储能需求和AIDC供电链条带来景气改善。"],
-      "risks": ["历史产能压力、价格战和海外政策扰动压制盈利。"],
-      "next_watch_conditions": ["价格、排产、订单和ETF趋势持续验证。"],
-      "related_etfs": ["电池ETF", "新能源车ETF", "储能电池ETF"],
-      "representative_stocks": ["宁德时代", "亿纬锂能", "科达利", "华友钴业"],
-      "upgrade_conditions": ["固态电池从事件催化转为产业订单。"],
-      "downgrade_conditions": ["价格战恶化或排产不及预期。"],
-      "position_impact": "副线，作为新能源修复线观察。"
+      "conclusion_evidence": [
+        "锂电排产、固态电池、储能需求和AIDC供电链条带来景气改善。"
+      ],
+      "risks": [
+        "历史产能压力、价格战和海外政策扰动压制盈利。"
+      ],
+      "next_watch_conditions": [
+        "价格、排产、订单和ETF趋势持续验证。"
+      ],
+      "related_etfs": [
+        "电池ETF",
+        "新能源车ETF",
+        "储能电池ETF"
+      ],
+      "representative_stocks": [
+        "宁德时代",
+        "亿纬锂能",
+        "科达利",
+        "华友钴业"
+      ],
+      "upgrade_conditions": [
+        "固态电池从事件催化转为产业订单。"
+      ],
+      "downgrade_conditions": [
+        "价格战恶化或排产不及预期。"
+      ],
+      "position_impact": "副线，作为新能源修复线观察。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "储能",
@@ -236,24 +617,80 @@
       "change_type": "new",
       "bucket_role": "secondary",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 17, "evidence": "AI数据中心供电、绿电直连、构网型储能和虚拟电厂构成中期逻辑。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 13, "evidence": "AI与能源双向赋能方案支持储能和算电协同。"},
-        "fund_participation": {"weight": 20, "score": 12, "evidence": "储能相关ETF有资金关注，但强度低于AI和半导体。"},
-        "trend_strength": {"weight": 20, "score": 12, "evidence": "趋势改善但尚未连续确认。"},
-        "breadth_diffusion": {"weight": 15, "score": 9, "evidence": "电芯、PCS、逆变器、温控、变压器等尚未充分同步。"},
-        "earnings_validation": {"weight": 10, "score": 7, "evidence": "订单和项目落地仍需继续验证。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 17,
+          "evidence": "AI数据中心供电、绿电直连、构网型储能和虚拟电厂构成中期逻辑。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 13,
+          "evidence": "AI与能源双向赋能方案支持储能和算电协同。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "储能相关ETF有资金关注，但强度低于AI和半导体。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "趋势改善但尚未连续确认。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 9,
+          "evidence": "电芯、PCS、逆变器、温控、变压器等尚未充分同步。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 7,
+          "evidence": "订单和项目落地仍需继续验证。"
+        },
         "base_score": 70,
-        "crowding_risk": {"score": 2, "evidence": "尚无明显拥挤。", "operation_limit": "可低配或观察。"},
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "尚无明显拥挤。",
+          "operation_limit": "可低配或观察。"
+        },
         "final_score": 68
       },
-      "conclusion_evidence": ["储能与电力设备、电池、AI能源协同高度相关。"],
-      "risks": ["储能需求不及预期或价格竞争导致盈利修复不成立。"],
-      "next_watch_conditions": ["储能电池、PCS、逆变器、温控、变压器等分支能否形成连续扩散。"],
-      "related_etfs": ["储能ETF", "储能电池ETF", "电力设备ETF"],
-      "representative_stocks": ["宁德时代", "阳光电源", "海博思创", "特锐德"],
-      "upgrade_conditions": ["国内外储能订单和并网数据持续改善。"],
-      "downgrade_conditions": ["项目落地低于预期或价格竞争恶化。"],
-      "position_impact": "副线，作为电力设备分支观察。"
+      "conclusion_evidence": [
+        "储能与电力设备、电池、AI能源协同高度相关。"
+      ],
+      "risks": [
+        "储能需求不及预期或价格竞争导致盈利修复不成立。"
+      ],
+      "next_watch_conditions": [
+        "储能电池、PCS、逆变器、温控、变压器等分支能否形成连续扩散。"
+      ],
+      "related_etfs": [
+        "储能ETF",
+        "储能电池ETF",
+        "电力设备ETF"
+      ],
+      "representative_stocks": [
+        "宁德时代",
+        "阳光电源",
+        "海博思创",
+        "特锐德"
+      ],
+      "upgrade_conditions": [
+        "国内外储能订单和并网数据持续改善。"
+      ],
+      "downgrade_conditions": [
+        "项目落地低于预期或价格竞争恶化。"
+      ],
+      "position_impact": "副线，作为电力设备分支观察。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "机器人",
@@ -263,24 +700,81 @@
       "change_type": "new",
       "bucket_role": "theme_trial",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 17, "evidence": "人形机器人和具身智能长期产业趋势清晰。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 12, "evidence": "标准体系和宇树IPO提供催化。"},
-        "fund_participation": {"weight": 20, "score": 13, "evidence": "事件链活跃，但持续资金确认不足。"},
-        "trend_strength": {"weight": 20, "score": 12, "evidence": "主题弹性较高但趋势稳定性不足。"},
-        "breadth_diffusion": {"weight": 15, "score": 8, "evidence": "供应链扩散不足。"},
-        "earnings_validation": {"weight": 10, "score": 5, "evidence": "多数A股映射仍缺少利润兑现。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 17,
+          "evidence": "人形机器人和具身智能长期产业趋势清晰。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 12,
+          "evidence": "标准体系和宇树IPO提供催化。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 13,
+          "evidence": "事件链活跃，但持续资金确认不足。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "主题弹性较高但趋势稳定性不足。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 8,
+          "evidence": "供应链扩散不足。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 5,
+          "evidence": "多数A股映射仍缺少利润兑现。"
+        },
         "base_score": 67,
-        "crowding_risk": {"score": 4, "evidence": "事件热度较高。", "operation_limit": "仅适合主题仓试错。"},
+        "crowding_risk": {
+          "score": 4,
+          "evidence": "事件热度较高。",
+          "operation_limit": "仅适合主题仓试错。"
+        },
         "final_score": 63
       },
-      "conclusion_evidence": ["宇树科技6月1日上会带来事件催化。", "具身智能政策标准逐步完善。"],
-      "risks": ["事件落地后资金退潮。", "供应链业绩验证不足。"],
-      "next_watch_conditions": ["机器人ETF放量突破且回撤可控。"],
-      "related_etfs": ["机器人ETF", "机械ETF"],
-      "representative_stocks": ["中大力德", "长盛轴承", "奥比中光", "优必选"],
-      "upgrade_conditions": ["供应链龙头强于指数，订单和业绩开始扩散。"],
-      "downgrade_conditions": ["宇树事件落地后主题退潮或放量滞涨。"],
-      "position_impact": "主题仓试错，不进入进攻仓核心。"
+      "conclusion_evidence": [
+        "宇树科技6月1日上会带来事件催化。",
+        "具身智能政策标准逐步完善。"
+      ],
+      "risks": [
+        "事件落地后资金退潮。",
+        "供应链业绩验证不足。"
+      ],
+      "next_watch_conditions": [
+        "机器人ETF放量突破且回撤可控。"
+      ],
+      "related_etfs": [
+        "机器人ETF",
+        "机械ETF"
+      ],
+      "representative_stocks": [
+        "中大力德",
+        "长盛轴承",
+        "奥比中光",
+        "优必选"
+      ],
+      "upgrade_conditions": [
+        "供应链龙头强于指数，订单和业绩开始扩散。"
+      ],
+      "downgrade_conditions": [
+        "宇树事件落地后主题退潮或放量滞涨。"
+      ],
+      "position_impact": "主题仓试错，不进入进攻仓核心。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "商业航天",
@@ -290,24 +784,78 @@
       "change_type": "new",
       "bucket_role": "theme_trial",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 16, "evidence": "卫星互联网、商业发射和空间应用有长期空间。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 13, "evidence": "商业航天标准体系发布，卫星互联网属于新型基础设施方向。"},
-        "fund_participation": {"weight": 20, "score": 11, "evidence": "事件催化下资金活跃，但持续确认不足。"},
-        "trend_strength": {"weight": 20, "score": 11, "evidence": "主题弹性高，趋势稳定性一般。"},
-        "breadth_diffusion": {"weight": 15, "score": 7, "evidence": "火箭、卫星、测控、材料分支尚未同步扩散。"},
-        "earnings_validation": {"weight": 10, "score": 5, "evidence": "A股链条收入和利润兑现仍早期。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 16,
+          "evidence": "卫星互联网、商业发射和空间应用有长期空间。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 13,
+          "evidence": "商业航天标准体系发布，卫星互联网属于新型基础设施方向。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 11,
+          "evidence": "事件催化下资金活跃，但持续确认不足。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 11,
+          "evidence": "主题弹性高，趋势稳定性一般。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 7,
+          "evidence": "火箭、卫星、测控、材料分支尚未同步扩散。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 5,
+          "evidence": "A股链条收入和利润兑现仍早期。"
+        },
         "base_score": 63,
-        "crowding_risk": {"score": 2, "evidence": "未见极端拥挤。", "operation_limit": "仅适合主题仓试错。"},
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "未见极端拥挤。",
+          "operation_limit": "仅适合主题仓试错。"
+        },
         "final_score": 61
       },
-      "conclusion_evidence": ["商业航天标准体系发布，卫星互联网和发射事件增强产业确定性。"],
-      "risks": ["商业化节奏和订单兑现偏早期。"],
-      "next_watch_conditions": ["卫星互联网、火箭、测控、材料等分支能否同步走强。"],
-      "related_etfs": ["军工ETF", "航天军工ETF"],
-      "representative_stocks": ["中国卫星", "航天电子", "航天彩虹"],
-      "upgrade_conditions": ["订单兑现和板块扩散增强。"],
-      "downgrade_conditions": ["事件催化后成交萎缩。"],
-      "position_impact": "主题仓试错，不进入进攻仓核心。"
+      "conclusion_evidence": [
+        "商业航天标准体系发布，卫星互联网和发射事件增强产业确定性。"
+      ],
+      "risks": [
+        "商业化节奏和订单兑现偏早期。"
+      ],
+      "next_watch_conditions": [
+        "卫星互联网、火箭、测控、材料等分支能否同步走强。"
+      ],
+      "related_etfs": [
+        "军工ETF",
+        "航天军工ETF"
+      ],
+      "representative_stocks": [
+        "中国卫星",
+        "航天电子",
+        "航天彩虹"
+      ],
+      "upgrade_conditions": [
+        "订单兑现和板块扩散增强。"
+      ],
+      "downgrade_conditions": [
+        "事件催化后成交萎缩。"
+      ],
+      "position_impact": "主题仓试错，不进入进攻仓核心。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "化工",
@@ -317,24 +865,78 @@
       "change_type": "new",
       "bucket_role": "theme_trial",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 12, "evidence": "产能出清和部分化学品价格修复逻辑存在。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 10, "evidence": "低估值反转和新材料需求支撑。"},
-        "fund_participation": {"weight": 20, "score": 13, "evidence": "6月1日化工板块有活跃表现。"},
-        "trend_strength": {"weight": 20, "score": 12, "evidence": "周期修复但连续性一般。"},
-        "breadth_diffusion": {"weight": 15, "score": 9, "evidence": "化学原料、化学制品和新材料分化较大。"},
-        "earnings_validation": {"weight": 10, "score": 8, "evidence": "部分价格和盈利修复有验证。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "产能出清和部分化学品价格修复逻辑存在。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "低估值反转和新材料需求支撑。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 13,
+          "evidence": "6月1日化工板块有活跃表现。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "周期修复但连续性一般。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 9,
+          "evidence": "化学原料、化学制品和新材料分化较大。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "部分价格和盈利修复有验证。"
+        },
         "base_score": 64,
-        "crowding_risk": {"score": 2, "evidence": "拥挤度不高。", "operation_limit": "主题仓试错或观察。"},
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "拥挤度不高。",
+          "operation_limit": "主题仓试错或观察。"
+        },
         "final_score": 62
       },
-      "conclusion_evidence": ["产能出清、部分化学品价格修复和低估值反转逻辑存在。"],
-      "risks": ["板块内部分化较大，更多是周期修复而非持续产业主线。"],
-      "next_watch_conditions": ["化工ETF持续放量，化学原料、化学制品和新材料同步扩散。"],
-      "related_etfs": ["化工ETF", "新材料ETF"],
-      "representative_stocks": ["万华化学", "华鲁恒升", "卫星化学"],
-      "upgrade_conditions": ["价格和盈利修复扩散到更多分支。"],
-      "downgrade_conditions": ["商品价格回落或仅少数涨价分支表现。"],
-      "position_impact": "主题仓观察，不作为主攻。"
+      "conclusion_evidence": [
+        "产能出清、部分化学品价格修复和低估值反转逻辑存在。"
+      ],
+      "risks": [
+        "板块内部分化较大，更多是周期修复而非持续产业主线。"
+      ],
+      "next_watch_conditions": [
+        "化工ETF持续放量，化学原料、化学制品和新材料同步扩散。"
+      ],
+      "related_etfs": [
+        "化工ETF",
+        "新材料ETF"
+      ],
+      "representative_stocks": [
+        "万华化学",
+        "华鲁恒升",
+        "卫星化学"
+      ],
+      "upgrade_conditions": [
+        "价格和盈利修复扩散到更多分支。"
+      ],
+      "downgrade_conditions": [
+        "商品价格回落或仅少数涨价分支表现。"
+      ],
+      "position_impact": "主题仓观察，不作为主攻。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "能源",
@@ -344,24 +946,80 @@
       "change_type": "new",
       "bucket_role": "theme_trial",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 11, "evidence": "煤炭、油气、电力各自有逻辑，但缺少统一产业扩散。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 10, "evidence": "能源安全和迎峰度夏提供阶段支撑。"},
-        "fund_participation": {"weight": 20, "score": 13, "evidence": "煤炭、油气、电力在6月1日前后有阶段活跃。"},
-        "trend_strength": {"weight": 20, "score": 11, "evidence": "偏轮动和防御，趋势稳定性不足。"},
-        "breadth_diffusion": {"weight": 15, "score": 7, "evidence": "煤炭、油气、电力驱动不同。"},
-        "earnings_validation": {"weight": 10, "score": 7, "evidence": "部分能源企业盈利有支撑。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 11,
+          "evidence": "煤炭、油气、电力各自有逻辑，但缺少统一产业扩散。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "能源安全和迎峰度夏提供阶段支撑。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 13,
+          "evidence": "煤炭、油气、电力在6月1日前后有阶段活跃。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 11,
+          "evidence": "偏轮动和防御，趋势稳定性不足。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 7,
+          "evidence": "煤炭、油气、电力驱动不同。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 7,
+          "evidence": "部分能源企业盈利有支撑。"
+        },
         "base_score": 59,
-        "crowding_risk": {"score": 2, "evidence": "拥挤度不高。", "operation_limit": "主题仓试错或观察。"},
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "拥挤度不高。",
+          "operation_limit": "主题仓试错或观察。"
+        },
         "final_score": 57
       },
-      "conclusion_evidence": ["煤炭、油气、电力有阶段表现和防御属性。"],
-      "risks": ["商品价格回落或高股息防御切换结束。"],
-      "next_watch_conditions": ["能源价格、业绩和防御资金是否共同强化。"],
-      "related_etfs": ["煤炭ETF", "能源ETF", "电力ETF"],
-      "representative_stocks": ["中国神华", "中煤能源", "中国石油", "中国海油"],
-      "upgrade_conditions": ["能源价格、盈利和资金形成持续共振。"],
-      "downgrade_conditions": ["商品价格回落或板块轮动结束。"],
-      "position_impact": "主题仓观察，不作为进攻核心。"
+      "conclusion_evidence": [
+        "煤炭、油气、电力有阶段表现和防御属性。"
+      ],
+      "risks": [
+        "商品价格回落或高股息防御切换结束。"
+      ],
+      "next_watch_conditions": [
+        "能源价格、业绩和防御资金是否共同强化。"
+      ],
+      "related_etfs": [
+        "煤炭ETF",
+        "能源ETF",
+        "电力ETF"
+      ],
+      "representative_stocks": [
+        "中国神华",
+        "中煤能源",
+        "中国石油",
+        "中国海油"
+      ],
+      "upgrade_conditions": [
+        "能源价格、盈利和资金形成持续共振。"
+      ],
+      "downgrade_conditions": [
+        "商品价格回落或板块轮动结束。"
+      ],
+      "position_impact": "主题仓观察，不作为进攻核心。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     },
     {
       "name": "无人驾驶",
@@ -371,39 +1029,177 @@
       "change_type": "new",
       "bucket_role": "watch",
       "scores": {
-        "industry_logic": {"weight": 20, "score": 14, "evidence": "智能驾驶长期逻辑仍在。"},
-        "policy_cycle_catalyst": {"weight": 15, "score": 8, "evidence": "近期缺少强政策或事件催化。"},
-        "fund_participation": {"weight": 20, "score": 8, "evidence": "近期资金参与证据不足。"},
-        "trend_strength": {"weight": 20, "score": 8, "evidence": "未形成强于AI、半导体、机器人等方向的趋势。"},
-        "breadth_diffusion": {"weight": 15, "score": 6, "evidence": "板块扩散不足。"},
-        "earnings_validation": {"weight": 10, "score": 5, "evidence": "盈利验证仍需跟踪。"},
+        "industry_logic": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "智能驾驶长期逻辑仍在。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 8,
+          "evidence": "近期缺少强政策或事件催化。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 8,
+          "evidence": "近期资金参与证据不足。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 8,
+          "evidence": "未形成强于AI、半导体、机器人等方向的趋势。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 6,
+          "evidence": "板块扩散不足。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 5,
+          "evidence": "盈利验证仍需跟踪。"
+        },
         "base_score": 49,
-        "crowding_risk": {"score": 1, "evidence": "拥挤度低，但主线强度不足。", "operation_limit": "观察。"},
+        "crowding_risk": {
+          "score": 1,
+          "evidence": "拥挤度低，但主线强度不足。",
+          "operation_limit": "观察。"
+        },
         "final_score": 48
       },
-      "conclusion_evidence": ["近期缺少可验证的资金、趋势、政策和业绩共振。"],
-      "risks": ["若继续缺少催化，将被移出当前主线池。"],
-      "next_watch_conditions": ["智能驾驶政策落地、整车/零部件趋势走强、ETF或核心标的持续强于指数。"],
-      "related_etfs": ["智能汽车ETF", "智能驾驶ETF"],
-      "representative_stocks": ["德赛西威", "华阳集团", "经纬恒润"],
-      "upgrade_conditions": ["政策、资金、趋势至少两项改善。"],
-      "downgrade_conditions": ["连续两次更新仍处于D档。"],
-      "position_impact": "暂不配置，仅观察。"
+      "conclusion_evidence": [
+        "近期缺少可验证的资金、趋势、政策和业绩共振。"
+      ],
+      "risks": [
+        "若继续缺少催化，将被移出当前主线池。"
+      ],
+      "next_watch_conditions": [
+        "智能驾驶政策落地、整车/零部件趋势走强、ETF或核心标的持续强于指数。"
+      ],
+      "related_etfs": [
+        "智能汽车ETF",
+        "智能驾驶ETF"
+      ],
+      "representative_stocks": [
+        "德赛西威",
+        "华阳集团",
+        "经纬恒润"
+      ],
+      "upgrade_conditions": [
+        "政策、资金、趋势至少两项改善。"
+      ],
+      "downgrade_conditions": [
+        "连续两次更新仍处于D档。"
+      ],
+      "position_impact": "暂不配置，仅观察。",
+      "cycle": {
+        "stage": "unknown",
+        "first_watch_date": "2026-06-01",
+        "first_confirmation_date": "",
+        "current_stage_start_date": "",
+        "estimated_effective_window": "",
+        "next_stage_review_date": "",
+        "stage_invalidation_conditions": []
+      }
     }
   ],
   "changes": [
-    {"theme": "AI", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "A档进攻仓核心", "reason": "政策、资金、趋势、扩散均较强。", "position_impact": "支持进攻仓核心配置，但不追高硬件拥挤段。"},
-    {"theme": "半导体", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "A档进攻仓核心", "reason": "AI算力、国产替代、设备材料和资金流共振。", "position_impact": "支持进攻仓核心配置，观察科技硬件回撤风险。"},
-    {"theme": "电力设备", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "B档副线", "reason": "算电协同、电网设备和出海逻辑增强。", "position_impact": "可作为副线，等待趋势确认。"},
-    {"theme": "高端装备", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "B档副线", "reason": "机械设备、自动化和高端制造出海景气改善。", "position_impact": "可低配观察，不能替代A档主线。"},
-    {"theme": "有色", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "B档副线", "reason": "价格、资源属性和资金轮动支撑。", "position_impact": "可作为平衡线，防止科技单线拥挤。"},
-    {"theme": "电池", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "B档副线", "reason": "排产、固态电池和储能需求改善。", "position_impact": "可作为新能源修复线观察。"},
-    {"theme": "储能", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "B档副线", "reason": "AI电力、构网型储能和绿电直连提供新需求。", "position_impact": "可作为电力设备副线观察。"},
-    {"theme": "机器人", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "C档主题仓", "reason": "宇树IPO和具身智能催化明确，但业绩验证不足。", "position_impact": "只适合主题仓试错。"},
-    {"theme": "商业航天", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "C档主题仓", "reason": "标准体系和卫星互联网催化存在，兑现早期。", "position_impact": "只适合主题仓试错。"},
-    {"theme": "化工", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "C档主题仓", "reason": "产能出清和价格修复逻辑存在。", "position_impact": "观察周期修复，不作为主攻。"},
-    {"theme": "能源", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "C档主题仓/观察", "reason": "煤炭油气电力阶段活跃，防御属性强。", "position_impact": "观察，不作为进攻核心。"},
-    {"theme": "无人驾驶", "change_type": "new", "previous_conclusion": "pending", "new_conclusion": "D档观察", "reason": "近期证据不足。", "position_impact": "暂不配置。"}
+    {
+      "theme": "AI",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "A档进攻仓核心",
+      "reason": "政策、资金、趋势、扩散均较强。",
+      "position_impact": "支持进攻仓核心配置，但不追高硬件拥挤段。"
+    },
+    {
+      "theme": "半导体",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "A档进攻仓核心",
+      "reason": "AI算力、国产替代、设备材料和资金流共振。",
+      "position_impact": "支持进攻仓核心配置，观察科技硬件回撤风险。"
+    },
+    {
+      "theme": "电力设备",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "B档副线",
+      "reason": "算电协同、电网设备和出海逻辑增强。",
+      "position_impact": "可作为副线，等待趋势确认。"
+    },
+    {
+      "theme": "高端装备",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "B档副线",
+      "reason": "机械设备、自动化和高端制造出海景气改善。",
+      "position_impact": "可低配观察，不能替代A档主线。"
+    },
+    {
+      "theme": "有色",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "B档副线",
+      "reason": "价格、资源属性和资金轮动支撑。",
+      "position_impact": "可作为平衡线，防止科技单线拥挤。"
+    },
+    {
+      "theme": "电池",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "B档副线",
+      "reason": "排产、固态电池和储能需求改善。",
+      "position_impact": "可作为新能源修复线观察。"
+    },
+    {
+      "theme": "储能",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "B档副线",
+      "reason": "AI电力、构网型储能和绿电直连提供新需求。",
+      "position_impact": "可作为电力设备副线观察。"
+    },
+    {
+      "theme": "机器人",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "C档主题仓",
+      "reason": "宇树IPO和具身智能催化明确，但业绩验证不足。",
+      "position_impact": "只适合主题仓试错。"
+    },
+    {
+      "theme": "商业航天",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "C档主题仓",
+      "reason": "标准体系和卫星互联网催化存在，兑现早期。",
+      "position_impact": "只适合主题仓试错。"
+    },
+    {
+      "theme": "化工",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "C档主题仓",
+      "reason": "产能出清和价格修复逻辑存在。",
+      "position_impact": "观察周期修复，不作为主攻。"
+    },
+    {
+      "theme": "能源",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "C档主题仓/观察",
+      "reason": "煤炭油气电力阶段活跃，防御属性强。",
+      "position_impact": "观察，不作为进攻核心。"
+    },
+    {
+      "theme": "无人驾驶",
+      "change_type": "new",
+      "previous_conclusion": "pending",
+      "new_conclusion": "D档观察",
+      "reason": "近期证据不足。",
+      "position_impact": "暂不配置。"
+    }
   ],
   "cross_module_impacts": {
     "market_position": [

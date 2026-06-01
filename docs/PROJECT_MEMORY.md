@@ -272,3 +272,4 @@ research/
 - 确定盘中提醒模块 1.0：新增 `docs/modules/INTRADAY_ALERTS.md`、`templates/intraday_alert_template.md`、`templates/intraday_alert_template.json`，并建立 `research/alerts/` 作为盘中提醒产物目录。
 - 确定盘后复盘模块 1.0：新增 `docs/modules/POST_MARKET_REVIEW.md`、`templates/post_market_review_template.md`、`templates/post_market_review_template.json`，并建立 `research/reviews/` 作为复盘产物目录。
 - 确定新增 `docs/RUNBOOK.md`，作为日常运行手册，固定盘前、盘中、盘后、周末和临时事件流程。
+- 确定主线研究需要增加周期阶段和时间坐标：每条主线必须记录周期阶段、首次观察日期、首次确认日期、当前阶段起始日期、预估有效窗口、下次阶段复核日期和阶段失效条件。
