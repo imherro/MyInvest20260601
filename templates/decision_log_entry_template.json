@@ -1,0 +1,34 @@
+{
+  "module": "decision_log",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "session": "premarket|intraday|close|weekend|ad_hoc",
+  "decision_type": "market_position|theme_rating|etf_rating|stock_rating|portfolio_adjustment|action_plan|execution|post_market_review|workflow_rule",
+  "change_type": "maintain|upgrade|downgrade|new|remove|execute|review|revise_rule",
+  "subject": {
+    "type": "market|theme|etf|stock|portfolio|rule",
+    "name": "",
+    "code": ""
+  },
+  "previous_conclusion": "",
+  "new_conclusion": "",
+  "source_files": [],
+  "evidence": [],
+  "position_or_action_impact": [],
+  "invalidation_conditions": [],
+  "execution": {
+    "action_type": "",
+    "position_change": "",
+    "execution_price_or_range": "",
+    "followed_original_plan": null,
+    "deviation_reason": ""
+  },
+  "review_entry": {
+    "review_date": "",
+    "hypothesis_to_validate": "",
+    "success_criteria": "",
+    "failure_criteria": "",
+    "follow_up_action": ""
+  },
+  "notes": ""
+}

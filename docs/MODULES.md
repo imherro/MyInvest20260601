@@ -418,7 +418,7 @@ research/
 2. 主线研究模块模板（已建立：`docs/modules/THEME_RESEARCH.md`、`templates/theme_review_template.md`、`templates/theme_review_template.json`、`research/themes/theme_registry.json`）
 3. ETF 档案模板（已建立：`docs/modules/ETF_RESEARCH.md`、`templates/etf_profile_template.md`、`templates/etf_profile_template.json`、`research/etfs/etf_registry.json`）
 4. 个股档案模板（已建立：`docs/modules/STOCK_RESEARCH.md`、`templates/stock_profile_template.md`、`templates/stock_profile_template.json`、`research/stocks/stock_registry.json`）
-5. 决策日志模板
+5. 决策日志模板（已建立：`docs/modules/DECISION_LOG.md`、`templates/decision_log_entry_template.md`、`templates/decision_log_entry_template.json`、`research/logs/decision_log.md`）
 
 暂时不做：
 
