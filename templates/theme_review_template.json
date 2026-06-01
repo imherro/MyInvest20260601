@@ -1,0 +1,91 @@
+{
+  "module": "theme_research",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "session": "premarket|close|weekend|ad_hoc",
+  "data_sources": [],
+  "summary": {
+    "a_themes": [],
+    "b_themes": [],
+    "c_themes": [],
+    "d_themes": [],
+    "one_line_conclusion": "",
+    "offensive_bucket_impact": "expand|maintain|reduce|pause_new",
+    "theme_bucket_impact": "trial|pause|clean_up",
+    "market_position_notes": ""
+  },
+  "themes": [
+    {
+      "name": "",
+      "previous_rating": "",
+      "current_rating": "",
+      "theme_score": null,
+      "change_type": "maintain|upgrade|downgrade|new|remove",
+      "bucket_role": "offensive_core|offensive_candidate|secondary|theme_trial|watch|avoid",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": null,
+          "evidence": ""
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": null,
+          "evidence": ""
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": null,
+          "evidence": ""
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": null,
+          "evidence": ""
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": null,
+          "evidence": ""
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": null,
+          "evidence": ""
+        },
+        "base_score": null,
+        "crowding_risk": {
+          "score": null,
+          "evidence": "",
+          "operation_limit": ""
+        },
+        "final_score": null
+      },
+      "conclusion_evidence": [],
+      "risks": [],
+      "next_watch_conditions": [],
+      "related_etfs": [],
+      "representative_stocks": [],
+      "upgrade_conditions": [],
+      "downgrade_conditions": [],
+      "position_impact": ""
+    }
+  ],
+  "changes": [
+    {
+      "theme": "",
+      "change_type": "maintain|upgrade|downgrade|new|remove",
+      "previous_conclusion": "",
+      "new_conclusion": "",
+      "reason": "",
+      "position_impact": ""
+    }
+  ],
+  "cross_module_impacts": {
+    "market_position": [],
+    "etf_research": [],
+    "stock_research": [],
+    "action_plan": []
+  },
+  "decision_log_entry": ""
+}
