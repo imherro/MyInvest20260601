@@ -30,7 +30,45 @@
     "fund_flow_risk_appetite": {
       "weight": 15,
       "score": null,
-      "evidence": ""
+      "evidence": "",
+      "components": {
+        "all_a_moneyflow": {
+          "status": "available|missing|not_applicable",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "theme_industry_moneyflow": {
+          "status": "available|missing|not_applicable",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "etf_turnover_change": {
+          "status": "available|missing|not_applicable",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "etf_share_or_subscription_change": {
+          "status": "available|missing|not_applicable",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "margin_financing_balance": {
+          "status": "available|missing|not_applicable",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "northbound_or_foreign_flow": {
+          "status": "available|missing|not_applicable",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "fx_external_risk_appetite": {
+          "status": "available|missing|not_applicable",
+          "conclusion": "",
+          "evidence": ""
+        }
+      },
+      "confidence": "high|medium|low"
     },
     "theme_strength": {
       "weight": 15,
@@ -40,7 +78,35 @@
     "valuation_odds": {
       "weight": 15,
       "score": null,
-      "evidence": ""
+      "evidence": "",
+      "components": {
+        "short_term_60d_percentile": {
+          "status": "available|missing",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "medium_term_1y_percentile": {
+          "status": "available|missing",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "long_term_3y_5y_percentile": {
+          "status": "available|missing",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "equity_bond_relative_value": {
+          "status": "available|missing",
+          "conclusion": "",
+          "evidence": ""
+        },
+        "theme_industry_valuation": {
+          "status": "available|missing",
+          "conclusion": "",
+          "evidence": ""
+        }
+      },
+      "confidence": "high|medium|low"
     },
     "macro_policy": {
       "weight": 10,
@@ -109,6 +175,12 @@
     }
   ],
   "equity_bucket_suggestion": {
+    "role_definitions": {
+      "core": "A500、沪深300、中证500、自由现金流、红利低波等低换手核心暴露",
+      "offensive": "AI、半导体、机器人等交易主线或高弹性产业方向",
+      "defensive": "黄金、红利低波、公用事业、部分高股息能源等防御暴露",
+      "theme": "商业航天、无人驾驶、事件型机器人分支等低确定性试错方向"
+    },
     "core": {
       "range": "",
       "status": "increase|maintain|decrease",
@@ -122,7 +194,8 @@
     "defensive": {
       "range": "",
       "status": "increase|maintain|decrease",
-      "note": ""
+      "note": "",
+      "normal_reference_range": "7%-12% of equity allocation"
     },
     "theme": {
       "range": "",
@@ -130,6 +203,14 @@
       "note": ""
     }
   },
+  "trigger_based_adjustments": [
+    {
+      "trigger_condition": "",
+      "observed_indicators": [],
+      "allocation_action": "",
+      "invalid_or_reverse_condition": ""
+    }
+  ],
   "operation_implications": {
     "equity_total": "",
     "bond_cash": "",
@@ -139,6 +220,14 @@
   },
   "risks": [],
   "watchlist": [],
+  "data_gaps": {
+    "fund_flow": [],
+    "etf_share_or_subscription": [],
+    "margin_financing": [],
+    "northbound_or_foreign_flow": [],
+    "long_term_valuation_percentile": [],
+    "other": []
+  },
   "needs_theme_module_confirmation": [],
   "comparison_with_previous": {
     "previous_date": "",
