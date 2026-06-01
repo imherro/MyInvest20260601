@@ -6,6 +6,8 @@
   "data_sources": [],
   "summary": {
     "a_themes": [],
+    "strategic_a_themes": [],
+    "tactical_a_themes": [],
     "b_themes": [],
     "c_themes": [],
     "d_themes": [],
@@ -17,8 +19,10 @@
   "themes": [
     {
       "name": "",
-      "previous_rating": "",
-      "current_rating": "",
+      "previous_strategic_rating": "",
+      "strategic_rating": "",
+      "previous_tactical_rating": "",
+      "tactical_rating": "",
       "theme_score": null,
       "change_type": "maintain|upgrade|downgrade|new|remove",
       "bucket_role": "offensive_core|offensive_candidate|secondary|theme_trial|watch|avoid",
@@ -52,10 +56,12 @@
           "score": null,
           "evidence": ""
         },
-        "fund_participation": {
+        "fund_trade_heat_proxy": {
           "weight": 20,
           "score": null,
-          "evidence": ""
+          "evidence": "",
+          "uses_real_fund_flow": false,
+          "real_fund_flow_sources": []
         },
         "trend_strength": {
           "weight": 20,
@@ -87,6 +93,9 @@
       "representative_stocks": [],
       "upgrade_conditions": [],
       "downgrade_conditions": [],
+      "invalid_conditions": [],
+      "overlap_risk": "",
+      "next_review_date": "",
       "position_impact": ""
     }
   ],
@@ -94,12 +103,19 @@
     {
       "theme": "",
       "change_type": "maintain|upgrade|downgrade|new|remove",
-      "previous_conclusion": "",
-      "new_conclusion": "",
+      "previous_strategic_rating": "",
+      "new_strategic_rating": "",
+      "previous_tactical_rating": "",
+      "new_tactical_rating": "",
       "previous_long_term_cycle": "",
       "new_long_term_cycle": "",
       "previous_trading_cycle_stage": "",
       "new_trading_cycle_stage": "",
+      "hard_rule_check": {
+        "required": false,
+        "matched_conditions": [],
+        "unmatched_conditions": []
+      },
       "reason": "",
       "position_impact": ""
     }
