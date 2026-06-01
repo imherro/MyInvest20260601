@@ -1,0 +1,94 @@
+{
+  "module": "action_plan",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "session": "premarket|intraday|close|ad_hoc",
+  "source_files": {
+    "market_position": "",
+    "theme_registry": "",
+    "etf_profiles": [],
+    "stock_profiles": [],
+    "portfolio_analysis": "",
+    "decision_log": ""
+  },
+  "summary": {
+    "action_state": "actionable|cautious|watch_only|research_first|no_action",
+    "recommendation_strength": "Strong|Normal|Weak|Blocked",
+    "one_line_conclusion": ""
+  },
+  "preconditions": {
+    "market_position": {
+      "conclusion": "",
+      "impact": ""
+    },
+    "theme_rating": {
+      "conclusion": "",
+      "impact": ""
+    },
+    "portfolio_deviation": {
+      "conclusion": "",
+      "impact": ""
+    },
+    "crowding_risk": {
+      "conclusion": "",
+      "impact": ""
+    },
+    "hard_constraints": {
+      "conclusion": "",
+      "impact": ""
+    }
+  },
+  "actions": [
+    {
+      "priority": "high|medium|low",
+      "action_type": "Buy|Add|Hold|Reduce|Sell|Watch|NoAction|ResearchFirst",
+      "subject": {
+        "code": "",
+        "name": "",
+        "type": "etf|stock|cash|bond|portfolio|theme"
+      },
+      "bucket_role": "core|offensive|defensive|theme|bond_cash|unknown",
+      "current_position": "",
+      "suggested_change": "",
+      "target_position": "",
+      "recommendation_strength": "Strong|Normal|Weak|Blocked",
+      "needs_manual_confirmation": true,
+      "evidence": [],
+      "trigger_conditions": [],
+      "invalidation_conditions": [],
+      "risks": [],
+      "review_points": []
+    }
+  ],
+  "no_action_list": [
+    {
+      "subject": "",
+      "reason": "market_position_not_supportive|theme_unclear|condition_not_triggered|risk_too_high|portfolio_matched|research_needed",
+      "watch_points": []
+    }
+  ],
+  "research_first_list": [
+    {
+      "subject": "",
+      "missing_content": "market_position|theme|etf_profile|stock_profile|portfolio_analysis",
+      "why_it_blocks_action": "",
+      "next_step": ""
+    }
+  ],
+  "intraday_triggers": [
+    {
+      "subject": "",
+      "trigger_condition": "",
+      "action_after_trigger": "execute|wait|cancel|review",
+      "needs_manual_confirmation": true
+    }
+  ],
+  "risks": [],
+  "triggered_hard_constraints": [],
+  "comparison_with_previous": {
+    "previous_date": "",
+    "main_changes": [],
+    "change_reasons": []
+  },
+  "decision_log_entry": ""
+}
