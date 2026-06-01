@@ -1,0 +1,147 @@
+{
+  "module": "portfolio_analysis",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "session": "premarket|close|weekend|ad_hoc",
+  "data_sources": [],
+  "summary": {
+    "current_equity_allocation": "",
+    "target_equity_allocation": "",
+    "current_bond_cash_allocation": "",
+    "target_bond_cash_allocation": "",
+    "portfolio_state": "under_allocated|matched|over_allocated|structure_imbalanced|concentration_risk",
+    "one_line_conclusion": ""
+  },
+  "asset_structure": {
+    "equity": {
+      "current": "",
+      "target": "",
+      "deviation": "",
+      "conclusion": ""
+    },
+    "bond_cash": {
+      "current": "",
+      "target": "",
+      "deviation": "",
+      "conclusion": ""
+    }
+  },
+  "equity_bucket_structure": {
+    "core": {
+      "current": "",
+      "target": "",
+      "deviation": "",
+      "conclusion": ""
+    },
+    "offensive": {
+      "current": "",
+      "target": "",
+      "deviation": "",
+      "conclusion": ""
+    },
+    "defensive": {
+      "current": "",
+      "target": "",
+      "deviation": "",
+      "conclusion": ""
+    },
+    "theme": {
+      "current": "",
+      "target": "",
+      "deviation": "",
+      "conclusion": ""
+    }
+  },
+  "holdings": [
+    {
+      "code": "",
+      "name": "",
+      "asset_type": "etf|stock|bond|cash",
+      "bucket_role": "core|offensive|defensive|theme|bond_cash|unknown",
+      "current_weight": "",
+      "cost_basis": "",
+      "pnl": "",
+      "has_profile": null,
+      "current_rating": "",
+      "conclusion": ""
+    }
+  ],
+  "hard_constraints": [
+    {
+      "name": "权益仓位上限85%",
+      "triggered": null,
+      "impact": "",
+      "priority": "high|medium|low"
+    },
+    {
+      "name": "无明确牛市主升浪不超过75%",
+      "triggered": null,
+      "impact": "",
+      "priority": "high|medium|low"
+    },
+    {
+      "name": "没有A级主线不超过65%",
+      "triggered": null,
+      "impact": "",
+      "priority": "high|medium|low"
+    },
+    {
+      "name": "市场广度低于45%不超过60%",
+      "triggered": null,
+      "impact": "",
+      "priority": "high|medium|low"
+    },
+    {
+      "name": "单一行业或主线不超过权益仓位30%-35%",
+      "triggered": null,
+      "impact": "",
+      "priority": "high|medium|low"
+    },
+    {
+      "name": "主题仓不超过权益仓位10%",
+      "triggered": null,
+      "impact": "",
+      "priority": "high|medium|low"
+    },
+    {
+      "name": "单一个股不超过总资产8%-12%",
+      "triggered": null,
+      "impact": "",
+      "priority": "high|medium|low"
+    }
+  ],
+  "concentration": {
+    "by_theme": [],
+    "by_industry": [],
+    "by_security": []
+  },
+  "deviations": [
+    {
+      "type": "under_allocated|over_allocated|concentration_risk|style_imbalance|stale_position|missing_profile|conflict_with_theme|conflict_with_market_position|no_action_needed",
+      "subject": "",
+      "description": "",
+      "priority": "high|medium|low"
+    }
+  ],
+  "missing_profiles": [
+    {
+      "code": "",
+      "name": "",
+      "asset_type": "etf|stock",
+      "current_weight": "",
+      "missing_content": [],
+      "suggested_handling": "research_first|can_defer"
+    }
+  ],
+  "next_steps": {
+    "needs_action_plan": [],
+    "needs_research_first": [],
+    "no_action_needed": []
+  },
+  "comparison_with_previous": {
+    "previous_date": "",
+    "main_changes": [],
+    "change_reasons": []
+  },
+  "decision_log_entry": ""
+}

@@ -267,3 +267,4 @@ research/
 - 确定 ETF 研究模块 1.0：新增 `docs/modules/ETF_RESEARCH.md`、`templates/etf_profile_template.md`、`templates/etf_profile_template.json`，并建立 `research/etfs/etf_registry.json` 作为 ETF 总览登记册。
 - 确定个股研究模块 1.0：新增 `docs/modules/STOCK_RESEARCH.md`、`templates/stock_profile_template.md`、`templates/stock_profile_template.json`，并建立 `research/stocks/stock_registry.json` 作为个股总览登记册。
 - 确定决策日志模块 1.0：新增 `docs/modules/DECISION_LOG.md`、`templates/decision_log_entry_template.md`、`templates/decision_log_entry_template.json`，并建立 `research/logs/decision_log.md` 作为长期审计日志。
+- 确定组合分析模块 1.0：新增 `docs/modules/PORTFOLIO_ANALYSIS.md`、`templates/portfolio_snapshot_template.md`、`templates/portfolio_snapshot_template.json`，并建立 `research/portfolio/current_holdings_template.md` 作为持仓输入模板。
