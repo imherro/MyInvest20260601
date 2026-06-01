@@ -7,19 +7,21 @@
 1. 拉取最新项目。
 2. 阅读 `README.md`。
 3. 阅读 `docs/PROJECT_MEMORY.md`。
-4. 查看最近提交记录，确认上次工作到哪里。
-5. 如果本次任务会改变策略、流程或研究结论，先确认应更新哪个文件。
+4. 阅读 `docs/RUNBOOK.md`。
+5. 查看最近提交记录，确认上次工作到哪里。
+6. 如果本次任务会改变策略、流程或研究结论，先确认应更新哪个文件。
 
 建议对 Codex 的开场指令：
 
 ```text
-请先阅读 README.md 和 docs/PROJECT_MEMORY.md，了解本项目已经确定的投资策略、模块边界和协作规则。之后再继续当前任务。
+请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md 和 research/logs/decision_log.md，了解本项目已经确定的投资策略、模块边界、运行流程和协作规则。之后再继续当前任务。
 ```
 
 ## 2. 文件职责
 
 - `README.md`：项目入口，说明新电脑如何开始。
 - `docs/PROJECT_MEMORY.md`：长期记忆，记录策略框架、重要决议、错误教训。
+- `docs/RUNBOOK.md`：日常运行手册，说明盘前、盘中、盘后、周末如何运行项目。
 - `docs/WORKFLOW.md`：协作规则，记录如何使用 Codex、如何更新文件、如何提交。
 - `research/`：后续保存具体研究成果。
 

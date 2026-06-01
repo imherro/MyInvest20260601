@@ -22,6 +22,7 @@
 
 - [docs/PROJECT_MEMORY.md](docs/PROJECT_MEMORY.md)：项目长期记忆，记录策略框架、已确定规则、历史决议和错误教训。
 - [docs/MODULES.md](docs/MODULES.md)：模块架构，定义每个投资研究模块的职责、输入、输出和边界。
+- [docs/RUNBOOK.md](docs/RUNBOOK.md)：日常运行手册，说明盘前、盘中、盘后、周末如何运行项目。
 - [docs/WORKFLOW.md](docs/WORKFLOW.md)：多电脑协同、Codex 使用、更新和提交规则。
 
 ## 当前阶段
