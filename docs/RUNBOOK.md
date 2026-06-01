@@ -7,15 +7,17 @@
 1. 拉取最新项目。
 2. 阅读 `README.md`、`docs/PROJECT_MEMORY.md`、`docs/MODULES.md`。
 3. 阅读 `docs/DATA_SOURCES.md`，确认 Tushare 等数据源权限。
-4. 查看 `research/logs/decision_log.md` 的最近记录。
-5. 确认本次要做的是盘前、盘中、盘后、周末，还是临时事件更新。
-6. 完成后提交并推送。
+4. 阅读 `docs/FILE_NAMING.md`，确认文件命名和最新版本读取规则。
+5. 查看 `research/logs/decision_log.md` 的最近记录。
+6. 确认本次要做的是盘前、盘中、盘后、周末，还是临时事件更新。
+7. 完成后提交并推送。
 
 推荐开场指令：
 
 ```text
-请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DATA_SOURCES.md 和 research/logs/decision_log.md，然后按今天的任务继续。
+请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md 和 research/logs/decision_log.md，然后按今天的任务继续。
 本项目已知可使用 Tushare 数据权限；做 A 股结构化数据研究时请优先检查并使用本地 Tushare token。
+生成研究产物时文件名必须包含 YYYY-MM-DD_HHMMSS；基于前期研究时默认读取同类最新时间戳版本。
 ```
 
 ## 2. 盘前流程
@@ -36,12 +38,12 @@
 产物：
 
 ```text
-research/market/market_score_YYYY-MM-DD.md
-research/market/market_score_YYYY-MM-DD.json
-research/portfolio/portfolio_snapshot_YYYY-MM-DD.md
-research/portfolio/portfolio_snapshot_YYYY-MM-DD.json
-research/actions/action_plan_YYYY-MM-DD_premarket.md
-research/actions/action_plan_YYYY-MM-DD_premarket.json
+research/market/market_score_YYYY-MM-DD_HHMMSS.md
+research/market/market_score_YYYY-MM-DD_HHMMSS.json
+research/portfolio/portfolio_snapshot_YYYY-MM-DD_HHMMSS.md
+research/portfolio/portfolio_snapshot_YYYY-MM-DD_HHMMSS.json
+research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.md
+research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.json
 research/logs/decision_log.md
 ```
 
@@ -70,8 +72,8 @@ research/logs/decision_log.md
 产物：
 
 ```text
-research/alerts/intraday_alert_YYYY-MM-DD_HHMM.md
-research/alerts/intraday_alert_YYYY-MM-DD_HHMM.json
+research/alerts/intraday_alert_YYYY-MM-DD_HHMMSS.md
+research/alerts/intraday_alert_YYYY-MM-DD_HHMMSS.json
 research/logs/decision_log.md
 ```
 
@@ -101,8 +103,8 @@ research/logs/decision_log.md
 产物：
 
 ```text
-research/reviews/post_market_review_YYYY-MM-DD.md
-research/reviews/post_market_review_YYYY-MM-DD.json
+research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.md
+research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 research/logs/decision_log.md
 ```
 
@@ -132,11 +134,11 @@ research/logs/decision_log.md
 产物：
 
 ```text
-research/themes/theme_review_YYYY-MM-DD.md
-research/themes/theme_review_YYYY-MM-DD.json
+research/themes/theme_review_YYYY-MM-DD_HHMMSS.md
+research/themes/theme_review_YYYY-MM-DD_HHMMSS.json
 research/themes/theme_registry.json
-research/portfolio/portfolio_snapshot_YYYY-MM-DD.md
-research/reviews/post_market_review_YYYY-MM-DD_weekly.md
+research/portfolio/portfolio_snapshot_YYYY-MM-DD_HHMMSS.md
+research/reviews/post_market_review_YYYY-MM-DD_HHMMSS_weekly.md
 research/logs/decision_log.md
 docs/PROJECT_MEMORY.md
 ```

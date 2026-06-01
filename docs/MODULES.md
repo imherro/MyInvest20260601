@@ -383,29 +383,31 @@
 
 ## 文件产物建议
 
+研究报告类文件必须按 `docs/FILE_NAMING.md` 使用日期加时间戳：`YYYY-MM-DD_HHMMSS`。基于前期研究时，默认读取同类文件中时间戳最新的版本，除非用户明确指定历史版本。
+
 ```text
 research/
   market/
-    market_score_YYYY-MM-DD.md
-    market_score_YYYY-MM-DD.json
+    market_score_YYYY-MM-DD_HHMMSS.md
+    market_score_YYYY-MM-DD_HHMMSS.json
   themes/
-    theme_review_YYYY-MM-DD.md
-    theme_review_YYYY-MM-DD.json
+    theme_review_YYYY-MM-DD_HHMMSS.md
+    theme_review_YYYY-MM-DD_HHMMSS.json
     theme_registry.json
   etfs/
-    ETF代码_名称.md
-    ETF代码_名称.json
+    ETF代码_名称_YYYY-MM-DD_HHMMSS.md
+    ETF代码_名称_YYYY-MM-DD_HHMMSS.json
   stocks/
-    股票代码_名称.md
-    股票代码_名称.json
+    股票代码_名称_YYYY-MM-DD_HHMMSS.md
+    股票代码_名称_YYYY-MM-DD_HHMMSS.json
   portfolio/
-    portfolio_snapshot_YYYY-MM-DD.md
-    portfolio_snapshot_YYYY-MM-DD.json
+    portfolio_snapshot_YYYY-MM-DD_HHMMSS.md
+    portfolio_snapshot_YYYY-MM-DD_HHMMSS.json
   actions/
-    action_plan_YYYY-MM-DD_premarket.md
-    action_plan_YYYY-MM-DD_premarket.json
-    action_plan_YYYY-MM-DD_close.md
-    action_plan_YYYY-MM-DD_close.json
+    action_plan_YYYY-MM-DD_HHMMSS_premarket.md
+    action_plan_YYYY-MM-DD_HHMMSS_premarket.json
+    action_plan_YYYY-MM-DD_HHMMSS_close.md
+    action_plan_YYYY-MM-DD_HHMMSS_close.json
   logs/
     decision_log.md
 ```

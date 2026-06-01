@@ -1,4 +1,4 @@
-# 决策日志
+﻿# 决策日志
 
 本文记录本项目的重要判断、变化、操作建议、实际执行和复盘入口。不要覆盖旧记录，新记录按日期追加。
 
@@ -11,7 +11,7 @@
 - 标的/主题：A股主线登记册
 - 原结论：上一版主线登记册已给出A/B/C/D评级，但周期日期已重置为待证据确认，且尚未优先使用本地 Tushare 结构化行情进行复核。
 - 新结论：AI维持A档但本轮交易阶段为分歧；半导体由A下调为B；电力设备维持B；能源由C上调为B；有色、电池、储能由B下调为C；机器人、商业航天、化工维持C；无人驾驶维持D。
-- 来源文件：`research/themes/theme_review_2026-06-01.md`、`research/themes/theme_review_2026-06-01.json`、`research/themes/theme_registry.json`
+- 来源文件：`research/themes/theme_review_2026-06-01_172109.md`、`research/themes/theme_review_2026-06-01_172109.json`、`research/themes/theme_registry.json`
 
 主要依据：
 
@@ -49,7 +49,7 @@
 - 标的/主题：A股市场仓位
 - 原结论：尚无正式市场仓位报告。
 - 新结论：市场机会分数 62，拥挤惩罚 8，市场仓位分数 54；建议权益仓位 50%-60%，债券/现金仓位 40%-50%；进攻仓维持，不放大。
-- 来源文件：`research/market/market_score_2026-06-01.md`、`research/market/market_score_2026-06-01.json`、`research/themes/theme_registry.json`
+- 来源文件：`research/market/market_score_2026-06-01_171647.md`、`research/market/market_score_2026-06-01_171647.json`、`research/themes/theme_registry.json`
 
 主要依据：
 
@@ -90,7 +90,7 @@
 - 标的/主题：A股市场仓位
 - 原结论：v1.0 使用东方财富行情接口、公开新闻和本地主线登记册生成，市场机会分数 62，拥挤惩罚 8，市场仓位分数 54，建议权益仓位 50%-60%。
 - 新结论：按 `docs/DATA_SOURCES.md` 要求改用 Tushare 作为结构化行情主数据源后，市场机会分数调整为 64，拥挤惩罚维持 8，市场仓位分数调整为 56；建议权益仓位仍为 50%-60%，债券/现金仓位仍为 40%-50%，进攻仓维持不放大。
-- 来源文件：`docs/DATA_SOURCES.md`、`research/market/market_score_2026-06-01.md`、`research/market/market_score_2026-06-01.json`
+- 来源文件：`docs/DATA_SOURCES.md`、`research/market/market_score_2026-06-01_171647.md`、`research/market/market_score_2026-06-01_171647.json`
 
 主要依据：
 
@@ -126,7 +126,7 @@
 - 标的/主题：A股主线登记册
 - 原结论：`research/themes/theme_registry.json` 中所有候选方向均为 pending，尚未完成首次正式主线研究。
 - 新结论：AI、半导体评为 A 档；电力设备、高端装备、有色、电池、储能评为 B 档；机器人、商业航天、化工、能源评为 C 档；无人驾驶评为 D 档。
-- 来源文件：`research/themes/theme_review_2026-06-01.md`、`research/themes/theme_review_2026-06-01.json`、`research/themes/theme_registry.json`
+- 来源文件：`research/themes/theme_review_2026-06-01_172109.md`、`research/themes/theme_review_2026-06-01_172109.json`、`research/themes/theme_registry.json`
 
 主要依据：
 
@@ -164,7 +164,7 @@
 - 标的/主题：A股主线研究报告与主线登记册
 - 原结论：首次主线研究已固化 A/B/C/D 评级，但旧版模板尚未记录主线周期阶段、首次确认日期、当前阶段起始、预估有效窗口和阶段失效条件。
 - 新结论：维持 AI、半导体为 A 档；电力设备、高端装备、有色、电池、储能为 B 档；机器人、商业航天、化工、能源为 C 档；无人驾驶为 D 档。同时补充周期阶段：AI、半导体为确认期；电力设备、储能、高端装备为启动期；有色为确认期；电池、化工为修复期；机器人、能源为启动期；商业航天、无人驾驶为萌芽期。
-- 来源文件：`templates/theme_review_template.md`、`templates/theme_review_template.json`、`research/themes/theme_review_2026-06-01.md`、`research/themes/theme_review_2026-06-01.json`、`research/themes/theme_registry.json`
+- 来源文件：`templates/theme_review_template.md`、`templates/theme_review_template.json`、`research/themes/theme_review_2026-06-01_172109.md`、`research/themes/theme_review_2026-06-01_172109.json`、`research/themes/theme_registry.json`
 
 主要依据：
 
@@ -315,3 +315,35 @@
 - 成功标准：研究报告明确写出 Tushare 数据使用情况。
 - 失败标准：新会话仍然不知道 Tushare 或未检查本地 token。
 - 后续处理：必要时增加数据源检查脚本。
+
+### 决策：研究产物文件名增加时间戳
+
+- 决策类型：workflow_rule
+- 变化类型：new
+- 标的/主题：文件命名与版本管理
+- 原结论：研究报告文件名主要使用日期，存在同一天多次更新时覆盖或难以区分版本的问题。
+- 新结论：所有研究报告类文件名必须包含 `YYYY-MM-DD_HHMMSS` 时间戳；基于前期研究时，默认读取同类文件中时间戳最新的版本。
+- 来源文件：`docs/FILE_NAMING.md`、`docs/RUNBOOK.md`、`docs/MODULES.md`、`docs/WORKFLOW.md`
+
+主要依据：
+
+- 同一天可能多次生成市场仓位、主线、组合、操作建议或复盘。
+- 保留时间戳版本便于对比早盘、盘中、盘后和临时事件更新。
+- 默认读取最新版本可以减少误用旧研究结论的风险。
+
+对仓位或操作的影响：
+
+- 后续操作建议必须明确引用读取的前置研究文件名。
+- 如果不是读取最新版本，必须说明原因。
+
+失效条件：
+
+- 如果后续引入数据库或索引文件，可由数据库记录版本，但文件名仍建议保留时间戳。
+
+复盘入口：
+
+- 复盘日期：完成下一次研究产物生成后。
+- 验证假设：时间戳命名能保留版本并减少误读旧文件。
+- 成功标准：新研究文件名包含 `YYYY-MM-DD_HHMMSS`，决策日志记录读取和生成文件名。
+- 失败标准：新文件仍覆盖旧版本或未说明前置文件版本。
+- 后续处理：必要时增加文件命名检查脚本。
