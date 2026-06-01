@@ -5,11 +5,18 @@
   "code": "",
   "name": "",
   "data_sources": [],
+  "input_research_files": {
+    "market_position_report": "",
+    "theme_research_report": "",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json"
+  },
   "summary": {
     "bucket_role": "core|offensive|defensive|theme|bond_cash",
     "action_rating": "Buy|Add|Hold|Reduce|Sell|Watch",
     "etf_score": null,
     "target_position_range": "",
+    "confidence": "high|medium|low",
     "one_line_conclusion": ""
   },
   "basic_info": {
@@ -25,7 +32,9 @@
   "position_role": {
     "bucket_role": "core|offensive|defensive|theme|bond_cash",
     "related_theme": "",
-    "theme_rating": "",
+    "strategic_theme_rating": "",
+    "tactical_theme_rating": "",
+    "theme_stage": "",
     "allocation_purpose": "",
     "alternative_etfs": [],
     "overlap_with_existing_holdings": ""
@@ -76,18 +85,72 @@
   },
   "valuation": {
     "status": "",
-    "historical_percentile": "",
-    "relative_value": ""
+    "short_term_60d_percentile": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    },
+    "medium_term_1y_percentile": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    },
+    "long_term_3y_5y_percentile": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    },
+    "dividend_or_earnings_yield": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    },
+    "relative_value": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    }
   },
   "trend_and_flow": {
-    "trend_status": "",
-    "fund_flow": "",
-    "liquidity": ""
+    "ma20_ma60_trend": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    },
+    "relative_strength": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    },
+    "etf_share_change": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    },
+    "subscription_redemption": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    },
+    "turnover_liquidity": {
+      "status": "available|missing",
+      "conclusion": "",
+      "evidence": ""
+    }
   },
   "holdings_structure": {
     "top_holdings": [],
     "concentration_risk": "",
-    "portfolio_overlap": ""
+    "portfolio_overlap": "",
+    "alternative_etf_comparison": [
+      {
+        "code": "",
+        "name": "",
+        "advantages": [],
+        "disadvantages": [],
+        "preferred": null
+      }
+    ]
   },
   "operation_conditions": {
     "buy_conditions": [],
@@ -96,17 +159,31 @@
     "reduce_conditions": [],
     "sell_or_invalidation_conditions": []
   },
+  "trigger_based_actions": [
+    {
+      "trigger_condition": "",
+      "action": "",
+      "reverse_or_invalidation_condition": ""
+    }
+  ],
   "position_suggestions_by_scenario": {
     "market_position_below_45": "",
     "market_position_45_60": "",
     "market_position_60_75": "",
     "market_position_above_75": "",
-    "theme_a": "",
-    "theme_downgrade_to_b": "",
-    "theme_downgrade_to_c_or_d": ""
+    "tactical_theme_a": "",
+    "tactical_theme_downgrade_to_b": "",
+    "tactical_theme_downgrade_to_c_or_d": ""
   },
   "risks": [],
   "risk_monitors": [],
+  "data_gaps": {
+    "etf_share_or_subscription": [],
+    "long_term_valuation_percentile": [],
+    "full_holdings_structure": [],
+    "portfolio_overlap": [],
+    "other": []
+  },
   "next_update_triggers": [
     "theme_rating_change",
     "valuation_percentile_change",
