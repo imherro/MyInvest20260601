@@ -1,0 +1,1675 @@
+{
+  "module": "theme_research",
+  "version": "1.2-tushare-recheck",
+  "date": "2026-06-01",
+  "session": "close",
+  "data_sources": [
+    {
+      "name": "Tushare trade_cal",
+      "type": "structured",
+      "usage": "确认交易日历，目标日期为2026-06-01"
+    },
+    {
+      "name": "Tushare daily",
+      "type": "structured",
+      "usage": "全A 2026-06-01 个股行情、行业涨跌中位数、上涨占比、成交额"
+    },
+    {
+      "name": "Tushare stock_basic",
+      "type": "structured",
+      "usage": "个股行业分类，用于计算行业表现"
+    },
+    {
+      "name": "Tushare index_daily",
+      "type": "structured",
+      "usage": "上证指数、沪深300、中证500、中证1000、创业板指、科创50等主要指数行情"
+    },
+    {
+      "name": "Tushare fund_basic",
+      "type": "structured",
+      "usage": "ETF代码和名称匹配"
+    },
+    {
+      "name": "Tushare fund_daily",
+      "type": "structured",
+      "usage": "AI、芯片、半导体、电力、煤炭、机器人、化工、航天、智能驾驶等ETF行情和短期趋势"
+    },
+    {
+      "name": "中共中央政治局2026-04-28会议通稿",
+      "type": "policy",
+      "url": "https://www.ndcpa.gov.cn/jbkzzx/c100007/common/content/content_2049036533576929280.html",
+      "usage": "人工智能+、算力网、新型电网等政策催化"
+    },
+    {
+      "name": "国家能源局等四部门：关于促进人工智能与能源双向赋能的行动方案",
+      "type": "policy",
+      "url": "https://www.nea.gov.cn/20260508/4dae97ca01d348e4871bb8654be34b3a/c.html",
+      "usage": "AI与能源双向赋能、算电协同、电力设备和储能逻辑"
+    },
+    {
+      "name": "国家航天局、市场监管总局：商业航天标准体系1.0版",
+      "type": "policy",
+      "url": "https://www.cnsa.gov.cn/n6758823/n6758839/c10741644/content.html",
+      "usage": "商业航天长期催化"
+    },
+    {
+      "name": "证券时报：宇树科技科创板IPO将于6月1日上会",
+      "type": "event",
+      "url": "https://www.stcn.com/article/detail/3926513.html",
+      "usage": "机器人主题事件催化"
+    }
+  ],
+  "data_quality_notes": [
+    "本次按时间戳规则生成新版本，前置读取 research/themes/theme_review_2026-06-01_172109.md 和 research/themes/theme_review_2026-06-01_172109.json。",
+    "本地Tushare token可用，未在文件中保存或展示真实token。",
+    "Tushare用于交易日历、指数日线、全A个股日线、行业分类、ETF基础信息和ETF日线。",
+    "本次未系统拉取财务报表，业绩验证分仅作为辅助判断；后续个股/ETF档案应补充财务指标和估值分位。",
+    "政策、事件和产业催化来自公开网页来源；行情、趋势和ETF验证优先使用Tushare。"
+  ],
+  "tushare_snapshot": {
+    "trade_date": "20260601",
+    "index_daily": {
+      "上证指数": "-0.27%",
+      "沪深300": "-0.98%",
+      "中证500": "-1.02%",
+      "中证1000": "-0.76%",
+      "创业板指": "-2.15%",
+      "科创50": "-5.00%"
+    },
+    "industry_key_observations": {
+      "AI": "Tushare行业数据显示，软件服务中位涨幅+3.09%、上涨占比88.85%，互联网中位涨幅+3.07%、上涨占比90.00%，IT设备中位涨幅+2.32%；但AI人工智能ETF平安当日-2.85%、5日-6.97%，科创AIETF博时当日-2.82%、5日-12.40，AI硬件和应用明显分化。",
+      "半导体": "Tushare行业数据显示，半导体行业中位跌幅-3.85%、上涨占比12.37%；科创芯片ETF广发当日-6.18%、5日-13.40，科创半导体ETF华夏当日-5.68%、5日-14.98，半导体设备ETF当日-5.65%、5日-15.00。",
+      "电力设备": "Tushare行业数据显示，电气设备中位涨幅+0.95%、上涨占比62.72%；电力ETF南方当日+1.30%、5日+7.46，收盘价较20日均线约+6.91%。",
+      "高端装备": "Tushare行业数据显示，专用机械中位涨幅+0.18%、机械基件中位涨幅+1.00%；机械ETF富国当日-0.19%、5日-2.08，说明方向有修复但独立趋势不强。",
+      "有色": "Tushare行业数据显示，小金属中位跌幅-0.36%、铝中位涨幅+2.05%；有色ETF易方达当日-0.43%、5日-3.66，有色ETF华安当日-0.81%、5日-3.71。",
+      "电池": "Tushare数据显示，电池ETF华夏当日-0.65%、5日-3.41，仍处修复观察，未形成强主线趋势。",
+      "储能": "Tushare数据显示，储能电池ETF广发当日-1.25%、5日-3.83；电气设备整体正收益，但储能分支趋势尚未充分确认。",
+      "机器人": "Tushare数据显示，机器人ETF易方达当日-1.75%、5日-12.54，宇树IPO事件催化未转化为持续ETF趋势。",
+      "商业航天": "Tushare数据显示，航天ETF华安当日-0.92%、5日-8.12，军工ETF国泰当日-1.17%、5日-7.78，交易趋势偏弱。",
+      "化工": "Tushare行业数据显示，化工原料中位涨幅+1.72%、上涨占比73.83%；化工ETF国泰当日+1.88，但5日仍为-1.91，属于修复而非确认。",
+      "能源": "Tushare行业数据显示，煤炭开采中位涨幅+7.51%、上涨占比100%；煤炭ETF国泰当日+6.62%、5日+12.40，能源防御/周期线短期启动。",
+      "无人驾驶": "Tushare数据显示，智能驾驶ETF华泰柏瑞当日-0.91%、5日-7.46，缺少资金和趋势确认。"
+    },
+    "etf_key_observations": {
+      "AI人工智能ETF平安": "2026-06-01 -2.85%，5日-6.97%",
+      "科创AIETF博时": "2026-06-01 -2.82%，5日-12.40%",
+      "科创芯片ETF广发": "2026-06-01 -6.18%，5日-13.40%",
+      "科创半导体ETF华夏": "2026-06-01 -5.68%，5日-14.98%",
+      "电力ETF南方": "2026-06-01 +1.30%，5日+7.46%",
+      "煤炭ETF国泰": "2026-06-01 +6.62%，5日+12.40%",
+      "机器人ETF易方达": "2026-06-01 -1.75%，5日-12.54%",
+      "航天ETF华安": "2026-06-01 -0.92%，5日-8.12%",
+      "智能驾驶ETF华泰柏瑞": "2026-06-01 -0.91%，5日-7.46%"
+    }
+  },
+  "summary": {
+    "a_themes": [
+      "AI"
+    ],
+    "b_themes": [
+      "半导体",
+      "电力设备",
+      "高端装备",
+      "能源"
+    ],
+    "c_themes": [
+      "有色",
+      "电池",
+      "储能",
+      "机器人",
+      "商业航天",
+      "化工"
+    ],
+    "d_themes": [
+      "无人驾驶"
+    ],
+    "one_line_conclusion": "Tushare结构化数据确认AI仍是唯一A档长期核心主线，但本轮A股交易阶段已进入内部分歧；半导体因ETF和行业趋势明显走弱下调为B档，电力设备和能源为B档副线，其余多为主题或修复观察。",
+    "offensive_bucket_impact": "maintain",
+    "theme_bucket_impact": "trial",
+    "market_position_notes": "存在A档主线但处于分歧阶段，市场仓位模块不应因AI长期逻辑而放大进攻仓；半导体从A下调为B会降低主线强度分。"
+  },
+  "themes": [
+    {
+      "name": "AI",
+      "previous_rating": "A",
+      "current_rating": "A",
+      "change_type": "maintain",
+      "bucket_role": "offensive_core",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 19,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 14,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 16,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 15,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 14,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 86,
+        "crowding_risk": {
+          "score": 6,
+          "evidence": "AI应用和软件扩散较好，但AI硬件、科创AI ETF和通信链出现明显回撤，拥挤与分歧并存。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 80
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "AI是2023年以来的长期科技主线，仍处长期产业扩张期。",
+          "start_or_approx_start": "2023年以来",
+          "drivers": [
+            "大模型能力扩散",
+            "算力和端侧AI需求",
+            "AI应用商业化",
+            "国产算力和半导体适配"
+          ],
+          "invalidation_conditions": [
+            "全球AI资本开支显著收缩",
+            "应用商业化长期不及预期",
+            "核心硬件供应链严重受限"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "divergence",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-04-28",
+          "first_confirmation_date": "2026-05上旬",
+          "current_stage_start_date": "2026-05-29",
+          "date_evidence": [
+            "2026-04-28政策端强化人工智能+和算力网",
+            "Tushare行业数据显示，软件服务中位涨幅+3.09%、上涨占比88.85%，互联网中位涨幅+3.07%、上涨占比90.00%，IT设备中位涨幅+2.32%；但AI人工智能ETF平安当日-2.85%、5日-6.97%，科创AIETF博时当日-2.82%、5日-12.40，AI硬件和应用明显分化。",
+            "2026-05-29至2026-06-01 AI硬件ETF回撤，但软件服务和互联网行业扩散强"
+          ],
+          "estimated_effective_window": "1-2周，等待AI应用承接和硬件止跌确认",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "软件服务/互联网扩散回落",
+            "科创AI和人工智能ETF继续跌破短期均线",
+            "AI硬件与应用同时资金流出"
+          ]
+        }
+      },
+      "risks": [
+        "硬件链回撤拖累整体风险偏好",
+        "应用端若不能继续扩散，A档需要下调",
+        "本轮交易阶段已经不是无分歧确认期"
+      ],
+      "theme_score": 80,
+      "conclusion_evidence": [
+        "Tushare行业数据显示，软件服务中位涨幅+3.09%、上涨占比88.85%，互联网中位涨幅+3.07%、上涨占比90.00%，IT设备中位涨幅+2.32%；但AI人工智能ETF平安当日-2.85%、5日-6.97%，科创AIETF博时当日-2.82%、5日-12.40，AI硬件和应用明显分化。",
+        "长期政策和产业逻辑仍强，但Tushare行情显示本轮交易阶段已由单边确认转为内部分歧。"
+      ],
+      "next_watch_conditions": [
+        "软件服务、互联网、AI应用能否维持高上涨占比",
+        "科创AI/人工智能ETF能否止跌并重新站回短期均线",
+        "硬件分支是否从分歧转修复"
+      ],
+      "related_etfs": [
+        "512930.SH AI人工智能ETF平安",
+        "588790.SH 科创AIETF博时",
+        "516510.SH 云计算ETF易方达",
+        "159583.SZ 通信ETF富国"
+      ],
+      "representative_stocks": [
+        "寒武纪",
+        "海光信息",
+        "工业富联",
+        "软通动力",
+        "掌阅科技",
+        "视觉中国"
+      ],
+      "position_impact": "A档长期核心主线，但本轮交易阶段为分歧；进攻仓可保留核心暴露，不宜新增追涨。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "半导体",
+      "previous_rating": "A",
+      "current_rating": "B",
+      "change_type": "downgrade",
+      "bucket_role": "secondary",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 18,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 13,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 11,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 72,
+        "crowding_risk": {
+          "score": 6,
+          "evidence": "半导体长期拥挤不算极端，但Tushare显示短线资金和趋势明显转弱。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 66
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "半导体是AI算力、国产替代和先进制造的长期关键主线。",
+          "start_or_approx_start": "2023年以来，国产替代更早",
+          "drivers": [
+            "AI芯片和算力需求",
+            "国产半导体设备材料",
+            "先进封装",
+            "存储周期"
+          ],
+          "invalidation_conditions": [
+            "资本开支下修",
+            "国产替代进展明显低于预期",
+            "行业景气和财报持续下修"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "divergence",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-05上旬",
+          "first_confirmation_date": "2026-05上旬",
+          "current_stage_start_date": "2026-05-29",
+          "date_evidence": [
+            "Tushare行业数据显示，半导体行业中位跌幅-3.85%、上涨占比12.37%；科创芯片ETF广发当日-6.18%、5日-13.40，科创半导体ETF华夏当日-5.68%、5日-14.98，半导体设备ETF当日-5.65%、5日-15.00。",
+            "科创50 2026-06-01 下跌约5.00%，半导体代表股普遍大幅回撤"
+          ],
+          "estimated_effective_window": "1-2周，等待ETF止跌和资金回流",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "芯片/半导体设备ETF继续放量下跌",
+            "行业上涨占比继续低于30%",
+            "AI硬件链无法修复"
+          ]
+        }
+      },
+      "risks": [
+        "短期趋势破坏后继续杀估值",
+        "设备、材料、芯片扩散失败",
+        "若不能快速修复，本轮交易周期可能进入退潮"
+      ],
+      "theme_score": 66,
+      "conclusion_evidence": [
+        "Tushare行业数据显示，半导体行业中位跌幅-3.85%、上涨占比12.37%；科创芯片ETF广发当日-6.18%、5日-13.40，科创半导体ETF华夏当日-5.68%、5日-14.98，半导体设备ETF当日-5.65%、5日-15.00。",
+        "长期产业逻辑未破坏，但当前交易周期趋势与资金证据不满足A档硬条件。"
+      ],
+      "next_watch_conditions": [
+        "科创芯片、半导体设备ETF能否止跌",
+        "半导体行业上涨占比能否回到50%以上",
+        "代表龙头是否缩量企稳"
+      ],
+      "related_etfs": [
+        "589160.SH 科创芯片ETF广发",
+        "588920.SH 科创芯片ETF鹏华",
+        "588170.SH 科创半导体ETF华夏",
+        "588710.SH 科创半导体设备ETF华泰柏瑞"
+      ],
+      "representative_stocks": [
+        "中微公司",
+        "北方华创",
+        "寒武纪",
+        "海光信息",
+        "华虹公司",
+        "沪电股份"
+      ],
+      "position_impact": "从A档下调为B档副线；长期逻辑保留，但当前不作为新增进攻仓核心。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "电力设备",
+      "previous_rating": "B",
+      "current_rating": "B",
+      "change_type": "maintain",
+      "bucket_role": "secondary",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 17,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 14,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 11,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 78,
+        "crowding_risk": {
+          "score": 3,
+          "evidence": "电力设备拥挤度不高，电力ETF强于主要指数。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 75
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "电力设备处于AI用电、电网升级、绿电和出海共振的中期产业景气阶段。",
+          "start_or_approx_start": "2024年以来，2026年AI能源协同强化",
+          "drivers": [
+            "算电协同",
+            "新型电网",
+            "绿电直连",
+            "电力设备出海"
+          ],
+          "invalidation_conditions": [
+            "电网投资和订单低于预期",
+            "AI用电需求证伪",
+            "出口订单下滑"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "launch",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-05上旬",
+          "first_confirmation_date": "待证据确认",
+          "current_stage_start_date": "2026-06-01",
+          "date_evidence": [
+            "Tushare行业数据显示，电气设备中位涨幅+0.95%、上涨占比62.72%；电力ETF南方当日+1.30%、5日+7.46，收盘价较20日均线约+6.91%。",
+            "AI与能源双向赋能方案提供政策支撑"
+          ],
+          "estimated_effective_window": "2-3周，等待从启动走向确认",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "电力ETF跌回20日均线下方",
+            "电气设备行业上涨占比跌破50%",
+            "订单或政策落地不及预期"
+          ]
+        }
+      },
+      "risks": [
+        "电力股短线轮动后资金回流不足",
+        "算电协同停留在政策预期"
+      ],
+      "theme_score": 75,
+      "conclusion_evidence": [
+        "Tushare行业数据显示，电气设备中位涨幅+0.95%、上涨占比62.72%；电力ETF南方当日+1.30%、5日+7.46，收盘价较20日均线约+6.91%。",
+        "政策与行情证据共振，但行业扩散和业绩验证仍不足以升A。"
+      ],
+      "next_watch_conditions": [
+        "电力ETF能否维持强于主要指数",
+        "电气设备行业扩散能否增强",
+        "AIDC供电和电网招标是否继续落地"
+      ],
+      "related_etfs": [
+        "560580.SH 电力ETF南方",
+        "电力设备ETF",
+        "电网ETF"
+      ],
+      "representative_stocks": [
+        "宁德时代",
+        "特锐德",
+        "平高电气",
+        "特变电工",
+        "东方电气"
+      ],
+      "position_impact": "B档副线，若ETF和订单继续确认，可进入A档候选观察。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "高端装备",
+      "previous_rating": "B",
+      "current_rating": "B",
+      "change_type": "maintain",
+      "bucket_role": "secondary",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 16,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 12,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 11,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 69,
+        "crowding_risk": {
+          "score": 3,
+          "evidence": "机械方向拥挤度低，但趋势并不强。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 66
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "高端装备是制造升级、自动化和设备出海的中长期方向。",
+          "start_or_approx_start": "2024年以来",
+          "drivers": [
+            "设备更新",
+            "制造业出海",
+            "AI数据中心配套设备",
+            "自动化和工业母机"
+          ],
+          "invalidation_conditions": [
+            "制造业投资下滑",
+            "出海订单下降",
+            "设备更新不及预期"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "repair",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-05下旬",
+          "first_confirmation_date": "待证据确认",
+          "current_stage_start_date": "2026-06-01",
+          "date_evidence": [
+            "Tushare行业数据显示，专用机械中位涨幅+0.18%、机械基件中位涨幅+1.00%；机械ETF富国当日-0.19%、5日-2.08，说明方向有修复但独立趋势不强。"
+          ],
+          "estimated_effective_window": "2-3周，等待独立资金确认",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "机械ETF继续弱于市场",
+            "专用机械和机械基件扩散失败"
+          ]
+        }
+      },
+      "risks": [
+        "容易被机器人/AI事件牵引，缺少独立主线辨识度"
+      ],
+      "theme_score": 66,
+      "conclusion_evidence": [
+        "Tushare行业数据显示，专用机械中位涨幅+0.18%、机械基件中位涨幅+1.00%；机械ETF富国当日-0.19%、5日-2.08，说明方向有修复但独立趋势不强。",
+        "方向具备产业逻辑，但交易证据只是修复，不是确认。"
+      ],
+      "next_watch_conditions": [
+        "机械ETF能否转强",
+        "机械基件、专用机械能否同步扩散"
+      ],
+      "related_etfs": [
+        "159886.SZ 机械ETF富国",
+        "工程机械ETF",
+        "工业母机ETF"
+      ],
+      "representative_stocks": [
+        "杰普特",
+        "日联科技",
+        "杰瑞股份",
+        "新雷能"
+      ],
+      "position_impact": "B档副线偏观察。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "能源",
+      "previous_rating": "C",
+      "current_rating": "B",
+      "change_type": "upgrade",
+      "bucket_role": "secondary",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 11,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 16,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 16,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 11,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 74,
+        "crowding_risk": {
+          "score": 6,
+          "evidence": "煤炭短线涨幅较大，存在快速轮动后的拥挤风险。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 68
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "能源属于资源品、防御和能源安全长期方向，不是科技成长主线。",
+          "start_or_approx_start": "长期存在，当前为阶段性轮动",
+          "drivers": [
+            "能源安全",
+            "迎峰度夏",
+            "高股息防御",
+            "煤炭价格和电力需求"
+          ],
+          "invalidation_conditions": [
+            "能源价格下行",
+            "高股息防御退潮",
+            "盈利预期下修"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "acceleration",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-06-01",
+          "first_confirmation_date": "2026-06-01",
+          "current_stage_start_date": "2026-06-01",
+          "date_evidence": [
+            "Tushare行业数据显示，煤炭开采中位涨幅+7.51%、上涨占比100%；煤炭ETF国泰当日+6.62%、5日+12.40，能源防御/周期线短期启动。"
+          ],
+          "estimated_effective_window": "1-2周，快速轮动后需观察持续性",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "煤炭ETF放量滞涨",
+            "煤炭行业上涨占比快速回落",
+            "防御资金切换结束"
+          ]
+        }
+      },
+      "risks": [
+        "短线加速后回撤",
+        "商品价格扰动",
+        "防御行情切换"
+      ],
+      "theme_score": 68,
+      "conclusion_evidence": [
+        "Tushare行业数据显示，煤炭开采中位涨幅+7.51%、上涨占比100%；煤炭ETF国泰当日+6.62%、5日+12.40，能源防御/周期线短期启动。",
+        "短线资金和趋势证据很强，但主线属性偏防御/周期，暂定B档。"
+      ],
+      "next_watch_conditions": [
+        "煤炭ETF能否持续强于市场",
+        "能源线是否从煤炭扩散到油气、电力"
+      ],
+      "related_etfs": [
+        "515220.SH 煤炭ETF国泰",
+        "能源ETF",
+        "电力ETF"
+      ],
+      "representative_stocks": [
+        "中国神华",
+        "中煤能源",
+        "中国石油",
+        "中国海油"
+      ],
+      "position_impact": "由C上调为B档副线，但不是进攻仓核心。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "有色",
+      "previous_rating": "B",
+      "current_rating": "C",
+      "change_type": "downgrade",
+      "bucket_role": "theme_trial",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 11,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 9,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 8,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 60,
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "拥挤不高，但趋势证据不足。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 58
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "有色是资源周期、新材料和制造上游的中长期方向。",
+          "start_or_approx_start": "长期周期波动",
+          "drivers": [
+            "工业金属供需",
+            "黄金和小金属",
+            "新能源和制造上游需求"
+          ],
+          "invalidation_conditions": [
+            "大宗价格持续下行",
+            "资源股盈利下修"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "repair",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-05下旬",
+          "first_confirmation_date": "待证据确认",
+          "current_stage_start_date": "2026-06-01",
+          "date_evidence": [
+            "Tushare行业数据显示，小金属中位跌幅-0.36%、铝中位涨幅+2.05%；有色ETF易方达当日-0.43%、5日-3.66，有色ETF华安当日-0.81%、5日-3.71。"
+          ],
+          "estimated_effective_window": "2-3周，等待资源价格和ETF修复",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "有色ETF继续低于20日均线",
+            "小金属和工业有色扩散失败"
+          ]
+        }
+      },
+      "risks": [
+        "商品价格回落",
+        "资金转向防御或科技后有色承接不足"
+      ],
+      "theme_score": 58,
+      "conclusion_evidence": [
+        "Tushare行业数据显示，小金属中位跌幅-0.36%、铝中位涨幅+2.05%；有色ETF易方达当日-0.43%、5日-3.66，有色ETF华安当日-0.81%、5日-3.71。",
+        "分支表现不一致，ETF趋势偏弱，当前不满足B档副线强度。"
+      ],
+      "next_watch_conditions": [
+        "有色ETF能否修复",
+        "铝、小金属、贵金属是否同步扩散"
+      ],
+      "related_etfs": [
+        "560470.SH 有色ETF易方达",
+        "512940.SH 有色ETF华安"
+      ],
+      "representative_stocks": [
+        "中国铝业",
+        "紫金矿业",
+        "洛阳钼业",
+        "北方稀土"
+      ],
+      "position_impact": "从B下调至C档主题/观察。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "电池",
+      "previous_rating": "B",
+      "current_rating": "C",
+      "change_type": "downgrade",
+      "bucket_role": "theme_trial",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 16,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 10,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 9,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 8,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 7,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 60,
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "拥挤不高，但ETF趋势偏弱。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 58
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "电池是新能源车、储能和固态电池的中长期产业方向。",
+          "start_or_approx_start": "2020年以来，当前处修复周期",
+          "drivers": [
+            "新能源车需求",
+            "储能需求",
+            "固态电池",
+            "成本下降"
+          ],
+          "invalidation_conditions": [
+            "价格战恶化",
+            "排产下滑",
+            "产能过剩持续压制盈利"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "repair",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-05下旬",
+          "first_confirmation_date": "待证据确认",
+          "current_stage_start_date": "2026-06-01",
+          "date_evidence": [
+            "Tushare数据显示，电池ETF华夏当日-0.65%、5日-3.41，仍处修复观察，未形成强主线趋势。"
+          ],
+          "estimated_effective_window": "2-3周，等待排产和价格验证",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "电池ETF继续弱于市场",
+            "价格战或排产不及预期"
+          ]
+        }
+      },
+      "risks": [
+        "价格战",
+        "盈利修复不及预期"
+      ],
+      "theme_score": 58,
+      "conclusion_evidence": [
+        "Tushare数据显示，电池ETF华夏当日-0.65%、5日-3.41，仍处修复观察，未形成强主线趋势。",
+        "产业逻辑仍在，但本轮交易证据不足。"
+      ],
+      "next_watch_conditions": [
+        "电池ETF能否站回短期均线",
+        "排产、价格和订单是否改善"
+      ],
+      "related_etfs": [
+        "512460.SH 电池ETF华夏",
+        "新能源车ETF"
+      ],
+      "representative_stocks": [
+        "宁德时代",
+        "亿纬锂能",
+        "科达利",
+        "华友钴业"
+      ],
+      "position_impact": "从B下调至C档主题/观察。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "储能",
+      "previous_rating": "B",
+      "current_rating": "C",
+      "change_type": "downgrade",
+      "bucket_role": "theme_trial",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 17,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 13,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 10,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 9,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 8,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 7,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 64,
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "拥挤不高，但ETF和分支趋势未确认。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 62
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "储能是AI用电、绿电直连和新型电力系统的中长期方向。",
+          "start_or_approx_start": "2021年以来，2026年AI用电逻辑强化",
+          "drivers": [
+            "AI数据中心供电",
+            "构网型储能",
+            "绿电消纳",
+            "海外储能需求"
+          ],
+          "invalidation_conditions": [
+            "储能订单不及预期",
+            "价格竞争恶化",
+            "并网数据低于预期"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "repair",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-05中旬",
+          "first_confirmation_date": "待证据确认",
+          "current_stage_start_date": "2026-06-01",
+          "date_evidence": [
+            "Tushare数据显示，储能电池ETF广发当日-1.25%、5日-3.83；电气设备整体正收益，但储能分支趋势尚未充分确认。"
+          ],
+          "estimated_effective_window": "2-3周，等待AIDC配储订单和ETF修复",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "储能电池ETF继续走弱",
+            "PCS、逆变器、储能电池分支无法扩散"
+          ]
+        }
+      },
+      "risks": [
+        "政策预期无法转化为订单",
+        "价格竞争导致盈利承压"
+      ],
+      "theme_score": 62,
+      "conclusion_evidence": [
+        "Tushare数据显示，储能电池ETF广发当日-1.25%、5日-3.83；电气设备整体正收益，但储能分支趋势尚未充分确认。",
+        "政策逻辑强，但Tushare ETF趋势尚未确认。"
+      ],
+      "next_watch_conditions": [
+        "储能电池ETF和电力设备ETF是否共振",
+        "订单/招标/并网数据是否强化"
+      ],
+      "related_etfs": [
+        "159305.SZ 储能电池ETF广发",
+        "电力设备ETF"
+      ],
+      "representative_stocks": [
+        "宁德时代",
+        "阳光电源",
+        "海博思创",
+        "特锐德"
+      ],
+      "position_impact": "从B下调至C档主题/观察。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "机器人",
+      "previous_rating": "C",
+      "current_rating": "C",
+      "change_type": "maintain",
+      "bucket_role": "theme_trial",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 17,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 12,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 9,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 8,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 7,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 5,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 58,
+        "crowding_risk": {
+          "score": 4,
+          "evidence": "事件热度较高，但ETF回撤明显。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 54
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "机器人/具身智能是长期制造智能化方向。",
+          "start_or_approx_start": "2023年以来",
+          "drivers": [
+            "人形机器人",
+            "具身智能",
+            "传感器和执行器",
+            "产业资本投入"
+          ],
+          "invalidation_conditions": [
+            "商业化进展停滞",
+            "成本下降不及预期",
+            "核心公司订单不及预期"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "divergence",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-06-01",
+          "first_confirmation_date": "待证据确认",
+          "current_stage_start_date": "2026-06-01",
+          "date_evidence": [
+            "Tushare数据显示，机器人ETF易方达当日-1.75%、5日-12.54，宇树IPO事件催化未转化为持续ETF趋势。",
+            "宇树IPO上会提供事件催化"
+          ],
+          "estimated_effective_window": "1-2周，事件落地后复核",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "机器人ETF继续回撤",
+            "事件落地后资金退潮",
+            "供应链标的放量滞涨"
+          ]
+        }
+      },
+      "risks": [
+        "事件兑现后退潮",
+        "业绩验证不足"
+      ],
+      "theme_score": 54,
+      "conclusion_evidence": [
+        "Tushare数据显示，机器人ETF易方达当日-1.75%、5日-12.54，宇树IPO事件催化未转化为持续ETF趋势。",
+        "长期逻辑清晰但本轮交易证据未确认。"
+      ],
+      "next_watch_conditions": [
+        "机器人ETF能否止跌",
+        "供应链龙头是否强于指数"
+      ],
+      "related_etfs": [
+        "159530.SZ 机器人ETF易方达",
+        "机械ETF"
+      ],
+      "representative_stocks": [
+        "中大力德",
+        "长盛轴承",
+        "奥比中光",
+        "优必选"
+      ],
+      "position_impact": "维持C档主题仓试错。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "商业航天",
+      "previous_rating": "C",
+      "current_rating": "C",
+      "change_type": "maintain",
+      "bucket_role": "theme_trial",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 16,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 13,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 8,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 7,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 6,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 5,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 55,
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "拥挤不高，问题是趋势偏弱。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 53
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "商业航天是卫星互联网、商业发射和空间应用的长期方向。",
+          "start_or_approx_start": "2024年以来政策和产业加速",
+          "drivers": [
+            "卫星互联网",
+            "商业发射",
+            "低空/空天基础设施",
+            "标准体系建设"
+          ],
+          "invalidation_conditions": [
+            "发射和订单节奏低于预期",
+            "商业化收入兑现不足"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "germination",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-05下旬",
+          "first_confirmation_date": "待证据确认",
+          "current_stage_start_date": "2026-06-01",
+          "date_evidence": [
+            "Tushare数据显示，航天ETF华安当日-0.92%、5日-8.12，军工ETF国泰当日-1.17%、5日-7.78，交易趋势偏弱。",
+            "商业航天标准体系1.0版提供政策催化"
+          ],
+          "estimated_effective_window": "2-4周，等待发射/订单/指数趋势确认",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "航天ETF和军工ETF继续弱于市场",
+            "事件催化后成交萎缩"
+          ]
+        }
+      },
+      "risks": [
+        "兑现早期",
+        "订单和利润弹性不足"
+      ],
+      "theme_score": 53,
+      "conclusion_evidence": [
+        "Tushare数据显示，航天ETF华安当日-0.92%、5日-8.12，军工ETF国泰当日-1.17%、5日-7.78，交易趋势偏弱。",
+        "政策有催化，但交易趋势偏弱。"
+      ],
+      "next_watch_conditions": [
+        "航天ETF能否止跌",
+        "卫星互联网、火箭、测控、材料是否扩散"
+      ],
+      "related_etfs": [
+        "159267.SZ 航天ETF华安",
+        "512660.SH 军工ETF国泰"
+      ],
+      "representative_stocks": [
+        "中国卫星",
+        "航天电子",
+        "航天彩虹"
+      ],
+      "position_impact": "维持C档主题仓试错。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "化工",
+      "previous_rating": "C",
+      "current_rating": "C",
+      "change_type": "maintain",
+      "bucket_role": "theme_trial",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 12,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 11,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 10,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 8,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 63,
+        "crowding_risk": {
+          "score": 2,
+          "evidence": "拥挤度不高，属于修复而非过热。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 61
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "化工属于周期修复和新材料分支机会，不是统一长期成长主线。",
+          "start_or_approx_start": "周期性波动",
+          "drivers": [
+            "产能出清",
+            "价格修复",
+            "新材料需求"
+          ],
+          "invalidation_conditions": [
+            "化学品价格下行",
+            "盈利修复失败"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "repair",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "2026-05下旬",
+          "first_confirmation_date": "待证据确认",
+          "current_stage_start_date": "2026-06-01",
+          "date_evidence": [
+            "Tushare行业数据显示，化工原料中位涨幅+1.72%、上涨占比73.83%；化工ETF国泰当日+1.88，但5日仍为-1.91，属于修复而非确认。"
+          ],
+          "estimated_effective_window": "2-3周，等待价格和ETF确认",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "化工ETF无法延续",
+            "化工原料扩散失败"
+          ]
+        }
+      },
+      "risks": [
+        "价格修复不持续",
+        "板块分化"
+      ],
+      "theme_score": 61,
+      "conclusion_evidence": [
+        "Tushare行业数据显示，化工原料中位涨幅+1.72%、上涨占比73.83%；化工ETF国泰当日+1.88，但5日仍为-1.91，属于修复而非确认。",
+        "当日修复明显，但5日趋势仍弱。"
+      ],
+      "next_watch_conditions": [
+        "化工ETF能否由修复转确认",
+        "化学原料和化学制品是否同步扩散"
+      ],
+      "related_etfs": [
+        "516220.SH 化工ETF国泰"
+      ],
+      "representative_stocks": [
+        "万华化学",
+        "华鲁恒升",
+        "卫星化学"
+      ],
+      "position_impact": "维持C档主题仓/周期修复观察。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    },
+    {
+      "name": "无人驾驶",
+      "previous_rating": "D",
+      "current_rating": "D",
+      "change_type": "maintain",
+      "bucket_role": "watch",
+      "scores": {
+        "industry_logic": {
+          "weight": 20,
+          "score": 14,
+          "evidence": "产业逻辑评分见结论依据和长期周期说明。"
+        },
+        "policy_cycle_catalyst": {
+          "weight": 15,
+          "score": 8,
+          "evidence": "政策/景气评分见结论依据。"
+        },
+        "fund_participation": {
+          "weight": 20,
+          "score": 7,
+          "evidence": "资金参与以Tushare ETF成交、行业成交和涨跌扩散为主要证据。"
+        },
+        "trend_strength": {
+          "weight": 20,
+          "score": 7,
+          "evidence": "趋势强度以Tushare ETF短期涨跌、指数日线和行业表现为主要证据。"
+        },
+        "breadth_diffusion": {
+          "weight": 15,
+          "score": 6,
+          "evidence": "扩散以行业上涨占比、分支表现和ETF验证为主要证据。"
+        },
+        "earnings_validation": {
+          "weight": 10,
+          "score": 5,
+          "evidence": "本次未系统拉取财报，业绩验证以已知产业景气和代表公司预期为辅助，后续需用财务指标模块补充。"
+        },
+        "base_score": 47,
+        "crowding_risk": {
+          "score": 1,
+          "evidence": "拥挤度低，但强度不足。",
+          "operation_limit": "可持有核心暴露，但不宜追涨；若阶段进入分歧或退潮，应限制新增进攻仓。"
+        },
+        "final_score": 46
+      },
+      "cycle": {
+        "long_term_industry_cycle": {
+          "judgment": "无人驾驶/智能驾驶是长期智能汽车方向。",
+          "start_or_approx_start": "2020年以来",
+          "drivers": [
+            "L2/L3渗透率",
+            "车端智能化",
+            "Robotaxi试点"
+          ],
+          "invalidation_conditions": [
+            "政策落地低于预期",
+            "商业化和整车需求不及预期"
+          ]
+        },
+        "current_a_share_trading_cycle": {
+          "stage": "germination",
+          "system_first_watch_date": "2026-06-01",
+          "first_watch_date": "待证据确认",
+          "first_confirmation_date": "待证据确认",
+          "current_stage_start_date": "待证据确认",
+          "date_evidence": [
+            "Tushare数据显示，智能驾驶ETF华泰柏瑞当日-0.91%、5日-7.46，缺少资金和趋势确认。"
+          ],
+          "estimated_effective_window": "待证据确认",
+          "next_stage_review_date": "2026-06-08",
+          "stage_invalidation_conditions": [
+            "智能驾驶ETF继续弱于市场",
+            "缺少政策和资金共振"
+          ]
+        }
+      },
+      "risks": [
+        "长期逻辑无法转化为交易主线",
+        "整车和零部件弱势"
+      ],
+      "theme_score": 46,
+      "conclusion_evidence": [
+        "Tushare数据显示，智能驾驶ETF华泰柏瑞当日-0.91%、5日-7.46，缺少资金和趋势确认。",
+        "长期方向仍在，但本轮A股交易周期未确认。"
+      ],
+      "next_watch_conditions": [
+        "智能驾驶ETF能否强于指数",
+        "政策/试点/订单是否催化"
+      ],
+      "related_etfs": [
+        "516520.SH 智能驾驶ETF华泰柏瑞",
+        "智能汽车ETF"
+      ],
+      "representative_stocks": [
+        "德赛西威",
+        "华阳集团",
+        "经纬恒润"
+      ],
+      "position_impact": "维持D档观察。",
+      "upgrade_conditions": [
+        "资金、趋势、扩散至少两项改善并持续3-5个交易日",
+        "ETF重新站上短期均线且行业上涨占比改善"
+      ],
+      "downgrade_conditions": [
+        "ETF继续跌破关键趋势",
+        "资金持续流出",
+        "板块扩散失败或主题事件兑现后退潮"
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "theme": "AI",
+      "change_type": "maintain",
+      "previous_conclusion": "A",
+      "new_conclusion": "A",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "AI是2023年以来的长期科技主线，仍处长期产业扩张期。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "divergence",
+      "reason": "Tushare行业数据显示，软件服务中位涨幅+3.09%、上涨占比88.85%，互联网中位涨幅+3.07%、上涨占比90.00%，IT设备中位涨幅+2.32%；但AI人工智能ETF平安当日-2.85%、5日-6.97%，科创AIETF博时当日-2.82%、5日-12.40，AI硬件和应用明显分化。",
+      "position_impact": "A档长期核心主线，但本轮交易阶段为分歧；进攻仓可保留核心暴露，不宜新增追涨。"
+    },
+    {
+      "theme": "半导体",
+      "change_type": "downgrade",
+      "previous_conclusion": "A",
+      "new_conclusion": "B",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "半导体是AI算力、国产替代和先进制造的长期关键主线。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "divergence",
+      "reason": "Tushare行业数据显示，半导体行业中位跌幅-3.85%、上涨占比12.37%；科创芯片ETF广发当日-6.18%、5日-13.40，科创半导体ETF华夏当日-5.68%、5日-14.98，半导体设备ETF当日-5.65%、5日-15.00。",
+      "position_impact": "从A档下调为B档副线；长期逻辑保留，但当前不作为新增进攻仓核心。"
+    },
+    {
+      "theme": "电力设备",
+      "change_type": "maintain",
+      "previous_conclusion": "B",
+      "new_conclusion": "B",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "电力设备处于AI用电、电网升级、绿电和出海共振的中期产业景气阶段。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "launch",
+      "reason": "Tushare行业数据显示，电气设备中位涨幅+0.95%、上涨占比62.72%；电力ETF南方当日+1.30%、5日+7.46，收盘价较20日均线约+6.91%。",
+      "position_impact": "B档副线，若ETF和订单继续确认，可进入A档候选观察。"
+    },
+    {
+      "theme": "高端装备",
+      "change_type": "maintain",
+      "previous_conclusion": "B",
+      "new_conclusion": "B",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "高端装备是制造升级、自动化和设备出海的中长期方向。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "repair",
+      "reason": "Tushare行业数据显示，专用机械中位涨幅+0.18%、机械基件中位涨幅+1.00%；机械ETF富国当日-0.19%、5日-2.08，说明方向有修复但独立趋势不强。",
+      "position_impact": "B档副线偏观察。"
+    },
+    {
+      "theme": "能源",
+      "change_type": "upgrade",
+      "previous_conclusion": "C",
+      "new_conclusion": "B",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "能源属于资源品、防御和能源安全长期方向，不是科技成长主线。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "acceleration",
+      "reason": "Tushare行业数据显示，煤炭开采中位涨幅+7.51%、上涨占比100%；煤炭ETF国泰当日+6.62%、5日+12.40，能源防御/周期线短期启动。",
+      "position_impact": "由C上调为B档副线，但不是进攻仓核心。"
+    },
+    {
+      "theme": "有色",
+      "change_type": "downgrade",
+      "previous_conclusion": "B",
+      "new_conclusion": "C",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "有色是资源周期、新材料和制造上游的中长期方向。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "repair",
+      "reason": "Tushare行业数据显示，小金属中位跌幅-0.36%、铝中位涨幅+2.05%；有色ETF易方达当日-0.43%、5日-3.66，有色ETF华安当日-0.81%、5日-3.71。",
+      "position_impact": "从B下调至C档主题/观察。"
+    },
+    {
+      "theme": "电池",
+      "change_type": "downgrade",
+      "previous_conclusion": "B",
+      "new_conclusion": "C",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "电池是新能源车、储能和固态电池的中长期产业方向。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "repair",
+      "reason": "Tushare数据显示，电池ETF华夏当日-0.65%、5日-3.41，仍处修复观察，未形成强主线趋势。",
+      "position_impact": "从B下调至C档主题/观察。"
+    },
+    {
+      "theme": "储能",
+      "change_type": "downgrade",
+      "previous_conclusion": "B",
+      "new_conclusion": "C",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "储能是AI用电、绿电直连和新型电力系统的中长期方向。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "repair",
+      "reason": "Tushare数据显示，储能电池ETF广发当日-1.25%、5日-3.83；电气设备整体正收益，但储能分支趋势尚未充分确认。",
+      "position_impact": "从B下调至C档主题/观察。"
+    },
+    {
+      "theme": "机器人",
+      "change_type": "maintain",
+      "previous_conclusion": "C",
+      "new_conclusion": "C",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "机器人/具身智能是长期制造智能化方向。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "divergence",
+      "reason": "Tushare数据显示，机器人ETF易方达当日-1.75%、5日-12.54，宇树IPO事件催化未转化为持续ETF趋势。",
+      "position_impact": "维持C档主题仓试错。"
+    },
+    {
+      "theme": "商业航天",
+      "change_type": "maintain",
+      "previous_conclusion": "C",
+      "new_conclusion": "C",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "商业航天是卫星互联网、商业发射和空间应用的长期方向。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "germination",
+      "reason": "Tushare数据显示，航天ETF华安当日-0.92%、5日-8.12，军工ETF国泰当日-1.17%、5日-7.78，交易趋势偏弱。",
+      "position_impact": "维持C档主题仓试错。"
+    },
+    {
+      "theme": "化工",
+      "change_type": "maintain",
+      "previous_conclusion": "C",
+      "new_conclusion": "C",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "化工属于周期修复和新材料分支机会，不是统一长期成长主线。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "repair",
+      "reason": "Tushare行业数据显示，化工原料中位涨幅+1.72%、上涨占比73.83%；化工ETF国泰当日+1.88，但5日仍为-1.91，属于修复而非确认。",
+      "position_impact": "维持C档主题仓/周期修复观察。"
+    },
+    {
+      "theme": "无人驾驶",
+      "change_type": "maintain",
+      "previous_conclusion": "D",
+      "new_conclusion": "D",
+      "previous_long_term_cycle": "待证据确认",
+      "new_long_term_cycle": "无人驾驶/智能驾驶是长期智能汽车方向。",
+      "previous_trading_cycle_stage": "unknown",
+      "new_trading_cycle_stage": "germination",
+      "reason": "Tushare数据显示，智能驾驶ETF华泰柏瑞当日-0.91%、5日-7.46，缺少资金和趋势确认。",
+      "position_impact": "维持D档观察。"
+    }
+  ],
+  "cross_module_impacts": {
+    "market_position": [
+      "半导体由A下调为B，主线强度应较旧版下降。",
+      "AI仍为A档，但本轮交易阶段为分歧，不支持放大进攻仓。",
+      "能源短线强度上调为B，但偏防御/周期，不替代科技进攻主线。"
+    ],
+    "etf_research": [
+      "优先补建AI、科创AI、芯片、半导体设备、电力、煤炭ETF档案。",
+      "半导体和机器人ETF需要记录短线趋势破坏后的失效条件。"
+    ],
+    "stock_research": [
+      "AI应用、软件服务和互联网方向可优先筛选强于指数的个股。",
+      "半导体个股需先检查是否止跌，不能仅凭长期逻辑进入进攻仓。"
+    ],
+    "action_plan": [
+      "后续操作建议必须同时引用评级和本轮交易阶段。",
+      "本报告不直接给出买卖指令；半导体新增进攻仓应等待修复确认。"
+    ]
+  },
+  "decision_log_entry": "2026-06-01 Tushare复核版主线研究：读取前置 theme_review_2026-06-01_172109.md/theme_review_2026-06-01_172109.json，重新检查Tushare数据后，维持AI A档、半导体/电力设备/高端装备/能源 B档，有色/电池/储能/机器人/商业航天/化工 C档，无人驾驶 D档。生成 theme_review_2026-06-01_231611.md/theme_review_2026-06-01_231611.json。",
+  "previous_review_files": [
+    "research/themes/theme_review_2026-06-01_172109.md",
+    "research/themes/theme_review_2026-06-01_172109.json"
+  ],
+  "generated_files": [
+    "research/themes/theme_review_2026-06-01_231611.md",
+    "research/themes/theme_review_2026-06-01_231611.json"
+  ],
+  "tushare_recheck_summary": {
+    "trade_date": "20260601",
+    "index_count": 6,
+    "industry_focus_count": 11,
+    "fund_count": 15,
+    "conclusion_change": "none; maintained latest Tushare-based theme ratings and trading-cycle judgments"
+  }
+}

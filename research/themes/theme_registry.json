@@ -1,8 +1,8 @@
-﻿{
+{
   "module": "theme_registry",
   "version": "1.0",
   "last_updated": "2026-06-01",
-  "notes": "当前文件保存主线研究模块的最新固化结论。2026-06-01 已按 Tushare 结构化数据和双周期模板重做首次正式主线研究。",
+  "notes": "当前文件保存主线研究模块的最新固化结论。2026-06-01 已按 Tushare 结构化数据和双周期模板完成首次正式主线研究，并按时间戳规则生成复核版。",
   "themes": [
     {
       "name": "AI",
@@ -28,7 +28,7 @@
         "掌阅科技",
         "视觉中国"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "AI是2023年以来的长期科技主线，仍处长期产业扩张期。",
@@ -90,7 +90,7 @@
         "华虹公司",
         "沪电股份"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "半导体是AI算力、国产替代和先进制造的长期关键主线。",
@@ -149,7 +149,7 @@
         "特变电工",
         "东方电气"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "电力设备处于AI用电、电网升级、绿电和出海共振的中期产业景气阶段。",
@@ -207,7 +207,7 @@
         "杰瑞股份",
         "新雷能"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "高端装备是制造升级、自动化和设备出海的中长期方向。",
@@ -263,7 +263,7 @@
         "中国石油",
         "中国海油"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "能源属于资源品、防御和能源安全长期方向，不是科技成长主线。",
@@ -319,7 +319,7 @@
         "洛阳钼业",
         "北方稀土"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "有色是资源周期、新材料和制造上游的中长期方向。",
@@ -372,7 +372,7 @@
         "科达利",
         "华友钴业"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "电池是新能源车、储能和固态电池的中长期产业方向。",
@@ -427,7 +427,7 @@
         "海博思创",
         "特锐德"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "储能是AI用电、绿电直连和新型电力系统的中长期方向。",
@@ -482,7 +482,7 @@
         "奥比中光",
         "优必选"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "机器人/具身智能是长期制造智能化方向。",
@@ -538,7 +538,7 @@
         "航天电子",
         "航天彩虹"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "商业航天是卫星互联网、商业发射和空间应用的长期方向。",
@@ -591,7 +591,7 @@
         "华鲁恒升",
         "卫星化学"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "化工属于周期修复和新材料分支机会，不是统一长期成长主线。",
@@ -643,7 +643,7 @@
         "华阳集团",
         "经纬恒润"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_172109.md",
+      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "无人驾驶/智能驾驶是长期智能汽车方向。",
@@ -712,6 +712,11 @@
       "date": "2026-06-01",
       "change": "按 Tushare 结构化行情、行业和ETF数据重做首次正式A股主线研究。",
       "impact": "AI维持A档但交易阶段为分歧；半导体由A下调B；能源由C上调B；有色、电池、储能由B下调C。"
+    },
+    {
+      "date": "2026-06-01",
+      "change": "按 Tushare 数据重新复核首次正式主线研究，生成时间戳版本 theme_review_2026-06-01_231611.md / theme_review_2026-06-01_231611.json。",
+      "impact": "评级和交易阶段结论维持不变；theme_registry.json 指向最新时间戳版本。"
     }
   ]
 }
