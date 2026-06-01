@@ -1,0 +1,133 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "code": "",
+  "name": "",
+  "data_sources": [],
+  "summary": {
+    "bucket_role": "long_term_core|offensive_stock|swing_trade|theme_trial|watch|avoid",
+    "action_rating": "Buy|Add|Hold|Reduce|Sell|Watch",
+    "stock_score": null,
+    "target_position_range": "",
+    "one_line_conclusion": ""
+  },
+  "basic_info": {
+    "stock_code": "",
+    "company_name": "",
+    "industry": "",
+    "related_theme": "",
+    "theme_rating": "",
+    "market_cap": "",
+    "current_price": "",
+    "current_position": "",
+    "cost_basis": ""
+  },
+  "position_role": {
+    "bucket_role": "long_term_core|offensive_stock|swing_trade|theme_trial|watch|avoid",
+    "allocation_purpose": "",
+    "is_long_term_core": null,
+    "is_offensive_stock": null,
+    "is_theme_trial": null,
+    "overlap_with_existing_holdings": ""
+  },
+  "investment_logic": {
+    "long_term_logic": [],
+    "swing_logic": [],
+    "core_assumptions": [],
+    "most_likely_failure_points": []
+  },
+  "scores": {
+    "business_logic": {
+      "weight": 20,
+      "score": null,
+      "evidence": ""
+    },
+    "industry_theme_fit": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "financial_quality": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "earnings_trend": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": null,
+      "evidence": ""
+    },
+    "trend_fund_flow": {
+      "weight": 10,
+      "score": null,
+      "evidence": ""
+    },
+    "risk_controllability": {
+      "weight": 10,
+      "score": null,
+      "evidence": ""
+    },
+    "base_score": null,
+    "stock_risk_penalty": {
+      "score": null,
+      "evidence": "",
+      "operation_limit": ""
+    },
+    "final_score": null
+  },
+  "financials_and_earnings": {
+    "financial_quality": "",
+    "earnings_trend": "",
+    "earnings_expectation": "",
+    "items_to_watch": []
+  },
+  "valuation": {
+    "current_valuation": "",
+    "historical_percentile": "",
+    "peer_comparison": "",
+    "reasonable_valuation_range": "",
+    "upside_potential": "",
+    "downside_risk": ""
+  },
+  "trend_and_flow": {
+    "trend_status": "",
+    "fund_flow": "",
+    "key_price_zones": []
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [],
+    "reduce_conditions": [],
+    "sell_or_invalidation_conditions": []
+  },
+  "position_suggestions_by_scenario": {
+    "market_position_below_45": "",
+    "market_position_45_60": "",
+    "market_position_60_75": "",
+    "market_position_above_75": "",
+    "theme_a": "",
+    "theme_downgrade_to_b": "",
+    "theme_downgrade_to_c_or_d": "",
+    "earnings_miss": "",
+    "valuation_overheated": ""
+  },
+  "risks": [],
+  "risk_monitors": [],
+  "next_update_triggers": [
+    "earnings_release",
+    "major_announcement",
+    "theme_rating_change",
+    "trend_break_or_recovery",
+    "valuation_deviation",
+    "earnings_revision",
+    "risk_event"
+  ],
+  "decision_log_entry": ""
+}
