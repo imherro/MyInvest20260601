@@ -618,25 +618,27 @@
     },
     {
       "code": "159378.SZ",
-      "name": "General Aviation ETF Yongying",
+      "name": "通用航空ETF永赢",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
-      "status": "to_research",
+      "status": "profile_generated",
       "current_weight_pct": 2.52,
-      "related_theme": "pending",
-      "strategic_theme_rating": "pending",
-      "tactical_theme_rating": "pending",
-      "theme_stage": "pending",
-      "rating": "pending",
+      "related_theme": "低空经济/通用航空/商业航天",
+      "strategic_theme_rating": "商业航天C；低空经济未单独登记",
+      "tactical_theme_rating": "C / 未确认",
+      "theme_stage": "germination / 待证据确认",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
-      "last_profile_file": "",
-      "last_profile_json": "",
+      "target_position_range": "不在ETF档案设定目标仓位；当前仓位2.52%作为后续组合模块输入。",
+      "reason": "通用航空ETF永赢跟踪国证通用航空产业指数，主题表达清晰；但商业航天仍为C档主题仓试错，ETF低于20/60/120/240日均线，近20日和60日显著弱于沪深300，且组合中军工/航天/低空/卫星组已约10%。本档案不生成买卖或调仓动作。",
+      "last_profile_file": "research/etfs/159378.SZ_通用航空ETF永赢_2026-06-02_183206.md",
+      "last_profile_json": "research/etfs/159378.SZ_通用航空ETF永赢_2026-06-02_183206.json",
       "data_gaps": [
-        "ETF profile not generated",
-        "theme binding pending",
-        "peer comparison pending"
+        "官方净申购/赎回金额未取得",
+        "3年/5年长期估值分位未取得",
+        "实时完整持仓结构未取得，仅有2026-03-31披露持仓",
+        "成分级组合重叠未完成",
+        "同类航天/军工/低空ETF横向比较未完成"
       ]
     },
     {
@@ -716,6 +718,11 @@
       "date": "2026-06-02",
       "change": "Generated timestamped ETF profile for 159842.SZ 券商ETF银华.",
       "impact": "159842 is now available as a profiled brokerage theme ETF input for portfolio and action modules; profile does not create buy/sell advice."
+    },
+    {
+      "date": "2026-06-02",
+      "change": "Generated timestamped ETF profile for 159378.SZ 通用航空ETF永赢.",
+      "impact": "159378 is now available as a profiled low-altitude/general aviation theme ETF input for portfolio and action modules; profile does not create buy/sell advice."
     }
   ]
 }

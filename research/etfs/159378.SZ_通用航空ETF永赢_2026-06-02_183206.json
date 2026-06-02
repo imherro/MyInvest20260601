@@ -1,0 +1,291 @@
+{
+  "module": "etf_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_183206",
+  "code": "159378.SZ",
+  "name": "通用航空ETF永赢",
+  "amount_policy": "ratio_only; no holding market value; no cost amount; no profit amount; no share count",
+  "boundary": "ETF research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": [
+    "docs/modules/ETF_RESEARCH.md",
+    "templates/etf_profile_template.md",
+    "templates/etf_profile_template.json",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/themes/theme_registry.json",
+    "research/etfs/etf_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research/portfolio/research_backlog_2026-06-02_183206.json",
+    "Tushare: fund_basic, fund_daily, fund_nav, fund_share, fund_portfolio, stock_basic, index_daily"
+  ],
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research_report": "research/themes/theme_review_2026-06-01_231611.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research_backlog": "research/portfolio/research_backlog_2026-06-02_183206.json"
+  },
+  "summary": {
+    "bucket_role": "theme",
+    "action_rating": "Watch",
+    "etf_score": 30,
+    "rating": "D",
+    "target_position_range": "No target position in this dossier; current 2.52% ratio is an input for downstream portfolio modules.",
+    "confidence": "medium",
+    "one_line_conclusion": "The ETF tracks the CN General Aviation Industry Index and expresses low-altitude/general aviation exposure, but the related theme remains C-rated, the ETF is far below key moving averages and underperforms CSI 300, while the portfolio already has about 10% military/aerospace/low-altitude/satellite exposure; Watch only."
+  },
+  "basic_info": {
+    "fund_code": "159378.SZ",
+    "fund_name": "通用航空ETF永赢",
+    "tracked_index_or_asset": "国证通用航空产业指数收益率",
+    "fund_company": "永赢基金",
+    "custodian": "中信证券",
+    "fund_type": "股票型",
+    "invest_type": "被动指数型",
+    "found_date": "2025-01-02",
+    "list_date": "2025-01-10",
+    "aum": "fund_nav did not return complete net asset fields in this run",
+    "average_daily_turnover": "Tushare fund_daily amount 20-day average about 41147.18 raw units",
+    "fee": "management fee 0.50%; custodian fee 0.10%",
+    "long_term_holding_suitable": false
+  },
+  "position_role": {
+    "bucket_role": "theme",
+    "related_theme": "低空经济/通用航空/商业航天交叉主题",
+    "strategic_theme_rating": "商业航天 C; low-altitude economy not separately registered",
+    "tactical_theme_rating": "C / unconfirmed",
+    "theme_stage": "germination / evidence pending",
+    "allocation_purpose": "Small theme exposure to low-altitude, general aviation and aerospace chains.",
+    "alternative_etfs": [
+      "159206.SZ 卫星ETF永赢",
+      "512710.SH 军工龙头ETF富国",
+      "航天/军工类ETF"
+    ],
+    "overlap_with_existing_holdings": "Military/aerospace/low-altitude/satellite group is about 10.00% in the portfolio and includes 159378, 512710, 159206, 688439, 002625, 300627, 600764."
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 13,
+      "evidence": "Tracks the CN General Aviation Industry Index; represents the theme but includes mixed aerospace, defense, equipment and new-stock exposures."
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 5,
+      "evidence": "Tracking-index valuation percentiles are missing; ETF price drawdown cannot substitute for valuation."
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": 3,
+      "evidence": "Below MA20/60/120/240; 20-day return -16.01%, 60-day return -20.47%, materially weaker than CSI 300."
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": 7,
+      "evidence": "20-day Tushare amount average about 41147.18 raw units; suitable for observation-sized exposure."
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": 5,
+      "evidence": "Fund share increased about 2.63% over 20 observations but declined about 27.00% over 120 observations."
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 4,
+      "evidence": "Related theme is C-rated and current market report pauses theme additions."
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": 2,
+      "evidence": "The portfolio already has about 10.00% exposure to the military/aerospace/low-altitude/satellite group."
+    },
+    "base_score": 39,
+    "crowding_structure_risk": {
+      "score": 9,
+      "evidence": "Theme concentration, weak trend, long-observation share decline and incomplete holdings/valuation data.",
+      "operation_limit": "Watch only; do not use this dossier as buy/add instruction."
+    },
+    "final_score": 30
+  },
+  "valuation": {
+    "status": "insufficient_index_valuation_data",
+    "short_term_60d_percentile": {
+      "status": "missing",
+      "conclusion": "Cannot confirm.",
+      "evidence": "Tracking-index valuation percentile not available from current Tushare pull."
+    },
+    "medium_term_1y_percentile": {
+      "status": "missing",
+      "conclusion": "Cannot confirm.",
+      "evidence": "ETF was listed in 2025 and has limited history."
+    },
+    "long_term_3y_5y_percentile": {
+      "status": "missing",
+      "conclusion": "Cannot confirm.",
+      "evidence": "ETF was established in 2025; long-term index valuation not obtained."
+    },
+    "dividend_or_earnings_yield": {
+      "status": "missing",
+      "conclusion": "Cannot confirm.",
+      "evidence": "Tracking index dividend yield or earnings yield not obtained."
+    },
+    "relative_value": {
+      "status": "missing",
+      "conclusion": "Peer comparison not completed.",
+      "evidence": "Need comparison with military, aerospace, satellite and low-altitude ETFs."
+    }
+  },
+  "trend_and_flow": {
+    "ma20_ma60_trend": {
+      "status": "available",
+      "conclusion": "weak",
+      "evidence": "2026-06-02 close 1.154; about 11.13% below MA20 and 13.18% below MA60."
+    },
+    "relative_strength": {
+      "status": "available",
+      "conclusion": "materially weaker than CSI 300",
+      "evidence": "20-day relative return about -16.78pct; 60-day relative return about -26.21pct."
+    },
+    "etf_share_change": {
+      "status": "available",
+      "conclusion": "short-term increase, longer-observation decline",
+      "evidence": "Fund share +2.63% over 20 observations; -27.00% over 120 observations."
+    },
+    "subscription_redemption": {
+      "status": "missing",
+      "conclusion": "Cannot confirm official net subscription/redemption.",
+      "evidence": "Only fund_share proxy is available."
+    },
+    "turnover_liquidity": {
+      "status": "available",
+      "conclusion": "usable for observation-sized exposure",
+      "evidence": "20-day Tushare amount average about 41147.18 raw units."
+    }
+  },
+  "holdings_structure": {
+    "latest_disclosure_date": "2026-03-31",
+    "top_holdings": [
+      {"code": "002085.SZ", "name": "万丰奥威", "weight_pct": 5.03},
+      {"code": "300342.SZ", "name": "天银机电", "weight_pct": 4.35},
+      {"code": "600316.SH", "name": "洪都航空", "weight_pct": 4.10},
+      {"code": "002389.SZ", "name": "航天彩虹", "weight_pct": 3.69},
+      {"code": "600038.SH", "name": "中直股份", "weight_pct": 3.56},
+      {"code": "600118.SH", "name": "中国卫星", "weight_pct": 3.17},
+      {"code": "600879.SH", "name": "航天电子", "weight_pct": 3.14},
+      {"code": "688297.SH", "name": "中无人机", "weight_pct": 2.97},
+      {"code": "300045.SZ", "name": "华力创通", "weight_pct": 2.85},
+      {"code": "603308.SH", "name": "应流股份", "weight_pct": 2.78}
+    ],
+    "concentration_risk": "Top disclosed holdings are concentrated in aviation, aerospace, satellite and equipment names; not a pure low-altitude operations exposure.",
+    "portfolio_overlap": "Overlaps thematically with 159206, 512710 and military/aerospace/low-altitude/satellite stock holdings.",
+    "alternative_etf_comparison": [
+      {
+        "code": "159378.SZ",
+        "name": "通用航空ETF永赢",
+        "advantages": ["Direct general aviation index exposure", "Theme expression is clear"],
+        "disadvantages": ["Weak trend", "Short ETF history", "Valuation and real-time holdings gaps"],
+        "preferred": false
+      },
+      {
+        "code": "159206.SZ",
+        "name": "卫星ETF永赢",
+        "advantages": ["Already profiled", "Clear satellite/commercial aerospace exposure"],
+        "disadvantages": ["C-rated theme trial", "Not a core exposure"],
+        "preferred": false
+      },
+      {
+        "code": "512710.SH",
+        "name": "军工龙头ETF富国",
+        "advantages": ["Potentially broader defense leader exposure"],
+        "disadvantages": ["Profile not yet generated"],
+        "preferred": null
+      }
+    ]
+  },
+  "operation_conditions": {
+    "buy_conditions": [
+      "No buy condition is generated in this dossier."
+    ],
+    "add_conditions": [
+      "No add condition is generated in this dossier."
+    ],
+    "hold_conditions": [
+      "Use only as research input while waiting for theme upgrade, ETF MA20/MA60 recovery and lower portfolio concentration."
+    ],
+    "reduce_conditions": [
+      "No reduce condition is generated in this dossier; concentration risk should be handled by ACTION_PLAN if needed."
+    ],
+    "sell_or_invalidation_conditions": [
+      "No sell condition is generated in this dossier; thesis weakens if ETF continues to underperform CSI 300, fund shares keep falling, and theme remains C/D without evidence."
+    ]
+  },
+  "trigger_based_actions": [
+    {
+      "trigger_condition": "Commercial aerospace/low-altitude theme upgrades and ETF recovers above MA20/MA60.",
+      "action": "ACTION_PLAN may re-evaluate keep/watch status.",
+      "reverse_or_invalidation_condition": "Theme remains C/D or ETF remains weaker than market."
+    },
+    {
+      "trigger_condition": "Military/aerospace/low-altitude group remains above reasonable portfolio boundary.",
+      "action": "Portfolio module should include this ETF in concentration review.",
+      "reverse_or_invalidation_condition": "Group exposure falls to a reasonable range and theme improves."
+    },
+    {
+      "trigger_condition": "ETF breaks lower with volume and continues to weaken.",
+      "action": "ACTION_PLAN may review risk handling.",
+      "reverse_or_invalidation_condition": "ETF recovers above MA20/MA60 with fund-flow improvement."
+    }
+  ],
+  "position_suggestions_by_scenario": {
+    "market_position_below_45": "No action in this dossier; theme sleeve should be reduced or paused.",
+    "market_position_45_60": "Current market is defensive; no new theme exposure.",
+    "market_position_60_75": "Cannot upgrade automatically without theme research upgrade.",
+    "market_position_above_75": "Still constrained by theme sleeve and concentration limits.",
+    "tactical_theme_a": "Re-score if the theme is upgraded to A.",
+    "tactical_theme_downgrade_to_b": "Not applicable; current theme status is below B.",
+    "tactical_theme_downgrade_to_c_or_d": "Current status is C theme trial; Watch only."
+  },
+  "risks": [
+    "Related theme is still C-rated and not confirmed.",
+    "ETF trend is weak and materially underperforms CSI 300 over 20/60 days.",
+    "Portfolio already has about 10.00% military/aerospace/low-altitude/satellite exposure.",
+    "ETF history is short; long-term valuation and fund-flow history are limited.",
+    "Holdings are mixed across aviation, defense, satellite, equipment and new stocks, not pure low-altitude economy."
+  ],
+  "risk_monitors": [
+    "Commercial aerospace/low-altitude theme rating changes.",
+    "ETF recovery above MA20/MA60.",
+    "20-observation fund-share trend.",
+    "Total portfolio exposure to military/aerospace/low-altitude/satellite group.",
+    "New policy, orders, launch, low-altitude infrastructure tender evidence."
+  ],
+  "data_gaps": {
+    "etf_share_or_subscription": [
+      "Fund share changes are available, but official net subscription/redemption amount is not obtained."
+    ],
+    "long_term_valuation_percentile": [
+      "Tracking-index long-term valuation percentile is missing.",
+      "ETF history is short because it was established in 2025."
+    ],
+    "full_holdings_structure": [
+      "Only 2026-03-31 disclosed holdings are available; real-time full holdings are missing."
+    ],
+    "portfolio_overlap": [
+      "Only theme/code-level overlap was identified; constituent-level quantitative overlap is not completed."
+    ],
+    "other": [
+      "Peer comparison with 512710 and other aerospace/defense/low-altitude ETFs is not completed."
+    ]
+  },
+  "next_update_triggers": [
+    "theme_rating_change",
+    "trend_break_or_recovery",
+    "fund_flow_reversal",
+    "holdings_structure_change",
+    "portfolio_overlap_change",
+    "512710 profile completion"
+  ],
+  "decision_log_entry": "2026-06-02 ETF研究：159378.SZ 通用航空ETF永赢；仓位角色为主题仓，操作评级Watch，ETF分数30，评级D；当前仓位2.52%仅作为组合模块输入；关键依据为跟踪国证通用航空产业指数、低空/通用航空主题表达清晰，但商业航天仍为C档主题仓试错，ETF低于20/60/120/240日均线，近20日和60日显著弱于沪深300，组合中军工/航天/低空/卫星组已约10%；本档案不生成买卖建议或调仓动作。"
+}
