@@ -1,8 +1,8 @@
 {
   "module": "etf_registry",
-  "version": "1.2",
+  "version": "1.3",
   "last_updated": "2026-06-02",
-  "generated_at": "2026-06-02_000715",
+  "generated_at": "2026-06-02_194731",
   "notes": "当前文件保存用户关注ETF池的最新总览。进入观察池不等于可买清单；正式操作前仍需组合分析和操作建议模块。",
   "input_research_files": {
     "market_position_report": "research/market/market_score_2026-06-01_231907.md",
@@ -666,25 +666,26 @@
     },
     {
       "code": "512710.SH",
-      "name": "Defense Leader ETF Fullgoal",
+      "name": "军工龙头ETF富国",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
-      "status": "to_research",
+      "status": "profile_generated",
       "current_weight_pct": 2.24,
-      "related_theme": "pending",
-      "strategic_theme_rating": "pending",
-      "tactical_theme_rating": "pending",
-      "theme_stage": "pending",
-      "rating": "pending",
+      "related_theme": "军工/航天/商业航天交叉主题",
+      "strategic_theme_rating": "军工未单独登记；商业航天 C；高端装备 B/C交叉",
+      "tactical_theme_rating": "C / unconfirmed",
+      "theme_stage": "weak trend / evidence pending",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
-      "last_profile_file": "",
-      "last_profile_json": "",
+      "target_position_range": "本档案不设目标仓位；当前 2.24% 仅作为后续组合模块输入",
+      "reason": "军工龙头ETF富国跟踪中证军工龙头指数收益率，代表性和流动性尚可，但当前趋势显著弱于沪深300，份额代理下降，且组合中军工/航天/低空/卫星组约10%，因此只给观察。",
+      "last_profile_file": "research/etfs/512710.SH_军工龙头ETF富国_2026-06-02_194731.md",
+      "last_profile_json": "research/etfs/512710.SH_军工龙头ETF富国_2026-06-02_194731.json",
       "data_gaps": [
-        "ETF profile not generated",
-        "theme binding pending",
-        "peer comparison pending"
+        "官方净申购/赎回金额未取得",
+        "3年/5年长期估值分位未取得",
+        "实时完整持仓和组合重叠矩阵未取得",
+        "军工主题未在当前主线登记册中单独登记"
       ]
     }
   ],
@@ -723,6 +724,11 @@
       "date": "2026-06-02",
       "change": "Generated timestamped ETF profile for 159378.SZ 通用航空ETF永赢.",
       "impact": "159378 is now available as a profiled low-altitude/general aviation theme ETF input for portfolio and action modules; profile does not create buy/sell advice."
+    },
+    {
+      "date": "2026-06-02",
+      "generated_at": "2026-06-02_194731",
+      "change": "Generated ETF profile for 512710.SH and refreshed status to profile_generated; no buy/sell/rebalance action created."
     }
   ]
 }

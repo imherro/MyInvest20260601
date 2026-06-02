@@ -1,0 +1,268 @@
+{
+  "module": "etf_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_194731",
+  "code": "512710.SH",
+  "name": "军工龙头ETF富国",
+  "amount_policy": "ratio_only; no holding market value; no cost amount; no profit amount; no share count",
+  "boundary": "ETF research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": [
+    "docs/modules/ETF_RESEARCH.md",
+    "templates/etf_profile_template.md",
+    "templates/etf_profile_template.json",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/themes/theme_registry.json",
+    "research/etfs/etf_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research/portfolio/research_backlog_2026-06-02_183207.json",
+    "Tushare: fund_basic, fund_daily, fund_nav, fund_share, fund_portfolio, stock_basic, index_daily"
+  ],
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research_report": "research/themes/theme_review_2026-06-01_231611.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research_backlog": "research/portfolio/research_backlog_2026-06-02_183207.json"
+  },
+  "summary": {
+    "bucket_role": "theme",
+    "action_rating": "Watch",
+    "etf_score": 30,
+    "rating": "D",
+    "target_position_range": "No target position in this dossier; current 2.24% ratio is an input for downstream portfolio modules.",
+    "confidence": "medium",
+    "one_line_conclusion": "The ETF tracks the CSI Defense Leader Index and gives broad defense/aerospace exposure, but the related theme is not registered as an A/B tactical mainline, price is materially below MA20/60 and underperforms CSI 300, while the portfolio already has about 10% military/aerospace/low-altitude/satellite exposure; Watch only."
+  },
+  "basic_info": {
+    "fund_code": "512710.SH",
+    "fund_name": "军工龙头ETF富国",
+    "tracked_index_or_asset": "中证军工龙头指数收益率",
+    "fund_company": "富国基金",
+    "custodian": "中国建设银行",
+    "fund_type": "股票型",
+    "invest_type": "被动指数型",
+    "found_date": "2019-07-23",
+    "list_date": "2019-08-26",
+    "aum": "fund_nav did not return complete net asset fields in this run",
+    "average_daily_turnover": "Tushare fund_daily amount 20-day average about 460976.28 raw units",
+    "fee": "management fee 0.50%; custodian fee 0.10%",
+    "long_term_holding_suitable": false
+  },
+  "position_role": {
+    "bucket_role": "theme",
+    "related_theme": "军工/航天/商业航天交叉主题",
+    "strategic_theme_rating": "军工未单独登记；商业航天 C；高端装备 B/C交叉",
+    "tactical_theme_rating": "C / unconfirmed",
+    "theme_stage": "weak trend / evidence pending",
+    "allocation_purpose": "Theme exposure to defense aerospace, military electronics, satellite and high-end materials chains.",
+    "alternative_etfs": [
+      "159378.SZ 通用航空ETF永赢",
+      "159206.SZ 卫星ETF永赢",
+      "军工/航天/国防类 ETF"
+    ],
+    "overlap_with_existing_holdings": "Military/aerospace/low-altitude/satellite group is about 10.00% in the portfolio and includes 159378, 512710, 159206, 688439, 002625, 300627, 600764."
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 16,
+      "evidence": "Tracks CSI Defense Leader Index; representative for defense aerospace and military electronics, but not a pure AI/semiconductor mainline ETF."
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 5,
+      "evidence": "Tracking-index valuation percentiles are missing; price weakness cannot be treated as verified valuation cheapness."
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": 3,
+      "evidence": "2026-06-02 close is 9.29% below MA20 and 11.81% below MA60; 20-day return -10.84%, 60-day return -21.76%."
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": 8,
+      "evidence": "20-day Tushare amount average about 460976.28 raw units; liquidity is acceptable for observation-sized ETF exposure."
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": 3,
+      "evidence": "Fund-share proxy fell 4.28% over 20 observations, 12.05% over 60 and 43.31% over 120; official net subscription/redemption data not available."
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 4,
+      "evidence": "Defense is not registered as a current A/B tactical mainline; commercial aerospace remains C-rated theme trial."
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": 2,
+      "evidence": "Existing military/aerospace/low-altitude/satellite group is already about 10.00%, so this ETF adds concentration rather than diversification."
+    },
+    "base_score": 38,
+    "crowding_structure_risk": {
+      "score": 8,
+      "evidence": "Theme concentration, weak relative trend, falling share proxy and incomplete valuation/overlap data.",
+      "operation_limit": "Watch only; do not use this dossier as buy/add instruction."
+    },
+    "final_score": 30
+  },
+  "valuation": {
+    "status": "insufficient_index_valuation_data",
+    "short_term_60d_percentile": {
+      "status": "missing",
+      "conclusion": "Cannot confirm.",
+      "evidence": "Tracking-index valuation percentile not available from current Tushare pull."
+    },
+    "medium_term_1y_percentile": {
+      "status": "missing",
+      "conclusion": "Cannot confirm."
+    },
+    "long_term_3y_5y_percentile": {
+      "status": "missing",
+      "conclusion": "Cannot confirm."
+    },
+    "dividend_or_earnings_yield": {
+      "status": "missing",
+      "conclusion": "Cannot confirm."
+    }
+  },
+  "trend_and_flow": {
+    "basis_date": "2026-06-02",
+    "close": 0.683,
+    "latest_pct_chg": -0.73,
+    "ret_5d_pct": -6.44,
+    "ret_20d_pct": -10.84,
+    "ret_60d_pct": -21.76,
+    "ret_120d_pct": 2.86,
+    "close_vs_ma20_pct": -9.29,
+    "close_vs_ma60_pct": -11.81,
+    "relative_to_csi300_20d_pct": -13.07,
+    "relative_to_csi300_60d_pct": -28.54,
+    "fund_share_proxy_20obs_pct": -4.28,
+    "fund_share_proxy_60obs_pct": -12.05,
+    "fund_share_proxy_120obs_pct": -43.31,
+    "net_subscription_redemption": "missing; share change only used as proxy"
+  },
+  "holdings": {
+    "latest_disclosure_date": "2026-03-31",
+    "top10_weight_sum_pct": 60.58,
+    "top_holdings": [
+      {
+        "code": "600893.SH",
+        "name": "航发动力",
+        "industry": "航空",
+        "weight_pct": 9.5
+      },
+      {
+        "code": "600879.SH",
+        "name": "航天电子",
+        "industry": "航空",
+        "weight_pct": 8.7
+      },
+      {
+        "code": "600118.SH",
+        "name": "中国卫星",
+        "industry": "航空",
+        "weight_pct": 7.2
+      },
+      {
+        "code": "002179.SZ",
+        "name": "中航光电",
+        "industry": "元器件",
+        "weight_pct": 6.37
+      },
+      {
+        "code": "600760.SH",
+        "name": "中航沈飞",
+        "industry": "航空",
+        "weight_pct": 6.2
+      },
+      {
+        "code": "000768.SZ",
+        "name": "中航西飞",
+        "industry": "航空",
+        "weight_pct": 5.08
+      },
+      {
+        "code": "688122.SH",
+        "name": "西部超导",
+        "industry": "小金属",
+        "weight_pct": 4.78
+      },
+      {
+        "code": "600372.SH",
+        "name": "中航机载",
+        "industry": "航空",
+        "weight_pct": 4.67
+      },
+      {
+        "code": "002465.SZ",
+        "name": "海格通信",
+        "industry": "通信设备",
+        "weight_pct": 4.41
+      },
+      {
+        "code": "688568.SH",
+        "name": "中科星图",
+        "industry": "软件服务",
+        "weight_pct": 3.67
+      }
+    ],
+    "concentration_note": "Top 10 disclosed holdings sum to about 60.58%, concentrated in aviation, aerospace, military electronics, satellite and high-end materials."
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [
+      "Use only as research input until defense/aerospace theme is separately registered or upgraded, ETF regains MA20/60, and portfolio concentration is reviewed."
+    ],
+    "reduce_conditions": [],
+    "sell_invalid_conditions": [
+      "ETF continues to underperform CSI 300, share proxy keeps falling, or related theme remains C/D without policy/order/earnings confirmation."
+    ],
+    "trigger_table": [
+      {
+        "trigger": "ETF stands back above MA20/60 and related theme is upgraded by theme research",
+        "action": "Action-plan module may reassess whether it remains a small theme holding",
+        "invalid": "Theme remains C/D or ETF stays weaker than CSI 300"
+      },
+      {
+        "trigger": "Military/aerospace/low-altitude/satellite group remains around or above 10%",
+        "action": "Portfolio module should treat this as concentration risk input",
+        "invalid": "Group concentration falls and tactical evidence improves"
+      },
+      {
+        "trigger": "ETF breaks recent low with continued volume pressure",
+        "action": "Action-plan module should review risk treatment",
+        "invalid": "ETF retakes MA20/60 with confirmed fund/relative-strength repair"
+      }
+    ]
+  },
+  "position_advice_boundary": {
+    "this_dossier_action": "Watch",
+    "portfolio_action": "Not generated here",
+    "current_weight_pct_input": 2.24,
+    "notes": [
+      "No buy advice.",
+      "No add advice.",
+      "No sell advice.",
+      "No rebalance instruction."
+    ]
+  },
+  "data_gaps": [
+    "Official net subscription/redemption amount not available; fund-share change is only a proxy.",
+    "Tracking-index 60d/1y/3y/5y valuation percentiles not available.",
+    "Complete live holdings and overlap matrix not available; latest portfolio disclosure is 2026-03-31.",
+    "Defense theme is not yet separately registered in current theme registry; commercial aerospace proxy remains C-rated."
+  ],
+  "next_review": {
+    "next_review_date": "When theme registry adds/updates defense aerospace, ETF regains MA20/60, or portfolio snapshot changes.",
+    "success_criteria": [
+      "Downstream modules no longer treat 512710 as unprofiled.",
+      "Action-plan module uses this dossier as input without interpreting it as buy/add instruction."
+    ]
+  }
+}
