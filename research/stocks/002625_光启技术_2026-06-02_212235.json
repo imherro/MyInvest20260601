@@ -1,0 +1,247 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_212235",
+  "code": "002625.SZ",
+  "name": "光启技术",
+  "amount_policy": "ratio_only; no holding market value; no cost amount; no profit amount; no share count",
+  "boundary": "Stock research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": [
+    "docs/modules/STOCK_RESEARCH.md",
+    "templates/stock_profile_template.md",
+    "templates/stock_profile_template.json",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/themes/theme_registry.json",
+    "research/stocks/stock_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research/portfolio/research_backlog_2026-06-02_194731.json",
+    "Tushare: stock_basic, daily, daily_basic, moneyflow, income, balancesheet, cashflow, fina_indicator, fina_mainbz, index_daily"
+  ],
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research_report": "research/themes/theme_review_2026-06-01_231611.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "stock_registry": "research/stocks/stock_registry.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research_backlog": "research/portfolio/research_backlog_2026-06-02_194731.json"
+  },
+  "summary": {
+    "bucket_role": "观察股 / 主题试错股",
+    "action_rating": "Watch",
+    "stock_score": 47,
+    "rating": "D",
+    "target_position_range": "No target position in this dossier; current 1.78% ratio is an input for downstream portfolio modules.",
+    "confidence": "medium",
+    "one_line_conclusion": "光启技术主营超材料，2025和2026Q1收入保持较快增长、毛利率高、负债率低，但军工/航天主题未确认为当前A/B交易主线，PE(TTM)约116倍、PB约8.45倍、PS(TTM)约37.61倍，股价低于20/60/120/240日线且资金净流出；Watch only."
+  },
+  "basic_info": {
+    "stock_code": "002625.SZ",
+    "company_name": "光启技术",
+    "area": "深圳",
+    "industry": "航空",
+    "market": "主板",
+    "list_date": "2011-11-03",
+    "related_theme": "超材料 / 军工航空 / 航天 / 低空交叉主题",
+    "theme_rating": "军工未单独登记；商业航天 C；高端装备 B/C 交叉",
+    "total_market_cap": "about 825.85 billion CNY from Tushare daily_basic total_mv; public market cap, not holding amount",
+    "current_price": "38.33 CNY, 2026-06-02 close",
+    "current_weight_pct_input": 1.78,
+    "cost_policy": "Cost amount is not recorded in this dossier."
+  },
+  "position_role": {
+    "bucket_role": "观察股 / 主题试错股",
+    "allocation_purpose": "Research input for defense/aerospace/new-material exposure; not a core or confirmed offensive holding.",
+    "long_term_core": false,
+    "mainline_offensive": false,
+    "theme_trial": true,
+    "overlap_with_existing_holdings": "Overlaps with 512710, 159378, 159206, 600764, 688439 and 300627 in the military/aerospace/low-altitude/satellite group, which is already about 10.00% in the portfolio."
+  },
+  "business_logic": {
+    "long_term_logic": [
+      "主营超材料产品和超材料研发业务，2025年超材料行业收入约20.35亿元，占收入绝对主体。",
+      "超材料产品2025年收入约17.96亿元、毛利约9.38亿元，业务具备较高毛利率。",
+      "低负债和较高现金储备提供一定财务缓冲。"
+    ],
+    "swing_logic": [
+      "No confirmed positive trend as of 2026-06-02.",
+      "Price is below MA20/60/120/240 and underperforms CSI 300 over 20 and 60 trading days."
+    ],
+    "core_assumptions": [
+      "Defense aerospace and special-material demand continues.",
+      "Company can convert high gross margin into sustained earnings and cash flow.",
+      "Theme registration eventually confirms defense/aerospace as at least a B tactical line."
+    ],
+    "likely_failure_points": [
+      "High valuation leaves little room for earnings disappointment.",
+      "Revenue depends on specialized defense/new-material demand and may face customer/order concentration risk.",
+      "2026Q1 operating cash flow deteriorated sharply year over year while capex and working-capital demand remain material."
+    ]
+  },
+  "scores": {
+    "business_logic": {
+      "weight": 20,
+      "score": 15,
+      "evidence": "Super-material business is real and high-margin; 2025 super-material industry revenue about 20.35bn CNY."
+    },
+    "industry_theme_fit": {
+      "weight": 15,
+      "score": 7,
+      "evidence": "Defense/aerospace/new-material exposure is relevant, but current theme registry has commercial aerospace at C and no separate A/B defense tactical mainline."
+    },
+    "financial_quality": {
+      "weight": 15,
+      "score": 10,
+      "evidence": "2025 gross margin about 48.97%, net margin about 33.58%, debt-to-assets about 19.00%; but ROE only about 7.40% and receivables/inventory/capex need monitoring."
+    },
+    "earnings_trend": {
+      "weight": 15,
+      "score": 12,
+      "evidence": "2025 revenue +31.32%, parent net profit +5.37%; 2026Q1 revenue +40.28%, parent net profit +17.03%."
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 3,
+      "evidence": "PE(TTM) about 115.90, PB about 8.45, PS(TTM) about 37.61; historical percentile since 2024 is mid-low but absolute valuation is expensive."
+    },
+    "trend_and_flow": {
+      "weight": 10,
+      "score": 2,
+      "evidence": "Below MA20/60/120/240; 20-day moneyflow proxy about -169703.24 and 60-day about -373104.16 raw Tushare units."
+    },
+    "risk_control": {
+      "weight": 10,
+      "score": 5,
+      "evidence": "Debt is low, but valuation, customer/order concentration, capex/working-capital pressure and theme concentration are material."
+    },
+    "base_score": 54,
+    "stock_risk_penalty": {
+      "score": 7,
+      "evidence": "Penalty for high absolute valuation, weak trend, net money outflow, C-rated related theme and portfolio concentration."
+    },
+    "final_score": 47
+  },
+  "financials": {
+    "2025": {
+      "revenue_billion_cny": 2.0457,
+      "parent_net_profit_billion_cny": 0.6869,
+      "revenue_yoy_pct": 31.32,
+      "parent_net_profit_yoy_pct": 5.37,
+      "gross_margin_pct": 48.97,
+      "net_margin_pct": 33.58,
+      "roe_pct": 7.4,
+      "debt_to_assets_pct": 19.0,
+      "operating_cashflow_billion_cny": 0.8084,
+      "free_cashflow_billion_cny": 0.6988,
+      "capex_billion_cny": 0.6488
+    },
+    "2026Q1": {
+      "revenue_billion_cny": 0.5223,
+      "parent_net_profit_billion_cny": 0.1762,
+      "revenue_yoy_pct": 40.28,
+      "parent_net_profit_yoy_pct": 17.03,
+      "gross_margin_pct": 49.85,
+      "net_margin_pct": 33.72,
+      "roe_yearly_pct": 7.26,
+      "debt_to_assets_pct": 18.57,
+      "operating_cashflow_billion_cny": 0.0494,
+      "operating_cashflow_yoy_pct": -84.83,
+      "free_cashflow_billion_cny": -0.3055,
+      "capex_billion_cny": 0.1488
+    },
+    "balance_2026Q1": {
+      "total_assets_billion_cny": 12.008,
+      "total_liabilities_billion_cny": 2.23,
+      "equity_parent_billion_cny": 9.777,
+      "money_cap_billion_cny": 3.606,
+      "accounts_receivable_billion_cny": 2.624,
+      "inventory_billion_cny": 0.771,
+      "goodwill_billion_cny": 0.321
+    }
+  },
+  "valuation": {
+    "basis_date": "2026-06-02",
+    "pe_ttm": 115.8968,
+    "pe_ttm_percentile_since_2024": 0.3522,
+    "pb": 8.4466,
+    "pb_percentile_since_2024": 0.3368,
+    "ps_ttm": 37.6122,
+    "ps_ttm_percentile_since_2024": 0.3162,
+    "dividend_yield_ttm": null,
+    "conclusion": "Absolute valuation is expensive; mid-low short history percentile does not provide enough safety margin."
+  },
+  "trend_and_flow": {
+    "basis_date": "2026-06-02",
+    "close": 38.33,
+    "ret_5d_pct": -3.18,
+    "ret_20d_pct": -2.17,
+    "ret_60d_pct": -15.35,
+    "ret_120d_pct": -15.12,
+    "ret_240d_pct": -3.55,
+    "close_vs_ma20_pct": -5.04,
+    "close_vs_ma60_pct": -5.34,
+    "close_vs_ma120_pct": -15.01,
+    "close_vs_ma240_pct": -13.98,
+    "moneyflow_net_5d": -4425.73,
+    "moneyflow_net_20d": -169703.24,
+    "moneyflow_net_60d": -373104.16,
+    "relative_to_csi300_20d_pct": -4.4,
+    "relative_to_csi300_60d_pct": -22.13
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [
+      "Use as research input only if position remains small and downstream portfolio module accepts military/aerospace concentration risk.",
+      "Watch for revenue/profit growth continuing with cash-flow repair and ETF/theme strength repair."
+    ],
+    "reduce_conditions": [],
+    "sell_invalid_conditions": [
+      "Earnings growth slows while valuation remains high.",
+      "Price stays below MA20/60 with continued moneyflow outflow.",
+      "Defense/aerospace theme remains C/D and portfolio concentration remains high."
+    ],
+    "trigger_table": [
+      {
+        "trigger": "Stock regains MA20/60 and 20-day moneyflow turns positive while defense/aerospace theme upgrades",
+        "action": "Action-plan module may reassess from Watch to small trial holding",
+        "invalid": "Theme remains C/D or price fails at MA60"
+      },
+      {
+        "trigger": "2026 interim report confirms revenue/profit growth and operating cashflow repair",
+        "action": "Refresh valuation and financial score",
+        "invalid": "OCF remains weak or receivables/inventory expand faster than revenue"
+      },
+      {
+        "trigger": "PE/PB/PS remain high while trend breaks lower",
+        "action": "Action-plan module should review risk treatment",
+        "invalid": "Valuation compresses or earnings growth accelerates enough to justify premium"
+      }
+    ]
+  },
+  "position_advice_boundary": {
+    "this_dossier_action": "Watch",
+    "portfolio_action": "Not generated here",
+    "current_weight_pct_input": 1.78,
+    "notes": [
+      "No buy advice.",
+      "No add advice.",
+      "No sell advice.",
+      "No rebalance instruction."
+    ]
+  },
+  "data_gaps": [
+    "No official customer concentration or order backlog data was parsed in this run.",
+    "No analyst consensus forecast was introduced.",
+    "No peer valuation table was built.",
+    "Moneyflow uses Tushare raw proxy and is not equivalent to verified institutional flow."
+  ],
+  "next_review": {
+    "next_review_date": "2026 interim report, major order announcement, defense/aerospace theme registry update, or MA20/60 repair/breakdown.",
+    "success_criteria": [
+      "Downstream modules no longer treat 002625 as unprofiled.",
+      "Action-plan module uses this dossier without interpreting it as direct buy/add/sell instruction."
+    ]
+  }
+}
