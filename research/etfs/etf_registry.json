@@ -46,15 +46,15 @@
       "562500.SH 机器人ETF华夏"
     ],
     "current_holding_to_research": [
-      "511360.SH ??ETF???",
-      "512400.SH ????ETF??",
-      "513180.SH ????ETF??",
-      "159842.SZ ??ETF??",
-      "512070.SH ????ETF???",
-      "159992.SZ ???ETF??",
-      "159378.SZ ????ETF??",
-      "562800.SH ????ETF??",
-      "512710.SH ????ETF??"
+      "511360.SH Short-term Bond ETF Haifutong",
+      "512400.SH Nonferrous Metals ETF Southern",
+      "513180.SH Hang Seng Tech ETF ChinaAMC",
+      "159842.SZ Brokerage ETF Yinhua",
+      "512070.SH Securities Insurance ETF E Fund",
+      "159992.SZ Innovative Drug ETF Yinhua",
+      "159378.SZ General Aviation ETF Yongying",
+      "562800.SH Rare Metals ETF Harvest",
+      "512710.SH Defense Leader ETF Fullgoal"
     ]
   },
   "etfs": [
@@ -474,7 +474,7 @@
     },
     {
       "code": "511360.SH",
-      "name": "??ETF???",
+      "name": "Short-term Bond ETF Haifutong",
       "bucket_role": "bond_cash",
       "pool": "current_holding_to_research",
       "status": "to_research",
@@ -486,18 +486,18 @@
       "rating": "pending",
       "action_rating": "Watch",
       "target_position_range": "",
-      "reason": "????ETF?????????ETF????????????ETF???",
+      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
       "last_profile_file": "",
       "last_profile_json": "",
       "data_gaps": [
-        "ETF?????",
-        "???????",
-        "?????????"
+        "ETF profile not generated",
+        "theme binding pending",
+        "peer comparison pending"
       ]
     },
     {
       "code": "512400.SH",
-      "name": "????ETF??",
+      "name": "Nonferrous Metals ETF Southern",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
       "status": "to_research",
@@ -509,18 +509,18 @@
       "rating": "pending",
       "action_rating": "Watch",
       "target_position_range": "",
-      "reason": "????ETF?????????ETF????????????ETF???",
+      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
       "last_profile_file": "",
       "last_profile_json": "",
       "data_gaps": [
-        "ETF?????",
-        "???????",
-        "?????????"
+        "ETF profile not generated",
+        "theme binding pending",
+        "peer comparison pending"
       ]
     },
     {
       "code": "513180.SH",
-      "name": "????ETF??",
+      "name": "Hang Seng Tech ETF ChinaAMC",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
       "status": "to_research",
@@ -532,18 +532,18 @@
       "rating": "pending",
       "action_rating": "Watch",
       "target_position_range": "",
-      "reason": "????ETF?????????ETF????????????ETF???",
+      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
       "last_profile_file": "",
       "last_profile_json": "",
       "data_gaps": [
-        "ETF?????",
-        "???????",
-        "?????????"
+        "ETF profile not generated",
+        "theme binding pending",
+        "peer comparison pending"
       ]
     },
     {
       "code": "159842.SZ",
-      "name": "??ETF??",
+      "name": "Brokerage ETF Yinhua",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
       "status": "to_research",
@@ -555,18 +555,18 @@
       "rating": "pending",
       "action_rating": "Watch",
       "target_position_range": "",
-      "reason": "????ETF?????????ETF????????????ETF???",
+      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
       "last_profile_file": "",
       "last_profile_json": "",
       "data_gaps": [
-        "ETF?????",
-        "???????",
-        "?????????"
+        "ETF profile not generated",
+        "theme binding pending",
+        "peer comparison pending"
       ]
     },
     {
       "code": "512070.SH",
-      "name": "????ETF???",
+      "name": "Securities Insurance ETF E Fund",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
       "status": "to_research",
@@ -578,18 +578,18 @@
       "rating": "pending",
       "action_rating": "Watch",
       "target_position_range": "",
-      "reason": "????ETF?????????ETF????????????ETF???",
+      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
       "last_profile_file": "",
       "last_profile_json": "",
       "data_gaps": [
-        "ETF?????",
-        "???????",
-        "?????????"
+        "ETF profile not generated",
+        "theme binding pending",
+        "peer comparison pending"
       ]
     },
     {
       "code": "159992.SZ",
-      "name": "???ETF??",
+      "name": "Innovative Drug ETF Yinhua",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
       "status": "to_research",
@@ -601,18 +601,18 @@
       "rating": "pending",
       "action_rating": "Watch",
       "target_position_range": "",
-      "reason": "????ETF?????????ETF????????????ETF???",
+      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
       "last_profile_file": "",
       "last_profile_json": "",
       "data_gaps": [
-        "ETF?????",
-        "???????",
-        "?????????"
+        "ETF profile not generated",
+        "theme binding pending",
+        "peer comparison pending"
       ]
     },
     {
       "code": "159378.SZ",
-      "name": "????ETF??",
+      "name": "General Aviation ETF Yongying",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
       "status": "to_research",
@@ -624,18 +624,18 @@
       "rating": "pending",
       "action_rating": "Watch",
       "target_position_range": "",
-      "reason": "????ETF?????????ETF????????????ETF???",
+      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
       "last_profile_file": "",
       "last_profile_json": "",
       "data_gaps": [
-        "ETF?????",
-        "???????",
-        "?????????"
+        "ETF profile not generated",
+        "theme binding pending",
+        "peer comparison pending"
       ]
     },
     {
       "code": "562800.SH",
-      "name": "????ETF??",
+      "name": "Rare Metals ETF Harvest",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
       "status": "to_research",
@@ -647,18 +647,18 @@
       "rating": "pending",
       "action_rating": "Watch",
       "target_position_range": "",
-      "reason": "????ETF?????????ETF????????????ETF???",
+      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
       "last_profile_file": "",
       "last_profile_json": "",
       "data_gaps": [
-        "ETF?????",
-        "???????",
-        "?????????"
+        "ETF profile not generated",
+        "theme binding pending",
+        "peer comparison pending"
       ]
     },
     {
       "code": "512710.SH",
-      "name": "????ETF??",
+      "name": "Defense Leader ETF Fullgoal",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
       "status": "to_research",
@@ -670,13 +670,13 @@
       "rating": "pending",
       "action_rating": "Watch",
       "target_position_range": "",
-      "reason": "????ETF?????????ETF????????????ETF???",
+      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
       "last_profile_file": "",
       "last_profile_json": "",
       "data_gaps": [
-        "ETF?????",
-        "???????",
-        "?????????"
+        "ETF profile not generated",
+        "theme binding pending",
+        "peer comparison pending"
       ]
     }
   ],
@@ -688,8 +688,8 @@
     },
     {
       "date": "2026-06-02",
-      "change": "???????????9????ETF?current_holding_to_research?",
-      "impact": "??ETF????????????????????????????????"
+      "change": "Added 9 currently held ETFs to current_holding_to_research.",
+      "impact": "These ETFs require timestamped ETF profiles before they can be used as buy/add candidates."
     }
   ]
 }
