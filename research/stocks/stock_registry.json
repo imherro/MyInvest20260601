@@ -10,7 +10,7 @@
     {"code": "603596", "name": "伯特利", "status": "to_research", "current_weight_pct": 1.79, "bucket_role": "unknown", "related_theme": "pending", "rating": "pending", "action_rating": "Watch", "target_position_range": "", "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。", "last_profile_file": ""},
     {"code": "002352", "name": "顺丰控股", "status": "to_research", "current_weight_pct": 2.01, "bucket_role": "unknown", "related_theme": "pending", "rating": "pending", "action_rating": "Watch", "target_position_range": "", "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。", "last_profile_file": ""},
     {"code": "603087", "name": "甘李药业", "status": "to_research", "current_weight_pct": 1.03, "bucket_role": "unknown", "related_theme": "pending", "rating": "pending", "action_rating": "Watch", "target_position_range": "", "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。", "last_profile_file": ""},
-    {"code": "002920", "name": "德赛西威", "status": "to_research", "current_weight_pct": 2.45, "bucket_role": "unknown", "related_theme": "pending", "rating": "pending", "action_rating": "Watch", "target_position_range": "", "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。", "last_profile_file": ""},
+    {"code": "002920", "name": "德赛西威", "status": "profile_generated", "current_weight_pct": 2.45, "bucket_role": "watch", "related_theme": "无人驾驶/智能汽车", "rating": "C", "action_rating": "Watch", "target_position_range": "不在个股档案设定目标仓位；当前仓位2.45%作为后续模块输入。", "reason": "已生成个股档案：业务逻辑清晰、2025年盈利有验证，但无人驾驶主线D档观察，2026Q1业绩回落且趋势弱于指数；本档案不生成买卖或调仓动作。", "last_profile_file": "research/stocks/002920_德赛西威_2026-06-02_103125.md", "last_profile_json": "research/stocks/002920_德赛西威_2026-06-02_103125.json"},
     {"code": "688439", "name": "振华风光", "status": "to_research", "current_weight_pct": 1.21, "bucket_role": "unknown", "related_theme": "pending", "rating": "pending", "action_rating": "Watch", "target_position_range": "", "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。", "last_profile_file": ""},
     {"code": "002625", "name": "光启技术", "status": "to_research", "current_weight_pct": 1.78, "bucket_role": "unknown", "related_theme": "pending", "rating": "pending", "action_rating": "Watch", "target_position_range": "", "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。", "last_profile_file": ""},
     {"code": "300627", "name": "华测导航", "status": "to_research", "current_weight_pct": 0.58, "bucket_role": "unknown", "related_theme": "pending", "rating": "pending", "action_rating": "Watch", "target_position_range": "", "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。", "last_profile_file": ""},
@@ -32,6 +32,11 @@
       "date": "2026-06-02",
       "change": "根据用户提供的当前持仓，登记17只持仓个股为to_research。",
       "impact": "后续个股操作建议必须先补个股档案，不能只凭组合比例直接给买卖指令。"
+    },
+    {
+      "date": "2026-06-02",
+      "change": "生成002920 德赛西威个股档案，更新为profile_generated，评级C，操作评级Watch。",
+      "impact": "后续PORTFOLIO_ANALYSIS、ACTION_PLAN、INTRADAY_ALERTS、POST_MARKET_REVIEW可读取该档案；本次不生成买卖建议或调仓动作。"
     }
   ]
 }

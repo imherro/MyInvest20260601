@@ -1,0 +1,210 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_103125",
+  "code": "002920.SZ",
+  "name": "德赛西威",
+  "data_sources": [
+    "docs/modules/STOCK_RESEARCH.md",
+    "templates/stock_profile_template.md",
+    "templates/stock_profile_template.json",
+    "docs/DATA_SOURCES.md",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/themes/theme_registry.json",
+    "research/stocks/stock_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.md",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research/portfolio/research_backlog_2026-06-02_094121.json",
+    "Tushare: stock_basic, daily, daily_basic, fina_indicator, income, cashflow, moneyflow, index_daily"
+  ],
+  "boundary": "研究档案输入；不生成买卖建议，不生成调仓动作，不展示组合总金额、单只持仓金额或盈亏金额。持仓成本按最新价与快照参考盈亏比例反推，仅作成本基准。",
+  "summary": {
+    "bucket_role": "watch",
+    "action_rating": "Watch",
+    "stock_score": 52,
+    "rating": "C",
+    "target_position_range": "不在本档案设定目标仓位；记录当前仓位2.45%，供后续 PORTFOLIO_ANALYSIS/ACTION_PLAN 读取。",
+    "one_line_conclusion": "德赛西威具备智能座舱/智能驾驶汽车电子的清晰业务逻辑和2025年盈利验证，但最新主线仍为D档观察，2026Q1收入与利润同比回落，股价弱于沪深300和创业板，当前先作为观察股研究输入。"
+  },
+  "basic_info": {
+    "stock_code": "002920.SZ",
+    "company_name": "德赛西威",
+    "area": "广东",
+    "industry": "汽车配件",
+    "market": "主板",
+    "list_date": "2017-12-26",
+    "related_theme": "无人驾驶/智能汽车",
+    "theme_rating": "无人驾驶：D；状态：watch；交易阶段：germination",
+    "market_cap": "总市值约602.18亿元，流通市值约601.99亿元（Tushare daily_basic，2026-06-01；公共市值，不是持仓金额）",
+    "current_price": "100.90元（2026-06-01收盘）",
+    "current_position": "2.45%（portfolio_snapshot_2026-06-02_092310）",
+    "cost_basis": "约118.12元；按2026-06-01收盘价100.90元和持仓快照参考盈亏比例-14.58%反推，不记录成本金额",
+    "holding_days": 65
+  },
+  "position_role": {
+    "bucket_role": "watch",
+    "allocation_purpose": "智能汽车/无人驾驶方向的个股观察输入，验证公司基本面能否支撑后续模块继续跟踪。",
+    "is_long_term_core": false,
+    "is_offensive_stock": false,
+    "is_theme_trial": false,
+    "overlap_with_existing_holdings": "组合快照中智能汽车组约4.24%，包含603596、002920；516520智能驾驶ETF档案披露的2026-03-31持仓中也含002920，后续组合模块需复核个股与ETF重叠。"
+  },
+  "market_and_theme_context": {
+    "market_position": "最新市场仓位报告为中性修复、偏防守，权益目标45%-55%，进攻仓状态reduce。",
+    "portfolio_context": "组合快照显示当前权益64.96%，未建档个股22.14%，002920为P0补研究标的。",
+    "theme_context": "无人驾驶主线评级D、状态watch、阶段germination；代表股包含德赛西威。"
+  },
+  "investment_logic": {
+    "long_term_logic": [
+      "公司处于汽车电子链条，业务方向与智能座舱、智能驾驶、车联网等整车智能化升级相关。",
+      "2025年营收325.57亿元、归母净利润24.54亿元，ROE约19.58%，说明过去一年基本面仍有较强验证。",
+      "智能驾驶长期产业方向存在，但当前A股交易阶段尚未确认，不能仅凭主题归属提升仓位角色。"
+    ],
+    "swing_logic": [
+      "截至2026-06-01，收盘价低于20日、60日、120日均线，20/60/120/240日收益均为负。",
+      "相对沪深300近60日落后约19.19个百分点，相对创业板指近60日落后约38.24个百分点，短线趋势和相对强度不足。"
+    ],
+    "core_assumptions": [
+      "智能座舱和智能驾驶电子单车价值量提升能够继续支撑收入规模。",
+      "公司能在整车客户价格压力与研发投入之间维持合理毛利率和现金流。",
+      "无人驾驶/智能汽车主题若要成为进攻输入，需要ETF、资金和政策/订单证据同步改善。"
+    ],
+    "most_likely_failure_points": [
+      "2026Q1营收同比-4.37%、归母净利润同比-20.74%，若后续季度延续下滑，2025年的高增长会被削弱。",
+      "汽车电子价格竞争、整车客户议价或项目量产节奏低于预期。",
+      "智能驾驶主线继续弱于市场，个股即使基本面尚可也难以获得交易阶段支撑。"
+    ]
+  },
+  "scores": {
+    "business_logic": {
+      "weight": 20,
+      "score": 16,
+      "evidence": "汽车电子业务逻辑清晰，长期受益于整车智能化，但需年报/公告继续复核客户结构与订单质量。"
+    },
+    "industry_theme_fit": {
+      "weight": 15,
+      "score": 7,
+      "evidence": "公司是无人驾驶/智能汽车代表股，但主线登记册中无人驾驶当前仅D档观察、阶段germination。"
+    },
+    "financial_quality": {
+      "weight": 15,
+      "score": 12,
+      "evidence": "2025年ROE约19.58%，经营现金流约28.84亿元；2026Q1经营现金流约11.16亿元，财务质量尚可。"
+    },
+    "earnings_trend": {
+      "weight": 15,
+      "score": 8,
+      "evidence": "2025年营收同比+17.88%、净利润同比+22.38%；但2026Q1营收同比-4.37%、净利润同比-20.74%，趋势出现回落。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 12,
+      "evidence": "2026-06-01 PE(TTM)25.81、PB4.18、PS(TTM)1.87；240日PE分位约17.08%、PB分位约5.00%、PS分位约1.67%，估值处于近一年偏低区域。"
+    },
+    "trend_fund_flow": {
+      "weight": 10,
+      "score": 4,
+      "evidence": "价格低于20/60/120日均线；近60日-15.14%，相对沪深300落后19.19个百分点；近3个交易日moneyflow样本为净流出。"
+    },
+    "risk_controllability": {
+      "weight": 10,
+      "score": 8,
+      "evidence": "公司财务风险未见明显失控，但存在汽车周期、客户议价、价格竞争、主题降温和个股与ETF重叠风险。"
+    },
+    "base_score": 59,
+    "stock_risk_penalty": {
+      "score": 7,
+      "evidence": "扣分来自2026Q1业绩回落、趋势弱于指数、主题D档观察、组合中智能汽车相关敞口需复核。",
+      "operation_limit": "本档案仅给研究评级Watch，不生成买卖或调仓动作。"
+    },
+    "final_score": 52
+  },
+  "financials_and_earnings": {
+    "financial_quality": "2025年营收325.57亿元、归母净利润24.54亿元、ROE约19.58%、毛利率约19.07%、净利率约7.60%；2026Q1经营现金流约11.16亿元，现金流表现好于同期利润。",
+    "earnings_trend": "2025年维持增长，但2026Q1营收64.95亿元、归母净利润4.61亿元，收入同比-4.37%、净利润同比-20.74%，需要观察是否只是季度节奏还是趋势反转。",
+    "earnings_expectation": "本次未引入券商盈利预测；后续若纳入预期数据，需单独标注来源和日期。",
+    "items_to_watch": [
+      "2026中报收入和归母净利润是否恢复增长",
+      "毛利率是否继续低于20%并压缩净利率",
+      "经营现金流与利润的匹配程度",
+      "智能座舱/智能驾驶项目量产节奏和客户集中度"
+    ]
+  },
+  "valuation": {
+    "current_valuation": "2026-06-01 PE(TTM)25.81、PB4.18、PS(TTM)1.87。",
+    "historical_percentile": "近240个交易日PE(TTM)分位约17.08%、PB分位约5.00%、PS(TTM)分位约1.67%；近60个交易日PE(TTM)分位约21.67%、PB分位约20.00%。",
+    "peer_comparison": "本次未做完整同业横向比较，需后续与汽车电子/智能座舱/智能驾驶链条公司复核。",
+    "reasonable_valuation_range": "不在本档案给估值交易区间；仅记录当前估值处于近一年低分位，但需结合业绩是否修复判断。",
+    "upside_potential": "不做价格上行判断。",
+    "downside_risk": "若2026Q1回落延续且主线仍为D档，低估值可能变为盈利下修后的估值陷阱。"
+  },
+  "trend_and_flow": {
+    "trend_status": "2026-06-01收盘100.90元，低于20日均线105.03元、60日均线107.96元、120日均线115.44元；近20/60/120/240日收益分别为-2.94%、-15.14%、-6.65%、-6.01%。",
+    "fund_flow": "Tushare moneyflow样本显示2026-05-28至2026-06-01连续三日净流出；2026-06-01 net_mf_amount约-3140.33（Tushare原始口径）。",
+    "key_price_zones": [
+      "20日均线约105.03元：短期趋势修复观察位",
+      "60日均线约107.96元：中期趋势修复观察位",
+      "120日均线约115.44元：中期压力/确认观察位",
+      "成本基准约118.12元：由持仓快照参考盈亏比例反推，仅用于风险观察"
+    ]
+  },
+  "operation_conditions": {
+    "buy_conditions": [
+      "本档案不生成买入条件；如需操作动作，必须由 ACTION_PLAN 在读取本档案、市场仓位、主线评级和组合约束后另行生成。"
+    ],
+    "add_conditions": [
+      "本档案不生成加仓条件。"
+    ],
+    "hold_conditions": [
+      "作为研究观察输入：跟踪2026中报、无人驾驶主线评级、20/60日均线修复、资金流是否从净流出转为稳定流入。"
+    ],
+    "reduce_conditions": [
+      "本档案不生成减仓条件。"
+    ],
+    "sell_or_invalidation_conditions": [
+      "本档案不生成卖出条件；研究假设失效信号包括业绩继续下滑、主线继续弱于市场、汽车电子价格竞争显著恶化。"
+    ]
+  },
+  "position_suggestions_by_scenario": {
+    "market_position_below_45": "不在本档案给仓位动作；仅提示后续模块需同时读取市场仓位和主线评级。",
+    "market_position_45_60": "不在本档案给仓位动作；当前市场报告为45%-55%且偏防守。",
+    "market_position_60_75": "不在本档案给仓位动作；组合模块需先处理整体权益超配和未建档个股问题。",
+    "market_position_above_75": "不在本档案给仓位动作。",
+    "theme_a": "若无人驾驶升为A档，需重算行业/主线匹配分和趋势资金分。",
+    "theme_downgrade_to_b": "当前已为D档观察；若后续修复至B档，需重新评估。",
+    "theme_downgrade_to_c_or_d": "当前已为D档观察。",
+    "earnings_miss": "需重评财务质量、业绩趋势和风险惩罚。",
+    "valuation_overheated": "需重评估值赔率，不直接生成动作。"
+  },
+  "risks": [
+    "2026Q1收入和归母净利润同比回落，可能削弱成长验证。",
+    "汽车电子客户议价、价格竞争和项目量产节奏风险。",
+    "无人驾驶主线当前D档观察，缺乏交易阶段确认。",
+    "股价弱于主要指数且低于关键均线，趋势未修复。",
+    "与智能驾驶ETF或智能汽车组内个股存在潜在重叠，需要组合模块复核。"
+  ],
+  "risk_monitors": [
+    "2026中报营收、净利润、毛利率、经营现金流",
+    "无人驾驶/智能驾驶ETF能否强于市场并站回关键均线",
+    "002920相对沪深300和创业板指的20/60日强弱变化",
+    "moneyflow净流入是否持续改善",
+    "公告中的客户结构、订单、项目量产与价格压力"
+  ],
+  "data_gaps": [
+    "未读取公司年报/公告全文，客户结构、订单和产品线细节需后续公告级复核。",
+    "未引入券商一致预期或盈利预测。",
+    "未完成汽车电子同业横向估值比较。",
+    "当前组合只提供比例、参考盈亏比例和持股天数；未记录也未使用总金额、单只持仓金额、盈亏金额。"
+  ],
+  "next_update_triggers": [
+    "2026中报或下一期财报发布",
+    "无人驾驶主线评级变化",
+    "股价重新站上或跌离20/60日均线",
+    "Tushare moneyflow连续改善或恶化",
+    "重大客户、订单、产品或监管公告",
+    "组合快照更新或智能汽车组敞口变化"
+  ],
+  "decision_log_entry": "2026-06-02 个股研究：\n- 标的：002920.SZ 德赛西威\n- 仓位角色：观察股\n- 操作评级：Watch\n- 个股分数：52，评级C\n- 当前仓位：2.45%；成本基准约118.12元，按最新价与参考盈亏比例反推，不记录成本金额\n- 关键依据：业务逻辑清晰、2025年盈利和现金流有验证；但无人驾驶主线为D档观察，2026Q1收入/利润同比回落，股价低于20/60/120日均线且弱于指数。\n- 前置研究：market_score_2026-06-01_231907、theme_review_2026-06-01_231611、theme_registry、stock_registry、portfolio_snapshot、research_backlog\n- 边界：不生成买卖建议，不生成调仓动作，不展示总金额、持仓金额或盈亏金额。\n- 后续影响：PORTFOLIO_ANALYSIS、ACTION_PLAN、INTRADAY_ALERTS、POST_MARKET_REVIEW。"
+}
