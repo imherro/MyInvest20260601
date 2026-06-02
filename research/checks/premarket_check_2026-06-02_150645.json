@@ -1,0 +1,247 @@
+{
+  "module": "premarket_check",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "session": "premarket_sample",
+  "generated_at": "2026-06-02_150645",
+  "amount_policy": "ratio_only",
+  "input_files": {
+    "daily_process": {
+      "path": "docs/DAILY_PROCESS.md",
+      "is_latest": true,
+      "status": "available"
+    },
+    "market_position": {
+      "path": "research/market/market_score_2026-06-01_231907.json",
+      "is_latest": true,
+      "status": "available"
+    },
+    "theme_research": {
+      "path": "research/themes/theme_review_2026-06-01_231611.json",
+      "is_latest": true,
+      "status": "available"
+    },
+    "theme_registry": {
+      "path": "research/themes/theme_registry.json",
+      "is_latest": true,
+      "status": "available"
+    },
+    "portfolio_snapshot": {
+      "path": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+      "is_latest": true,
+      "status": "available"
+    },
+    "etf_registry": {
+      "path": "research/etfs/etf_registry.json",
+      "is_latest": true,
+      "status": "available"
+    },
+    "stock_registry": {
+      "path": "research/stocks/stock_registry.json",
+      "is_latest": true,
+      "status": "available"
+    },
+    "action_plan": {
+      "path": "research/actions/action_plan_2026-06-02_093828_ad_hoc.json",
+      "is_latest": true,
+      "status": "available"
+    },
+    "research_backlog": {
+      "path": "research/portfolio/research_backlog_2026-06-02_094121.json",
+      "is_latest": true,
+      "status": "available"
+    }
+  },
+  "summary": {
+    "premarket_status": "risk_reduce_only|research_first",
+    "one_line_conclusion": "已有比例版操作建议可进入减风险方向执行检查，但当前权益64.96%高于45%-55%目标，主题/卫星ETF过高且缺档案较多，不允许新增进攻仓或主题仓。",
+    "allowed_action_scope": [
+      "按既有操作建议执行减风险计划",
+      "释放比例进入现金/债券现金桶",
+      "推进ResearchFirst标的补研究",
+      "盘中只监控已定义触发条件"
+    ],
+    "forbidden_actions": [
+      "新增进攻仓",
+      "新增主题仓",
+      "直接操作未建档个股",
+      "直接把511360作为加仓短融ETF标的建议",
+      "临时改写市场仓位或主线评级",
+      "使用金额、股数或市值生成建议"
+    ]
+  },
+  "market_gate": {
+    "equity_target_range": "45%-55%",
+    "bond_cash_target_range": "45%-55%",
+    "offensive_bucket_status": "reduce",
+    "has_trigger_table": true,
+    "data_gaps": [
+      "两融数据缺口",
+      "长期估值分位缺口"
+    ],
+    "pass": true,
+    "notes": "市场门禁支持减风险和观察，不支持新增进攻。"
+  },
+  "theme_gate": {
+    "tactical_a_themes": [
+      "AI"
+    ],
+    "divergence_or_decline_themes": [
+      "AI处于分歧",
+      "半导体交易评级B"
+    ],
+    "themes_need_review": [
+      "AI",
+      "半导体",
+      "能源"
+    ],
+    "rating_rewritten": false,
+    "pass": true,
+    "notes": "不支持新增AI/半导体进攻仓；已有小比例进攻ETF仅观察。"
+  },
+  "portfolio_gate": {
+    "equity_allocation": {
+      "current": "64.96%",
+      "target": "45%-55%",
+      "pass": false,
+      "notes": "高于目标上沿约9.96pct。"
+    },
+    "bond_cash_allocation": {
+      "current": "35.04%",
+      "target": "45%-55%",
+      "pass": false,
+      "notes": "低于目标下沿约9.96pct。"
+    },
+    "bucket_structure": {
+      "core": {
+        "current": "4.60%",
+        "target": "28%-33%",
+        "pass": false,
+        "notes": "核心仓偏低，但当前不能通过加权益解决。"
+      },
+      "offensive": {
+        "current": "1.23% profiled offensive ETF",
+        "target": "7%-10%, but current status is reduce",
+        "pass": true,
+        "notes": "不新增，仅观察。"
+      },
+      "defensive": {
+        "current": "3.42%",
+        "target": "7%-10%",
+        "pass": false,
+        "notes": "防御权益偏低，但总权益过高。"
+      },
+      "theme": {
+        "current": "33.48%",
+        "target": "0%-2%",
+        "pass": false,
+        "notes": "明显高配，是优先风险来源。"
+      },
+      "unknown_or_missing_profile": {
+        "current": "22.14% stocks plus 9 unprofiled ETFs",
+        "target": "research required",
+        "pass": false,
+        "notes": "全部股票和9只持仓ETF仍需补档案。"
+      }
+    }
+  },
+  "action_plan_gate": {
+    "exists": true,
+    "ratio_only": true,
+    "has_triggers": true,
+    "has_invalidation_conditions": true,
+    "acts_on_unprofiled_security": false,
+    "pass": true,
+    "notes": "操作建议只覆盖第一阶段减风险；未建档标的仍ResearchFirst。"
+  },
+  "intraday_monitoring": [
+    {
+      "object": "已建档主题ETF篮子",
+      "source_file": "research/actions/action_plan_2026-06-02_093828_ad_hoc.json",
+      "trigger_condition": "当前比例仍接近组合快照，且可从9.57%降至不超过2.00%。",
+      "action_after_trigger": "execute",
+      "requires_human_confirmation": true
+    },
+    {
+      "object": "债券现金桶",
+      "source_file": "research/actions/action_plan_2026-06-02_093828_ad_hoc.json",
+      "trigger_condition": "已建档主题ETF篮子完成减风险后，释放比例进入现金/债券现金桶。",
+      "action_after_trigger": "execute",
+      "requires_human_confirmation": true
+    },
+    {
+      "object": "第二阶段权益压降",
+      "source_file": "research/portfolio/research_backlog_2026-06-02_094121.json",
+      "trigger_condition": "未建档ETF和个股完成档案后，权益仍高于55%。",
+      "action_after_trigger": "review",
+      "requires_human_confirmation": true
+    },
+    {
+      "object": "新增进攻仓",
+      "source_file": "research/market/market_score_2026-06-01_231907.json",
+      "trigger_condition": "当前不满足新增条件。",
+      "action_after_trigger": "cancel",
+      "requires_human_confirmation": true
+    },
+    {
+      "object": "新增主题仓",
+      "source_file": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+      "trigger_condition": "主题/卫星ETF已明显超标。",
+      "action_after_trigger": "cancel",
+      "requires_human_confirmation": true
+    }
+  ],
+  "blocked_or_research_first": [
+    {
+      "type": "research_first",
+      "subject": "511360 短融ETF海富通",
+      "reason": "当前债券现金主工具但无ETF档案。",
+      "next_step": "补短融ETF档案后才能作为具体标的建议。"
+    },
+    {
+      "type": "research_first",
+      "subject": "512400、513180、159842、512070、159992、159378、562800、512710",
+      "reason": "持仓ETF未建档。",
+      "next_step": "按backlog优先级补ETF档案。"
+    },
+    {
+      "type": "research_first",
+      "subject": "17只持仓个股",
+      "reason": "个股档案缺失。",
+      "next_step": "优先补P0/P1个股档案。"
+    },
+    {
+      "type": "blocked",
+      "subject": "新增进攻仓",
+      "reason": "市场仓位要求进攻仓收缩，主线处于分歧。",
+      "next_step": "等市场仓位和主线条件改善。"
+    },
+    {
+      "type": "blocked",
+      "subject": "新增主题仓",
+      "reason": "主题/卫星ETF已显著高配。",
+      "next_step": "只允许减风险或观察。"
+    }
+  ],
+  "handoff": {
+    "market_position_module": [
+      "如果2026-06-02收盘后市场状态明显变化，需要更新市场仓位报告。"
+    ],
+    "theme_research_module": [
+      "继续观察AI分歧是否修复、半导体是否止跌、能源是否只是防御轮动。"
+    ],
+    "etf_stock_research_module": [
+      "按research_backlog_2026-06-02_094121补齐P0/P1档案。",
+      "优先补511360、159992、512070、159842、002920、002352。"
+    ],
+    "action_plan_module": [
+      "当前操作建议只覆盖第一阶段减风险。",
+      "第二阶段是否继续压到55%以内，需等缺失档案补齐后重算。"
+    ],
+    "intraday_alert_module": [
+      "只监控本检查列出的条件。",
+      "不临时新增未定义触发条件。"
+    ]
+  },
+  "decision_log_entry": "2026-06-02 盘前执行检查：生成 premarket_check_2026-06-02_150645.md/json；状态 risk_reduce_only / research_first；只允许按既有操作建议执行减风险和债券现金桶承接；禁止新增进攻仓、主题仓和直接操作未建档标的。"
+}
