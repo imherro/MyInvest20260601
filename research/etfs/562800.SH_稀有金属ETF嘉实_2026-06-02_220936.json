@@ -1,0 +1,157 @@
+{
+  "module": "etf_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_220936",
+  "code": "562800.SH",
+  "name": "稀有金属ETF嘉实",
+  "amount_policy": "ratio_only; no holding market value; no cost amount; no profit amount; no share count",
+  "boundary": "ETF research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "summary": {
+    "bucket_role": "theme",
+    "action_rating": "Watch",
+    "etf_score": 39,
+    "rating": "D",
+    "target_position_range": "No target position in this dossier; current 0.82% ratio is an input for downstream portfolio modules.",
+    "confidence": "medium",
+    "one_line_conclusion": "稀有金属ETF嘉实跟踪中证稀有金属主题指数，长期弹性强但短期跌破20/60日线，近20/60个观察日份额代理下降，资源/稀有金属未确认为当前A/B进攻主线；Watch only."
+  },
+  "basic_info": {
+    "fund_code": "562800.SH",
+    "fund_name": "稀有金属ETF嘉实",
+    "tracked_index_or_asset": "中证稀有金属主题指数收益率",
+    "fund_company": "嘉实基金",
+    "fund_type": "股票型",
+    "invest_type": "被动指数型",
+    "found_date": "20210915",
+    "list_date": "20210927",
+    "current_price": "1.052 CNY, 2026-06-02 close",
+    "current_weight_pct_input": 0.82
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 16
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 5
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": 7
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": 7
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": 3
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 5
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": 4
+    },
+    "base_score": 47,
+    "crowding_structure_risk": {
+      "score": 8
+    },
+    "final_score": 39
+  },
+  "trend_and_flow": {
+    "basis_date": "2026-06-02",
+    "close": 1.052,
+    "ret_20d_pct": -9.699570815450642,
+    "ret_60d_pct": -7.31277533039647,
+    "ret_120d_pct": 23.185011709601877,
+    "ret_240d_pct": 106.27450980392159,
+    "close_vs_ma20_pct": -5.510396550949837,
+    "close_vs_ma60_pct": -2.1865460011467275,
+    "relative_to_csi300_20d_pct": -11.930595425092283,
+    "relative_to_csi300_60d_pct": -14.090090891232876,
+    "fund_share_proxy_20obs_pct": -16.77632805287138,
+    "fund_share_proxy_60obs_pct": -31.65858194284288,
+    "fund_share_proxy_120obs_pct": 26.982563722772902
+  },
+  "holdings": {
+    "date": "20260331",
+    "top10_sum_pct": 57.839999999999996,
+    "top_holdings": [
+      {
+        "code": "603993.SH",
+        "name": "洛阳钼业",
+        "industry": "小金属",
+        "weight_pct": 10.6
+      },
+      {
+        "code": "600111.SH",
+        "name": "北方稀土",
+        "industry": "小金属",
+        "weight_pct": 8.53
+      },
+      {
+        "code": "000792.SZ",
+        "name": "盐湖股份",
+        "industry": "农药化肥",
+        "weight_pct": 8.31
+      },
+      {
+        "code": "603799.SH",
+        "name": "华友钴业",
+        "industry": "小金属",
+        "weight_pct": 6.3
+      },
+      {
+        "code": "002460.SZ",
+        "name": "赣锋锂业",
+        "industry": "小金属",
+        "weight_pct": 6.28
+      },
+      {
+        "code": "600549.SH",
+        "name": "厦门钨业",
+        "industry": "小金属",
+        "weight_pct": 4.38
+      },
+      {
+        "code": "002466.SZ",
+        "name": "天齐锂业",
+        "industry": "小金属",
+        "weight_pct": 4.05
+      },
+      {
+        "code": "002738.SZ",
+        "name": "中矿资源",
+        "industry": "小金属",
+        "weight_pct": 3.79
+      },
+      {
+        "code": "000657.SZ",
+        "name": "中钨高新",
+        "industry": "小金属",
+        "weight_pct": 3.08
+      },
+      {
+        "code": "000831.SZ",
+        "name": "中国稀土",
+        "industry": "小金属",
+        "weight_pct": 2.52
+      }
+    ]
+  },
+  "position_advice_boundary": {
+    "this_dossier_action": "Watch",
+    "portfolio_action": "Not generated here",
+    "current_weight_pct_input": 0.82
+  },
+  "data_gaps": [
+    "Tracking-index long-term valuation percentile unavailable.",
+    "Official net subscription/redemption unavailable; share change is only a proxy.",
+    "Complete live holdings and overlap matrix unavailable."
+  ]
+}

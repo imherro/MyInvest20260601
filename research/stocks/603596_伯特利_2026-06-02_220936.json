@@ -1,0 +1,178 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_220936",
+  "code": "603596.SH",
+  "name": "伯特利",
+  "amount_policy": "ratio_only; no holding market value; no cost amount; no profit amount; no share count",
+  "boundary": "Stock research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": [
+    "docs/modules/STOCK_RESEARCH.md",
+    "templates/stock_profile_template.md",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/themes/theme_registry.json",
+    "research/stocks/stock_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research/portfolio/research_backlog_2026-06-02_212235.json",
+    "Tushare: stock_basic, daily, daily_basic, moneyflow, income, balancesheet, cashflow, fina_indicator, fina_mainbz, index_daily"
+  ],
+  "summary": {
+    "bucket_role": "观察股",
+    "action_rating": "Watch",
+    "stock_score": 45,
+    "rating": "D",
+    "target_position_range": "No target position in this dossier; current 1.79% ratio is an input for downstream portfolio modules.",
+    "confidence": "medium",
+    "one_line_conclusion": "伯特利是汽车制动和智能电控零部件公司，2025年收入和利润仍增长、估值处于近两年低位，但2026Q1利润转弱，股价显著跌破多条均线且资金流代理净流出，只能 Watch。"
+  },
+  "basic_info": {
+    "stock_code": "603596.SH",
+    "company_name": "伯特利",
+    "area": "安徽",
+    "industry": "汽车配件",
+    "market": "主板",
+    "list_date": "20180427",
+    "related_theme": "智能汽车 / 汽车制动与智能电控",
+    "theme_rating": "无人驾驶 D；智能汽车未确认A/B交易主线",
+    "total_market_cap": "about 286.62 亿元 from Tushare daily_basic total_mv; public market cap, not holding amount",
+    "current_price": "31.93 CNY, 2026-06-02 close",
+    "current_weight_pct_input": 1.79,
+    "cost_policy": "Cost amount is not recorded in this dossier."
+  },
+  "position_role": {
+    "bucket_role": "观察股",
+    "long_term_core": false,
+    "mainline_offensive": false,
+    "theme_trial": false,
+    "overlap_with_existing_holdings": "Needs downstream portfolio module to aggregate theme overlap; this dossier records ratio only."
+  },
+  "business_logic": {
+    "long_term_logic": [
+      "2025年汽车零部件行业收入约117.10亿元，智能电控和机械制动是主要业务。",
+      "线控制动、智能电控方向有中长期汽车智能化逻辑。",
+      "估值分位较低，但这是在趋势破坏和业绩放缓背景下形成，不能简单视为买点。"
+    ],
+    "swing_logic": [
+      "2026-06-02 close 31.93; close_vs_ma20 -8.27%; close_vs_ma60 -25.09%.",
+      "Relative to CSI300: 20d -32.64%, 60d -45.49%."
+    ]
+  },
+  "scores": {
+    "business_logic": {
+      "weight": 20,
+      "score": 14
+    },
+    "industry_theme_fit": {
+      "weight": 15,
+      "score": 6
+    },
+    "financial_quality": {
+      "weight": 15,
+      "score": 11
+    },
+    "earnings_trend": {
+      "weight": 15,
+      "score": 7
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 11
+    },
+    "trend_and_flow": {
+      "weight": 10,
+      "score": 1
+    },
+    "risk_control": {
+      "weight": 10,
+      "score": 5
+    },
+    "base_score": 49,
+    "stock_risk_penalty": {
+      "score": 4,
+      "evidence": "Penalty for unconfirmed tactical theme, valuation or cashflow pressure, weak moneyflow/trend where applicable."
+    },
+    "final_score": 45
+  },
+  "financials": {
+    "2025": {
+      "revenue_yoy_pct": 20.9074,
+      "parent_net_profit_yoy_pct": 8.3209,
+      "gross_margin_pct": 19.6468,
+      "net_margin_pct": 10.9927,
+      "roe_pct": 17.9944,
+      "debt_to_assets_pct": 51.2915,
+      "revenue_100m_cny": 120.14,
+      "parent_net_profit_100m_cny": 13.09,
+      "operating_cashflow_100m_cny": 8.67,
+      "free_cashflow_100m_cny": -4.43
+    },
+    "2026Q1": {
+      "revenue_yoy_pct": 1.3812,
+      "parent_net_profit_yoy_pct": -0.636,
+      "gross_margin_pct": 19.4289,
+      "net_margin_pct": 10.072,
+      "roe_yearly_pct": 13.2252,
+      "debt_to_assets_pct": 49.9968,
+      "operating_cashflow_yoy_pct": 179.3412,
+      "revenue_100m_cny": 26.74,
+      "parent_net_profit_100m_cny": 2.69,
+      "operating_cashflow_100m_cny": 1.18,
+      "free_cashflow_100m_cny": -1.25
+    }
+  },
+  "valuation": {
+    "basis_date": "2026-06-02",
+    "pe_ttm": 21.9173,
+    "pe_ttm_percentile_since_2024": 0.12027491408934708,
+    "pb": 3.6602,
+    "pb_percentile_since_2024": 0.06872852233676977,
+    "ps_ttm": 2.3785,
+    "ps_ttm_percentile_since_2024": 0.08075601374570447,
+    "dividend_yield_ttm": 0.8041
+  },
+  "trend_and_flow": {
+    "basis_date": "2026-06-02",
+    "close": 31.93,
+    "ret_20d_pct": -30.405405405405407,
+    "ret_60d_pct": -38.714011516314784,
+    "ret_120d_pct": -29.01289461983103,
+    "close_vs_ma20_pct": -8.268214203631352,
+    "close_vs_ma60_pct": -25.089151651651655,
+    "close_vs_ma120_pct": -32.24810533053716,
+    "moneyflow_net_5d": -46028.68,
+    "moneyflow_net_20d": -114691.99999999999,
+    "moneyflow_net_60d": -265507.04,
+    "relative_to_csi300_20d_pct": -32.63643001504705,
+    "relative_to_csi300_60d_pct": -45.49132707715119
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [
+      "Use as research input only; downstream ACTION_PLAN must decide actual action."
+    ],
+    "reduce_conditions": [],
+    "sell_invalid_conditions": [
+      "Earnings or cashflow weakens while valuation remains demanding.",
+      "Theme rating remains weak and price stays below key moving averages."
+    ]
+  },
+  "position_advice_boundary": {
+    "this_dossier_action": "Watch",
+    "portfolio_action": "Not generated here",
+    "current_weight_pct_input": 1.79,
+    "notes": [
+      "No buy advice.",
+      "No add advice.",
+      "No sell advice.",
+      "No rebalance instruction."
+    ]
+  },
+  "data_gaps": [
+    "No analyst consensus forecast introduced.",
+    "No full peer valuation table built.",
+    "Moneyflow uses Tushare raw proxy and is not equivalent to verified institutional flow."
+  ]
+}

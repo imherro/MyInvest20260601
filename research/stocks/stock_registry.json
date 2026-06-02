@@ -1,34 +1,36 @@
 {
   "module": "stock_registry",
-  "version": "1.2",
+  "version": "1.3",
   "last_updated": "2026-06-02",
   "notes": "当前文件保存个股研究模块的总览登记。根据用户当前持仓，已登记持仓股为待研究状态；正式个股操作建议前必须逐只建立个股档案。",
   "stocks": [
     {
       "code": "002241",
       "name": "歌尔股份",
-      "status": "to_research",
+      "status": "profile_generated",
       "current_weight_pct": 1.41,
-      "bucket_role": "unknown",
-      "related_theme": "pending",
-      "rating": "pending",
+      "bucket_role": "观察股 / 科技终端候选",
+      "related_theme": "智能硬件 / AI终端 / 消费电子",
+      "rating": "C",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。",
-      "last_profile_file": ""
+      "target_position_range": "不在个股档案设定目标仓位；当前仓位1.41%作为后续模块输入。",
+      "reason": "已生成个股档案：歌尔股份受益智能硬件和AI终端预期，近20/60日相对沪深300略强且PE处低分位；但毛利率和净利率偏低、2026Q1经营现金流转负，仍只给 Watch，不直接加仓。 本档案不生成买卖或调仓动作。",
+      "last_profile_file": "research/stocks/002241_歌尔股份_2026-06-02_220936.md",
+      "last_profile_json": "research/stocks/002241_歌尔股份_2026-06-02_220936.json"
     },
     {
       "code": "688333",
       "name": "西安铂力特",
-      "status": "to_research",
+      "status": "profile_generated",
       "current_weight_pct": 1.34,
-      "bucket_role": "unknown",
-      "related_theme": "pending",
-      "rating": "pending",
+      "bucket_role": "观察股 / 主题试错股",
+      "related_theme": "高端装备 / 3D打印 / 航空航天",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。",
-      "last_profile_file": ""
+      "target_position_range": "不在个股档案设定目标仓位；当前仓位1.34%作为后续模块输入。",
+      "reason": "已生成个股档案：西安铂力特是3D打印和航空航天高端制造标的，2025和2026Q1增长改善、趋势中期有弹性，但估值高、ROE低、自由现金流持续为负且资金流代理净流出，只能 Watch。 本档案不生成买卖或调仓动作。",
+      "last_profile_file": "research/stocks/688333_西安铂力特_2026-06-02_220936.md",
+      "last_profile_json": "research/stocks/688333_西安铂力特_2026-06-02_220936.json"
     },
     {
       "code": "300760",
@@ -46,15 +48,16 @@
     {
       "code": "603596",
       "name": "伯特利",
-      "status": "to_research",
+      "status": "profile_generated",
       "current_weight_pct": 1.79,
-      "bucket_role": "unknown",
-      "related_theme": "pending",
-      "rating": "pending",
+      "bucket_role": "观察股",
+      "related_theme": "智能汽车 / 汽车制动与智能电控",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。",
-      "last_profile_file": ""
+      "target_position_range": "不在个股档案设定目标仓位；当前仓位1.79%作为后续模块输入。",
+      "reason": "已生成个股档案：伯特利是汽车制动和智能电控零部件公司，2025年收入和利润仍增长、估值处于近两年低位，但2026Q1利润转弱，股价显著跌破多条均线且资金流代理净流出，只能 Watch。 本档案不生成买卖或调仓动作。",
+      "last_profile_file": "research/stocks/603596_伯特利_2026-06-02_220936.md",
+      "last_profile_json": "research/stocks/603596_伯特利_2026-06-02_220936.json"
     },
     {
       "code": "002352",
@@ -254,6 +257,11 @@
       "date": "2026-06-02",
       "change": "生成002625 光启技术个股档案，更新为profile_generated，评级D，操作评级Watch。",
       "impact": "后续PORTFOLIO_ANALYSIS、ACTION_PLAN、INTRADAY_ALERTS、POST_MARKET_REVIEW可读取该档案；本次不生成买卖建议或调仓动作。"
+    },
+    {
+      "date": "2026-06-02",
+      "change": "按用户新范围生成603596伯特利、002241歌尔股份、688333西安铂力特个股档案；600764中国海防已卖出，暂停研究。",
+      "impact": "后续仅对用户指定关注标的继续使用这些档案，其他待研究项先冻结。"
     }
   ]
 }

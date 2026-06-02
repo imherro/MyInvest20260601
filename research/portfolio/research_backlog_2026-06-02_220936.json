@@ -1,0 +1,173 @@
+{
+  "module": "portfolio_research_backlog",
+  "version": "1.6",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_220936",
+  "amount_policy": "ratio_only; no market_value; no cost_amount; no profit_amount; no share count",
+  "boundary": "Research priority only; no buy/sell advice and no rebalance action.",
+  "previous_backlog": "research/portfolio/research_backlog_2026-06-02_212235.json",
+  "purpose": "Apply user scope update: finish only 603596, 002241, 688333 and 562800; mark 600764 sold and pause other research items.",
+  "completed_since_previous": [
+    {
+      "code": "603596",
+      "name": "伯特利",
+      "type": "股票",
+      "status": "profile_generated",
+      "profile_file": "research/stocks/603596_伯特利_2026-06-02_220936.md",
+      "profile_json": "research/stocks/603596_伯特利_2026-06-02_220936.json"
+    },
+    {
+      "code": "002241",
+      "name": "歌尔股份",
+      "type": "股票",
+      "status": "profile_generated",
+      "profile_file": "research/stocks/002241_歌尔股份_2026-06-02_220936.md",
+      "profile_json": "research/stocks/002241_歌尔股份_2026-06-02_220936.json"
+    },
+    {
+      "code": "688333",
+      "name": "西安铂力特",
+      "type": "股票",
+      "status": "profile_generated",
+      "profile_file": "research/stocks/688333_西安铂力特_2026-06-02_220936.md",
+      "profile_json": "research/stocks/688333_西安铂力特_2026-06-02_220936.json"
+    },
+    {
+      "code": "562800",
+      "name": "稀有金属ETF嘉实",
+      "type": "ETF",
+      "status": "profile_generated",
+      "profile_file": "research/etfs/562800.SH_稀有金属ETF嘉实_2026-06-02_220936.md",
+      "profile_json": "research/etfs/562800.SH_稀有金属ETF嘉实_2026-06-02_220936.json"
+    }
+  ],
+  "removed_from_scope": [
+    {
+      "code": "600764",
+      "name": "中国海防",
+      "type": "股票",
+      "reason": "User sold the position and asked to stop considering it."
+    }
+  ],
+  "summary": {
+    "active_remaining_total_items": 0,
+    "paused_total_items": 12,
+    "key_change": "User-defined focus list completed; other previous backlog items are paused."
+  },
+  "active_remaining_items": [],
+  "paused_items": [
+    {
+      "priority": "P1",
+      "code": "000970",
+      "name": "中科三环",
+      "type": "股票",
+      "current_weight_pct": 1.75,
+      "reason": "Nonferrous/rare-earth/resources concentration.",
+      "target_module": "STOCK_RESEARCH"
+    },
+    {
+      "priority": "P1",
+      "code": "513180",
+      "name": "恒生科技ETF华夏",
+      "type": "ETF",
+      "current_weight_pct": 1.61,
+      "reason": "Cross-market technology exposure.",
+      "target_module": "ETF_RESEARCH"
+    },
+    {
+      "priority": "P1",
+      "code": "512400",
+      "name": "有色金属ETF南方",
+      "type": "ETF",
+      "current_weight_pct": 1.58,
+      "reason": "Nonferrous/rare-earth/resources concentration.",
+      "target_module": "ETF_RESEARCH"
+    },
+    {
+      "priority": "P1",
+      "code": "688032",
+      "name": "禾迈股份",
+      "type": "股票",
+      "current_weight_pct": 1.36,
+      "reason": "Power equipment/new-energy exposure needs validation.",
+      "target_module": "STOCK_RESEARCH"
+    },
+    {
+      "priority": "P1",
+      "code": "300724",
+      "name": "捷佳伟创",
+      "type": "股票",
+      "current_weight_pct": 1.29,
+      "reason": "Photovoltaic equipment/power equipment exposure.",
+      "target_module": "STOCK_RESEARCH"
+    },
+    {
+      "priority": "P1",
+      "code": "688439",
+      "name": "振华风光",
+      "type": "股票",
+      "current_weight_pct": 1.21,
+      "reason": "Military electronics exposure.",
+      "target_module": "STOCK_RESEARCH"
+    },
+    {
+      "priority": "P1",
+      "code": "002258",
+      "name": "利尔化学",
+      "type": "股票",
+      "current_weight_pct": 1.16,
+      "reason": "Chemical/agriculture-chain role needs validation.",
+      "target_module": "STOCK_RESEARCH"
+    },
+    {
+      "priority": "P1",
+      "code": "603087",
+      "name": "甘李药业",
+      "type": "股票",
+      "current_weight_pct": 1.03,
+      "reason": "Medical group role needs validation.",
+      "target_module": "STOCK_RESEARCH"
+    },
+    {
+      "priority": "P2",
+      "code": "002041",
+      "name": "登海种业",
+      "type": "股票",
+      "current_weight_pct": 0.63,
+      "reason": "Small position; agriculture/seed exposure.",
+      "target_module": "STOCK_RESEARCH"
+    },
+    {
+      "priority": "P2",
+      "code": "300627",
+      "name": "华测导航",
+      "type": "股票",
+      "current_weight_pct": 0.58,
+      "reason": "Small position; satellite navigation/low-altitude exposure.",
+      "target_module": "STOCK_RESEARCH"
+    },
+    {
+      "priority": "P2",
+      "code": "603903",
+      "name": "中持股份",
+      "type": "股票",
+      "current_weight_pct": 0.42,
+      "reason": "Small position; environmental/public utility exposure.",
+      "target_module": "STOCK_RESEARCH"
+    },
+    {
+      "priority": "P2",
+      "code": "300760",
+      "name": "迈瑞医疗",
+      "type": "股票",
+      "current_weight_pct": 0.36,
+      "reason": "Small position; medical device exposure.",
+      "target_module": "STOCK_RESEARCH"
+    }
+  ],
+  "downstream_impact": [
+    "600764 should not be included in current holding research or operation suggestions unless user re-adds it.",
+    "Only the four newly completed focus dossiers should be treated as newly available inputs.",
+    "This backlog update does not change allocation advice."
+  ]
+}
