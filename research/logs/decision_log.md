@@ -645,3 +645,32 @@
 - 复盘日期：第一阶段执行后，或补齐 511360、未建档 ETF 和权重超过 1% 的个股档案后。
 - 成功标准：已建档主题 ETF 降至 2.00% 以内，且后续建议继续保持比例口径、不使用金额和股数。
 - 失败标准：后续操作绕过未建档标的的 ResearchFirst 约束，或直接给未建档 ETF/个股买卖结论。
+
+### 决策：生成当前持仓补研究优先级清单
+
+- 决策类型：portfolio_research_backlog
+- 变化类型：new
+- 标的/主题：当前持仓缺档研究优先级
+- 生成文件：`research/portfolio/research_backlog_2026-06-02_094121.md`、`research/portfolio/research_backlog_2026-06-02_094121.json`
+- 读取前置文件：`README.md`、`docs/PROJECT_MEMORY.md`、`docs/WORKFLOW.md`、`docs/FILE_NAMING.md`、`docs/modules/ETF_RESEARCH.md`、`docs/modules/STOCK_RESEARCH.md`、`research/portfolio/portfolio_snapshot_2026-06-02_092310.md`、`research/portfolio/portfolio_snapshot_2026-06-02_092310.json`、`research/etfs/etf_registry.json`、`research/stocks/stock_registry.json`、`research/logs/decision_log.md`
+- 口径：只按当前仓位比例、是否缺档、主题/行业集中度排序；不使用市值、成本金额、盈亏金额，也不使用盈亏比例作为排序依据。
+- 新结论：当前需补研究标的共 26 个，其中 P0 共 6 个、P1 共 15 个、P2 共 5 个。
+
+主要依据：
+
+- P0：`511360`、`159992`、`512070`、`159842`、`002920`、`002352`。这些标的分别对应债券/现金承接、高仓位未建档 ETF、金融证券集中暴露和最高仓位未建档个股。
+- P1：仓位超过 1% 或处于军工/低空、金融证券、有色/稀土、创新药/医药、智能汽车等集中主题中的未建档标的。
+- P2：仓位低于 1% 且短期对组合级判断影响较小的未建档标的。
+
+对仓位或操作的影响：
+
+- 本记录不生成买卖建议，不生成调仓动作。
+- 后续 ETF_RESEARCH 和 STOCK_RESEARCH 应优先补 P0，再补 P1，最后补 P2。
+- 操作建议模块在生成具体动作前，应先读取本 backlog、最新组合快照、ETF 档案和个股档案。
+
+复盘入口：
+
+- 复盘日期：完成 P0 档案后，或用户提供新的持仓比例后。
+- 验证假设：按仓位比例和缺档状态排序，能减少后续操作建议缺少研究依据的问题。
+- 成功标准：后续操作建议不再绕过 P0 缺档标的。
+- 失败标准：后续建议仍直接处理未建档高仓位标的，或临时改写主线/个股结论。
