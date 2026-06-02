@@ -7,7 +7,7 @@
 1. 克隆项目到本地。
 2. 先阅读 [项目记忆](docs/PROJECT_MEMORY.md)，了解已经确定的策略、规则和历史决议。
 3. 阅读 [数据源与权限](docs/DATA_SOURCES.md)，确认本地数据权限配置。
-4. 再阅读 [协作规则](docs/WORKFLOW.md)，按固定流程继续工作。
+4. 再阅读 [协作规则](docs/WORKFLOW.md) 和 [每日流程标准](docs/DAILY_PROCESS.md)，按固定流程继续工作。
 5. 每次和 Codex 形成新的重要决议后，更新 `docs/PROJECT_MEMORY.md` 或对应研究文件。
 6. 每次更新后提交 Git commit，保持多台电脑之间的上下文一致。
 
@@ -24,15 +24,11 @@
 - [docs/PROJECT_MEMORY.md](docs/PROJECT_MEMORY.md)：项目长期记忆，记录策略框架、已确定规则、历史决议和错误教训。
 - [docs/MODULES.md](docs/MODULES.md)：模块架构，定义每个投资研究模块的职责、输入、输出和边界。
 - [docs/RUNBOOK.md](docs/RUNBOOK.md)：日常运行手册，说明盘前、盘中、盘后、周末如何运行项目。
+- [docs/DAILY_PROCESS.md](docs/DAILY_PROCESS.md)：每日流程标准，说明哪些任务每天做、哪些只读取、哪些放到周末或单独会话。
 - [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)：数据源与权限，记录 Tushare 等数据源的使用规则和本地配置方式。
 - [docs/FILE_NAMING.md](docs/FILE_NAMING.md)：文件命名与版本规则，要求研究产物使用日期加时间戳，并默认读取最新版本。
 - [docs/WORKFLOW.md](docs/WORKFLOW.md)：多电脑协同、Codex 使用、更新和提交规则。
 
 ## 当前阶段
 
-当前处于策略框架设计阶段。优先完成：
-
-1. 市场仓位模块
-2. 主线研究模块
-3. ETF/个股研究档案结构
-4. 操作建议与决策日志规则
+当前已经建立核心模块和首批研究产物。后续重点是按每日流程运行，并逐步补齐 ETF/个股档案、组合分析和复盘记录。

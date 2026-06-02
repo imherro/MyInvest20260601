@@ -8,15 +8,16 @@
 2. 阅读 `README.md`。
 3. 阅读 `docs/PROJECT_MEMORY.md`。
 4. 阅读 `docs/RUNBOOK.md`。
-5. 阅读 `docs/DATA_SOURCES.md`，确认数据源权限。
-6. 阅读 `docs/FILE_NAMING.md`，确认研究产物命名和最新版本读取规则。
-7. 查看最近提交记录，确认上次工作到哪里。
-8. 如果本次任务会改变策略、流程或研究结论，先确认应更新哪个文件。
+5. 阅读 `docs/DAILY_PROCESS.md`，确认本次是盘前、盘中、盘后、周末还是单独研究任务。
+6. 阅读 `docs/DATA_SOURCES.md`，确认数据源权限。
+7. 阅读 `docs/FILE_NAMING.md`，确认研究产物命名和最新版本读取规则。
+8. 查看最近提交记录，确认上次工作到哪里。
+9. 如果本次任务会改变策略、流程或研究结论，先确认应更新哪个文件。
 
 建议对 Codex 的开场指令：
 
 ```text
-请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md 和 research/logs/decision_log.md，了解本项目已经确定的投资策略、模块边界、运行流程、数据源权限、文件命名规则和协作规则。之后再继续当前任务。
+请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DAILY_PROCESS.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md 和 research/logs/decision_log.md，了解本项目已经确定的投资策略、模块边界、每日流程、数据源权限、文件命名规则和协作规则。之后再继续当前任务。
 ```
 
 ## 2. 文件职责
@@ -24,6 +25,7 @@
 - `README.md`：项目入口，说明新电脑如何开始。
 - `docs/PROJECT_MEMORY.md`：长期记忆，记录策略框架、重要决议、错误教训。
 - `docs/RUNBOOK.md`：日常运行手册，说明盘前、盘中、盘后、周末如何运行项目。
+- `docs/DAILY_PROCESS.md`：每日流程标准，说明日常任务是否应读取、更新、复盘或转入单独研究会话。
 - `docs/DATA_SOURCES.md`：数据源与权限，记录 Tushare 等数据源的使用规则和本地配置方式。
 - `docs/FILE_NAMING.md`：文件命名与版本规则，要求研究产物使用日期加时间戳，并默认读取最新版本。
 - `docs/WORKFLOW.md`：协作规则，记录如何使用 Codex、如何更新文件、如何提交。
@@ -113,10 +115,10 @@ workflow: refine collaboration rules
 研究执行阶段：
 
 ```text
-更新市场仓位
-→ 更新主线研究
-→ 更新 ETF/个股档案
-→ 生成操作建议
+按 DAILY_PROCESS 判断任务类型
+→ 读取最新前置研究
+→ 只更新必要模块
+→ 生成对应研究或操作产物
 → 写入决策日志
 → commit
 ```

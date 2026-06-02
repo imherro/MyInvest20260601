@@ -8,30 +8,31 @@
 2. 阅读 `README.md`、`docs/PROJECT_MEMORY.md`、`docs/MODULES.md`。
 3. 阅读 `docs/DATA_SOURCES.md`，确认 Tushare 等数据源权限。
 4. 阅读 `docs/FILE_NAMING.md`，确认文件命名和最新版本读取规则。
-5. 查看 `research/logs/decision_log.md` 的最近记录。
-6. 确认本次要做的是盘前、盘中、盘后、周末，还是临时事件更新。
-7. 完成后提交并推送。
+5. 阅读 `docs/DAILY_PROCESS.md`，确认本次要做的是读取、更新、复盘还是补研究。
+6. 查看 `research/logs/decision_log.md` 的最近记录。
+7. 确认本次要做的是盘前、盘中、盘后、周末，还是临时事件更新。
+8. 完成后提交并推送。
 
 推荐开场指令：
 
 ```text
-请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md 和 research/logs/decision_log.md，然后按今天的任务继续。
+请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DAILY_PROCESS.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md 和 research/logs/decision_log.md，然后按今天的任务继续。
 本项目已知可使用 Tushare 数据权限；做 A 股结构化数据研究时请优先检查并使用本地 Tushare token。
 生成研究产物时文件名必须包含 YYYY-MM-DD_HHMMSS；基于前期研究时默认读取同类最新时间戳版本。
 ```
 
 ## 2. 盘前流程
 
-目标：形成当天仓位环境、操作计划和盘中触发条件。
+目标：形成当天仓位环境、操作计划和盘中触发条件。具体是否需要重做市场仓位或主线研究，先按 `docs/DAILY_PROCESS.md` 判断。
 
 步骤：
 
-1. 更新市场仓位模块。
-2. 检查主线登记册是否有重大变化。
-3. 如有必要，更新相关 ETF/个股档案。
-4. 更新或读取当前持仓快照。
+1. 读取最新市场仓位模块；必要时更新。
+2. 读取主线登记册；只有触发条件变化时才更新主线研究。
+3. 如有必要，更新相关 ETF/个股档案；缺档案时标记 ResearchFirst。
+4. 读取或更新当前持仓快照。
 5. 运行组合分析。
-6. 生成盘前操作建议。
+6. 生成盘前操作建议或执行检查。
 7. 写入决策日志。
 8. 提交并推送。
 
@@ -50,8 +51,8 @@ research/logs/decision_log.md
 推荐指令：
 
 ```text
-请按 docs/RUNBOOK.md 执行今日盘前流程。
-先更新市场仓位，再检查主线登记册，然后基于持仓快照做组合分析，最后生成盘前操作建议。
+请按 docs/RUNBOOK.md 和 docs/DAILY_PROCESS.md 执行今日盘前流程。
+先读取最新市场仓位、主线登记册和组合快照；只有必要时才更新市场仓位或主线研究。
 不要临时重写前置研究结论；缺少研究时输出 ResearchFirst。
 ```
 
@@ -80,7 +81,7 @@ research/logs/decision_log.md
 推荐指令：
 
 ```text
-请按 docs/modules/INTRADAY_ALERTS.md 检查当前盘中提醒。
+请按 docs/DAILY_PROCESS.md 和 docs/modules/INTRADAY_ALERTS.md 检查当前盘中提醒。
 只能检查盘前计划和标的档案中已经定义的触发条件。
 如果缺少盘前计划或标的档案，输出 blocked。
 ```
@@ -111,7 +112,7 @@ research/logs/decision_log.md
 推荐指令：
 
 ```text
-请按 docs/modules/POST_MARKET_REVIEW.md 做今日盘后复盘。
+请按 docs/DAILY_PROCESS.md 和 docs/modules/POST_MARKET_REVIEW.md 做今日盘后复盘。
 必须对比盘前计划、盘中提醒和实际执行。
 不要用事后结果重写事前判断；如果缺少实际执行信息，请明确标注。
 ```
@@ -146,7 +147,7 @@ docs/PROJECT_MEMORY.md
 推荐指令：
 
 ```text
-请按 docs/RUNBOOK.md 执行周末流程。
+请按 docs/RUNBOOK.md 和 docs/DAILY_PROCESS.md 执行周末流程。
 重点更新主线研究、组合分析和决策日志，检查本周是否存在重复偏差。
 只有发现重复问题或明确规则缺陷时，才建议修改项目规则。
 ```
@@ -218,8 +219,7 @@ docs: update project memory
 
 尚未完成：
 
-- 首次正式市场仓位报告
-- 首次正式主线研究
-- 真实持仓快照
-- ETF/个股首批档案
-- 自动化数据接入
+- 补齐全部持仓个股档案
+- 补齐持仓中尚未建档的 ETF 档案
+- 完成操作建议、盘中提醒和盘后复盘的持续样例
+- 自动化数据接入和质量检查
