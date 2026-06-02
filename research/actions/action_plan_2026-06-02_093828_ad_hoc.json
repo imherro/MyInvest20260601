@@ -1,0 +1,333 @@
+{
+  "module": "action_plan",
+  "version": "1.0-ratio_only",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_093828",
+  "session": "ad_hoc",
+  "amount_policy": "ratio_only; no amount; no share count",
+  "source_files": {
+    "market_position": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research": "research/themes/theme_review_2026-06-01_231611.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "stock_registry": "research/stocks/stock_registry.json",
+    "portfolio_analysis": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "decision_log": "research/logs/decision_log.md",
+    "etf_profiles_referenced": [
+      "research/etfs/512880.SH_证券ETF国泰_2026-06-02_000715.json",
+      "research/etfs/513120.SH_港股创新药ETF广发_2026-06-02_000715.json",
+      "research/etfs/159869.SZ_游戏ETF华夏_2026-06-02_000715.json",
+      "research/etfs/516150.SH_稀土ETF嘉实_2026-06-02_000715.json",
+      "research/etfs/562500.SH_机器人ETF华夏_2026-06-02_000715.json",
+      "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.json",
+      "research/etfs/159201.SZ_自由现金流ETF华夏_2026-06-02_000715.json",
+      "research/etfs/510880.SH_红利ETF华泰柏瑞_2026-06-02_000715.json",
+      "research/etfs/159301.SZ_公用事业ETF华夏_2026-06-02_000715.json",
+      "research/etfs/159819.SZ_人工智能ETF易方达_2026-06-02_000715.json",
+      "research/etfs/588200.SH_科创芯片ETF嘉实_2026-06-02_000715.json",
+      "research/etfs/159558.SZ_半导体设备ETF易方达_2026-06-02_000715.json",
+      "research/etfs/159667.SZ_工业母机ETF国泰_2026-06-02_000715.json",
+      "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.json"
+    ]
+  },
+  "summary": {
+    "action_state": "cautious_and_research_first",
+    "recommendation_strength": "Normal|Blocked",
+    "one_line_conclusion": "Current equity allocation is 64.96% versus the latest target range of 45%-55%; first reduce profiled theme ETFs from 9.57% to no more than 2.00%, then wait for missing ETF and stock profiles before making further target-level trade decisions.",
+    "first_stage_expected_equity_allocation": "about 57.39%",
+    "remaining_gap_to_55pct_after_first_stage": "about 2.39 percentage points"
+  },
+  "preconditions": {
+    "market_position": {
+      "conclusion": "Equity target 45%-55%; bond/cash target 45%-55%; offensive bucket should shrink and new offensive adds are paused.",
+      "impact": "Current equity allocation is 64.96%, about 9.96 percentage points above the upper bound."
+    },
+    "theme_rating": {
+      "conclusion": "AI is A but in divergence; semiconductor tactical rating is B; energy is B but defensive/cyclical.",
+      "impact": "Do not add offensive or theme exposure."
+    },
+    "portfolio_deviation": {
+      "conclusion": "Theme/satellite ETF exposure is 33.48%, core is 4.60%, unprofiled stocks are 22.14%.",
+      "impact": "Prioritize theme ETF reduction and research coverage."
+    },
+    "crowding_risk": {
+      "conclusion": "Technology hardware, semiconductors, robots and other high-beta areas are in divergence.",
+      "impact": "Avoid chasing rebounds and avoid expanding C/D themes."
+    },
+    "hard_constraints": {
+      "conclusion": "Theme exposure and missing-profile exposure block a complete direct action plan.",
+      "impact": "Only profiled theme ETFs receive a direct reduce conclusion; unprofiled ETFs and stocks are ResearchFirst."
+    }
+  },
+  "actions": [
+    {
+      "priority": "high",
+      "action_type": "Reduce",
+      "subject": {
+        "code": "512880,513120,159869,516150,562500,159206",
+        "name": "Profiled theme ETF basket",
+        "type": "etf_basket"
+      },
+      "bucket_role": "theme",
+      "current_position": "9.57%",
+      "suggested_change": "-7.57 percentage points",
+      "target_position": "no more than 2.00%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Latest market position report sets theme bucket reference at 0%-2% and pauses new theme/offensive adds.",
+        "Portfolio snapshot shows theme/satellite ETF exposure at 33.48%.",
+        "The involved profiled ETFs have Watch action ratings and are not buy/add candidates."
+      ],
+      "trigger_conditions": [
+        "Execute only if current proportions are still close to the latest portfolio snapshot.",
+        "Keep the profiled theme ETF basket at or below 2.00% after execution."
+      ],
+      "invalidation_conditions": [
+        "A new market position report raises equity allocation and theme bucket limits.",
+        "A new theme review upgrades these themes to current tactical A ratings and a new action plan is generated."
+      ],
+      "risks": [
+        "May reduce rebound exposure if themes bounce in the short term.",
+        "Residual equity allocation remains above 55% until missing profiles are completed."
+      ],
+      "review_points": [
+        "Whether equity allocation falls to about 57.39% after the first stage.",
+        "Whether profiled theme ETF basket is no more than 2.00%."
+      ]
+    },
+    {
+      "priority": "high",
+      "action_type": "Add",
+      "subject": {
+        "code": "",
+        "name": "Cash/bond-cash bucket, without naming an unprofiled ETF",
+        "type": "cash"
+      },
+      "bucket_role": "bond_cash",
+      "current_position": "35.04%",
+      "suggested_change": "+7.57 percentage points",
+      "target_position": "about 42.61%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Latest market position report sets bond/cash target at 45%-55%.",
+        "Portfolio snapshot shows bond/cash at 35.04%.",
+        "511360 is unprofiled, so this action is expressed only as a bucket-level proportion, not as an ETF add recommendation."
+      ],
+      "trigger_conditions": [
+        "After reducing the profiled theme ETF basket, keep the released proportion in the cash/bond-cash bucket."
+      ],
+      "invalidation_conditions": [
+        "If the future 511360 profile or other bond-cash profile finds the tool unsuitable, select another researched cash-equivalent route."
+      ],
+      "risks": [
+        "The specific bond-cash tool is not validated yet because 511360 has no profile."
+      ],
+      "review_points": [
+        "Complete 511360 ETF profile.",
+        "Recheck whether bond/cash reaches the 45%-55% target range."
+      ]
+    },
+    {
+      "priority": "medium",
+      "action_type": "Hold",
+      "subject": {
+        "code": "159201",
+        "name": "自由现金流ETF华夏",
+        "type": "etf"
+      },
+      "bucket_role": "core",
+      "current_position": "4.60%",
+      "suggested_change": "0 percentage points",
+      "target_position": "4.60%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Core exposure is structurally underallocated, but total equity is already above the target upper bound.",
+        "No new equity adds are recommended before equity falls within the 45%-55% range."
+      ],
+      "trigger_conditions": [
+        "No add trigger in this action plan."
+      ],
+      "invalidation_conditions": [
+        "Generate a new action plan if equity falls below 55% and core replacement is needed."
+      ],
+      "risks": [
+        "Core structure remains underallocated during the first risk-reduction stage."
+      ],
+      "review_points": [
+        "After equity normalization, evaluate replacing theme exposure with researched core exposure."
+      ]
+    },
+    {
+      "priority": "medium",
+      "action_type": "Hold",
+      "subject": {
+        "code": "510880,159301",
+        "name": "Profiled defensive ETF basket",
+        "type": "etf_basket"
+      },
+      "bucket_role": "defensive",
+      "current_position": "3.42%",
+      "suggested_change": "0 percentage points",
+      "target_position": "3.42%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Defensive exposure is structurally underallocated, but total equity is too high.",
+        "Adding defensive equity ETFs would not solve the total equity conflict."
+      ],
+      "trigger_conditions": [
+        "No add trigger in this action plan."
+      ],
+      "invalidation_conditions": [
+        "Generate a new action plan if equity falls within range and defensive sleeve still needs adjustment."
+      ],
+      "risks": [
+        "Portfolio may remain volatile until unprofiled themes and stocks are researched."
+      ],
+      "review_points": [
+        "Recalculate defensive sleeve after first-stage theme ETF reduction."
+      ]
+    },
+    {
+      "priority": "medium",
+      "action_type": "Watch",
+      "subject": {
+        "code": "159819,588200,159558,159667,159326",
+        "name": "Profiled offensive ETF basket",
+        "type": "etf_basket"
+      },
+      "bucket_role": "offensive",
+      "current_position": "1.23%",
+      "suggested_change": "0 percentage points",
+      "target_position": "1.23%",
+      "recommendation_strength": "Weak",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "AI is still A-rated but in divergence.",
+        "Semiconductor tactical rating is B and no longer a new offensive core.",
+        "Latest market position report pauses new offensive adds."
+      ],
+      "trigger_conditions": [
+        "Wait for a new market position report and theme review showing improved index, volume and theme conditions."
+      ],
+      "invalidation_conditions": [
+        "If AI enters retreat or semiconductor continues to break down, generate a new reduce-focused plan."
+      ],
+      "risks": [
+        "Continuing divergence can drag high-beta technology exposure."
+      ],
+      "review_points": [
+        "AI application breadth, hardware stabilization and semiconductor ETF stop-loss conditions."
+      ]
+    }
+  ],
+  "no_action_list": [
+    {
+      "subject": "Unprofiled stocks, total 22.14%",
+      "reason": "research_needed",
+      "watch_points": [
+        "Create stock profiles before any direct buy/sell/reduce/add conclusion."
+      ]
+    },
+    {
+      "subject": "Unprofiled ETFs: 511360,512400,513180,159842,512070,159992,159378,562800,512710",
+      "reason": "research_needed",
+      "watch_points": [
+        "Create ETF profiles before direct tool-level operation conclusions."
+      ]
+    },
+    {
+      "subject": "New offensive ETF additions",
+      "reason": "market_position_not_supportive",
+      "watch_points": [
+        "Wait for market position and theme confirmation."
+      ]
+    },
+    {
+      "subject": "New theme ETF additions",
+      "reason": "risk_too_high",
+      "watch_points": [
+        "Theme bucket is already materially above constraint."
+      ]
+    }
+  ],
+  "research_first_list": [
+    {
+      "subject": "511360 短融ETF海富通",
+      "missing_content": "etf_profile",
+      "why_it_blocks_action": "It is the current bond/cash holding but has no ETF profile, so it cannot be named as a direct add candidate.",
+      "next_step": "Generate timestamped ETF profile covering liquidity, duration, credit risk and alternatives."
+    },
+    {
+      "subject": "512400,513180,159842,512070,159992,159378,562800,512710",
+      "missing_content": "etf_profile",
+      "why_it_blocks_action": "These current ETF holdings lack timestamped profiles and cannot receive direct buy/sell/reduce conclusions.",
+      "next_step": "Generate profiles by current weight and theme risk priority."
+    },
+    {
+      "subject": "德赛西威、顺丰控股、伯特利、光启技术、中科三环、中国海防、歌尔股份、禾迈股份、西安铂力特、捷佳伟创、振华风光、利尔化学、甘李药业",
+      "missing_content": "stock_profile",
+      "why_it_blocks_action": "These stocks are over 1% weight and lack profiles; direct trade conclusions are blocked.",
+      "next_step": "Generate stock profiles before the second-stage action plan."
+    },
+    {
+      "subject": "证券、创新药、军工/航天、有色稀土",
+      "missing_content": "theme_or_etf_profile",
+      "why_it_blocks_action": "These concentration groups are significant and some are not fully covered by current theme research.",
+      "next_step": "Review theme fit and ETF overlap before deciding the next reduction stage."
+    }
+  ],
+  "intraday_triggers": [
+    {
+      "subject": "Profiled theme ETF basket",
+      "trigger_condition": "Can reduce basket from 9.57% to no more than 2.00% based on current proportions.",
+      "action_after_trigger": "execute",
+      "needs_manual_confirmation": true
+    },
+    {
+      "subject": "Cash/bond-cash bucket",
+      "trigger_condition": "After profiled theme ETF basket reduction is executed.",
+      "action_after_trigger": "execute",
+      "needs_manual_confirmation": true
+    },
+    {
+      "subject": "Second-stage equity reduction",
+      "trigger_condition": "Unprofiled ETF and stock profiles are completed and equity remains above 55%.",
+      "action_after_trigger": "review",
+      "needs_manual_confirmation": true
+    },
+    {
+      "subject": "New offensive additions",
+      "trigger_condition": "Market position, theme review and ETF profiles all improve.",
+      "action_after_trigger": "cancel",
+      "needs_manual_confirmation": true
+    }
+  ],
+  "risks": [
+    "First-stage reduction only lowers equity to about 57.39%, still above the 55% upper bound.",
+    "Large unprofiled ETF and stock exposure blocks direct trade conclusions.",
+    "AI and semiconductor exposure remains in divergence or tactical downgrade conditions.",
+    "The bond/cash holding 511360 lacks a profile, so bond-cash allocation is bucket-level only."
+  ],
+  "triggered_hard_constraints": [
+    "Current equity allocation is above latest market-position upper bound.",
+    "Theme/satellite ETF allocation is materially above current theme bucket constraint.",
+    "Major ETF and all stock holdings have missing profile gaps."
+  ],
+  "comparison_with_previous": {
+    "previous_date": "",
+    "main_changes": [
+      "First ratio-only action plan generated from the latest portfolio snapshot.",
+      "No amount or share-count fields are used.",
+      "Unprofiled ETFs and stocks are classified as ResearchFirst only."
+    ],
+    "change_reasons": [
+      "Latest market position target is 45%-55% equity.",
+      "Portfolio snapshot shows 64.96% equity and excessive theme/satellite exposure."
+    ]
+  },
+  "decision_log_entry": "2026-06-02 比例版操作建议：生成 action_plan_2026-06-02_093828_ad_hoc.md/json；读取最新市场仓位、主线研究、ETF登记册、个股登记册和组合快照；建议先将已建档主题ETF篮子从9.57%降至不超过2.00%，释放比例进入现金/债券现金桶但不指定未建档ETF；未建档ETF和个股只列入补研究，不直接给买卖结论；第一阶段后权益约57.39%，剩余是否压到55%以内需补研究后重算。"
+}
