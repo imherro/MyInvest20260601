@@ -1,0 +1,303 @@
+{
+  "module": "etf_research",
+  "version": "1.0",
+  "date": "2026-06-01",
+  "generated_at": "2026-06-02_000715",
+  "code": "159301.SZ",
+  "name": "公用事业ETF华夏",
+  "rating": "B",
+  "data_sources": [
+    "Tushare Pro fund_basic/fund_daily/fund_nav/fund_share/fund_portfolio",
+    "research/market/market_score_2026-06-01_231907.md",
+    "research/themes/theme_review_2026-06-01_231611.md",
+    "research/themes/theme_registry.json"
+  ],
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-01_231907.md",
+    "theme_research_report": "research/themes/theme_review_2026-06-01_231611.md",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json"
+  },
+  "summary": {
+    "bucket_role": "defensive",
+    "action_rating": "Watch",
+    "etf_score": 75,
+    "target_position_range": "单只防御工具 0%-5%，防御仓合计参考7%-10%",
+    "confidence": "中",
+    "one_line_conclusion": "公用事业ETF华夏跟踪中证全指公用事业指数收益率，角色为防御仓；对应主线战略评级不适用、交易评级不适用、阶段不适用。最新市场仓位要求权益45%-55%且进攻仓收缩，因此本档案只给观察和触发条件。"
+  },
+  "basic_info": {
+    "fund_code": "159301.SZ",
+    "fund_name": "公用事业ETF华夏",
+    "tracked_index_or_asset": "中证全指公用事业指数收益率",
+    "fund_company": "华夏基金",
+    "aum": "约 1.31 亿元（按最新收盘价与Tushare份额估算）",
+    "average_daily_turnover": "近20日约 0.28 亿元",
+    "fee": "Tushare fund_basic未返回管理费/托管费字段，待基金公告补充",
+    "long_term_holding_suitable": "是，适合作为候选"
+  },
+  "position_role": {
+    "bucket_role": "defensive",
+    "related_theme": "",
+    "strategic_theme_rating": "不适用",
+    "tactical_theme_rating": "不适用",
+    "theme_stage": "不适用",
+    "allocation_purpose": "作为防御或低波动权益暴露候选，用于平衡科技进攻仓分歧。",
+    "alternative_etfs": [],
+    "overlap_with_existing_holdings": "当前组合持仓未录入，无法判断真实重叠；同主题ETF之间默认存在较高重叠，需要组合模块复核。"
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 17,
+      "evidence": "被动跟踪 中证全指公用事业指数收益率，基金公司为华夏基金。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 7,
+      "evidence": "仅取得ETF价格/净值位置代理：60日分位 100.0，1年可用样本分位 100.0；长期估值分位缺失。"
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": 19,
+      "evidence": "收盘 1.12，20日均线 1.06，60日均线 1.03；5日 +6.55%，20日 +9.89%，60日 +11.09%。 相对沪深300的20日强弱 +9.19%。"
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": 4,
+      "evidence": "近20日成交额约 0.28 亿元。"
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": 9,
+      "evidence": "最新份额 11695.84 万份，5日 +4.93%，20日 +21.25%。 官方净申购金额未直接取得。"
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 12,
+      "evidence": "前置主线结论：战略不适用、交易不适用、阶段不适用；不适用。"
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": 8,
+      "evidence": "真实组合持仓未录入，按仓位角色和同主题重叠风险给保守分。"
+    },
+    "base_score": 76,
+    "crowding_structure_risk": {
+      "score": 1,
+      "evidence": "交易评级不适用、阶段不适用；5日表现+6.55%，20日表现+9.89%，前十大权重合计 52.46%。",
+      "operation_limit": "市场仓位报告要求进攻仓收缩、主题仓暂停新增；本档案不直接生成买卖数量。"
+    },
+    "final_score": 75
+  },
+  "valuation": {
+    "status": "价格/净值位置代理，不等同于底层指数估值分位",
+    "short_term_60d_percentile": {
+      "status": "已获取",
+      "conclusion": "100.0 分位",
+      "evidence": "按Tushare fund_daily收盘价近60个交易日计算，仅代表ETF价格位置。"
+    },
+    "medium_term_1y_percentile": {
+      "status": "已获取",
+      "conclusion": "100.0 分位",
+      "evidence": "按Tushare fund_daily可用近一年样本计算，若上市不足一年则不使用。"
+    },
+    "long_term_3y_5y_percentile": {
+      "status": "缺失",
+      "conclusion": "未取得",
+      "evidence": "未取得跟踪指数3年/5年PE/PB等长期估值分位。"
+    },
+    "dividend_or_earnings_yield": {
+      "status": "缺失",
+      "conclusion": "未取得",
+      "evidence": "Tushare本次未返回该ETF或跟踪指数股息率/盈利收益率。"
+    },
+    "relative_value": {
+      "status": "缺失",
+      "conclusion": "待补充",
+      "evidence": "同类ETF费率、跟踪误差和估值比较待基金公告/指数估值补充。"
+    }
+  },
+  "trend_and_flow": {
+    "ma20_ma60_trend": {
+      "status": "已获取",
+      "conclusion": "站上20日线，站上60日线",
+      "evidence": "收盘 1.12，20日均线 1.06，60日均线 1.03；5日 +6.55%，20日 +9.89%，60日 +11.09%。"
+    },
+    "relative_strength": {
+      "status": "已获取",
+      "conclusion": "20日相对沪深300 +9.19%",
+      "evidence": "ETF 20日 +9.89%，沪深300 20日 +0.70%。"
+    },
+    "etf_share_change": {
+      "status": "已获取",
+      "conclusion": "最新份额 11695.84 万份，5日 +4.93%，20日 +21.25%。",
+      "evidence": "来自Tushare fund_share。"
+    },
+    "subscription_redemption": {
+      "status": "缺失",
+      "conclusion": "官方净申购/赎回金额未取得",
+      "evidence": "未取得基金公司/交易所官方净申购赎回金额；仅可用份额变化作代理。 5日份额变化对应市值约 0.06 亿元，仅为粗略代理。"
+    },
+    "turnover_liquidity": {
+      "status": "已获取",
+      "conclusion": "近20日成交额约 0.28 亿元",
+      "evidence": "来自Tushare fund_daily amount，单位换算为亿元。"
+    },
+    "scale_spread": {
+      "status": "部分获取",
+      "conclusion": "估算规模约 1.31 亿元；买卖价差缺失",
+      "evidence": "规模按收盘价和基金份额估算，盘口买卖价差未取得。"
+    }
+  },
+  "holdings_structure": {
+    "top_holdings": [
+      {
+        "symbol": "600900.SH",
+        "name": "长江电力",
+        "stk_mkv_ratio": 13.92
+      },
+      {
+        "symbol": "601985.SH",
+        "name": "中国核电",
+        "stk_mkv_ratio": 7.68
+      },
+      {
+        "symbol": "600905.SH",
+        "name": "三峡能源",
+        "stk_mkv_ratio": 6.28
+      },
+      {
+        "symbol": "600795.SH",
+        "name": "国电电力",
+        "stk_mkv_ratio": 4.45
+      },
+      {
+        "symbol": "600157.SH",
+        "name": "永泰能源",
+        "stk_mkv_ratio": 4.05
+      },
+      {
+        "symbol": "003816.SZ",
+        "name": "中国广核",
+        "stk_mkv_ratio": 3.74
+      },
+      {
+        "symbol": "600886.SH",
+        "name": "国投电力",
+        "stk_mkv_ratio": 3.51
+      },
+      {
+        "symbol": "600011.SH",
+        "name": "华能国际",
+        "stk_mkv_ratio": 3.19
+      },
+      {
+        "symbol": "600674.SH",
+        "name": "川投能源",
+        "stk_mkv_ratio": 2.99
+      },
+      {
+        "symbol": "600021.SH",
+        "name": "上海电力",
+        "stk_mkv_ratio": 2.65
+      }
+    ],
+    "concentration_risk": "最新披露期 20260331，持仓记录 10 条，披露股票权重合计约 52.46%，前十大约 52.46%。该结构存在披露滞后。",
+    "portfolio_overlap": "未录入真实持仓，无法判断与当前组合或个股持仓的实际重叠。",
+    "alternative_etf_comparison": []
+  },
+  "operation_conditions": {
+    "buy_conditions": [
+      "市场仓位重新允许提高对应仓位，且总权益区间不再处于收缩约束。",
+      "若为进攻/主题工具，对应主线交易评级至少修复到A或明确B+确认；若为防御/核心工具，需确认组合有配置缺口。",
+      "ETF重新站稳20日线且成交/份额变化不显示持续流出。",
+      "组合模块确认不存在同主题过度集中。"
+    ],
+    "add_conditions": [
+      "仅适用于已有仓位；新增前需由组合分析确认目标仓位缺口。",
+      "5日和20日趋势转强，且主线阶段未进入退潮。"
+    ],
+    "hold_conditions": [
+      "已持仓且未跌破60日线或主线失效条件。",
+      "份额变化和成交未显示明显撤离，且组合集中度仍在上限内。"
+    ],
+    "reduce_conditions": [
+      "跌破20日线后无法修复，或20日相对沪深300持续转弱。",
+      "对应主线交易评级下调，或阶段由分歧/修复转退潮。",
+      "组合层面同主题暴露超过限制。"
+    ],
+    "sell_or_invalidation_conditions": [
+      "跌破60日线且主线评级降至C/D或未评级方向无法补证。",
+      "基金流动性显著恶化、规模快速萎缩，或持仓结构与名称显著不匹配。"
+    ]
+  },
+  "trigger_based_actions": [
+    {
+      "trigger_condition": "重新站上20日线且20日强于沪深300，同时主线评级/阶段支持",
+      "action": "列为可复核候选，不直接生成买入指令",
+      "reverse_or_invalidation_condition": "再次跌回20日线或成交缩量失效"
+    },
+    {
+      "trigger_condition": "跌破60日线或主线降至C/D",
+      "action": "进入风险复核，已有仓位由组合/操作模块评估是否降低",
+      "reverse_or_invalidation_condition": "重新站回60日线且主线修复"
+    },
+    {
+      "trigger_condition": "份额连续下降且成交放大下跌",
+      "action": "降低档案评分中的资金流和趋势分",
+      "reverse_or_invalidation_condition": "份额企稳并重回相对强势"
+    }
+  ],
+  "position_suggestions_by_scenario": {
+    "market_position_below_45": "仅保留必要观察或防御属性，进攻/主题工具不新增。",
+    "market_position_45_60": "当前适用场景；按档案触发条件观察，不生成买入清单。",
+    "market_position_60_75": "只有在主线和趋势确认后，才允许纳入组合模块复核。",
+    "market_position_above_75": "仍需控制单一主题集中度，不因市场强势跳过ETF档案。",
+    "tactical_theme_a": "若为对应A档主线且趋势确认，可进入组合复核。",
+    "tactical_theme_downgrade_to_b": "降低进攻属性，通常只观察或持有既有仓位。",
+    "tactical_theme_downgrade_to_c_or_d": "进攻逻辑失效，主题仓只允许小仓试错或退出复核。"
+  },
+  "risks": [
+    "市场仓位报告显示进攻仓收缩，新增仓位需更高确认度。",
+    "底层指数长期估值分位、股息率和盈利收益率缺失，估值判断可信度有限。",
+    "最新持仓为定期披露数据，可能滞后于当前组合结构。",
+    "真实组合持仓未录入，无法判断是否与已有ETF或个股高重叠。"
+  ],
+  "risk_monitors": [
+    "20日/60日均线状态和相对沪深300强弱。",
+    "Tushare fund_share的5日和20日变化。",
+    "对应主线的战略评级、交易评级和交易阶段是否变化。",
+    "下次基金季报披露后的前十大持仓和集中度变化。"
+  ],
+  "data_gaps": {
+    "etf_share_or_subscription": [
+      "ETF份额已通过Tushare fund_share获取。",
+      "官方净申购/赎回金额未取得，仅能用份额变化作代理。"
+    ],
+    "long_term_valuation_percentile": [
+      "未取得跟踪指数3年/5年长期PE/PB估值分位。",
+      "本档案使用ETF价格/净值位置作为短中期代理，不等同于长期估值赔率。"
+    ],
+    "full_holdings_structure": [
+      "仅取得Tushare fund_portfolio最新披露期 20260331 的持仓记录，非实时完整持仓。",
+      "若基金公告披露口径与Tushare不同，应以基金公告复核。"
+    ],
+    "portfolio_overlap": [
+      "当前组合真实持仓未录入，无法计算重叠度。"
+    ],
+    "other": [
+      "管理费/托管费、盘口买卖价差、跟踪误差本次未取得。",
+      "主题登记册尚未为部分方向单独建主线，未登记方向不得临时升级。"
+    ]
+  },
+  "next_update_triggers": [
+    "theme_rating_change",
+    "valuation_percentile_change",
+    "trend_break_or_recovery",
+    "fund_flow_reversal",
+    "holdings_structure_change",
+    "portfolio_overlap_change"
+  ],
+  "decision_log_entry": "2026-06-01 ETF研究：\n- 标的：159301.SZ 公用事业ETF华夏\n- 仓位角色：防御仓\n- 操作评级：Watch\n- ETF分数：75\n- 目标仓位：单只防御工具 0%-5%，防御仓合计参考7%-10%\n- 关键依据：战略不适用、交易不适用、阶段不适用；市场仓位45%-55%，进攻仓收缩。\n- 前置研究：research/market/market_score_2026-06-01_231907.md；research/themes/theme_review_2026-06-01_231611.md；research/themes/theme_registry.json\n- 数据缺口：官方净申购金额、长期估值分位、实时完整持仓、组合重叠。\n- 失效条件：跌破60日线、主线降级或份额/成交显示持续撤离。"
+}
