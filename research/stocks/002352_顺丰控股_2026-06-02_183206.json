@@ -1,0 +1,212 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_183206",
+  "code": "002352.SZ",
+  "name": "顺丰控股",
+  "amount_policy": "ratio_only; no market-value holding amount; no cost amount; no profit amount; no share count",
+  "boundary": "Stock research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": [
+    "docs/modules/STOCK_RESEARCH.md",
+    "templates/stock_profile_template.md",
+    "templates/stock_profile_template.json",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/themes/theme_registry.json",
+    "research/stocks/stock_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research/portfolio/research_backlog_2026-06-02_152907.json",
+    "Tushare: stock_basic, daily, daily_basic, fina_indicator, income, cashflow, balancesheet, moneyflow, index_daily",
+    "CNInfo 2026 Q1 report: https://static.cninfo.com.cn/finalpage/2026-04-29/1225231842.PDF",
+    "CNInfo 2026-03-30 investor relations record: https://static.cninfo.com.cn/finalpage/2026-03-30/1225064344.PDF"
+  ],
+  "summary": {
+    "bucket_role": "watch",
+    "bucket_role_note": "watch / stable-core candidate",
+    "action_rating": "Watch",
+    "stock_score": 60,
+    "rating": "C",
+    "target_position_range": "No target position in this dossier; current 2.01% ratio is an input for downstream portfolio modules.",
+    "one_line_conclusion": "SF Holding has clear business logic, strong cash flow and very low valuation percentile, but it is not an A/B tactical theme, price trend is weak versus CSI 300, and recent moneyflow is negative; keep it as a stable-core candidate watch input, not an automatic add."
+  },
+  "basic_info": {
+    "stock_code": "002352.SZ",
+    "company_name": "顺丰控股",
+    "area": "深圳",
+    "industry": "仓储物流",
+    "market": "主板",
+    "list_date": "2010-02-05",
+    "related_theme": "物流/供应链/出海服务",
+    "theme_rating": "not_applicable_or_unrated",
+    "market_cap": "Total market cap about 1758.76 billion yuan; float market cap about 1664.73 billion yuan from Tushare daily_basic 2026-06-02; public market cap, not holding amount.",
+    "current_price": "34.90 yuan, 2026-06-02 close",
+    "current_position": "2.01% from portfolio snapshot",
+    "cost_basis": "Not recorded; no cost amount is saved.",
+    "holding_days": 40
+  },
+  "position_role": {
+    "bucket_role": "watch",
+    "allocation_purpose": "Research input for a logistics leader and non-theme defensive equity exposure.",
+    "is_long_term_core": false,
+    "is_offensive_stock": false,
+    "is_theme_trial": false,
+    "overlap_with_existing_holdings": "Low overlap with current technology, military, resources, financial and medical theme exposures; closer to non-theme stable equity exposure."
+  },
+  "market_and_theme_context": {
+    "market_position": "Latest market score report sets equity target at 45%-55%, bond/cash at 45%-55%, and offensive bucket status as reduce.",
+    "portfolio_context": "Portfolio snapshot shows equity 64.96%, bond/cash 35.04%, and remaining stock-profile gaps; 002352 was the only P0 item in research_backlog_2026-06-02_152907.",
+    "theme_context": "Logistics/supply-chain is not included in the current theme registry as an A/B tactical theme."
+  },
+  "investment_logic": {
+    "long_term_logic": [
+      "SF Holding is a large integrated logistics company covering time-definite express, economy express, freight, intra-city, supply-chain and international services.",
+      "2025 revenue was about 308.23 billion yuan, attributable net profit about 11.12 billion yuan, and operating cash flow about 27.56 billion yuan.",
+      "Management's 2025 review emphasized digital/intelligent operations and international/cross-border logistics expansion."
+    ],
+    "swing_logic": [
+      "No confirmed positive swing trend: 2026-06-02 close is below 20/60/120/240-day moving averages.",
+      "20/60/120/240-day returns are about -6.38%, -4.96%, -9.14% and -25.59%.",
+      "Relative performance versus CSI 300 is weak across 20/60/120/240-day windows."
+    ],
+    "core_assumptions": [
+      "Logistics demand remains resilient enough for stable revenue growth.",
+      "Operating efficiency, business mix and international/supply-chain growth can support margins.",
+      "Low valuation creates odds only if earnings are not revised down."
+    ],
+    "most_likely_failure_points": [
+      "Logistics price competition or macro demand weakness compresses margins.",
+      "International business is affected by trade frictions, energy prices, FX and geopolitical risk.",
+      "Low valuation remains low because market does not price the business as a growth asset."
+    ]
+  },
+  "scores": {
+    "business_logic": {
+      "weight": 20,
+      "score": 17,
+      "evidence": "Integrated logistics leader with real demand, scale, brand and strong operating cash flow."
+    },
+    "industry_theme_fit": {
+      "weight": 15,
+      "score": 6,
+      "evidence": "Logistics is not an A/B tactical theme in the current theme registry; cannot be treated as offensive core."
+    },
+    "financial_quality": {
+      "weight": 15,
+      "score": 12,
+      "evidence": "2025 ROE about 11.62%, debt-to-assets about 49.03%; 2026Q1 debt-to-assets about 47.80%; cash flow is solid."
+    },
+    "earnings_trend": {
+      "weight": 15,
+      "score": 11,
+      "evidence": "2025 revenue +8.37% and attributable net profit +9.30%; 2026Q1 revenue +6.14% and attributable net profit +13.05%."
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 13,
+      "evidence": "PE(TTM), PB and PS(TTM) are around the lowest percentile in the 582-observation sample since 2024."
+    },
+    "trend_fund_flow": {
+      "weight": 10,
+      "score": 2,
+      "evidence": "Price is below 20/60/120/240-day averages; 5-day and 20-day Tushare moneyflow sums are negative; relative performance is weak versus CSI 300."
+    },
+    "risk_controllability": {
+      "weight": 10,
+      "score": 7,
+      "evidence": "Risks are identifiable, but macro demand, price competition, international exposure and asset-heavy structure require monitoring."
+    },
+    "base_score": 68,
+    "stock_risk_penalty": {
+      "score": 8,
+      "evidence": "Penalty for weak trend, negative moneyflow, non-theme status, international and industry competition risks.",
+      "operation_limit": "Watch only; no buy/add/reduce/sell action is generated in this dossier."
+    },
+    "final_score": 60
+  },
+  "financials_and_earnings": {
+    "financial_quality": "2025 revenue about 308.23 billion yuan, attributable net profit about 11.12 billion yuan, ROE about 11.62%, gross margin about 13.32%, net margin about 3.79%. 2026Q1 debt-to-assets about 47.80%.",
+    "earnings_trend": "2025 growth was stable; 2026Q1 revenue grew about 6.14% and attributable net profit grew about 13.05%. This is resilient but not high-beta growth.",
+    "earnings_expectation": "No sell-side consensus forecast was used.",
+    "items_to_watch": [
+      "2026 interim revenue, attributable net profit, operating cash flow, gross margin and net margin",
+      "Monthly operating data, parcel volume and unit revenue",
+      "Supply-chain and international business growth",
+      "Accounts receivable, goodwill, debt and lease liabilities"
+    ]
+  },
+  "valuation": {
+    "current_valuation": "2026-06-02 PE(TTM) about 15.42, PB about 1.79, PS(TTM) about 0.56, dividend yield TTM about 2.52%.",
+    "historical_percentile": "Using 582 observations from 2024-01-01 to 2026-06-02, PE(TTM), PB and PS(TTM) are all around the 0.17th percentile.",
+    "peer_comparison": "Not completed; needs comparison with express, logistics and supply-chain peers.",
+    "reasonable_valuation_range": "No trading valuation band is provided; current conclusion is low valuation with unconfirmed trend.",
+    "upside_potential": "No price target is provided.",
+    "downside_risk": "Low valuation can stay low if earnings or logistics demand disappoint."
+  },
+  "trend_and_flow": {
+    "trend_status": "2026-06-02 close 34.90; below MA20 36.03, MA60 36.75, MA120 37.50 and MA240 40.86.",
+    "fund_flow": "Tushare moneyflow net_mf_amount sum is about -24155.36 over 5 trading days and -216713.91 over 20 trading days; latest day 2026-06-02 is also net outflow.",
+    "key_price_zones": [
+      "MA20 about 36.03: short-term repair watch level",
+      "MA60 about 36.75: medium-term repair watch level",
+      "MA240 about 40.86: long-term trend pressure watch level"
+    ]
+  },
+  "operation_conditions": {
+    "buy_conditions": [
+      "No buy condition is generated in this dossier; ACTION_PLAN must decide after reading market position, portfolio constraints and this dossier."
+    ],
+    "add_conditions": [
+      "No add condition is generated in this dossier."
+    ],
+    "hold_conditions": [
+      "Track earnings, cash flow, low valuation, MA20/MA60 recovery and moneyflow improvement as research inputs."
+    ],
+    "reduce_conditions": [
+      "No reduce condition is generated in this dossier."
+    ],
+    "sell_or_invalidation_conditions": [
+      "No sell condition is generated in this dossier; research thesis weakens if earnings decline, operating cash flow deteriorates, price competition worsens or price remains persistently weak versus CSI 300."
+    ]
+  },
+  "position_suggestions_by_scenario": {
+    "market_position_below_45": "No action in this dossier; portfolio module decides whether to keep defensive equity exposure.",
+    "market_position_45_60": "Current market is defensive; wait for trend repair before treating as core candidate.",
+    "market_position_60_75": "Still not an offensive stock.",
+    "market_position_above_75": "Do not expand single-stock risk only because valuation is low.",
+    "theme_a": "Not applicable.",
+    "theme_downgrade_to_b": "Not applicable.",
+    "theme_downgrade_to_c_or_d": "Not applicable.",
+    "earnings_miss": "Re-score earnings trend and risk penalty.",
+    "valuation_overheated": "Re-score valuation odds."
+  },
+  "risks": [
+    "Macro consumption and manufacturing demand weakness.",
+    "Express and logistics price competition compressing margins.",
+    "International business exposed to trade, FX, geopolitical and energy-price risks.",
+    "Asset-heavy logistics network, debt and lease liabilities.",
+    "Low valuation may reflect limited growth elasticity."
+  ],
+  "risk_monitors": [
+    "2026 interim revenue, attributable net profit, operating cash flow, gross margin and net margin",
+    "Monthly operating data, parcel volume and unit revenue",
+    "MA20/MA60 recovery and CSI 300 relative strength",
+    "Tushare moneyflow turning from net outflow to stable inflow",
+    "Buyback, dividend, H-share placement, debt financing and major investment events"
+  ],
+  "data_gaps": [
+    "Full peer comparison is not completed.",
+    "No sell-side consensus forecast is used.",
+    "Monthly operating data and segment-level margins are not fully decomposed.",
+    "Only the 2026Q1 report and the 2025 annual-results investor relations record were read as announcement-level supplements."
+  ],
+  "next_update_triggers": [
+    "2026 interim report or next earnings release",
+    "Material change in monthly operating data",
+    "Price recovers above or breaks further below MA20/MA60",
+    "20-day moneyflow shifts from net outflow to net inflow",
+    "Major change in logistics price competition, international business, buyback/dividend or debt financing",
+    "Portfolio snapshot update or material position-ratio change"
+  ],
+  "decision_log_entry": "2026-06-02 个股研究：002352.SZ 顺丰控股；仓位角色为观察股/稳健核心候选，操作评级Watch，个股分数60，评级C；当前仓位2.01%仅作为组合模块输入，不记录持仓金额、成本金额、盈亏金额或股数；关键依据为商业逻辑清晰、2025和2026Q1业绩保持正增长、现金流较强、估值处于2024年以来低分位，但物流未进入当前主线登记册，股价低于20/60/120/240日均线，近20日资金净流出且显著弱于沪深300；本档案不生成买卖建议或调仓动作。"
+}

@@ -1,0 +1,64 @@
+{
+  "module": "portfolio_research_backlog",
+  "version": "1.2",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_183206",
+  "amount_policy": "ratio_only; no market_value; no cost_amount; no profit_amount; no share count",
+  "boundary": "Research priority only; no buy/sell advice and no rebalance action.",
+  "previous_backlog": "research/portfolio/research_backlog_2026-06-02_152907.json",
+  "purpose": "Refresh backlog after 002352 stock profile was generated.",
+  "completed_since_previous": [
+    {
+      "code": "002352",
+      "name": "顺丰控股",
+      "type": "股票",
+      "status": "profile_generated",
+      "profile_file": "research/stocks/002352_顺丰控股_2026-06-02_183206.md",
+      "profile_json": "research/stocks/002352_顺丰控股_2026-06-02_183206.json",
+      "downstream_note": "No longer a P0 missing-profile blocker; dossier does not create buy/sell advice."
+    }
+  ],
+  "summary": {
+    "remaining_total_items": 20,
+    "remaining_by_priority": {
+      "P0": {"etf": 0, "stock": 0, "total": 0},
+      "P1": {"etf": 4, "stock": 11, "total": 15},
+      "P2": {"etf": 1, "stock": 4, "total": 5}
+    },
+    "key_change": "P0 missing-profile blockers are now zero."
+  },
+  "remaining_items": [
+    {"priority": "P1", "code": "159378", "name": "通用航空ETF永赢", "type": "ETF", "current_weight_pct": 2.52, "reason": "Military/aerospace/low-altitude concentration.", "target_module": "ETF_RESEARCH"},
+    {"priority": "P1", "code": "512710", "name": "军工龙头ETF富国", "type": "ETF", "current_weight_pct": 2.24, "reason": "Military/aerospace/low-altitude concentration.", "target_module": "ETF_RESEARCH"},
+    {"priority": "P1", "code": "603596", "name": "伯特利", "type": "股票", "current_weight_pct": 1.79, "reason": "Intelligent vehicle stock; company profile needed.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "002625", "name": "光启技术", "type": "股票", "current_weight_pct": 1.78, "reason": "Defense/low-altitude/new-materials exposure.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "000970", "name": "中科三环", "type": "股票", "current_weight_pct": 1.75, "reason": "Nonferrous/rare-earth/resources concentration.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "513180", "name": "恒生科技ETF华夏", "type": "ETF", "current_weight_pct": 1.61, "reason": "Cross-market technology exposure.", "target_module": "ETF_RESEARCH"},
+    {"priority": "P1", "code": "512400", "name": "有色金属ETF南方", "type": "ETF", "current_weight_pct": 1.58, "reason": "Nonferrous/rare-earth/resources concentration.", "target_module": "ETF_RESEARCH"},
+    {"priority": "P1", "code": "600764", "name": "中国海防", "type": "股票", "current_weight_pct": 1.57, "reason": "Defense informatization exposure.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "002241", "name": "歌尔股份", "type": "股票", "current_weight_pct": 1.41, "reason": "Technology/AI terminal exposure needs validation.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "688032", "name": "禾迈股份", "type": "股票", "current_weight_pct": 1.36, "reason": "Power equipment/new-energy exposure needs validation.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "688333", "name": "西安铂力特", "type": "股票", "current_weight_pct": 1.34, "reason": "High-end equipment/defense chain exposure.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "300724", "name": "捷佳伟创", "type": "股票", "current_weight_pct": 1.29, "reason": "Photovoltaic equipment/power equipment exposure.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "688439", "name": "振华风光", "type": "股票", "current_weight_pct": 1.21, "reason": "Military electronics exposure.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "002258", "name": "利尔化学", "type": "股票", "current_weight_pct": 1.16, "reason": "Chemical/agriculture-chain role needs validation.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P1", "code": "603087", "name": "甘李药业", "type": "股票", "current_weight_pct": 1.03, "reason": "Medical group role needs validation.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P2", "code": "562800", "name": "稀有金属ETF嘉实", "type": "ETF", "current_weight_pct": 0.82, "reason": "Small position; related to resources group.", "target_module": "ETF_RESEARCH"},
+    {"priority": "P2", "code": "002041", "name": "登海种业", "type": "股票", "current_weight_pct": 0.63, "reason": "Small position; agriculture/seed exposure.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P2", "code": "300627", "name": "华测导航", "type": "股票", "current_weight_pct": 0.58, "reason": "Small position; satellite navigation/low-altitude exposure.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P2", "code": "603903", "name": "中持股份", "type": "股票", "current_weight_pct": 0.42, "reason": "Small position; environmental/public utility exposure.", "target_module": "STOCK_RESEARCH"},
+    {"priority": "P2", "code": "300760", "name": "迈瑞医疗", "type": "股票", "current_weight_pct": 0.36, "reason": "Small position; medical device exposure.", "target_module": "STOCK_RESEARCH"}
+  ],
+  "execution_order": [
+    "P1 military/low-altitude group: 159378, 512710, 002625, 600764, 688439",
+    "P1 resources group: 512400, 000970, 562800",
+    "P1 intelligent vehicle, technology and power equipment stocks: 603596, 002241, 688032, 688333, 300724",
+    "P2 small positions after portfolio update or higher-impact profiles are completed"
+  ],
+  "downstream_impact": [
+    "002352 is no longer a P0 missing-profile blocker.",
+    "There are still 20 remaining research items; second-stage equity reduction should not bypass the research list.",
+    "This backlog update does not change allocation advice."
+  ],
+  "decision_log_entry": "2026-06-02 补研究清单更新：生成 research_backlog_2026-06-02_183206.md/json；确认 002352 顺丰控股已完成时间戳个股档案，P0 未建档阻断项降为 0；剩余待研究标的为 20 个，其中 P1 为 15 个、P2 为 5 个；本清单不生成买卖建议或调仓动作。"
+}
