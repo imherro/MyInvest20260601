@@ -1,0 +1,229 @@
+{
+  "module": "etf_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_095258",
+  "code": "511360.SH",
+  "name": "短融ETF海富通",
+  "boundary": "Treat as cash/short-term financing vehicle; no buy/sell advice and no rebalance action.",
+  "data_sources": [
+    "Tushare fund_basic",
+    "Tushare fund_daily",
+    "Tushare fund_nav",
+    "Tushare fund_share",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/themes/theme_registry.json",
+    "research/etfs/etf_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research/portfolio/research_backlog_2026-06-02_094121.json"
+  ],
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-01_231907.md",
+    "theme_research_report": "research/themes/theme_review_2026-06-01_231611.md",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research_backlog": "research/portfolio/research_backlog_2026-06-02_094121.json"
+  },
+  "summary": {
+    "bucket_role": "bond_cash",
+    "action_rating": "Watch",
+    "etf_score": 75,
+    "target_position_range": "作为现金/债券桶工具，由组合分析和操作建议模块决定；最新市场仓位报告给出的债券/现金目标为45%-55%。",
+    "confidence": "medium",
+    "one_line_conclusion": "511360先按现金/短融承接工具处理，不绑定权益主线，不生成买卖建议；后续组合和操作建议模块可以把它作为债券/现金桶输入。"
+  },
+  "basic_info": {
+    "fund_code": "511360.SH",
+    "fund_name": "短融ETF海富通",
+    "tracked_index_or_asset": "中证短融指数收益率",
+    "fund_company": "海富通基金",
+    "custodian": "兴业银行",
+    "fund_type": "债券型",
+    "invest_type": "被动指数型",
+    "found_date": "2020-08-03",
+    "list_date": "2020-09-25",
+    "fee": "管理费0.15%，托管费0.05%",
+    "latest_trade_date": "2026-06-01",
+    "latest_close": 113.525,
+    "latest_unit_nav": 113.5363,
+    "premium_discount_pct": -0.01,
+    "latest_fd_share_wan": 80371.26,
+    "estimated_aum_yi": 912.51,
+    "latest_turnover_yi": 135.65,
+    "average_daily_turnover_20d_yi": 237.01,
+    "long_term_holding_suitable": true
+  },
+  "position_role": {
+    "bucket_role": "bond_cash",
+    "related_theme": "不适用",
+    "strategic_theme_rating": "不适用",
+    "tactical_theme_rating": "不适用",
+    "theme_stage": "不适用",
+    "allocation_purpose": "现金管理、短融暴露、组合防守和仓位承接",
+    "alternative_etfs": ["货币ETF", "其他短融ETF", "中短债ETF"],
+    "overlap_with_existing_holdings": "当前组合中511360已是债券/现金桶唯一主要标的，占比35.04%。"
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 18,
+      "evidence": "跟踪中证短融指数收益率，角色清晰。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 9,
+      "evidence": "债券现金工具不适合用权益估值分位评价；折溢价约-0.01%，但久期、信用和底层债券细节仍需基金公告复核。"
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": 15,
+      "evidence": "近20日收益约0.11%，近60日收益约0.35%，价格平稳。"
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": 10,
+      "evidence": "最新成交额约135.65亿元，近20日日均约237.01亿元。"
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": 6,
+      "evidence": "最新份额较20个观察日之前下降约9.54%，但较60个观察日之前增加约17.78%。"
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 13,
+      "evidence": "与最新市场仓位报告中债券/现金45%-55%目标方向一致。"
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": 8,
+      "evidence": "与权益主题仓和未建档个股互补，可作为现金桶输入。"
+    },
+    "base_score": 79,
+    "crowding_structure_risk": {
+      "score": 4,
+      "evidence": "主要风险是把短融ETF当作无风险现金，底层债券结构和信用风险未完全展开。",
+      "operation_limit": "不生成买卖建议；后续动作交给组合分析和操作建议模块。"
+    },
+    "final_score": 75
+  },
+  "trend_and_flow": {
+    "ma20_ma60_trend": {
+      "status": "available",
+      "conclusion": "稳定",
+      "evidence": "最新收盘价高于20日和60日均线；短融ETF趋势意义弱于权益ETF。"
+    },
+    "short_term_returns": {
+      "status": "available",
+      "return_20d_pct": 0.1067,
+      "return_60d_pct": 0.3545,
+      "return_120d_pct": 0.7562
+    },
+    "etf_share_change": {
+      "status": "available",
+      "share_5d_change_pct": -1.45,
+      "share_20d_change_pct": -9.54,
+      "share_60d_change_pct": 17.78,
+      "evidence": "Tushare fund_share fd_share口径。"
+    },
+    "subscription_redemption": {
+      "status": "missing",
+      "conclusion": "未取得官方净申购/赎回金额。",
+      "evidence": "本次只用份额变化作为代理。"
+    },
+    "turnover_liquidity": {
+      "status": "available",
+      "conclusion": "强",
+      "evidence": "最新成交额约135.65亿元，近20日日均约237.01亿元。"
+    }
+  },
+  "holdings_structure": {
+    "top_holdings": [],
+    "concentration_risk": "Tushare fund_portfolio未返回底层债券持仓；当前组合中511360占比35.04%，是债券/现金桶的主要工具。",
+    "portfolio_overlap": "与权益ETF和股票不构成权益主题重叠；与债券/现金桶高度重合。",
+    "alternative_etf_comparison": [
+      {
+        "code": "511360.SH",
+        "name": "短融ETF海富通",
+        "advantages": ["规模和成交活跃", "现金/短融角色清晰"],
+        "disadvantages": ["完整底层债券结构未在本次取得", "仍有利率、信用和流动性风险"],
+        "preferred": true
+      },
+      {
+        "code": "",
+        "name": "货币ETF/其他短融ETF",
+        "advantages": ["可作为替代现金工具"],
+        "disadvantages": ["本次未做横向比较"],
+        "preferred": null
+      }
+    ]
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [
+      "如果操作建议模块需要现金/债券承接工具，可以读取本档案确认511360的现金/短融角色。"
+    ],
+    "reduce_conditions": [],
+    "sell_or_invalidation_conditions": []
+  },
+  "trigger_based_actions": [
+    {
+      "trigger_condition": "操作建议模块需要现金/债券桶输入",
+      "action": "引用本档案作为511360的角色依据",
+      "reverse_or_invalidation_condition": "511360出现流动性、折溢价或底层风险异常"
+    },
+    {
+      "trigger_condition": "最新市场仓位报告调整债券/现金目标",
+      "action": "重新读取市场仓位报告并复核现金桶比例",
+      "reverse_or_invalidation_condition": "市场仓位报告维持不变"
+    }
+  ],
+  "position_suggestions_by_scenario": {
+    "market_position_below_45": "作为现金/短融桶输入，具体比例由组合和操作建议模块决定。",
+    "market_position_45_60": "作为现金/短融桶输入，具体比例由组合和操作建议模块决定。",
+    "market_position_60_75": "作为现金/短融桶输入，具体比例由组合和操作建议模块决定。",
+    "market_position_above_75": "作为现金/短融桶输入，具体比例由组合和操作建议模块决定。",
+    "tactical_theme_a": "不适用。",
+    "tactical_theme_downgrade_to_b": "不适用。",
+    "tactical_theme_downgrade_to_c_or_d": "不适用。"
+  },
+  "risks": [
+    "短融ETF不等同于银行现金，仍有利率、信用、流动性和折溢价风险。",
+    "Tushare未返回完整底层债券持仓，底层信用结构需要基金公告或基金公司数据补充。",
+    "当前组合中该标的占比高，后续操作建议需要把它作为现金桶集中工具处理。"
+  ],
+  "risk_monitors": [
+    "折溢价是否明显扩大",
+    "成交额是否明显下降",
+    "份额是否出现连续大幅波动",
+    "基金公告是否披露底层债券信用或久期异常"
+  ],
+  "data_gaps": {
+    "etf_share_or_subscription": [
+      "已取得份额变化；未取得官方净申购/赎回金额。"
+    ],
+    "long_term_valuation_percentile": [
+      "不适用于短融ETF；可用折溢价、收益率和久期替代。"
+    ],
+    "full_holdings_structure": [
+      "Tushare fund_portfolio未返回底层债券持仓。"
+    ],
+    "portfolio_overlap": [
+      "已按组合快照确认其为债券/现金桶主要工具。"
+    ],
+    "other": [
+      "未做同类货币ETF、短融ETF横向比较。"
+    ]
+  },
+  "next_update_triggers": [
+    "用户更新持仓比例",
+    "最新市场仓位报告改变债券/现金目标区间",
+    "511360折溢价、成交额、份额出现异常变化",
+    "需要在操作建议模块中比较多个现金/短融替代工具",
+    "基金公告披露底层持仓、久期或信用风险变化"
+  ],
+  "decision_log_entry": "2026-06-02 ETF研究：511360.SH 短融ETF海富通；仓位角色为债券现金仓，操作评级Watch，ETF分数75。按用户要求先作为现金/短融承接工具处理，不生成买卖建议，不生成调仓动作。"
+}

@@ -474,25 +474,25 @@
     },
     {
       "code": "511360.SH",
-      "name": "Short-term Bond ETF Haifutong",
+      "name": "短融ETF海富通",
       "bucket_role": "bond_cash",
       "pool": "current_holding_to_research",
-      "status": "to_research",
+      "status": "profile_generated",
       "current_weight_pct": 35.04,
-      "related_theme": "pending",
-      "strategic_theme_rating": "pending",
-      "tactical_theme_rating": "pending",
-      "theme_stage": "pending",
-      "rating": "pending",
+      "related_theme": "不适用",
+      "strategic_theme_rating": "不适用",
+      "tactical_theme_rating": "不适用",
+      "theme_stage": "不适用",
+      "rating": "B",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
-      "last_profile_file": "",
-      "last_profile_json": "",
+      "target_position_range": "作为现金/债券桶工具，由组合分析和操作建议模块决定；最新市场仓位报告债券/现金目标为45%-55%。",
+      "reason": "按用户要求先作为现金/短融承接工具处理，不绑定权益主线，不生成买卖建议；Tushare基础信息、日线、净值和份额数据可用，流动性强。",
+      "last_profile_file": "research/etfs/511360.SH_短融ETF海富通_2026-06-02_095258.md",
+      "last_profile_json": "research/etfs/511360.SH_短融ETF海富通_2026-06-02_095258.json",
       "data_gaps": [
-        "ETF profile not generated",
-        "theme binding pending",
-        "peer comparison pending"
+        "官方净申购/赎回金额未取得",
+        "Tushare fund_portfolio未返回完整底层债券持仓",
+        "未做同类货币ETF、短融ETF横向比较"
       ]
     },
     {
@@ -690,6 +690,11 @@
       "date": "2026-06-02",
       "change": "Added 9 currently held ETFs to current_holding_to_research.",
       "impact": "These ETFs require timestamped ETF profiles before they can be used as buy/add candidates."
+    },
+    {
+      "date": "2026-06-02",
+      "change": "Generated timestamped ETF profile for 511360.SH 短融ETF海富通.",
+      "impact": "511360 is now available as a bond_cash/cash bucket input for portfolio and action modules; profile does not create buy/sell advice."
     }
   ]
 }
