@@ -543,25 +543,27 @@
     },
     {
       "code": "159842.SZ",
-      "name": "Brokerage ETF Yinhua",
+      "name": "券商ETF银华",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
-      "status": "to_research",
+      "status": "profile_generated",
       "current_weight_pct": 4.37,
-      "related_theme": "pending",
-      "strategic_theme_rating": "pending",
-      "tactical_theme_rating": "pending",
-      "theme_stage": "pending",
-      "rating": "pending",
+      "related_theme": "金融证券/券商",
+      "strategic_theme_rating": "未评级",
+      "tactical_theme_rating": "未评级",
+      "theme_stage": "不适用",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
-      "last_profile_file": "",
-      "last_profile_json": "",
+      "target_position_range": "单只券商主题工具0%-1%；金融证券组需合并纳入主题仓和行业集中度约束。",
+      "reason": "券商ETF银华跟踪中证全指证券公司指数，角色为主题仓；当前金融证券未进入主线登记册，ETF低于20日和60日均线，且组合中证券/券商/保险ETF组占比10.62%。本档案只给观察和触发条件。",
+      "last_profile_file": "research/etfs/159842.SZ_券商ETF银华_2026-06-02_101331.md",
+      "last_profile_json": "research/etfs/159842.SZ_券商ETF银华_2026-06-02_101331.json",
       "data_gaps": [
-        "ETF profile not generated",
-        "theme binding pending",
-        "peer comparison pending"
+        "官方净申购/赎回金额未取得",
+        "3年/5年长期估值分位未取得",
+        "实时完整持仓结构未取得，仅有2026-03-31披露持仓",
+        "与512880、512070的成分级重叠量化未完成",
+        "金融证券组完整横向比较需由组合分析模块统一完成"
       ]
     },
     {
@@ -709,6 +711,11 @@
       "date": "2026-06-02",
       "change": "Generated timestamped ETF profile for 512070.SH 证券保险ETF易方达.",
       "impact": "512070 is now available as a profiled financial securities theme ETF input for portfolio and action modules; profile does not create buy/sell advice."
+    },
+    {
+      "date": "2026-06-02",
+      "change": "Generated timestamped ETF profile for 159842.SZ 券商ETF银华.",
+      "impact": "159842 is now available as a profiled brokerage theme ETF input for portfolio and action modules; profile does not create buy/sell advice."
     }
   ]
 }
