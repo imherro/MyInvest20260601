@@ -566,25 +566,27 @@
     },
     {
       "code": "512070.SH",
-      "name": "Securities Insurance ETF E Fund",
+      "name": "证券保险ETF易方达",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
-      "status": "to_research",
+      "status": "profile_generated",
       "current_weight_pct": 4.99,
-      "related_theme": "pending",
-      "strategic_theme_rating": "pending",
-      "tactical_theme_rating": "pending",
-      "theme_stage": "pending",
-      "rating": "pending",
+      "related_theme": "金融证券/非银金融",
+      "strategic_theme_rating": "未评级",
+      "tactical_theme_rating": "未评级",
+      "theme_stage": "不适用",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
-      "last_profile_file": "",
-      "last_profile_json": "",
+      "target_position_range": "单只金融证券主题工具0%-1%；金融证券组需合并纳入主题仓和行业集中度约束。",
+      "reason": "证券保险ETF易方达跟踪沪深300非银行金融指数，角色为主题仓；当前金融证券未进入主线登记册，ETF低于20日和60日均线，且组合中证券/券商/保险ETF组占比10.62%。本档案只给观察和触发条件。",
+      "last_profile_file": "research/etfs/512070.SH_证券保险ETF易方达_2026-06-02_100814.md",
+      "last_profile_json": "research/etfs/512070.SH_证券保险ETF易方达_2026-06-02_100814.json",
       "data_gaps": [
-        "ETF profile not generated",
-        "theme binding pending",
-        "peer comparison pending"
+        "官方净申购/赎回金额未取得",
+        "3年/5年长期估值分位未取得",
+        "实时完整持仓结构未取得，仅有2026-03-31披露持仓",
+        "与512880、159842的成分级重叠未完成",
+        "159842尚未建档，金融证券组横向比较仍不完整"
       ]
     },
     {
@@ -702,6 +704,11 @@
       "date": "2026-06-02",
       "change": "Generated timestamped ETF profile for 159992.SZ 创新药ETF银华.",
       "impact": "159992 is now available as a profiled theme ETF input for portfolio and action modules; profile does not create buy/sell advice."
+    },
+    {
+      "date": "2026-06-02",
+      "change": "Generated timestamped ETF profile for 512070.SH 证券保险ETF易方达.",
+      "impact": "512070 is now available as a profiled financial securities theme ETF input for portfolio and action modules; profile does not create buy/sell advice."
     }
   ]
 }

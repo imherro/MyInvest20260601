@@ -1,0 +1,300 @@
+{
+  "module": "etf_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_100814",
+  "code": "512070.SH",
+  "name": "证券保险ETF易方达",
+  "boundary": "ETF profile only; no buy/sell advice and no rebalance action.",
+  "data_sources": [
+    "Tushare fund_basic",
+    "Tushare fund_daily",
+    "Tushare fund_nav",
+    "Tushare fund_share",
+    "Tushare fund_portfolio",
+    "Tushare stock_basic",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/themes/theme_registry.json",
+    "research/etfs/etf_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research/portfolio/research_backlog_2026-06-02_094121.json"
+  ],
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-01_231907.md",
+    "theme_research_report": "research/themes/theme_review_2026-06-01_231611.md",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research_backlog": "research/portfolio/research_backlog_2026-06-02_094121.json"
+  },
+  "summary": {
+    "bucket_role": "theme",
+    "action_rating": "Watch",
+    "etf_score": 35,
+    "target_position_range": "单只金融证券主题工具0%-1%；金融证券组需合并纳入主题仓和行业集中度约束。",
+    "confidence": "medium",
+    "one_line_conclusion": "512070是非银金融主题ETF，保险和券商权重集中，当前未进入主线登记册、趋势弱于市场，且组合中证券/券商/保险ETF组已有10.62%暴露；本档案只补齐研究输入，不生成买卖建议或调仓动作。"
+  },
+  "basic_info": {
+    "fund_code": "512070.SH",
+    "fund_name": "证券保险ETF易方达",
+    "tracked_index_or_asset": "沪深300非银行金融指数",
+    "fund_company": "易方达基金",
+    "custodian": "中国建设银行",
+    "fund_type": "股票型",
+    "invest_type": "被动指数型",
+    "found_date": "2014-06-26",
+    "list_date": "2014-07-18",
+    "fee": "管理费0.50%，托管费0.10%",
+    "latest_trade_date": "2026-06-01",
+    "latest_close": 0.757,
+    "latest_unit_nav": 0.7562,
+    "premium_discount_pct": 0.106,
+    "latest_fd_share_wan": 1537747.97,
+    "estimated_aum_yi": 116.31,
+    "latest_turnover_yi": 3.24,
+    "average_daily_turnover_20d_yi": 5.0,
+    "long_term_holding_suitable": false
+  },
+  "position_role": {
+    "bucket_role": "theme",
+    "related_theme": "金融证券/非银金融",
+    "strategic_theme_rating": "未评级",
+    "tactical_theme_rating": "未评级",
+    "theme_stage": "不适用",
+    "allocation_purpose": "提供券商、保险和非银金融主题暴露",
+    "alternative_etfs": ["512880.SH 证券ETF国泰", "159842.SZ 券商ETF银华"],
+    "overlap_with_existing_holdings": "与512880、159842同属证券/券商/保险ETF组；组合快照中该组占比10.62%。"
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 14,
+      "evidence": "跟踪沪深300非银行金融指数，覆盖券商和保险，但前十大集中度较高。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 8,
+      "evidence": "价格处于近60日和近240日低分位，但未取得指数长期PE/PB分位。"
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": 3,
+      "evidence": "最新收盘价低于20日和60日均线；近20日-6.54%，近60日-10.10%。"
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": 7,
+      "evidence": "最新成交额约3.24亿元，近20日日均约5.00亿元，常规流动性尚可。"
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": 3,
+      "evidence": "Tushare份额近20个观察日下降约6.90%，近60个观察日下降约28.10%。"
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 3,
+      "evidence": "金融证券未在当前主线登记册中评级，且最新市场仓位报告要求主题仓暂停新增。"
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": 2,
+      "evidence": "当前组合证券/券商/保险ETF组已达10.62%，本ETF是该组最大单只，放大主题集中。"
+    },
+    "base_score": 47,
+    "crowding_structure_risk": {
+      "score": 12,
+      "evidence": "当前单只4.99%，金融证券组10.62%；前十大持仓集中度高。",
+      "operation_limit": "本档案不生成买卖建议；后续动作交给组合分析和操作建议模块。"
+    },
+    "final_score": 35
+  },
+  "valuation": {
+    "status": "partial",
+    "short_term_60d_percentile": {
+      "status": "available",
+      "conclusion": "价格低位",
+      "evidence": "最新收盘价在近60日收盘价中约处于6.67%分位。"
+    },
+    "medium_term_1y_percentile": {
+      "status": "available",
+      "conclusion": "价格低位",
+      "evidence": "最新收盘价在近240日收盘价中约处于1.67%分位。"
+    },
+    "long_term_3y_5y_percentile": {
+      "status": "missing",
+      "conclusion": "未判断",
+      "evidence": "未取得沪深300非银行金融指数长期PE/PB分位。"
+    },
+    "dividend_or_earnings_yield": {
+      "status": "missing",
+      "conclusion": "未判断",
+      "evidence": "未取得跟踪指数股息率和盈利收益率。"
+    },
+    "relative_value": {
+      "status": "partial",
+      "conclusion": "待补",
+      "evidence": "已识别与512880、159842的主题重叠，但未完成成分级横向比较。"
+    }
+  },
+  "trend_and_flow": {
+    "ma20_ma60_trend": {
+      "status": "available",
+      "conclusion": "弱势",
+      "evidence": "最新收盘价0.757，低于20日均线0.7820和60日均线0.7992。"
+    },
+    "relative_strength": {
+      "status": "available",
+      "conclusion": "明显弱于沪深300",
+      "evidence": "近20日相对沪深300约-7.31pct，近60日约-15.34pct，近120日约-18.89pct。"
+    },
+    "returns": {
+      "status": "available",
+      "return_5d_pct": -1.82,
+      "return_20d_pct": -6.54,
+      "return_60d_pct": -10.1,
+      "return_120d_pct": -11.87,
+      "return_240d_pct": -2.57
+    },
+    "etf_share_change": {
+      "status": "available",
+      "conclusion": "近中期下降",
+      "evidence": "近20个观察日-6.90%，近60个观察日-28.10%，近120个观察日-19.14%。"
+    },
+    "subscription_redemption": {
+      "status": "missing",
+      "conclusion": "未取得",
+      "evidence": "Tushare返回份额变化，但未取得官方净申购/赎回金额。"
+    },
+    "turnover_liquidity": {
+      "status": "available",
+      "conclusion": "流动性尚可",
+      "evidence": "最新成交额约3.24亿元，近20日日均约5.00亿元。"
+    }
+  },
+  "holdings_structure": {
+    "latest_disclosed_end_date": "2026-03-31",
+    "top_holdings": [
+      {"code": "601318.SH", "name": "中国平安", "industry": "保险", "weight_pct": 27.53},
+      {"code": "300059.SZ", "name": "东方财富", "industry": "证券", "weight_pct": 10.88},
+      {"code": "600030.SH", "name": "中信证券", "industry": "证券", "weight_pct": 10.69},
+      {"code": "601211.SH", "name": "国泰海通", "industry": "证券", "weight_pct": 8.53},
+      {"code": "601601.SH", "name": "中国太保", "industry": "保险", "weight_pct": 5.78},
+      {"code": "601688.SH", "name": "华泰证券", "industry": "证券", "weight_pct": 4.73},
+      {"code": "601628.SH", "name": "中国人寿", "industry": "保险", "weight_pct": 2.75},
+      {"code": "600999.SH", "name": "招商证券", "industry": "证券", "weight_pct": 2.61},
+      {"code": "000776.SZ", "name": "广发证券", "industry": "证券", "weight_pct": 2.42},
+      {"code": "601336.SH", "name": "新华保险", "industry": "保险", "weight_pct": 2.33}
+    ],
+    "top10_weight_sum_pct": 78.25,
+    "concentration_risk": "前十大成分合计约78.25%，第一大中国平安约27.53%。",
+    "portfolio_overlap": "与512880和159842高度重叠，均属于证券/券商/非银金融暴露；512070相比纯券商ETF增加保险权重。",
+    "alternative_etf_comparison": [
+      {
+        "code": "512070.SH",
+        "name": "证券保险ETF易方达",
+        "advantages": ["同时覆盖券商和保险", "规模和成交尚可"],
+        "disadvantages": ["前十大和中国平安权重集中", "当前趋势弱", "未评级主题"],
+        "preferred": null
+      },
+      {
+        "code": "512880.SH",
+        "name": "证券ETF国泰",
+        "advantages": ["已建档", "偏证券公司指数暴露"],
+        "disadvantages": ["与本ETF券商部分重复", "不覆盖保险权重"],
+        "preferred": null
+      },
+      {
+        "code": "159842.SZ",
+        "name": "券商ETF银华",
+        "advantages": ["当前持仓中券商主题工具"],
+        "disadvantages": ["尚未建档", "与证券类ETF高度重复"],
+        "preferred": null
+      }
+    ]
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [
+      "仅当后续模块需要判断金融证券组暴露时，引用本档案作为512070的基础研究输入。"
+    ],
+    "reduce_conditions": [],
+    "sell_or_invalidation_conditions": [
+      "本档案不生成卖出动作；若ETF继续弱于市场、份额持续流出、或成分集中风险上升，应触发重新研究。"
+    ]
+  },
+  "trigger_based_actions": [
+    {
+      "trigger_condition": "操作建议模块处理证券/券商/保险ETF组",
+      "action": "引用本档案作为512070的基础输入",
+      "reverse_or_invalidation_condition": "市场仓位、主线或组合快照已更新但未重新读取"
+    },
+    {
+      "trigger_condition": "金融证券被纳入主线登记册并获得交易评级",
+      "action": "重新生成或复核ETF档案",
+      "reverse_or_invalidation_condition": "主线仍未评级"
+    },
+    {
+      "trigger_condition": "512070重新站上20日和60日均线且相对沪深300修复",
+      "action": "触发ETF_RESEARCH复核",
+      "reverse_or_invalidation_condition": "趋势继续弱于市场"
+    },
+    {
+      "trigger_condition": "基金份额持续下降或折溢价异常",
+      "action": "触发资金和流动性复核",
+      "reverse_or_invalidation_condition": "份额和折溢价恢复稳定"
+    }
+  ],
+  "position_suggestions_by_scenario": {
+    "market_position_below_45": "主题仓保持观察口径，具体动作由操作建议模块决定。",
+    "market_position_45_60": "主题仓不直接放大；当前市场报告给出主题仓0%-2%且暂停新增。",
+    "market_position_60_75": "若主线和趋势未修复，仍不能自动升级为进攻仓。",
+    "market_position_above_75": "需重新读取最新市场报告，不在本档案推导。",
+    "tactical_theme_a": "金融证券当前未评级，不适用。",
+    "tactical_theme_downgrade_to_b": "不适用。",
+    "tactical_theme_downgrade_to_c_or_d": "若未来纳入主线且评级偏低，应维持主题观察边界。"
+  },
+  "risks": [
+    "金融证券未纳入当前主线登记册，缺少固化主线评级。",
+    "512070当前趋势弱于市场，且低于20日和60日均线。",
+    "当前组合中证券/券商/保险ETF组占比10.62%，512070单只4.99%，存在主题集中度风险。",
+    "前十大成分较集中，中国平安单只权重约27.53%。",
+    "基金披露持仓为2026-03-31，不代表实时完整持仓。"
+  ],
+  "risk_monitors": [
+    "是否重新站上20日和60日均线",
+    "相对沪深300是否由弱转强",
+    "基金份额是否继续下降",
+    "金融证券是否被主线研究模块纳入评级",
+    "中国平安、东方财富、中信证券等核心成分是否发生重大风险"
+  ],
+  "data_gaps": {
+    "etf_share_or_subscription": [
+      "已取得份额变化；未取得官方净申购/赎回金额。"
+    ],
+    "long_term_valuation_percentile": [
+      "未取得沪深300非银行金融指数3年/5年PE/PB分位。"
+    ],
+    "full_holdings_structure": [
+      "只取得2026-03-31披露持仓，不是实时完整持仓。"
+    ],
+    "portfolio_overlap": [
+      "已按组合快照识别证券/券商/保险ETF组，但未完成与512880、159842的成分级重叠分析。"
+    ],
+    "other": [
+      "159842尚未建档，金融证券组横向比较仍不完整。"
+    ]
+  },
+  "next_update_triggers": [
+    "金融证券进入或退出主线登记册",
+    "最新市场仓位报告改变主题仓边界",
+    "512070站上或跌破关键均线",
+    "基金份额、成交额或折溢价异常变化",
+    "组合快照更新后证券/券商/保险ETF组权重明显变化",
+    "159842补档后，需要重算金融证券组横向比较和重叠"
+  ],
+  "decision_log_entry": "2026-06-02 ETF研究：512070.SH 证券保险ETF易方达；仓位角色为主题仓，操作评级Watch，ETF分数35。只补齐研究输入，不生成买卖建议，不生成调仓动作。"
+}
