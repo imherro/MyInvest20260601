@@ -32,9 +32,10 @@
 3. 如有必要，更新相关 ETF/个股档案；缺档案时标记 ResearchFirst。
 4. 读取或更新当前持仓快照。
 5. 运行组合分析。
-6. 生成盘前操作建议或执行检查。
-7. 写入决策日志。
-8. 提交并推送。
+6. 生成盘前操作建议或读取已有操作建议。
+7. 生成盘前执行检查。
+8. 写入决策日志。
+9. 提交并推送。
 
 产物：
 
@@ -45,6 +46,8 @@ research/portfolio/portfolio_snapshot_YYYY-MM-DD_HHMMSS.md
 research/portfolio/portfolio_snapshot_YYYY-MM-DD_HHMMSS.json
 research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.md
 research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.json
+research/checks/premarket_check_YYYY-MM-DD_HHMMSS.md
+research/checks/premarket_check_YYYY-MM-DD_HHMMSS.json
 research/logs/decision_log.md
 ```
 
@@ -53,6 +56,7 @@ research/logs/decision_log.md
 ```text
 请按 docs/RUNBOOK.md 和 docs/DAILY_PROCESS.md 执行今日盘前流程。
 先读取最新市场仓位、主线登记册和组合快照；只有必要时才更新市场仓位或主线研究。
+如操作建议已存在，请按 docs/modules/PREMARKET_CHECK.md 生成盘前执行检查。
 不要临时重写前置研究结论；缺少研究时输出 ResearchFirst。
 ```
 

@@ -1,0 +1,128 @@
+{
+  "module": "premarket_check",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "session": "premarket",
+  "generated_at": "YYYY-MM-DD_HHMMSS",
+  "amount_policy": "ratio_only",
+  "input_files": {
+    "daily_process": {
+      "path": "docs/DAILY_PROCESS.md",
+      "is_latest": true,
+      "status": ""
+    },
+    "market_position": {
+      "path": "",
+      "is_latest": null,
+      "status": ""
+    },
+    "theme_research": {
+      "path": "",
+      "is_latest": null,
+      "status": ""
+    },
+    "theme_registry": {
+      "path": "research/themes/theme_registry.json",
+      "is_latest": null,
+      "status": ""
+    },
+    "portfolio_snapshot": {
+      "path": "",
+      "is_latest": null,
+      "status": ""
+    },
+    "etf_registry": {
+      "path": "research/etfs/etf_registry.json",
+      "is_latest": null,
+      "status": ""
+    },
+    "stock_registry": {
+      "path": "research/stocks/stock_registry.json",
+      "is_latest": null,
+      "status": ""
+    },
+    "action_plan": {
+      "path": "",
+      "is_latest": null,
+      "status": "available|missing|stale"
+    }
+  },
+  "summary": {
+    "premarket_status": "executable|risk_reduce_only|watch_only|research_first|blocked",
+    "one_line_conclusion": "",
+    "allowed_action_scope": [],
+    "forbidden_actions": []
+  },
+  "market_gate": {
+    "equity_target_range": "",
+    "bond_cash_target_range": "",
+    "offensive_bucket_status": "expand|maintain|reduce|pause_new|unknown",
+    "has_trigger_table": null,
+    "data_gaps": [],
+    "pass": null,
+    "notes": ""
+  },
+  "theme_gate": {
+    "tactical_a_themes": [],
+    "divergence_or_decline_themes": [],
+    "themes_need_review": [],
+    "rating_rewritten": false,
+    "pass": null,
+    "notes": ""
+  },
+  "portfolio_gate": {
+    "equity_allocation": {
+      "current": "",
+      "target": "",
+      "pass": null,
+      "notes": ""
+    },
+    "bond_cash_allocation": {
+      "current": "",
+      "target": "",
+      "pass": null,
+      "notes": ""
+    },
+    "bucket_structure": {
+      "core": {"current": "", "target": "", "pass": null, "notes": ""},
+      "offensive": {"current": "", "target": "", "pass": null, "notes": ""},
+      "defensive": {"current": "", "target": "", "pass": null, "notes": ""},
+      "theme": {"current": "", "target": "", "pass": null, "notes": ""},
+      "unknown_or_missing_profile": {"current": "", "target": "", "pass": null, "notes": ""}
+    }
+  },
+  "action_plan_gate": {
+    "exists": null,
+    "ratio_only": null,
+    "has_triggers": null,
+    "has_invalidation_conditions": null,
+    "acts_on_unprofiled_security": null,
+    "pass": null,
+    "notes": ""
+  },
+  "intraday_monitoring": [
+    {
+      "object": "",
+      "source_file": "",
+      "trigger_condition": "",
+      "action_after_trigger": "execute|wait|cancel|review|log_only",
+      "requires_human_confirmation": true
+    }
+  ],
+  "blocked_or_research_first": [
+    {
+      "type": "blocked|research_first",
+      "subject": "",
+      "reason": "",
+      "next_step": ""
+    }
+  ],
+  "handoff": {
+    "market_position_module": [],
+    "theme_research_module": [],
+    "etf_stock_research_module": [],
+    "action_plan_module": [],
+    "intraday_alert_module": []
+  },
+  "decision_log_entry": ""
+}

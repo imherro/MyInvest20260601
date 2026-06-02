@@ -32,6 +32,7 @@
 - 个股登记册和个股档案：`research/stocks/`
 - 组合快照：`research/portfolio/portfolio_snapshot_YYYY-MM-DD_HHMMSS.*`
 - 操作建议：`research/actions/action_plan_YYYY-MM-DD_HHMMSS_*.*`
+- 盘前执行检查：`research/checks/premarket_check_YYYY-MM-DD_HHMMSS.*`
 
 注意：如果存在多个同类文件，默认读取时间戳最新版本。若不用最新版本，必须说明原因。
 
@@ -69,9 +70,13 @@
 盘前输出可以是：
 
 ```text
+research/checks/premarket_check_YYYY-MM-DD_HHMMSS.md
+research/checks/premarket_check_YYYY-MM-DD_HHMMSS.json
 research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.md
 research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.json
 ```
+
+如果操作建议已经由单独会话生成，盘前流程应优先生成执行检查，而不是重复生成操作建议。
 
 ## 3. 盘中流程
 
@@ -163,6 +168,7 @@ research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 | 主线研究会话 | 更新战略评级、交易评级和主线阶段 |
 | ETF/个股补研究会话 | 逐只生成档案，不给最终买卖建议 |
 | 操作建议会话 | 读取所有前置研究，生成比例级操作建议 |
+| 盘前执行检查会话 | 检查最新研究和操作建议是否可执行，输出盘中监控清单 |
 | 盘中提醒会话 | 只检查已定义触发条件 |
 
 ## 7. 日常状态判断
@@ -186,7 +192,7 @@ research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 ```text
 请按 docs/DAILY_PROCESS.md 执行盘前流程。
 读取最新市场仓位、主线研究、组合快照、ETF/个股档案和最新操作建议。
-只生成盘前执行检查和触发条件，不临时改写主线，不新增未建档标的。
+请按 docs/modules/PREMARKET_CHECK.md 生成盘前执行检查和盘中监控清单，不临时改写主线，不新增未建档标的。
 只按比例分析，不使用金额。
 ```
 

@@ -11,7 +11,9 @@
 → 更新 ETF/个股档案
 → 分析当前组合
 → 生成操作建议
+→ 盘前执行检查
 → 记录决策日志
+→ 盘中提醒
 → 盘后复盘
 ```
 
@@ -270,7 +272,48 @@
 - 不重写市场仓位或主线评级。
 - 不给没有依据、没有条件、没有复盘点的操作。
 
-## 07 盘中提醒模块
+## 07 盘前执行检查模块
+
+职责：在开盘前确认已有研究和操作建议是否可以进入执行。
+
+核心问题：
+
+- 前置文件是否齐全、最新、可用？
+- 市场仓位、主线、组合和操作建议是否互相冲突？
+- 今天允许新增操作、只允许减风险，还是只能观察？
+- 盘中只需要监控哪些已定义触发条件？
+
+输入：
+
+- 每日流程标准
+- 最新市场仓位
+- 最新主线研究和主线登记册
+- 最新组合快照
+- ETF/个股登记册和档案
+- 最新操作建议
+
+输出：
+
+- 执行门禁状态
+- 今日允许动作范围
+- 今日禁止事项
+- 盘中监控清单
+- blocked / ResearchFirst 清单
+
+更新频率：
+
+- 每个交易日盘前
+- 操作建议变化后
+- 重大隔夜事件后
+
+禁止事项：
+
+- 不给具体买卖动作。
+- 不临时改写市场仓位或主线评级。
+- 不新增未建档标的。
+- 不使用金额。
+
+## 08 盘中提醒模块
 
 职责：监控已定义触发条件，并提醒是否需要执行原计划。
 
@@ -303,7 +346,7 @@
 - 不在盘中临时发明新策略。
 - 不因为价格波动频繁改变原计划。
 
-## 08 盘后复盘模块
+## 09 盘后复盘模块
 
 职责：记录当天市场表现、操作执行、判断偏差和后续修正。
 
@@ -340,7 +383,7 @@
 - 不只记录涨跌结果。
 - 不把单日结果简单归因为策略正确或错误。
 
-## 09 决策日志模块
+## 10 决策日志模块
 
 职责：保存关键结论变化和操作理由，形成长期可追溯记录。
 
@@ -408,6 +451,9 @@ research/
     action_plan_YYYY-MM-DD_HHMMSS_premarket.json
     action_plan_YYYY-MM-DD_HHMMSS_close.md
     action_plan_YYYY-MM-DD_HHMMSS_close.json
+  checks/
+    premarket_check_YYYY-MM-DD_HHMMSS.md
+    premarket_check_YYYY-MM-DD_HHMMSS.json
   logs/
     decision_log.md
 ```
@@ -423,8 +469,9 @@ research/
 5. 决策日志模板（已建立：`docs/modules/DECISION_LOG.md`、`templates/decision_log_entry_template.md`、`templates/decision_log_entry_template.json`、`research/logs/decision_log.md`）
 6. 组合分析模块模板（已建立：`docs/modules/PORTFOLIO_ANALYSIS.md`、`templates/portfolio_snapshot_template.md`、`templates/portfolio_snapshot_template.json`、`research/portfolio/current_holdings_template.md`）
 7. 操作建议模块模板（已建立：`docs/modules/ACTION_PLAN.md`、`templates/action_plan_template.md`、`templates/action_plan_template.json`）
-8. 盘中提醒模块模板（已建立：`docs/modules/INTRADAY_ALERTS.md`、`templates/intraday_alert_template.md`、`templates/intraday_alert_template.json`）
-9. 盘后复盘模块模板（已建立：`docs/modules/POST_MARKET_REVIEW.md`、`templates/post_market_review_template.md`、`templates/post_market_review_template.json`）
+8. 盘前执行检查模块模板（已建立：`docs/modules/PREMARKET_CHECK.md`、`templates/premarket_check_template.md`、`templates/premarket_check_template.json`）
+9. 盘中提醒模块模板（已建立：`docs/modules/INTRADAY_ALERTS.md`、`templates/intraday_alert_template.md`、`templates/intraday_alert_template.json`）
+10. 盘后复盘模块模板（已建立：`docs/modules/POST_MARKET_REVIEW.md`、`templates/post_market_review_template.md`、`templates/post_market_review_template.json`）
 
 暂时不做：
 

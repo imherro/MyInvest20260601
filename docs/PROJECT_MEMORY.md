@@ -282,3 +282,4 @@ research/
 - 确定用户指定的 18 只 ETF 作为当前重点关注池，已批量生成时间戳 ETF 档案并写入 `research/etfs/etf_registry.json`；这些档案只作为研究参考，不等于操作建议。
 - 确定当前持仓快照按用户要求只保存比例信息，不保存市值、成本金额、盈亏金额；组合分析以仓位占比、盈亏比例、持股天数和研究覆盖状态为主。
 - 确定新增 `docs/DAILY_PROCESS.md` 作为每日流程标准：日常流程不是每天重做所有研究，盘前以读取和执行检查为主，盘中只检查触发条件，盘后复盘和必要更新，周末或单独会话做深度研究。
+- 确定新增盘前执行检查模块：`docs/modules/PREMARKET_CHECK.md`、`templates/premarket_check_template.md`、`templates/premarket_check_template.json` 和 `research/checks/`；该模块只做执行门禁、允许动作范围、禁止事项和盘中监控清单，不给具体买卖动作。
