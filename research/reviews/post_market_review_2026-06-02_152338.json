@@ -1,0 +1,306 @@
+{
+  "module": "post_market_review",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_152338",
+  "review_type": "daily_brief",
+  "amount_policy": "ratio_only; no market value; no cost amount; no profit amount; no share count",
+  "data_sources": {
+    "market_position": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research": "research/themes/theme_review_2026-06-01_231611.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "action_plan": "research/actions/action_plan_2026-06-02_093828_ad_hoc.json",
+    "premarket_check": "research/checks/premarket_check_2026-06-02_150645.json",
+    "intraday_alerts": [
+      "research/alerts/intraday_alert_2026-06-02_151843.json"
+    ],
+    "execution_records": "not_provided",
+    "close_market_data": {
+      "provider": "Tushare",
+      "trade_date": "20260602",
+      "status": "not_returned",
+      "checked_objects": [
+        "index_daily",
+        "daily",
+        "fund_daily"
+      ]
+    }
+  },
+  "summary": {
+    "review_conclusion": "insufficient_information",
+    "needs_research_update": true,
+    "needs_rule_revision": false,
+    "one_line_conclusion": "Only process-discipline review is possible: premarket, intraday and action-plan boundaries are consistent, but execution records and 2026-06-02 close data are missing."
+  },
+  "market_review": {
+    "premarket_judgment": "risk_reduce_only / research_first; equity target 45%-55%; bond/cash target 45%-55%; no new offensive/theme/unprofiled-security actions.",
+    "close_performance": "Tushare trade calendar marks 2026-06-02 as open, but index_daily, daily and fund_daily returned no records in this run.",
+    "bias_assessment": "cannot_judge_market_bias",
+    "reason": "Close market data and execution records are missing."
+  },
+  "theme_review": [
+    {
+      "theme": "AI",
+      "premarket_rating": "strategic A; tactical A; stage divergence",
+      "daily_performance": "close data not available",
+      "matched_expectation": "unknown",
+      "needs_update": false,
+      "note": "Do not revise rating without market evidence."
+    },
+    {
+      "theme": "Semiconductor",
+      "premarket_rating": "strategic A; tactical B; stage divergence",
+      "daily_performance": "close data not available",
+      "matched_expectation": "unknown",
+      "needs_update": false,
+      "note": "Wait for stop-fall and breadth evidence."
+    },
+    {
+      "theme": "Power equipment",
+      "premarket_rating": "strategic B+; tactical B+",
+      "daily_performance": "close data not available",
+      "matched_expectation": "unknown",
+      "needs_update": false,
+      "note": "Continue observation."
+    },
+    {
+      "theme": "Energy",
+      "premarket_rating": "defensive/cyclical rotation; tactical B",
+      "daily_performance": "close data not available",
+      "matched_expectation": "unknown",
+      "needs_update": false,
+      "note": "Does not replace technology offensive themes."
+    }
+  ],
+  "action_plan_review": [
+    {
+      "subject": "Profiled theme ETF basket",
+      "premarket_suggestion": "Reduce to no more than 2.00%",
+      "trigger_condition": "Current proportions remain close to portfolio snapshot and risk-reduction-only boundary remains valid.",
+      "triggered": true,
+      "executed": null,
+      "result": "Cannot confirm without execution records.",
+      "bias": "execution_information_missing"
+    },
+    {
+      "subject": "Cash/bond-cash bucket",
+      "premarket_suggestion": "Receive released proportion at bucket level",
+      "trigger_condition": "After profiled theme ETF basket reduction is executed.",
+      "triggered": null,
+      "executed": null,
+      "result": "Cannot confirm without execution records.",
+      "bias": "depends_on_previous_execution"
+    },
+    {
+      "subject": "New offensive additions",
+      "premarket_suggestion": "Cancel",
+      "trigger_condition": "Current market and theme state does not support new offensive adds.",
+      "triggered": true,
+      "executed": true,
+      "result": "Discipline valid at rule level.",
+      "bias": "none"
+    },
+    {
+      "subject": "New theme additions",
+      "premarket_suggestion": "Cancel",
+      "trigger_condition": "Theme/satellite ETF allocation is already over target.",
+      "triggered": true,
+      "executed": true,
+      "result": "Discipline valid at rule level.",
+      "bias": "none"
+    },
+    {
+      "subject": "Second-stage equity reduction",
+      "premarket_suggestion": "Review after missing profiles are completed",
+      "trigger_condition": "ETF and stock profiles completed and equity remains above 55%.",
+      "triggered": false,
+      "executed": false,
+      "result": "Waiting is appropriate.",
+      "bias": "none"
+    },
+    {
+      "subject": "511360 short-term financing ETF",
+      "premarket_suggestion": "Blocked as direct add target until ETF profile exists",
+      "trigger_condition": "ETF profile missing.",
+      "triggered": true,
+      "executed": false,
+      "result": "Block remains valid.",
+      "bias": "none"
+    }
+  ],
+  "intraday_alert_review": [
+    {
+      "alert": "Profiled theme ETF basket risk reduction",
+      "trigger_state": "rule_triggered",
+      "suggested_action": "execute with manual confirmation",
+      "actual_handling": "not_provided",
+      "was_useful": "partial",
+      "note": "Clear direction, but no execution feedback."
+    },
+    {
+      "alert": "Cash/bond-cash bucket receive released proportion",
+      "trigger_state": "depends_on_previous_execution",
+      "suggested_action": "execute at bucket level",
+      "actual_handling": "not_provided",
+      "was_useful": "partial",
+      "note": "Still blocks direct unprofiled ETF recommendation."
+    },
+    {
+      "alert": "New offensive additions",
+      "trigger_state": "blocked",
+      "suggested_action": "cancel",
+      "actual_handling": "not_applicable",
+      "was_useful": "yes",
+      "note": "Consistent with premarket check."
+    },
+    {
+      "alert": "New theme additions",
+      "trigger_state": "blocked",
+      "suggested_action": "cancel",
+      "actual_handling": "not_applicable",
+      "was_useful": "yes",
+      "note": "Consistent with portfolio constraint."
+    },
+    {
+      "alert": "Second-stage equity reduction",
+      "trigger_state": "watch",
+      "suggested_action": "review",
+      "actual_handling": "not_triggered",
+      "was_useful": "yes",
+      "note": "Research-first boundary is valid."
+    },
+    {
+      "alert": "511360 direct target block",
+      "trigger_state": "blocked",
+      "suggested_action": "review",
+      "actual_handling": "not_triggered",
+      "was_useful": "yes",
+      "note": "ETF profile still required."
+    }
+  ],
+  "execution_review": {
+    "actual_actions": [],
+    "followed_plan": null,
+    "execution_deviation": "Cannot judge because actual execution records were not provided.",
+    "improvement_needed": "Future post-market review needs user-provided execution status and updated ratios only; no amounts are required."
+  },
+  "portfolio_risk_changes": {
+    "equity_allocation_change": "Baseline snapshot: equity 64.96%; bond/cash 35.04%; actual change unknown.",
+    "theme_industry_concentration_change": "Baseline snapshot: theme/satellite ETF 33.48%; unprofiled stocks 22.14%; actual change unknown.",
+    "single_security_risk_change": "Unknown without updated ratios or execution records.",
+    "hard_constraints_triggered": [
+      "equity_above_55pct_upper_bound",
+      "theme_satellite_etf_over_target",
+      "missing_etf_profiles",
+      "missing_stock_profiles"
+    ]
+  },
+  "biases": [
+    {
+      "type": "market_misread",
+      "exists": null,
+      "description": "Cannot judge without 2026-06-02 close data.",
+      "follow_up": "Refresh market data or generate next market position report."
+    },
+    {
+      "type": "theme_misread",
+      "exists": null,
+      "description": "Cannot judge without theme performance data.",
+      "follow_up": "Do not revise theme ratings in this review."
+    },
+    {
+      "type": "valuation_misread",
+      "exists": null,
+      "description": "No valuation refresh in this review.",
+      "follow_up": "Handle in separate research module."
+    },
+    {
+      "type": "execution_deviation",
+      "exists": null,
+      "description": "Actual execution records not provided.",
+      "follow_up": "Ask for execution status or updated ratios."
+    },
+    {
+      "type": "emotional_trade",
+      "exists": null,
+      "description": "Cannot judge without execution records.",
+      "follow_up": "Review after execution information is available."
+    },
+    {
+      "type": "missed_trigger",
+      "exists": null,
+      "description": "Cannot judge whether risk-reduction trigger was acted on.",
+      "follow_up": "Confirm first-stage execution."
+    },
+    {
+      "type": "false_trigger",
+      "exists": false,
+      "description": "Triggers came from existing plan; no ad-hoc rule was added.",
+      "follow_up": "Keep rule unchanged."
+    },
+    {
+      "type": "missing_research",
+      "exists": true,
+      "description": "511360 and several ETF/stock profiles still block second-stage decisions.",
+      "follow_up": "Continue research backlog."
+    },
+    {
+      "type": "no_issue",
+      "exists": false,
+      "description": "Information gaps are still material.",
+      "follow_up": "Do not mark review as clean."
+    }
+  ],
+  "research_updates_needed": [
+    {
+      "module_or_file": "market_position",
+      "needs_update": true,
+      "reason": "2026-06-02 close data was not returned in this run.",
+      "priority": "high"
+    },
+    {
+      "module_or_file": "theme_research",
+      "needs_update": false,
+      "reason": "No sufficient evidence in this review to revise theme ratings.",
+      "priority": "medium"
+    },
+    {
+      "module_or_file": "etf_profile",
+      "needs_update": true,
+      "reason": "511360 profile is still required before naming it as a direct bond/cash tool.",
+      "priority": "high"
+    },
+    {
+      "module_or_file": "stock_profile",
+      "needs_update": true,
+      "reason": "Unprofiled stock exposure still blocks second-stage decisions.",
+      "priority": "high"
+    },
+    {
+      "module_or_file": "portfolio_analysis",
+      "needs_update": true,
+      "reason": "Needs execution records or updated ratios to calculate post-action allocation.",
+      "priority": "high"
+    },
+    {
+      "module_or_file": "action_plan",
+      "needs_update": false,
+      "reason": "Existing plan remains first-stage risk-reduction oriented.",
+      "priority": "medium"
+    }
+  ],
+  "next_day_watch_points": [
+    "Whether Tushare has refreshed 2026-06-02 index, A-share and ETF close data.",
+    "Whether profiled theme ETF basket reduction was executed.",
+    "Whether equity allocation moves from 64.96% toward the 55% upper bound.",
+    "Whether bond/cash allocation moves from 35.04% toward the 45%-55% target range.",
+    "Whether 511360 ETF profile is completed.",
+    "Whether P0/P1 ETF and stock profiles continue to be completed."
+  ],
+  "rule_revision_suggestion": {
+    "suggested": false,
+    "reason": "The issue is missing data and missing execution records, not a rule failure.",
+    "files_to_update": []
+  },
+  "decision_log_entry": "2026-06-02 盘后复盘：生成 post_market_review_2026-06-02_152338.md/json；今日结论为信息不足，只完成流程纪律复盘；Tushare 暂未返回 2026-06-02 指数、A股和 ETF 日线数据，用户未提供实际执行记录，因此不能判断市场验证情况或减风险是否执行；明日优先补 2026-06-02 收盘数据、确认实际执行结果、补齐 511360 ETF 档案，并继续推进 P0/P1 持仓研究；本次不修正规则。"
+}
