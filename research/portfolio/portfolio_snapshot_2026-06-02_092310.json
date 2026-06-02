@@ -1,0 +1,985 @@
+{
+  "module": "portfolio_analysis",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_092310",
+  "session": "ad_hoc",
+  "amount_policy": "ratio_only; ??????????????????",
+  "data_sources": [
+    "??????????????????????????",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/etfs/etf_registry.json",
+    "research/stocks/stock_registry.json"
+  ],
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research_report": "research/themes/theme_review_2026-06-01_231611.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "stock_registry": "research/stocks/stock_registry.json"
+  },
+  "summary": {
+    "current_equity_allocation": "64.96%",
+    "target_equity_allocation": "45%-55%",
+    "current_bond_cash_allocation": "35.04%",
+    "target_bond_cash_allocation": "45%-55%",
+    "portfolio_state": "over_allocated|structure_imbalanced|missing_profile",
+    "one_line_conclusion": "?????????????????64.96%???????????45%-55%???/?????35.04%?????45%-55%?????????4.60%???/??ETF?33.48%???????22.14%???????????????"
+  },
+  "asset_structure": {
+    "equity": {
+      "current": "64.96%",
+      "target": "45%-55%",
+      "deviation": "+9.96pct vs target upper 55%",
+      "conclusion": "over_allocated"
+    },
+    "bond_cash": {
+      "current": "35.04%",
+      "target": "45%-55%",
+      "deviation": "-9.96pct vs target lower 45%",
+      "conclusion": "under_allocated"
+    }
+  },
+  "equity_bucket_structure": {
+    "core": {
+      "current": "4.60%",
+      "target": "28%-33% from latest market report",
+      "deviation": "materially under target",
+      "conclusion": "under_allocated"
+    },
+    "offensive_profiled_etf": {
+      "current": "1.23%",
+      "target": "7%-10% for total offensive bucket",
+      "deviation": "profiled ETF offensive is low, but unknown stocks may contain offensive exposure",
+      "conclusion": "cannot judge until stock profiles are built"
+    },
+    "defensive": {
+      "current": "3.42%",
+      "target": "7%-10% from latest market report",
+      "deviation": "under target",
+      "conclusion": "under_allocated"
+    },
+    "theme_etf": {
+      "current": "33.48%",
+      "target": "0%-2% from latest market report",
+      "deviation": "substantially over target",
+      "conclusion": "over_allocated"
+    },
+    "unknown_stock": {
+      "current": "22.14%",
+      "target": "not set; must be classified by stock research",
+      "deviation": "research coverage gap",
+      "conclusion": "missing_profile"
+    }
+  },
+  "holdings": [
+    {
+      "code": "159819",
+      "name": "????ETF???",
+      "asset_type": "etf",
+      "bucket_role": "offensive",
+      "current_weight_pct": 0.02,
+      "pnl_pct": 278.458,
+      "holding_days": 12,
+      "has_profile": true
+    },
+    {
+      "code": "588200",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "offensive",
+      "current_weight_pct": 0.16,
+      "pnl_pct": 101.074,
+      "holding_days": 12,
+      "has_profile": true
+    },
+    {
+      "code": "002241",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.41,
+      "pnl_pct": 40.016,
+      "holding_days": 14,
+      "has_profile": false
+    },
+    {
+      "code": "159667",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "offensive",
+      "current_weight_pct": 0.03,
+      "pnl_pct": 11.089,
+      "holding_days": 12,
+      "has_profile": true
+    },
+    {
+      "code": "159301",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "defensive",
+      "current_weight_pct": 0.53,
+      "pnl_pct": 4.673,
+      "holding_days": 5,
+      "has_profile": true
+    },
+    {
+      "code": "159558",
+      "name": "?????ETF???",
+      "asset_type": "etf",
+      "bucket_role": "offensive",
+      "current_weight_pct": 0.16,
+      "pnl_pct": 4.326,
+      "holding_days": 12,
+      "has_profile": true
+    },
+    {
+      "code": "510880",
+      "name": "??ETF????",
+      "asset_type": "etf",
+      "bucket_role": "defensive",
+      "current_weight_pct": 2.89,
+      "pnl_pct": 4.205,
+      "holding_days": 8,
+      "has_profile": true
+    },
+    {
+      "code": "562500",
+      "name": "???ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 0.29,
+      "pnl_pct": 0.155,
+      "holding_days": 12,
+      "has_profile": true
+    },
+    {
+      "code": "511360",
+      "name": "??ETF???",
+      "asset_type": "etf",
+      "bucket_role": "bond_cash",
+      "current_weight_pct": 35.04,
+      "pnl_pct": 0.053,
+      "holding_days": 12,
+      "has_profile": false
+    },
+    {
+      "code": "159326",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "offensive",
+      "current_weight_pct": 0.86,
+      "pnl_pct": -2.01,
+      "holding_days": 2,
+      "has_profile": true
+    },
+    {
+      "code": "512400",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 1.58,
+      "pnl_pct": -2.023,
+      "holding_days": 8,
+      "has_profile": false
+    },
+    {
+      "code": "688333",
+      "name": "?????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.34,
+      "pnl_pct": -2.286,
+      "holding_days": 6,
+      "has_profile": false
+    },
+    {
+      "code": "159201",
+      "name": "?????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "core",
+      "current_weight_pct": 4.6,
+      "pnl_pct": -2.551,
+      "holding_days": 12,
+      "has_profile": true
+    },
+    {
+      "code": "513180",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 1.61,
+      "pnl_pct": -4.369,
+      "holding_days": 14,
+      "has_profile": false
+    },
+    {
+      "code": "300760",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 0.36,
+      "pnl_pct": -5.401,
+      "holding_days": 11,
+      "has_profile": false
+    },
+    {
+      "code": "512880",
+      "name": "??ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 1.26,
+      "pnl_pct": -6.174,
+      "holding_days": 16,
+      "has_profile": true
+    },
+    {
+      "code": "603596",
+      "name": "???",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.79,
+      "pnl_pct": -7.001,
+      "holding_days": 8,
+      "has_profile": false
+    },
+    {
+      "code": "002352",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 2.01,
+      "pnl_pct": -7.177,
+      "holding_days": 40,
+      "has_profile": false
+    },
+    {
+      "code": "159842",
+      "name": "??ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 4.37,
+      "pnl_pct": -7.984,
+      "holding_days": 16,
+      "has_profile": false
+    },
+    {
+      "code": "512070",
+      "name": "????ETF???",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 4.99,
+      "pnl_pct": -9.2,
+      "holding_days": 82,
+      "has_profile": false
+    },
+    {
+      "code": "513120",
+      "name": "?????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 1.32,
+      "pnl_pct": -11.137,
+      "holding_days": 16,
+      "has_profile": true
+    },
+    {
+      "code": "159992",
+      "name": "???ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 6.22,
+      "pnl_pct": -11.317,
+      "holding_days": 32,
+      "has_profile": false
+    },
+    {
+      "code": "516150",
+      "name": "??ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 3.58,
+      "pnl_pct": -11.399,
+      "holding_days": 17,
+      "has_profile": true
+    },
+    {
+      "code": "159869",
+      "name": "??ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 2.58,
+      "pnl_pct": -12.097,
+      "holding_days": 18,
+      "has_profile": true
+    },
+    {
+      "code": "159378",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 2.52,
+      "pnl_pct": -12.107,
+      "holding_days": 9,
+      "has_profile": false
+    },
+    {
+      "code": "562800",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 0.82,
+      "pnl_pct": -14.205,
+      "holding_days": 17,
+      "has_profile": false
+    },
+    {
+      "code": "603087",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.03,
+      "pnl_pct": -14.573,
+      "holding_days": 42,
+      "has_profile": false
+    },
+    {
+      "code": "002920",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 2.45,
+      "pnl_pct": -14.582,
+      "holding_days": 65,
+      "has_profile": false
+    },
+    {
+      "code": "688439",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.21,
+      "pnl_pct": -14.722,
+      "holding_days": 65,
+      "has_profile": false
+    },
+    {
+      "code": "002625",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.78,
+      "pnl_pct": -15.206,
+      "holding_days": 65,
+      "has_profile": false
+    },
+    {
+      "code": "512710",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 2.24,
+      "pnl_pct": -15.924,
+      "holding_days": 18,
+      "has_profile": false
+    },
+    {
+      "code": "159206",
+      "name": "??ETF??",
+      "asset_type": "etf",
+      "bucket_role": "theme",
+      "current_weight_pct": 0.1,
+      "pnl_pct": -16.272,
+      "holding_days": 12,
+      "has_profile": true
+    },
+    {
+      "code": "300627",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 0.58,
+      "pnl_pct": -19.539,
+      "holding_days": 28,
+      "has_profile": false
+    },
+    {
+      "code": "603903",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 0.42,
+      "pnl_pct": -20.116,
+      "holding_days": 12,
+      "has_profile": false
+    },
+    {
+      "code": "002041",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 0.63,
+      "pnl_pct": -20.119,
+      "holding_days": 46,
+      "has_profile": false
+    },
+    {
+      "code": "002258",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.16,
+      "pnl_pct": -23.892,
+      "holding_days": 55,
+      "has_profile": false
+    },
+    {
+      "code": "600764",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.57,
+      "pnl_pct": -24.149,
+      "holding_days": 63,
+      "has_profile": false
+    },
+    {
+      "code": "688032",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.36,
+      "pnl_pct": -25.601,
+      "holding_days": 45,
+      "has_profile": false
+    },
+    {
+      "code": "000970",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.75,
+      "pnl_pct": -26.755,
+      "holding_days": 79,
+      "has_profile": false
+    },
+    {
+      "code": "300724",
+      "name": "????",
+      "asset_type": "stock",
+      "bucket_role": "unknown",
+      "current_weight_pct": 1.29,
+      "pnl_pct": -31.761,
+      "holding_days": 41,
+      "has_profile": false
+    }
+  ],
+  "concentration": {
+    "by_group": [
+      {
+        "group": "??/????",
+        "weight_pct": 35.04,
+        "codes": [
+          "511360"
+        ]
+      },
+      {
+        "group": "??/??/??ETF",
+        "weight_pct": 10.62,
+        "codes": [
+          "512880",
+          "159842",
+          "512070"
+        ]
+      },
+      {
+        "group": "??/??/??/??",
+        "weight_pct": 10.0,
+        "codes": [
+          "159378",
+          "512710",
+          "159206",
+          "688439",
+          "002625",
+          "300627",
+          "600764"
+        ]
+      },
+      {
+        "group": "???/??",
+        "weight_pct": 8.93,
+        "codes": [
+          "513120",
+          "159992",
+          "300760",
+          "603087"
+        ]
+      },
+      {
+        "group": "??/??/??",
+        "weight_pct": 7.73,
+        "codes": [
+          "512400",
+          "516150",
+          "562800",
+          "000970"
+        ]
+      },
+      {
+        "group": "????/??",
+        "weight_pct": 7.09,
+        "codes": [
+          "562500",
+          "159869",
+          "002352",
+          "603903",
+          "002041",
+          "002258"
+        ]
+      },
+      {
+        "group": "????",
+        "weight_pct": 4.24,
+        "codes": [
+          "603596",
+          "002920"
+        ]
+      },
+      {
+        "group": "??/??????",
+        "weight_pct": 3.42,
+        "codes": [
+          "510880",
+          "159301"
+        ]
+      },
+      {
+        "group": "AI/???/??",
+        "weight_pct": 3.36,
+        "codes": [
+          "159819",
+          "588200",
+          "002241",
+          "159558",
+          "513180"
+        ]
+      }
+    ],
+    "by_security": [
+      {
+        "code": "511360",
+        "name": "??ETF???",
+        "weight_pct": 35.04
+      },
+      {
+        "code": "159992",
+        "name": "???ETF??",
+        "weight_pct": 6.22
+      },
+      {
+        "code": "512070",
+        "name": "????ETF???",
+        "weight_pct": 4.99
+      },
+      {
+        "code": "159201",
+        "name": "?????ETF??",
+        "weight_pct": 4.6
+      },
+      {
+        "code": "159842",
+        "name": "??ETF??",
+        "weight_pct": 4.37
+      },
+      {
+        "code": "516150",
+        "name": "??ETF??",
+        "weight_pct": 3.58
+      },
+      {
+        "code": "510880",
+        "name": "??ETF????",
+        "weight_pct": 2.89
+      },
+      {
+        "code": "159869",
+        "name": "??ETF??",
+        "weight_pct": 2.58
+      },
+      {
+        "code": "159378",
+        "name": "????ETF??",
+        "weight_pct": 2.52
+      },
+      {
+        "code": "002920",
+        "name": "????",
+        "weight_pct": 2.45
+      },
+      {
+        "code": "512710",
+        "name": "????ETF??",
+        "weight_pct": 2.24
+      },
+      {
+        "code": "002352",
+        "name": "????",
+        "weight_pct": 2.01
+      }
+    ]
+  },
+  "hard_constraints": [
+    {
+      "name": "????45%-55%",
+      "triggered": true,
+      "impact": "????64.96%??????9.96pct",
+      "priority": "high"
+    },
+    {
+      "name": "??????????10%",
+      "triggered": true,
+      "impact": "???ETF?33.48%?????????????0%-2%?????",
+      "priority": "high"
+    },
+    {
+      "name": "??????????8%-12%",
+      "triggered": false,
+      "impact": "???????3%????????",
+      "priority": "low"
+    },
+    {
+      "name": "??????",
+      "triggered": true,
+      "impact": "??????????????ETF?????18??",
+      "priority": "high"
+    }
+  ],
+  "deviations": [
+    {
+      "type": "conflict_with_market_position",
+      "subject": "?????",
+      "description": "??64.96%??????????45%-55%???/??35.04%??45%-55%?",
+      "priority": "high"
+    },
+    {
+      "type": "structure_imbalance",
+      "subject": "???/???",
+      "description": "????4.60%???ETF?33.48%?????????????28%-33%???0%-2%??????",
+      "priority": "high"
+    },
+    {
+      "type": "missing_profile",
+      "subject": "????",
+      "description": "??????22.14%????????????????????????",
+      "priority": "high"
+    },
+    {
+      "type": "concentration_risk",
+      "subject": "????ETF",
+      "description": "??/??/????ETF??10.62%??????????A????",
+      "priority": "medium"
+    },
+    {
+      "type": "concentration_risk",
+      "subject": "???/??",
+      "description": "???/????8.93%??????ETF????6.22%????????????",
+      "priority": "medium"
+    }
+  ],
+  "missing_profiles": [
+    {
+      "code": "002241",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.41,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "511360",
+      "name": "??ETF???",
+      "asset_type": "etf",
+      "current_weight_pct": 35.04,
+      "missing_content": [
+        "etf_profile"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "512400",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "current_weight_pct": 1.58,
+      "missing_content": [
+        "etf_profile"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "688333",
+      "name": "?????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.34,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "513180",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "current_weight_pct": 1.61,
+      "missing_content": [
+        "etf_profile"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "300760",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 0.36,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "can_defer"
+    },
+    {
+      "code": "603596",
+      "name": "???",
+      "asset_type": "stock",
+      "current_weight_pct": 1.79,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "002352",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 2.01,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "159842",
+      "name": "??ETF??",
+      "asset_type": "etf",
+      "current_weight_pct": 4.37,
+      "missing_content": [
+        "etf_profile"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "512070",
+      "name": "????ETF???",
+      "asset_type": "etf",
+      "current_weight_pct": 4.99,
+      "missing_content": [
+        "etf_profile"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "159992",
+      "name": "???ETF??",
+      "asset_type": "etf",
+      "current_weight_pct": 6.22,
+      "missing_content": [
+        "etf_profile"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "159378",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "current_weight_pct": 2.52,
+      "missing_content": [
+        "etf_profile"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "562800",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "current_weight_pct": 0.82,
+      "missing_content": [
+        "etf_profile"
+      ],
+      "suggested_handling": "can_defer"
+    },
+    {
+      "code": "603087",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.03,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "002920",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 2.45,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "688439",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.21,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "002625",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.78,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "512710",
+      "name": "????ETF??",
+      "asset_type": "etf",
+      "current_weight_pct": 2.24,
+      "missing_content": [
+        "etf_profile"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "300627",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 0.58,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "can_defer"
+    },
+    {
+      "code": "603903",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 0.42,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "can_defer"
+    },
+    {
+      "code": "002041",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 0.63,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "can_defer"
+    },
+    {
+      "code": "002258",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.16,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "600764",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.57,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "688032",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.36,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "000970",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.75,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    },
+    {
+      "code": "300724",
+      "name": "????",
+      "asset_type": "stock",
+      "current_weight_pct": 1.29,
+      "missing_content": [
+        "profile",
+        "theme_binding"
+      ],
+      "suggested_handling": "research_first"
+    }
+  ],
+  "next_steps": {
+    "needs_action_plan": [
+      "???64.96%???55%?????????",
+      "??????ETF?????????????",
+      "????/?????????45%-55%????"
+    ],
+    "needs_research_first": [
+      "?????1%?????????",
+      "???????ETF?ETF???511360?512400?513180?159842?512070?159992?159378?562800?512710",
+      "???????????/????????????????????"
+    ],
+    "no_action_needed": [
+      "???????8%-12%???",
+      "???18?ETF???????????"
+    ]
+  },
+  "decision_log_entry": "2026-06-02 ?????????????64.96%???/??35.04%??????????45%-55%???????????ETF???????????"
+}

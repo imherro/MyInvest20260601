@@ -1,7 +1,7 @@
 {
   "module": "etf_registry",
   "version": "1.2",
-  "last_updated": "2026-06-01",
+  "last_updated": "2026-06-02",
   "generated_at": "2026-06-02_000715",
   "notes": "当前文件保存用户关注ETF池的最新总览。进入观察池不等于可买清单；正式操作前仍需组合分析和操作建议模块。",
   "input_research_files": {
@@ -44,6 +44,17 @@
       "159755.SZ 电池ETF广发",
       "516520.SH 智能驾驶ETF华泰柏瑞",
       "562500.SH 机器人ETF华夏"
+    ],
+    "current_holding_to_research": [
+      "511360.SH ??ETF???",
+      "512400.SH ????ETF??",
+      "513180.SH ????ETF??",
+      "159842.SZ ??ETF??",
+      "512070.SH ????ETF???",
+      "159992.SZ ???ETF??",
+      "159378.SZ ????ETF??",
+      "562800.SH ????ETF??",
+      "512710.SH ????ETF??"
     ]
   },
   "etfs": [
@@ -460,6 +471,213 @@
         "实时完整持仓结构未取得",
         "当前组合重叠未取得"
       ]
+    },
+    {
+      "code": "511360.SH",
+      "name": "??ETF???",
+      "bucket_role": "bond_cash",
+      "pool": "current_holding_to_research",
+      "status": "to_research",
+      "current_weight_pct": 35.04,
+      "related_theme": "pending",
+      "strategic_theme_rating": "pending",
+      "tactical_theme_rating": "pending",
+      "theme_stage": "pending",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "????ETF?????????ETF????????????ETF???",
+      "last_profile_file": "",
+      "last_profile_json": "",
+      "data_gaps": [
+        "ETF?????",
+        "???????",
+        "?????????"
+      ]
+    },
+    {
+      "code": "512400.SH",
+      "name": "????ETF??",
+      "bucket_role": "theme",
+      "pool": "current_holding_to_research",
+      "status": "to_research",
+      "current_weight_pct": 1.58,
+      "related_theme": "pending",
+      "strategic_theme_rating": "pending",
+      "tactical_theme_rating": "pending",
+      "theme_stage": "pending",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "????ETF?????????ETF????????????ETF???",
+      "last_profile_file": "",
+      "last_profile_json": "",
+      "data_gaps": [
+        "ETF?????",
+        "???????",
+        "?????????"
+      ]
+    },
+    {
+      "code": "513180.SH",
+      "name": "????ETF??",
+      "bucket_role": "theme",
+      "pool": "current_holding_to_research",
+      "status": "to_research",
+      "current_weight_pct": 1.61,
+      "related_theme": "pending",
+      "strategic_theme_rating": "pending",
+      "tactical_theme_rating": "pending",
+      "theme_stage": "pending",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "????ETF?????????ETF????????????ETF???",
+      "last_profile_file": "",
+      "last_profile_json": "",
+      "data_gaps": [
+        "ETF?????",
+        "???????",
+        "?????????"
+      ]
+    },
+    {
+      "code": "159842.SZ",
+      "name": "??ETF??",
+      "bucket_role": "theme",
+      "pool": "current_holding_to_research",
+      "status": "to_research",
+      "current_weight_pct": 4.37,
+      "related_theme": "pending",
+      "strategic_theme_rating": "pending",
+      "tactical_theme_rating": "pending",
+      "theme_stage": "pending",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "????ETF?????????ETF????????????ETF???",
+      "last_profile_file": "",
+      "last_profile_json": "",
+      "data_gaps": [
+        "ETF?????",
+        "???????",
+        "?????????"
+      ]
+    },
+    {
+      "code": "512070.SH",
+      "name": "????ETF???",
+      "bucket_role": "theme",
+      "pool": "current_holding_to_research",
+      "status": "to_research",
+      "current_weight_pct": 4.99,
+      "related_theme": "pending",
+      "strategic_theme_rating": "pending",
+      "tactical_theme_rating": "pending",
+      "theme_stage": "pending",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "????ETF?????????ETF????????????ETF???",
+      "last_profile_file": "",
+      "last_profile_json": "",
+      "data_gaps": [
+        "ETF?????",
+        "???????",
+        "?????????"
+      ]
+    },
+    {
+      "code": "159992.SZ",
+      "name": "???ETF??",
+      "bucket_role": "theme",
+      "pool": "current_holding_to_research",
+      "status": "to_research",
+      "current_weight_pct": 6.22,
+      "related_theme": "pending",
+      "strategic_theme_rating": "pending",
+      "tactical_theme_rating": "pending",
+      "theme_stage": "pending",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "????ETF?????????ETF????????????ETF???",
+      "last_profile_file": "",
+      "last_profile_json": "",
+      "data_gaps": [
+        "ETF?????",
+        "???????",
+        "?????????"
+      ]
+    },
+    {
+      "code": "159378.SZ",
+      "name": "????ETF??",
+      "bucket_role": "theme",
+      "pool": "current_holding_to_research",
+      "status": "to_research",
+      "current_weight_pct": 2.52,
+      "related_theme": "pending",
+      "strategic_theme_rating": "pending",
+      "tactical_theme_rating": "pending",
+      "theme_stage": "pending",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "????ETF?????????ETF????????????ETF???",
+      "last_profile_file": "",
+      "last_profile_json": "",
+      "data_gaps": [
+        "ETF?????",
+        "???????",
+        "?????????"
+      ]
+    },
+    {
+      "code": "562800.SH",
+      "name": "????ETF??",
+      "bucket_role": "theme",
+      "pool": "current_holding_to_research",
+      "status": "to_research",
+      "current_weight_pct": 0.82,
+      "related_theme": "pending",
+      "strategic_theme_rating": "pending",
+      "tactical_theme_rating": "pending",
+      "theme_stage": "pending",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "????ETF?????????ETF????????????ETF???",
+      "last_profile_file": "",
+      "last_profile_json": "",
+      "data_gaps": [
+        "ETF?????",
+        "???????",
+        "?????????"
+      ]
+    },
+    {
+      "code": "512710.SH",
+      "name": "????ETF??",
+      "bucket_role": "theme",
+      "pool": "current_holding_to_research",
+      "status": "to_research",
+      "current_weight_pct": 2.24,
+      "related_theme": "pending",
+      "strategic_theme_rating": "pending",
+      "tactical_theme_rating": "pending",
+      "theme_stage": "pending",
+      "rating": "pending",
+      "action_rating": "Watch",
+      "target_position_range": "",
+      "reason": "????ETF?????????ETF????????????ETF???",
+      "last_profile_file": "",
+      "last_profile_json": "",
+      "data_gaps": [
+        "ETF?????",
+        "???????",
+        "?????????"
+      ]
     }
   ],
   "change_log": [
@@ -467,6 +685,11 @@
       "date": "2026-06-01",
       "change": "按用户给出的18只ETF关注池批量生成时间戳ETF档案，时间戳 2026-06-02_000715。",
       "impact": "只更新ETF档案和登记册，不生成组合买卖清单；所有档案均引用最新市场仓位报告、最新主线研究报告和theme_registry.json。"
+    },
+    {
+      "date": "2026-06-02",
+      "change": "???????????9????ETF?current_holding_to_research?",
+      "impact": "??ETF????????????????????????????????"
     }
   ]
 }
