@@ -1,0 +1,193 @@
+{
+  "module": "intraday_alerts",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "time": "15:18",
+  "source_plan": "research/actions/action_plan_2026-06-02_093828_ad_hoc.json",
+  "source_check": "research/checks/premarket_check_2026-06-02_150645.json",
+  "amount_policy": "ratio_only",
+  "summary": {
+    "alert_state": "triggered|review_needed",
+    "highest_priority": "high",
+    "one_line_conclusion": "根据盘前执行检查和比例版操作建议，当前只允许执行已定义的减风险方向提醒；新增进攻仓、新增主题仓、未建档标的操作均应取消或阻断。"
+  },
+  "alerts": [
+    {
+      "priority": "high",
+      "subject": {
+        "code": "512880,513120,159869,516150,562500,159206",
+        "name": "已建档主题ETF篮子",
+        "type": "etf_basket"
+      },
+      "alert_type": "reduce_trigger",
+      "trigger_condition": "当前比例仍接近组合快照，且已建档主题ETF篮子可从9.57%降至不超过2.00%。",
+      "current_state": "来自既有操作建议，允许减风险。",
+      "suggested_action": "execute",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "市场仓位目标权益45%-55%，当前权益约64.96%。",
+        "主题/卫星ETF明显高于约束。",
+        "盘前执行检查状态为risk_reduce_only / research_first。"
+      ],
+      "risks": [
+        "减风险后可能错过主题短期反弹。",
+        "第一阶段执行后权益预计仍约57.39%，可能仍高于55%上沿。"
+      ],
+      "execution_boundary": "只执行既有比例计划，不扩大到未建档ETF或个股。",
+      "invalidation_condition": "新的市场仓位报告上调权益目标，或新的主线研究上调相关主题并生成新操作建议。",
+      "review_point": "主题ETF篮子是否降至不超过2.00%；权益是否降至约57.39%。"
+    },
+    {
+      "priority": "high",
+      "subject": {
+        "code": "",
+        "name": "现金/债券现金桶",
+        "type": "portfolio"
+      },
+      "alert_type": "add_trigger",
+      "trigger_condition": "已建档主题ETF篮子减风险执行后，释放比例进入现金/债券现金桶。",
+      "current_state": "允许桶级承接，不允许直接指定未建档ETF。",
+      "suggested_action": "execute",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "最新市场仓位建议债券/现金45%-55%。",
+        "当前短融/债券现金约35.04%，低于目标下沿。",
+        "511360尚未建档，因此只能表达为桶级承接。"
+      ],
+      "risks": [
+        "如果未来511360档案显示工具不合适，需要换用其他已研究现金等价工具。"
+      ],
+      "execution_boundary": "不输出具体ETF代码、金额或份额。",
+      "invalidation_condition": "债券现金工具档案显示不适合，或新市场仓位改为提高权益。",
+      "review_point": "债券现金桶是否接近目标区间。"
+    },
+    {
+      "priority": "high",
+      "subject": {
+        "code": "",
+        "name": "新增进攻仓",
+        "type": "portfolio"
+      },
+      "alert_type": "blocked",
+      "trigger_condition": "任何新增进攻仓想法均不符合当前盘前检查。",
+      "current_state": "不满足新增条件。",
+      "suggested_action": "cancel",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "市场仓位报告要求进攻仓收缩。",
+        "AI虽为A档但处于分歧。",
+        "半导体交易评级为B。"
+      ],
+      "risks": [
+        "若盘中高弹性方向反弹，仍不能临时改写为新增信号。"
+      ],
+      "execution_boundary": "取消新增进攻仓，保留观察。",
+      "invalidation_condition": "必须有新的市场仓位、主线研究和操作建议共同确认。",
+      "review_point": "是否遵守不临时新增进攻仓纪律。"
+    },
+    {
+      "priority": "high",
+      "subject": {
+        "code": "",
+        "name": "新增主题仓",
+        "type": "portfolio"
+      },
+      "alert_type": "blocked",
+      "trigger_condition": "主题/卫星ETF已明显超标。",
+      "current_state": "不满足新增条件。",
+      "suggested_action": "cancel",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "组合快照显示主题/卫星ETF约33.48%。",
+        "最新市场仓位报告建议主题仓0%-2%，并暂停新增。"
+      ],
+      "risks": [
+        "若题材盘中反弹，仍不能作为新增主题仓依据。"
+      ],
+      "execution_boundary": "取消新增主题仓。",
+      "invalidation_condition": "必须有新的市场仓位、主线研究和操作建议共同确认。",
+      "review_point": "是否遵守不临时新增主题仓纪律。"
+    },
+    {
+      "priority": "medium",
+      "subject": {
+        "code": "",
+        "name": "第二阶段权益压降",
+        "type": "portfolio"
+      },
+      "alert_type": "watch_trigger",
+      "trigger_condition": "未建档ETF和个股档案补齐后，权益仍高于55%。",
+      "current_state": "需要补研究后重算。",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "第一阶段后权益预计仍约57.39%。",
+        "未建档ETF和个股仍阻断第二阶段直接建议。"
+      ],
+      "risks": [
+        "若不补研究，第二阶段容易变成无依据操作。"
+      ],
+      "execution_boundary": "只记录待复核，不执行。",
+      "invalidation_condition": "补研究完成后生成新的组合分析和操作建议。",
+      "review_point": "P0/P1研究完成进度和权益是否仍高于55%。"
+    },
+    {
+      "priority": "medium",
+      "subject": {
+        "code": "511360",
+        "name": "短融ETF海富通",
+        "type": "etf"
+      },
+      "alert_type": "blocked",
+      "trigger_condition": "当前无ETF档案。",
+      "current_state": "只能作为债券现金桶方向，不能直接作为标的加仓建议。",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "盘前检查明确511360为ResearchFirst。",
+        "操作建议只允许债券现金桶承接，不指定未建档ETF。"
+      ],
+      "risks": [
+        "工具未研究前，直接指定可能忽略流动性、久期和信用风险。"
+      ],
+      "execution_boundary": "补ETF档案前不得作为具体加仓标的。",
+      "invalidation_condition": "生成511360时间戳ETF档案并通过操作建议模块重算。",
+      "review_point": "511360 ETF档案是否补齐。"
+    }
+  ],
+  "near_triggers": [
+    {
+      "subject": "第二阶段权益压降",
+      "near_condition": "第一阶段后权益仍可能约57.39%，高于55%。",
+      "watch_point": "等P0/P1研究补齐后重算。"
+    },
+    {
+      "subject": "511360 短融ETF海富通",
+      "near_condition": "当前承担债券现金桶，但无档案。",
+      "watch_point": "优先补ETF档案。"
+    },
+    {
+      "subject": "未建档个股",
+      "near_condition": "合计约22.14%。",
+      "watch_point": "优先补P0/P1个股档案。"
+    }
+  ],
+  "missing_preconditions": [
+    {
+      "missing_content": "etf_profile",
+      "impact": "511360不能直接作为具体加仓标的。",
+      "next_step": "补ETF档案。"
+    },
+    {
+      "missing_content": "etf_profile",
+      "impact": "9只持仓ETF不能直接给买卖结论。",
+      "next_step": "按backlog补研究。"
+    },
+    {
+      "missing_content": "stock_profile",
+      "impact": "17只持仓个股不能直接给买卖结论。",
+      "next_step": "按backlog补研究。"
+    }
+  ],
+  "decision_log_entry": "2026-06-02 15:18 盘中提醒：最高优先级高；触发事项为已建档主题ETF篮子减风险、债券现金桶承接；新增进攻仓和新增主题仓取消；全部需要人工确认；盘后复盘是否执行减风险计划、执行后权益和债券现金桶是否接近目标、是否发生临时新增未建档标的。"
+}
