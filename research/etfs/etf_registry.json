@@ -589,25 +589,27 @@
     },
     {
       "code": "159992.SZ",
-      "name": "Innovative Drug ETF Yinhua",
+      "name": "创新药ETF银华",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
-      "status": "to_research",
+      "status": "profile_generated",
       "current_weight_pct": 6.22,
-      "related_theme": "pending",
-      "strategic_theme_rating": "pending",
-      "tactical_theme_rating": "pending",
-      "theme_stage": "pending",
-      "rating": "pending",
+      "related_theme": "创新药/医药",
+      "strategic_theme_rating": "未评级",
+      "tactical_theme_rating": "未评级",
+      "theme_stage": "不适用",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
-      "last_profile_file": "",
-      "last_profile_json": "",
+      "target_position_range": "单只主题工具0%-1%；创新药/医药组需合并纳入主题仓和行业集中度约束。",
+      "reason": "创新药ETF银华跟踪中证创新药产业指数，角色为主题仓；当前创新药/医药未进入主线登记册，ETF低于20日和60日均线，且组合中创新药/医药组占比8.93%。本档案只给观察和触发条件。",
+      "last_profile_file": "research/etfs/159992.SZ_创新药ETF银华_2026-06-02_100213.md",
+      "last_profile_json": "research/etfs/159992.SZ_创新药ETF银华_2026-06-02_100213.json",
       "data_gaps": [
-        "ETF profile not generated",
-        "theme binding pending",
-        "peer comparison pending"
+        "官方净申购/赎回金额未取得",
+        "3年/5年长期估值分位未取得",
+        "实时完整持仓结构未取得，仅有2026-03-31披露持仓",
+        "当前组合成分级重叠未取得",
+        "全市场同类ETF横向比较未完成"
       ]
     },
     {
@@ -695,6 +697,11 @@
       "date": "2026-06-02",
       "change": "Generated timestamped ETF profile for 511360.SH 短融ETF海富通.",
       "impact": "511360 is now available as a bond_cash/cash bucket input for portfolio and action modules; profile does not create buy/sell advice."
+    },
+    {
+      "date": "2026-06-02",
+      "change": "Generated timestamped ETF profile for 159992.SZ 创新药ETF银华.",
+      "impact": "159992 is now available as a profiled theme ETF input for portfolio and action modules; profile does not create buy/sell advice."
     }
   ]
 }

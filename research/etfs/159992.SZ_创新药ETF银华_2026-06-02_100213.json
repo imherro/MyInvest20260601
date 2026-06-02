@@ -1,0 +1,293 @@
+{
+  "module": "etf_research",
+  "version": "1.0",
+  "date": "2026-06-02",
+  "generated_at": "2026-06-02_100213",
+  "code": "159992.SZ",
+  "name": "创新药ETF银华",
+  "boundary": "ETF profile only; no buy/sell advice and no rebalance action.",
+  "data_sources": [
+    "Tushare fund_basic",
+    "Tushare fund_daily",
+    "Tushare fund_nav",
+    "Tushare fund_share",
+    "Tushare fund_portfolio",
+    "Tushare stock_basic",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/themes/theme_registry.json",
+    "research/etfs/etf_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research/portfolio/research_backlog_2026-06-02_094121.json"
+  ],
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-01_231907.md",
+    "theme_research_report": "research/themes/theme_review_2026-06-01_231611.md",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "research_backlog": "research/portfolio/research_backlog_2026-06-02_094121.json"
+  },
+  "summary": {
+    "bucket_role": "theme",
+    "action_rating": "Watch",
+    "etf_score": 39,
+    "target_position_range": "单只主题工具0%-1%；创新药/医药组需合并纳入主题仓和行业集中度约束。",
+    "confidence": "medium",
+    "one_line_conclusion": "159992是A股创新药主题ETF，代表性和流动性尚可，但当前未进入主线登记册、趋势弱于市场，且组合中创新药/医药组已有8.93%暴露；本档案只补齐研究输入，不生成买卖建议或调仓动作。"
+  },
+  "basic_info": {
+    "fund_code": "159992.SZ",
+    "fund_name": "创新药ETF银华",
+    "tracked_index_or_asset": "中证创新药产业指数",
+    "fund_company": "银华基金",
+    "custodian": "上海银行",
+    "fund_type": "股票型",
+    "invest_type": "被动指数型",
+    "found_date": "2020-03-20",
+    "list_date": "2020-04-10",
+    "fee": "管理费0.50%，托管费0.05%",
+    "latest_trade_date": "2026-06-01",
+    "latest_close": 0.757,
+    "latest_unit_nav": 0.7568,
+    "premium_discount_pct": 0.026,
+    "latest_fd_share_wan": 1897798.1217,
+    "estimated_aum_yi": 143.61,
+    "latest_turnover_yi": 8.77,
+    "average_daily_turnover_20d_yi": 7.21,
+    "long_term_holding_suitable": false
+  },
+  "position_role": {
+    "bucket_role": "theme",
+    "related_theme": "创新药/医药",
+    "strategic_theme_rating": "未评级",
+    "tactical_theme_rating": "未评级",
+    "theme_stage": "不适用",
+    "allocation_purpose": "提供A股创新药产业链主题暴露",
+    "alternative_etfs": ["513120.SH 港股创新药ETF广发", "其他医药/创新药ETF"],
+    "overlap_with_existing_holdings": "与513120、300760、603087同属创新药/医药组；组合快照中该组占比8.93%。"
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 16,
+      "evidence": "跟踪中证创新药产业指数，前十大成分集中在药明康德、恒瑞医药、科伦药业等创新药/CXO/医药公司。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 8,
+      "evidence": "价格处于近60日和近240日低分位，但未取得跟踪指数PE/PB长期估值分位。"
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": 4,
+      "evidence": "最新收盘价低于20日和60日均线；近20日-9.45%，近120日-13.68%。"
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": 8,
+      "evidence": "最新成交额约8.77亿元，近20日日均约7.21亿元，常规流动性较好。"
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": 7,
+      "evidence": "Tushare份额近20个观察日增加约4.28%，近120个观察日增加约25.52%；但未取得官方净申购/赎回金额。"
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 3,
+      "evidence": "创新药/医药未在当前主线登记册中评级，且最新市场仓位报告要求主题仓暂停新增。"
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": 3,
+      "evidence": "当前组合创新药/医药组已达8.93%，本ETF是该组最大单只，增加主题集中而非改善分散。"
+    },
+    "base_score": 51,
+    "crowding_structure_risk": {
+      "score": 12,
+      "evidence": "当前组合中单只6.22%，创新药/医药组8.93%；主题仓边界和趋势弱势共同构成结构风险。",
+      "operation_limit": "本档案不生成买卖建议；后续动作交给组合分析和操作建议模块。"
+    },
+    "final_score": 39
+  },
+  "valuation": {
+    "status": "partial",
+    "short_term_60d_percentile": {
+      "status": "available",
+      "conclusion": "价格低位",
+      "evidence": "最新收盘价在近60日收盘价中约处于5.00%分位。"
+    },
+    "medium_term_1y_percentile": {
+      "status": "available",
+      "conclusion": "价格低位",
+      "evidence": "最新收盘价在近240日收盘价中约处于1.25%分位。"
+    },
+    "long_term_3y_5y_percentile": {
+      "status": "missing",
+      "conclusion": "未判断",
+      "evidence": "未取得中证创新药产业指数长期PE/PB分位。"
+    },
+    "dividend_or_earnings_yield": {
+      "status": "missing",
+      "conclusion": "未判断",
+      "evidence": "未取得跟踪指数股息率和盈利收益率。"
+    },
+    "relative_value": {
+      "status": "partial",
+      "conclusion": "待补",
+      "evidence": "仅与组合内513120做角色区分，未完成全市场同类ETF横向比较。"
+    }
+  },
+  "trend_and_flow": {
+    "ma20_ma60_trend": {
+      "status": "available",
+      "conclusion": "弱势",
+      "evidence": "最新收盘价0.757，低于20日均线0.7983和60日均线0.8132。"
+    },
+    "relative_strength": {
+      "status": "available",
+      "conclusion": "明显弱于沪深300",
+      "evidence": "近20日相对沪深300约-10.22pct，近60日约-7.07pct，近120日约-20.70pct。"
+    },
+    "returns": {
+      "status": "available",
+      "return_5d_pct": -1.56,
+      "return_20d_pct": -9.45,
+      "return_60d_pct": -1.82,
+      "return_120d_pct": -13.68,
+      "return_240d_pct": -5.38
+    },
+    "etf_share_change": {
+      "status": "available",
+      "conclusion": "份额增加但短期波动",
+      "evidence": "近20个观察日+4.28%，近60个观察日+3.58%，近120个观察日+25.52%。"
+    },
+    "subscription_redemption": {
+      "status": "missing",
+      "conclusion": "未取得",
+      "evidence": "Tushare返回份额变化，但未取得官方净申购/赎回金额。"
+    },
+    "turnover_liquidity": {
+      "status": "available",
+      "conclusion": "流动性较好",
+      "evidence": "最新成交额约8.77亿元，近20日日均约7.21亿元。"
+    }
+  },
+  "holdings_structure": {
+    "latest_disclosed_end_date": "2026-03-31",
+    "top_holdings": [
+      {"code": "603259.SH", "name": "药明康德", "industry": "化学制药", "weight_pct": 11.61},
+      {"code": "600276.SH", "name": "恒瑞医药", "industry": "化学制药", "weight_pct": 9.51},
+      {"code": "002422.SZ", "name": "科伦药业", "industry": "化学制药", "weight_pct": 3.90},
+      {"code": "002294.SZ", "name": "信立泰", "industry": "化学制药", "weight_pct": 3.44},
+      {"code": "600196.SH", "name": "复星医药", "industry": "化学制药", "weight_pct": 3.40},
+      {"code": "000963.SZ", "name": "华东医药", "industry": "化学制药", "weight_pct": 3.06},
+      {"code": "300759.SZ", "name": "康龙化成", "industry": "化学制药", "weight_pct": 2.89},
+      {"code": "300347.SZ", "name": "泰格医药", "industry": "医疗保健", "weight_pct": 2.86},
+      {"code": "000661.SZ", "name": "长春高新", "industry": "生物制药", "weight_pct": 2.85},
+      {"code": "688578.SH", "name": "艾力斯", "industry": "化学制药", "weight_pct": 2.78}
+    ],
+    "top10_weight_sum_pct": 46.30,
+    "concentration_risk": "前十大成分合计约46.30%，前两大药明康德和恒瑞医药合计约21.12%。",
+    "portfolio_overlap": "与513120同属创新药方向；与300760、603087同属医药相关暴露，需要后续个股档案确认成分级重叠。",
+    "alternative_etf_comparison": [
+      {
+        "code": "159992.SZ",
+        "name": "创新药ETF银华",
+        "advantages": ["A股创新药产业指数暴露", "规模和成交较好"],
+        "disadvantages": ["当前趋势弱", "组合中单只占比已高", "未评级主题"],
+        "preferred": null
+      },
+      {
+        "code": "513120.SH",
+        "name": "港股创新药ETF广发",
+        "advantages": ["港股创新药暴露", "已建档"],
+        "disadvantages": ["港股市场、汇率和指数成分差异", "不能直接替代A股创新药"],
+        "preferred": null
+      }
+    ]
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [
+      "仅当后续模块需要判断创新药/医药暴露时，引用本档案作为159992的基础研究输入。"
+    ],
+    "reduce_conditions": [],
+    "sell_or_invalidation_conditions": [
+      "本档案不生成卖出动作；若ETF继续弱于市场、份额反转流出、或成分风险上升，应触发重新研究。"
+    ]
+  },
+  "trigger_based_actions": [
+    {
+      "trigger_condition": "操作建议模块处理创新药/医药组",
+      "action": "引用本档案作为159992的基础输入",
+      "reverse_or_invalidation_condition": "市场仓位、主线或组合快照已更新但未重新读取"
+    },
+    {
+      "trigger_condition": "创新药/医药被纳入主线登记册并获得交易评级",
+      "action": "重新生成或复核ETF档案",
+      "reverse_or_invalidation_condition": "主线仍未评级"
+    },
+    {
+      "trigger_condition": "159992重新站上20日和60日均线且相对沪深300修复",
+      "action": "触发ETF_RESEARCH复核",
+      "reverse_or_invalidation_condition": "趋势继续弱于市场"
+    },
+    {
+      "trigger_condition": "基金份额由增加转为连续大幅下降",
+      "action": "触发资金项复核",
+      "reverse_or_invalidation_condition": "份额变化恢复稳定"
+    }
+  ],
+  "position_suggestions_by_scenario": {
+    "market_position_below_45": "主题仓保持观察口径，具体动作由操作建议模块决定。",
+    "market_position_45_60": "主题仓不直接放大；当前市场报告给出主题仓0%-2%且暂停新增。",
+    "market_position_60_75": "若主线和趋势未修复，仍不能自动升级为进攻仓。",
+    "market_position_above_75": "需重新读取最新市场报告，不在本档案推导。",
+    "tactical_theme_a": "创新药/医药当前未评级，不适用。",
+    "tactical_theme_downgrade_to_b": "不适用。",
+    "tactical_theme_downgrade_to_c_or_d": "若未来纳入主线且评级偏低，应维持主题观察边界。"
+  },
+  "risks": [
+    "创新药/医药未纳入当前主线登记册，缺少固化主线评级。",
+    "159992当前趋势弱于市场，且低于20日和60日均线。",
+    "当前组合中创新药/医药组占比8.93%，159992单只6.22%，存在主题集中度风险。",
+    "前十大成分较集中，药明康德和恒瑞医药合计约21.12%。",
+    "基金披露持仓为2026-03-31，不代表实时完整持仓。"
+  ],
+  "risk_monitors": [
+    "是否重新站上20日和60日均线",
+    "相对沪深300是否由弱转强",
+    "基金份额是否由增加转为连续下降",
+    "创新药/医药是否被主线研究模块纳入评级",
+    "前十大成分是否发生重大风险或集中度变化"
+  ],
+  "data_gaps": {
+    "etf_share_or_subscription": [
+      "已取得份额变化；未取得官方净申购/赎回金额。"
+    ],
+    "long_term_valuation_percentile": [
+      "未取得中证创新药产业指数3年/5年PE/PB分位。"
+    ],
+    "full_holdings_structure": [
+      "只取得2026-03-31披露持仓，不是实时完整持仓。"
+    ],
+    "portfolio_overlap": [
+      "已按组合快照识别创新药/医药组，但未完成与个股档案的成分级重叠分析。"
+    ],
+    "other": [
+      "未完成全市场创新药/医药ETF横向比较。"
+    ]
+  },
+  "next_update_triggers": [
+    "创新药/医药进入或退出主线登记册",
+    "最新市场仓位报告改变主题仓边界",
+    "159992站上或跌破关键均线",
+    "基金份额、成交额或折溢价异常变化",
+    "组合快照更新后创新药/医药组权重明显变化",
+    "300760、603087等医药个股档案补齐后，需要重算组合重叠"
+  ],
+  "decision_log_entry": "2026-06-02 ETF研究：159992.SZ 创新药ETF银华；仓位角色为主题仓，操作评级Watch，ETF分数39。只补齐研究输入，不生成买卖建议，不生成调仓动作。"
+}
