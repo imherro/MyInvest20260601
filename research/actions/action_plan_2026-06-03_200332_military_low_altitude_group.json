@@ -1,0 +1,143 @@
+{
+  "module": "action_plan",
+  "version": "1.0-military_low_altitude_group_ratio_only",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_200332",
+  "session": "military_low_altitude_satellite_group_handling",
+  "amount_policy": "ratio_only_no_market_value_no_cost_no_share_count",
+  "data_sources": [
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "research/actions/action_plan_2026-06-03_144641_post_execution.json",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/etfs/159378.SZ_通用航空ETF永赢_2026-06-02_183206.json",
+    "research/etfs/512710.SH_军工龙头ETF富国_2026-06-02_194731.json",
+    "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.json",
+    "research/stocks/002625_光启技术_2026-06-02_212235.json",
+    "research/stocks/688333_西安铂力特_2026-06-02_220936.json",
+    "research/stocks/688439_振华风光_2026-06-03_145839.json",
+    "research/stocks/300627_华测导航_2026-06-03_153536.json"
+  ],
+  "external_check_urls": [
+    "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12289284&stockid=688439",
+    "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12234830&stockid=002625",
+    "https://q.fund.sohu.com/159378/index.shtml",
+    "https://stock.finance.sina.com.cn/fundInfo/view/FundInfo_CGMX.php?symbol=159206",
+    "https://www.erichfund.com/websiteII/html/funddetail/fund_512710.html"
+  ],
+  "portfolio_context": {
+    "current_equity_allocation": "55.09%",
+    "current_bond_cash_allocation": "44.90% in 511360",
+    "group_name": "military_low_altitude_satellite",
+    "group_current_weight_pct": 9.79,
+    "target_group_weight_pct": 6.05,
+    "market_context": "defensive, target equity range 45%-55%, no new offensive/theme exposure",
+    "theme_context": "commercial aerospace is C, low-altitude and defense are not confirmed A/B tactical mainlines"
+  },
+  "summary": {
+    "recommended_plan": "reduce_group_to_watch_sleeve",
+    "total_planned_reduction_pct": 3.74,
+    "estimated_group_after_execution_pct": 6.05,
+    "estimated_equity_after_execution": "about 51.35%",
+    "estimated_bond_cash_after_execution": "about 48.64%",
+    "destination": "511360_or_cash_short_duration_bucket",
+    "one_line_conclusion": "Reduce weak and overlapping military/low-altitude/satellite exposure to a watch-sized sleeve rather than fully exiting."
+  },
+  "actions": [
+    {
+      "priority": 1,
+      "code": "159378",
+      "name": "通用航空ETF永赢",
+      "type": "ETF",
+      "current_weight_pct": 2.54,
+      "target_weight_pct": 1.2,
+      "change_pct": -1.34,
+      "action": "reduce",
+      "reason": "ETF rating D; theme is not confirmed A/B; weak trend and high overlap with the group."
+    },
+    {
+      "priority": 2,
+      "code": "512710",
+      "name": "军工龙头ETF富国",
+      "type": "ETF",
+      "current_weight_pct": 2.23,
+      "target_weight_pct": 1.2,
+      "change_pct": -1.03,
+      "action": "reduce",
+      "reason": "ETF rating D; defense bucket is not current offensive focus; weak relative strength."
+    },
+    {
+      "priority": 3,
+      "code": "688439",
+      "name": "振华风光",
+      "type": "stock",
+      "current_weight_pct": 1.19,
+      "target_weight_pct": 0.5,
+      "change_pct": -0.69,
+      "action": "reduce",
+      "reason": "Stock rating D; 2026Q1 loss, high valuation pressure, weak trend and fund flow."
+    },
+    {
+      "priority": 4,
+      "code": "002625",
+      "name": "光启技术",
+      "type": "stock",
+      "current_weight_pct": 1.78,
+      "target_weight_pct": 1.1,
+      "change_pct": -0.68,
+      "action": "reduce",
+      "reason": "Stock rating D; high valuation, weak trend and weak fund flow; keep only a watch-sized position."
+    },
+    {
+      "priority": 5,
+      "code": "688333",
+      "name": "西安铂力特",
+      "type": "stock",
+      "current_weight_pct": 1.35,
+      "target_weight_pct": 1.35,
+      "change_pct": 0.0,
+      "action": "hold_watch",
+      "reason": "Stock rating D, but short-term elasticity is better than the weakest names; no add."
+    },
+    {
+      "priority": 6,
+      "code": "300627",
+      "name": "华测导航",
+      "type": "stock",
+      "current_weight_pct": 0.6,
+      "target_weight_pct": 0.6,
+      "change_pct": 0.0,
+      "action": "hold_watch",
+      "reason": "Stock rating C and position is small; keep for post-market review, no add."
+    },
+    {
+      "priority": 7,
+      "code": "159206",
+      "name": "卫星ETF永赢",
+      "type": "ETF",
+      "current_weight_pct": 0.1,
+      "target_weight_pct": 0.1,
+      "change_pct": 0.0,
+      "action": "hold_watch",
+      "reason": "Tiny position with limited portfolio impact; keep only as a theme marker."
+    }
+  ],
+  "execution_order": [
+    "159378",
+    "512710",
+    "688439",
+    "002625"
+  ],
+  "do_not_do": [
+    "do_not_add_military_low_altitude_satellite_exposure_intraday",
+    "do_not_rotate_released_capital_into_other_offensive_themes",
+    "do_not_chase_688333_300627_159206_intraday",
+    "do_not_force_full_exit_because_total_equity_is_already_near_target"
+  ],
+  "invalidations": [
+    "If group weight is already near 6% after partial execution, stop further mechanical selling.",
+    "If actual latest holdings differ materially from the 2026-06-03_144641 snapshot, refresh holdings first.",
+    "If post-execution equity falls below 50%, pause additional reductions and switch to post-market review."
+  ],
+  "next_task_suggestion": "After execution, send updated holdings for a post-execution check and 2026-06-03 post-market review."
+}

@@ -1403,3 +1403,14 @@
 - 数据来源：Tushare stock_basic、daily、daily_basic、fina_indicator、income、cashflow、balancesheet、moneyflow、fina_mainbz，并交叉读取公开公告/财报摘要入口。
 - 新结论：`300760` 评分 62、评级 C、Watch；`603087` 评分 56、评级 C、Watch；`300627` 评分 58、评级 C、Watch；`002041` 评分 45、评级 D、Watch；`603903` 评分 34、评级 D、Watch。五份档案均不直接生成买卖动作。
 - 后续影响：最新持仓中仍持有的个股已全部完成建档；后续 ACTION_PLAN 可以不再被“未建档”阻断，下一步可生成全个股处理清单或做盘后复盘。
+
+### 决策：单独处理军工/低空/卫星组仓位
+
+- 决策类型：theme_group_action_plan
+- 变化类型：post_execution_structure_cleanup
+- 标的/主题：159378 通用航空ETF永赢、512710 军工龙头ETF富国、159206 卫星ETF永赢、002625 光启技术、688333 西安铂力特、688439 振华风光、300627 华测导航
+- 生成文件：`research/actions/action_plan_2026-06-03_200332_military_low_altitude_group.md`、`research/actions/action_plan_2026-06-03_200332_military_low_altitude_group.json`
+- 读取前置文件：`research/portfolio/portfolio_snapshot_2026-06-03_144641.json`、`research/actions/action_plan_2026-06-03_144641_post_execution.json`、`research/market/market_score_2026-06-01_231907.json`、`research/themes/theme_review_2026-06-01_231611.json`、三只 ETF 档案、四只相关个股档案
+- 外部轻量核对：读取 688439、002625 最新一季报公告入口，并核对 159378、512710、159206 主题 ETF 公开基金页。
+- 新结论：军工/低空/卫星组合计约 9.79%，在当前防守市场与主题未确认背景下偏高；建议降至约 6.05%，释放约 3.74pct 进入 `511360` / 现金短融桶。优先处理 `159378`、`512710`、`688439`、`002625`，保留 `688333`、`300627`、`159206` 为观察仓。
+- 后续影响：执行后预计权益仓约 51.35%，短融/现金桶约 48.64%，组合从贴近权益上限转为留有缓冲。执行后需回传最新持仓并进入盘后复核。
