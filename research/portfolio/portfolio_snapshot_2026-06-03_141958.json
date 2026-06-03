@@ -1,0 +1,85 @@
+{
+  "module": "portfolio_analysis",
+  "version": "1.1-real_holding_ratio_only",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_141958",
+  "session": "intraday_user_provided_holdings",
+  "amount_policy": "ratio_only; user provided market values and amounts, but this file stores only percentages and qualitative conclusions",
+  "data_sources": [
+    "User-provided real holdings table on 2026-06-03",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/etfs/etf_registry.json",
+    "research/stocks/stock_registry.json"
+  ],
+  "summary": {
+    "current_equity_allocation": "59.65%",
+    "target_equity_allocation": "45%-55%",
+    "current_bond_cash_allocation": "39.67% in 511360; about 40.35% if unlisted cash/rounding remainder is included",
+    "target_bond_cash_allocation": "45%-55%",
+    "portfolio_state": "slightly_over_allocated|theme_concentrated|bond_cash_under_allocated",
+    "one_line_conclusion": "The real portfolio is closer to target than the 2026-06-02 snapshot, but equity is still about 4.65 percentage points above the latest upper bound; first reduce about 5.00 percentage points from duplicated financial ETF and innovation-drug exposure into 511360/cash."
+  },
+  "asset_structure": {
+    "equity": {
+      "current": "59.65%",
+      "target": "45%-55%",
+      "deviation": "+4.65pct vs target upper 55%",
+      "conclusion": "slightly_over_allocated"
+    },
+    "bond_cash": {
+      "current": "39.67% in 511360",
+      "target": "45%-55%",
+      "deviation": "-5.33pct vs target lower 45%, or about -4.65pct if unlisted cash is included",
+      "conclusion": "under_allocated"
+    }
+  },
+  "group_exposures": [
+    {"group": "bond_cash", "weight_pct": 39.67, "codes": ["511360"]},
+    {"group": "core", "weight_pct": 4.58, "codes": ["159201"]},
+    {"group": "defensive", "weight_pct": 3.45, "codes": ["510880", "159301"]},
+    {"group": "offensive_ai_semi_power", "weight_pct": 2.71, "codes": ["159819", "588200", "002241", "159667", "159558", "159326"]},
+    {"group": "financial", "weight_pct": 10.66, "codes": ["512880", "159842", "512070"]},
+    {"group": "medicine_innovation_drug", "weight_pct": 8.73, "codes": ["300760", "603087", "159992", "513120"]},
+    {"group": "rare_metals", "weight_pct": 6.25, "codes": ["512400", "516150", "562800"]},
+    {"group": "military_low_altitude_satellite", "weight_pct": 9.82, "codes": ["688333", "159378", "159206", "002625", "688439", "512710", "300627"]},
+    {"group": "hk_china_internet", "weight_pct": 2.29, "codes": ["513050", "513180"]},
+    {"group": "auto_logistics", "weight_pct": 6.11, "codes": ["002352", "603596", "002920"]},
+    {"group": "game", "weight_pct": 2.48, "codes": ["159869"]},
+    {"group": "chem_agri_env", "weight_pct": 2.22, "codes": ["002258", "002041", "603903"]},
+    {"group": "robot_etf", "weight_pct": 0.35, "codes": ["562500"]}
+  ],
+  "deviations": [
+    {
+      "type": "conflict_with_market_position",
+      "subject": "total_equity",
+      "description": "Equity is 59.65%, above the latest 45%-55% target.",
+      "priority": "high"
+    },
+    {
+      "type": "structure_imbalance",
+      "subject": "financial_and_theme_exposure",
+      "description": "Financial, medicine/innovation drug, military/low-altitude/satellite, and rare-metals exposures together remain high versus the latest theme-bucket constraint.",
+      "priority": "high"
+    },
+    {
+      "type": "bond_cash_under_allocated",
+      "subject": "511360/cash bucket",
+      "description": "511360 is 39.67%; even with cash/rounding remainder included, bond/cash is below the 45%-55% target lower bound.",
+      "priority": "high"
+    }
+  ],
+  "next_steps": {
+    "needs_action_plan": [
+      "Release about 5.00 percentage points of equity into 511360/cash to bring equity near 54.65%.",
+      "Prioritize duplicated financial ETF exposure and large innovation-drug ETF exposure.",
+      "Keep offensive AI/semiconductor/power exposure unchanged because it is already small."
+    ],
+    "no_action_needed": [
+      "No broad liquidation is required.",
+      "No offensive/theme additions are supported.",
+      "Individual stocks should not receive intraday trade conclusions without stock-level trigger review."
+    ]
+  },
+  "decision_log_entry": "2026-06-03 真实持仓组合快照：基于用户提供真实持仓表生成 portfolio_snapshot_2026-06-03_141958.md/json；只保存比例，不保存市值、成本、盈亏金额或份额；当前权益约59.65%，511360约39.67%，权益高于45%-55%目标上沿约4.65pct；优先释放约5pct权益到511360/现金桶。"
+}

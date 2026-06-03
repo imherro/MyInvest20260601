@@ -1,0 +1,172 @@
+{
+  "module": "action_plan",
+  "version": "1.2-real_holding_ratio_only",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_141958",
+  "session": "intraday_user_provided_holdings",
+  "amount_policy": "ratio_only; no amount; no share count",
+  "source_files": {
+    "portfolio_analysis": "research/portfolio/portfolio_snapshot_2026-06-03_141958.json",
+    "market_position": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research": "research/themes/theme_review_2026-06-01_231611.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "stock_registry": "research/stocks/stock_registry.json",
+    "previous_action_plan": "research/actions/action_plan_2026-06-03_141038_intraday.json",
+    "public_market_sources": [
+      "https://www.chinanews.com.cn/cj/2026/06-03/10633476.shtml"
+    ]
+  },
+  "summary": {
+    "action_state": "cautious",
+    "recommendation_strength": "Normal",
+    "one_line_conclusion": "Based on real holdings, equity is about 59.65%, so reduce about 5.00 percentage points from 512070, 159992 and 159869 into 511360/cash; do not add offensive or theme exposure.",
+    "expected_equity_after_actions": "about 54.65%",
+    "expected_bond_cash_after_actions": "about 44.67% in 511360, or about 45.35% if unlisted cash/rounding remainder is included"
+  },
+  "preconditions": {
+    "market_position": {
+      "conclusion": "Equity target 45%-55%; bond/cash target 45%-55%; offensive bucket should shrink.",
+      "impact": "Equity at 59.65% needs about 4.65 percentage points of reduction."
+    },
+    "theme_rating": {
+      "conclusion": "AI remains A but in divergence; semiconductor tactical rating is B.",
+      "impact": "Do not add offensive or theme exposure."
+    },
+    "portfolio_deviation": {
+      "conclusion": "Financial exposure is 10.66%, medicine/innovation drug exposure is 8.73%, military/low-altitude/satellite is 9.82%, rare metals is 6.25%.",
+      "impact": "Prioritize duplicated financial ETF and large innovation-drug ETF exposure."
+    },
+    "crowding_risk": {
+      "conclusion": "2026-06-03 noon market is index/technology strong but breadth weak.",
+      "impact": "Use the rebound as a risk-reduction window."
+    },
+    "hard_constraints": {
+      "conclusion": "Theme and offensive additions remain blocked.",
+      "impact": "Only reduction and cash/short-term financing transfer are actionable."
+    }
+  },
+  "actions": [
+    {
+      "priority": "high",
+      "action_type": "Reduce",
+      "subject": {"code": "512070", "name": "证券保险ETF易方达", "type": "etf"},
+      "bucket_role": "theme",
+      "current_position": "5.00%",
+      "suggested_change": "-2.00 percentage points",
+      "target_position": "3.00%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Financial ETF exposure totals about 10.66% across 512880, 159842 and 512070.",
+        "Financial securities is not a current A-rated trading theme.",
+        "512070 is one of the largest duplicated financial ETF exposures."
+      ],
+      "trigger_conditions": ["512070 remains near 5.00% and financial exposure remains high."],
+      "invalidation_conditions": ["User already reduced financial exposure materially.", "A new theme/action plan upgrades financial exposure."],
+      "risks": ["May miss a financial-sector rebound."],
+      "review_points": ["Financial exposure should fall from about 10.66% to about 8.66%."]
+    },
+    {
+      "priority": "high",
+      "action_type": "Reduce",
+      "subject": {"code": "159992", "name": "创新药ETF银华", "type": "etf"},
+      "bucket_role": "theme",
+      "current_position": "6.05%",
+      "suggested_change": "-2.00 percentage points",
+      "target_position": "4.05%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Medicine/innovation drug exposure totals about 8.73%.",
+        "159992 is the largest single theme ETF position at 6.05%.",
+        "Innovation drug is not a current A-rated trading theme in the latest theme report."
+      ],
+      "trigger_conditions": ["159992 remains near 6.05% and medicine/innovation drug exposure remains high."],
+      "invalidation_conditions": ["User already reduced 159992.", "A new theme/action plan upgrades innovation drug exposure."],
+      "risks": ["May miss a short-term innovation-drug rebound."],
+      "review_points": ["Medicine/innovation drug exposure should fall from about 8.73% to about 6.73%."]
+    },
+    {
+      "priority": "medium",
+      "action_type": "Reduce",
+      "subject": {"code": "159869", "name": "游戏ETF华夏", "type": "etf"},
+      "bucket_role": "theme",
+      "current_position": "2.48%",
+      "suggested_change": "-1.00 percentage points",
+      "target_position": "1.48%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "159869 is a non-A theme exposure and remains above a small trial position.",
+        "The position has a deep reference loss and is not part of the current confirmed A theme."
+      ],
+      "trigger_conditions": ["159869 remains above 2.00%."],
+      "invalidation_conditions": ["User already reduced it below about 1.50%.", "A new theme/action plan upgrades game exposure."],
+      "risks": ["May miss a media/game rebound."],
+      "review_points": ["Game ETF should fall to about 1.48%."]
+    },
+    {
+      "priority": "high",
+      "action_type": "Add",
+      "subject": {"code": "511360", "name": "短融ETF海富通 / cash bucket", "type": "cash"},
+      "bucket_role": "bond_cash",
+      "current_position": "39.67%",
+      "suggested_change": "+5.00 percentage points",
+      "target_position": "about 44.67%; about 45.35% if unlisted cash/rounding remainder is included",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Latest market position target for bond/cash is 45%-55%.",
+        "511360 has a completed ETF profile and is classified as bond_cash.",
+        "This transfer brings equity back under 55%."
+      ],
+      "trigger_conditions": ["The three reductions above are executed.", "511360 has no abnormal premium/discount or liquidity issue."],
+      "invalidation_conditions": ["User prefers pure cash over 511360.", "511360 shows liquidity or premium/discount abnormality."],
+      "risks": ["Short-duration ETF is not risk-free cash."],
+      "review_points": ["Bond/cash should move to about 45% including cash/rounding remainder."]
+    }
+  ],
+  "no_action_list": [
+    {"subject": "AI/semiconductor/power/grid/GoerTek group", "reason": "condition_not_triggered", "watch_points": ["Exposure is only about 2.71%; do not chase or cut today."]},
+    {"subject": "rare metals group", "reason": "condition_not_triggered", "watch_points": ["Keep today; consider later if equity remains above target."]},
+    {"subject": "military/low-altitude/satellite group", "reason": "research_needed", "watch_points": ["Needs a dedicated group action plan."]},
+    {"subject": "individual stocks", "reason": "research_needed", "watch_points": ["Do not generate intraday stock trades without stock-level trigger review."]},
+    {"subject": "new offensive/theme additions", "reason": "market_position_not_supportive", "watch_points": ["Cancelled under current market position."]}
+  ],
+  "research_first_list": [
+    {"subject": "financial ETF group", "missing_content": "etf_profile", "why_it_blocks_action": "Need overlap/preference rule among 512880, 159842 and 512070 after first reduction.", "next_step": "Run group comparison later."},
+    {"subject": "medicine/innovation drug group", "missing_content": "theme", "why_it_blocks_action": "Need a theme-level allocation boundary after first reduction.", "next_step": "Review after close."},
+    {"subject": "individual stocks", "missing_content": "stock_profile", "why_it_blocks_action": "Stock-level trades need individual triggers.", "next_step": "Generate a stock-level action plan if requested."}
+  ],
+  "intraday_triggers": [
+    {"subject": "512070", "trigger_condition": "Position remains near 5.00% and financial group remains high.", "action_after_trigger": "execute", "needs_manual_confirmation": true},
+    {"subject": "159992", "trigger_condition": "Position remains near 6.05% and medicine/innovation-drug group remains high.", "action_after_trigger": "execute", "needs_manual_confirmation": true},
+    {"subject": "159869", "trigger_condition": "Position remains above 2.00%.", "action_after_trigger": "execute", "needs_manual_confirmation": true},
+    {"subject": "511360/cash", "trigger_condition": "Reduction proceeds are available.", "action_after_trigger": "execute", "needs_manual_confirmation": true},
+    {"subject": "new offensive/theme additions", "trigger_condition": "Any new add idea today.", "action_after_trigger": "cancel", "needs_manual_confirmation": true}
+  ],
+  "risks": [
+    "This is a ratio-level intraday plan and requires live order sizing outside the file.",
+    "If the user traded after providing holdings, percentages must be recalculated.",
+    "Reducing losing theme positions may reduce rebound participation."
+  ],
+  "triggered_hard_constraints": [
+    "Equity is 59.65%, above the 55% upper bound.",
+    "Theme and duplicated industry exposure remain high.",
+    "Market position does not support new offensive or theme additions."
+  ],
+  "comparison_with_previous": {
+    "previous_date": "2026-06-03_141038",
+    "main_changes": [
+      "Uses real holdings instead of the 2026-06-02 snapshot.",
+      "Reduces required risk cut from about 7.57pct to about 5.00pct.",
+      "Specifies concrete ratio reductions: 512070 -2pct, 159992 -2pct, 159869 -1pct."
+    ],
+    "change_reasons": [
+      "Real equity allocation is 59.65%, lower than the old 64.96% snapshot.",
+      "Financial and innovation-drug ETF exposures are the clearest large non-A theme reduction sources."
+    ]
+  },
+  "decision_log_entry": "2026-06-03 真实持仓操作建议：生成 action_plan_2026-06-03_141958_real_holdings.md/json；基于真实持仓权益约59.65%，建议先释放约5pct权益到511360/现金短融桶；512070减2pct、159992减2pct、159869减1pct；不新增进攻仓和主题仓，不盘中临时处理个股。"
+}
