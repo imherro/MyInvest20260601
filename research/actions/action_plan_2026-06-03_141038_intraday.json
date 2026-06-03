@@ -1,0 +1,343 @@
+{
+  "module": "action_plan",
+  "version": "1.1-ratio_only",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_141038",
+  "session": "intraday",
+  "amount_policy": "ratio_only; no amount; no share count",
+  "source_files": {
+    "market_position": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research": "research/themes/theme_review_2026-06-01_231611.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "stock_registry": "research/stocks/stock_registry.json",
+    "portfolio_analysis": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "current_backlog": "research/portfolio/research_backlog_2026-06-02_220936.json",
+    "intraday_alert": "research/alerts/intraday_alert_2026-06-03_140234.json",
+    "decision_log": "research/logs/decision_log.md",
+    "public_market_sources": [
+      "https://www.chinanews.com.cn/cj/2026/06-03/10633476.shtml",
+      "https://www.thepaper.cn/newsDetail_forward_33290481",
+      "https://fund.eastmoney.com/a/202606023757500723.html"
+    ],
+    "etf_profiles_referenced": [
+      "research/etfs/511360.SH_短融ETF海富通_2026-06-02_095258.json",
+      "research/etfs/512880.SH_证券ETF国泰_2026-06-02_000715.json",
+      "research/etfs/513120.SH_港股创新药ETF广发_2026-06-02_000715.json",
+      "research/etfs/159869.SZ_游戏ETF华夏_2026-06-02_000715.json",
+      "research/etfs/516150.SH_稀土ETF嘉实_2026-06-02_000715.json",
+      "research/etfs/562500.SH_机器人ETF华夏_2026-06-02_000715.json",
+      "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.json",
+      "research/etfs/159201.SZ_自由现金流ETF华夏_2026-06-02_000715.json",
+      "research/etfs/510880.SH_红利ETF华泰柏瑞_2026-06-02_000715.json",
+      "research/etfs/159301.SZ_公用事业ETF华夏_2026-06-02_000715.json",
+      "research/etfs/159819.SZ_人工智能ETF易方达_2026-06-02_000715.json",
+      "research/etfs/588200.SH_科创芯片ETF嘉实_2026-06-02_000715.json",
+      "research/etfs/159558.SZ_半导体设备ETF易方达_2026-06-02_000715.json",
+      "research/etfs/159667.SZ_工业母机ETF国泰_2026-06-02_000715.json",
+      "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.json"
+    ]
+  },
+  "summary": {
+    "action_state": "cautious",
+    "recommendation_strength": "Normal",
+    "one_line_conclusion": "If current holdings are still close to the 2026-06-02 snapshot, reduce the profiled theme ETF basket from about 9.57% to no more than 2.00%, and move the released proportion into 511360 or the cash/short-term financing bucket; do not add offensive or theme exposure.",
+    "first_stage_expected_equity_allocation": "about 57.39% if the 2026-06-02 snapshot still applies",
+    "remaining_gap_to_55pct_after_first_stage": "about 2.39 percentage points if the 2026-06-02 snapshot still applies"
+  },
+  "preconditions": {
+    "market_position": {
+      "conclusion": "Equity target remains 45%-55%; bond/cash target remains 45%-55%; offensive bucket should shrink.",
+      "impact": "Risk reduction remains preferred over new equity additions."
+    },
+    "theme_rating": {
+      "conclusion": "AI remains A but in divergence; semiconductor tactical rating is B.",
+      "impact": "The 2026-06-03 tech rebound is not enough to justify chasing offensive exposure without a new market-position update."
+    },
+    "portfolio_deviation": {
+      "conclusion": "2026-06-02 snapshot has 64.96% equity, 35.04% bond/cash, and 33.48% theme/satellite ETF exposure.",
+      "impact": "The first priority is still reducing excessive theme ETF exposure if today's holdings are similar."
+    },
+    "crowding_risk": {
+      "conclusion": "2026-06-03 noon market shows strong indices but weak breadth: more than 3400 stocks declined while CPO, communications and semiconductor led.",
+      "impact": "Treat the rebound as a risk-reduction window, not a broad risk-on confirmation."
+    },
+    "hard_constraints": {
+      "conclusion": "Theme bucket target is 0%-2%; new offensive and theme additions remain blocked.",
+      "impact": "Only reduction and cash/bond-cash transfer are actionable."
+    }
+  },
+  "actions": [
+    {
+      "priority": "high",
+      "action_type": "Reduce",
+      "subject": {
+        "code": "512880,513120,159869,516150,562500,159206",
+        "name": "Profiled theme ETF basket",
+        "type": "etf"
+      },
+      "bucket_role": "theme",
+      "current_position": "about 9.57% if still close to the 2026-06-02 snapshot",
+      "suggested_change": "If still 9.57%, reduce about 7.57 percentage points; if changed, reduce only the portion above 2.00%.",
+      "target_position": "no more than 2.00%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Latest market position report sets theme bucket at 0%-2% and pauses new theme additions.",
+        "2026-06-02 portfolio snapshot shows excessive theme/satellite ETF exposure.",
+        "The involved ETF profiles are Watch-rated and not current buy/add candidates.",
+        "2026-06-03 noon market rebound is index/technology-led but not broad-based."
+      ],
+      "trigger_conditions": [
+        "Current actual holding proportions are still close to the 2026-06-02 snapshot.",
+        "The profiled theme ETF basket is still above 2.00%.",
+        "User confirms ratio-level execution."
+      ],
+      "invalidation_conditions": [
+        "Actual holdings have changed materially and the basket is no longer above 2.00%.",
+        "A new market position report raises the theme bucket limit and a new action plan allows higher theme exposure.",
+        "A new theme review upgrades these themes to current tactical A ratings and a new action plan is generated."
+      ],
+      "risks": [
+        "The basket may continue to rebound in the short term after reduction.",
+        "If actual holdings differ from the old snapshot, the percentage target must be recalculated."
+      ],
+      "review_points": [
+        "Whether the basket falls to no more than 2.00%.",
+        "Whether equity allocation falls toward about 57.39% under the old snapshot assumption."
+      ]
+    },
+    {
+      "priority": "high",
+      "action_type": "Add",
+      "subject": {
+        "code": "511360",
+        "name": "短融ETF海富通 / cash-short financing bucket",
+        "type": "cash"
+      },
+      "bucket_role": "bond_cash",
+      "current_position": "about 35.04% if still close to the 2026-06-02 snapshot",
+      "suggested_change": "Receive the proportion released from theme ETF reduction; if first-stage release is about 7.57 percentage points, bond/cash moves toward about 42.61%.",
+      "target_position": "move toward 45%-55%, without mechanically exceeding 55%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Latest market position report sets bond/cash target at 45%-55%.",
+        "511360 has a completed ETF profile and is classified as bond_cash / cash-short financing input with ETF score 75.",
+        "This is a risk-reduction transfer, not a new equity risk add."
+      ],
+      "trigger_conditions": [
+        "Theme ETF basket reduction is executed or planned.",
+        "511360 has no abnormal premium/discount, liquidity, or risk event.",
+        "User accepts 511360 as the cash-short financing tool; otherwise use cash or another researched cash-equivalent route."
+      ],
+      "invalidation_conditions": [
+        "511360 shows abnormal premium/discount, liquidity deterioration, or credit/liquidity warning.",
+        "A new market position report lowers the bond/cash target."
+      ],
+      "risks": [
+        "Short-duration ETF is not risk-free cash.",
+        "No full peer comparison with other cash-equivalent tools has been completed."
+      ],
+      "review_points": [
+        "Whether bond/cash moves closer to the 45%-55% target.",
+        "Whether 511360 remains liquid with stable premium/discount."
+      ]
+    },
+    {
+      "priority": "medium",
+      "action_type": "Hold",
+      "subject": {
+        "code": "159201",
+        "name": "自由现金流ETF华夏",
+        "type": "etf"
+      },
+      "bucket_role": "core",
+      "current_position": "about 4.60%",
+      "suggested_change": "0 percentage points",
+      "target_position": "about 4.60%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Core exposure is structurally low but total equity is still above target.",
+        "No new equity adds before equity returns to the 45%-55% range."
+      ],
+      "trigger_conditions": [
+        "No add trigger today."
+      ],
+      "invalidation_conditions": [
+        "Generate a new action plan if equity falls below 55% and core replacement is needed."
+      ],
+      "risks": [
+        "Core structure remains underallocated during first-stage risk reduction."
+      ],
+      "review_points": [
+        "Reassess core replacement after equity normalization."
+      ]
+    },
+    {
+      "priority": "medium",
+      "action_type": "Hold",
+      "subject": {
+        "code": "510880,159301",
+        "name": "Profiled defensive ETF basket",
+        "type": "etf"
+      },
+      "bucket_role": "defensive",
+      "current_position": "about 3.42%",
+      "suggested_change": "0 percentage points",
+      "target_position": "about 3.42%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "Defensive exposure is low, but adding equity ETFs does not solve the current total-equity over-allocation."
+      ],
+      "trigger_conditions": [
+        "No add trigger today."
+      ],
+      "invalidation_conditions": [
+        "Generate a new action plan if equity is within range and defensive sleeve still needs adjustment."
+      ],
+      "risks": [
+        "Portfolio may remain volatile until theme and stock exposure are handled."
+      ],
+      "review_points": [
+        "Recalculate defensive sleeve after first-stage reduction."
+      ]
+    },
+    {
+      "priority": "medium",
+      "action_type": "Watch",
+      "subject": {
+        "code": "159819,588200,159558,159667,159326",
+        "name": "Profiled offensive ETF basket",
+        "type": "etf"
+      },
+      "bucket_role": "offensive",
+      "current_position": "about 1.23%",
+      "suggested_change": "0 percentage points",
+      "target_position": "about 1.23%",
+      "recommendation_strength": "Weak",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "AI is A-rated but in divergence.",
+        "Semiconductor tactical rating is B.",
+        "2026-06-03 noon tech rebound is strong but not broad enough to override the market-position constraint."
+      ],
+      "trigger_conditions": [
+        "No add trigger today."
+      ],
+      "invalidation_conditions": [
+        "If AI enters retreat or semiconductor continues to break down, generate a reduce-focused plan.",
+        "Only a new market-position report and action plan can allow offensive adds."
+      ],
+      "risks": [
+        "Chasing a strong intraday rebound can increase exposure before breadth confirms."
+      ],
+      "review_points": [
+        "Whether technology rebound broadens into close and the following trading day."
+      ]
+    }
+  ],
+  "no_action_list": [
+    {
+      "subject": "New offensive additions",
+      "reason": "market_position_not_supportive",
+      "watch_points": [
+        "Wait for market position and theme confirmation."
+      ]
+    },
+    {
+      "subject": "New theme additions",
+      "reason": "risk_too_high",
+      "watch_points": [
+        "Theme bucket is already above target."
+      ]
+    },
+    {
+      "subject": "Individual stock holdings",
+      "reason": "research_needed",
+      "watch_points": [
+        "Do not create intraday stock trade conclusions without reading stock profiles, current weights, and trigger conditions."
+      ]
+    },
+    {
+      "subject": "Paused backlog items",
+      "reason": "condition_not_triggered",
+      "watch_points": [
+        "Do not resume paused backlog unless the user re-specifies scope."
+      ]
+    }
+  ],
+  "research_first_list": [
+    {
+      "subject": "Latest actual holdings",
+      "missing_content": "portfolio_analysis",
+      "why_it_blocks_action": "The action percentages are based on the 2026-06-02 snapshot and need recalculation if holdings changed.",
+      "next_step": "Provide current holdings or generate an updated portfolio snapshot."
+    },
+    {
+      "subject": "2026-06-03 close data",
+      "missing_content": "market_position",
+      "why_it_blocks_action": "Noon rebound is not a close confirmation.",
+      "next_step": "Run post-market review or market-position update after close."
+    },
+    {
+      "subject": "Individual stock trigger review",
+      "missing_content": "stock_profile",
+      "why_it_blocks_action": "Intraday module should not invent stock-level trade conclusions.",
+      "next_step": "Generate a stock-level action plan if the user requests it."
+    }
+  ],
+  "intraday_triggers": [
+    {
+      "subject": "Profiled theme ETF basket",
+      "trigger_condition": "Current basket remains above 2.00% and current holdings are close to the 2026-06-02 snapshot.",
+      "action_after_trigger": "execute",
+      "needs_manual_confirmation": true
+    },
+    {
+      "subject": "511360 / cash-short financing bucket",
+      "trigger_condition": "Theme ETF basket reduction is executed and bond/cash remains below 45%.",
+      "action_after_trigger": "execute",
+      "needs_manual_confirmation": true
+    },
+    {
+      "subject": "New offensive additions",
+      "trigger_condition": "Any idea to add offensive exposure today.",
+      "action_after_trigger": "cancel",
+      "needs_manual_confirmation": true
+    },
+    {
+      "subject": "New theme additions",
+      "trigger_condition": "Any idea to add theme exposure today.",
+      "action_after_trigger": "cancel",
+      "needs_manual_confirmation": true
+    }
+  ],
+  "risks": [
+    "2026-06-03 noon market is index-strong but breadth-weak.",
+    "The 2026-06-02 portfolio snapshot may not match current actual holdings.",
+    "Theme ETF reduction may miss further short-term rebound.",
+    "511360 is not risk-free cash."
+  ],
+  "triggered_hard_constraints": [
+    "Equity allocation is above the latest 45%-55% target if the 2026-06-02 snapshot still applies.",
+    "Theme/satellite ETF allocation is above the 0%-2% theme-bucket target.",
+    "Offensive bucket should shrink and theme bucket should pause new additions.",
+    "Paused backlog should not be resumed automatically."
+  ],
+  "comparison_with_previous": {
+    "previous_date": "2026-06-02",
+    "main_changes": [
+      "Maintains first-stage theme ETF risk reduction.",
+      "Uses the completed 511360 profile to name it as a cash/short-term financing bucket input.",
+      "Adds 2026-06-03 noon market context: strong technology rebound but weak breadth."
+    ],
+    "change_reasons": [
+      "Current market rebound is better used as a risk-reduction window than as a chase-add signal.",
+      "The latest backlog pauses old research items and does not create new active research scope."
+    ]
+  },
+  "decision_log_entry": "2026-06-03 盘中操作建议：生成 action_plan_2026-06-03_141038_intraday.md/json；今日操作状态为谨慎操作；若当前持仓仍接近2026-06-02快照，将已建档主题ETF篮子从约9.57%降至不超过2.00%，释放比例进入511360/现金短融桶；不新增进攻仓、不新增主题仓，个股不在盘中临时给买卖结论，暂停backlog不自动恢复；复盘点为执行后主题ETF篮子是否不超过2.00%、权益是否降至约57.39%、债券/现金桶是否靠近45%-55%下沿。"
+}
