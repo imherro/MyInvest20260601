@@ -1,0 +1,161 @@
+{
+  "module": "action_plan",
+  "version": "1.0-stock_group_ratio_only",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_145028",
+  "session": "stock_group_handling_after_partial_execution",
+  "amount_policy": "ratio_only; no holding market value, cost amount, profit amount, or share count is stored",
+  "scope": [
+    {"code": "002920", "name": "德赛西威", "current_weight_pct": 2.39},
+    {"code": "002352", "name": "顺丰控股", "current_weight_pct": 1.97},
+    {"code": "603596", "name": "伯特利", "current_weight_pct": 1.73},
+    {"code": "002625", "name": "光启技术", "current_weight_pct": 1.78},
+    {"code": "688439", "name": "振华风光", "current_weight_pct": 1.19},
+    {"code": "002258", "name": "利尔化学", "current_weight_pct": 1.20}
+  ],
+  "data_sources": [
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "research/actions/action_plan_2026-06-03_144641_post_execution.json",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/stocks/stock_registry.json",
+    "research/stocks/002920_德赛西威_2026-06-02_103125.json",
+    "research/stocks/002352_顺丰控股_2026-06-02_183206.json",
+    "research/stocks/603596_伯特利_2026-06-02_220936.json",
+    "research/stocks/002625_光启技术_2026-06-02_212235.json"
+  ],
+  "portfolio_context": {
+    "post_execution_equity_allocation": "55.09%",
+    "post_execution_bond_cash_allocation": "44.90% in 511360",
+    "target_equity_allocation": "45%-55%",
+    "target_bond_cash_allocation": "45%-55%",
+    "conclusion": "first-stage risk reduction is effectively complete; this plan is a small second-stage structure cleanup, not a broad mechanical liquidation"
+  },
+  "summary": {
+    "recommended_plan": "reduce_selected_weak_profiled_stocks",
+    "total_planned_reduction_pct": 1.50,
+    "destination": "511360_or_cash_short_duration_bucket",
+    "estimated_equity_after_execution": "about 53.6%",
+    "estimated_bond_cash_after_execution": "about 46.4%",
+    "one_line_conclusion": "Only reduce 002920 and 603596 modestly; keep 002352 and 002625 on watch; mark 688439 and 002258 as ResearchFirst before any stock-level action."
+  },
+  "actions": [
+    {
+      "priority": 1,
+      "code": "603596",
+      "name": "伯特利",
+      "profile_status": "profile_generated",
+      "stock_rating": "D",
+      "action_rating": "Watch",
+      "current_weight_pct": 1.73,
+      "action": "reduce",
+      "planned_change_pct": -0.70,
+      "target_weight_pct": 1.00,
+      "destination": "511360_or_cash_short_duration_bucket",
+      "rationale": [
+        "Existing stock dossier gives D rating and Watch action rating.",
+        "2026Q1 profit weakened, price broke multiple moving averages, and moneyflow proxy is negative.",
+        "Auto and logistics group remains about 6.09%; this is the weakest profiled auto component holding in the requested group."
+      ]
+    },
+    {
+      "priority": 2,
+      "code": "002920",
+      "name": "德赛西威",
+      "profile_status": "profile_generated",
+      "stock_rating": "C",
+      "action_rating": "Watch",
+      "current_weight_pct": 2.39,
+      "action": "reduce",
+      "planned_change_pct": -0.80,
+      "target_weight_pct": 1.50,
+      "destination": "511360_or_cash_short_duration_bucket",
+      "rationale": [
+        "Existing stock dossier gives C rating and Watch action rating.",
+        "Unmanned driving remains a D-rated watch theme, while 2026Q1 revenue and profit declined year over year.",
+        "It is the largest single-stock weight in the requested group and remains weak versus major indices."
+      ]
+    },
+    {
+      "priority": 3,
+      "code": "002352",
+      "name": "顺丰控股",
+      "profile_status": "profile_generated",
+      "stock_rating": "C",
+      "action_rating": "Watch",
+      "current_weight_pct": 1.97,
+      "action": "hold_watch",
+      "planned_change_pct": 0.00,
+      "target_weight_pct": 1.97,
+      "rationale": [
+        "Existing stock dossier gives C rating and Watch action rating.",
+        "Trend is weak, but earnings, cash flow and valuation odds are better than the other profiled names in this requested group.",
+        "Keep as a stable-core candidate watch input; do not add."
+      ]
+    },
+    {
+      "priority": 4,
+      "code": "002625",
+      "name": "光启技术",
+      "profile_status": "profile_generated",
+      "stock_rating": "D",
+      "action_rating": "Watch",
+      "current_weight_pct": 1.78,
+      "action": "hold_watch",
+      "planned_change_pct": 0.00,
+      "target_weight_pct": 1.78,
+      "rationale": [
+        "Existing stock dossier gives D rating and Watch action rating.",
+        "Absolute valuation is high and trend is weak, but the position is modest and belongs to the broader military, aerospace, low-altitude and satellite group.",
+        "Do not add; if this theme group is reduced further, handle it with the whole group rather than only this stock."
+      ]
+    },
+    {
+      "priority": 5,
+      "code": "688439",
+      "name": "振华风光",
+      "profile_status": "to_research",
+      "stock_rating": "pending",
+      "action_rating": "ResearchFirst",
+      "current_weight_pct": 1.19,
+      "action": "research_first",
+      "planned_change_pct": 0.00,
+      "target_weight_pct": 1.19,
+      "rationale": [
+        "No formal stock dossier exists in the repository.",
+        "Do not generate a hard buy, sell, add or reduce action without a stock dossier.",
+        "Because it likely overlaps with the military, aerospace, low-altitude and satellite group, it should be a high-priority research item."
+      ]
+    },
+    {
+      "priority": 6,
+      "code": "002258",
+      "name": "利尔化学",
+      "profile_status": "to_research",
+      "stock_rating": "pending",
+      "action_rating": "ResearchFirst",
+      "current_weight_pct": 1.20,
+      "action": "research_first",
+      "planned_change_pct": 0.00,
+      "target_weight_pct": 1.20,
+      "rationale": [
+        "No formal stock dossier exists in the repository.",
+        "Chemical/agri exposure is not a confirmed A/B tactical mainline in the latest theme framework.",
+        "Create a stock dossier before any stock-level action."
+      ]
+    }
+  ],
+  "execution_order": [
+    "Reduce 603596 by about 0.70pct first.",
+    "Reduce 002920 by about 0.80pct second.",
+    "Move released ratio to 511360 or cash short-duration bucket.",
+    "Stop after the planned 1.50pct cleanup if equity allocation is around 53%-54%.",
+    "Do not add offensive, theme, or single-stock exposure today."
+  ],
+  "invalidations": [
+    "If market breadth and volume confirm a broad risk-on reversal while intelligent auto themes upgrade materially, revisit the plan before further selling.",
+    "If the user wants a same-equity switch rather than lower total equity, do not move proceeds to 511360 until replacement candidates are researched."
+  ],
+  "next_task_suggestion": "After execution, record updated holdings and run a 2026-06-03 post-market review. If not executing, create stock dossiers for 688439 and 002258 first.",
+  "decision_log_entry": "2026-06-03 个股组合处理计划：基于执行后权益约55.09%、511360约44.90%的真实持仓，建议只小幅处理已有档案且更弱的002920与603596，合计释放约1.50pct至511360/现金短融桶；002352、002625维持观察不加仓；688439、002258因未建档标记为ResearchFirst。"
+}

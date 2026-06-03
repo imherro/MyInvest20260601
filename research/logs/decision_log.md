@@ -1374,3 +1374,12 @@
 - 复盘日期：2026-06-03 盘后。
 - 成功标准：盘后确认权益仍在 55%附近，执行动作符合计划，未发生追涨新增。
 - 失败标准：在第一阶段已达标后继续机械卖出，或重新新增进攻/主题仓。
+### 决策：生成 2026-06-03 个股组合处理计划
+
+- 决策类型：stock_group_action_plan
+- 变化类型：post_execution_structure_cleanup
+- 标的/主题：002920 德赛西威、002352 顺丰控股、603596 伯特利、002625 光启技术、688439 振华风光、002258 利尔化学
+- 生成文件：`research/actions/action_plan_2026-06-03_145028_stock_group.md`、`research/actions/action_plan_2026-06-03_145028_stock_group.json`
+- 读取前置文件：`research/portfolio/portfolio_snapshot_2026-06-03_144641.json`、`research/actions/action_plan_2026-06-03_144641_post_execution.json`、`research/market/market_score_2026-06-01_231907.json`、`research/themes/theme_review_2026-06-01_231611.json`、`research/stocks/stock_registry.json`、四个已建档个股 JSON。
+- 新结论：执行后权益约 55.09%、511360 约 44.90%，第一阶段降风险基本完成；本次只做第二阶段个股结构处理，建议减 603596 约 0.70pct、减 002920 约 0.80pct，释放比例进入 511360 / 现金短融桶；002352、002625 维持观察不加仓；688439、002258 因未建正式个股档案，标记为 ResearchFirst，不直接给买卖动作。
+- 后续影响：若用户执行，需要回传最新持仓并做 2026-06-03 盘后复盘；若不执行，下一步优先补 688439 和 002258 个股档案。
