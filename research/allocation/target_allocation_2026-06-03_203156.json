@@ -1,0 +1,342 @@
+{
+  "module": "target_allocation",
+  "version": "2.0-transition_and_true_target",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_203156",
+  "supersedes": "research/allocation/target_allocation_2026-06-03_202441.json",
+  "session": "target_allocation_revision",
+  "amount_policy": "ratio_only_no_market_value_no_cost_no_profit_no_share_count",
+  "purpose": "Separate ideal allocation design from current-position accommodation, with transition and true-target versions.",
+  "data_sources": [
+    "research/allocation/target_allocation_2026-06-03_202441.json",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json"
+  ],
+  "market_context": {
+    "local_market_position_score": 53,
+    "state": "neutral_defensive",
+    "equity_center_pct": 50.0,
+    "bond_cash_center_pct": 50.0,
+    "rule": "Use a 50/50 equity versus cash-short-duration center. Equity internal allocation has transition and true-target models."
+  },
+  "classification_rules": [
+    {
+      "class": "core_mandatory",
+      "display_name": "核心必配",
+      "definition": "Long-term quality, cash-flow, broad/core quality proxies.",
+      "principle": "Equity base allocation; can be held through cycles."
+    },
+    {
+      "class": "defensive_mandatory",
+      "display_name": "防御必配",
+      "definition": "Dividend, public utility, low-volatility and defensive cash-flow assets.",
+      "principle": "Required in neutral-defensive markets."
+    },
+    {
+      "class": "ab_mainline_optional",
+      "display_name": "A/B主线可配",
+      "definition": "Only A/B-rated mainlines with trend and volume confirmation.",
+      "principle": "Optional allocation; underweight does not mean immediate add."
+    },
+    {
+      "class": "watch",
+      "display_name": "观察仓",
+      "definition": "Has some long-term logic but current rating, trend or confirmation is insufficient.",
+      "principle": "Small or moderate watch only."
+    },
+    {
+      "class": "legacy_cleanup",
+      "display_name": "遗留清理仓",
+      "definition": "Weak themes, weak trend, unconfirmed or old-logic residual holdings.",
+      "principle": "Gradually reduce, prioritizing weak names."
+    },
+    {
+      "class": "bond_cash",
+      "display_name": "现金短融",
+      "definition": "511360 or cash-short-duration bucket.",
+      "principle": "Main stabilizer under current market context."
+    }
+  ],
+  "hard_constraints": [
+    "C/D-rated themes must not have a standalone ideal allocation above 3%.",
+    "Military/low-altitude/satellite target is lowered to 3%-4% unless the mainline rating upgrades to B.",
+    "Auto/logistics/intelligent-driving target is lowered to 3%-4%; weak names are cleaned first.",
+    "Chemical/agriculture/environment is reclassified as miscellaneous legacy cleanup with a 0%-1.5% target.",
+    "Robot ETF is included in A/B mainline optional or watch buckets and must not appear as a duplicate standalone bucket.",
+    "Underweight A/B optional allocation is not a buy instruction."
+  ],
+  "transition_model": {
+    "name": "A. 过渡型理想仓位",
+    "use_case": "Current-to-next 1-2 trading days; avoid one-off large restructuring.",
+    "equity_total_pct": 50.0,
+    "bond_cash_total_pct": 50.0,
+    "groups": [
+      {
+        "class": "bond_cash",
+        "group": "bond_cash",
+        "display_name": "511360 / 现金短融桶",
+        "current_pct": 44.9,
+        "target_pct": 50.0,
+        "target_range": "48%-52%",
+        "deviation_to_target_pct": 5.1,
+        "direction": "increase"
+      },
+      {
+        "class": "core_mandatory",
+        "group": "core_quality",
+        "display_name": "自由现金流 / 核心质量",
+        "current_pct": 4.58,
+        "target_pct": 6.0,
+        "target_range": "5%-7%",
+        "deviation_to_target_pct": 1.42,
+        "direction": "raise_over_time_no_chase"
+      },
+      {
+        "class": "defensive_mandatory",
+        "group": "defensive",
+        "display_name": "红利 / 公用事业",
+        "current_pct": 3.45,
+        "target_pct": 5.0,
+        "target_range": "4%-6%",
+        "deviation_to_target_pct": 1.55,
+        "direction": "possible_defensive_rebalance"
+      },
+      {
+        "class": "ab_mainline_optional",
+        "group": "ab_mainline_optional",
+        "display_name": "AI / 半导体 / 电网 / 高端装备 / 机器人",
+        "current_pct": 2.71,
+        "target_pct": 4.0,
+        "target_range": "3%-5%",
+        "deviation_to_target_pct": 1.29,
+        "direction": "wait_for_confirmation"
+      },
+      {
+        "class": "watch",
+        "group": "financial",
+        "display_name": "金融",
+        "current_pct": 9.0,
+        "target_pct": 6.0,
+        "target_range": "5%-6.5%",
+        "deviation_to_target_pct": -3.0,
+        "direction": "review_after_first_reduction"
+      },
+      {
+        "class": "watch",
+        "group": "medicine_innovation_drug",
+        "display_name": "医药 / 创新药",
+        "current_pct": 6.71,
+        "target_pct": 5.5,
+        "target_range": "4.5%-6%",
+        "deviation_to_target_pct": -1.21,
+        "direction": "watch_after_first_reduction"
+      },
+      {
+        "class": "watch",
+        "group": "hk_china_internet",
+        "display_name": "港股科技 / 中概互联网",
+        "current_pct": 2.31,
+        "target_pct": 2.5,
+        "target_range": "2%-3%",
+        "deviation_to_target_pct": 0.19,
+        "direction": "hold_watch"
+      },
+      {
+        "class": "watch",
+        "group": "rare_metals",
+        "display_name": "稀土 / 有色 / 稀有金属",
+        "current_pct": 6.22,
+        "target_pct": 3.0,
+        "target_range": "2%-3%",
+        "deviation_to_target_pct": -3.22,
+        "direction": "modest_reduce_to_cd_cap"
+      },
+      {
+        "class": "legacy_cleanup",
+        "group": "military_low_altitude_satellite",
+        "display_name": "军工 / 低空 / 卫星",
+        "current_pct": 9.79,
+        "target_pct": 3.5,
+        "target_range": "3%-4%",
+        "deviation_to_target_pct": -6.29,
+        "direction": "priority_reduce"
+      },
+      {
+        "class": "legacy_cleanup",
+        "group": "auto_logistics_intelligent_driving",
+        "display_name": "汽车 / 物流 / 智能驾驶相关",
+        "current_pct": 6.09,
+        "target_pct": 3.5,
+        "target_range": "3%-4%",
+        "deviation_to_target_pct": -2.59,
+        "direction": "reduce_weak_names_first"
+      },
+      {
+        "class": "legacy_cleanup",
+        "group": "game_media",
+        "display_name": "游戏 / 传媒",
+        "current_pct": 1.65,
+        "target_pct": 1.0,
+        "target_range": "0.5%-1.5%",
+        "deviation_to_target_pct": -0.65,
+        "direction": "watch_after_first_reduction"
+      },
+      {
+        "class": "legacy_cleanup",
+        "group": "misc_legacy",
+        "display_name": "杂项遗留仓：化工 / 农业 / 环保",
+        "current_pct": 2.23,
+        "target_pct": 1.0,
+        "target_range": "0%-1.5%",
+        "deviation_to_target_pct": -1.23,
+        "direction": "defer_cleanup"
+      },
+      {
+        "class": "ab_mainline_optional",
+        "group": "ab_mainline_buffer",
+        "display_name": "权益机动额度",
+        "current_pct": 0.0,
+        "target_pct": 3.5,
+        "target_range": "0%-3.5%",
+        "deviation_to_target_pct": 3.5,
+        "direction": "do_not_deploy_until_ab_confirmation"
+      }
+    ]
+  },
+  "true_target_model": {
+    "name": "B. 真正目标型理想仓位",
+    "use_case": "Designed from scratch; more focused and less tolerant of legacy theme sprawl.",
+    "equity_total_pct": 50.0,
+    "bond_cash_total_pct": 50.0,
+    "groups": [
+      {
+        "class": "bond_cash",
+        "group": "bond_cash",
+        "display_name": "511360 / 现金短融桶",
+        "target_pct": 50.0,
+        "target_range": "48%-55%",
+        "reason": "Main stabilizer under current neutral-defensive context."
+      },
+      {
+        "class": "core_mandatory",
+        "group": "core_quality",
+        "display_name": "自由现金流 / 核心质量 / 宽基质量代理",
+        "target_pct": 8.0,
+        "target_range": "7%-10%",
+        "reason": "Highest-priority equity base."
+      },
+      {
+        "class": "defensive_mandatory",
+        "group": "defensive",
+        "display_name": "红利 / 公用事业 / 低波动",
+        "target_pct": 6.0,
+        "target_range": "5%-7%",
+        "reason": "Required in neutral-defensive markets."
+      },
+      {
+        "class": "ab_mainline_optional",
+        "group": "ab_mainline_optional",
+        "display_name": "AI / 半导体 / 电网 / 高端装备 / 机器人",
+        "target_pct": 8.0,
+        "target_range": "6%-10%",
+        "reason": "Only A/B-rated confirmed mainlines."
+      },
+      {
+        "class": "watch",
+        "group": "financial",
+        "display_name": "金融",
+        "target_pct": 4.0,
+        "target_range": "3%-5%",
+        "reason": "Industry beta watch only."
+      },
+      {
+        "class": "watch",
+        "group": "medicine_innovation_drug",
+        "display_name": "医药 / 创新药",
+        "target_pct": 4.0,
+        "target_range": "3%-5%",
+        "reason": "Watch allocation rather than large theme allocation."
+      },
+      {
+        "class": "watch",
+        "group": "hk_china_internet",
+        "display_name": "港股科技 / 中概互联网",
+        "target_pct": 2.5,
+        "target_range": "2%-3%",
+        "reason": "Small watch allocation."
+      },
+      {
+        "class": "watch",
+        "group": "rare_metals",
+        "display_name": "稀土 / 有色 / 稀有金属",
+        "target_pct": 2.5,
+        "target_range": "1.5%-3%",
+        "reason": "C-rated theme cap; standalone target must not exceed 3%."
+      },
+      {
+        "class": "legacy_cleanup",
+        "group": "military_low_altitude_satellite",
+        "display_name": "军工 / 低空 / 卫星",
+        "target_pct": 3.0,
+        "target_range": "0%-3%",
+        "reason": "Can rise to 4%-5% only if the mainline upgrades to B."
+      },
+      {
+        "class": "legacy_cleanup",
+        "group": "auto_logistics_intelligent_driving",
+        "display_name": "汽车 / 物流 / 智能驾驶相关",
+        "target_pct": 3.0,
+        "target_range": "0%-3%",
+        "reason": "Keep only strong-quality names after weak-name cleanup."
+      },
+      {
+        "class": "legacy_cleanup",
+        "group": "game_media",
+        "display_name": "游戏 / 传媒",
+        "target_pct": 1.0,
+        "target_range": "0%-1.5%",
+        "reason": "Small watch allocation."
+      },
+      {
+        "class": "legacy_cleanup",
+        "group": "misc_legacy",
+        "display_name": "杂项遗留仓：化工 / 农业 / 环保",
+        "target_pct": 1.0,
+        "target_range": "0%-1.5%",
+        "reason": "No standalone expansion."
+      },
+      {
+        "class": "ab_mainline_optional",
+        "group": "ab_mainline_buffer",
+        "display_name": "预留机动额度",
+        "target_pct": 3.0,
+        "target_range": "0%-3%",
+        "reason": "Deploy only after A/B mainline confirmation."
+      }
+    ]
+  },
+  "changes_from_previous": [
+    {"item": "military_low_altitude_satellite", "previous_target_pct": 5.0, "transition_target_pct": 3.5, "true_target_pct": 3.0},
+    {"item": "auto_logistics_intelligent_driving", "previous_target_pct": 5.0, "transition_target_pct": 3.5, "true_target_pct": 3.0},
+    {"item": "rare_metals", "previous_target_pct": 4.0, "transition_target_pct": 3.0, "true_target_pct": 2.5},
+    {"item": "chem_agri_env", "previous_target_pct": 2.0, "transition_target_pct": 1.0, "true_target_pct": 1.0, "new_class": "misc_legacy"},
+    {"item": "robot_etf", "previous_status": "standalone_group", "new_status": "included_in_ab_mainline_optional_not_duplicated"}
+  ],
+  "priority_deviations_transition": [
+    {"priority": 1, "group": "military_low_altitude_satellite", "deviation_pct": -6.29, "suggestion": "priority reduce toward 3%-4%"},
+    {"priority": 2, "group": "financial", "deviation_pct": -3.0, "suggestion": "already reduced once; review without mechanical repeat"},
+    {"priority": 3, "group": "rare_metals", "deviation_pct": -3.22, "suggestion": "reduce toward C-theme cap"},
+    {"priority": 4, "group": "auto_logistics_intelligent_driving", "deviation_pct": -2.59, "suggestion": "clean weak names first"},
+    {"priority": 5, "group": "misc_legacy", "deviation_pct": -1.23, "suggestion": "defer cleanup"},
+    {"priority": 6, "group": "bond_cash", "deviation_pct": 5.1, "suggestion": "receive released allocation"}
+  ],
+  "usage_rules": [
+    "Use transition_model for current holdings correction.",
+    "Use true_target_model for long-term restructuring.",
+    "First reduce risk toward the transition model, then optimize toward the true target model.",
+    "Do not treat underweight A/B optional allocation as a buy signal.",
+    "C/D-rated themes are watch or legacy cleanup only and no longer receive high ideal targets."
+  ],
+  "next_task_suggestion": "Generate an actual-vs-transition-target deviation table and reorder existing action plans."
+}
