@@ -1,0 +1,147 @@
+{
+  "module": "intraday_alerts",
+  "version": "1.0",
+  "date": "2026-06-03",
+  "time": "14:02",
+  "source_plan": "research/actions/action_plan_2026-06-02_093828_ad_hoc.json",
+  "source_files": {
+    "action_plan": "research/actions/action_plan_2026-06-02_093828_ad_hoc.json",
+    "premarket_check": "research/checks/premarket_check_2026-06-02_150645.json",
+    "market_position": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research": "research/themes/theme_review_2026-06-01_231611.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-02_092310.json",
+    "current_backlog": "research/portfolio/research_backlog_2026-06-02_220936.json"
+  },
+  "summary": {
+    "alert_state": "blocked",
+    "highest_priority": "high",
+    "one_line_conclusion": "No 2026-06-03 same-day premarket action plan or premarket execution check exists, and the 2026-06-02 premarket check is partly stale after later backlog updates; this intraday check blocks direct execution of the old plan and requires a same-day check or updated action plan first."
+  },
+  "alerts": [
+    {
+      "priority": "high",
+      "subject": {
+        "code": "",
+        "name": "今日盘中执行门禁",
+        "type": "portfolio"
+      },
+      "alert_type": "blocked",
+      "trigger_condition": "No 2026-06-03 same-day premarket action plan or premarket execution check is present.",
+      "current_state": "Latest action plan and premarket check are dated 2026-06-02.",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "docs/modules/INTRADAY_ALERTS.md requires reading the same-day premarket action plan.",
+        "Latest action plan is research/actions/action_plan_2026-06-02_093828_ad_hoc.json.",
+        "Latest premarket check is research/checks/premarket_check_2026-06-02_150645.json."
+      ],
+      "risks": [
+        "Direct execution may use stale portfolio weights or stale ResearchFirst assumptions.",
+        "Intraday strategy improvisation would violate the module boundary."
+      ],
+      "execution_boundary": "Do not execute trade actions from the old plan before generating a 2026-06-03 premarket check or updated action plan.",
+      "invalidation_condition": "A 2026-06-03 same-day premarket check or updated action plan is generated and confirms the old triggers remain valid.",
+      "review_point": "Check after close whether the missing same-day plan blocked execution."
+    },
+    {
+      "priority": "high",
+      "subject": {
+        "code": "512880,513120,159869,516150,562500,159206",
+        "name": "2026-06-02 profiled theme ETF basket reduce plan",
+        "type": "etf"
+      },
+      "alert_type": "blocked",
+      "trigger_condition": "Old plan can reduce the basket only if current proportions are still close to the latest portfolio snapshot.",
+      "current_state": "Current same-day holdings were not confirmed, and later backlog updates changed research coverage and scope.",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "action_plan_2026-06-02_093828_ad_hoc.json depends on portfolio_snapshot_2026-06-02_092310.json.",
+        "research_backlog_2026-06-02_220936.json shows user-defined focus work completed and old backlog items paused."
+      ],
+      "risks": [
+        "The old reduction direction may still be relevant, but direct execution bypasses today's gate.",
+        "If holdings changed after the old snapshot, the target percentages may be wrong."
+      ],
+      "execution_boundary": "Generate today's premarket execution check or updated action plan before using this reduce plan.",
+      "invalidation_condition": "New market position, portfolio snapshot, or user instruction changes the risk-reduction boundary.",
+      "review_point": "Confirm whether the 2026-06-02 plan is stale because of timing or scope updates."
+    },
+    {
+      "priority": "high",
+      "subject": {
+        "code": "",
+        "name": "新增进攻仓 / 新增主题仓",
+        "type": "portfolio"
+      },
+      "alert_type": "blocked",
+      "trigger_condition": "Latest market position still says offensive bucket should shrink and theme bucket should pause new additions.",
+      "current_state": "No newer market position or theme review allows offensive/theme additions.",
+      "suggested_action": "cancel",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "market_score_2026-06-01_231907.json sets equity allocation at 45%-55% and offensive bucket status as reduce.",
+        "theme_review_2026-06-01_231611.json keeps AI as A but in divergence and semiconductor tactical rating as B."
+      ],
+      "risks": [
+        "Adding offensive or theme exposure without a same-day gate bypasses fixed market and theme constraints."
+      ],
+      "execution_boundary": "No new offensive or theme adds.",
+      "invalidation_condition": "A new market position report and action plan explicitly allow additions.",
+      "review_point": "Check whether any execution bypassed the blocked condition."
+    },
+    {
+      "priority": "medium",
+      "subject": {
+        "code": "",
+        "name": "暂停 backlog 标的",
+        "type": "portfolio"
+      },
+      "alert_type": "blocked",
+      "trigger_condition": "Current backlog has no active remaining research items and pauses old backlog items.",
+      "current_state": "active_remaining_total_items is 0.",
+      "suggested_action": "log_only",
+      "needs_manual_confirmation": false,
+      "evidence": [
+        "research_backlog_2026-06-02_220936.json sets active_remaining_items to an empty list.",
+        "The same backlog says old backlog items are paused and should not be automatically continued."
+      ],
+      "risks": [
+        "Automatically restoring old backlog items would ignore the user's latest scope update."
+      ],
+      "execution_boundary": "Do not resume paused research items unless the user re-specifies scope.",
+      "invalidation_condition": "User re-adds a paused item or requests continued research.",
+      "review_point": "Check whether future tasks respect the paused scope."
+    }
+  ],
+  "near_triggers": [
+    {
+      "subject": "2026-06-02 first-stage risk reduction plan",
+      "near_condition": "May remain relevant if current proportions are still close to the 2026-06-02 snapshot.",
+      "watch_point": "Generate a 2026-06-03 premarket check or updated action plan before execution."
+    },
+    {
+      "subject": "market_position_module",
+      "near_condition": "Latest market position report is dated 2026-06-01.",
+      "watch_point": "If market state changed materially, update market position in its own module rather than during intraday alerts."
+    }
+  ],
+  "missing_preconditions": [
+    {
+      "missing_content": "premarket_plan",
+      "impact": "Cannot confirm which actions are allowed for 2026-06-03.",
+      "next_step": "Generate a 2026-06-03 action plan or explicitly confirm the old plan is still valid."
+    },
+    {
+      "missing_content": "premarket_plan",
+      "impact": "Cannot turn the old action plan into today's intraday monitoring list.",
+      "next_step": "Generate a 2026-06-03 premarket execution check."
+    },
+    {
+      "missing_content": "portfolio_analysis",
+      "impact": "The old action plan depends on 2026-06-02 portfolio weights and current weights were not confirmed.",
+      "next_step": "Provide updated holdings or generate a new portfolio snapshot."
+    }
+  ],
+  "decision_log_entry": "2026-06-03 14:02 盘中提醒：生成 research/alerts/intraday_alert_2026-06-03_140234.md/json；最高优先级高；缺少2026-06-03当日盘前操作建议和盘前执行检查，2026-06-02旧计划不能直接作为今日执行依据；建议review，新增进攻仓和新增主题仓继续cancel；盘后复盘点为是否需要先补今日盘前执行检查或新版操作建议。"
+}
