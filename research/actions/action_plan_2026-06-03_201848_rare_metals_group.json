@@ -1,0 +1,110 @@
+{
+  "module": "action_plan",
+  "version": "1.0-rare_metals_group_ratio_only",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_201848",
+  "session": "rare_metals_group_handling",
+  "amount_policy": "ratio_only_no_market_value_no_cost_no_profit_no_share_count",
+  "data_sources": [
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/etfs/516150.SH_稀土ETF嘉实_2026-06-02_000715.json",
+    "research/etfs/562800.SH_稀有金属ETF嘉实_2026-06-02_220936.json"
+  ],
+  "external_check_urls": [
+    "https://fund.eastmoney.com/516150.html",
+    "https://fund.eastmoney.com/562800.html",
+    "https://fund.stockstar.com/funds/512400.shtml",
+    "https://www.nbd.com.cn/articles/2026-06-03/4416444.html",
+    "https://finance.eastmoney.com/a/202606033759029157.html"
+  ],
+  "portfolio_context": {
+    "current_equity_allocation": "55.09%",
+    "current_bond_cash_allocation": "44.90% in 511360",
+    "group_name": "rare_metals",
+    "group_current_weight_pct": 6.22,
+    "target_group_weight_pct": 4.65,
+    "theme_context": "nonferrous metals is C-rated watch/repair in the latest theme framework",
+    "market_context": "defensive-to-neutral; no new offensive/theme exposure"
+  },
+  "summary": {
+    "recommended_plan": "modestly_reduce_largest_weak_resource_etfs",
+    "total_planned_reduction_pct": 1.57,
+    "estimated_group_after_execution_pct": 4.65,
+    "estimated_equity_after_execution_if_standalone": "about 53.52%",
+    "estimated_bond_cash_after_execution_if_standalone": "about 46.47%",
+    "destination": "511360_or_cash_short_duration_bucket",
+    "one_line_conclusion": "Reduce rare-metals exposure from a sizeable theme sleeve to a smaller watch sleeve; do not fully exit and do not add."
+  },
+  "preconditions": [
+    "If the full portfolio final plan has not been executed, this rare-metals group plan can be executed standalone.",
+    "If the full portfolio final plan has already been executed, refresh holdings before applying this plan.",
+    "If equity allocation is already below 50%, pause this plan."
+  ],
+  "actions": [
+    {
+      "priority": 1,
+      "code": "516150",
+      "name": "稀土ETF嘉实",
+      "type": "ETF",
+      "profile_status": "profile_generated",
+      "etf_rating": "D",
+      "etf_score": 40,
+      "current_weight_pct": 3.72,
+      "target_weight_pct": 2.5,
+      "planned_change_pct": -1.22,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket",
+      "reason": "Largest group position; D-rated ETF dossier; nonferrous theme is C-rated watch; trend and share proxy are weak."
+    },
+    {
+      "priority": 2,
+      "code": "562800",
+      "name": "稀有金属ETF嘉实",
+      "type": "ETF",
+      "profile_status": "profile_generated",
+      "etf_rating": "D",
+      "etf_score": 39,
+      "current_weight_pct": 0.85,
+      "target_weight_pct": 0.5,
+      "planned_change_pct": -0.35,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket",
+      "reason": "D-rated ETF dossier; below 20/60-day averages and share proxy declining; retain only a small watch position."
+    },
+    {
+      "priority": 3,
+      "code": "512400",
+      "name": "有色金属ETF南方",
+      "type": "ETF",
+      "profile_status": "missing_profile",
+      "etf_rating": "pending",
+      "etf_score": null,
+      "current_weight_pct": 1.65,
+      "target_weight_pct": 1.65,
+      "planned_change_pct": 0.0,
+      "action": "hold_watch_research_first",
+      "reason": "No formal local ETF dossier found; position is moderate and has a profit cushion, so do not create an unprofiled sell action."
+    }
+  ],
+  "execution_order": [
+    "Reduce 516150 first.",
+    "Reduce 562800 second.",
+    "Do not adjust 512400 until its ETF dossier is created.",
+    "Stop if equity allocation is already below 53% during execution."
+  ],
+  "do_not_do": [
+    "do_not_add_rare_metals_or_nonferrous_exposure",
+    "do_not_rotate_516150_reduction_into_512400_or_562800",
+    "do_not_chase_resource_theme_rebound",
+    "do_not_stack_this_plan_after_full_portfolio_final_plan_without_refreshing_holdings"
+  ],
+  "invalidations": [
+    "If full portfolio final plan was already executed, refresh holdings first.",
+    "If nonferrous theme upgrades to B/A and ETFs regain 20-day trend with relative strength, rerun review.",
+    "If total equity allocation is already below 50%, pause this plan."
+  ],
+  "next_task_suggestion": "Create a formal 512400 ETF dossier first, or send updated holdings if any plan has been executed."
+}
