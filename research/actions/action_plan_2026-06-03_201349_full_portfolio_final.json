@@ -1,0 +1,157 @@
+{
+  "module": "action_plan",
+  "version": "1.0-full_portfolio_final_ratio_only",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_201349",
+  "session": "full_portfolio_final_handling_list",
+  "amount_policy": "ratio_only_no_market_value_no_cost_no_profit_no_share_count",
+  "data_sources": [
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "research/actions/action_plan_2026-06-03_144641_post_execution.json",
+    "research/actions/action_plan_2026-06-03_145028_stock_group.json",
+    "research/actions/action_plan_2026-06-03_200332_military_low_altitude_group.json",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/stocks/stock_registry.json"
+  ],
+  "external_market_checks": [
+    {
+      "source": "National Business Daily",
+      "url": "https://www.nbd.com.cn/articles/2026-06-03/4416444.html",
+      "takeaway": "2026-06-03 A-shares rose by index but pulled back intraday, with broad stock-level divergence."
+    },
+    {
+      "source": "Eastmoney",
+      "url": "https://finance.eastmoney.com/a/202606033759029157.html",
+      "takeaway": "Shanghai Composite, Shenzhen Component and ChiNext closed higher, but afternoon pullback confirms volatility."
+    }
+  ],
+  "portfolio_target": {
+    "current_equity_pct": 55.09,
+    "current_bond_cash_pct": 44.9,
+    "planned_total_reduction_pct": 5.24,
+    "target_equity_pct": 49.85,
+    "target_bond_cash_pct": 50.14,
+    "destination": "511360_or_cash_short_duration_bucket",
+    "one_line_conclusion": "Complete the structure cleanup by reducing weak theme and weak stock exposure, while keeping core and already-reduced groups unchanged."
+  },
+  "execution_package": [
+    {
+      "order": 1,
+      "code": "159378",
+      "name": "通用航空ETF永赢",
+      "current_weight_pct": 2.54,
+      "target_weight_pct": 1.2,
+      "planned_change_pct": -1.34,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket",
+      "reason": "Low-altitude theme not confirmed as a mainline; ETF rating D; largest weak theme exposure in the group."
+    },
+    {
+      "order": 2,
+      "code": "512710",
+      "name": "军工龙头ETF富国",
+      "current_weight_pct": 2.23,
+      "target_weight_pct": 1.2,
+      "planned_change_pct": -1.03,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket",
+      "reason": "Defense bucket is not the current offensive focus; ETF rating D; weak trend and relative strength."
+    },
+    {
+      "order": 3,
+      "code": "688439",
+      "name": "振华风光",
+      "current_weight_pct": 1.19,
+      "target_weight_pct": 0.5,
+      "planned_change_pct": -0.69,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket",
+      "reason": "Stock rating D; 2026Q1 loss; valuation and trend do not support a larger watch position."
+    },
+    {
+      "order": 4,
+      "code": "603596",
+      "name": "伯特利",
+      "current_weight_pct": 1.73,
+      "target_weight_pct": 1.0,
+      "planned_change_pct": -0.7,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket",
+      "reason": "Stock rating D; weak auto-component holding in the requested single-stock group."
+    },
+    {
+      "order": 5,
+      "code": "002920",
+      "name": "德赛西威",
+      "current_weight_pct": 2.39,
+      "target_weight_pct": 1.5,
+      "planned_change_pct": -0.8,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket",
+      "reason": "Stock rating C but position is relatively large; intelligent driving theme is weak in the current framework."
+    },
+    {
+      "order": 6,
+      "code": "002625",
+      "name": "光启技术",
+      "current_weight_pct": 1.78,
+      "target_weight_pct": 1.1,
+      "planned_change_pct": -0.68,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket",
+      "reason": "Stock rating D; high valuation, weak trend and weak fund-flow signal; retain only a small watch position."
+    }
+  ],
+  "hold_watch_list": [
+    {"code": "159201", "name": "自由现金流ETF华夏", "weight_pct": 4.58, "reason": "core quality sleeve"},
+    {"code": "159842", "name": "券商ETF银华", "weight_pct": 4.4, "reason": "financial group already reduced; no second mechanical reduction today"},
+    {"code": "159992", "name": "创新药ETF银华", "weight_pct": 4.03, "reason": "medicine group already reduced; no add"},
+    {"code": "516150", "name": "稀土ETF嘉实", "weight_pct": 3.72, "reason": "rare-metals group still notable; defer to post-market review"},
+    {"code": "512070", "name": "证券保险ETF易方达", "weight_pct": 3.34, "reason": "already reduced"},
+    {"code": "510880", "name": "红利ETF华泰柏瑞", "weight_pct": 2.92, "reason": "defensive sleeve"},
+    {"code": "002352", "name": "顺丰控股", "weight_pct": 1.97, "reason": "relative quality and cash-flow profile better than weak-stock execution names"},
+    {"code": "513180", "name": "恒生科技ETF华夏", "weight_pct": 1.66, "reason": "small HK technology sleeve; no add"},
+    {"code": "512400", "name": "有色金属ETF南方", "weight_pct": 1.65, "reason": "metal sleeve, post-market review"},
+    {"code": "159869", "name": "游戏ETF华夏", "weight_pct": 1.65, "reason": "already reduced"},
+    {"code": "002241", "name": "歌尔股份", "weight_pct": 1.44, "reason": "profit cushion; no chase add"},
+    {"code": "688333", "name": "西安铂力特", "weight_pct": 1.35, "reason": "watch only, no add"},
+    {"code": "513120", "name": "港股创新药ETF广发", "weight_pct": 1.27, "reason": "medicine sleeve watch"},
+    {"code": "512880", "name": "证券ETF国泰", "weight_pct": 1.26, "reason": "small financial watch position"},
+    {"code": "002258", "name": "利尔化学", "weight_pct": 1.2, "reason": "stock rating C; no immediate action"},
+    {"code": "603087", "name": "甘李药业", "weight_pct": 1.06, "reason": "small medicine stock watch"},
+    {"code": "159326", "name": "电网设备ETF华夏", "weight_pct": 0.88, "reason": "small sleeve"},
+    {"code": "562800", "name": "稀有金属ETF嘉实", "weight_pct": 0.85, "reason": "metal sleeve, no add"},
+    {"code": "513050", "name": "中概互联网ETF易方达", "weight_pct": 0.65, "reason": "small sleeve"},
+    {"code": "002041", "name": "登海种业", "weight_pct": 0.62, "reason": "D-rated small position, post-market review"},
+    {"code": "300627", "name": "华测导航", "weight_pct": 0.6, "reason": "C-rated small position"},
+    {"code": "159301", "name": "公用事业ETF华夏", "weight_pct": 0.53, "reason": "defensive sleeve"},
+    {"code": "603903", "name": "中持股份", "weight_pct": 0.41, "reason": "D-rated small position, low priority"},
+    {"code": "562500", "name": "机器人ETF华夏", "weight_pct": 0.35, "reason": "small sleeve"},
+    {"code": "300760", "name": "迈瑞医疗", "weight_pct": 0.35, "reason": "small medicine stock watch"},
+    {"code": "588200", "name": "科创芯片ETF嘉实", "weight_pct": 0.17, "reason": "micro position"},
+    {"code": "159558", "name": "半导体设备ETF易方达", "weight_pct": 0.17, "reason": "micro position"},
+    {"code": "159206", "name": "卫星ETF永赢", "weight_pct": 0.1, "reason": "theme marker only"},
+    {"code": "159667", "name": "工业母机ETF国泰", "weight_pct": 0.03, "reason": "micro position"},
+    {"code": "159819", "name": "人工智能ETF易方达", "weight_pct": 0.02, "reason": "micro position"}
+  ],
+  "execution_rules": [
+    "Execute only the six names in execution_package.",
+    "Move all released ratio to 511360 or cash short-duration bucket.",
+    "Stop if equity allocation reaches about 50%.",
+    "Do not add any offensive theme, single stock, or replacement ETF exposure.",
+    "Do not repeat reductions already completed in financial, medicine, or game sleeves."
+  ],
+  "deferred_review_groups": [
+    {"group": "financial", "reason": "already reduced once today"},
+    {"group": "medicine_innovation_drug", "reason": "already reduced once today"},
+    {"group": "rare_metals", "reason": "still notable but should be reviewed post-market rather than sold mechanically"},
+    {"group": "chem_agri_env", "reason": "small and lower priority"}
+  ],
+  "invalidations": [
+    "If the user has already executed part of the military-low-altitude-satellite group plan, refresh holdings first.",
+    "If post-execution equity is below 49%, stop additional reductions.",
+    "If the market turns into broad volume-backed risk-on and themes upgrade to A/B, rerun post-market review before execution."
+  ],
+  "next_task_suggestion": "After execution, send updated holdings for a post-execution check. If not executing, start the 2026-06-03 post-market review."
+}
