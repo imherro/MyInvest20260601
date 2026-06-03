@@ -1,0 +1,224 @@
+{
+  "module": "target_allocation",
+  "version": "1.0-ratio_only",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_202441",
+  "session": "ideal_allocation_reference",
+  "amount_policy": "ratio_only_no_market_value_no_cost_no_profit_no_share_count",
+  "purpose": "Reference allocation benchmark for comparing actual holdings before generating action plans.",
+  "data_sources": [
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "public market checks for 2026-06-03 post-market A-share condition"
+  ],
+  "external_market_checks": [
+    {
+      "source": "National Business Daily",
+      "url": "https://www.nbd.com.cn/articles/2026-06-03/4416444.html",
+      "takeaway": "A-shares closed higher by index but pulled back intraday, with broad stock-level divergence."
+    },
+    {
+      "source": "Eastmoney",
+      "url": "https://finance.eastmoney.com/a/202606033759079539.html",
+      "takeaway": "Major indexes rose but intraday volatility and afternoon pullback remained meaningful."
+    }
+  ],
+  "market_context": {
+    "local_market_position_score": 53,
+    "state": "neutral_defensive",
+    "local_equity_range": "45%-55%",
+    "local_bond_cash_range": "45%-55%",
+    "chosen_equity_center_pct": 50.0,
+    "chosen_bond_cash_center_pct": 50.0,
+    "reason": "Market score is in the neutral-repair bucket, but 2026-06-03 post-market price action still shows divergence and intraday pullback."
+  },
+  "theme_context": {
+    "a_themes": ["AI"],
+    "b_themes": ["semiconductor", "power_equipment", "high_end_equipment", "energy"],
+    "c_themes": ["nonferrous_metals", "battery", "energy_storage", "robotics", "commercial_aerospace", "chemical"],
+    "d_themes": ["autonomous_driving"],
+    "key_policy": "No immediate add for underweight offensive sleeves unless A/B themes reconfirm with trend and volume."
+  },
+  "asset_targets": [
+    {
+      "bucket": "bond_cash",
+      "name": "511360_or_cash_short_duration_bucket",
+      "current_pct": 44.9,
+      "target_pct": 50.0,
+      "target_range": "48%-52%",
+      "deviation_to_target_pct": 5.1,
+      "status": "underweight",
+      "direction": "increase"
+    },
+    {
+      "bucket": "equity",
+      "name": "equity_total",
+      "current_pct": 55.09,
+      "target_pct": 50.0,
+      "target_range": "48%-52%",
+      "deviation_to_target_pct": -5.09,
+      "status": "overweight",
+      "direction": "reduce_to_center"
+    }
+  ],
+  "group_targets": [
+    {
+      "group": "bond_cash",
+      "display_name": "现金短融",
+      "current_pct": 44.9,
+      "target_pct": 50.0,
+      "target_range": "48%-52%",
+      "deviation_to_target_pct": 5.1,
+      "status": "underweight",
+      "direction": "increase"
+    },
+    {
+      "group": "core",
+      "display_name": "核心质量 / 自由现金流",
+      "current_pct": 4.58,
+      "target_pct": 7.0,
+      "target_range": "6%-8%",
+      "deviation_to_target_pct": 2.42,
+      "status": "underweight",
+      "direction": "raise_over_time_no_chase"
+    },
+    {
+      "group": "defensive",
+      "display_name": "防御 / 红利 / 公用事业",
+      "current_pct": 3.45,
+      "target_pct": 5.0,
+      "target_range": "4%-6%",
+      "deviation_to_target_pct": 1.55,
+      "status": "underweight",
+      "direction": "possible_defensive_rebalance"
+    },
+    {
+      "group": "offensive_ai_semi_power",
+      "display_name": "AI / 半导体 / 电网 / 机器人等进攻观察",
+      "current_pct": 2.71,
+      "target_pct": 4.0,
+      "target_range": "3%-5%",
+      "deviation_to_target_pct": 1.29,
+      "status": "underweight",
+      "direction": "watch_only_no_immediate_add"
+    },
+    {
+      "group": "financial",
+      "display_name": "金融",
+      "current_pct": 9.0,
+      "target_pct": 5.5,
+      "target_range": "4.5%-6.5%",
+      "deviation_to_target_pct": -3.5,
+      "status": "overweight",
+      "direction": "review_after_first_reduction"
+    },
+    {
+      "group": "medicine_innovation_drug",
+      "display_name": "医药 / 创新药",
+      "current_pct": 6.71,
+      "target_pct": 5.5,
+      "target_range": "4.5%-6.5%",
+      "deviation_to_target_pct": -1.21,
+      "status": "slightly_overweight",
+      "direction": "watch_after_first_reduction"
+    },
+    {
+      "group": "rare_metals",
+      "display_name": "稀土 / 有色 / 稀有金属",
+      "current_pct": 6.22,
+      "target_pct": 4.0,
+      "target_range": "3%-5%",
+      "deviation_to_target_pct": -2.22,
+      "status": "overweight",
+      "direction": "modest_reduce"
+    },
+    {
+      "group": "military_low_altitude_satellite",
+      "display_name": "军工 / 低空 / 卫星",
+      "current_pct": 9.79,
+      "target_pct": 5.0,
+      "target_range": "4%-6%",
+      "deviation_to_target_pct": -4.79,
+      "status": "overweight",
+      "direction": "priority_reduce"
+    },
+    {
+      "group": "hk_china_internet",
+      "display_name": "港股科技 / 中概互联网",
+      "current_pct": 2.31,
+      "target_pct": 2.5,
+      "target_range": "2%-3%",
+      "deviation_to_target_pct": 0.19,
+      "status": "near_target",
+      "direction": "hold_watch"
+    },
+    {
+      "group": "auto_logistics",
+      "display_name": "汽车 / 物流 / 智能驾驶相关",
+      "current_pct": 6.09,
+      "target_pct": 5.0,
+      "target_range": "4%-6%",
+      "deviation_to_target_pct": -1.09,
+      "status": "slightly_overweight",
+      "direction": "reduce_weak_names_only"
+    },
+    {
+      "group": "game",
+      "display_name": "游戏 / 传媒",
+      "current_pct": 1.65,
+      "target_pct": 1.0,
+      "target_range": "0.5%-1.5%",
+      "deviation_to_target_pct": -0.65,
+      "status": "slightly_overweight",
+      "direction": "watch_after_first_reduction"
+    },
+    {
+      "group": "chem_agri_env",
+      "display_name": "化工 / 农业 / 环保小票",
+      "current_pct": 2.23,
+      "target_pct": 2.0,
+      "target_range": "1%-2.5%",
+      "deviation_to_target_pct": -0.23,
+      "status": "near_target",
+      "direction": "defer"
+    },
+    {
+      "group": "robot_etf",
+      "display_name": "机器人 ETF",
+      "current_pct": 0.35,
+      "target_pct": 0.5,
+      "target_range": "0%-1%",
+      "deviation_to_target_pct": 0.15,
+      "status": "near_target",
+      "direction": "micro_watch"
+    },
+    {
+      "group": "equity_rebalance_buffer",
+      "display_name": "权益机动额度",
+      "current_pct": 0.0,
+      "target_pct": 3.0,
+      "target_range": "0%-3%",
+      "deviation_to_target_pct": 3.0,
+      "status": "reserved",
+      "direction": "do_not_deploy_until_ab_theme_confirmation"
+    }
+  ],
+  "constraints": [
+    "Current equity reference upper bound is 52%; if exceeded, reduce C/D themes and weak single stocks first.",
+    "C/D-rated theme groups should generally stay below 5%-6% of total portfolio.",
+    "Single-stock positions should generally stay below 2%; D-rated stocks should generally stay below 1%-1.2%.",
+    "Groups already reduced once should not be mechanically reduced again without updated holdings.",
+    "Underweight offensive sleeves do not imply immediate add; trend and theme confirmation are required.",
+    "Equity rebalance buffer is only deployed when A/B themes reconfirm with trend, volume and breadth."
+  ],
+  "priority_deviations": [
+    {"priority": 1, "group": "military_low_altitude_satellite", "deviation_pct": -4.79, "suggestion": "reduce toward 5%-6%"},
+    {"priority": 2, "group": "financial", "deviation_pct": -3.5, "suggestion": "already reduced once; review later"},
+    {"priority": 3, "group": "rare_metals", "deviation_pct": -2.22, "suggestion": "modest reduce toward 4%-5%"},
+    {"priority": 4, "group": "medicine_innovation_drug", "deviation_pct": -1.21, "suggestion": "already reduced once; watch"},
+    {"priority": 5, "group": "auto_logistics", "deviation_pct": -1.09, "suggestion": "reduce weak names only"},
+    {"priority": 6, "group": "bond_cash", "deviation_pct": 5.1, "suggestion": "receive released allocation"}
+  ],
+  "next_task_suggestion": "Generate an actual-vs-target deviation report and reorder existing action plans by target-allocation priority."
+}

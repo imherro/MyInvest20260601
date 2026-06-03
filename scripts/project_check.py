@@ -21,6 +21,7 @@ RESEARCH_NAME_PATTERNS = {
     "portfolio": re.compile(
         rf"^(portfolio_snapshot|research_backlog)_{TIMESTAMP}\.(md|json)$"
     ),
+    "allocation": re.compile(rf"^target_allocation_{TIMESTAMP}\.(md|json)$"),
     "actions": re.compile(
         rf"^action_plan_{TIMESTAMP}(_[A-Za-z0-9_-]+)?\.(md|json)$"
     ),
