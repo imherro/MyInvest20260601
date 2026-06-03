@@ -7,9 +7,10 @@
 1. 克隆项目到本地。
 2. 先阅读 [项目记忆](docs/PROJECT_MEMORY.md)，了解已经确定的策略、规则和历史决议。
 3. 阅读 [数据源与权限](docs/DATA_SOURCES.md)，确认本地数据权限配置。
-4. 再阅读 [协作规则](docs/WORKFLOW.md) 和 [每日流程标准](docs/DAILY_PROCESS.md)，按固定流程继续工作。
-5. 每次和 Codex 形成新的重要决议后，更新 `docs/PROJECT_MEMORY.md` 或对应研究文件。
-6. 每次更新后提交 Git commit，保持多台电脑之间的上下文一致。
+4. 运行 `python scripts/project_check.py`，检查本地 `.env`、JSON 文件和研究产物命名状态。
+5. 再阅读 [协作规则](docs/WORKFLOW.md) 和 [每日流程标准](docs/DAILY_PROCESS.md)，按固定流程继续工作。
+6. 每次和 Codex 形成新的重要决议后，更新 `docs/PROJECT_MEMORY.md` 或对应研究文件。
+7. 每次更新后提交 Git commit，保持多台电脑之间的上下文一致。
 
 ## 核心原则
 
@@ -29,6 +30,7 @@
 - [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)：数据源与权限，记录 Tushare 等数据源的使用规则和本地配置方式。
 - [docs/FILE_NAMING.md](docs/FILE_NAMING.md)：文件命名与版本规则，要求研究产物使用日期加时间戳，并默认读取最新版本。
 - [docs/WORKFLOW.md](docs/WORKFLOW.md)：多电脑协同、Codex 使用、更新和提交规则。
+- [scripts/project_check.py](scripts/project_check.py)：本地质量检查脚本，检查 `.env` 配置状态、JSON 可解析性和研究文件时间戳命名。
 
 ## 当前阶段
 
