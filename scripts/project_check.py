@@ -99,7 +99,7 @@ def check_research_names(findings: list[Finding]) -> None:
         return
 
     for path in sorted(research_root.rglob("*")):
-        if not path.is_file() or path.name == ".gitkeep":
+        if not path.is_file() or path.name in {".gitkeep", ".env"}:
             continue
         relative = rel(path)
         if relative.removeprefix("research/") in FIXED_RESEARCH_FILES:

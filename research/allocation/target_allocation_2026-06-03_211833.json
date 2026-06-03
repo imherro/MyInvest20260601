@@ -1,0 +1,210 @@
+{
+  "module": "target_allocation_reference",
+  "version": "1.1-post_market",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_211833",
+  "session": "close_post_market_from_market_score",
+  "amount_policy": "ratio_only_no_market_value_no_cost_no_profit_no_share_count",
+  "data_sources": [
+    "research/market/market_score_2026-06-03_211833.json",
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "research/allocation/target_allocation_2026-06-03_205732.json",
+    "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+    "research/themes/theme_registry.json"
+  ],
+  "summary": {
+    "market_state": "neutral_repair_breadth_divergence_defensive",
+    "recommended_equity_center": "47.5%",
+    "recommended_equity_range": "45%-50%",
+    "recommended_bond_cash_center": "52.5%",
+    "recommended_bond_cash_range": "50%-55%",
+    "one_line_conclusion": "理想结构应把511360/现金短融提高为50%-55%的组合锚，权益压到45%-50%，权益内部保留质量、防御和少量A/B主线，继续压低C/D主题和弱个股。"
+  },
+  "target_allocation": {
+    "groups": [
+      {
+        "group": "511360 / 现金短融桶",
+        "target_range": "50%-55%",
+        "target_center_pct": 52.5,
+        "vehicles": [
+          "511360",
+          "cash_short_duration"
+        ],
+        "role": "防守锚和机动资金",
+        "principle": "承接弱项释放资金，不横向切到新热点"
+      },
+      {
+        "group": "宽基/核心质量仓",
+        "target_range": "11%-13%",
+        "target_center_pct": 12.0,
+        "vehicles": [
+          "159201",
+          "沪深300/宽基替代",
+          "002352"
+        ],
+        "role": "权益底仓",
+        "principle": "保留质量和现金流暴露，不因指数单日冲高而追高"
+      },
+      {
+        "group": "红利/公用事业防御仓",
+        "target_range": "5%-7%",
+        "target_center_pct": 6.0,
+        "vehicles": [
+          "510880",
+          "159301"
+        ],
+        "role": "权益内防守",
+        "principle": "用于平衡科技波动"
+      },
+      {
+        "group": "A/B科技主线观察仓",
+        "target_range": "5%-7%",
+        "target_center_pct": 6.0,
+        "vehicles": [
+          "159819",
+          "588200",
+          "159558",
+          "159326",
+          "159667",
+          "002241"
+        ],
+        "role": "进攻/副线",
+        "principle": "只保留核心观察，等宽度和承接确认后再启用缺口"
+      },
+      {
+        "group": "金融证券观察仓",
+        "target_range": "4%-5%",
+        "target_center_pct": 4.5,
+        "vehicles": [
+          "159842",
+          "512070",
+          "512880"
+        ],
+        "role": "周期弹性",
+        "principle": "已降过一轮，不新增；弱于市场时继续复核"
+      },
+      {
+        "group": "医药/创新药观察仓",
+        "target_range": "4%-5%",
+        "target_center_pct": 4.5,
+        "vehicles": [
+          "159992",
+          "513120",
+          "603087",
+          "300760"
+        ],
+        "role": "防御成长观察",
+        "principle": "不加仓，等待独立强度"
+      },
+      {
+        "group": "资源能源/稀土有色仓",
+        "target_range": "3%-5%",
+        "target_center_pct": 4.0,
+        "vehicles": [
+          "516150",
+          "512400",
+          "562800",
+          "煤炭/能源候选需另评"
+        ],
+        "role": "防御+顺周期弹性",
+        "principle": "今日强势但不追高，单组上限控制"
+      },
+      {
+        "group": "军工/低空/卫星遗留仓",
+        "target_range": "2%-3%",
+        "target_center_pct": 2.5,
+        "vehicles": [
+          "159378",
+          "512710",
+          "002625",
+          "688333",
+          "688439",
+          "300627",
+          "159206"
+        ],
+        "role": "遗留清理",
+        "principle": "不作为理想主仓，继续压缩弱项"
+      },
+      {
+        "group": "汽车/物流/智能驾驶",
+        "target_range": "2.5%-3.5%",
+        "target_center_pct": 3.0,
+        "vehicles": [
+          "002920",
+          "002352",
+          "603596"
+        ],
+        "role": "个股观察",
+        "principle": "保留质量更好的，压弱趋势个股"
+      },
+      {
+        "group": "港股/中概科技小仓",
+        "target_range": "1.5%-2.5%",
+        "target_center_pct": 2.0,
+        "vehicles": [
+          "513180",
+          "513050"
+        ],
+        "role": "小仓观察",
+        "principle": "不新增"
+      },
+      {
+        "group": "其他C/D主题和杂项",
+        "target_range": "0%-1.5%",
+        "target_center_pct": 1.0,
+        "vehicles": [
+          "159869",
+          "562500",
+          "002258",
+          "002041",
+          "603903"
+        ],
+        "role": "标记仓/待清理",
+        "principle": "合计小仓，不单独放大"
+      }
+    ]
+  },
+  "transition_targets": [
+    {
+      "subject": "equity_total",
+      "current": "55.09%",
+      "transition_target": "45%-50%",
+      "priority": "high",
+      "reason": "新市场仓位分数下调到46，宽度背离明显"
+    },
+    {
+      "subject": "511360_cash_short_duration",
+      "current": "44.90% in 511360",
+      "transition_target": "50%-55%",
+      "priority": "high",
+      "reason": "作为承接弱项资金和等待确认的组合锚"
+    },
+    {
+      "subject": "C/D_theme_total",
+      "current": "需按最新持仓重算",
+      "transition_target": "不超过8%-10%",
+      "priority": "high",
+      "reason": "指数红盘但个股多数下跌，弱主题不能占用过多风险预算"
+    }
+  ],
+  "rules": [
+    "不把单日强势板块直接升为理想主仓。",
+    "A/B主线低配不自动买入，需要市场仓位、主线阶段和持仓档案同时确认。",
+    "释放资金优先进入511360/现金短融桶。",
+    "权益仓低于45%后停止继续降权益，转为观察。",
+    "单一C/D主题原则上不超过总资产3%，C/D主题合计不超过8%-10%。"
+  ],
+  "activation_triggers": [
+    "上涨家数占比重新回到50%以上且涨跌幅中位数转正。",
+    "上证、科创50、中证500、中证1000重新站上20日线。",
+    "Tushare moneyflow由净流出转净流入。",
+    "AI/CPO、半导体从冲高回落转为放量承接且行业扩散健康。",
+    "下一版市场仓位报告重新上修到55%-60%。"
+  ],
+  "defensive_triggers": [
+    "指数上涨但下跌家数继续超过3000只。",
+    "CPO/创业板高位放量滞涨。",
+    "现金短融桶低于50%。",
+    "权益仍高于50%且主线未确认。"
+  ]
+}

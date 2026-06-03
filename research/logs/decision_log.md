@@ -1457,3 +1457,14 @@
 - 修订对象：`research/allocation/target_allocation_2026-06-03_202441.md`、`research/allocation/target_allocation_2026-06-03_202441.json`
 - 新结论：不再把所有现有持仓方向都设置为“理想仓位”；仓位分为核心必配、防御必配、A/B 主线可配、观察仓、遗留清理仓、现金短融。C/D 档主题单独理想仓位不得高于 3%；军工/低空/卫星下调至过渡 3.5%、目标 3.0%；汽车/物流/智能驾驶下调至过渡 3.5%、目标 3.0%；化工/农业/环保改为杂项遗留仓，目标 0%-1.5%；机器人 ETF 并入 A/B 主线可配，不再重复列组。
 - 后续影响：后续偏离对照和行动计划优先级应使用 `203156` 修订版，优先用过渡型目标做当前持仓纠偏，再用真正目标型做长期重构。
+
+### 决策：重新生成 2026-06-03 推荐理想持仓
+
+- 决策类型：target_allocation_reference
+- 变化类型：regenerate_missing_allocation_files
+- 标的/主题：全组合理想持仓、现金短融锚、C/D 档主题压缩边界
+- 生成文件：`research/allocation/target_allocation_2026-06-03_205732.md`、`research/allocation/target_allocation_2026-06-03_205732.json`
+- 读取前置文件：`research/market/market_score_2026-06-01_231907.json`、`research/themes/theme_review_2026-06-01_231611.json`、`research/portfolio/portfolio_snapshot_2026-06-03_144641.json`、`research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json`
+- 文件修复说明：决策日志曾记录 `target_allocation_2026-06-03_203156.md/json` 为修订版，但当前 `research/allocation/` 目录未发现对应文件，因此本次按最新可验证输入重新生成。
+- 新结论：推荐中枢为权益约 50%、`511360` / 现金短融约 50%；目标型可让现金短融保持 50%-53%。不新增进攻仓，不把释放资金换到新热点；优先压缩弱主题、弱趋势、高重叠个股。
+- 后续影响：后续实际持仓应先对照本参考表，再生成买卖动作；若已经执行此前全组合清单，应先回传最新仓位重算偏离。

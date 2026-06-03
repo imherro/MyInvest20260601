@@ -1,0 +1,188 @@
+{
+  "module": "target_allocation_reference",
+  "version": "1.0-regenerated",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_205732",
+  "session": "close_ad_hoc",
+  "amount_policy": "ratio_only_no_market_value_no_cost_no_profit_no_share_count",
+  "data_sources": [
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+    "public_market_check_2026-06-03_close"
+  ],
+  "file_repair_note": "decision_log records target_allocation_2026-06-03_203156.md/json as the preferred revised version, but research/allocation currently does not contain those files; this version regenerates the reference from latest verifiable inputs.",
+  "summary": {
+    "market_state": "neutral_repair_defensive",
+    "recommended_equity_center": "50%",
+    "recommended_equity_range": "47%-52%",
+    "recommended_bond_cash_center": "50%",
+    "recommended_bond_cash_range": "48%-53%",
+    "one_line_conclusion": "Use a 50/50 structure anchored by 511360/cash-short-duration, compress weak C/D themes and weak stocks, and keep A/B mainline exposure as watch-only until confirmation."
+  },
+  "target_allocation": {
+    "bond_cash_bucket": {
+      "target_range": "50%-53%",
+      "vehicles": ["511360", "cash_short_duration"],
+      "role": "defensive_anchor_and_tactical_reserve",
+      "principle": "released capital goes here rather than rotating into new hot themes"
+    },
+    "equity_total": {
+      "target_center": "50%",
+      "acceptable_range": "47%-52%",
+      "hard_reference_from_market_position": "45%-55%"
+    },
+    "equity_groups": [
+      {
+        "group": "core_quality",
+        "target_range": "8%-10%",
+        "vehicles": ["159201", "510880", "159301", "002352"],
+        "role": "core",
+        "principle": "keep, but underweight does not automatically trigger buying"
+      },
+      {
+        "group": "a_b_mainline_optional",
+        "target_range": "5%-7%",
+        "vehicles": ["159819", "588200", "159558", "159326", "159667", "002241"],
+        "role": "offensive_or_secondary_mainline",
+        "principle": "watch only for now; deploy only after market and theme confirmation"
+      },
+      {
+        "group": "financial_watch",
+        "target_range": "4%-6%",
+        "vehicles": ["159842", "512070", "512880"],
+        "role": "watch_cycle_beta",
+        "principle": "already reduced once; no mechanical second reduction intraday"
+      },
+      {
+        "group": "medicine_innovation_drug_watch",
+        "target_range": "4%-5.5%",
+        "vehicles": ["159992", "513120", "603087", "300760"],
+        "role": "watch_defensive_growth",
+        "principle": "already reduced once; do not add"
+      },
+      {
+        "group": "rare_metals",
+        "target_range": "2.5%-3.5%",
+        "vehicles": ["516150", "512400", "562800"],
+        "role": "c_rated_theme",
+        "principle": "target below current exposure; review before retaining a large sleeve"
+      },
+      {
+        "group": "military_low_altitude_satellite",
+        "target_range": "2.5%-3.0%",
+        "vehicles": ["159378", "512710", "002625", "688333", "688439", "300627", "159206"],
+        "role": "legacy_cleanup",
+        "principle": "not an ideal core sleeve; continue compressing weak items"
+      },
+      {
+        "group": "auto_logistics_intelligent_driving",
+        "target_range": "2.5%-3.5%",
+        "vehicles": ["002920", "002352", "603596"],
+        "role": "stock_watch",
+        "principle": "keep stronger quality names, reduce weaker names"
+      },
+      {
+        "group": "hk_china_technology",
+        "target_range": "1.5%-2.5%",
+        "vehicles": ["513180", "513050"],
+        "role": "small_watch",
+        "principle": "no add"
+      },
+      {
+        "group": "game",
+        "target_range": "0%-1.0%",
+        "vehicles": ["159869"],
+        "role": "c_d_theme",
+        "principle": "small watch only"
+      },
+      {
+        "group": "chem_agri_env",
+        "target_range": "0%-1.5%",
+        "vehicles": ["002258", "002041", "603903"],
+        "role": "misc_legacy",
+        "principle": "review or clean up later"
+      },
+      {
+        "group": "robot_and_other_themes",
+        "target_range": "0%-0.5%",
+        "vehicles": ["562500"],
+        "role": "theme_marker",
+        "principle": "do not expand separately"
+      }
+    ]
+  },
+  "transition_targets": [
+    {
+      "subject": "equity_total",
+      "current": "55.09%",
+      "transition_target": "49%-51%",
+      "priority": "high",
+      "reason": "align with latest full portfolio final plan"
+    },
+    {
+      "subject": "511360_cash_short_duration",
+      "current": "44.90%",
+      "transition_target": "49%-51%",
+      "priority": "high",
+      "reason": "receive capital from weak exposures"
+    },
+    {
+      "subject": "military_low_altitude_satellite",
+      "current": "9.79%",
+      "transition_target": "3.0%-3.5%",
+      "priority": "high",
+      "reason": "largest structure deviation; not supported by current theme ratings"
+    },
+    {
+      "subject": "auto_logistics_intelligent_driving",
+      "current": "6.09%",
+      "transition_target": "3.0%-3.5%",
+      "priority": "high",
+      "reason": "reduce weak stocks while keeping better quality exposure"
+    },
+    {
+      "subject": "rare_metals",
+      "current": "6.22%",
+      "transition_target": "3.0%-4.0%",
+      "priority": "medium",
+      "reason": "C-rated theme should not take excessive risk budget"
+    },
+    {
+      "subject": "financial_watch",
+      "current": "9.00%",
+      "transition_target": "5.0%-6.0%",
+      "priority": "medium",
+      "reason": "already reduced once; review rather than mechanically sell again"
+    },
+    {
+      "subject": "medicine_innovation_drug_watch",
+      "current": "6.71%",
+      "transition_target": "4.0%-5.5%",
+      "priority": "medium",
+      "reason": "already reduced once; needs review"
+    }
+  ],
+  "rules": [
+    "A single C/D-rated theme should normally stay at or below 3% of total assets.",
+    "Combined C/D-rated themes should normally stay at or below 8%-10% of total assets.",
+    "Do not deploy underweight A/B mainline exposure until market allocation, theme stage, and profiles all confirm.",
+    "Released capital should go to 511360/cash-short-duration rather than another hot theme.",
+    "Stop reducing equity if equity allocation falls below 47%."
+  ],
+  "activation_triggers": [
+    "new market position report raises equity target to at least 55%-60%",
+    "AI moves from divergence to confirmation with application and hardware no longer diverging",
+    "semiconductor ETFs stabilize and regain relative strength, with theme rating back to A or clear B+ confirmation",
+    "turnover returns above the 20-day average without broad divergence",
+    "market breadth improves to majority advancers"
+  ],
+  "defensive_triggers": [
+    "indices rebound while most stocks still decline",
+    "C/D themes stall on volume or keep underperforming major indices",
+    "511360/cash-short-duration falls below 48%",
+    "equity allocation approaches or exceeds 52% while mainlines remain unconfirmed"
+  ],
+  "decision_log_entry": "2026-06-03 理想仓位参考：生成 research/allocation/target_allocation_2026-06-03_205732.md/json；因 decision_log 曾记录的 203156 版文件当前不存在，本版按最新可验证输入重新生成。推荐中枢为权益约50%、511360/现金短融约50%，目标型可让现金短融保持50%-53%；不新增进攻仓，不把释放资金换到新热点，优先压缩弱主题、弱趋势、高重叠个股。"
+}
