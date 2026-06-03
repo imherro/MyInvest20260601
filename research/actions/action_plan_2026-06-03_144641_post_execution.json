@@ -1,0 +1,74 @@
+{
+  "module": "action_plan",
+  "version": "1.3-post_execution_ratio_only",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_144641",
+  "session": "intraday_post_execution",
+  "amount_policy": "ratio_only; no amount; no share count",
+  "source_files": {
+    "post_execution_portfolio": "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "previous_real_holding_plan": "research/actions/action_plan_2026-06-03_141958_real_holdings.json",
+    "market_position": "research/market/market_score_2026-06-01_231907.json",
+    "theme_research": "research/themes/theme_review_2026-06-01_231611.json"
+  },
+  "summary": {
+    "action_state": "no_more_mechanical_intraday_reduction",
+    "recommendation_strength": "Normal",
+    "one_line_conclusion": "First-stage risk reduction is effectively complete: equity is about 55.09% and 511360 is about 44.90%; do not continue mechanical intraday reduction or add offensive/theme exposure today.",
+    "next_task": "Run 2026-06-03 post-market review after close, then decide whether a stock-level or theme-group action plan is needed."
+  },
+  "preconditions": {
+    "market_position": {"conclusion": "Equity target 45%-55%; bond/cash target 45%-55%.", "impact": "Current portfolio is now near the target boundary."},
+    "execution_status": {"conclusion": "512070, 159992 and 159869 were reduced; 511360 was increased.", "impact": "First-stage risk reduction goal has largely been met."},
+    "hard_constraints": {"conclusion": "No offensive/theme additions.", "impact": "No new risk should be added today."}
+  },
+  "actions": [
+    {
+      "priority": "high",
+      "action_type": "NoAction",
+      "subject": {"code": "", "name": "全组合继续机械减仓", "type": "portfolio"},
+      "bucket_role": "unknown",
+      "current_position": "equity about 55.09%",
+      "suggested_change": "0 percentage points",
+      "target_position": "stay near 55%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": false,
+      "evidence": ["Equity is only about 0.09pct above the 55% upper bound.", "511360/cash bucket is already near the 45% lower bound."],
+      "trigger_conditions": ["No further mechanical reduction today."],
+      "invalidation_conditions": ["If market closes with a major risk event, generate a post-market plan."],
+      "risks": ["Continuing to sell mechanically may become overtrading."],
+      "review_points": ["Post-market review should confirm whether equity remained near target."]
+    }
+  ],
+  "no_action_list": [
+    {"subject": "new offensive additions", "reason": "market_position_not_supportive", "watch_points": ["Continue blocked today."]},
+    {"subject": "new theme additions", "reason": "risk_too_high", "watch_points": ["Continue blocked today."]},
+    {"subject": "additional mechanical reductions", "reason": "portfolio_matched", "watch_points": ["Review after close instead."]}
+  ],
+  "research_first_list": [
+    {"subject": "stock-level action plan", "missing_content": "stock_profile", "why_it_blocks_action": "Individual stocks need dedicated trigger review.", "next_step": "After post-market review, inspect 002920, 002352, 603596, 002625, 688439 and 002258."}
+  ],
+  "intraday_triggers": [
+    {"subject": "new offensive/theme additions", "trigger_condition": "Any new add idea today.", "action_after_trigger": "cancel", "needs_manual_confirmation": true},
+    {"subject": "further mechanical reduction", "trigger_condition": "Any further sell idea only because equity is 55.09%.", "action_after_trigger": "wait", "needs_manual_confirmation": true}
+  ],
+  "risks": [
+    "Remaining theme concentration is a structural issue for post-market review, not a reason for more mechanical intraday selling.",
+    "Short-duration ETF is not risk-free cash."
+  ],
+  "triggered_hard_constraints": [
+    "No new offensive/theme additions under the latest market-position framework."
+  ],
+  "comparison_with_previous": {
+    "previous_date": "2026-06-03_141958",
+    "main_changes": [
+      "First-stage reductions have been executed.",
+      "No further intraday mechanical sell is recommended."
+    ],
+    "change_reasons": [
+      "Equity moved from about 59.65% to about 55.09%.",
+      "511360 moved from about 39.67% to about 44.90%."
+    ]
+  },
+  "decision_log_entry": "2026-06-03 盘中执行后操作建议：生成 action_plan_2026-06-03_144641_post_execution.md/json；第一阶段减风险基本完成，权益约55.09%，511360约44.90%；今天盘中不继续机械减仓，不新增进攻仓或主题仓；下一步做盘后复盘。"
+}
