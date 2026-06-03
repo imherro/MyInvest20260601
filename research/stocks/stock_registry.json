@@ -1,7 +1,7 @@
 {
   "module": "stock_registry",
   "version": "1.3",
-  "last_updated": "2026-06-02",
+  "last_updated": "2026-06-03",
   "notes": "当前文件保存个股研究模块的总览登记。根据用户当前持仓，已登记持仓股为待研究状态；正式个股操作建议前必须逐只建立个股档案。",
   "stocks": [
     {
@@ -103,15 +103,16 @@
     {
       "code": "688439",
       "name": "振华风光",
-      "status": "to_research",
-      "current_weight_pct": 1.21,
-      "bucket_role": "unknown",
-      "related_theme": "pending",
-      "rating": "pending",
+      "status": "profile_generated",
+      "current_weight_pct": 1.19,
+      "bucket_role": "watch/theme_trial",
+      "related_theme": "高可靠集成电路 / 军工电子 / 半导体",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。",
-      "last_profile_file": ""
+      "target_position_range": "不在个股档案设定目标仓位；当前约1.19%作为后续模块输入。",
+      "reason": "已生成个股档案：振华风光业务属于高可靠集成电路/军工电子/半导体交叉方向，毛利率高且负债率低；但2025收入和利润下滑，2026Q1收入继续下降并转亏，PE/PS仍高，股价低于20/60日均线且资金流代理指标净流出，只能Watch。",
+      "last_profile_file": "research/stocks/688439_振华风光_2026-06-03_145839.md",
+      "last_profile_json": "research/stocks/688439_振华风光_2026-06-03_145839.json"
     },
     {
       "code": "002625",
@@ -169,15 +170,16 @@
     {
       "code": "002258",
       "name": "利尔化学",
-      "status": "to_research",
-      "current_weight_pct": 1.16,
-      "bucket_role": "unknown",
-      "related_theme": "pending",
-      "rating": "pending",
+      "status": "profile_generated",
+      "current_weight_pct": 1.2,
+      "bucket_role": "watch/cyclical_repair_candidate",
+      "related_theme": "农化 / 化工周期 / 农药原药和制剂",
+      "rating": "C",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。",
-      "last_profile_file": ""
+      "target_position_range": "不在个股档案设定目标仓位；当前约1.20%作为后续模块输入。",
+      "reason": "已生成个股档案：利尔化学农药原药、制剂和中间体业务清晰，2025收入和利润从低基数修复且估值处于近两年低分位；但2026Q1增收不增利、经营现金流转负，股价仍低于60日均线且农化/化工不是当前A/B主线，只能Watch。",
+      "last_profile_file": "research/stocks/002258_利尔化学_2026-06-03_145839.md",
+      "last_profile_json": "research/stocks/002258_利尔化学_2026-06-03_145839.json"
     },
     {
       "code": "600764",
@@ -262,6 +264,11 @@
       "date": "2026-06-02",
       "change": "按用户新范围生成603596伯特利、002241歌尔股份、688333西安铂力特个股档案；600764中国海防已卖出，暂停研究。",
       "impact": "后续仅对用户指定关注标的继续使用这些档案，其他待研究项先冻结。"
+    },
+    {
+      "date": "2026-06-03",
+      "change": "生成688439振华风光和002258利尔化学个股档案，并更新为profile_generated。",
+      "impact": "后续组合分析和操作建议不再将这两只作为未建档阻断项，但仍需由ACTION_PLAN另行生成组合动作。"
     }
   ]
 }

@@ -1383,3 +1383,13 @@
 - 读取前置文件：`research/portfolio/portfolio_snapshot_2026-06-03_144641.json`、`research/actions/action_plan_2026-06-03_144641_post_execution.json`、`research/market/market_score_2026-06-01_231907.json`、`research/themes/theme_review_2026-06-01_231611.json`、`research/stocks/stock_registry.json`、四个已建档个股 JSON。
 - 新结论：执行后权益约 55.09%、511360 约 44.90%，第一阶段降风险基本完成；本次只做第二阶段个股结构处理，建议减 603596 约 0.70pct、减 002920 约 0.80pct，释放比例进入 511360 / 现金短融桶；002352、002625 维持观察不加仓；688439、002258 因未建正式个股档案，标记为 ResearchFirst，不直接给买卖动作。
 - 后续影响：若用户执行，需要回传最新持仓并做 2026-06-03 盘后复盘；若不执行，下一步优先补 688439 和 002258 个股档案。
+### 决策：补齐 688439 振华风光和 002258 利尔化学个股档案
+
+- 决策类型：stock_research
+- 变化类型：new_profiles
+- 标的/主题：688439.SH 振华风光、002258.SZ 利尔化学
+- 生成文件：`research/stocks/688439_振华风光_2026-06-03_145839.md`、`research/stocks/688439_振华风光_2026-06-03_145839.json`、`research/stocks/002258_利尔化学_2026-06-03_145839.md`、`research/stocks/002258_利尔化学_2026-06-03_145839.json`
+- 读取前置文件：`docs/modules/STOCK_RESEARCH.md`、`research/market/market_score_2026-06-01_231907.json`、`research/themes/theme_review_2026-06-01_231611.json`、`research/stocks/stock_registry.json`、`research/portfolio/portfolio_snapshot_2026-06-03_144641.json`
+- 数据来源：Tushare stock_basic、daily、daily_basic、fina_indicator、income、cashflow、balancesheet、moneyflow、fina_mainbz，并交叉读取公开公告入口。
+- 新结论：`688439` 评分 36、评级 D、操作评级 Watch，核心问题是 2025 收入/利润下滑且 2026Q1 转亏，估值仍高、趋势和资金流弱；`002258` 评分 50、评级 C、操作评级 Watch，2025 修复但 2026Q1 增收不增利且现金流转负，估值较低但仍只能观察。
+- 后续影响：两只股票不再是未建档阻断项；后续 ACTION_PLAN 可以基于档案决定是否进一步压缩弱主题个股，但本次档案不直接生成买卖清单。

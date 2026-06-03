@@ -1,0 +1,183 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_145839",
+  "code": "002258.SZ",
+  "name": "利尔化学",
+  "amount_policy": "ratio_only; no holding market value, cost amount, profit amount, or share count",
+  "boundary": "Stock research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": [
+    "docs/modules/STOCK_RESEARCH.md",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/stocks/stock_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "Tushare: stock_basic, daily, daily_basic, fina_indicator, income, cashflow, balancesheet, moneyflow, fina_mainbz",
+    "SZSE 2026 Q1 report: https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-25/be7de639-b255-4b4c-8899-f370d714b16b.PDF",
+    "Sina/CNInfo annual report mirror: https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12025903&stockid=002258"
+  ],
+  "summary": {
+    "bucket_role": "watch/cyclical_repair_candidate",
+    "action_rating": "Watch",
+    "stock_score": 50,
+    "rating": "C",
+    "target_position_range": "No target position in this dossier; current about 1.20% ratio is an input for downstream portfolio modules.",
+    "confidence": "medium",
+    "one_line_conclusion": "利尔化学 has a real agrochemical business and low valuation percentile after 2025 recovery, but 2026Q1 showed revenue growth with profit decline and negative operating cash flow; Watch only, no add."
+  },
+  "basic_info": {
+    "stock_code": "002258.SZ",
+    "company_name": "利尔化学",
+    "area": "四川",
+    "industry": "农药化肥",
+    "market": "主板",
+    "list_date": "2008-07-08",
+    "related_theme": "农化 / 化工周期 / 农药原药和制剂",
+    "theme_rating": "Chemical/agrochemical is not a current A/B tactical mainline; cyclical repair watch only",
+    "current_weight_pct_input": 1.20,
+    "cost_policy": "Cost amount is not recorded in this dossier."
+  },
+  "position_role": {
+    "bucket_role": "watch/cyclical_repair_candidate",
+    "long_term_core": false,
+    "mainline_offensive": false,
+    "theme_trial": false,
+    "overlap_with_existing_holdings": "Belongs to chem/agri/env group with 002041 and 603903; downstream portfolio module should aggregate group risk."
+  },
+  "business_logic": {
+    "long_term_logic": [
+      "Main products include pesticide technicals, formulations, intermediates and chemical materials.",
+      "2025 revenue and profit recovered strongly from a low base.",
+      "Valuation percentile is relatively low across PE, PB and PS since 2024."
+    ],
+    "current_problems": [
+      "2026Q1 revenue grew but parent net profit declined about 24.82%.",
+      "2026Q1 operating cash flow and free cash flow turned negative.",
+      "Agrochemical/chemical exposure is cyclical and not a current A/B tactical theme."
+    ],
+    "core_assumptions": [
+      "Agrochemical price and demand recover enough to sustain 2025 improvement.",
+      "Cash flow normalizes after Q1 working-capital pressure.",
+      "Low valuation provides downside buffer if earnings do not deteriorate."
+    ],
+    "likely_failure_points": [
+      "Pesticide price cycle weakens again.",
+      "Revenue growth fails to translate into profit and cash flow.",
+      "Safety, environmental, overseas demand, FX or trade risks intensify."
+    ]
+  },
+  "scores": {
+    "business_logic": {"weight": 20, "score": 14},
+    "industry_theme_fit": {"weight": 15, "score": 5},
+    "financial_quality": {"weight": 15, "score": 10},
+    "earnings_trend": {"weight": 15, "score": 9},
+    "valuation_odds": {"weight": 15, "score": 12},
+    "trend_and_flow": {"weight": 10, "score": 4},
+    "risk_control": {"weight": 10, "score": 8},
+    "base_score": 58,
+    "stock_risk_penalty": {
+      "score": 8,
+      "evidence": "Penalty for 2026Q1 profit decline, negative operating cash flow, weak theme status and negative moneyflow proxy."
+    },
+    "final_score": 50
+  },
+  "financials": {
+    "2025": {
+      "revenue_100m_cny": 90.08,
+      "parent_net_profit_100m_cny": 4.79,
+      "revenue_yoy_pct": 23.21,
+      "parent_net_profit_yoy_pct": 122.33,
+      "gross_margin_pct": 18.92,
+      "net_margin_pct": 6.45,
+      "roe_pct": 6.13,
+      "debt_to_assets_pct": 42.60,
+      "operating_cashflow_100m_cny": 12.97,
+      "free_cashflow_100m_cny": 7.57
+    },
+    "2026Q1": {
+      "revenue_100m_cny": 23.12,
+      "parent_net_profit_100m_cny": 1.15,
+      "revenue_yoy_pct": 10.85,
+      "parent_net_profit_yoy_pct": -24.82,
+      "gross_margin_pct": 18.27,
+      "net_margin_pct": 5.90,
+      "debt_to_assets_pct": 44.02,
+      "operating_cashflow_100m_cny": -3.44,
+      "free_cashflow_100m_cny": -7.84
+    },
+    "main_business_2025": [
+      {"item": "农药原药", "sales_100m_cny": 56.25, "gross_profit_100m_cny": 10.22},
+      {"item": "农药制剂及其他", "sales_100m_cny": 18.42, "gross_profit_100m_cny": 3.60},
+      {"item": "农药中间体", "sales_100m_cny": 8.15, "gross_profit_100m_cny": 2.06},
+      {"item": "化工材料", "sales_100m_cny": 3.28, "gross_profit_100m_cny": 0.68}
+    ]
+  },
+  "valuation": {
+    "basis_date": "2026-06-02",
+    "close": 12.70,
+    "pe_ttm": 23.0624,
+    "pb": 1.2697,
+    "ps_ttm": 1.1009,
+    "dividend_yield_ttm_pct": 1.5748,
+    "pe_ttm_percentile_since_2024": 0.24,
+    "pb_percentile_since_2024": 0.19,
+    "ps_ttm_percentile_since_2024": 0.19,
+    "conclusion": "Valuation odds are relatively better than high-growth themes, but earnings and cash-flow repair must be confirmed."
+  },
+  "trend_and_flow": {
+    "basis_date": "2026-06-02",
+    "close": 12.70,
+    "ret_20d_pct": -1.55,
+    "ret_60d_pct": -18.75,
+    "close_vs_ma20_pct": 2.37,
+    "close_vs_ma60_pct": -8.99,
+    "relative_to_csi300_20d_pct": -3.78,
+    "relative_to_csi300_60d_pct": -25.52,
+    "moneyflow_net_5d": -5320.60,
+    "moneyflow_net_20d": -32661.16,
+    "moneyflow_net_60d": -71942.88
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [
+      "Keep only as a small watch input while monitoring 2026 interim report.",
+      "Watch MA60 repair and moneyflow proxy improvement.",
+      "Track pesticide technical/formulation prices, inventory, receivables and safety/environmental risk."
+    ],
+    "reduce_conditions": [
+      "2026 interim report continues revenue growth with profit decline or negative operating cash flow.",
+      "Price fails near MA60 and breaks MA20 again with continued net outflow proxy.",
+      "Portfolio needs to reduce weak-theme single-stock count."
+    ],
+    "sell_invalid_conditions": [
+      "Agrochemical recovery thesis is invalidated.",
+      "Cash flow, debt, inventory or receivables deteriorate materially.",
+      "Safety/environmental, capacity, overseas demand or FX risk rises materially."
+    ]
+  },
+  "position_advice_boundary": {
+    "this_dossier_action": "Watch",
+    "portfolio_action": "Not generated here",
+    "notes": [
+      "No buy advice.",
+      "No add advice.",
+      "No direct sell advice in this dossier.",
+      "Downstream ACTION_PLAN may use this as a hold-or-reduce input."
+    ]
+  },
+  "data_gaps": [
+    "No sell-side consensus forecast introduced.",
+    "No pesticide product price tracker introduced.",
+    "No peer valuation table built.",
+    "Moneyflow uses Tushare raw proxy and is not equivalent to verified institutional flow."
+  ],
+  "next_update_triggers": [
+    "2026 interim report",
+    "Chemical/agrochemical theme registry update",
+    "Price regains or loses MA20/MA60",
+    "20-day moneyflow proxy shifts from net outflow to net inflow",
+    "Pesticide price, overseas demand, safety/environmental or major capacity disclosure"
+  ]
+}
