@@ -1,0 +1,19 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_153536",
+  "code": "002041.SZ",
+  "name": "登海种业",
+  "amount_policy": "ratio_only; no holding market value, cost amount, profit amount, or share count",
+  "boundary": "Stock research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": ["docs/modules/STOCK_RESEARCH.md", "research/market/market_score_2026-06-01_231907.json", "research/themes/theme_review_2026-06-01_231611.json", "research/portfolio/portfolio_snapshot_2026-06-03_144641.json", "Tushare: stock_basic, daily, daily_basic, fina_indicator, income, cashflow, balancesheet, moneyflow, fina_mainbz", "Tonghuashun F10 updates: https://basic.10jqka.com.cn/002041/"],
+  "summary": {"bucket_role": "watch/agriculture_repair_candidate", "action_rating": "Watch", "stock_score": 45, "rating": "D", "target_position_range": "No target position in this dossier; current about 0.62% ratio is an input for downstream modules.", "one_line_conclusion": "登海种业 has Q1 repair but low ROE, high PE/PS and weak trend; Watch only."},
+  "basic_info": {"stock_code": "002041.SZ", "company_name": "登海种业", "area": "山东", "industry": "种植业", "market": "主板", "list_date": "2005-04-18", "related_theme": "种业 / 农业周期", "theme_rating": "not current A/B tactical mainline", "current_weight_pct_input": 0.62},
+  "scores": {"business_logic": {"weight": 20, "score": 12}, "industry_theme_fit": {"weight": 15, "score": 4}, "financial_quality": {"weight": 15, "score": 7}, "earnings_trend": {"weight": 15, "score": 9}, "valuation_odds": {"weight": 15, "score": 3}, "trend_and_flow": {"weight": 10, "score": 2}, "risk_control": {"weight": 10, "score": 6}, "base_score": 43, "stock_risk_penalty": {"score": 0, "evidence": "Already low score; no extra penalty."}, "final_score": 45},
+  "financials": {"2025": {"revenue_100m_cny": 11.02, "parent_net_profit_100m_cny": 0.92, "revenue_yoy_pct": -11.55, "parent_net_profit_yoy_pct": 61.86, "gross_margin_pct": 29.55, "net_margin_pct": 9.90, "roe_pct": 2.53, "debt_to_assets_pct": 18.66, "operating_cashflow_100m_cny": 2.46}, "2026Q1": {"revenue_100m_cny": 2.65, "parent_net_profit_100m_cny": 0.34, "revenue_yoy_pct": 62.70, "parent_net_profit_yoy_pct": 37.16, "gross_margin_pct": 32.09, "net_margin_pct": 14.13, "debt_to_assets_pct": 15.84, "operating_cashflow_100m_cny": -0.24}},
+  "valuation": {"basis_date": "2026-06-02", "close": 8.70, "pe_ttm": 75.8702, "pb": 2.0699, "ps_ttm": 6.3526, "pe_ttm_percentile_since_2024": 0.10},
+  "trend_and_flow": {"basis_date": "2026-06-03", "close": 8.70, "close_vs_ma20_pct": -6.51, "moneyflow_net_5d": -2875.96, "moneyflow_net_20d": -24277.91, "moneyflow_net_60d": -24277.91},
+  "operation_conditions": {"buy_conditions": [], "add_conditions": [], "hold_conditions": ["Watch 2026 interim report and corn-seed sales."], "reduce_conditions": ["Price remains below MA20/MA60 or Q1 recovery does not continue."], "sell_invalid_conditions": ["Seed-cycle, variety competition, inventory or cash-flow risk worsens."]},
+  "position_advice_boundary": {"this_dossier_action": "Watch", "portfolio_action": "Not generated here"}
+}

@@ -1,0 +1,64 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_153536",
+  "code": "300760.SZ",
+  "name": "迈瑞医疗",
+  "amount_policy": "ratio_only; no holding market value, cost amount, profit amount, or share count",
+  "boundary": "Stock research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": [
+    "docs/modules/STOCK_RESEARCH.md",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "Tushare: stock_basic, daily, daily_basic, fina_indicator, income, cashflow, balancesheet, moneyflow, fina_mainbz",
+    "Sina report list: https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_Bulletin/stockid/300760/page_type/yjdbg.phtml",
+    "Yingman finance snapshot: https://www.yingman.com/stock/300760/"
+  ],
+  "summary": {
+    "bucket_role": "watch/stable_core_candidate",
+    "action_rating": "Watch",
+    "stock_score": 62,
+    "rating": "C",
+    "target_position_range": "No target position in this dossier; current about 0.35% ratio is an input for downstream modules.",
+    "one_line_conclusion": "迈瑞医疗 remains a high-quality medical device leader, but 2025 earnings declined and 2026Q1 profit has not repaired; low valuation supports watch, not add."
+  },
+  "basic_info": {
+    "stock_code": "300760.SZ",
+    "company_name": "迈瑞医疗",
+    "area": "深圳",
+    "industry": "医疗保健",
+    "market": "创业板",
+    "list_date": "2018-10-16",
+    "related_theme": "医疗器械 / 稳定核心候选",
+    "theme_rating": "not current A/B tactical mainline",
+    "current_weight_pct_input": 0.35
+  },
+  "scores": {
+    "business_logic": {"weight": 20, "score": 18},
+    "industry_theme_fit": {"weight": 15, "score": 7},
+    "financial_quality": {"weight": 15, "score": 14},
+    "earnings_trend": {"weight": 15, "score": 6},
+    "valuation_odds": {"weight": 15, "score": 13},
+    "trend_and_flow": {"weight": 10, "score": 2},
+    "risk_control": {"weight": 10, "score": 8},
+    "base_score": 68,
+    "stock_risk_penalty": {"score": 6, "evidence": "Penalty for 2025 earnings decline, still-weak trend and negative moneyflow proxy."},
+    "final_score": 62
+  },
+  "financials": {
+    "2025": {"revenue_100m_cny": 332.82, "parent_net_profit_100m_cny": 81.36, "revenue_yoy_pct": -9.38, "parent_net_profit_yoy_pct": -30.28, "gross_margin_pct": 60.32, "net_margin_pct": 25.39, "roe_pct": 22.00, "debt_to_assets_pct": 27.43, "operating_cashflow_100m_cny": 101.45, "free_cashflow_100m_cny": 86.44},
+    "2026Q1": {"revenue_100m_cny": 83.52, "parent_net_profit_100m_cny": 23.30, "revenue_yoy_pct": 1.39, "parent_net_profit_yoy_pct": -11.37, "gross_margin_pct": 61.87, "net_margin_pct": 29.05, "debt_to_assets_pct": 24.77, "operating_cashflow_100m_cny": 13.81}
+  },
+  "valuation": {"basis_date": "2026-06-02", "close": 144.59, "pe_ttm": 22.7409, "pb": 4.6631, "ps_ttm": 5.3363, "pe_ttm_percentile_since_2024": 0.05, "ps_ttm_percentile_since_2024": 0.05},
+  "trend_and_flow": {"basis_date": "2026-06-03", "close": 144.59, "close_vs_ma20_pct": -8.17, "moneyflow_net_5d": -28778.13, "moneyflow_net_20d": -185612.91, "moneyflow_net_60d": -185612.91},
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": ["Keep as a small watch input; reassess after 2026 interim report and MA20/MA60 repair."],
+    "reduce_conditions": ["Profit keeps falling, price remains below moving averages, or moneyflow proxy stays negative."],
+    "sell_invalid_conditions": ["Industry policy, centralized procurement, overseas market or new-business execution materially worsens."]
+  },
+  "position_advice_boundary": {"this_dossier_action": "Watch", "portfolio_action": "Not generated here"}
+}

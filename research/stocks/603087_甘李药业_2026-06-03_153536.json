@@ -1,0 +1,27 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_153536",
+  "code": "603087.SH",
+  "name": "甘李药业",
+  "amount_policy": "ratio_only; no holding market value, cost amount, profit amount, or share count",
+  "boundary": "Stock research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": [
+    "docs/modules/STOCK_RESEARCH.md",
+    "research/market/market_score_2026-06-01_231907.json",
+    "research/themes/theme_review_2026-06-01_231611.json",
+    "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+    "Tushare: stock_basic, daily, daily_basic, fina_indicator, income, cashflow, balancesheet, moneyflow, fina_mainbz",
+    "Sina 2025 annual report mirror: https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12144908&stockid=603087",
+    "Xueqiu 2026 Q1 report PDF: https://stockmc.xueqiu.com/202604/603087_20260423_XBUH.pdf"
+  ],
+  "summary": {"bucket_role": "watch/medicine_repair_candidate", "action_rating": "Watch", "stock_score": 56, "rating": "C", "target_position_range": "No target position in this dossier; current about 1.06% ratio is an input for downstream modules.", "one_line_conclusion": "甘李药业 repaired strongly in 2025, but 2026Q1 revenue and profit declined; hold-watch only, no add."},
+  "basic_info": {"stock_code": "603087.SH", "company_name": "甘李药业", "area": "北京", "industry": "生物制药", "market": "主板", "list_date": "2020-06-29", "related_theme": "胰岛素 / 生物制品 / 医药修复", "theme_rating": "not current A/B tactical mainline", "current_weight_pct_input": 1.06},
+  "scores": {"business_logic": {"weight": 20, "score": 15}, "industry_theme_fit": {"weight": 15, "score": 7}, "financial_quality": {"weight": 15, "score": 12}, "earnings_trend": {"weight": 15, "score": 8}, "valuation_odds": {"weight": 15, "score": 6}, "trend_and_flow": {"weight": 10, "score": 4}, "risk_control": {"weight": 10, "score": 8}, "base_score": 60, "stock_risk_penalty": {"score": 4, "evidence": "Penalty for 2026Q1 decline, not-low valuation percentile and existing medicine group exposure."}, "final_score": 56},
+  "financials": {"2025": {"revenue_100m_cny": 40.52, "parent_net_profit_100m_cny": 11.44, "revenue_yoy_pct": 33.06, "parent_net_profit_yoy_pct": 86.05, "gross_margin_pct": 75.84, "net_margin_pct": 28.22, "roe_pct": 10.08, "debt_to_assets_pct": 7.91, "operating_cashflow_100m_cny": 7.84}, "2026Q1": {"revenue_100m_cny": 8.78, "parent_net_profit_100m_cny": 1.92, "revenue_yoy_pct": -10.84, "parent_net_profit_yoy_pct": -38.29, "gross_margin_pct": 74.56, "net_margin_pct": 21.92, "debt_to_assets_pct": 6.72, "operating_cashflow_100m_cny": 1.72}},
+  "valuation": {"basis_date": "2026-06-02", "close": 54.15, "pe_ttm": 32.0713, "pb": 2.9251, "ps_ttm": 8.3251, "pe_ttm_percentile_since_2024": 0.55},
+  "trend_and_flow": {"basis_date": "2026-06-03", "close": 54.15, "close_vs_ma20_pct": -2.59, "moneyflow_net_5d": 5483.53, "moneyflow_net_20d": -24533.09, "moneyflow_net_60d": -24533.09},
+  "operation_conditions": {"buy_conditions": [], "add_conditions": [], "hold_conditions": ["Watch 2026 interim report, insulin sales, overseas progress and cash flow."], "reduce_conditions": ["2026 interim report keeps declining or medicine group needs further reduction."], "sell_invalid_conditions": ["Centralized procurement, overseas sales, R&D or expense pressure causes continued earnings miss."]},
+  "position_advice_boundary": {"this_dossier_action": "Watch", "portfolio_action": "Not generated here"}
+}

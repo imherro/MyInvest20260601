@@ -1393,3 +1393,13 @@
 - 数据来源：Tushare stock_basic、daily、daily_basic、fina_indicator、income、cashflow、balancesheet、moneyflow、fina_mainbz，并交叉读取公开公告入口。
 - 新结论：`688439` 评分 36、评级 D、操作评级 Watch，核心问题是 2025 收入/利润下滑且 2026Q1 转亏，估值仍高、趋势和资金流弱；`002258` 评分 50、评级 C、操作评级 Watch，2025 修复但 2026Q1 增收不增利且现金流转负，估值较低但仍只能观察。
 - 后续影响：两只股票不再是未建档阻断项；后续 ACTION_PLAN 可以基于档案决定是否进一步压缩弱主题个股，但本次档案不直接生成买卖清单。
+### 决策：补齐最新持仓剩余 5 只未建档个股
+
+- 决策类型：stock_research
+- 变化类型：new_profiles_current_holdings
+- 标的/主题：300760.SZ 迈瑞医疗、603087.SH 甘李药业、300627.SZ 华测导航、002041.SZ 登海种业、603903.SH 中持股份
+- 生成文件：`research/stocks/300760_迈瑞医疗_2026-06-03_153536.md/json`、`research/stocks/603087_甘李药业_2026-06-03_153536.md/json`、`research/stocks/300627_华测导航_2026-06-03_153536.md/json`、`research/stocks/002041_登海种业_2026-06-03_153536.md/json`、`research/stocks/603903_中持股份_2026-06-03_153536.md/json`
+- 读取前置文件：`docs/modules/STOCK_RESEARCH.md`、`research/market/market_score_2026-06-01_231907.json`、`research/themes/theme_review_2026-06-01_231611.json`、`research/portfolio/portfolio_snapshot_2026-06-03_144641.json`、`research/stocks/stock_registry.json`
+- 数据来源：Tushare stock_basic、daily、daily_basic、fina_indicator、income、cashflow、balancesheet、moneyflow、fina_mainbz，并交叉读取公开公告/财报摘要入口。
+- 新结论：`300760` 评分 62、评级 C、Watch；`603087` 评分 56、评级 C、Watch；`300627` 评分 58、评级 C、Watch；`002041` 评分 45、评级 D、Watch；`603903` 评分 34、评级 D、Watch。五份档案均不直接生成买卖动作。
+- 后续影响：最新持仓中仍持有的个股已全部完成建档；后续 ACTION_PLAN 可以不再被“未建档”阻断，下一步可生成全个股处理清单或做盘后复盘。

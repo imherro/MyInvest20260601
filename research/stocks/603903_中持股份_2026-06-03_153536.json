@@ -1,0 +1,19 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03_153536",
+  "code": "603903.SH",
+  "name": "中持股份",
+  "amount_policy": "ratio_only; no holding market value, cost amount, profit amount, or share count",
+  "boundary": "Stock research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": ["docs/modules/STOCK_RESEARCH.md", "research/market/market_score_2026-06-01_231907.json", "research/themes/theme_review_2026-06-01_231611.json", "research/portfolio/portfolio_snapshot_2026-06-03_144641.json", "Tushare: stock_basic, daily, daily_basic, fina_indicator, income, cashflow, balancesheet, moneyflow, fina_mainbz", "Sina 2025 annual summary: https://finance.sina.com.cn/stock/relnews/cn/2026-04-29/doc-inhwceiq7990074.shtml", "Sina Q1 report list: https://money.finance.sina.com.cn/corp/view/vCB_BulletinYi.php?page_type=yjdbg&stockid=603903&type=list"],
+  "summary": {"bucket_role": "avoid/watch_to_handle", "action_rating": "Watch", "stock_score": 34, "rating": "D", "target_position_range": "No target position in this dossier; current about 0.41% ratio is an input for downstream modules.", "one_line_conclusion": "中持股份 had 2025 loss, high leverage and weak trend; Q1 profit repair is not enough. Avoid/add no exposure."},
+  "basic_info": {"stock_code": "603903.SH", "company_name": "中持股份", "area": "北京", "industry": "环境保护", "market": "主板", "list_date": "2017-03-14", "related_theme": "环保运营 / 水务", "theme_rating": "not current A/B tactical mainline", "current_weight_pct_input": 0.41},
+  "scores": {"business_logic": {"weight": 20, "score": 8}, "industry_theme_fit": {"weight": 15, "score": 3}, "financial_quality": {"weight": 15, "score": 3}, "earnings_trend": {"weight": 15, "score": 5}, "valuation_odds": {"weight": 15, "score": 4}, "trend_and_flow": {"weight": 10, "score": 1}, "risk_control": {"weight": 10, "score": 5}, "base_score": 29, "stock_risk_penalty": {"score": 0, "evidence": "Already low score; no extra penalty."}, "final_score": 34},
+  "financials": {"2025": {"revenue_100m_cny": 10.25, "parent_net_profit_100m_cny": -1.06, "revenue_yoy_pct": -3.11, "net_margin_pct": -13.77, "roe_pct": -7.23, "debt_to_assets_pct": 62.74, "operating_cashflow_100m_cny": 1.98}, "2026Q1": {"revenue_100m_cny": 1.39, "parent_net_profit_100m_cny": 0.17, "revenue_yoy_pct": -9.93, "gross_margin_pct": 40.69, "net_margin_pct": 12.87, "debt_to_assets_pct": 61.05, "operating_cashflow_100m_cny": -0.36}},
+  "valuation": {"basis_date": "2026-06-02", "close": 11.20, "pb": 2.017, "ps_ttm": 2.8546, "pb_percentile_since_2024": 0.10},
+  "trend_and_flow": {"basis_date": "2026-06-03", "close": 11.20, "close_vs_ma20_pct": -10.33, "moneyflow_net_5d": -2456.06, "moneyflow_net_20d": -25394.02, "moneyflow_net_60d": -25394.02},
+  "operation_conditions": {"buy_conditions": [], "add_conditions": [], "hold_conditions": ["Watch only as a candidate for weak-stock cleanup."], "reduce_conditions": ["If downstream ACTION_PLAN cleans weak single-stock exposure, this is a priority candidate."], "sell_invalid_conditions": ["Continued losses, revenue decline, debt or cash-flow deterioration."]},
+  "position_advice_boundary": {"this_dossier_action": "Watch", "portfolio_action": "Not generated here"}
+}
