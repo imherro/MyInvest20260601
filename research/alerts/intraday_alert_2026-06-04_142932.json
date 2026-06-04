@@ -1,0 +1,67 @@
+{
+  "module": "intraday_alerts",
+  "version": "1.1",
+  "date": "2026-06-04",
+  "time": "142932",
+  "generated_at": "2026-06-04_142932",
+  "source_plan": [
+    "docs/modules/INTRADAY_ALERTS.md",
+    "docs/modules/STOCK_RESEARCH.md",
+    "research/market/market_score_2026-06-03_211833.json",
+    "research/allocation/target_allocation_2026-06-03_211833.json",
+    "research/stocks/001280_中国铀业_v2_2026-06-04_133534.json",
+    "research/stocks/601318_中国平安_v2_2026-06-04_133534.json"
+  ],
+  "quote_source": "qmt+tushare_refs",
+  "market_context": {
+    "market_gate": "verify_only",
+    "current_equity_pct": null,
+    "target_equity_range": "45%-50%",
+    "up_count": null,
+    "down_count": null,
+    "total_amount_100m": null
+  },
+  "monitored_quotes": [
+    {
+      "code": "001280.SZ",
+      "name": "中国铀业",
+      "type": "stock",
+      "last": 71.33,
+      "pre_close": 73.42,
+      "pct_chg": -2.8466357940615694,
+      "amount_100m": 6.203955,
+      "turnover_rate": 12.3038,
+      "volume_ratio": 2.91,
+      "ma20": 77.9135,
+      "ma60": 81.38100000000001,
+      "moneyflow_5d": 3722.9799999999996,
+      "moneyflow_20d": -81759.4,
+      "qmt_timetag": "20260604 14:29:06"
+    },
+    {
+      "code": "601318.SH",
+      "name": "中国平安",
+      "type": "stock",
+      "last": 53.17,
+      "pre_close": 53.7,
+      "pct_chg": -0.9869646182495417,
+      "amount_100m": 27.232183,
+      "turnover_rate": 0.5864,
+      "volume_ratio": 0.73,
+      "ma20": 55.516000000000005,
+      "ma60": 57.82483333333333,
+      "moneyflow_5d": -94440.0,
+      "moneyflow_20d": -1088623.7599999998,
+      "qmt_timetag": "20260604 14:29:08"
+    }
+  ],
+  "summary": {
+    "alert_state": "no_trigger",
+    "highest_priority": "none",
+    "one_line_conclusion": "未触发已定义盘中规则。"
+  },
+  "alerts": [],
+  "near_triggers": [],
+  "missing_preconditions": [],
+  "decision_log_entry": "2026-06-04_142932 盘中提醒：最高优先级=none；触发=0；接近触发=0；缺失=0。"
+}

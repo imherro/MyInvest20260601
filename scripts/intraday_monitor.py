@@ -226,6 +226,7 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
     alerts: list[dict[str, Any]] = []
     near_triggers: list[dict[str, Any]] = []
     missing: list[dict[str, Any]] = []
+    monitored_quotes: list[dict[str, Any]] = []
 
     for subject in rules.get("subjects", []):
         code = normalize_code(subject["code"])
@@ -239,6 +240,24 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
                 }
             )
             continue
+        monitored_quotes.append(
+            {
+                "code": code,
+                "name": subject.get("name", quote.get("name", "")),
+                "type": subject.get("type", quote.get("type", "unknown")),
+                "last": quote.get("last"),
+                "pre_close": quote.get("pre_close"),
+                "pct_chg": quote.get("pct_chg"),
+                "amount_100m": quote.get("amount_100m"),
+                "turnover_rate": quote.get("turnover_rate"),
+                "volume_ratio": quote.get("volume_ratio"),
+                "ma20": quote.get("ma20"),
+                "ma60": quote.get("ma60"),
+                "moneyflow_5d": quote.get("moneyflow_5d"),
+                "moneyflow_20d": quote.get("moneyflow_20d"),
+                "qmt_timetag": quote.get("qmt_timetag"),
+            }
+        )
         for rule in subject.get("rules", []):
             alert, near = evaluate_rule(subject, rule, quote, rules, snapshot)
             if alert:
@@ -270,6 +289,7 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
         "source_plan": rules.get("data_sources", []),
         "quote_source": snapshot.get("source", "unknown"),
         "market_context": snapshot.get("market_context", {}),
+        "monitored_quotes": monitored_quotes,
         "summary": {
             "alert_state": state,
             "highest_priority": highest,
@@ -300,6 +320,36 @@ def md_table_alerts(alerts: list[dict[str, Any]]) -> str:
                 condition=item["trigger_condition"],
                 state=item["current_state"],
                 action=item["suggested_action"],
+            )
+        )
+    return "\n".join(rows)
+
+
+def fmt_value(value: Any) -> str:
+    if value is None:
+        return "缺失"
+    if isinstance(value, (int, float)):
+        return f"{value:.2f}"
+    return str(value)
+
+
+def md_table_quotes(quotes: list[dict[str, Any]]) -> str:
+    if not quotes:
+        return "| 无 | 无 | 缺失 | 缺失 | 缺失 | 缺失 | 缺失 | 缺失 | 缺失 |"
+    rows = []
+    for item in quotes:
+        rows.append(
+            "| {code} {name} | {last} | {pct}% | {amount} | {ma20} | {ma60} | {mf5} | {mf20} | {time} |".format(
+                code=item["code"],
+                name=item["name"],
+                last=fmt_value(item.get("last")),
+                pct=fmt_value(item.get("pct_chg")),
+                amount=fmt_value(item.get("amount_100m")),
+                ma20=fmt_value(item.get("ma20")),
+                ma60=fmt_value(item.get("ma60")),
+                mf5=fmt_value(item.get("moneyflow_5d")),
+                mf20=fmt_value(item.get("moneyflow_20d")),
+                time=fmt_value(item.get("qmt_timetag")),
             )
         )
     return "\n".join(rows)
@@ -373,6 +423,14 @@ def render_markdown(report: dict[str, Any]) -> str:
 > {report['summary']['one_line_conclusion']}
 
 ## 2. 提醒清单
+
+### 2.1 监控行情
+
+| 标的 | 当前价 | 涨跌幅 | 成交额(亿元) | MA20 | MA60 | 5日资金流 | 20日资金流 | 行情时间 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+{md_table_quotes(report.get('monitored_quotes', []))}
+
+### 2.2 触发状态
 
 | 优先级 | 标的/范围 | 提醒类型 | 触发条件 | 当前状态 | 建议动作 | 人工确认 |
 | --- | --- | --- | --- | --- | --- | --- |
