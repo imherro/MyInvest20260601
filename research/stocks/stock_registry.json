@@ -1,6 +1,6 @@
 {
   "module": "stock_registry",
-  "version": "1.4",
+  "version": "1.5",
   "last_updated": "2026-06-04",
   "notes": "当前文件保存个股研究模块的总览登记。根据用户当前持仓，已登记持仓股为待研究状态；正式个股操作建议前必须逐只建立个股档案。",
   "stocks": [
@@ -242,7 +242,7 @@
       "code": "001280",
       "name": "中国铀业",
       "status": "profile_generated",
-      "current_weight_pct": 0.0,
+      "current_weight_pct": 0,
       "bucket_role": "watch/resource_energy_security_candidate",
       "related_theme": "天然铀/核燃料/能源安全/稀有金属",
       "rating": "C",
@@ -251,6 +251,20 @@
       "reason": "已生成个股档案：天然铀和核燃料供应链战略地位强，2025和2026Q1业绩增长；但上市样本短、绝对估值高、趋势弱、20/60日资金流代理净流出。本档案不生成买卖或调仓动作。",
       "last_profile_file": "research/stocks/001280_中国铀业_2026-06-04_130308.md",
       "last_profile_json": "research/stocks/001280_中国铀业_2026-06-04_130308.json"
+    },
+    {
+      "code": "601318",
+      "name": "中国平安",
+      "status": "profile_generated",
+      "current_weight_pct": 0,
+      "bucket_role": "watch/financial_dividend_core_candidate",
+      "related_theme": "保险/综合金融/红利价值/金融防御",
+      "rating": "C",
+      "action_rating": "Watch",
+      "target_position_range": "不在个股档案设定目标仓位；当前按0%观察标的处理。",
+      "reason": "已生成个股档案：中国平安具备保险龙头、低估值和分红优势，2025年利润和股息增长，2026Q1寿险NBV和营运利润仍增长；但Q1报表净利下滑、股价弱于沪深300、20/60日资金流代理净流出。本档案不生成买卖或调仓动作。",
+      "last_profile_file": "research/stocks/601318_中国平安_2026-06-04_132722.md",
+      "last_profile_json": "research/stocks/601318_中国平安_2026-06-04_132722.json"
     }
   ],
   "change_log": [
@@ -293,6 +307,11 @@
       "date": "2026-06-04",
       "change": "生成001280 中国铀业个股档案，登记为观察标的，评级C，操作评级Watch。",
       "impact": "后续操作建议如需纳入中国铀业，必须读取该档案；本次不生成买卖建议或调仓动作。"
+    },
+    {
+      "date": "2026-06-04",
+      "change": "生成601318 中国平安A股个股档案，登记为观察标的，评级C，操作评级Watch。",
+      "impact": "后续操作建议如需纳入中国平安，必须读取该档案；需与现有证券保险/券商/红利类ETF暴露合并评估，本次不生成买卖建议或调仓动作。"
     }
   ]
 }
