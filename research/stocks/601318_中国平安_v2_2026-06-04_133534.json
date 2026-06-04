@@ -1,0 +1,52 @@
+{
+  "module": "stock_research",
+  "version": "2.0",
+  "date": "2026-06-04",
+  "generated_at": "2026-06-04_133534",
+  "code": "601318.SH",
+  "name": "中国平安",
+  "latest_complete_trade_date": "20260603",
+  "price_date": "20260603",
+  "financial_period": "2026Q1",
+  "summary": {
+    "bucket_role": "长期核心候选 / 红利金融观察股",
+    "action_rating": "Watch",
+    "stock_score": 66,
+    "rating": "B",
+    "individual_position_range": "0%-3%，作为个股级条件输入，不是组合调仓指令",
+    "suited": "观察等待 / 有条件中仓配置",
+    "one_line_conclusion": "中国平安具备保险龙头、低估值、高股息和寿险NBV改善逻辑，估值处于合理偏低区；但当前趋势弱、资金流代理持续净流出，且金融权重不是当前最强市场风格，因此不适合重仓追买，只适合等待趋势和资金确认后作为红利金融候选配置。",
+    "heavy_position": "否。原因：估值赔率存在，但趋势和资金没有确认，且金融权重不是当前最强风格。"
+  },
+  "data_freshness": {
+    "daily": "20260603",
+    "daily_basic": "20260603",
+    "moneyflow": "20260603",
+    "margin_detail": "20260603",
+    "cyq_perf": "20260603",
+    "financial": "20260331",
+    "index": "20260603"
+  },
+  "valuation": {
+    "current_price": 53.7,
+    "total_mv_100m": 9723.80375132,
+    "ttm_profit_100m": 1327.8442921371022,
+    "pe_ttm": 7.323,
+    "pb": 0.9549,
+    "ps_ttm": 0.9385
+  },
+  "trend": {
+    "stage": "弱修复/下行趋势后的低位震荡",
+    "ret5": 0.8072085601651846,
+    "ret20": -9.53504043126684,
+    "ret60": -13.498711340206182,
+    "rel20": -10.800464270204348,
+    "rel60": -19.762400795882485,
+    "mf5": -94440,
+    "mf20": -1088623.7599999998,
+    "mf60": -1835935.4299999997,
+    "margin_ratio_pct": 6.749223060075295,
+    "winner_rate": 17.48
+  },
+  "boundary": "individual stock conditional strategy only; no portfolio-level order list"
+}

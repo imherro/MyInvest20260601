@@ -1,0 +1,52 @@
+{
+  "module": "stock_research",
+  "version": "2.0",
+  "date": "2026-06-04",
+  "generated_at": "2026-06-04_133534",
+  "code": "001280.SZ",
+  "name": "中国铀业",
+  "latest_complete_trade_date": "20260603",
+  "price_date": "20260603",
+  "financial_period": "2026Q1",
+  "summary": {
+    "bucket_role": "观察股 / 战略资源主题候选",
+    "action_rating": "Watch",
+    "stock_score": 56,
+    "rating": "C",
+    "individual_position_range": "0%-1%，仅作为个股级条件输入，不是组合调仓指令",
+    "suited": "观察等待 / 有条件小仓试错",
+    "one_line_conclusion": "中国铀业的长期战略稀缺性明确，但当前PE(TTM)约88倍、PB约8.92倍，且上市样本短、流通盘小、融资余额/流通市值较高，价格已包含较多战略资源和次新资金溢价；当前不适合重仓，只适合等待右侧确认或极小仓试错。",
+    "heavy_position": "否。原因：估值和资金结构还没有给出重仓所需的安全边际，必须等业绩、铀价和趋势三重确认。"
+  },
+  "data_freshness": {
+    "daily": "20260603",
+    "daily_basic": "20260603",
+    "moneyflow": "20260603",
+    "margin_detail": "20260603",
+    "cyq_perf": "20260603",
+    "financial": "20260331",
+    "index": "20260603"
+  },
+  "valuation": {
+    "current_price": 73.42,
+    "total_mv_100m": 1518.45909078,
+    "ttm_profit_100m": 17.193379388675954,
+    "pe_ttm": 88.3165,
+    "pb": 8.9176,
+    "ps_ttm": 7.5257
+  },
+  "trend": {
+    "stage": "弱修复，仍未完成右侧确认",
+    "ret5": -0.02723311546840579,
+    "ret20": -12.071856287425142,
+    "ret60": -20.532525165061156,
+    "rel20": -13.33728012636265,
+    "rel60": -26.79621462073746,
+    "mf5": 3722.9799999999996,
+    "mf20": -81759.4,
+    "mf60": -195951.65999999997,
+    "margin_ratio_pct": 5.625260480228388,
+    "winner_rate": 62.23
+  },
+  "boundary": "individual stock conditional strategy only; no portfolio-level order list"
+}

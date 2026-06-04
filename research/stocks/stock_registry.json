@@ -1,6 +1,6 @@
 {
   "module": "stock_registry",
-  "version": "1.5",
+  "version": "2.0",
   "last_updated": "2026-06-04",
   "notes": "当前文件保存个股研究模块的总览登记。根据用户当前持仓，已登记持仓股为待研究状态；正式个股操作建议前必须逐只建立个股档案。",
   "stocks": [
@@ -241,30 +241,30 @@
     {
       "code": "001280",
       "name": "中国铀业",
-      "status": "profile_generated",
+      "status": "profile_generated_v2",
       "current_weight_pct": 0,
-      "bucket_role": "watch/resource_energy_security_candidate",
+      "bucket_role": "观察股 / 战略资源主题候选",
       "related_theme": "天然铀/核燃料/能源安全/稀有金属",
       "rating": "C",
       "action_rating": "Watch",
-      "target_position_range": "不在个股档案设定目标仓位；当前按0%观察标的处理。",
-      "reason": "已生成个股档案：天然铀和核燃料供应链战略地位强，2025和2026Q1业绩增长；但上市样本短、绝对估值高、趋势弱、20/60日资金流代理净流出。本档案不生成买卖或调仓动作。",
-      "last_profile_file": "research/stocks/001280_中国铀业_2026-06-04_130308.md",
-      "last_profile_json": "research/stocks/001280_中国铀业_2026-06-04_130308.json"
+      "target_position_range": "0%-1%，仅作为个股级条件输入，不是组合调仓指令",
+      "reason": "v2已生成：中国铀业的长期战略稀缺性明确，但当前PE(TTM)约88倍、PB约8.92倍，且上市样本短、流通盘小、融资余额/流通市值较高，价格已包含较多战略资源和次新资金溢价；当前不适合重仓，只适合等待右侧确认或极小仓试错。",
+      "last_profile_file": "research/stocks/001280_中国铀业_v2_2026-06-04_133534.md",
+      "last_profile_json": "research/stocks/001280_中国铀业_v2_2026-06-04_133534.json"
     },
     {
       "code": "601318",
       "name": "中国平安",
-      "status": "profile_generated",
+      "status": "profile_generated_v2",
       "current_weight_pct": 0,
-      "bucket_role": "watch/financial_dividend_core_candidate",
+      "bucket_role": "长期核心候选 / 红利金融观察股",
       "related_theme": "保险/综合金融/红利价值/金融防御",
-      "rating": "C",
+      "rating": "B",
       "action_rating": "Watch",
-      "target_position_range": "不在个股档案设定目标仓位；当前按0%观察标的处理。",
-      "reason": "已生成个股档案：中国平安具备保险龙头、低估值和分红优势，2025年利润和股息增长，2026Q1寿险NBV和营运利润仍增长；但Q1报表净利下滑、股价弱于沪深300、20/60日资金流代理净流出。本档案不生成买卖或调仓动作。",
-      "last_profile_file": "research/stocks/601318_中国平安_2026-06-04_132722.md",
-      "last_profile_json": "research/stocks/601318_中国平安_2026-06-04_132722.json"
+      "target_position_range": "0%-3%，作为个股级条件输入，不是组合调仓指令",
+      "reason": "v2已生成：中国平安具备保险龙头、低估值、高股息和寿险NBV改善逻辑，估值处于合理偏低区；但当前趋势弱、资金流代理持续净流出，且金融权重不是当前最强市场风格，因此不适合重仓追买，只适合等待趋势和资金确认后作为红利金融候选配置。",
+      "last_profile_file": "research/stocks/601318_中国平安_v2_2026-06-04_133534.md",
+      "last_profile_json": "research/stocks/601318_中国平安_v2_2026-06-04_133534.json"
     }
   ],
   "change_log": [
@@ -312,6 +312,11 @@
       "date": "2026-06-04",
       "change": "生成601318 中国平安A股个股档案，登记为观察标的，评级C，操作评级Watch。",
       "impact": "后续操作建议如需纳入中国平安，必须读取该档案；需与现有证券保险/券商/红利类ETF暴露合并评估，本次不生成买卖建议或调仓动作。"
+    },
+    {
+      "date": "2026-06-04",
+      "change": "升级个股研究模块到v2，并重新生成001280中国铀业、601318中国平安A股v2研究报告。",
+      "impact": "后续个股研究必须包含数据新鲜度、资产分类、估值区间、三情景推演、同业/估值锚、市场风格适配、条件化策略、风险排序和证伪条件；本次仍不生成组合级买卖清单。"
     }
   ]
 }
