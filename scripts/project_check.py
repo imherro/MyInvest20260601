@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from importlib.util import find_spec
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -33,6 +34,7 @@ RESEARCH_NAME_PATTERNS = {
 }
 
 FIXED_RESEARCH_FILES = {
+    "alerts/intraday_rules.json",
     "themes/theme_registry.json",
     "etfs/etf_registry.json",
     "stocks/stock_registry.json",
@@ -80,6 +82,18 @@ def check_env(findings: list[Finding]) -> None:
         findings.append(Finding("WARN", ".env exists but TUSHARE_TOKEN is not defined"))
     elif not token_has_value:
         findings.append(Finding("WARN", ".env has an empty TUSHARE_TOKEN"))
+
+
+def check_python_dependencies(findings: list[Finding]) -> None:
+    required_packages = ["baostock", "pandas"]
+    for package in required_packages:
+        if find_spec(package) is None:
+            findings.append(
+                Finding(
+                    "WARN",
+                    f"Python package {package} is not installed; run python -m pip install -r requirements.txt",
+                )
+            )
 
 
 def check_json(findings: list[Finding]) -> None:
@@ -139,6 +153,7 @@ def main() -> int:
     findings: list[Finding] = []
     check_required_files(findings)
     check_env(findings)
+    check_python_dependencies(findings)
     check_json(findings)
     check_research_names(findings)
 

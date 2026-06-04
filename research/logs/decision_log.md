@@ -1533,3 +1533,21 @@
 
 - 本次只更新个股研究规则和单股研究输入，不生成组合级买卖清单。
 - 后续实际仓位动作仍必须由 `ACTION_PLAN` 结合市场仓位、组合暴露和持仓约束生成。
+
+### 决策：开发盘中监测 v1
+
+- 决策类型：intraday_alerts_development
+- 变化类型：new_monitor_engine
+- 更新文件：`docs/modules/INTRADAY_ALERTS.md`、`docs/DATA_SOURCES.md`、`scripts/intraday_monitor.py`、`scripts/project_check.py`、`templates/intraday_quotes_snapshot_template.json`、`research/alerts/intraday_rules.json`
+- 新结论：盘中监测 v1 已建立，采用“固定规则 + QMT/手工行情快照”的方式生成 `research/alerts/intraday_alert_YYYY-MM-DD_HHMMSS.md/json`。第一版只做提醒和复核，不自动下单，不临时发明新策略。
+
+对仓位或操作的影响：
+
+- 盘中加仓、减仓或风控提醒必须读取已有规则和研究档案。
+- 当前规则已包含 `001280 中国铀业` 与 `601318 中国平安` 的关键风控、右侧确认和观察条件。
+- 所有提醒仍需人工确认，并由 `ACTION_PLAN` 处理最终组合级动作。
+
+复盘入口：
+
+- 下一步需要接入真实 QMT 行情快照导出，并用盘中真实行情生成第一份正式 `intraday_alert` 报告。
+- 如果 QMT 字段缺失，脚本应输出 `blocked`，不得推断触发状态。
