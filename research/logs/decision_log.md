@@ -1476,3 +1476,23 @@
 - 生成文件：`research/portfolio/portfolio_snapshot_2026-06-04_092931.json`、`research/portfolio/portfolio_snapshot_2026-06-04_092931.md`、`research/checks/premarket_check_2026-06-04_092931.json`、`research/checks/premarket_check_2026-06-04_092931.md`
 - 新结论：当前权益约 54.97%，短融/现金约 44.99%；盘前状态 `risk_reduce_only`，只允许执行或监控既有减风险计划，不新增进攻仓。
 - 边界：本记录不生成新的买卖建议，不使用金额或股数。
+
+### 决策：生成 001280 中国铀业个股档案
+
+- 决策类型：stock_research
+- 变化类型：new_watchlist_profile
+- 标的/主题：001280.SZ 中国铀业；天然铀 / 核燃料 / 能源安全 / 稀有金属
+- 生成文件：`research/stocks/001280_中国铀业_2026-06-04_130308.md`、`research/stocks/001280_中国铀业_2026-06-04_130308.json`
+- 读取前置文件：`docs/DATA_SOURCES.md`、`docs/modules/STOCK_RESEARCH.md`、`research/market/market_score_2026-06-03_211833.json`、`research/themes/theme_registry.json`、`research/stocks/stock_registry.json`
+- 新结论：`001280` 已完成时间戳个股档案，操作评级 Watch，个股分数 52，评级 C；天然铀和核燃料战略地位强，2025 和 2026Q1 业绩增长，但上市样本短、绝对估值高、趋势弱、20/60日资金流代理净流出，因此仅作为观察输入。
+
+对仓位或操作的影响：
+
+- 本记录不生成买入、卖出、加仓、减仓或调仓动作。
+- 当前按 0% 观察标的登记；如后续进入组合或操作建议，必须由 `ACTION_PLAN` 单独处理。
+
+复盘入口：
+
+- 复盘日期：2026 中报、铀价显著变化、站上/跌破 20/60 日均线、主线研究新增核燃料/能源安全主题评级。
+- 成功标准：后续模块读取该档案，不把中国铀业仅按“资源概念”直接纳入买入建议。
+- 失败标准：后续建议绕过估值、趋势和新股样本风险，直接把该股当作进攻主线标的。

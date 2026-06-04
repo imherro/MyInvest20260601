@@ -1,0 +1,248 @@
+{
+  "module": "stock_research",
+  "version": "1.0",
+  "date": "2026-06-04",
+  "generated_at": "2026-06-04_130308",
+  "code": "001280.SZ",
+  "name": "中国铀业",
+  "amount_policy": "ratio_only; no holding market value; no cost amount; no profit amount; no share count",
+  "boundary": "Stock research dossier input; no portfolio-level buy/sell list and no rebalance action.",
+  "data_sources": [
+    "docs/modules/STOCK_RESEARCH.md",
+    "templates/stock_profile_template.md",
+    "docs/DATA_SOURCES.md",
+    "research/market/market_score_2026-06-03_211833.json",
+    "research/allocation/target_allocation_2026-06-03_211833.json",
+    "research/themes/theme_registry.json",
+    "research/stocks/stock_registry.json",
+    "Tushare: stock_basic, daily, daily_basic, moneyflow, income, balancesheet, cashflow, fina_indicator, fina_mainbz, index_daily",
+    "Sina/CNINFO mirror: 中国铀业2025年年度报告 https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12256605&stockid=001280",
+    "Sina/CNINFO mirror: 中国铀业2026年第一季度报告 https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12256577&stockid=001280",
+    "CNINFO prospectus PDF https://dataclouds.cninfo.com.cn/sjother/documents/2025/20250808/0785540997434e3e99c0bf2000530a82.pdf"
+  ],
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-03_211833.json",
+    "target_allocation": "research/allocation/target_allocation_2026-06-03_211833.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "stock_registry": "research/stocks/stock_registry.json"
+  },
+  "summary": {
+    "bucket_role": "观察股 / 资源能源安全主题候选",
+    "action_rating": "Watch",
+    "stock_score": 52,
+    "rating": "C",
+    "target_position_range": "No target position in this dossier; current holding ratio is 0% unless user adds it to portfolio.",
+    "confidence": "medium",
+    "one_line_conclusion": "中国铀业是天然铀和放射性共伴生矿产资源综合利用的战略资源公司，2025和2026Q1业绩继续增长，核燃料/能源安全逻辑强；但2025年12月才上市，交易样本短，PE(TTM)约88倍、PB约8.92倍，股价低于20/60日线且20/60日资金流代理净流出，当前只适合Watch。"
+  },
+  "basic_info": {
+    "stock_code": "001280.SZ",
+    "company_name": "中国铀业",
+    "area": "北京",
+    "industry": "小金属",
+    "market": "主板",
+    "list_date": "2025-12-03",
+    "related_theme": "天然铀 / 核燃料 / 能源安全 / 稀有金属",
+    "theme_rating": "未在当前theme_registry单独登记；可归入资源/能源安全观察主题，不属于当前A/B进攻主线",
+    "total_market_cap": "约1518.46亿元，来自Tushare daily_basic total_mv，非持仓金额",
+    "float_market_cap": "约127.55亿元，来自Tushare daily_basic circ_mv，非持仓金额",
+    "current_price": "73.42元，2026-06-03收盘",
+    "current_weight_pct_input": 0.0,
+    "cost_policy": "No position cost is recorded."
+  },
+  "position_role": {
+    "bucket_role": "观察股 / 资源能源安全主题候选",
+    "allocation_purpose": "研究观察天然铀、核燃料、能源安全和战略资源品暴露。",
+    "long_term_core": false,
+    "mainline_offensive": false,
+    "theme_trial": true,
+    "overlap_with_existing_holdings": "如果组合已有稀土、有色、稀有金属、能源或军工主题仓，应合并看资源和政策主题集中度。"
+  },
+  "business_logic": {
+    "long_term_logic": [
+      "公司主营天然铀资源采冶、销售及贸易，以及独居石、铀钼、钽铌等放射性共伴生矿产资源综合利用。",
+      "2025年外购天然铀产品销售收入约105.54亿元，自产天然铀产品销售收入约40.92亿元，国际天然铀贸易约31.02亿元；天然铀链条是收入主体。",
+      "公司实际控制人体系和核电客户链条决定其战略地位强，但也带来关联交易、政策和定价透明度约束。"
+    ],
+    "swing_logic": [
+      "上市仅约119个交易日，历史估值分位和趋势样本较短。",
+      "截至2026-06-03，收盘价低于20日线约5.77%、低于60日线约9.78%，近20日相对沪深300约-13.34pct。"
+    ],
+    "core_assumptions": [
+      "核电装机和核燃料需求长期增长。",
+      "天然铀价格和销售数量能够继续支撑利润。",
+      "公司能稳定推进海外矿山和共伴生矿综合利用项目。"
+    ],
+    "likely_failure_points": [
+      "铀价回落或核电换料节奏导致收入利润季度波动。",
+      "关联交易占比较高，市场化定价和客户集中需要持续复核。",
+      "海外矿山、汇率、地缘、监管和核安全因素均可能影响利润和估值。"
+    ]
+  },
+  "scores": {
+    "business_logic": {
+      "weight": 20,
+      "score": 18,
+      "evidence": "天然铀和核燃料供应链战略地位强，主营业务清晰。"
+    },
+    "industry_theme_fit": {
+      "weight": 15,
+      "score": 10,
+      "evidence": "能源安全和战略资源逻辑强，但当前项目主线登记册未将核燃料列为A/B交易主线。"
+    },
+    "financial_quality": {
+      "weight": 15,
+      "score": 10,
+      "evidence": "2025 ROE约11.94%，资产负债率约43.02%；但存货、应收和资本开支规模较大。"
+    },
+    "earnings_trend": {
+      "weight": 15,
+      "score": 12,
+      "evidence": "2025营收+15.14%、归母净利+12.82%；2026Q1营收+8.62%、归母净利+52.71%。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 3,
+      "evidence": "PE(TTM)约88.32、PB约8.92、PS(TTM)约7.53；上市样本短且绝对估值高。"
+    },
+    "trend_and_flow": {
+      "weight": 10,
+      "score": 3,
+      "evidence": "低于20/60日线，近20/60日资金流代理为净流出。"
+    },
+    "risk_control": {
+      "weight": 10,
+      "score": 6,
+      "evidence": "战略地位降低信用风险，但铀价、关联交易、海外矿山、汇率和监管风险复杂。"
+    },
+    "base_score": 62,
+    "stock_risk_penalty": {
+      "score": 10,
+      "evidence": "高绝对估值、新股样本短、弱趋势、资金净流出和关联交易/海外矿山风险扣分。"
+    },
+    "final_score": 52
+  },
+  "financials": {
+    "2025": {
+      "revenue_100m_cny": 198.94,
+      "parent_net_profit_100m_cny": 16.45,
+      "revenue_yoy_pct": 15.14,
+      "parent_net_profit_yoy_pct": 12.82,
+      "deducted_net_profit_yoy_pct": 18.49,
+      "gross_margin_pct": 19.83,
+      "net_margin_pct": 9.61,
+      "roe_pct": 11.94,
+      "debt_to_assets_pct": 43.02,
+      "operating_cashflow_100m_cny": -25.65,
+      "free_cashflow_100m_cny": -45.7,
+      "capex_100m_cny": 19.26
+    },
+    "2026Q1": {
+      "revenue_100m_cny": 35.65,
+      "parent_net_profit_100m_cny": 2.14,
+      "revenue_yoy_pct": 8.62,
+      "parent_net_profit_yoy_pct": 52.71,
+      "deducted_net_profit_yoy_pct": 69.82,
+      "gross_margin_pct": 17.52,
+      "net_margin_pct": 6.61,
+      "roe_yearly_pct": 5.05,
+      "debt_to_assets_pct": 41.39,
+      "operating_cashflow_100m_cny": 9.01,
+      "operating_cashflow_yoy_pct": 178.51,
+      "free_cashflow_100m_cny": 4.12,
+      "capex_100m_cny": 2.55
+    },
+    "balance_2026Q1": {
+      "total_assets_100m_cny": 314.08,
+      "total_liabilities_100m_cny": 129.98,
+      "equity_parent_100m_cny": 170.28,
+      "money_cap_100m_cny": 81.66,
+      "accounts_receivable_100m_cny": 28.11,
+      "inventory_100m_cny": 110.04,
+      "goodwill_100m_cny": 0.0
+    }
+  },
+  "business_mix_2025": {
+    "self_produced_uranium_sales_100m_cny": 40.92,
+    "self_produced_uranium_profit_100m_cny": 17.98,
+    "purchased_uranium_sales_100m_cny": 105.54,
+    "purchased_uranium_profit_100m_cny": 16.32,
+    "international_uranium_trade_sales_100m_cny": 31.02,
+    "international_uranium_trade_profit_100m_cny": 0.43,
+    "rare_earth_chloride_and_byproducts_sales_100m_cny": 12.2,
+    "rare_earth_chloride_and_byproducts_profit_100m_cny": 2.14,
+    "ammonium_tetramolybdate_sales_100m_cny": 4.22,
+    "ammonium_tetramolybdate_profit_100m_cny": 2.16,
+    "tantalum_niobium_oxide_sales_100m_cny": 2.59,
+    "tantalum_niobium_oxide_profit_100m_cny": 0.07
+  },
+  "valuation": {
+    "basis_date": "2026-06-03",
+    "sample_rows": 119,
+    "pe_ttm": 88.3165,
+    "pe_ttm_percentile_short_listing_sample": 0.2773,
+    "pb": 8.9176,
+    "pb_percentile_short_listing_sample": 0.2773,
+    "ps_ttm": 7.5257,
+    "ps_ttm_percentile_short_listing_sample": 0.2773,
+    "dividend_yield_ttm": null,
+    "conclusion": "Short listing sample makes percentile weak; absolute valuation is demanding."
+  },
+  "trend_and_flow": {
+    "basis_date": "2026-06-03",
+    "close": 73.42,
+    "sample_rows": 119,
+    "ret_5d_pct": -0.03,
+    "ret_10d_pct": -3.61,
+    "ret_20d_pct": -12.07,
+    "ret_60d_pct": -20.53,
+    "close_vs_ma5_pct": 1.17,
+    "close_vs_ma10_pct": -0.67,
+    "close_vs_ma20_pct": -5.77,
+    "close_vs_ma60_pct": -9.78,
+    "relative_to_csi300_5d_pct": -0.65,
+    "relative_to_csi300_10d_pct": -5.43,
+    "relative_to_csi300_20d_pct": -13.34,
+    "relative_to_csi300_60d_pct": -26.8,
+    "moneyflow_net_5d": 3722.98,
+    "moneyflow_net_20d": -81759.4,
+    "moneyflow_net_60d": -195951.66
+  },
+  "operation_conditions": {
+    "buy_conditions": [],
+    "add_conditions": [],
+    "hold_conditions": [
+      "As watchlist research input only; wait for price to regain MA20/60, moneyflow to repair, and valuation to become more reasonable."
+    ],
+    "reduce_conditions": [],
+    "sell_invalid_conditions": [
+      "Uranium price weakens or sales volume reverses, causing earnings growth to slow.",
+      "Price remains below MA20/60 and relative strength stays weak.",
+      "Related-party or overseas mine/FX risk materially increases."
+    ]
+  },
+  "position_advice_boundary": {
+    "this_dossier_action": "Watch",
+    "portfolio_action": "Not generated here",
+    "current_weight_pct_input": 0.0,
+    "notes": [
+      "No buy advice.",
+      "No add advice.",
+      "No sell advice.",
+      "No rebalance instruction."
+    ]
+  },
+  "data_gaps": [
+    "No long-term trading history because listed on 2025-12-03.",
+    "No independent uranium spot price time series was imported into this run.",
+    "No full peer valuation table was built.",
+    "Moneyflow uses Tushare raw proxy and is not equivalent to verified institutional flow."
+  ],
+  "next_review": {
+    "next_review_date": "After 2026 interim report, uranium price trend update, MA20/60 repair, or if user adds it to portfolio/watchlist action review.",
+    "success_criteria": [
+      "Downstream modules treat it as a watchlist research file only, not a buy instruction.",
+      "Any operation plan must independently check market gate and valuation/trend repair."
+    ]
+  }
+}
