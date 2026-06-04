@@ -1468,3 +1468,11 @@
 - 文件修复说明：决策日志曾记录 `target_allocation_2026-06-03_203156.md/json` 为修订版，但当前 `research/allocation/` 目录未发现对应文件，因此本次按最新可验证输入重新生成。
 - 新结论：推荐中枢为权益约 50%、`511360` / 现金短融约 50%；目标型可让现金短融保持 50%-53%。不新增进攻仓，不把释放资金换到新热点；优先压缩弱主题、弱趋势、高重叠个股。
 - 后续影响：后续实际持仓应先对照本参考表，再生成买卖动作；若已经执行此前全组合清单，应先回传最新仓位重算偏离。
+
+### 决策：生成 2026-06-04 盘前执行检查
+
+- 决策类型：premarket_check
+- 变化类型：new_snapshot_and_check
+- 生成文件：`research/portfolio/portfolio_snapshot_2026-06-04_092931.json`、`research/portfolio/portfolio_snapshot_2026-06-04_092931.md`、`research/checks/premarket_check_2026-06-04_092931.json`、`research/checks/premarket_check_2026-06-04_092931.md`
+- 新结论：当前权益约 54.97%，短融/现金约 44.99%；盘前状态 `risk_reduce_only`，只允许执行或监控既有减风险计划，不新增进攻仓。
+- 边界：本记录不生成新的买卖建议，不使用金额或股数。

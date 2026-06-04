@@ -1,0 +1,213 @@
+{
+  "module": "premarket_check",
+  "version": "1.0",
+  "date": "2026-06-04",
+  "session": "premarket",
+  "generated_at": "2026-06-04_092931",
+  "amount_policy": "ratio_only; no market_value; no cost_amount; no profit_amount; no share count",
+  "status": "risk_reduce_only",
+  "basis": "Uses 2026-06-03 close market score and user-provided 2026-06-04 current holdings snapshot.",
+  "read_files": {
+    "daily_process": "docs/DAILY_PROCESS.md",
+    "market_position": "research/market/market_score_2026-06-03_211833.json",
+    "target_allocation": "research/allocation/target_allocation_2026-06-03_211833.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-04_092931.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "stock_registry": "research/stocks/stock_registry.json",
+    "action_plan": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+    "decision_log": "research/logs/decision_log.md"
+  },
+  "summary": {
+    "one_line_conclusion": "今日盘前只允许执行既有减风险计划或观察，不允许新增进攻仓；当前权益约54.97%，高于45%-50%目标上沿，短融/现金约44.99%，低于50%-55%目标下沿。",
+    "allowed_actions": [
+      "执行或继续监控6月3日晚已生成的减风险执行包，释放比例进入511360/现金短融桶。",
+      "若盘中出现广度明显修复和风险偏好反转，暂停机械执行并转为review。",
+      "执行后权益接近50%或低于49%时停止追加减风险。"
+    ],
+    "forbidden_actions": [
+      "不新增进攻仓。",
+      "不新增C/D主题仓。",
+      "不把盘中单日反弹解释为主线升级。",
+      "不操作未建档标的。",
+      "不使用金额或股数生成执行计划。"
+    ]
+  },
+  "market_gate": {
+    "market_score_date": "2026-06-03",
+    "market_position_score": 46,
+    "equity_target_range": "45%-50%",
+    "bond_cash_target_range": "50%-55%",
+    "offensive_bucket_status": "只保留，不新增；等待回踩和宽度修复确认",
+    "conclusion": "pass_for_reduce_only; fail_for_new_offense"
+  },
+  "theme_gate": {
+    "theme_registry_date": "2026-06-01",
+    "temporary_rating_rewrite": false,
+    "conclusion": "Do not rewrite themes premarket. AI is long-term A but current stage divergence; semiconductor B divergence; commercial aerospace/theme buckets not offensive core."
+  },
+  "portfolio_gate": {
+    "current_equity_pct": 54.97,
+    "target_equity_range": "45%-50%",
+    "current_bond_cash_pct": 44.99,
+    "target_bond_cash_range": "50%-55%",
+    "planned_reduce_to_cash_pct": 5.33,
+    "estimated_post_execution_equity_pct": 49.64,
+    "estimated_post_execution_bond_cash_pct": 50.32,
+    "conclusion": "Current portfolio is above equity target; existing reduce-only package brings it back into range."
+  },
+  "action_gate": {
+    "latest_action_plan": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+    "action_plan_status": "usable_as_reduce_only_reference",
+    "execution_package_rebased_to_current_ratios": [
+      {
+        "code": "159378",
+        "name": "通用航空ETF永赢",
+        "current_weight_pct": 2.55,
+        "target_weight_pct": 1.2,
+        "planned_change_pct": -1.35,
+        "action": "reduce",
+        "destination": "511360_or_cash_short_duration_bucket"
+      },
+      {
+        "code": "512710",
+        "name": "军工龙头ETF富国",
+        "current_weight_pct": 2.23,
+        "target_weight_pct": 1.2,
+        "planned_change_pct": -1.03,
+        "action": "reduce",
+        "destination": "511360_or_cash_short_duration_bucket"
+      },
+      {
+        "code": "688439",
+        "name": "振华风光",
+        "current_weight_pct": 1.17,
+        "target_weight_pct": 0.5,
+        "planned_change_pct": -0.67,
+        "action": "reduce",
+        "destination": "511360_or_cash_short_duration_bucket"
+      },
+      {
+        "code": "603596",
+        "name": "伯特利",
+        "current_weight_pct": 1.73,
+        "target_weight_pct": 1.0,
+        "planned_change_pct": -0.73,
+        "action": "reduce",
+        "destination": "511360_or_cash_short_duration_bucket"
+      },
+      {
+        "code": "002920",
+        "name": "德赛西威",
+        "current_weight_pct": 2.38,
+        "target_weight_pct": 1.5,
+        "planned_change_pct": -0.88,
+        "action": "reduce",
+        "destination": "511360_or_cash_short_duration_bucket"
+      },
+      {
+        "code": "002625",
+        "name": "光启技术",
+        "current_weight_pct": 1.77,
+        "target_weight_pct": 1.1,
+        "planned_change_pct": -0.67,
+        "action": "reduce",
+        "destination": "511360_or_cash_short_duration_bucket"
+      }
+    ],
+    "conclusion": "Executable only as human-confirmed reduce-risk plan; no new trades are created by this premarket check."
+  },
+  "intraday_monitoring": [
+    {
+      "object": "权益总仓位",
+      "source": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "trigger": "权益仍高于50%且市场仓位分数仍为46",
+      "after_trigger_action": "只允许执行既有减风险计划，不新增进攻",
+      "manual_confirm": true
+    },
+    {
+      "object": "短融/现金桶 511360",
+      "source": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "trigger": "短融/现金低于50%",
+      "after_trigger_action": "弱项释放资金优先回到511360/现金短融桶",
+      "manual_confirm": true
+    },
+    {
+      "object": "市场宽度",
+      "source": "research/market/market_score_2026-06-03_211833.json",
+      "trigger": "上涨家数占比仍低于50%或下跌家数继续超过3000",
+      "after_trigger_action": "维持risk_reduce_only，不新增主题仓",
+      "manual_confirm": false
+    },
+    {
+      "object": "风险偏好反转",
+      "source": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "trigger": "若盘中出现放量普涨、上涨家数>50%、主线放量承接",
+      "after_trigger_action": "暂停机械执行，转review，等待盘后重算",
+      "manual_confirm": true
+    },
+    {
+      "object": "六项执行包",
+      "source": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "trigger": "执行后权益接近50%或低于49%",
+      "after_trigger_action": "立即停止追加减仓",
+      "manual_confirm": true
+    },
+    {
+      "object": "159378 通用航空ETF永赢",
+      "source": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "trigger": "沿用6月3日晚已生成的减风险执行包；盘前只检查是否仍在仓位目标之外",
+      "after_trigger_action": "execute_after_human_confirm_or_wait",
+      "manual_confirm": true,
+      "planned_change_pct": -1.35
+    },
+    {
+      "object": "512710 军工龙头ETF富国",
+      "source": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "trigger": "沿用6月3日晚已生成的减风险执行包；盘前只检查是否仍在仓位目标之外",
+      "after_trigger_action": "execute_after_human_confirm_or_wait",
+      "manual_confirm": true,
+      "planned_change_pct": -1.03
+    },
+    {
+      "object": "688439 振华风光",
+      "source": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "trigger": "沿用6月3日晚已生成的减风险执行包；盘前只检查是否仍在仓位目标之外",
+      "after_trigger_action": "execute_after_human_confirm_or_wait",
+      "manual_confirm": true,
+      "planned_change_pct": -0.67
+    },
+    {
+      "object": "603596 伯特利",
+      "source": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "trigger": "沿用6月3日晚已生成的减风险执行包；盘前只检查是否仍在仓位目标之外",
+      "after_trigger_action": "execute_after_human_confirm_or_wait",
+      "manual_confirm": true,
+      "planned_change_pct": -0.73
+    },
+    {
+      "object": "002920 德赛西威",
+      "source": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "trigger": "沿用6月3日晚已生成的减风险执行包；盘前只检查是否仍在仓位目标之外",
+      "after_trigger_action": "execute_after_human_confirm_or_wait",
+      "manual_confirm": true,
+      "planned_change_pct": -0.88
+    },
+    {
+      "object": "002625 光启技术",
+      "source": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "trigger": "沿用6月3日晚已生成的减风险执行包；盘前只检查是否仍在仓位目标之外",
+      "after_trigger_action": "execute_after_human_confirm_or_wait",
+      "manual_confirm": true,
+      "planned_change_pct": -0.67
+    }
+  ],
+  "blocked_research_first": [],
+  "module_handoff": {
+    "market_position": "No update required premarket unless 2026-06-04 intraday breadth/turnover materially invalidates 2026-06-03 close report.",
+    "theme_research": "No premarket rewrite. Review only if hard upgrade/downgrade triggers occur.",
+    "action_plan": "Use existing 2026-06-03 full portfolio final plan as reduce-only reference; refresh after execution or if invalidation triggers occur.",
+    "intraday_alerts": "Monitor breadth, cash bucket, equity target and execution-package stop conditions."
+  },
+  "decision_log_entry": "2026-06-04 盘前执行检查：保存用户提供的比例口径持仓快照 research/portfolio/portfolio_snapshot_2026-06-04_092931.json；当前权益约54.97%、短融/现金约44.99%，高于2026-06-03盘后目标权益45%-50%；盘前状态risk_reduce_only，只允许执行或监控既有减风险计划，不新增进攻仓。"
+}

@@ -1,0 +1,451 @@
+{
+  "module": "portfolio_snapshot",
+  "version": "2026-06-04_ratio_only_current_holding",
+  "date": "2026-06-04",
+  "generated_at": "2026-06-04_092931",
+  "source": "user_provided_current_holdings_message",
+  "amount_policy": "ratio_only; no market_value; no cost_amount; no profit_amount; no share count saved",
+  "summary": {
+    "total_items": 37,
+    "equity_weight_pct": 54.97,
+    "bond_cash_weight_pct": 44.99,
+    "weight_sum_pct": 99.96,
+    "one_line_conclusion": "当前短融/现金桶约44.99%，权益约55.01%，高于2026-06-03盘后目标权益45%-50%。"
+  },
+  "category_summary": {
+    "technology": 0.36,
+    "technology_terminal": 1.42,
+    "high_end_equipment": 0.03,
+    "defensive": 3.45,
+    "resources": 6.2,
+    "theme": 2.0,
+    "hk_cn_tech": 2.28,
+    "bond_cash": 44.99,
+    "power_equipment": 0.87,
+    "core_quality": 4.59,
+    "military_low_altitude": 9.76,
+    "financial": 8.97,
+    "core_quality_logistics": 1.98,
+    "medicine": 6.72,
+    "auto": 4.11,
+    "other": 2.23
+  },
+  "target_allocation_lens": {
+    "511360_cash_short_duration": 44.99,
+    "core_quality_cashflow": 6.57,
+    "defensive_dividend_utility": 3.45,
+    "ab_tech_watch": 2.68,
+    "financial": 8.97,
+    "medicine_innovation": 6.72,
+    "resources_rare_metals": 6.2,
+    "military_low_altitude_satellite": 9.76,
+    "auto_logistics_watch": 6.09,
+    "hk_cn_tech": 2.28,
+    "other_theme_misc": 4.23
+  },
+  "holdings": [
+    {
+      "code": "159819",
+      "name": "人工智能ETF易方达",
+      "type": "ETF",
+      "weight_pct": 0.02,
+      "day_change_pct": -1.62,
+      "reference_pnl_pct": 296.245,
+      "category": "technology"
+    },
+    {
+      "code": "588200",
+      "name": "科创芯片ETF嘉实",
+      "type": "ETF",
+      "weight_pct": 0.17,
+      "day_change_pct": -2.13,
+      "reference_pnl_pct": 108.532,
+      "category": "technology"
+    },
+    {
+      "code": "002241",
+      "name": "歌尔股份",
+      "type": "stock",
+      "weight_pct": 1.42,
+      "day_change_pct": -1.9,
+      "reference_pnl_pct": 39.531,
+      "category": "technology_terminal"
+    },
+    {
+      "code": "159667",
+      "name": "工业母机ETF国泰",
+      "type": "ETF",
+      "weight_pct": 0.03,
+      "day_change_pct": -1.79,
+      "reference_pnl_pct": 15.855,
+      "category": "high_end_equipment"
+    },
+    {
+      "code": "159558",
+      "name": "半导体设备ETF易方达",
+      "type": "ETF",
+      "weight_pct": 0.17,
+      "day_change_pct": -2.03,
+      "reference_pnl_pct": 6.932,
+      "category": "technology"
+    },
+    {
+      "code": "510880",
+      "name": "红利ETF华泰柏瑞",
+      "type": "ETF",
+      "weight_pct": 2.92,
+      "day_change_pct": -0.18,
+      "reference_pnl_pct": 4.583,
+      "category": "defensive"
+    },
+    {
+      "code": "159301",
+      "name": "公用事业ETF华夏",
+      "type": "ETF",
+      "weight_pct": 0.53,
+      "day_change_pct": -0.36,
+      "reference_pnl_pct": 3.645,
+      "category": "defensive"
+    },
+    {
+      "code": "512400",
+      "name": "有色金属ETF南方",
+      "type": "ETF",
+      "weight_pct": 1.64,
+      "day_change_pct": -1.38,
+      "reference_pnl_pct": 0.587,
+      "category": "resources"
+    },
+    {
+      "code": "562500",
+      "name": "机器人ETF华夏",
+      "type": "ETF",
+      "weight_pct": 0.35,
+      "day_change_pct": -1.42,
+      "reference_pnl_pct": 0.57,
+      "category": "theme"
+    },
+    {
+      "code": "513050",
+      "name": "中概互联网ETF易方达",
+      "type": "ETF",
+      "weight_pct": 0.64,
+      "day_change_pct": -1.04,
+      "reference_pnl_pct": 0.422,
+      "category": "hk_cn_tech"
+    },
+    {
+      "code": "511360",
+      "name": "短融ETF海富通",
+      "type": "ETF",
+      "weight_pct": 44.99,
+      "day_change_pct": 0.01,
+      "reference_pnl_pct": 0.047,
+      "category": "bond_cash"
+    },
+    {
+      "code": "159326",
+      "name": "电网设备ETF华夏",
+      "type": "ETF",
+      "weight_pct": 0.87,
+      "day_change_pct": -0.72,
+      "reference_pnl_pct": -1.297,
+      "category": "power_equipment"
+    },
+    {
+      "code": "513180",
+      "name": "恒生科技ETF华夏",
+      "type": "ETF",
+      "weight_pct": 1.64,
+      "day_change_pct": -1.25,
+      "reference_pnl_pct": -3.3,
+      "category": "hk_cn_tech"
+    },
+    {
+      "code": "159201",
+      "name": "自由现金流ETF华夏",
+      "type": "ETF",
+      "weight_pct": 4.59,
+      "day_change_pct": -0.25,
+      "reference_pnl_pct": -3.423,
+      "category": "core_quality"
+    },
+    {
+      "code": "688333",
+      "name": "西安铂力特",
+      "type": "stock",
+      "weight_pct": 1.33,
+      "day_change_pct": -1.79,
+      "reference_pnl_pct": -4.085,
+      "category": "military_low_altitude"
+    },
+    {
+      "code": "512880",
+      "name": "证券ETF国泰",
+      "type": "ETF",
+      "weight_pct": 1.26,
+      "day_change_pct": -0.68,
+      "reference_pnl_pct": -6.808,
+      "category": "financial"
+    },
+    {
+      "code": "159842",
+      "name": "券商ETF银华",
+      "type": "ETF",
+      "weight_pct": 4.38,
+      "day_change_pct": -0.61,
+      "reference_pnl_pct": -8.358,
+      "category": "financial"
+    },
+    {
+      "code": "516150",
+      "name": "稀土ETF嘉实",
+      "type": "ETF",
+      "weight_pct": 3.71,
+      "day_change_pct": -0.97,
+      "reference_pnl_pct": -8.771,
+      "category": "resources"
+    },
+    {
+      "code": "002352",
+      "name": "顺丰控股",
+      "type": "stock",
+      "weight_pct": 1.98,
+      "day_change_pct": -0.46,
+      "reference_pnl_pct": -9.079,
+      "category": "core_quality_logistics"
+    },
+    {
+      "code": "300760",
+      "name": "迈瑞医疗",
+      "type": "stock",
+      "weight_pct": 0.35,
+      "day_change_pct": -0.87,
+      "reference_pnl_pct": -9.263,
+      "category": "medicine"
+    },
+    {
+      "code": "603596",
+      "name": "伯特利",
+      "type": "stock",
+      "weight_pct": 1.73,
+      "day_change_pct": -0.77,
+      "reference_pnl_pct": -10.795,
+      "category": "auto"
+    },
+    {
+      "code": "159378",
+      "name": "通用航空ETF永赢",
+      "type": "ETF",
+      "weight_pct": 2.55,
+      "day_change_pct": -0.34,
+      "reference_pnl_pct": -11.879,
+      "category": "military_low_altitude"
+    },
+    {
+      "code": "562800",
+      "name": "稀有金属ETF嘉实",
+      "type": "ETF",
+      "weight_pct": 0.85,
+      "day_change_pct": -1.21,
+      "reference_pnl_pct": -11.965,
+      "category": "resources"
+    },
+    {
+      "code": "603087",
+      "name": "甘李药业",
+      "type": "stock",
+      "weight_pct": 1.06,
+      "day_change_pct": 0.09,
+      "reference_pnl_pct": -13.033,
+      "category": "medicine"
+    },
+    {
+      "code": "512070",
+      "name": "证券保险ETF易方达",
+      "type": "ETF",
+      "weight_pct": 3.33,
+      "day_change_pct": -0.53,
+      "reference_pnl_pct": -13.746,
+      "category": "financial"
+    },
+    {
+      "code": "513120",
+      "name": "港股创新药ETF广发",
+      "type": "ETF",
+      "weight_pct": 1.28,
+      "day_change_pct": 0.48,
+      "reference_pnl_pct": -14.573,
+      "category": "medicine"
+    },
+    {
+      "code": "159206",
+      "name": "卫星ETF永赢",
+      "type": "ETF",
+      "weight_pct": 0.1,
+      "day_change_pct": -1.4,
+      "reference_pnl_pct": -14.955,
+      "category": "military_low_altitude"
+    },
+    {
+      "code": "002625",
+      "name": "光启技术",
+      "type": "stock",
+      "weight_pct": 1.77,
+      "day_change_pct": -1.55,
+      "reference_pnl_pct": -16.065,
+      "category": "military_low_altitude"
+    },
+    {
+      "code": "300627",
+      "name": "华测导航",
+      "type": "stock",
+      "weight_pct": 0.61,
+      "day_change_pct": -0.44,
+      "reference_pnl_pct": -16.675,
+      "category": "military_low_altitude"
+    },
+    {
+      "code": "512710",
+      "name": "军工龙头ETF富国",
+      "type": "ETF",
+      "weight_pct": 2.23,
+      "day_change_pct": -0.73,
+      "reference_pnl_pct": -16.901,
+      "category": "military_low_altitude"
+    },
+    {
+      "code": "002920",
+      "name": "德赛西威",
+      "type": "stock",
+      "weight_pct": 2.38,
+      "day_change_pct": -0.91,
+      "reference_pnl_pct": -17.46,
+      "category": "auto"
+    },
+    {
+      "code": "688439",
+      "name": "振华风光",
+      "type": "stock",
+      "weight_pct": 1.17,
+      "day_change_pct": -1.38,
+      "reference_pnl_pct": -17.92,
+      "category": "military_low_altitude"
+    },
+    {
+      "code": "159992",
+      "name": "创新药ETF银华",
+      "type": "ETF",
+      "weight_pct": 4.03,
+      "day_change_pct": -0.41,
+      "reference_pnl_pct": -20.21,
+      "category": "medicine"
+    },
+    {
+      "code": "002258",
+      "name": "利尔化学",
+      "type": "stock",
+      "weight_pct": 1.21,
+      "day_change_pct": 0.46,
+      "reference_pnl_pct": -21.08,
+      "category": "other"
+    },
+    {
+      "code": "002041",
+      "name": "登海种业",
+      "type": "stock",
+      "weight_pct": 0.61,
+      "day_change_pct": -0.57,
+      "reference_pnl_pct": -22.537,
+      "category": "other"
+    },
+    {
+      "code": "159869",
+      "name": "游戏ETF华夏",
+      "type": "ETF",
+      "weight_pct": 1.65,
+      "day_change_pct": -0.36,
+      "reference_pnl_pct": -22.54,
+      "category": "theme"
+    },
+    {
+      "code": "603903",
+      "name": "中持股份",
+      "type": "stock",
+      "weight_pct": 0.41,
+      "day_change_pct": -0.09,
+      "reference_pnl_pct": -22.673,
+      "category": "other"
+    }
+  ],
+  "execution_package_rebased_to_current_ratios": [
+    {
+      "code": "159378",
+      "name": "通用航空ETF永赢",
+      "current_weight_pct": 2.55,
+      "target_weight_pct": 1.2,
+      "planned_change_pct": -1.35,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket"
+    },
+    {
+      "code": "512710",
+      "name": "军工龙头ETF富国",
+      "current_weight_pct": 2.23,
+      "target_weight_pct": 1.2,
+      "planned_change_pct": -1.03,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket"
+    },
+    {
+      "code": "688439",
+      "name": "振华风光",
+      "current_weight_pct": 1.17,
+      "target_weight_pct": 0.5,
+      "planned_change_pct": -0.67,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket"
+    },
+    {
+      "code": "603596",
+      "name": "伯特利",
+      "current_weight_pct": 1.73,
+      "target_weight_pct": 1.0,
+      "planned_change_pct": -0.73,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket"
+    },
+    {
+      "code": "002920",
+      "name": "德赛西威",
+      "current_weight_pct": 2.38,
+      "target_weight_pct": 1.5,
+      "planned_change_pct": -0.88,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket"
+    },
+    {
+      "code": "002625",
+      "name": "光启技术",
+      "current_weight_pct": 1.77,
+      "target_weight_pct": 1.1,
+      "planned_change_pct": -0.67,
+      "action": "reduce",
+      "destination": "511360_or_cash_short_duration_bucket"
+    }
+  ],
+  "post_execution_estimate_if_package_completed": {
+    "planned_reduction_to_511360_or_cash_pct": 5.33,
+    "estimated_equity_pct": 49.64,
+    "estimated_bond_cash_pct": 50.32
+  },
+  "data_excluded": [
+    "market_value",
+    "cost_price",
+    "profit_amount",
+    "day_profit_amount",
+    "shares",
+    "available_shares",
+    "frozen_shares"
+  ]
+}
