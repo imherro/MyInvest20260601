@@ -35,6 +35,54 @@ ZONE_LABELS = {
     "crowded_risk": "拥挤/风险区",
 }
 
+BUCKETS = {
+    "cash_short": {"label": "现金/短融", "color": "#5b6b7a"},
+    "core_base": {"label": "宽基/核心底仓", "color": "#2f6fbd"},
+    "attack_mainline": {"label": "进攻主线仓", "color": "#8b5cf6"},
+    "defense": {"label": "防御仓", "color": "#0f8b6f"},
+    "legacy_watch": {"label": "其他/待清理", "color": "#9a6700"},
+}
+
+BUCKET_BY_CODE = {
+    "510300": "core_base",
+    "510500": "core_base",
+    "159915": "core_base",
+    "159201": "core_base",
+    "002352": "core_base",
+    "159819": "attack_mainline",
+    "588200": "attack_mainline",
+    "159558": "attack_mainline",
+    "001280": "attack_mainline",
+    "159326": "attack_mainline",
+    "159667": "attack_mainline",
+    "002241": "attack_mainline",
+    "510880": "defense",
+    "159301": "defense",
+    "601318": "defense",
+    "512880": "defense",
+    "159842": "defense",
+    "512070": "defense",
+    "159992": "defense",
+    "513120": "defense",
+    "603087": "defense",
+    "300760": "defense",
+    "511360": "cash_short",
+}
+
+SNAPSHOT_CATEGORY_BUCKET = {
+    "bond_cash": "cash_short",
+    "core_quality": "core_base",
+    "core_quality_logistics": "core_base",
+    "technology": "attack_mainline",
+    "technology_terminal": "attack_mainline",
+    "high_end_equipment": "attack_mainline",
+    "power_equipment": "attack_mainline",
+    "resources": "attack_mainline",
+    "defensive": "defense",
+    "financial": "defense",
+    "medicine": "defense",
+}
+
 
 @dataclass(frozen=True)
 class Target:
@@ -183,6 +231,167 @@ def latest_portfolio_weights() -> dict[str, float]:
         if code and weight is not None:
             weights[code] = weight
     return weights
+
+
+def latest_file(directory: Path, pattern: str) -> Path | None:
+    files = sorted(directory.glob(pattern), key=lambda p: p.stat().st_mtime, reverse=True)
+    return files[0] if files else None
+
+
+def parse_pct_text(value: Any, fallback: float) -> float:
+    if value is None:
+        return fallback
+    text = str(value).replace("%", "").strip()
+    try:
+        return float(text)
+    except ValueError:
+        return fallback
+
+
+def bucket_for_code(code: str) -> str:
+    plain = code.split(".")[0]
+    return BUCKET_BY_CODE.get(plain, "legacy_watch")
+
+
+def latest_portfolio_snapshot() -> tuple[dict[str, Any], Path | None]:
+    path = latest_file(PORTFOLIO_DIR, "portfolio_snapshot_*.json")
+    if path is None:
+        return {}, None
+    return read_json(path, {}), path
+
+
+def latest_target_allocation() -> tuple[dict[str, Any], Path | None]:
+    path = latest_file(ROOT / "research" / "allocation", "target_allocation_*.json")
+    if path is None:
+        return {}, None
+    return read_json(path, {}), path
+
+
+def build_allocation_map() -> dict[str, Any]:
+    allocation, allocation_path = latest_target_allocation()
+    snapshot, snapshot_path = latest_portfolio_snapshot()
+    summary = allocation.get("summary", {})
+    equity_target = parse_pct_text(summary.get("recommended_equity_center"), 50.0)
+    cash_target = parse_pct_text(summary.get("recommended_bond_cash_center"), 100.0 - equity_target)
+    category_summary = snapshot.get("category_summary", {})
+
+    actual_by_bucket = {key: 0.0 for key in BUCKETS}
+    for category, weight in category_summary.items():
+        bucket = SNAPSHOT_CATEGORY_BUCKET.get(category, "legacy_watch")
+        actual_by_bucket[bucket] += float(weight or 0)
+    if not category_summary:
+        for item in snapshot.get("holdings", []):
+            code = str(item.get("code", "")).strip()
+            bucket = bucket_for_code(code)
+            actual_by_bucket[bucket] += float(item.get("weight_pct") or 0)
+
+    target_by_bucket = {
+        "cash_short": round(cash_target, 2),
+        "core_base": round(equity_target * 0.40, 2),
+        "attack_mainline": round(equity_target * 0.40, 2),
+        "defense": round(equity_target * 0.20, 2),
+        "legacy_watch": 0.0,
+    }
+    buckets = []
+    for key in ["cash_short", "core_base", "attack_mainline", "defense", "legacy_watch"]:
+        meta = BUCKETS[key]
+        actual = round(actual_by_bucket.get(key, 0.0), 2)
+        target = target_by_bucket[key]
+        buckets.append(
+            {
+                "key": key,
+                "label": meta["label"],
+                "color": meta["color"],
+                "target_pct": target,
+                "actual_pct": actual,
+                "gap_pct": round(actual - target, 2),
+                "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。",
+            }
+        )
+    return {
+        "basis": "latest_target_allocation_and_portfolio_snapshot",
+        "target_allocation_file": rel_path(allocation_path) if allocation_path else None,
+        "portfolio_snapshot_file": rel_path(snapshot_path) if snapshot_path else None,
+        "target_equity_pct": round(equity_target, 2),
+        "target_cash_short_pct": round(cash_target, 2),
+        "actual_equity_pct": round(100.0 - actual_by_bucket.get("cash_short", 0.0), 2),
+        "actual_cash_short_pct": round(actual_by_bucket.get("cash_short", 0.0), 2),
+        "bucket_model": "现金短融 + 权益内 40%核心/40%进攻/20%防御；实际组合多余部分进入其他/待清理。",
+        "buckets": buckets,
+    }
+
+
+def trend_label(change_pct: float, up: float, down: float) -> tuple[str, str]:
+    if change_pct >= up:
+        return "上行", "#16a34a"
+    if change_pct <= -down:
+        return "下行", "#dc2626"
+    return "震荡", "#f59e0b"
+
+
+def build_trend_visual(close_series: pd.Series, date_series: pd.Series | None = None) -> dict[str, Any]:
+    clean = pd.to_numeric(close_series, errors="coerce").dropna().reset_index(drop=True)
+    if clean.empty:
+        return {"available": False, "reason": "missing close series"}
+    current = float(clean.iloc[-1])
+
+    def change_for(window: int) -> float | None:
+        if len(clean) <= window:
+            return None
+        base = float(clean.iloc[-window - 1])
+        return round((current / base - 1) * 100, 2) if base else None
+
+    trend_windows = [
+        ("long", "长期", 250, 10.0, 10.0),
+        ("mid", "中期", 60, 6.0, 6.0),
+        ("short", "短期", 20, 3.0, 3.0),
+    ]
+    trends = []
+    for key, label, window, up, down in trend_windows:
+        change = change_for(window)
+        if change is None:
+            trends.append({"key": key, "label": label, "state": "样本不足", "color": "#94a3b8", "change_pct": None, "window_days": window})
+            continue
+        state, color = trend_label(change, up, down)
+        trends.append({"key": key, "label": label, "state": state, "color": color, "change_pct": change, "window_days": window})
+
+    rolling_high = clean.rolling(120, min_periods=20).max()
+    rolling_low = clean.rolling(120, min_periods=20).min()
+    drawdowns = (clean / rolling_high - 1) * 100
+    rebounds = (clean / rolling_low - 1) * 100
+    sample_high_idx = int(clean.idxmax())
+    sample_low_idx = int(clean.idxmin())
+
+    def date_at(idx: int) -> str | None:
+        if date_series is None or len(date_series) <= idx:
+            return None
+        return str(date_series.reset_index(drop=True).iloc[idx])
+
+    current_drawdown = round((current / float(clean.max()) - 1) * 100, 2)
+    current_rebound = round((current / float(clean.min()) - 1) * 100, 2)
+    common_drawdown = round(float(drawdowns.dropna().quantile(0.25)), 2) if not drawdowns.dropna().empty else None
+    deep_drawdown = round(float(drawdowns.dropna().quantile(0.10)), 2) if not drawdowns.dropna().empty else None
+    common_rebound = round(float(rebounds.dropna().quantile(0.50)), 2) if not rebounds.dropna().empty else None
+    strong_rebound = round(float(rebounds.dropna().quantile(0.80)), 2) if not rebounds.dropna().empty else None
+    return {
+        "available": True,
+        "current": round(current, 4),
+        "trends": trends,
+        "drawdown": {
+            "from_sample_high_pct": current_drawdown,
+            "sample_high": round(float(clean.max()), 4),
+            "sample_high_date": date_at(sample_high_idx),
+            "common_120d_drawdown_pct": common_drawdown,
+            "deep_120d_drawdown_pct": deep_drawdown,
+        },
+        "rebound": {
+            "from_sample_low_pct": current_rebound,
+            "sample_low": round(float(clean.min()), 4),
+            "sample_low_date": date_at(sample_low_idx),
+            "common_120d_rebound_pct": common_rebound,
+            "strong_120d_rebound_pct": strong_rebound,
+        },
+    }
 
 
 def fund_daily(pro: Any, code: str, start: str, end: str) -> pd.DataFrame:
@@ -361,6 +570,7 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
     index_val = index_valuation(pro, target.benchmark, start, end) if target.benchmark else {"available": False, "reason": "theme index valuation not mapped"}
     ma20 = round(float(daily["close"].tail(20).mean()), 4)
     ma60 = round(float(daily["close"].tail(60).mean()), 4) if len(daily) >= 60 else None
+    trend_visual = build_trend_visual(daily["close"], daily["trade_date"])
     nav_latest = None if nav.empty else finite(nav.iloc[-1].get("unit_nav"))
     premium_discount = round((current / nav_latest - 1) * 100, 2) if nav_latest else None
     code_plain = target.code.split(".")[0]
@@ -408,6 +618,13 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
             "current_position_pct": weights.get(code_plain, 0),
             "target_position_range": target.target_position_range,
             "valuation_visual": None,
+            "trend_visual": trend_visual,
+            "risk_markers": {
+                "support": {"label": "风控位", "value": zones[0]["max"], "color": "#2563eb", "shape": "triangle"},
+                "right_confirm": {"label": "右侧确认", "value": ma60, "color": "#06b6d4", "shape": "diamond"},
+                "risk_zone_start": {"label": "风险区起点", "value": zones[3]["min"], "color": "#dc2626", "shape": "flag"},
+            },
+            "allocation_bucket": bucket_for_code(target.code),
         },
         "data_gaps": data_gaps,
         "source": {
@@ -427,6 +644,7 @@ def make_report_for_stock(pro: Any, target: Target, start: str, end: str, timest
     latest = df.iloc[-1]
     ma20 = round(float(df["close"].tail(20).mean()), 4)
     ma60 = round(float(df["close"].tail(60).mean()), 4) if len(df) >= 60 else None
+    trend_visual = build_trend_visual(df["close"], df["trade_date"])
     mf5, mf20 = moneyflow_sums(pro, target.code, end)
     code_plain = target.code.split(".")[0]
     metrics = []
@@ -486,6 +704,13 @@ def make_report_for_stock(pro: Any, target: Target, start: str, end: str, timest
             "current_position_pct": weights.get(code_plain, 0),
             "target_position_range": target.target_position_range,
             "valuation_visual": None,
+            "trend_visual": trend_visual,
+            "risk_markers": {
+                "support": {"label": "风控位", "value": zones[0]["max"], "color": "#2563eb", "shape": "triangle"},
+                "right_confirm": {"label": "右侧确认", "value": ma60, "color": "#06b6d4", "shape": "diamond"},
+                "risk_zone_start": {"label": "风险区起点", "value": zones[3]["min"], "color": "#dc2626", "shape": "flag"},
+            },
+            "allocation_bucket": bucket_for_code(target.code),
         },
         "data_gaps": data_gaps,
         "source": {
@@ -525,6 +750,7 @@ def alert_rules_for_report(report: dict[str, Any], md_path: Path, json_path: Pat
         "source_report": rel_path(md_path),
         "group": report["group"],
         "role": report["role"],
+        "allocation_bucket": ref.get("allocation_bucket", bucket_for_code(report["code"])),
         "ideal_position_range": ref.get("target_position_range"),
         "reference_metrics": ref,
         "rules": [
@@ -580,6 +806,7 @@ def sync_intraday_rules(reports: list[tuple[dict[str, Any], Path, Path]]) -> Non
                 "manual_confirmation_required": True,
             },
         ),
+        "allocation_map": build_allocation_map(),
         "subjects": [alert_rules_for_report(report, md_path, json_path) for report, md_path, json_path in reports],
     }
     write_json(ALERT_RULES, rules)

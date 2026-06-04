@@ -258,6 +258,10 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
                 "moneyflow_20d": quote.get("moneyflow_20d"),
                 "qmt_timetag": quote.get("qmt_timetag"),
                 "valuation_visual": quote.get("valuation_visual"),
+                "trend_visual": quote.get("trend_visual"),
+                "risk_markers": quote.get("risk_markers"),
+                "position_visual": quote.get("position_visual"),
+                "allocation_bucket": quote.get("allocation_bucket"),
             }
         )
         for rule in subject.get("rules", []):

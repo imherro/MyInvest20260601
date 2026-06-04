@@ -1607,3 +1607,19 @@
 - 当前 ETF 估值分段中，主题 ETF 主要是价格/净值位置代理，不等于真实长期指数估值。
 - 拥挤/风险区提醒不等于卖出；低估观察区提醒不等于买入。
 - 所有实际买卖动作仍必须由 ACTION_PLAN 结合市场仓位、组合暴露、趋势和盘中触发生成。
+
+### 决策：升级盘中作战地图为图示化仓位与趋势面板
+
+- 决策类型：intraday_dashboard_visual_upgrade
+- 变化类型：valuation_markers_trend_drawdown_allocation_map
+- 更新文件：`scripts/intraday_dashboard.py`、`scripts/generate_valuation_reports.py`、`scripts/intraday_monitor.py`、`docs/modules/INTRADAY_ALERTS.md`、`research/alerts/intraday_rules.json`
+- 新生成文件：`research/valuations/valuation_*_2026-06-04_153212.md/json`
+- 新结论：盘中窗口不再以成交额、涨跌幅、MA20、MA60 表格字段为主，而是以理想仓位底图、估值作战带、风控位、右侧确认位、长/中/短趋势、前高回撤、前低反弹和仓位偏离图示为主。
+- 仓位底图：读取最新目标仓位与组合快照，当前规则底图为目标权益 47.5%、现金/短融 52.5%；权益内按 40% 核心底仓、40% 进攻主线仓、20% 防御仓换算，并额外显示其他/待清理桶。
+- 图示标记：黑色竖线表示实时价格位置；蓝色三角表示风控位；青色菱形表示右侧确认；红色竖线表示风险区起点。
+- 验证结果：`py -3.11 scripts\intraday_dashboard.py --once-json` 成功读取 7 个标的 QMT 实时行情，并输出仓位底图、趋势、回撤/反弹、风控标记和触发状态。
+
+边界：
+
+- 风控位、右侧确认和风险区只触发复核，不代表自动买卖。
+- 趋势和回撤数据由每日估值规则生成脚本固化；盘中窗口只做高频读取和绘图，不调用大模型、不临时生成新策略。
