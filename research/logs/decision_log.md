@@ -1590,3 +1590,20 @@
 
 - 下一步应把更多持仓 ETF、重点指数和重点观察股加入 `intraday_rules.json`，并把理想仓位区间从最新 `research/allocation/` 自动读取，而不是在规则中手工维护。
 - 后续 UI 可继续增加分组热力图、权益实际 vs 理想偏离条、触发历史曲线和声音/桌面通知。
+
+### 决策：新增估值研究模块并接入盘中估值分段图示
+
+- 决策类型：valuation_research_and_intraday_visual
+- 变化类型：new_module_and_dashboard_upgrade
+- 更新规则：个股/ETF档案必须给估值区间或估值锚，但不直接生成组合级买卖指令；每日估值分段由 `docs/modules/VALUATION_RESEARCH.md` 和 `research/valuations/valuation_*.md/json` 管理；ACTION_PLAN 决定最终交易动作。
+- 生成文件：`research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-04_150218.md/json`、`research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-04_150218.md/json`、`research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-04_150218.md/json`、`research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-04_150218.md/json`、`research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-04_150218.md/json`、`research/valuations/valuation_001280_SZ_中国铀业_2026-06-04_150218.md/json`、`research/valuations/valuation_601318_SH_中国平安_2026-06-04_150218.md/json`
+- 更新文件：`docs/modules/VALUATION_RESEARCH.md`、`docs/modules/ETF_RESEARCH.md`、`docs/modules/STOCK_RESEARCH.md`、`templates/etf_profile_template.md`、`templates/stock_profile_template.md`、`scripts/generate_valuation_reports.py`、`scripts/intraday_dashboard.py`、`scripts/intraday_monitor.py`、`scripts/project_check.py`、`research/alerts/intraday_rules.json`
+- 新结论：宽基 ETF 优先使用跟踪指数估值和 ETF 价格/净值位置；主题 ETF 如缺少长期指数估值，降级为 ETF 价格/净值位置代理；个股使用 PE/PB/PS 历史分位映射价格区间。所有估值报告输出四段：低估观察区、合理配置区、偏贵区、拥挤/风险区。
+- 盘中影响：`intraday_rules.json` 已扩展为 7 个标的，盘中作战地图新增彩色估值分段条，并用实时 QMT 价格标记当前位置。
+- 验证结果：2026-06-04 15:00 左右，QMT 成功读取 510300、510500、159915、159558、588200、001280、601318；当前宽基与半导体类 ETF 触发拥挤/风险区复核，中国铀业和中国平安处于合理配置区。
+
+边界：
+
+- 当前 ETF 估值分段中，主题 ETF 主要是价格/净值位置代理，不等于真实长期指数估值。
+- 拥挤/风险区提醒不等于卖出；低估观察区提醒不等于买入。
+- 所有实际买卖动作仍必须由 ACTION_PLAN 结合市场仓位、组合暴露、趋势和盘中触发生成。

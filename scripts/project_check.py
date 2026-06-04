@@ -27,6 +27,7 @@ RESEARCH_NAME_PATTERNS = {
         rf"^action_plan_{TIMESTAMP}(_[A-Za-z0-9_-]+)?\.(md|json)$"
     ),
     "alerts": re.compile(rf"^intraday_alert_{TIMESTAMP}\.(md|json)$"),
+    "valuations": re.compile(rf"^valuation_.+_{TIMESTAMP}\.(md|json)$"),
     "checks": re.compile(rf"^premarket_check_{TIMESTAMP}\.(md|json)$"),
     "reviews": re.compile(
         rf"^post_market_review_{TIMESTAMP}(_[A-Za-z0-9_-]+)?\.(md|json)$"
@@ -85,7 +86,7 @@ def check_env(findings: list[Finding]) -> None:
 
 
 def check_python_dependencies(findings: list[Finding]) -> None:
-    required_packages = ["baostock", "pandas"]
+    required_packages = ["baostock", "pandas", "tushare"]
     for package in required_packages:
         if find_spec(package) is None:
             findings.append(

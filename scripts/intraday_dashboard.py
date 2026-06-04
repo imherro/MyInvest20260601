@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QPainter, QPen
 from PySide6.QtWidgets import (
     QApplication,
     QFrame,
@@ -55,6 +55,73 @@ def parse_range_center(text: str | None) -> str:
     return text
 
 
+def valuation_zone_for_value(visual: dict[str, Any], value: Any) -> dict[str, Any] | None:
+    try:
+        current = float(value)
+    except (TypeError, ValueError):
+        return None
+    for zone in visual.get("zones", []):
+        if float(zone["min"]) <= current <= float(zone["max"]):
+            return zone
+    zones = visual.get("zones", [])
+    if not zones:
+        return None
+    if current < float(zones[0]["min"]):
+        return zones[0]
+    return zones[-1]
+
+
+class ValuationBar(QWidget):
+    def __init__(self, visual: dict[str, Any], current_value: Any, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.visual = visual
+        self.current_value = current_value
+        self.setMinimumHeight(34)
+        self.setToolTip(self.tooltip_text())
+
+    def tooltip_text(self) -> str:
+        zone = valuation_zone_for_value(self.visual, self.current_value)
+        label = zone.get("label", "-") if zone else "-"
+        parts = [f"当前位置：{label}", f"当前值：{fmt(self.current_value, 4)}"]
+        for item in self.visual.get("zones", []):
+            parts.append(f"{item['label']}：{fmt(item['min'], 4)}-{fmt(item['max'], 4)}")
+        return "\n".join(parts)
+
+    def paintEvent(self, event: Any) -> None:  # noqa: N802 - Qt override.
+        zones = self.visual.get("zones", [])
+        if not zones:
+            return
+        minimum = float(zones[0]["min"])
+        maximum = float(zones[-1]["max"])
+        if maximum <= minimum:
+            return
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        rect = self.rect().adjusted(6, 8, -6, -10)
+        span = maximum - minimum
+
+        for zone in zones:
+            left_ratio = (float(zone["min"]) - minimum) / span
+            right_ratio = (float(zone["max"]) - minimum) / span
+            x = rect.left() + rect.width() * left_ratio
+            w = max(2, rect.width() * (right_ratio - left_ratio))
+            painter.fillRect(int(x), rect.top(), int(w), rect.height(), QColor(zone.get("color", "#cccccc")))
+
+        painter.setPen(QPen(QColor("#333333"), 1))
+        painter.drawRect(rect)
+
+        try:
+            current = float(self.current_value)
+        except (TypeError, ValueError):
+            current = minimum
+        marker_ratio = min(1.0, max(0.0, (current - minimum) / span))
+        marker_x = rect.left() + rect.width() * marker_ratio
+        painter.setPen(QPen(QColor("#111111"), 3))
+        painter.drawLine(int(marker_x), rect.top() - 4, int(marker_x), rect.bottom() + 4)
+        painter.setPen(QPen(QColor("#111111"), 1))
+        painter.drawText(rect.left(), self.height() - 2, fmt(current, 3))
+
+
 def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, Any]]) -> dict[str, Any]:
     quotes: dict[str, dict[str, Any]] = {}
     for subject in rules.get("subjects", []):
@@ -76,6 +143,7 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
             "moneyflow_20d": ref.get("moneyflow_20d"),
             "rel_hs300_intraday_pct": live.get("rel_hs300_intraday_pct"),
             "qmt_timetag": live.get("qmt_timetag"),
+            "valuation_visual": ref.get("valuation_visual"),
         }
         quotes[code] = quote
     return {
@@ -168,12 +236,13 @@ class BattleMapWindow(QMainWindow):
         header.addWidget(self.time_card)
         root.addLayout(header)
 
-        self.table = QTableWidget(0, 14)
+        self.table = QTableWidget(0, 15)
         self.table.setHorizontalHeaderLabels(
             [
                 "标的",
                 "分组",
                 "当前价",
+                "估值分段",
                 "涨跌幅",
                 "成交额(亿)",
                 "MA20",
@@ -188,6 +257,8 @@ class BattleMapWindow(QMainWindow):
             ]
         )
         self.table.horizontalHeader().setStretchLastSection(True)
+        self.table.setColumnWidth(0, 210)
+        self.table.setColumnWidth(3, 260)
         root.addWidget(self.table, stretch=3)
 
         lower = QGridLayout()
@@ -278,10 +349,14 @@ class BattleMapWindow(QMainWindow):
             ma60 = quote.get("ma60")
             last = quote.get("last")
             dist60 = (float(last) / float(ma60) - 1) * 100 if last and ma60 else None
+            visual = ref.get("valuation_visual")
+            zone = valuation_zone_for_value(visual, last) if isinstance(visual, dict) else None
+            zone_label = zone.get("label", "-") if zone else "-"
             values = [
                 f"{quote['code']} {quote['name']}",
                 subject.get("group", "-"),
                 fmt(last),
+                zone_label,
                 fmt(quote.get("pct_chg")),
                 fmt(quote.get("amount_100m")),
                 fmt(quote.get("ma20")),
@@ -295,11 +370,15 @@ class BattleMapWindow(QMainWindow):
                 str(quote.get("qmt_timetag") or "-"),
             ]
             for col, value in enumerate(values):
+                if col == 3 and isinstance(visual, dict):
+                    self.table.setCellWidget(row, col, ValuationBar(visual, last, self.table))
+                    continue
                 item = QTableWidgetItem(value)
                 item.setBackground(color)
-                if col in {2, 3, 4, 5, 6, 7, 8, 9, 10}:
+                if col in {2, 4, 5, 6, 7, 8, 9, 10, 11}:
                     item.setTextAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
                 self.table.setItem(row, col, item)
+            self.table.setRowHeight(row, 42)
 
         summary = report.get("summary", {})
         self.detail.setText(

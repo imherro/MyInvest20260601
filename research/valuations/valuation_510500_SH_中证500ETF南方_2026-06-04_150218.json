@@ -1,0 +1,122 @@
+{
+  "module": "valuation_report",
+  "version": "1.0",
+  "code": "510500.SH",
+  "name": "中证500ETF南方",
+  "date": "2026-06-04",
+  "generated_at": "2026-06-04_150218",
+  "basis_date": "20260603",
+  "asset_type": "broad_etf",
+  "group": "核心宽基",
+  "role": "核心仓",
+  "confidence": "中高",
+  "one_line_conclusion": "中证500ETF南方 当前处于拥挤/风险区；跟踪指数估值 + ETF价格/净值位置，最终动作需由ACTION_PLAN结合市场仓位和组合暴露决定。",
+  "valuation_visual": {
+    "metric": "price",
+    "current_value": 8.455,
+    "current_zone": "crowded_risk",
+    "current_zone_label": "拥挤/风险区",
+    "zones": [
+      {
+        "key": "undervalued_observe",
+        "label": "低估观察区",
+        "min": 4.7915,
+        "max": 5.4276,
+        "color": "#2f9e44"
+      },
+      {
+        "key": "reasonable_allocation",
+        "label": "合理配置区",
+        "min": 5.4276,
+        "max": 5.8945,
+        "color": "#74b816"
+      },
+      {
+        "key": "expensive",
+        "label": "偏贵区",
+        "min": 5.8945,
+        "max": 7.2434,
+        "color": "#f59f00"
+      },
+      {
+        "key": "crowded_risk",
+        "label": "拥挤/风险区",
+        "min": 7.2434,
+        "max": 8.455,
+        "color": "#e03131"
+      }
+    ],
+    "basis": "跟踪指数估值 + ETF价格/净值位置",
+    "premium_discount_pct": -0.01
+  },
+  "index_valuation": {
+    "available": true,
+    "date": "20260603",
+    "pe_ttm": 36.71,
+    "pb": 2.55,
+    "pe_ttm_percentile": 91.76,
+    "pb_percentile": 92.84,
+    "sample_days": 740
+  },
+  "stock_valuation_metrics": [],
+  "reference_metrics": {
+    "price_date": "20260603",
+    "last_reference": 8.455,
+    "ma20": 8.6713,
+    "ma60": 8.295,
+    "moneyflow_5d": null,
+    "moneyflow_20d": null,
+    "support": 5.4276,
+    "right_confirm": 8.295,
+    "risk_zone_start": 7.2434,
+    "current_position_pct": 0,
+    "target_position_range": "0%-15%",
+    "valuation_visual": {
+      "metric": "price",
+      "current_value": 8.455,
+      "current_zone": "crowded_risk",
+      "current_zone_label": "拥挤/风险区",
+      "zones": [
+        {
+          "key": "undervalued_observe",
+          "label": "低估观察区",
+          "min": 4.7915,
+          "max": 5.4276,
+          "color": "#2f9e44"
+        },
+        {
+          "key": "reasonable_allocation",
+          "label": "合理配置区",
+          "min": 5.4276,
+          "max": 5.8945,
+          "color": "#74b816"
+        },
+        {
+          "key": "expensive",
+          "label": "偏贵区",
+          "min": 5.8945,
+          "max": 7.2434,
+          "color": "#f59f00"
+        },
+        {
+          "key": "crowded_risk",
+          "label": "拥挤/风险区",
+          "min": 7.2434,
+          "max": 8.455,
+          "color": "#e03131"
+        }
+      ],
+      "basis": "跟踪指数估值 + ETF价格/净值位置",
+      "premium_discount_pct": -0.01
+    }
+  },
+  "data_gaps": [],
+  "source": {
+    "tushare": [
+      "fund_daily",
+      "fund_nav",
+      "index_dailybasic"
+    ],
+    "history_sample_days": 740
+  }
+}
