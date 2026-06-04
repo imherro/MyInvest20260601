@@ -164,6 +164,22 @@ research/alerts/intraday_alert_YYYY-MM-DD_HHMMSS.json
 python scripts\intraday_monitor.py --quotes-file path\to\qmt_snapshot.json
 ```
 
+实时作战地图入口：
+
+```powershell
+py -3.11 scripts\intraday_dashboard.py
+```
+
+实时作战地图直接读取 QMT 行情和 `research/alerts/intraday_rules.json`，每隔数秒刷新一次，不调用大模型、不生成报告、不自动下单。状态变化日志默认写入本地 `runtime/alerts/`，该目录不作为研究报告提交。
+
+实时数据源自检：
+
+```powershell
+py -3.11 scripts\intraday_dashboard.py --once-json
+```
+
+该命令只读取一次 QMT 实时行情并输出 JSON，不打开窗口，适合排查 QMT 连接、字段缺失和规则误报。
+
 可选参数：
 
 ```powershell

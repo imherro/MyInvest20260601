@@ -151,8 +151,9 @@ def evaluate_rule(
         evaluate_condition(quote, condition, near_threshold_pct)
         for condition in rule.get("conditions", [])
     ]
-    blocked = any(item.blocked for item in condition_results)
-    passed = bool(condition_results) and all(item.passed for item in condition_results)
+    explicit_false = any((not item.blocked) and (not item.passed) for item in condition_results)
+    blocked = (not explicit_false) and any(item.blocked for item in condition_results)
+    passed = bool(condition_results) and all(item.passed and not item.blocked for item in condition_results)
     near = (not passed) and (not blocked) and any(item.near for item in condition_results)
     gate_allowed = market_gate_allows(rule, rules, snapshot)
 

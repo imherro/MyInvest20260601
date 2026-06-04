@@ -1570,3 +1570,23 @@
 
 - 盘后检查收盘价是否改变触发状态。
 - 下一步可把 QMT 快照生成自动化，减少手工临时脚本步骤。
+
+### 决策：开发盘中实时作战地图 MVP
+
+- 决策类型：intraday_dashboard_development
+- 变化类型：upgrade_from_report_to_live_dashboard
+- 更新文件：`scripts/intraday_dashboard.py`、`scripts/intraday_monitor.py`、`docs/modules/INTRADAY_ALERTS.md`、`research/alerts/intraday_rules.json`、`requirements.txt`、`.gitignore`
+- 新结论：盘中监测从“按快照生成报告”升级为“本地窗口实时作战地图”。程序直接读取 QMT 实时行情和固定盘中规则，默认每 3 秒刷新一次，展示市场门禁、目标权益区间、当前价、涨跌幅、成交额、MA20/MA60、风控位、右侧确认位、当前仓位和理想仓位区间。
+- 自检入口：`py -3.11 scripts\intraday_dashboard.py --once-json`，用于不打开窗口时验证 QMT 实时行情、规则字段和触发状态。
+- 验证结果：2026-06-04 14:37 左右，QMT 成功返回 `001280 中国铀业` 与 `601318 中国平安` 的实时行情；修正多条件规则判断后，两只标的均为 `no_trigger`，未产生误报。
+
+边界：
+
+- 该窗口不调用大模型，不临时生成新策略，不自动下单。
+- 高频盘中逻辑只执行既有规则；规则每日或盘前由研究、仓位、持仓和 ACTION_PLAN 模块更新。
+- 状态变化日志写入本地 `runtime/alerts/`，不作为正式研究报告提交。
+
+复盘入口：
+
+- 下一步应把更多持仓 ETF、重点指数和重点观察股加入 `intraday_rules.json`，并把理想仓位区间从最新 `research/allocation/` 自动读取，而不是在规则中手工维护。
+- 后续 UI 可继续增加分组热力图、权益实际 vs 理想偏离条、触发历史曲线和声音/桌面通知。
