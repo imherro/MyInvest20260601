@@ -8,13 +8,13 @@
     "docs/modules/VALUATION_RESEARCH.md",
     "research/market/market_score_2026-06-03_211833.json",
     "research/allocation/target_allocation_2026-06-03_211833.json",
-    "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-04_153212.json",
-    "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-04_153212.json",
-    "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-04_153212.json",
-    "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-04_153212.json",
-    "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-04_153212.json",
-    "research/valuations/valuation_001280_SZ_中国铀业_2026-06-04_153212.json",
-    "research/valuations/valuation_601318_SH_中国平安_2026-06-04_153212.json"
+    "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-04_160915.json",
+    "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-04_160915.json",
+    "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-04_160915.json",
+    "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-04_160915.json",
+    "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-04_160915.json",
+    "research/valuations/valuation_001280_SZ_中国铀业_2026-06-04_160915.json",
+    "research/valuations/valuation_601318_SH_中国平安_2026-06-04_160915.json"
   ],
   "global_gate": {
     "default_market_gate": "verify_only",
@@ -36,7 +36,70 @@
     "target_cash_short_pct": 52.5,
     "actual_equity_pct": 55.01,
     "actual_cash_short_pct": 44.99,
-    "bucket_model": "现金短融 + 权益内 40%核心/40%进攻/20%防御；实际组合多余部分进入其他/待清理。",
+    "bucket_model": "理想仓位由目标配置模块提供；真实持仓只作为覆盖层，不反向改变理想结构。",
+    "ideal_segments": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "color": "#5b6b7a",
+        "target_pct": 52.5
+      },
+      {
+        "key": "core_base",
+        "label": "宽基/核心底仓",
+        "color": "#2f6fbd",
+        "target_pct": 14.62
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "color": "#8b5cf6",
+        "target_pct": 14.62
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "color": "#0f8b6f",
+        "target_pct": 18.26
+      }
+    ],
+    "actual_overlay": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "color": "#5b6b7a",
+        "actual_pct": 44.99,
+        "gap_pct": -7.51
+      },
+      {
+        "key": "core_base",
+        "label": "宽基/核心底仓",
+        "color": "#2f6fbd",
+        "actual_pct": 6.57,
+        "gap_pct": -8.05
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "color": "#8b5cf6",
+        "actual_pct": 8.88,
+        "gap_pct": -5.74
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "color": "#0f8b6f",
+        "actual_pct": 19.14,
+        "gap_pct": 0.88
+      },
+      {
+        "key": "legacy_watch",
+        "label": "其他/待清理",
+        "color": "#9a6700",
+        "actual_pct": 20.38,
+        "gap_pct": 20.38
+      }
+    ],
     "buckets": [
       {
         "key": "cash_short",
@@ -51,27 +114,27 @@
         "key": "core_base",
         "label": "宽基/核心底仓",
         "color": "#2f6fbd",
-        "target_pct": 19.0,
+        "target_pct": 14.62,
         "actual_pct": 6.57,
-        "gap_pct": -12.43,
+        "gap_pct": -8.05,
         "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
       },
       {
         "key": "attack_mainline",
         "label": "进攻主线仓",
         "color": "#8b5cf6",
-        "target_pct": 19.0,
+        "target_pct": 14.62,
         "actual_pct": 8.88,
-        "gap_pct": -10.12,
+        "gap_pct": -5.74,
         "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
       },
       {
         "key": "defense",
         "label": "防御仓",
         "color": "#0f8b6f",
-        "target_pct": 9.5,
+        "target_pct": 18.26,
         "actual_pct": 19.14,
-        "gap_pct": 9.64,
+        "gap_pct": 0.88,
         "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
       },
       {
@@ -83,6 +146,14 @@
         "gap_pct": 20.38,
         "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
       }
+    ],
+    "missing_upstream": [
+      {
+        "module": "target_allocation",
+        "missing": "ideal_allocation_map",
+        "required_output": "明确输出盘中作战地图可直接消费的理想仓位桶。",
+        "fallback": "由 target_allocation.groups 降级映射到现金/核心/进攻/防御桶。"
+      }
     ]
   },
   "subjects": [
@@ -90,12 +161,20 @@
       "code": "510300.SH",
       "name": "沪深300ETF华泰柏瑞",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-04_153212.json",
-      "source_report": "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-04_153212.md",
+      "source_profile": "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-04_160915.json",
+      "source_report": "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-04_160915.md",
       "group": "核心宽基",
       "role": "核心仓",
       "allocation_bucket": "core_base",
       "ideal_position_range": "0%-20%",
+      "security_stance": {
+        "label": "减仓",
+        "basis": "估值或价格位置进入拥挤/风险区，需要优先复核降低标的暴露。",
+        "confidence": "中高",
+        "scope": "security_level_only",
+        "not_portfolio_action": true,
+        "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+      },
       "reference_metrics": {
         "price_date": "20260603",
         "last_reference": 4.965,
@@ -154,7 +233,7 @@
               "key": "long",
               "label": "长期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 23.6,
               "window_days": 250
             },
@@ -162,7 +241,7 @@
               "key": "mid",
               "label": "中期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 6.68,
               "window_days": 60
             },
@@ -180,14 +259,16 @@
             "sample_high": 5.017,
             "sample_high_date": "20260513",
             "common_120d_drawdown_pct": -9.02,
-            "deep_120d_drawdown_pct": -12.07
+            "deep_120d_drawdown_pct": -12.07,
+            "max_120d_drawdown_pct": -21.69
           },
           "rebound": {
             "from_sample_low_pct": 55.74,
             "sample_low": 3.188,
             "sample_low_date": "20240202",
             "common_120d_rebound_pct": 9.91,
-            "strong_120d_rebound_pct": 21.56
+            "strong_120d_rebound_pct": 21.56,
+            "max_120d_rebound_pct": 36.68
           }
         },
         "risk_markers": {
@@ -255,12 +336,20 @@
       "code": "510500.SH",
       "name": "中证500ETF南方",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-04_153212.json",
-      "source_report": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-04_153212.md",
+      "source_profile": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-04_160915.json",
+      "source_report": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-04_160915.md",
       "group": "核心宽基",
       "role": "核心仓",
       "allocation_bucket": "core_base",
       "ideal_position_range": "0%-15%",
+      "security_stance": {
+        "label": "减仓",
+        "basis": "估值或价格位置进入拥挤/风险区，需要优先复核降低标的暴露。",
+        "confidence": "中高",
+        "scope": "security_level_only",
+        "not_portfolio_action": true,
+        "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+      },
       "reference_metrics": {
         "price_date": "20260603",
         "last_reference": 8.455,
@@ -319,7 +408,7 @@
               "key": "long",
               "label": "长期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 48.05,
               "window_days": 250
             },
@@ -345,14 +434,16 @@
             "sample_high": 9.009,
             "sample_high_date": "20260513",
             "common_120d_drawdown_pct": -10.35,
-            "deep_120d_drawdown_pct": -14.09
+            "deep_120d_drawdown_pct": -14.09,
+            "max_120d_drawdown_pct": -24.68
           },
           "rebound": {
             "from_sample_low_pct": 86.97,
             "sample_low": 4.522,
             "sample_low_date": "20240913",
             "common_120d_rebound_pct": 17.91,
-            "strong_120d_rebound_pct": 29.8
+            "strong_120d_rebound_pct": 29.8,
+            "max_120d_rebound_pct": 42.24
           }
         },
         "risk_markers": {
@@ -420,12 +511,20 @@
       "code": "159915.SZ",
       "name": "创业板ETF易方达",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-04_153212.json",
-      "source_report": "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-04_153212.md",
+      "source_profile": "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-04_160915.json",
+      "source_report": "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-04_160915.md",
       "group": "核心宽基",
       "role": "核心/成长弹性仓",
       "allocation_bucket": "core_base",
       "ideal_position_range": "0%-10%",
+      "security_stance": {
+        "label": "减仓",
+        "basis": "估值或价格位置进入拥挤/风险区，需要优先复核降低标的暴露。",
+        "confidence": "中高",
+        "scope": "security_level_only",
+        "not_portfolio_action": true,
+        "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+      },
       "reference_metrics": {
         "price_date": "20260603",
         "last_reference": 4.145,
@@ -484,7 +583,7 @@
               "key": "long",
               "label": "长期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 105.61,
               "window_days": 250
             },
@@ -492,7 +591,7 @@
               "key": "mid",
               "label": "中期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 29.29,
               "window_days": 60
             },
@@ -500,7 +599,7 @@
               "key": "short",
               "label": "短期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 9.48,
               "window_days": 20
             }
@@ -510,14 +609,16 @@
             "sample_high": 4.145,
             "sample_high_date": "20260603",
             "common_120d_drawdown_pct": -17.7,
-            "deep_120d_drawdown_pct": -20.54
+            "deep_120d_drawdown_pct": -20.54,
+            "max_120d_drawdown_pct": -30.95
           },
           "rebound": {
             "from_sample_low_pct": 176.33,
             "sample_low": 1.5,
             "sample_low_date": "20240827",
             "common_120d_rebound_pct": 17.92,
-            "strong_120d_rebound_pct": 44.9
+            "strong_120d_rebound_pct": 44.9,
+            "max_120d_rebound_pct": 80.9
           }
         },
         "risk_markers": {
@@ -585,12 +686,20 @@
       "code": "159558.SZ",
       "name": "半导体设备ETF易方达",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-04_153212.json",
-      "source_report": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-04_153212.md",
+      "source_profile": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-04_160915.json",
+      "source_report": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-04_160915.md",
       "group": "半导体主线",
       "role": "进攻仓观察",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-2%",
+      "security_stance": {
+        "label": "减仓",
+        "basis": "估值或价格位置进入拥挤/风险区，需要优先复核降低标的暴露。",
+        "confidence": "中低",
+        "scope": "security_level_only",
+        "not_portfolio_action": true,
+        "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+      },
       "reference_metrics": {
         "price_date": "20260603",
         "last_reference": 2.806,
@@ -649,7 +758,7 @@
               "key": "long",
               "label": "长期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 137.6,
               "window_days": 250
             },
@@ -657,7 +766,7 @@
               "key": "mid",
               "label": "中期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 34.07,
               "window_days": 60
             },
@@ -665,7 +774,7 @@
               "key": "short",
               "label": "短期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 16.77,
               "window_days": 20
             }
@@ -675,14 +784,16 @@
             "sample_high": 3.169,
             "sample_high_date": "20260525",
             "common_120d_drawdown_pct": -13.98,
-            "deep_120d_drawdown_pct": -17.92
+            "deep_120d_drawdown_pct": -17.92,
+            "max_120d_drawdown_pct": -25.05
           },
           "rebound": {
             "from_sample_low_pct": 242.2,
             "sample_low": 0.82,
             "sample_low_date": "20240923",
             "common_120d_rebound_pct": 41.5,
-            "strong_120d_rebound_pct": 56.59
+            "strong_120d_rebound_pct": 56.59,
+            "max_120d_rebound_pct": 99.68
           }
         },
         "risk_markers": {
@@ -750,12 +861,20 @@
       "code": "588200.SH",
       "name": "科创芯片ETF嘉实",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-04_153212.json",
-      "source_report": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-04_153212.md",
+      "source_profile": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-04_160915.json",
+      "source_report": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-04_160915.md",
       "group": "半导体主线",
       "role": "进攻仓观察",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-2%",
+      "security_stance": {
+        "label": "减仓",
+        "basis": "估值或价格位置进入拥挤/风险区，需要优先复核降低标的暴露。",
+        "confidence": "中低",
+        "scope": "security_level_only",
+        "not_portfolio_action": true,
+        "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+      },
       "reference_metrics": {
         "price_date": "20260603",
         "last_reference": 3.571,
@@ -814,7 +933,7 @@
               "key": "long",
               "label": "长期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 138.07,
               "window_days": 250
             },
@@ -822,7 +941,7 @@
               "key": "mid",
               "label": "中期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 39.38,
               "window_days": 60
             },
@@ -830,7 +949,7 @@
               "key": "short",
               "label": "短期",
               "state": "上行",
-              "color": "#16a34a",
+              "color": "#dc2626",
               "change_pct": 9.54,
               "window_days": 20
             }
@@ -840,14 +959,16 @@
             "sample_high": 3.904,
             "sample_high_date": "20260525",
             "common_120d_drawdown_pct": -15.98,
-            "deep_120d_drawdown_pct": -21.45
+            "deep_120d_drawdown_pct": -21.45,
+            "max_120d_drawdown_pct": -33.28
           },
           "rebound": {
             "from_sample_low_pct": 344.15,
             "sample_low": 0.804,
             "sample_low_date": "20240205",
             "common_120d_rebound_pct": 17.91,
-            "strong_120d_rebound_pct": 65.87
+            "strong_120d_rebound_pct": 65.87,
+            "max_120d_rebound_pct": 106.35
           }
         },
         "risk_markers": {
@@ -915,12 +1036,20 @@
       "code": "001280.SZ",
       "name": "中国铀业",
       "type": "stock",
-      "source_profile": "research/valuations/valuation_001280_SZ_中国铀业_2026-06-04_153212.json",
-      "source_report": "research/valuations/valuation_001280_SZ_中国铀业_2026-06-04_153212.md",
+      "source_profile": "research/valuations/valuation_001280_SZ_中国铀业_2026-06-04_160915.json",
+      "source_report": "research/valuations/valuation_001280_SZ_中国铀业_2026-06-04_160915.md",
       "group": "战略资源观察",
       "role": "观察股",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-1%",
+      "security_stance": {
+        "label": "持有",
+        "basis": "估值处于合理配置区，标的自身没有给出减仓压力。",
+        "confidence": "中低",
+        "scope": "security_level_only",
+        "not_portfolio_action": true,
+        "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+      },
       "reference_metrics": {
         "price_date": "20260603",
         "last_reference": 73.42,
@@ -991,7 +1120,7 @@
               "key": "mid",
               "label": "中期",
               "state": "下行",
-              "color": "#dc2626",
+              "color": "#16a34a",
               "change_pct": -20.53,
               "window_days": 60
             },
@@ -999,7 +1128,7 @@
               "key": "short",
               "label": "短期",
               "state": "下行",
-              "color": "#dc2626",
+              "color": "#16a34a",
               "change_pct": -12.07,
               "window_days": 20
             }
@@ -1009,14 +1138,16 @@
             "sample_high": 100.65,
             "sample_high_date": "20260302",
             "common_120d_drawdown_pct": -19.55,
-            "deep_120d_drawdown_pct": -24.34
+            "deep_120d_drawdown_pct": -24.34,
+            "max_120d_drawdown_pct": -29.6
           },
           "rebound": {
             "from_sample_low_pct": 20.58,
             "sample_low": 60.89,
             "sample_low_date": "20251230",
             "common_120d_rebound_pct": 36.04,
-            "strong_120d_rebound_pct": 49.09
+            "strong_120d_rebound_pct": 49.09,
+            "max_120d_rebound_pct": 65.3
           }
         },
         "risk_markers": {
@@ -1084,12 +1215,20 @@
       "code": "601318.SH",
       "name": "中国平安",
       "type": "stock",
-      "source_profile": "research/valuations/valuation_601318_SH_中国平安_2026-06-04_153212.json",
-      "source_report": "research/valuations/valuation_601318_SH_中国平安_2026-06-04_153212.md",
+      "source_profile": "research/valuations/valuation_601318_SH_中国平安_2026-06-04_160915.json",
+      "source_report": "research/valuations/valuation_601318_SH_中国平安_2026-06-04_160915.md",
       "group": "红利金融观察",
       "role": "观察股",
       "allocation_bucket": "defense",
       "ideal_position_range": "0%-3%",
+      "security_stance": {
+        "label": "持有",
+        "basis": "估值处于合理配置区，标的自身没有给出减仓压力。",
+        "confidence": "中",
+        "scope": "security_level_only",
+        "not_portfolio_action": true,
+        "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+      },
       "reference_metrics": {
         "price_date": "20260603",
         "last_reference": 53.7,
@@ -1160,7 +1299,7 @@
               "key": "mid",
               "label": "中期",
               "state": "下行",
-              "color": "#dc2626",
+              "color": "#16a34a",
               "change_pct": -13.5,
               "window_days": 60
             },
@@ -1168,7 +1307,7 @@
               "key": "short",
               "label": "短期",
               "state": "下行",
-              "color": "#dc2626",
+              "color": "#16a34a",
               "change_pct": -9.54,
               "window_days": 20
             }
@@ -1178,14 +1317,16 @@
             "sample_high": 74.32,
             "sample_high_date": "20260106",
             "common_120d_drawdown_pct": -16.95,
-            "deep_120d_drawdown_pct": -21.92
+            "deep_120d_drawdown_pct": -21.92,
+            "max_120d_drawdown_pct": -29.4
           },
           "rebound": {
             "from_sample_low_pct": 42.14,
             "sample_low": 37.78,
             "sample_low_date": "20240412",
             "common_120d_rebound_pct": 11.99,
-            "strong_120d_rebound_pct": 21.4
+            "strong_120d_rebound_pct": 21.4,
+            "max_120d_rebound_pct": 63.39
           }
         },
         "risk_markers": {

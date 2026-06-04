@@ -1623,3 +1623,22 @@
 
 - 风控位、右侧确认和风险区只触发复核，不代表自动买卖。
 - 趋势和回撤数据由每日估值规则生成脚本固化；盘中窗口只做高频读取和绘图，不调用大模型、不临时生成新策略。
+
+### 决策：确立盘中作战地图消费端契约并改为分组战术面板
+
+- 决策类型：intraday_dashboard_contract_and_layout
+- 变化类型：upstream_contract_visual_refactor
+- 更新文件：`scripts/intraday_dashboard.py`、`scripts/generate_valuation_reports.py`、`scripts/intraday_monitor.py`、`docs/modules/INTRADAY_ALERTS.md`、`docs/modules/VALUATION_RESEARCH.md`、`docs/modules/TARGET_ALLOCATION.md`、`research/alerts/intraday_rules.json`
+- 新生成文件：`research/valuations/valuation_*_2026-06-04_160915.md/json`
+- 新结论：盘中作战地图只作为消费端运行；除 QMT 实时行情以外，理想仓位、标的级研究态度、估值区间、趋势、前高回撤和前低反弹都必须由上游模块提前生成并同步到 `intraday_rules.json`。
+- 仓位契约：新增 `ideal_segments` 和 `actual_overlay`。理想仓位只由目标配置模块产生，不受真实持仓影响；真实持仓只作为覆盖层显示偏离。若目标配置缺少直接可消费的 `ideal_allocation_map`，规则中写入 `missing_upstream` 提醒目标配置模块补齐。
+- 顶部仓位图：改为总资产 100% 堆叠图和同宽理想仓位桶；目标为 0 且实际为 0 的桶不显示，目标为 0 但实际不为 0 的“其他/待清理”仍显示在真实覆盖层。
+- 标的级研究态度：新增 `security_stance`，取值为 `增持`、`持有`、`减仓`。该字段只代表标的自身研究结论，不等于当前组合的买卖动作。
+- 趋势与波动图：长/中/短趋势按 A 股习惯使用红涨绿跌；前高回撤和前低反弹改为竖向图形契约，增加历史极值字段 `max_120d_drawdown_pct` 和 `max_120d_rebound_pct`。
+- UI 变化：主区域由表格改为按仓位桶分组的战术卡片，并支持风险优先、仓位偏离优先、触发优先和分组顺序排序；分组头显示触发数量、接近触发数量和仓位偏离热力。
+
+边界：
+
+- 当前监控标的仍使用演示集合；后续正式版本应默认从真实持仓和观察清单读取。
+- 当前 `ideal_allocation_map` 由 `target_allocation.groups` 降级映射得到，已经在规则中记录 `missing_upstream`，提示目标配置模块后续直接输出盘中仓位桶。
+- `security_stance` 当前由估值分段映射生成，后续 ETF/个股研究模块应输出更完整的标的级研究态度依据。

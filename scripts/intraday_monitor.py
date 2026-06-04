@@ -260,6 +260,7 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
                 "valuation_visual": quote.get("valuation_visual"),
                 "trend_visual": quote.get("trend_visual"),
                 "risk_markers": quote.get("risk_markers"),
+                "security_stance": quote.get("security_stance"),
                 "position_visual": quote.get("position_visual"),
                 "allocation_bucket": quote.get("allocation_bucket"),
             }

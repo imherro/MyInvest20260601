@@ -43,6 +43,8 @@ BUCKETS = {
     "legacy_watch": {"label": "其他/待清理", "color": "#9a6700"},
 }
 
+BUCKET_ORDER = ["cash_short", "core_base", "attack_mainline", "defense", "legacy_watch"]
+
 BUCKET_BY_CODE = {
     "510300": "core_base",
     "510500": "core_base",
@@ -82,6 +84,24 @@ SNAPSHOT_CATEGORY_BUCKET = {
     "financial": "defense",
     "medicine": "defense",
 }
+
+
+def target_group_bucket(group: dict[str, Any]) -> str | None:
+    name = str(group.get("group", ""))
+    role = str(group.get("role", ""))
+    principle = str(group.get("principle", ""))
+    text = f"{name} {role}"
+    if "现金" in name or "短融" in name or "511360" in name:
+        return "cash_short"
+    if "宽基" in text or "核心质量" in text or "权益底仓" in text:
+        return "core_base"
+    if "红利" in text or "公用事业" in text or "金融" in text or "医药" in text or "创新药" in text:
+        return "defense"
+    if "科技" in text or "资源" in text or "稀土" in text or "有色" in text:
+        return "attack_mainline"
+    if "遗留" in f"{text} {principle}" or "待清理" in f"{text} {principle}" or "C/D" in text or "杂项" in text:
+        return None
+    return "legacy_watch"
 
 
 @dataclass(frozen=True)
@@ -248,6 +268,24 @@ def parse_pct_text(value: Any, fallback: float) -> float:
         return fallback
 
 
+def security_stance(current_zone: str, confidence: str) -> dict[str, Any]:
+    stance_by_zone = {
+        "undervalued_observe": ("增持", "估值进入低估观察区，但仍需趋势、资金和基本面复核。"),
+        "reasonable_allocation": ("持有", "估值处于合理配置区，标的自身没有给出减仓压力。"),
+        "expensive": ("持有", "估值偏贵，控制新增，已有研究结论先维持观察。"),
+        "crowded_risk": ("减仓", "估值或价格位置进入拥挤/风险区，需要优先复核降低标的暴露。"),
+    }
+    label, reason = stance_by_zone.get(current_zone, ("持有", "估值分段不足，先维持观察。"))
+    return {
+        "label": label,
+        "basis": reason,
+        "confidence": confidence,
+        "scope": "security_level_only",
+        "not_portfolio_action": True,
+        "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+    }
+
+
 def bucket_for_code(code: str) -> str:
     plain = code.split(".")[0]
     return BUCKET_BY_CODE.get(plain, "legacy_watch")
@@ -273,6 +311,34 @@ def build_allocation_map() -> dict[str, Any]:
     summary = allocation.get("summary", {})
     equity_target = parse_pct_text(summary.get("recommended_equity_center"), 50.0)
     cash_target = parse_pct_text(summary.get("recommended_bond_cash_center"), 100.0 - equity_target)
+    missing_upstream = []
+    if not allocation_path:
+        missing_upstream.append(
+            {
+                "module": "target_allocation",
+                "missing": "ideal_allocation_map",
+                "required_output": "research/allocation/target_allocation_*.json",
+                "fallback": "使用默认目标权益/现金比例。",
+            }
+        )
+    if allocation_path and "ideal_allocation_map" not in allocation:
+        missing_upstream.append(
+            {
+                "module": "target_allocation",
+                "missing": "ideal_allocation_map",
+                "required_output": "明确输出盘中作战地图可直接消费的理想仓位桶。",
+                "fallback": "由 target_allocation.groups 降级映射到现金/核心/进攻/防御桶。",
+            }
+        )
+    if not snapshot_path:
+        missing_upstream.append(
+            {
+                "module": "portfolio_snapshot",
+                "missing": "actual_allocation_overlay",
+                "required_output": "research/portfolio/portfolio_snapshot_*.json",
+                "fallback": "真实持仓覆盖层为空。",
+            }
+        )
     category_summary = snapshot.get("category_summary", {})
 
     actual_by_bucket = {key: 0.0 for key in BUCKETS}
@@ -285,18 +351,30 @@ def build_allocation_map() -> dict[str, Any]:
             bucket = bucket_for_code(code)
             actual_by_bucket[bucket] += float(item.get("weight_pct") or 0)
 
-    target_by_bucket = {
-        "cash_short": round(cash_target, 2),
-        "core_base": round(equity_target * 0.40, 2),
-        "attack_mainline": round(equity_target * 0.40, 2),
-        "defense": round(equity_target * 0.20, 2),
-        "legacy_watch": 0.0,
-    }
+    target_by_bucket = {key: 0.0 for key in BUCKETS}
+    target_by_bucket["cash_short"] = cash_target
+    raw_equity_buckets = {key: 0.0 for key in ["core_base", "attack_mainline", "defense"]}
+    for group in allocation.get("target_allocation", {}).get("groups", []):
+        bucket = target_group_bucket(group)
+        if bucket in raw_equity_buckets:
+            raw_equity_buckets[bucket] += float(group.get("target_center_pct") or 0)
+
+    raw_total = sum(raw_equity_buckets.values())
+    if raw_total > 0:
+        for key, value in raw_equity_buckets.items():
+            target_by_bucket[key] = equity_target * value / raw_total
+    else:
+        target_by_bucket["core_base"] = equity_target * 0.40
+        target_by_bucket["attack_mainline"] = equity_target * 0.40
+        target_by_bucket["defense"] = equity_target * 0.20
+
     buckets = []
-    for key in ["cash_short", "core_base", "attack_mainline", "defense", "legacy_watch"]:
+    for key in BUCKET_ORDER:
         meta = BUCKETS[key]
         actual = round(actual_by_bucket.get(key, 0.0), 2)
-        target = target_by_bucket[key]
+        target = round(target_by_bucket[key], 2)
+        if target == 0 and actual == 0:
+            continue
         buckets.append(
             {
                 "key": key,
@@ -308,6 +386,35 @@ def build_allocation_map() -> dict[str, Any]:
                 "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。",
             }
         )
+    ideal_target_indexes = [idx for idx, item in enumerate(buckets) if item["target_pct"] > 0]
+    if ideal_target_indexes:
+        rounding_delta = round(100.0 - sum(buckets[idx]["target_pct"] for idx in ideal_target_indexes), 2)
+        buckets[ideal_target_indexes[-1]]["target_pct"] = round(buckets[ideal_target_indexes[-1]]["target_pct"] + rounding_delta, 2)
+        buckets[ideal_target_indexes[-1]]["gap_pct"] = round(
+            buckets[ideal_target_indexes[-1]]["actual_pct"] - buckets[ideal_target_indexes[-1]]["target_pct"],
+            2,
+        )
+    ideal_segments = [
+        {
+            "key": item["key"],
+            "label": item["label"],
+            "color": item["color"],
+            "target_pct": item["target_pct"],
+        }
+        for item in buckets
+        if item["target_pct"] > 0
+    ]
+    actual_overlay = [
+        {
+            "key": item["key"],
+            "label": item["label"],
+            "color": item["color"],
+            "actual_pct": item["actual_pct"],
+            "gap_pct": item["gap_pct"],
+        }
+        for item in buckets
+        if item["actual_pct"] > 0
+    ]
     return {
         "basis": "latest_target_allocation_and_portfolio_snapshot",
         "target_allocation_file": rel_path(allocation_path) if allocation_path else None,
@@ -316,16 +423,19 @@ def build_allocation_map() -> dict[str, Any]:
         "target_cash_short_pct": round(cash_target, 2),
         "actual_equity_pct": round(100.0 - actual_by_bucket.get("cash_short", 0.0), 2),
         "actual_cash_short_pct": round(actual_by_bucket.get("cash_short", 0.0), 2),
-        "bucket_model": "现金短融 + 权益内 40%核心/40%进攻/20%防御；实际组合多余部分进入其他/待清理。",
+        "bucket_model": "理想仓位由目标配置模块提供；真实持仓只作为覆盖层，不反向改变理想结构。",
+        "ideal_segments": ideal_segments,
+        "actual_overlay": actual_overlay,
         "buckets": buckets,
+        "missing_upstream": missing_upstream,
     }
 
 
 def trend_label(change_pct: float, up: float, down: float) -> tuple[str, str]:
     if change_pct >= up:
-        return "上行", "#16a34a"
+        return "上行", "#dc2626"
     if change_pct <= -down:
-        return "下行", "#dc2626"
+        return "下行", "#16a34a"
     return "震荡", "#f59e0b"
 
 
@@ -371,8 +481,10 @@ def build_trend_visual(close_series: pd.Series, date_series: pd.Series | None = 
     current_rebound = round((current / float(clean.min()) - 1) * 100, 2)
     common_drawdown = round(float(drawdowns.dropna().quantile(0.25)), 2) if not drawdowns.dropna().empty else None
     deep_drawdown = round(float(drawdowns.dropna().quantile(0.10)), 2) if not drawdowns.dropna().empty else None
+    max_drawdown = round(float(drawdowns.dropna().min()), 2) if not drawdowns.dropna().empty else current_drawdown
     common_rebound = round(float(rebounds.dropna().quantile(0.50)), 2) if not rebounds.dropna().empty else None
     strong_rebound = round(float(rebounds.dropna().quantile(0.80)), 2) if not rebounds.dropna().empty else None
+    max_rebound = round(float(rebounds.dropna().max()), 2) if not rebounds.dropna().empty else current_rebound
     return {
         "available": True,
         "current": round(current, 4),
@@ -383,6 +495,7 @@ def build_trend_visual(close_series: pd.Series, date_series: pd.Series | None = 
             "sample_high_date": date_at(sample_high_idx),
             "common_120d_drawdown_pct": common_drawdown,
             "deep_120d_drawdown_pct": deep_drawdown,
+            "max_120d_drawdown_pct": max_drawdown,
         },
         "rebound": {
             "from_sample_low_pct": current_rebound,
@@ -390,6 +503,7 @@ def build_trend_visual(close_series: pd.Series, date_series: pd.Series | None = 
             "sample_low_date": date_at(sample_low_idx),
             "common_120d_rebound_pct": common_rebound,
             "strong_120d_rebound_pct": strong_rebound,
+            "max_120d_rebound_pct": max_rebound,
         },
     }
 
@@ -497,6 +611,7 @@ def zone_text(zones: list[dict[str, Any]]) -> str:
 
 def render_report(report: dict[str, Any]) -> str:
     visual = report["valuation_visual"]
+    stance = report.get("security_stance", {})
     idx = report.get("index_valuation") or {}
     valuation_rows = []
     if idx.get("available"):
@@ -523,6 +638,9 @@ def render_report(report: dict[str, Any]) -> str:
 当前价格/净值位置：{visual['current_value']:.4f}
 当前位置：{visual['current_zone_label']}
 估值口径：{visual['basis']}
+标的级研究态度：{stance.get('label', '-')}（{stance.get('confidence', '-')}）
+
+说明：{stance.get('basis', '标的级研究态度不等于组合级买卖动作。')}
 
 一句话结论：
 > {report['one_line_conclusion']}
@@ -593,6 +711,7 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
         "group": target.group,
         "role": target.role,
         "confidence": confidence,
+        "security_stance": security_stance(current_zone, confidence),
         "one_line_conclusion": f"{target.name} 当前处于{ZONE_LABELS[current_zone]}；{basis}，最终动作需由ACTION_PLAN结合市场仓位和组合暴露决定。",
         "valuation_visual": {
             "metric": "price",
@@ -679,6 +798,7 @@ def make_report_for_stock(pro: Any, target: Target, start: str, end: str, timest
         "group": target.group,
         "role": target.role,
         "confidence": confidence,
+        "security_stance": security_stance(current_zone, confidence),
         "one_line_conclusion": f"{target.name} 当前处于{ZONE_LABELS[current_zone]}；估值区间来自{basis}，不是组合级买卖指令。",
         "valuation_visual": {
             "metric": "price",
@@ -752,6 +872,7 @@ def alert_rules_for_report(report: dict[str, Any], md_path: Path, json_path: Pat
         "role": report["role"],
         "allocation_bucket": ref.get("allocation_bucket", bucket_for_code(report["code"])),
         "ideal_position_range": ref.get("target_position_range"),
+        "security_stance": report.get("security_stance"),
         "reference_metrics": ref,
         "rules": [
             {

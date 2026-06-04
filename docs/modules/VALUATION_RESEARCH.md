@@ -8,8 +8,11 @@
 
 - ETF/个股档案：解释资产属性、估值方法、估值锚、风险和条件化策略。
 - 估值报告：给出当前价格/净值位置、低估观察区、合理配置区、偏贵区、拥挤/风险区。
+- 标的级研究态度：给出 `增持`、`持有`、`减仓` 三类提示，但只代表标的自身研究结论。
 - ACTION_PLAN：结合市场仓位、组合暴露和触发条件，生成最终买入、加仓、减仓或卖出动作。
 - 盘中作战地图：只展示估值分段和触发状态，不临时生成新策略，不自动下单。
+
+标的级研究态度不得读取或依赖用户真实持仓，也不得依赖总体仓位位置。它只基于该 ETF/个股自身的估值、趋势、基本面、拥挤度和风险条件。组合级最终动作仍由 ACTION_PLAN 决定。
 
 ## 2. 分段定义
 
@@ -76,6 +79,48 @@ research/alerts/intraday_rules.json
   }
 }
 ```
+
+标的级态度字段：
+
+```json
+{
+  "security_stance": {
+    "label": "增持|持有|减仓",
+    "basis": "估值、趋势、基本面或拥挤度依据",
+    "confidence": "高|中|低|中高|中低",
+    "scope": "security_level_only",
+    "not_portfolio_action": true
+  }
+}
+```
+
+趋势和回撤/反弹字段必须由本模块或趋势研究上游提前生成，供盘中作战地图直接绘图：
+
+```json
+{
+  "trend_visual": {
+    "trends": [
+      {"key": "long", "label": "长期", "state": "上行|震荡|下行|样本不足", "change_pct": 0},
+      {"key": "mid", "label": "中期", "state": "上行|震荡|下行|样本不足", "change_pct": 0},
+      {"key": "short", "label": "短期", "state": "上行|震荡|下行|样本不足", "change_pct": 0}
+    ],
+    "drawdown": {
+      "from_sample_high_pct": 0,
+      "common_120d_drawdown_pct": 0,
+      "deep_120d_drawdown_pct": 0,
+      "max_120d_drawdown_pct": 0
+    },
+    "rebound": {
+      "from_sample_low_pct": 0,
+      "common_120d_rebound_pct": 0,
+      "strong_120d_rebound_pct": 0,
+      "max_120d_rebound_pct": 0
+    }
+  }
+}
+```
+
+若上述字段缺失，盘中作战地图只能显示缺失提示，不得在盘中临时补算研究结论。
 
 ## 5. 使用提示词
 
