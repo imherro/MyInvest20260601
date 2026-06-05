@@ -1642,3 +1642,17 @@
 - 当前监控标的仍使用演示集合；后续正式版本应默认从真实持仓和观察清单读取。
 - 当前 `ideal_allocation_map` 由 `target_allocation.groups` 降级映射得到，已经在规则中记录 `missing_upstream`，提示目标配置模块后续直接输出盘中仓位桶。
 - `security_stance` 当前由估值分段映射生成，后续 ETF/个股研究模块应输出更完整的标的级研究态度依据。
+
+### 决策：修复未完成批量产物并增加离线预览回退
+
+- 决策类型：intraday_dashboard_maintenance
+- 变化类型：cleanup_and_offline_preview
+- 更新文件：`scripts/intraday_dashboard.py`、`scripts/project_check.py`、`scripts/generate_valuation_reports.py`、`docs/modules/INTRADAY_ALERTS.md`
+- 新结论：`runtime/` 是运行时缓存目录，项目检查不应扫描其中的 JSON；原始数据缓存应放在 `runtime/`，不放入正式 `research/` 命名体系。
+- 新增能力：`intraday_dashboard.py` 支持 `--reference-fallback`，用于 QMT 离线时按规则参考价输出 `--once-json` 或生成 `--preview-png` 截图。该模式会标记为 `offline_reference_preview`。
+- 清理结果：未接入当前作战地图合同的批量 ETF 估值试验产物和临时脚本已移入 `runtime/valuations/incomplete_batch_2026-06-04` 保留，不作为正式研究成果提交。
+
+边界：
+
+- `--reference-fallback` 只能用于离线自检和截图预览，不得当作实时行情或交易触发依据。
+- 未包含 `trend_visual`、`risk_markers`、`allocation_bucket` 等字段的估值文件不能接入盘中作战地图。

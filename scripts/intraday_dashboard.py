@@ -517,6 +517,20 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
     }
 
 
+def build_reference_ticks(rules: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    ticks: dict[str, dict[str, Any]] = {}
+    for subject in rules.get("subjects", []):
+        ref = subject.get("reference_metrics", {})
+        last = num(ref.get("last_reference")) or num((ref.get("valuation_visual") or {}).get("current_value")) or 0.0
+        ticks[subject["code"]] = {
+            "last": last,
+            "pre_close": last,
+            "pct_chg": 0.0,
+            "qmt_timetag": "offline_reference_preview",
+        }
+    return ticks
+
+
 class QmtQuoteProvider:
     def __init__(self, qmt_site: Path) -> None:
         self.qmt_site = qmt_site
@@ -556,12 +570,13 @@ class QmtQuoteProvider:
 
 
 class BattleMapWindow(QMainWindow):
-    def __init__(self, rules_file: Path, qmt_site: Path, interval_ms: int) -> None:
+    def __init__(self, rules_file: Path, qmt_site: Path, interval_ms: int, allow_reference_fallback: bool = False) -> None:
         super().__init__()
         self.rules_file = rules_file
         self.rules = load_json(rules_file)
         self.provider = QmtQuoteProvider(qmt_site)
         self.interval_ms = interval_ms
+        self.allow_reference_fallback = allow_reference_fallback
         self.last_states: dict[str, str] = {}
         self.event_path = RUNTIME_DIR / f"intraday_events_{datetime.now():%Y-%m-%d}.jsonl"
         self.event_path.parent.mkdir(parents=True, exist_ok=True)
@@ -671,6 +686,15 @@ class BattleMapWindow(QMainWindow):
             snapshot = self.build_snapshot(ticks)
             report = intraday_monitor.build_report(self.rules, snapshot)
         except Exception as exc:  # noqa: BLE001
+            if self.allow_reference_fallback:
+                ticks = build_reference_ticks(self.rules)
+                snapshot = self.build_snapshot(ticks)
+                snapshot["source"] = "offline_reference_preview"
+                report = intraday_monitor.build_report(self.rules, snapshot)
+                report["summary"]["one_line_conclusion"] = f"离线预览：QMT不可用，使用规则参考价绘制界面；原因：{exc}"
+                self.timer.stop()
+                self._render(report)
+                return
             QMessageBox.warning(self, "盘中监测错误", str(exc))
             self.timer.stop()
             return
@@ -910,20 +934,28 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--interval-ms", type=int, default=3000)
     parser.add_argument("--once-json", action="store_true", help="Fetch QMT once, print evaluated JSON, and exit.")
     parser.add_argument("--preview-png", type=Path, help="Open once, save a dashboard preview PNG, and exit.")
+    parser.add_argument("--reference-fallback", action="store_true", help="Use rule reference prices when QMT is offline. Only for offline checks and screenshots.")
     args = parser.parse_args(argv)
 
     if args.once_json:
         rules = load_json(args.rules_file)
         provider = QmtQuoteProvider(args.qmt_site)
         codes = [item["code"] for item in rules.get("subjects", [])]
-        ticks = provider.fetch(codes)
+        try:
+            ticks = provider.fetch(codes)
+        except Exception:
+            if not args.reference_fallback:
+                raise
+            ticks = build_reference_ticks(rules)
         snapshot = build_snapshot_from_rules(rules, ticks)
+        if args.reference_fallback and all(item.get("qmt_timetag") == "offline_reference_preview" for item in ticks.values()):
+            snapshot["source"] = "offline_reference_preview"
         report = intraday_monitor.build_report(rules, snapshot)
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0
 
     app = QApplication(sys.argv)
-    window = BattleMapWindow(args.rules_file, args.qmt_site, args.interval_ms)
+    window = BattleMapWindow(args.rules_file, args.qmt_site, args.interval_ms, allow_reference_fallback=bool(args.preview_png or args.reference_fallback))
     window.show()
     if args.preview_png:
         def save_preview() -> None:

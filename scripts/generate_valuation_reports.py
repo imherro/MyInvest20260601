@@ -69,6 +69,15 @@ BUCKET_BY_CODE = {
     "603087": "defense",
     "300760": "defense",
     "511360": "cash_short",
+    "688333": "attack_mainline",
+    "002625": "attack_mainline",
+    "300627": "attack_mainline",
+    "002920": "attack_mainline",
+    "688439": "attack_mainline",
+    "002258": "legacy_watch",
+    "002041": "legacy_watch",
+    "603903": "legacy_watch",
+    "603596": "attack_mainline",
 }
 
 SNAPSHOT_CATEGORY_BUCKET = {

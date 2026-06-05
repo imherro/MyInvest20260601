@@ -180,6 +180,14 @@ py -3.11 scripts\intraday_dashboard.py --once-json
 
 该命令只读取一次 QMT 实时行情并输出 JSON，不打开窗口，适合排查 QMT 连接、字段缺失和规则误报。
 
+盘后或 QMT 离线时，只做界面验证可以显式启用参考价回退：
+
+```powershell
+py -3.11 scripts\intraday_dashboard.py --once-json --reference-fallback
+```
+
+`--reference-fallback` 会使用 `intraday_rules.json` 中的参考价绘制或输出，数据源标记为 `offline_reference_preview`，只用于离线自检，不得当作实时行情或交易触发依据。
+
 窗口预览截图：
 
 ```powershell
@@ -187,6 +195,7 @@ py -3.11 scripts\intraday_dashboard.py --preview-png runtime\alerts\intraday_das
 ```
 
 该命令打开一次窗口、保存截图后退出，用于验证图示布局、文本重叠和分组显示。
+如果 QMT 离线，可追加 `--reference-fallback` 只验证界面布局。
 
 可选参数：
 

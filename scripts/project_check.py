@@ -99,7 +99,7 @@ def check_python_dependencies(findings: list[Finding]) -> None:
 
 def check_json(findings: list[Finding]) -> None:
     for path in sorted(ROOT.rglob("*.json")):
-        if ".git" in path.parts:
+        if ".git" in path.parts or "runtime" in path.relative_to(ROOT).parts:
             continue
         try:
             json.loads(path.read_text(encoding="utf-8"))
