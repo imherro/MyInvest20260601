@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from PySide6.QtCore import QPointF, QRectF, Qt, QTimer
+from PySide6.QtCore import QEvent, QObject, QPointF, QRectF, Qt, QTimer
 from PySide6.QtGui import QColor, QFont, QPainter, QPen, QPolygonF
 from PySide6.QtWidgets import (
     QApplication,
@@ -24,6 +24,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QToolButton,
+    QToolTip,
     QVBoxLayout,
     QWidget,
 )
@@ -43,7 +44,8 @@ BUCKET_STYLE = {
     "defense": {"label": "防御仓", "bg": "#e8f7f1", "accent": "#0f8b6f"},
     "legacy_watch": {"label": "其他/待清理", "bg": "#fff4df", "accent": "#9a6700"},
 }
-BUCKET_ORDER = ["cash_short", "core_base", "attack_mainline", "defense", "legacy_watch"]
+BUCKET_ORDER = ["core_base", "attack_mainline", "defense", "legacy_watch", "cash_short"]
+ALLOCATION_DISPLAY_ORDER = ["core_base", "attack_mainline", "defense", "legacy_watch", "cash_short"]
 PRIORITY_RANK = {"high": 3, "medium": 2, "low": 1}
 STANCE_COLOR = {"低估": "#16a34a", "合理": "#475569", "偏贵": "#d97706", "泡沫": "#b91c1c"}
 
@@ -94,6 +96,16 @@ def valuation_zone_for_value(visual: dict[str, Any], value: Any) -> dict[str, An
 
 def subject_bucket(subject: dict[str, Any]) -> str:
     return subject.get("allocation_bucket") or subject.get("reference_metrics", {}).get("allocation_bucket") or "legacy_watch"
+
+
+class LongToolTipFilter(QObject):
+    def eventFilter(self, obj: QObject, event: QEvent) -> bool:  # noqa: N802 - Qt override.
+        if event.type() == QEvent.Type.ToolTip and isinstance(obj, QWidget):
+            text = obj.toolTip()
+            if text:
+                QToolTip.showText(event.globalPos(), text, obj, obj.rect(), 45000)
+                return True
+        return super().eventFilter(obj, event)
 
 
 class ValuationMapBar(QWidget):
@@ -290,36 +302,41 @@ class MoveMap(QWidget):
         max_rb = num(rb.get("max_120d_rebound_pct")) or strong_rb or rebound or 1
 
         gauges = [
-            ("回撤", drawdown, common_dd, deep_dd, max(max_dd, drawdown, 1), "#16a34a", True),
-            ("反弹", rebound, common_rb, strong_rb, max(max_rb, rebound, 1), "#dc2626", False),
+            ("最大回撤", drawdown, common_dd, deep_dd, max(max_dd, drawdown, 1), "#16a34a"),
+            ("最大反弹", rebound, common_rb, strong_rb, max(max_rb, rebound, 1), "#dc2626"),
         ]
         painter.setFont(QFont("Microsoft YaHei", 8))
-        gauge_w = (self.width() - 24) / 2
-        for idx, (label, value, normal, strong, scale, color, down) in enumerate(gauges):
-            box = QRectF(8 + idx * gauge_w, 6, gauge_w - 8, 44)
-            bar = QRectF(box.left() + 16, box.top() + 4, 10, box.height() - 12)
+        for idx, (label, value, normal, strong, scale, color) in enumerate(gauges):
+            box = QRectF(8, 8 + idx * 36, self.width() - 16, 30)
+            label_rect = QRectF(box.left(), box.top(), 60, 14)
+            bar = QRectF(box.left() + 62, box.top() + 4, max(30, box.width() - 118), 12)
             painter.setPen(QColor("#334155"))
-            painter.drawText(QRectF(box.left(), box.top(), 36, 14), Qt.AlignmentFlag.AlignLeft, label)
+            painter.drawText(label_rect, Qt.AlignmentFlag.AlignLeft, label)
             painter.setBrush(QColor("#d7dee8"))
             painter.setPen(Qt.PenStyle.NoPen)
-            painter.drawRoundedRect(bar, 5, 5)
+            painter.drawRoundedRect(bar, 6, 6)
 
-            normal_y = self._y_for_vertical(bar, normal, scale, down)
-            strong_y = self._y_for_vertical(bar, strong, scale, down)
-            zone_top = min(normal_y, strong_y)
-            zone_h = abs(strong_y - normal_y)
+            normal_x = self._x_for_horizontal(bar, normal, scale)
+            strong_x = self._x_for_horizontal(bar, strong, scale)
+            zone_left = min(normal_x, strong_x)
+            zone_w = abs(strong_x - normal_x)
             painter.setBrush(QColor("#fde68a"))
-            painter.drawRect(QRectF(bar.left(), zone_top, bar.width(), max(2, zone_h)))
+            painter.drawRect(QRectF(zone_left, bar.top(), max(2, zone_w), bar.height()))
 
-            current_y = self._y_for_vertical(bar, value, scale, down)
-            painter.setPen(QPen(QColor(color), 3))
-            painter.drawLine(int(bar.left() - 5), int(current_y), int(bar.right() + 5), int(current_y))
+            current_x = self._x_for_horizontal(bar, value, scale)
+            painter.setBrush(QColor(color))
+            painter.setPen(Qt.PenStyle.NoPen)
+            painter.drawRoundedRect(QRectF(bar.left(), bar.top(), max(2, current_x - bar.left()), bar.height()), 6, 6)
+            painter.setPen(QPen(QColor("#111827"), 2))
+            painter.drawLine(int(current_x), int(bar.top() - 5), int(current_x), int(bar.bottom() + 5))
             painter.setPen(QColor("#334155"))
-            painter.drawText(QRectF(bar.right() + 8, box.top() + 17, box.width() - 30, 18), Qt.AlignmentFlag.AlignLeft, f"{value:.1f}%")
+            painter.drawText(QRectF(bar.right() + 6, box.top() + 1, 52, 18), Qt.AlignmentFlag.AlignLeft, f"{value:.1f}%")
+            painter.setPen(QColor("#64748b"))
+            painter.drawText(QRectF(bar.left(), bar.bottom() + 1, bar.width(), 12), Qt.AlignmentFlag.AlignRight, f"极值 {scale:.1f}%")
 
-    def _y_for_vertical(self, rect: QRectF, value: float, scale: float, down: bool) -> float:
+    def _x_for_horizontal(self, rect: QRectF, value: float, scale: float) -> float:
         ratio = min(1.0, max(0.0, value / scale if scale else 0.0))
-        return rect.top() + rect.height() * ratio if down else rect.bottom() - rect.height() * ratio
+        return rect.left() + rect.width() * ratio
 
 
 class PositionGapBar(QWidget):
@@ -366,7 +383,7 @@ class AllocationMap(QWidget):
     def __init__(self, allocation: dict[str, Any] | None, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.allocation = allocation or {}
-        self.setMinimumHeight(166)
+        self.setMinimumHeight(124)
         self.setToolTip(self.tooltip_text())
 
     def tooltip_text(self) -> str:
@@ -394,35 +411,43 @@ class AllocationMap(QWidget):
         painter.fillRect(self.rect(), QColor("#0f172a"))
         painter.setFont(QFont("Microsoft YaHei", 11, QFont.Weight.Bold))
         painter.setPen(QColor("#e5eefb"))
-        painter.drawText(18, 24, "理想仓位底图")
+        painter.drawText(18, 24, "理想仓位桶")
         if not self.allocation:
             painter.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, "未找到最新仓位底图")
             return
 
         x, width = 18, self.width() - 36
-        total_row = QRectF(x, 42, width, 24)
-        bucket_row = QRectF(x, 92, width, 28)
+        bucket_row = QRectF(x, 42, width, 28)
         painter.setFont(QFont("Microsoft YaHei", 9))
         painter.setPen(QColor("#cbd5e1"))
-        painter.drawText(QRectF(x, 24, width, 16), Qt.AlignmentFlag.AlignLeft, "理想结构：总资产 100%，真实持仓仅作覆盖标记")
+        painter.drawText(QRectF(x, 24, width, 16), Qt.AlignmentFlag.AlignLeft, "权益仓位桶在前，现金/短融在后；真实持仓仅作覆盖标记")
 
-        total_segments = [
-            {"label": "现金/短融", "pct": num(self.allocation.get("target_cash_short_pct")) or 0, "color": "#5b6b7a"},
-            {"label": "权益", "pct": num(self.allocation.get("target_equity_pct")) or 0, "color": "#60a5fa"},
-        ]
-        self._draw_segments(painter, total_row, total_segments, "pct")
-
-        ideal_segments = [
+        ideal_segments_raw = [
             {"label": item.get("label"), "pct": item.get("target_pct"), "color": item.get("color")}
             for item in self.allocation.get("ideal_segments", [])
             if (num(item.get("target_pct")) or 0) > 0
         ]
+        ideal_segments = self._ordered_segments(ideal_segments_raw)
         self._draw_segments(painter, bucket_row, ideal_segments, "pct")
 
         painter.setPen(QColor("#cbd5e1"))
-        painter.drawText(QRectF(x, 72, width, 16), Qt.AlignmentFlag.AlignLeft, "理想仓位桶")
-        painter.drawText(QRectF(x, 126, width, 16), Qt.AlignmentFlag.AlignLeft, "真实持仓覆盖")
-        self._draw_actual_overlay(painter, QRectF(x, 142, width, 10))
+        painter.drawText(QRectF(x, 78, width, 16), Qt.AlignmentFlag.AlignLeft, "真实持仓覆盖")
+        self._draw_actual_overlay(painter, QRectF(x, 94, width, 10))
+
+    def _ordered_segments(self, segments: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        def rank(item: dict[str, Any]) -> int:
+            label = str(item.get("label", ""))
+            if "现金" in label or "短融" in label:
+                return ALLOCATION_DISPLAY_ORDER.index("cash_short")
+            if "宽基" in label or "核心" in label:
+                return ALLOCATION_DISPLAY_ORDER.index("core_base")
+            if "进攻" in label or "主线" in label:
+                return ALLOCATION_DISPLAY_ORDER.index("attack_mainline")
+            if "防御" in label:
+                return ALLOCATION_DISPLAY_ORDER.index("defense")
+            return ALLOCATION_DISPLAY_ORDER.index("legacy_watch")
+
+        return sorted(segments, key=rank)
 
     def _draw_segments(self, painter: QPainter, rect: QRectF, segments: list[dict[str, Any]], pct_key: str) -> None:
         painter.setPen(Qt.PenStyle.NoPen)
@@ -450,7 +475,7 @@ class AllocationMap(QWidget):
         painter.setPen(Qt.PenStyle.NoPen)
         painter.drawRoundedRect(rect, 5, 5)
         cursor = rect.left()
-        for item in self.allocation.get("actual_overlay", []):
+        for item in sorted(self.allocation.get("actual_overlay", []), key=lambda item: ALLOCATION_DISPLAY_ORDER.index(item.get("key", "legacy_watch")) if item.get("key") in ALLOCATION_DISPLAY_ORDER else 99):
             actual = num(item.get("actual_pct")) or 0
             if actual <= 0:
                 continue
@@ -461,7 +486,7 @@ class AllocationMap(QWidget):
 
         cursor = rect.left()
         painter.setFont(QFont("Microsoft YaHei", 8))
-        for item in self.allocation.get("actual_overlay", []):
+        for item in sorted(self.allocation.get("actual_overlay", []), key=lambda item: ALLOCATION_DISPLAY_ORDER.index(item.get("key", "legacy_watch")) if item.get("key") in ALLOCATION_DISPLAY_ORDER else 99):
             actual = num(item.get("actual_pct")) or 0
             if actual <= 0:
                 continue
@@ -938,13 +963,12 @@ class BattleMapWindow(QMainWindow):
         markers = quote.get("risk_markers") or {}
         position = quote.get("position_visual") or {}
         grid.addWidget(ValuationMapBar(visual, markers, quote.get("last"), bg, card), 0, 1, 4, 2)
-        grid.addWidget(TrendStrip(quote.get("trend_visual"), bg, card), 0, 3, 4, 1)
-        grid.addWidget(MoveMap(quote.get("trend_visual"), bg, card), 0, 4, 4, 1)
+        grid.addWidget(MoveMap(quote.get("trend_visual"), bg, card), 0, 3, 4, 2)
         grid.addWidget(PositionGapBar(position.get("current_position_pct"), position.get("target_position_range"), bg, card), 0, 5, 4, 1)
         grid.setColumnStretch(0, 0)
         grid.setColumnStretch(1, 3)
         grid.setColumnStretch(2, 1)
-        grid.setColumnStretch(3, 1)
+        grid.setColumnStretch(3, 2)
         grid.setColumnStretch(4, 2)
         grid.setColumnStretch(5, 1)
         return card
@@ -1039,6 +1063,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     app = QApplication(sys.argv)
+    tooltip_filter = LongToolTipFilter(app)
+    app.installEventFilter(tooltip_filter)
     window = BattleMapWindow(args.rules_file, args.qmt_site, args.interval_ms, allow_reference_fallback=bool(args.preview_png or args.reference_fallback))
     window.show()
     if args.preview_png:

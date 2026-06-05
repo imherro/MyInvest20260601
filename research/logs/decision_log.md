@@ -1691,3 +1691,13 @@
 - 新结论：作战地图不再显示“增持/持有/减仓”作为标的状态，统一改为“低估/合理/偏贵/泡沫”。该字段只表达估值/赔率位置，不表达组合级买卖动作。
 - 触发原因：歌尔股份因进入低估观察区被显示为“增持”，容易被误读为盘中加仓建议；实际规则动作仍是 `wait`，不是买入。
 - 验证结果：歌尔股份 `002241.SZ` 当前显示为“低估”，边界为“估值状态不等于组合级买卖动作”。
+
+### 决策：简化作战地图顶部和标的波动图
+
+- 决策类型：intraday_dashboard_layout_refinement
+- 变化类型：ui_simplification_and_tooltip_duration
+- 更新文件：`scripts/intraday_dashboard.py`、`docs/modules/INTRADAY_ALERTS.md`
+- 新结论：顶部仓位区去掉单独的“理想结构”总资产行，只保留理想仓位桶和真实持仓覆盖；显示顺序改为权益仓位桶在前，现金/短融在后。
+- 标的卡片：移除长/中/短趋势图；前高回撤和前低反弹改为上下两条横向图，上方最大回撤、下方最大反弹。
+- 交互：全局 tooltip 显示时间延长到约45秒，方便阅读风控位、右侧确认位、估值状态、回撤/反弹和仓位偏离说明。
+- 验证结果：`py -3.11 scripts\intraday_dashboard.py --preview-png runtime\alerts\intraday_dashboard_layout_update_preview.png` 已生成新版截图；QMT 自检读取 29/29 个标的。
