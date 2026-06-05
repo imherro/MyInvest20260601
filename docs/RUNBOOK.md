@@ -64,6 +64,13 @@ research/logs/decision_log.md
 
 目标：只检查已定义触发条件，不临时发明新策略。
 
+QMT 前置条件：
+
+- 启动 QMT 行情/交易客户端时必须勾选“独立交易”。
+- 登录完成后确认 QMT 行情页能正常刷新。
+- 若未勾选“独立交易”，本项目可能能导入 QMT SDK，但 `get_full_tick` 会报“无法连接行情服务”或返回空行情。
+- 自检命令：`py -3.11 scripts\intraday_dashboard.py --once-json`。
+
 步骤：
 
 1. 读取当日盘前操作建议。

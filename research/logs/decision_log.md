@@ -1656,3 +1656,12 @@
 
 - `--reference-fallback` 只能用于离线自检和截图预览，不得当作实时行情或交易触发依据。
 - 未包含 `trend_visual`、`risk_markers`、`allocation_bucket` 等字段的估值文件不能接入盘中作战地图。
+
+### 决策：补充 QMT 独立交易前置条件并显示行情健康状态
+
+- 决策类型：intraday_dashboard_qmt_health
+- 变化类型：runtime_prerequisite_and_ui_status
+- 更新文件：`scripts/intraday_dashboard.py`、`docs/RUNBOOK.md`、`docs/modules/INTRADAY_ALERTS.md`
+- 新结论：启动 QMT 行情/交易客户端时必须勾选“独立交易”；否则 SDK 可能可以导入，但实时行情会报“无法连接行情服务”或返回空行情。
+- UI 变化：作战地图顶部“数据源”卡片从静态文字改为行情健康状态，区分“实时正常”“部分缺失”“行情为空”“行情延迟”“离线预览”。
+- 执行边界：部分缺失或行情为空时，缺失标的不得推断；离线预览只用于界面检查，不得作为实时行情或交易触发依据。

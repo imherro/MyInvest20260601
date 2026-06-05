@@ -475,11 +475,18 @@ class AllocationMap(QWidget):
 
 def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, Any]]) -> dict[str, Any]:
     quotes: dict[str, dict[str, Any]] = {}
+    expected_codes = [item["code"] for item in rules.get("subjects", [])]
+    received_codes = []
+    timetags = []
     for subject in rules.get("subjects", []):
         code = subject["code"]
         ref = subject.get("reference_metrics", {})
         live = ticks.get(code, {})
         last = live.get("last")
+        if num(last) is not None:
+            received_codes.append(code)
+        if live.get("qmt_timetag"):
+            timetags.append(str(live.get("qmt_timetag")))
         quote = {
             "name": subject.get("name", code),
             "type": subject.get("type", "unknown"),
@@ -512,6 +519,13 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
             "market_gate": rules.get("global_gate", {}).get("default_market_gate", "verify_only"),
             "target_equity_range": f"{fmt(allocation_map.get('target_equity_pct'), 1)}%" if allocation_map else "45%-50%",
             "allocation_map": allocation_map,
+            "quote_health": {
+                "expected_count": len(expected_codes),
+                "received_count": len(received_codes),
+                "missing_count": len(expected_codes) - len(received_codes),
+                "missing_codes": [code for code in expected_codes if code not in set(received_codes)],
+                "latest_timetag": max(timetags) if timetags else None,
+            },
         },
         "quotes": quotes,
     }
@@ -529,6 +543,15 @@ def build_reference_ticks(rules: dict[str, Any]) -> dict[str, dict[str, Any]]:
             "qmt_timetag": "offline_reference_preview",
         }
     return ticks
+
+
+def parse_qmt_timetag(value: str | None) -> datetime | None:
+    if not value or value == "offline_reference_preview":
+        return None
+    try:
+        return datetime.strptime(value, "%Y%m%d %H:%M:%S")
+    except ValueError:
+        return None
 
 
 class QmtQuoteProvider:
@@ -712,6 +735,9 @@ class BattleMapWindow(QMainWindow):
         gate_color = {"risk_reduce_only": "#b00020", "verify_only": "#9a6700", "allow_new_risk": "#0a7f2e"}.get(gate)
         self._set_card(self.status_card, gate, gate_color)
         self._set_card(self.target_card, context.get("target_equity_range", "-"))
+        source_label, source_color, source_tip = self._quote_health_label(report)
+        self._set_card(self.source_card, source_label, source_color)
+        self.source_card.setToolTip(source_tip)
         self._set_card(self.time_card, datetime.now().strftime("%H:%M:%S"))
         if context.get("allocation_map"):
             self.allocation_map.update_allocation(context["allocation_map"])
@@ -742,6 +768,60 @@ class BattleMapWindow(QMainWindow):
                 priority=summary.get("highest_priority"),
                 line=summary.get("one_line_conclusion"),
             )
+        )
+
+    def _quote_health_label(self, report: dict[str, Any]) -> tuple[str, str, str]:
+        source = report.get("quote_source", "unknown")
+        context = report.get("market_context", {})
+        health = context.get("quote_health", {}) or {}
+        expected = int(health.get("expected_count") or 0)
+        received = int(health.get("received_count") or 0)
+        missing = int(health.get("missing_count") or max(expected - received, 0))
+        missing_codes = health.get("missing_codes") or []
+        latest = health.get("latest_timetag")
+
+        if source == "offline_reference_preview":
+            return (
+                "离线预览",
+                "#9a6700",
+                "QMT 不可用或未连接时使用规则参考价绘图；只用于界面检查，不作为实时行情或交易触发依据。",
+            )
+
+        if received <= 0:
+            return (
+                "行情为空",
+                "#b00020",
+                "QMT 未返回有效价格。请确认 QMT 已登录、启动时已勾选“独立交易”，并且行情页能正常刷新。",
+            )
+
+        missing_text = "、".join(str(code) for code in missing_codes[:8])
+        if missing > 0:
+            suffix = f"；缺失：{missing_text}" if missing_text else ""
+            return (
+                f"部分缺失 {received}/{expected}",
+                "#d97706",
+                f"QMT 已返回部分标的，但仍有 {missing} 个标的缺少有效价格{suffix}。",
+            )
+
+        latest_dt = parse_qmt_timetag(str(latest) if latest else None)
+        if latest_dt:
+            delay_seconds = max(0, int((datetime.now() - latest_dt).total_seconds()))
+            if delay_seconds > 180:
+                return (
+                    f"行情延迟 {delay_seconds}s",
+                    "#d97706",
+                    f"最新 QMT 行情时间：{latest}；超过 180 秒未更新，盘中触发需要人工复核。",
+                )
+            return (
+                f"实时正常 {received}/{expected}",
+                "#0a7f2e",
+                f"QMT 实时行情正常；最新行情时间：{latest}。",
+            )
+
+        return (
+            f"实时正常 {received}/{expected}",
+            "#0a7f2e",
+            "QMT 已返回有效价格，但没有可解析的行情时间字段。",
         )
 
     def _clear_cards(self) -> None:
