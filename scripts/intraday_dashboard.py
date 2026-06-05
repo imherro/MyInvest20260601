@@ -557,8 +557,12 @@ class QmtQuoteProvider:
         result: dict[str, dict[str, Any]] = {}
         for code in codes:
             tick = ticks.get(code) or {}
-            last = float(tick.get("lastPrice") or 0)
-            pre_close = float(tick.get("lastClose") or 0)
+            if not tick:
+                continue
+            last = num(tick.get("lastPrice"))
+            pre_close = num(tick.get("lastClose"))
+            if last is None or last <= 0:
+                continue
             pct_chg = (last / pre_close - 1) * 100 if pre_close else None
             result[code] = {
                 "last": last,
