@@ -1665,3 +1665,19 @@
 - 新结论：启动 QMT 行情/交易客户端时必须勾选“独立交易”；否则 SDK 可能可以导入，但实时行情会报“无法连接行情服务”或返回空行情。
 - UI 变化：作战地图顶部“数据源”卡片从静态文字改为行情健康状态，区分“实时正常”“部分缺失”“行情为空”“行情延迟”“离线预览”。
 - 执行边界：部分缺失或行情为空时，缺失标的不得推断；离线预览只用于界面检查，不得作为实时行情或交易触发依据。
+
+### 决策：扩展盘中监控池并接入目标配置理想底图
+
+- 决策类型：intraday_dashboard_universe_and_allocation_map
+- 变化类型：monitor_universe_expansion_and_upstream_contract
+- 更新文件：`scripts/generate_valuation_reports.py`、`research/alerts/intraday_rules.json`、`research/allocation/target_allocation_2026-06-03_211833.json/md`、`docs/modules/INTRADAY_ALERTS.md`
+- 新生成文件：`research/valuations/valuation_*_2026-06-05_102437.md/json`
+- 新结论：盘中作战地图监控池从 7 个演示标的扩展到 29 个正式监控标的，覆盖现金短融锚、核心宽基、AI/半导体/电网等主线观察、防御金融医药资源暴露，以及中国铀业、中国平安、歌尔股份、伯特利、西安铂力特等重点个股。
+- 目标底图：`target_allocation_2026-06-03_211833.json` 已补充 `ideal_allocation_map`；盘中规则生成器优先读取该字段，不再在 `intraday_rules.json` 记录 `target_allocation` 缺失。
+- 现金工具边界：`511360` 保留在作战地图作为现金/短融仓位锚，但不设置估值高低触发规则，避免短融 ETF 价格分位造成误报警。
+- 验证结果：`py -3.11 scripts\intraday_dashboard.py --once-json` 成功读取 29/29 个 QMT 实时标的，`quote_health.missing_count=0`，`allocation_map.missing_upstream=[]`。
+
+边界：
+
+- 新增标的的 ETF 估值多为价格/净值位置代理；主题 ETF 的估值高低提醒仍只代表复核，不代表买卖。
+- 真实买卖动作仍必须由 `ACTION_PLAN` 结合市场仓位、组合暴露、主线阶段和持仓约束生成。

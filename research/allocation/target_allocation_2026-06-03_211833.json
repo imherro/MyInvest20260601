@@ -164,6 +164,43 @@
       }
     ]
   },
+  "ideal_allocation_map": {
+    "basis": "market_position_and_theme_analysis",
+    "target_equity_pct": 47.5,
+    "target_cash_short_pct": 52.5,
+    "segments": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "target_pct": 52.5,
+        "color": "#5b6b7a",
+        "basis": "市场仓位分数46，现金/短融作为防守锚。"
+      },
+      {
+        "key": "core_base",
+        "label": "宽基/核心底仓",
+        "target_pct": 14.62,
+        "color": "#2f6fbd",
+        "basis": "权益内核心底仓约40%，用于低换手核心暴露。"
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "target_pct": 14.62,
+        "color": "#8b5cf6",
+        "basis": "权益内进攻主线约40%，仅承接A/B主线和已建档观察标的。"
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "target_pct": 18.26,
+        "color": "#0f8b6f",
+        "basis": "权益内防御仓约20%并叠加当前市场偏防御环境。"
+      }
+    ],
+    "actual_overlay_source": "research/portfolio/portfolio_snapshot_2026-06-04_092931.json",
+    "boundary": "理想仓位只由市场仓位和配置约束决定；真实持仓只作为覆盖层，不反向改变理想结构。"
+  },
   "transition_targets": [
     {
       "subject": "equity_total",

@@ -66,6 +66,8 @@ BUCKET_BY_CODE = {
     "512070": "defense",
     "159992": "defense",
     "513120": "defense",
+    "513180": "legacy_watch",
+    "513050": "legacy_watch",
     "603087": "defense",
     "300760": "defense",
     "511360": "cash_short",
@@ -78,6 +80,9 @@ BUCKET_BY_CODE = {
     "002041": "legacy_watch",
     "603903": "legacy_watch",
     "603596": "attack_mainline",
+    "159378": "legacy_watch",
+    "562500": "legacy_watch",
+    "562800": "attack_mainline",
 }
 
 SNAPSHOT_CATEGORY_BUCKET = {
@@ -127,13 +132,35 @@ class Target:
 
 
 TARGETS = [
+    Target("511360.SH", "短融ETF海富通", "cash_etf", "现金短融", "现金/短融桶", "现金短融锚", "50%-55%"),
     Target("510300.SH", "沪深300ETF华泰柏瑞", "broad_etf", "核心宽基", "核心仓", "沪深300核心观察", "0%-20%", "000300.SH", "沪深300"),
     Target("510500.SH", "中证500ETF南方", "broad_etf", "核心宽基", "核心仓", "中证500核心观察", "0%-15%", "000905.SH", "中证500"),
     Target("159915.SZ", "创业板ETF易方达", "broad_etf", "核心宽基", "核心/成长弹性仓", "创业板核心观察", "0%-10%", "399006.SZ", "创业板指"),
+    Target("159201.SZ", "自由现金流ETF华夏", "theme_etf", "核心质量", "核心仓观察", "自由现金流核心观察", "3%-6%"),
+    Target("159819.SZ", "人工智能ETF易方达", "theme_etf", "AI主线", "进攻仓观察", "AI进攻观察", "0%-3%"),
     Target("159558.SZ", "半导体设备ETF易方达", "theme_etf", "半导体主线", "进攻仓观察", "半导体设备进攻观察", "0%-2%"),
     Target("588200.SH", "科创芯片ETF嘉实", "theme_etf", "半导体主线", "进攻仓观察", "科创芯片进攻观察", "0%-2%"),
+    Target("159326.SZ", "电网设备ETF华夏", "theme_etf", "电力设备副线", "进攻仓观察", "电网设备观察", "0%-2%"),
+    Target("510880.SH", "红利ETF华泰柏瑞", "theme_etf", "红利防御", "防御仓", "红利防御观察", "2%-5%"),
+    Target("159301.SZ", "公用事业ETF华夏", "theme_etf", "公用事业防御", "防御仓", "公用事业防御观察", "1%-3%"),
+    Target("512880.SH", "证券ETF国泰", "theme_etf", "金融证券", "防御/周期观察", "证券ETF观察", "0%-2%"),
+    Target("159842.SZ", "券商ETF银华", "theme_etf", "金融证券", "防御/周期观察", "券商ETF观察", "0%-3%"),
+    Target("512070.SH", "证券保险ETF易方达", "theme_etf", "金融证券", "防御/周期观察", "证券保险ETF观察", "0%-4%"),
+    Target("159992.SZ", "创新药ETF银华", "theme_etf", "医药防御成长", "防御/观察仓", "创新药ETF观察", "0%-4%"),
+    Target("513120.SH", "港股创新药ETF广发", "theme_etf", "港股创新药", "防御/观察仓", "港股创新药观察", "0%-2%"),
+    Target("516150.SH", "稀土ETF嘉实", "theme_etf", "稀土资源", "顺周期观察", "稀土ETF观察", "0%-3%"),
+    Target("562800.SH", "稀有金属ETF嘉实", "theme_etf", "稀有金属", "顺周期观察", "稀有金属ETF观察", "0%-2%"),
+    Target("159378.SZ", "通用航空ETF永赢", "theme_etf", "低空经济", "遗留/主题观察", "低空经济观察", "0%-2%"),
+    Target("512710.SH", "军工龙头ETF富国", "theme_etf", "军工", "遗留/主题观察", "军工ETF观察", "0%-2%"),
+    Target("159869.SZ", "游戏ETF华夏", "theme_etf", "游戏主题", "待清理主题观察", "游戏ETF观察", "0%-2%"),
+    Target("562500.SH", "机器人ETF华夏", "theme_etf", "机器人主题", "主题观察", "机器人ETF观察", "0%-2%"),
+    Target("513180.SH", "恒生科技ETF华夏", "theme_etf", "港股科技", "小仓观察", "恒生科技观察", "0%-2%"),
+    Target("513050.SH", "中概互联网ETF易方达", "theme_etf", "中概互联网", "小仓观察", "中概互联网观察", "0%-2%"),
     Target("001280.SZ", "中国铀业", "stock", "战略资源观察", "观察股", "战略资源观察股", "0%-1%"),
     Target("601318.SH", "中国平安", "stock", "红利金融观察", "观察股", "红利金融观察股", "0%-3%"),
+    Target("002241.SZ", "歌尔股份", "stock", "AI终端/消费电子", "进攻仓观察", "歌尔股份观察", "0%-2%"),
+    Target("603596.SH", "伯特利", "stock", "汽车零部件", "个股观察", "伯特利观察", "0%-2%"),
+    Target("688333.SH", "西安铂力特", "stock", "高端装备/军工", "进攻仓观察", "西安铂力特观察", "0%-2%"),
 ]
 
 
@@ -330,7 +357,9 @@ def build_allocation_map() -> dict[str, Any]:
                 "fallback": "使用默认目标权益/现金比例。",
             }
         )
-    if allocation_path and "ideal_allocation_map" not in allocation:
+    ideal_map = allocation.get("ideal_allocation_map", {})
+    ideal_segments_source = ideal_map.get("segments", []) if isinstance(ideal_map, dict) else []
+    if allocation_path and not ideal_segments_source:
         missing_upstream.append(
             {
                 "module": "target_allocation",
@@ -361,21 +390,27 @@ def build_allocation_map() -> dict[str, Any]:
             actual_by_bucket[bucket] += float(item.get("weight_pct") or 0)
 
     target_by_bucket = {key: 0.0 for key in BUCKETS}
-    target_by_bucket["cash_short"] = cash_target
-    raw_equity_buckets = {key: 0.0 for key in ["core_base", "attack_mainline", "defense"]}
-    for group in allocation.get("target_allocation", {}).get("groups", []):
-        bucket = target_group_bucket(group)
-        if bucket in raw_equity_buckets:
-            raw_equity_buckets[bucket] += float(group.get("target_center_pct") or 0)
-
-    raw_total = sum(raw_equity_buckets.values())
-    if raw_total > 0:
-        for key, value in raw_equity_buckets.items():
-            target_by_bucket[key] = equity_target * value / raw_total
+    if ideal_segments_source:
+        for item in ideal_segments_source:
+            key = str(item.get("key", ""))
+            if key in target_by_bucket:
+                target_by_bucket[key] += float(item.get("target_pct") or 0)
     else:
-        target_by_bucket["core_base"] = equity_target * 0.40
-        target_by_bucket["attack_mainline"] = equity_target * 0.40
-        target_by_bucket["defense"] = equity_target * 0.20
+        target_by_bucket["cash_short"] = cash_target
+        raw_equity_buckets = {key: 0.0 for key in ["core_base", "attack_mainline", "defense"]}
+        for group in allocation.get("target_allocation", {}).get("groups", []):
+            bucket = target_group_bucket(group)
+            if bucket in raw_equity_buckets:
+                raw_equity_buckets[bucket] += float(group.get("target_center_pct") or 0)
+
+        raw_total = sum(raw_equity_buckets.values())
+        if raw_total > 0:
+            for key, value in raw_equity_buckets.items():
+                target_by_bucket[key] = equity_target * value / raw_total
+        else:
+            target_by_bucket["core_base"] = equity_target * 0.40
+            target_by_bucket["attack_mainline"] = equity_target * 0.40
+            target_by_bucket["defense"] = equity_target * 0.20
 
     buckets = []
     for key in BUCKET_ORDER:
@@ -694,6 +729,11 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
     latest = daily.iloc[-1]
     current = float(latest["close"])
     zones, current_zone = build_price_position_zones(daily["close"], current)
+    if target.asset_type == "cash_etf":
+        current_zone = "reasonable_allocation"
+        for zone in zones:
+            zone["color"] = "#cbd5e1"
+        zones[1]["color"] = "#5b6b7a"
     index_val = index_valuation(pro, target.benchmark, start, end) if target.benchmark else {"available": False, "reason": "theme index valuation not mapped"}
     ma20 = round(float(daily["close"].tail(20).mean()), 4)
     ma60 = round(float(daily["close"].tail(60).mean()), 4) if len(daily) >= 60 else None
@@ -708,6 +748,20 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
         data_gaps.append("未取得最新基金单位净值，折溢价无法计算。")
     confidence = "中高" if target.asset_type == "broad_etf" and index_val.get("available") else "中低"
     basis = "跟踪指数估值 + ETF价格/净值位置" if index_val.get("available") else "ETF价格/净值位置代理"
+    stance = security_stance(current_zone, confidence)
+    one_line = f"{target.name} 当前处于{ZONE_LABELS[current_zone]}；{basis}，最终动作需由ACTION_PLAN结合市场仓位和组合暴露决定。"
+    if target.asset_type == "cash_etf":
+        confidence = "高"
+        data_gaps.append("现金/短融ETF不使用估值高低触发，只作为现金短融仓位锚和流动性观察工具。")
+        stance = {
+            "label": "持有",
+            "basis": "现金/短融工具用于仓位锚和流动性管理，不因价格分位生成加减仓信号。",
+            "confidence": confidence,
+            "scope": "security_level_only",
+            "not_portfolio_action": True,
+            "boundary": "现金/短融仓位动作由市场仓位和ACTION_PLAN决定，不由短融ETF价格分位决定。",
+        }
+        one_line = f"{target.name} 作为现金/短融仓位锚监控；不使用估值高低触发交易。"
     return {
         "module": "valuation_report",
         "version": "1.0",
@@ -720,8 +774,8 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
         "group": target.group,
         "role": target.role,
         "confidence": confidence,
-        "security_stance": security_stance(current_zone, confidence),
-        "one_line_conclusion": f"{target.name} 当前处于{ZONE_LABELS[current_zone]}；{basis}，最终动作需由ACTION_PLAN结合市场仓位和组合暴露决定。",
+        "security_stance": stance,
+        "one_line_conclusion": one_line,
         "valuation_visual": {
             "metric": "price",
             "current_value": round(current, 4),
@@ -871,6 +925,34 @@ def alert_rules_for_report(report: dict[str, Any], md_path: Path, json_path: Pat
     visual = report["valuation_visual"]
     low_max = visual["zones"][0]["max"]
     risk_min = visual["zones"][3]["min"]
+    valuation_rules = [
+        {
+            "id": f"{report['code'].replace('.', '_')}_valuation_low",
+            "alert_type": "watch_trigger",
+            "priority": "medium",
+            "suggested_action": "wait",
+            "trigger_condition": f"进入{ZONE_LABELS['undervalued_observe']}，只触发估值观察复核",
+            "conditions": [{"metric": "last", "op": "<=", "value": low_max}],
+            "near_threshold_pct": 1.0,
+            "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+            "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
+            "review_point": "复核估值口径、趋势、资金流和最新组合偏离。",
+        },
+        {
+            "id": f"{report['code'].replace('.', '_')}_valuation_risk",
+            "alert_type": "risk_trigger",
+            "priority": "high",
+            "suggested_action": "review",
+            "trigger_condition": f"进入{ZONE_LABELS['crowded_risk']}，触发拥挤/高估风险复核",
+            "conditions": [{"metric": "last", "op": ">=", "value": risk_min}],
+            "near_threshold_pct": 1.0,
+            "execution_boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+            "invalidation_condition": "价格回落至偏贵区以下，或盈利/指数估值显著改善。",
+            "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+        },
+    ]
+    if report["asset_type"] == "cash_etf":
+        valuation_rules = []
     return {
         "code": report["code"],
         "name": report["name"],
@@ -883,32 +965,7 @@ def alert_rules_for_report(report: dict[str, Any], md_path: Path, json_path: Pat
         "ideal_position_range": ref.get("target_position_range"),
         "security_stance": report.get("security_stance"),
         "reference_metrics": ref,
-        "rules": [
-            {
-                "id": f"{report['code'].replace('.', '_')}_valuation_low",
-                "alert_type": "watch_trigger",
-                "priority": "medium",
-                "suggested_action": "wait",
-                "trigger_condition": f"进入{ZONE_LABELS['undervalued_observe']}，只触发估值观察复核",
-                "conditions": [{"metric": "last", "op": "<=", "value": low_max}],
-                "near_threshold_pct": 1.0,
-                "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-                "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-                "review_point": "复核估值口径、趋势、资金流和最新组合偏离。",
-            },
-            {
-                "id": f"{report['code'].replace('.', '_')}_valuation_risk",
-                "alert_type": "risk_trigger",
-                "priority": "high",
-                "suggested_action": "review",
-                "trigger_condition": f"进入{ZONE_LABELS['crowded_risk']}，触发拥挤/高估风险复核",
-                "conditions": [{"metric": "last", "op": ">=", "value": risk_min}],
-                "near_threshold_pct": 1.0,
-                "execution_boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
-                "invalidation_condition": "价格回落至偏贵区以下，或盈利/指数估值显著改善。",
-                "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
-            },
-        ],
+        "rules": valuation_rules,
     }
 
 

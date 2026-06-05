@@ -1,0 +1,225 @@
+{
+  "module": "valuation_report",
+  "version": "1.0",
+  "code": "688333.SH",
+  "name": "西安铂力特",
+  "date": "2026-06-05",
+  "generated_at": "2026-06-05_102437",
+  "basis_date": "20260604",
+  "asset_type": "stock",
+  "group": "高端装备/军工",
+  "role": "进攻仓观察",
+  "confidence": "中",
+  "security_stance": {
+    "label": "持有",
+    "basis": "估值偏贵，控制新增，已有研究结论先维持观察。",
+    "confidence": "中",
+    "scope": "security_level_only",
+    "not_portfolio_action": true,
+    "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+  },
+  "one_line_conclusion": "西安铂力特 当前处于偏贵区；估值区间来自PE/PB/PS历史分位映射价格区间，不是组合级买卖指令。",
+  "valuation_visual": {
+    "metric": "price",
+    "current_value": 97.95,
+    "current_zone": "expensive",
+    "current_zone_label": "偏贵区",
+    "zones": [
+      {
+        "key": "undervalued_observe",
+        "label": "低估观察区",
+        "min": 57.9076,
+        "max": 74.0742,
+        "color": "#2f9e44"
+      },
+      {
+        "key": "reasonable_allocation",
+        "label": "合理配置区",
+        "min": 74.0742,
+        "max": 94.6301,
+        "color": "#74b816"
+      },
+      {
+        "key": "expensive",
+        "label": "偏贵区",
+        "min": 94.6301,
+        "max": 153.0918,
+        "color": "#f59f00"
+      },
+      {
+        "key": "crowded_risk",
+        "label": "拥挤/风险区",
+        "min": 153.0918,
+        "max": 186.5157,
+        "color": "#e03131"
+      }
+    ],
+    "basis": "PE/PB/PS历史分位映射价格区间",
+    "evidence": [
+      "pe_ttm current=114.09, percentile=42.03%",
+      "ps_ttm current=13.78, percentile=56.89%",
+      "pb current=5.37, percentile=71.89%"
+    ]
+  },
+  "index_valuation": {
+    "available": false,
+    "reason": "stock valuation uses daily_basic metrics"
+  },
+  "stock_valuation_metrics": [
+    {
+      "metric": "pe_ttm",
+      "value": 114.0868,
+      "percentile": 42.03,
+      "date": "20260604"
+    },
+    {
+      "metric": "pb",
+      "value": 5.3728,
+      "percentile": 71.89,
+      "date": "20260604"
+    },
+    {
+      "metric": "ps_ttm",
+      "value": 13.7754,
+      "percentile": 56.89,
+      "date": "20260604"
+    },
+    {
+      "metric": "dv_ttm",
+      "value": 0.1123,
+      "percentile": 42.18,
+      "date": "20260604"
+    }
+  ],
+  "reference_metrics": {
+    "price_date": "20260604",
+    "last_reference": 97.95,
+    "ma20": 94.543,
+    "ma60": 92.4707,
+    "moneyflow_5d": -21315.79,
+    "moneyflow_20d": -46608.74,
+    "support": 74.0742,
+    "right_confirm": 92.4707,
+    "risk_zone_start": 153.0918,
+    "current_position_pct": 1.33,
+    "target_position_range": "0%-2%",
+    "valuation_visual": {
+      "metric": "price",
+      "current_value": 97.95,
+      "current_zone": "expensive",
+      "current_zone_label": "偏贵区",
+      "zones": [
+        {
+          "key": "undervalued_observe",
+          "label": "低估观察区",
+          "min": 57.9076,
+          "max": 74.0742,
+          "color": "#2f9e44"
+        },
+        {
+          "key": "reasonable_allocation",
+          "label": "合理配置区",
+          "min": 74.0742,
+          "max": 94.6301,
+          "color": "#74b816"
+        },
+        {
+          "key": "expensive",
+          "label": "偏贵区",
+          "min": 94.6301,
+          "max": 153.0918,
+          "color": "#f59f00"
+        },
+        {
+          "key": "crowded_risk",
+          "label": "拥挤/风险区",
+          "min": 153.0918,
+          "max": 186.5157,
+          "color": "#e03131"
+        }
+      ],
+      "basis": "PE/PB/PS历史分位映射价格区间",
+      "evidence": [
+        "pe_ttm current=114.09, percentile=42.03%",
+        "ps_ttm current=13.78, percentile=56.89%",
+        "pb current=5.37, percentile=71.89%"
+      ]
+    },
+    "trend_visual": {
+      "available": true,
+      "current": 97.95,
+      "trends": [
+        {
+          "key": "long",
+          "label": "长期",
+          "state": "上行",
+          "color": "#dc2626",
+          "change_pct": 63.25,
+          "window_days": 250
+        },
+        {
+          "key": "mid",
+          "label": "中期",
+          "state": "震荡",
+          "color": "#f59e0b",
+          "change_pct": -4.11,
+          "window_days": 60
+        },
+        {
+          "key": "short",
+          "label": "短期",
+          "state": "上行",
+          "color": "#dc2626",
+          "change_pct": 6.18,
+          "window_days": 20
+        }
+      ],
+      "drawdown": {
+        "from_sample_high_pct": -30.17,
+        "sample_high": 140.27,
+        "sample_high_date": "20260112",
+        "common_120d_drawdown_pct": -36.3,
+        "deep_120d_drawdown_pct": -46.94,
+        "max_120d_drawdown_pct": -59.92
+      },
+      "rebound": {
+        "from_sample_low_pct": 159.4,
+        "sample_low": 37.76,
+        "sample_low_date": "20240920",
+        "common_120d_rebound_pct": 31.87,
+        "strong_120d_rebound_pct": 51.24,
+        "max_120d_rebound_pct": 138.35
+      }
+    },
+    "risk_markers": {
+      "support": {
+        "label": "风控位",
+        "value": 74.0742,
+        "color": "#2563eb",
+        "shape": "triangle"
+      },
+      "right_confirm": {
+        "label": "右侧确认",
+        "value": 92.4707,
+        "color": "#06b6d4",
+        "shape": "diamond"
+      },
+      "risk_zone_start": {
+        "label": "风险区起点",
+        "value": 153.0918,
+        "color": "#dc2626",
+        "shape": "flag"
+      }
+    },
+    "allocation_bucket": "attack_mainline"
+  },
+  "data_gaps": [],
+  "source": {
+    "tushare": [
+      "daily",
+      "daily_basic",
+      "moneyflow"
+    ],
+    "history_sample_days": 740
+  }
+}

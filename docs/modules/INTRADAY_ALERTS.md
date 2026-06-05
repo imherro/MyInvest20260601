@@ -179,6 +179,16 @@ py -3.11 scripts\intraday_dashboard.py
 
 实时作战地图直接读取 QMT 行情和 `research/alerts/intraday_rules.json`，每隔数秒刷新一次，不调用大模型、不生成报告、不自动下单。状态变化日志默认写入本地 `runtime/alerts/`，该目录不作为研究报告提交。
 
+盘中监控池由 `scripts/generate_valuation_reports.py` 每日或盘前同步生成。监控池应优先覆盖：
+
+- 现金/短融仓位锚：如 `511360`。
+- 核心宽基和核心质量工具。
+- 当前 A/B 主线和重点观察 ETF。
+- 防御仓、金融、医药、资源等主要组合暴露。
+- 用户明确关注且已经建档的重点个股。
+
+现金/短融 ETF 只作为仓位锚和流动性观察工具，不使用价格分位生成估值高低触发。
+
 实时数据源自检：
 
 ```powershell
