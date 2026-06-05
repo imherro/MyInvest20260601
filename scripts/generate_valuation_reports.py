@@ -306,19 +306,19 @@ def parse_pct_text(value: Any, fallback: float) -> float:
 
 def security_stance(current_zone: str, confidence: str) -> dict[str, Any]:
     stance_by_zone = {
-        "undervalued_observe": ("增持", "估值进入低估观察区，但仍需趋势、资金和基本面复核。"),
-        "reasonable_allocation": ("持有", "估值处于合理配置区，标的自身没有给出减仓压力。"),
-        "expensive": ("持有", "估值偏贵，控制新增，已有研究结论先维持观察。"),
-        "crowded_risk": ("减仓", "估值或价格位置进入拥挤/风险区，需要优先复核降低标的暴露。"),
+        "undervalued_observe": ("低估", "估值进入低估区，但仍需趋势、资金和基本面复核。"),
+        "reasonable_allocation": ("合理", "估值处于合理配置区。"),
+        "expensive": ("偏贵", "估值偏贵，控制新增，等待赔率改善。"),
+        "crowded_risk": ("泡沫", "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。"),
     }
-    label, reason = stance_by_zone.get(current_zone, ("持有", "估值分段不足，先维持观察。"))
+    label, reason = stance_by_zone.get(current_zone, ("合理", "估值分段不足，先维持观察。"))
     return {
         "label": label,
         "basis": reason,
         "confidence": confidence,
         "scope": "security_level_only",
         "not_portfolio_action": True,
-        "boundary": "标的级研究态度不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
     }
 
 
@@ -682,9 +682,9 @@ def render_report(report: dict[str, Any]) -> str:
 当前价格/净值位置：{visual['current_value']:.4f}
 当前位置：{visual['current_zone_label']}
 估值口径：{visual['basis']}
-标的级研究态度：{stance.get('label', '-')}（{stance.get('confidence', '-')}）
+标的级估值状态：{stance.get('label', '-')}（{stance.get('confidence', '-')}）
 
-说明：{stance.get('basis', '标的级研究态度不等于组合级买卖动作。')}
+说明：{stance.get('basis', '估值状态不等于组合级买卖动作。')}
 
 一句话结论：
 > {report['one_line_conclusion']}
@@ -754,7 +754,7 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
         confidence = "高"
         data_gaps.append("现金/短融ETF不使用估值高低触发，只作为现金短融仓位锚和流动性观察工具。")
         stance = {
-            "label": "持有",
+            "label": "合理",
             "basis": "现金/短融工具用于仓位锚和流动性管理，不因价格分位生成加减仓信号。",
             "confidence": confidence,
             "scope": "security_level_only",

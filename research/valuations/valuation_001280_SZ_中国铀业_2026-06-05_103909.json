@@ -1,0 +1,222 @@
+{
+  "module": "valuation_report",
+  "version": "1.0",
+  "code": "001280.SZ",
+  "name": "中国铀业",
+  "date": "2026-06-05",
+  "generated_at": "2026-06-05_103909",
+  "basis_date": "20260604",
+  "asset_type": "stock",
+  "group": "战略资源观察",
+  "role": "观察股",
+  "confidence": "中低",
+  "security_stance": {
+    "label": "合理",
+    "basis": "估值处于合理配置区。",
+    "confidence": "中低",
+    "scope": "security_level_only",
+    "not_portfolio_action": true,
+    "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+  },
+  "one_line_conclusion": "中国铀业 当前处于合理配置区；估值区间来自PE/PB/PS历史分位映射价格区间，不是组合级买卖指令。",
+  "valuation_visual": {
+    "metric": "price",
+    "current_value": 71.78,
+    "current_zone": "reasonable_allocation",
+    "current_zone_label": "合理配置区",
+    "zones": [
+      {
+        "key": "undervalued_observe",
+        "label": "低估观察区",
+        "min": 64.0176,
+        "max": 69.8714,
+        "color": "#2f9e44"
+      },
+      {
+        "key": "reasonable_allocation",
+        "label": "合理配置区",
+        "min": 69.8714,
+        "max": 82.4203,
+        "color": "#74b816"
+      },
+      {
+        "key": "expensive",
+        "label": "偏贵区",
+        "min": 82.4203,
+        "max": 90.1978,
+        "color": "#f59f00"
+      },
+      {
+        "key": "crowded_risk",
+        "label": "拥挤/风险区",
+        "min": 90.1978,
+        "max": 96.1804,
+        "color": "#e03131"
+      }
+    ],
+    "basis": "PE/PB/PS历史分位映射价格区间",
+    "evidence": [
+      "pe_ttm current=86.34, percentile=26.67%",
+      "ps_ttm current=7.36, percentile=26.67%",
+      "pb current=8.72, percentile=23.33%"
+    ]
+  },
+  "index_valuation": {
+    "available": false,
+    "reason": "stock valuation uses daily_basic metrics"
+  },
+  "stock_valuation_metrics": [
+    {
+      "metric": "pe_ttm",
+      "value": 86.3438,
+      "percentile": 26.67,
+      "date": "20260604"
+    },
+    {
+      "metric": "pb",
+      "value": 8.7184,
+      "percentile": 23.33,
+      "date": "20260604"
+    },
+    {
+      "metric": "ps_ttm",
+      "value": 7.3576,
+      "percentile": 26.67,
+      "date": "20260604"
+    }
+  ],
+  "reference_metrics": {
+    "price_date": "20260604",
+    "last_reference": 71.78,
+    "ma20": 77.1925,
+    "ma60": 81.0267,
+    "moneyflow_5d": -16579.64,
+    "moneyflow_20d": -103602.64,
+    "support": 69.8714,
+    "right_confirm": 81.0267,
+    "risk_zone_start": 90.1978,
+    "current_position_pct": 0,
+    "target_position_range": "0%-1%",
+    "valuation_visual": {
+      "metric": "price",
+      "current_value": 71.78,
+      "current_zone": "reasonable_allocation",
+      "current_zone_label": "合理配置区",
+      "zones": [
+        {
+          "key": "undervalued_observe",
+          "label": "低估观察区",
+          "min": 64.0176,
+          "max": 69.8714,
+          "color": "#2f9e44"
+        },
+        {
+          "key": "reasonable_allocation",
+          "label": "合理配置区",
+          "min": 69.8714,
+          "max": 82.4203,
+          "color": "#74b816"
+        },
+        {
+          "key": "expensive",
+          "label": "偏贵区",
+          "min": 82.4203,
+          "max": 90.1978,
+          "color": "#f59f00"
+        },
+        {
+          "key": "crowded_risk",
+          "label": "拥挤/风险区",
+          "min": 90.1978,
+          "max": 96.1804,
+          "color": "#e03131"
+        }
+      ],
+      "basis": "PE/PB/PS历史分位映射价格区间",
+      "evidence": [
+        "pe_ttm current=86.34, percentile=26.67%",
+        "ps_ttm current=7.36, percentile=26.67%",
+        "pb current=8.72, percentile=23.33%"
+      ]
+    },
+    "trend_visual": {
+      "available": true,
+      "current": 71.78,
+      "trends": [
+        {
+          "key": "long",
+          "label": "长期",
+          "state": "样本不足",
+          "color": "#94a3b8",
+          "change_pct": null,
+          "window_days": 250
+        },
+        {
+          "key": "mid",
+          "label": "中期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -22.85,
+          "window_days": 60
+        },
+        {
+          "key": "short",
+          "label": "短期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -16.73,
+          "window_days": 20
+        }
+      ],
+      "drawdown": {
+        "from_sample_high_pct": -28.68,
+        "sample_high": 100.65,
+        "sample_high_date": "20260302",
+        "common_120d_drawdown_pct": -19.61,
+        "deep_120d_drawdown_pct": -24.51,
+        "max_120d_drawdown_pct": -29.6
+      },
+      "rebound": {
+        "from_sample_low_pct": 17.88,
+        "sample_low": 60.89,
+        "sample_low_date": "20251230",
+        "common_120d_rebound_pct": 35.64,
+        "strong_120d_rebound_pct": 48.99,
+        "max_120d_rebound_pct": 65.3
+      }
+    },
+    "risk_markers": {
+      "support": {
+        "label": "风控位",
+        "value": 69.8714,
+        "color": "#2563eb",
+        "shape": "triangle"
+      },
+      "right_confirm": {
+        "label": "右侧确认",
+        "value": 81.0267,
+        "color": "#06b6d4",
+        "shape": "diamond"
+      },
+      "risk_zone_start": {
+        "label": "风险区起点",
+        "value": 90.1978,
+        "color": "#dc2626",
+        "shape": "flag"
+      }
+    },
+    "allocation_bucket": "attack_mainline"
+  },
+  "data_gaps": [
+    "历史样本不足3年，长期估值分位可信度下降。",
+    "中国铀业上市样本短，估值区间需结合铀价、中报和流通盘变化复核。"
+  ],
+  "source": {
+    "tushare": [
+      "daily",
+      "daily_basic",
+      "moneyflow"
+    ],
+    "history_sample_days": 120
+  }
+}

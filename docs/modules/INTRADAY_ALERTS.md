@@ -259,7 +259,7 @@ python scripts\intraday_monitor.py --quotes-file path\to\qmt_snapshot.json --rul
 - `target_allocation`：输出不受真实持仓影响的 `ideal_allocation_map`。
 - `portfolio_snapshot`：输出真实持仓覆盖层，只用于显示偏离。
 - `valuation_research`：输出估值作战带、风控位、右侧确认位、风险区起点。
-- `ETF_RESEARCH` / `STOCK_RESEARCH` / `VALUATION_RESEARCH`：输出标的级 `security_stance`，取值为 `增持`、`持有`、`减仓`，但不代表组合级交易动作。
+- `ETF_RESEARCH` / `STOCK_RESEARCH` / `VALUATION_RESEARCH`：输出标的级 `security_stance`，取值为 `低估`、`合理`、`偏贵`、`泡沫`，但不代表组合级交易动作。
 - 趋势研究或估值研究：输出长/中/短趋势、前高回撤和前低反弹图形数据。
 - `ACTION_PLAN`：把市场仓位、真实持仓、组合暴露和触发规则合并成最终操作建议。
 
@@ -279,7 +279,7 @@ python scripts\intraday_monitor.py --quotes-file path\to\qmt_snapshot.json --rul
 单标的图示至少包含：
 
 - 估值作战带：低估观察区、合理配置区、偏贵区、拥挤/风险区。
-- 标的级研究态度：增持、持有、减仓；该字段只代表标的自身研究，不代表当前组合立即买卖。
+- 标的级估值状态：低估、合理、偏贵、泡沫；该字段只代表标的自身估值/赔率位置，不代表当前组合立即买卖。
 - 实时当前位置：黑色竖线。
 - 风控位：蓝色三角标记；用于提示需要优先复核风险，不代表自动卖出。
 - 右侧确认位：青色菱形标记；用于提示重新站回确认位后才允许考虑由观察转配置，不代表自动买入。

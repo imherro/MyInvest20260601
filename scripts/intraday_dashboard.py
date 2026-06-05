@@ -45,7 +45,7 @@ BUCKET_STYLE = {
 }
 BUCKET_ORDER = ["cash_short", "core_base", "attack_mainline", "defense", "legacy_watch"]
 PRIORITY_RANK = {"high": 3, "medium": 2, "low": 1}
-STANCE_COLOR = {"增持": "#dc2626", "持有": "#475569", "减仓": "#16a34a"}
+STANCE_COLOR = {"低估": "#16a34a", "合理": "#475569", "偏贵": "#d97706", "泡沫": "#b91c1c"}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -953,14 +953,14 @@ class BattleMapWindow(QMainWindow):
         stance = stance or {}
         label = stance.get("label", "待研究")
         color = STANCE_COLOR.get(label, "#64748b")
-        widget = QLabel(f"标的态度：{label}")
+        widget = QLabel(f"估值状态：{label}")
         widget.setAlignment(Qt.AlignmentFlag.AlignCenter)
         widget.setStyleSheet(f"background:{color}; color:#ffffff; border-radius:6px; padding:4px 6px; font-weight:700;")
         widget.setToolTip(
             "\n".join(
                 [
-                    stance.get("basis", "缺少标的级研究态度，上游ETF/个股研究模块需要补齐。"),
-                    stance.get("boundary", "标的态度不等于组合级买卖动作。"),
+                    stance.get("basis", "缺少标的级估值状态，上游ETF/个股研究模块需要补齐。"),
+                    stance.get("boundary", "估值状态不等于组合级买卖动作。"),
                 ]
             )
         )

@@ -1681,3 +1681,13 @@
 
 - 新增标的的 ETF 估值多为价格/净值位置代理；主题 ETF 的估值高低提醒仍只代表复核，不代表买卖。
 - 真实买卖动作仍必须由 `ACTION_PLAN` 结合市场仓位、组合暴露、主线阶段和持仓约束生成。
+
+### 决策：将作战地图标的提示从操作词改为估值状态
+
+- 决策类型：intraday_dashboard_valuation_status_labels
+- 变化类型：terminology_risk_control
+- 更新文件：`scripts/generate_valuation_reports.py`、`scripts/intraday_dashboard.py`、`docs/modules/VALUATION_RESEARCH.md`、`docs/modules/INTRADAY_ALERTS.md`、`research/alerts/intraday_rules.json`
+- 新生成文件：`research/valuations/valuation_*_2026-06-05_103909.md/json`
+- 新结论：作战地图不再显示“增持/持有/减仓”作为标的状态，统一改为“低估/合理/偏贵/泡沫”。该字段只表达估值/赔率位置，不表达组合级买卖动作。
+- 触发原因：歌尔股份因进入低估观察区被显示为“增持”，容易被误读为盘中加仓建议；实际规则动作仍是 `wait`，不是买入。
+- 验证结果：歌尔股份 `002241.SZ` 当前显示为“低估”，边界为“估值状态不等于组合级买卖动作”。
