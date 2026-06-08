@@ -1703,3 +1703,5 @@
 - 验证结果：`py -3.11 scripts\intraday_dashboard.py --preview-png runtime\alerts\intraday_dashboard_layout_update_preview.png` 已生成新版截图；QMT 自检读取 29/29 个标的。
 
 2026-06-08 盘前分析：使用 Tushare 核验 2026-06-05 最新完整行情，结论为 risk_reduce_or_watch_only；沿用 2026-06-03 权益 45%-50% 上限，2026-06-04 持仓快照显示权益约 55.01%、现金短融约 44.99%，今天不新增进攻仓，只允许人工确认后的减风险/回补 511360 或现金短融；输出 research/checks/premarket_check_2026-06-08_093102.json 和 research/checks/premarket_check_2026-06-08_093102.md。
+
+2026-06-08 盘中分析：QMT 一次快照返回 29/29 个标的，最新行情时间 20260608 09:31:06，生成时间 2026-06-08 09:41:06，因行情约滞后 10 分钟按开盘快照处理；触发 15 条提醒，进攻主线仓平均跌幅约 -3.67%，弱于防御仓约 -0.74%，维持 risk_reduce_or_watch_only，不新增进攻仓，只允许人工确认后的减风险/回补 511360 或现金短融；输出 research/alerts/intraday_alert_2026-06-08_094106.json 和 research/alerts/intraday_alert_2026-06-08_094106.md。

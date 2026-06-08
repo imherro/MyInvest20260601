@@ -1,0 +1,379 @@
+{
+  "module": "intraday_analysis",
+  "version": "1.0",
+  "date": "2026-06-08",
+  "generated_at": "2026-06-08_094106",
+  "source_report": "C:/Users/kunpeng/Documents/MyInvest20260601/runtime/alerts/intraday_once_json_2026-06-08_latest.json",
+  "source": "QMT via scripts/intraday_dashboard.py --once-json; decoded from local GBK output and saved as UTF-8",
+  "quote_health": {
+    "expected_count": 29,
+    "received_count": 29,
+    "missing_count": 0,
+    "missing_codes": [],
+    "latest_timetag": "20260608 09:31:06",
+    "staleness_note": "本次 QMT 返回 29/29 个标的，但最新行情时间停在 09:31:06，报告生成时间 09:41:06，约滞后 10 分钟；因此本文件按开盘快照处理，不作为实时执行单。"
+  },
+  "amount_policy": "ratio_only; no market_value; no cost_amount; no profit_amount; no share count",
+  "summary": {
+    "status": "opening_snapshot_risk_reduce_or_watch_only",
+    "one_line": "QMT 开盘快照触发 15 条提醒；进攻主线仓显著弱于防御仓，维持不新增进攻仓，只做观察或人工确认后的减风险。",
+    "alert_count": 15,
+    "near_count": 0,
+    "missing_count": 0,
+    "bucket_performance": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "count": 1,
+        "avg_pct_chg": 0.0017613231059199208
+      },
+      {
+        "key": "core_base",
+        "label": "宽基/核心底仓",
+        "count": 4,
+        "avg_pct_chg": -1.8367876203795679
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "count": 9,
+        "avg_pct_chg": -3.670734460476505
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "count": 8,
+        "avg_pct_chg": -0.7465748001629635
+      },
+      {
+        "key": "legacy_watch",
+        "label": "其他/待清理",
+        "count": 7,
+        "avg_pct_chg": -2.1720463045265963
+      }
+    ],
+    "alert_counts": {
+      "high:risk_trigger": 12,
+      "medium:watch_trigger": 3
+    }
+  },
+  "key_findings": [
+    "行情健康：QMT 返回 29/29 个标的，无缺失，但行情时间滞后约 10 分钟，只能按开盘快照使用。",
+    "结构：进攻主线仓平均跌幅约 -3.67%，弱于宽基核心仓约 -1.84%，也明显弱于防御仓约 -0.74%。",
+    "触发：多数触发项是“泡沫/拥挤区风险复核”，不是卖出指令；中国铀业、歌尔股份、伯特利触发低估观察，也不是买入指令。",
+    "门禁：与盘前结论一致，今日不新增进攻仓；若要动作，只能走人工确认后的减风险/回补现金短融。"
+  ],
+  "top_declines": [
+    {
+      "code": "603596.SH",
+      "name": "伯特利",
+      "last": 29.25,
+      "pct_chg": -5.0940947436729385,
+      "bucket": "attack_mainline",
+      "stance": "低估",
+      "zone": "低估观察区",
+      "qmt_timetag": "20260608 09:31:03"
+    },
+    {
+      "code": "588200.SH",
+      "name": "科创芯片ETF嘉实",
+      "last": 3.292,
+      "pct_chg": -4.745370370370372,
+      "bucket": "attack_mainline",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "qmt_timetag": "20260608 09:31:03"
+    },
+    {
+      "code": "001280.SZ",
+      "name": "中国铀业",
+      "last": 67,
+      "pct_chg": -3.8461538461538547,
+      "bucket": "attack_mainline",
+      "stance": "合理",
+      "zone": "合理配置区",
+      "qmt_timetag": "20260608 09:31:06"
+    },
+    {
+      "code": "159819.SZ",
+      "name": "人工智能ETF易方达",
+      "last": 1.878,
+      "pct_chg": -3.7909836065573854,
+      "bucket": "attack_mainline",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "qmt_timetag": "20260608 09:31:03"
+    },
+    {
+      "code": "688333.SH",
+      "name": "西安铂力特",
+      "last": 94.73,
+      "pct_chg": -3.7296747967479726,
+      "bucket": "attack_mainline",
+      "stance": "偏贵",
+      "zone": "偏贵区",
+      "qmt_timetag": "20260608 09:31:03"
+    },
+    {
+      "code": "159558.SZ",
+      "name": "半导体设备ETF易方达",
+      "last": 2.722,
+      "pct_chg": -3.6801132342533682,
+      "bucket": "attack_mainline",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "qmt_timetag": "20260608 09:31:03"
+    },
+    {
+      "code": "516150.SH",
+      "name": "稀土ETF嘉实",
+      "last": 1.906,
+      "pct_chg": -3.1995937023870047,
+      "bucket": "legacy_watch",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "qmt_timetag": "20260608 09:31:04"
+    },
+    {
+      "code": "002241.SZ",
+      "name": "歌尔股份",
+      "last": 24.08,
+      "pct_chg": -2.981466559226442,
+      "bucket": "attack_mainline",
+      "stance": "低估",
+      "zone": "低估观察区",
+      "qmt_timetag": "20260608 09:31:06"
+    },
+    {
+      "code": "562800.SH",
+      "name": "稀有金属ETF嘉实",
+      "last": 1.01,
+      "pct_chg": -2.9779058597502295,
+      "bucket": "attack_mainline",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "qmt_timetag": "20260608 09:31:04"
+    },
+    {
+      "code": "159915.SZ",
+      "name": "创业板ETF易方达",
+      "last": 3.861,
+      "pct_chg": -2.916771435755583,
+      "bucket": "core_base",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "qmt_timetag": "20260608 09:31:03"
+    }
+  ],
+  "triggered_alerts": [
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "510300.SH",
+      "name": "沪深300ETF华泰柏瑞",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 4.6202; current=4.784"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "510500.SH",
+      "name": "中证500ETF南方",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 7.251; current=8.169"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "159915.SZ",
+      "name": "创业板ETF易方达",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 3.0604; current=3.861"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "159819.SZ",
+      "name": "人工智能ETF易方达",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 1.4592; current=1.878"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "159558.SZ",
+      "name": "半导体设备ETF易方达",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 1.885; current=2.722"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "588200.SH",
+      "name": "科创芯片ETF嘉实",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 2.2682; current=3.292"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "159326.SZ",
+      "name": "电网设备ETF华夏",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 1.7552; current=2.009"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "510880.SH",
+      "name": "红利ETF华泰柏瑞",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 3.24; current=3.303"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "159301.SZ",
+      "name": "公用事业ETF华夏",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 0.9828; current=1.041"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "516150.SH",
+      "name": "稀土ETF嘉实",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 1.7404; current=1.906"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "562800.SH",
+      "name": "稀有金属ETF嘉实",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 0.837; current=1.01"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "code": "562500.SH",
+      "name": "机器人ETF华夏",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+      "current_state": "已触发",
+      "suggested_action": "review",
+      "evidence": [
+        "last >= 0.983; current=1.138"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "code": "001280.SZ",
+      "name": "中国铀业",
+      "trigger_condition": "进入低估观察区，只触发估值观察复核",
+      "current_state": "已触发",
+      "suggested_action": "wait",
+      "evidence": [
+        "last <= 69.8714; current=67"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "code": "002241.SZ",
+      "name": "歌尔股份",
+      "trigger_condition": "进入低估观察区，只触发估值观察复核",
+      "current_state": "已触发",
+      "suggested_action": "wait",
+      "evidence": [
+        "last <= 25.0396; current=24.08"
+      ],
+      "manual_confirmation": true
+    },
+    {
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "code": "603596.SH",
+      "name": "伯特利",
+      "trigger_condition": "进入低估观察区，只触发估值观察复核",
+      "current_state": "已触发",
+      "suggested_action": "wait",
+      "evidence": [
+        "last <= 34.7921; current=29.25"
+      ],
+      "manual_confirmation": true
+    }
+  ],
+  "action_boundary": {
+    "allowed": [
+      "继续观察作战地图",
+      "确认 QMT 行情恢复实时后再参考盘中触发",
+      "只允许人工确认后的减风险或回补 511360/现金短融"
+    ],
+    "forbidden": [
+      "不新增 AI/半导体/电网设备等进攻仓",
+      "不把低估观察自动转为买入",
+      "不把泡沫/拥挤触发自动转为卖出",
+      "不使用滞后行情做执行单"
+    ]
+  },
+  "decision_log_entry": "2026-06-08 盘中分析：QMT 一次快照返回 29/29 个标的，最新行情时间 20260608 09:31:06，生成时间 2026-06-08 09:41:06，因行情约滞后 10 分钟按开盘快照处理；触发 15 条提醒，进攻主线仓平均跌幅约 -3.67%，弱于防御仓约 -0.74%，维持 risk_reduce_or_watch_only，不新增进攻仓，只允许人工确认后的减风险/回补 511360 或现金短融；输出 research/alerts/intraday_alert_2026-06-08_094106.json 和 research/alerts/intraday_alert_2026-06-08_094106.md。"
+}
