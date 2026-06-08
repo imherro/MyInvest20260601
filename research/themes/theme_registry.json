@@ -1,24 +1,24 @@
 {
   "module": "theme_registry",
-  "version": "1.0",
-  "last_updated": "2026-06-01",
-  "notes": "当前文件保存主线研究模块的最新固化结论。2026-06-01 已按 Tushare 结构化数据和双周期模板完成首次正式主线研究，并按时间戳规则生成复核版。",
+  "version": "2026-06-08_theme_research",
+  "last_updated": "2026-06-08_102237",
+  "notes": "战略评级代表长期产业地位；rating/tactical_rating 代表当前A股交易主线评级。",
   "themes": [
     {
       "name": "AI",
-      "rating": "A",
-      "bucket_role": "offensive_core",
+      "rating": "B",
+      "bucket_role": "offensive_candidate",
       "status": "active",
-      "score": 80,
+      "score": 62.9,
       "previous_rating": "A",
-      "change_type": "maintain",
+      "change_type": "downgrade",
       "reason": "Tushare行业数据显示，软件服务中位涨幅+3.09%、上涨占比88.85%，互联网中位涨幅+3.07%、上涨占比90.00%，IT设备中位涨幅+2.32%；但AI人工智能ETF平安当日-2.85%、5日-6.97%，科创AIETF博时当日-2.82%、5日-12.40，AI硬件和应用明显分化。",
-      "position_impact": "A档长期核心主线，但本轮交易阶段为分歧；进攻仓可保留核心暴露，不宜新增追涨。",
+      "position_impact": "可保留跟踪或小比例结构性观察，不适合在市场弱势时主动扩张。",
       "related_etfs": [
-        "512930.SH AI人工智能ETF平安",
-        "588790.SH 科创AIETF博时",
-        "516510.SH 云计算ETF易方达",
-        "159583.SZ 通信ETF富国"
+        "159819.SZ",
+        "515880.SH",
+        "588790.SH",
+        "512930.SH"
       ],
       "representative_stocks": [
         "寒武纪",
@@ -28,7 +28,7 @@
         "掌阅科技",
         "视觉中国"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "AI是2023年以来的长期科技主线，仍处长期产业扩张期。",
@@ -64,23 +64,41 @@
             "AI硬件与应用同时资金流出"
           ]
         }
-      }
+      },
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "current_a_share_trading_stage": "repair",
+      "core_view": "AI战略评级A、交易评级B，阶段为repair。代表ETF日涨跌均值-3.1%；5日均值0.01%；ETF站上20日线比例25%；行业上涨家数占比58.71%。结论是保留主线跟踪，但新增动作必须等市场仓位约束解除。",
+      "next_trigger": "继续观察代表ETF能否连续站稳20日线，且行业扩散率维持在50%以上。",
+      "risk": "最大风险是长期逻辑强但交易结构弱，容易出现高开低走或反抽失败。",
+      "score_components": {
+        "industry_logic": 18,
+        "policy_cycle": 13,
+        "fund_and_heat_proxy": 8,
+        "trend_strength": 13.0,
+        "breadth_diffusion": 10.9,
+        "earnings_validation": 8,
+        "crowding_penalty": 8
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "半导体",
-      "rating": "B",
-      "bucket_role": "secondary",
+      "rating": "C",
+      "bucket_role": "watch",
       "status": "active",
-      "score": 66,
-      "previous_rating": "A",
+      "score": 58.1,
+      "previous_rating": "B",
       "change_type": "downgrade",
       "reason": "Tushare行业数据显示，半导体行业中位跌幅-3.85%、上涨占比12.37%；科创芯片ETF广发当日-6.18%、5日-13.40，科创半导体ETF华夏当日-5.68%、5日-14.98，半导体设备ETF当日-5.65%、5日-15.00。",
-      "position_impact": "从A档下调为B档副线；长期逻辑保留，但当前不作为新增进攻仓核心。",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。",
       "related_etfs": [
-        "589160.SH 科创芯片ETF广发",
-        "588920.SH 科创芯片ETF鹏华",
-        "588170.SH 科创半导体ETF华夏",
-        "588710.SH 科创半导体设备ETF华泰柏瑞"
+        "588200.SH",
+        "159558.SZ",
+        "512760.SH",
+        "159995.SZ"
       ],
       "representative_stocks": [
         "中微公司",
@@ -90,7 +108,7 @@
         "华虹公司",
         "沪电股份"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "半导体是AI算力、国产替代和先进制造的长期关键主线。",
@@ -125,22 +143,40 @@
             "AI硬件链无法修复"
           ]
         }
-      }
+      },
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "current_a_share_trading_stage": "repair",
+      "core_view": "半导体战略评级A、交易评级C，阶段为repair。代表ETF日涨跌均值-4.41%；5日均值-2.74%；ETF站上20日线比例0%；行业上涨家数占比40.72%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待代表ETF站回20日线、5日相对收益转正、行业扩散率回到50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 18,
+        "policy_cycle": 12,
+        "fund_and_heat_proxy": 8,
+        "trend_strength": 11.0,
+        "breadth_diffusion": 9.1,
+        "earnings_validation": 7,
+        "crowding_penalty": 7
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "电力设备",
-      "rating": "B",
-      "bucket_role": "secondary",
+      "rating": "D",
+      "bucket_role": "avoid",
       "status": "active",
-      "score": 75,
+      "score": 48.0,
       "previous_rating": "B",
-      "change_type": "maintain",
+      "change_type": "downgrade",
       "reason": "Tushare行业数据显示，电气设备中位涨幅+0.95%、上涨占比62.72%；电力ETF南方当日+1.30%、5日+7.46，收盘价较20日均线约+6.91%。",
-      "position_impact": "B档副线，若ETF和订单继续确认，可进入A档候选观察。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
       "related_etfs": [
-        "560580.SH 电力ETF南方",
-        "电力设备ETF",
-        "电网ETF"
+        "159326.SZ",
+        "516160.SH",
+        "561700.SH"
       ],
       "representative_stocks": [
         "宁德时代",
@@ -149,7 +185,7 @@
         "特变电工",
         "东方电气"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "电力设备处于AI用电、电网升级、绿电和出海共振的中期产业景气阶段。",
@@ -184,22 +220,39 @@
             "订单或政策落地不及预期"
           ]
         }
-      }
+      },
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "current_a_share_trading_stage": "decline",
+      "core_view": "电力设备战略评级B、交易评级D，阶段为decline。代表ETF日涨跌均值-2.67%；5日均值-3.64%；ETF站上20日线比例0%；行业上涨家数占比43.37%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "短期趋势已经转弱，若继续放量下跌，评级仍需下修。",
+      "score_components": {
+        "industry_logic": 15,
+        "policy_cycle": 11,
+        "fund_and_heat_proxy": 5,
+        "trend_strength": 7.7,
+        "breadth_diffusion": 9.3,
+        "earnings_validation": 7,
+        "crowding_penalty": 7
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "高端装备",
-      "rating": "B",
-      "bucket_role": "secondary",
+      "rating": "C",
+      "bucket_role": "watch",
       "status": "active",
-      "score": 66,
+      "score": 62.9,
       "previous_rating": "B",
-      "change_type": "maintain",
+      "change_type": "downgrade",
       "reason": "Tushare行业数据显示，专用机械中位涨幅+0.18%、机械基件中位涨幅+1.00%；机械ETF富国当日-0.19%、5日-2.08，说明方向有修复但独立趋势不强。",
-      "position_impact": "B档副线偏观察。",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。",
       "related_etfs": [
-        "159886.SZ 机械ETF富国",
-        "工程机械ETF",
-        "工业母机ETF"
+        "159667.SZ",
+        "516320.SH"
       ],
       "representative_stocks": [
         "杰普特",
@@ -207,7 +260,7 @@
         "杰瑞股份",
         "新雷能"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "高端装备是制造升级、自动化和设备出海的中长期方向。",
@@ -240,22 +293,40 @@
             "专用机械和机械基件扩散失败"
           ]
         }
-      }
+      },
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "current_a_share_trading_stage": "repair",
+      "core_view": "高端装备战略评级B、交易评级C，阶段为repair。代表ETF日涨跌均值-0.5%；5日均值0.25%；ETF站上20日线比例50%；行业上涨家数占比69.4%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待代表ETF站回20日线、5日相对收益转正、行业扩散率回到50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 14,
+        "policy_cycle": 10,
+        "fund_and_heat_proxy": 12,
+        "trend_strength": 14.0,
+        "breadth_diffusion": 11.9,
+        "earnings_validation": 7,
+        "crowding_penalty": 6
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "能源",
-      "rating": "B",
-      "bucket_role": "secondary",
+      "rating": "D",
+      "bucket_role": "avoid",
       "status": "active",
-      "score": 68,
-      "previous_rating": "C",
-      "change_type": "upgrade",
+      "score": 49.5,
+      "previous_rating": "B",
+      "change_type": "downgrade",
       "reason": "Tushare行业数据显示，煤炭开采中位涨幅+7.51%、上涨占比100%；煤炭ETF国泰当日+6.62%、5日+12.40，能源防御/周期线短期启动。",
-      "position_impact": "由C上调为B档副线，但不是进攻仓核心。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
       "related_etfs": [
-        "515220.SH 煤炭ETF国泰",
-        "能源ETF",
-        "电力ETF"
+        "510880.SH",
+        "159301.SZ",
+        "561560.SH"
       ],
       "representative_stocks": [
         "中国神华",
@@ -263,7 +334,7 @@
         "中国石油",
         "中国海油"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "能源属于资源品、防御和能源安全长期方向，不是科技成长主线。",
@@ -297,21 +368,41 @@
             "防御资金切换结束"
           ]
         }
-      }
+      },
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "current_a_share_trading_stage": "decline",
+      "core_view": "能源战略评级B、交易评级D，阶段为decline。代表ETF日涨跌均值-2.39%；5日均值-1.8%；ETF站上20日线比例33%；行业上涨家数占比18.58%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 13,
+        "policy_cycle": 9,
+        "fund_and_heat_proxy": 6,
+        "trend_strength": 14.6,
+        "breadth_diffusion": 6.9,
+        "earnings_validation": 8,
+        "crowding_penalty": 8
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "有色",
-      "rating": "C",
-      "bucket_role": "theme_trial",
+      "rating": "D",
+      "bucket_role": "avoid",
       "status": "active",
-      "score": 58,
-      "previous_rating": "B",
+      "score": 46.8,
+      "previous_rating": "C",
       "change_type": "downgrade",
       "reason": "Tushare行业数据显示，小金属中位跌幅-0.36%、铝中位涨幅+2.05%；有色ETF易方达当日-0.43%、5日-3.66，有色ETF华安当日-0.81%、5日-3.71。",
-      "position_impact": "从B下调至C档主题/观察。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
       "related_etfs": [
-        "560470.SH 有色ETF易方达",
-        "512940.SH 有色ETF华安"
+        "516150.SH",
+        "562800.SH",
+        "512400.SH",
+        "159652.SZ"
       ],
       "representative_stocks": [
         "中国铝业",
@@ -319,7 +410,7 @@
         "洛阳钼业",
         "北方稀土"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "有色是资源周期、新材料和制造上游的中长期方向。",
@@ -350,21 +441,39 @@
             "小金属和工业有色扩散失败"
           ]
         }
-      }
+      },
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "current_a_share_trading_stage": "decline",
+      "core_view": "有色战略评级B、交易评级D，阶段为decline。代表ETF日涨跌均值-1.44%；5日均值-0.73%；ETF站上20日线比例0%；行业上涨家数占比38.13%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 13,
+        "policy_cycle": 9,
+        "fund_and_heat_proxy": 6,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 8.8,
+        "earnings_validation": 7,
+        "crowding_penalty": 5
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "电池",
-      "rating": "C",
-      "bucket_role": "theme_trial",
+      "rating": "D",
+      "bucket_role": "avoid",
       "status": "active",
-      "score": 58,
-      "previous_rating": "B",
+      "score": 37.7,
+      "previous_rating": "C",
       "change_type": "downgrade",
       "reason": "Tushare数据显示，电池ETF华夏当日-0.65%、5日-3.41，仍处修复观察，未形成强主线趋势。",
-      "position_impact": "从B下调至C档主题/观察。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
       "related_etfs": [
-        "512460.SH 电池ETF华夏",
-        "新能源车ETF"
+        "159755.SZ",
+        "561910.SH"
       ],
       "representative_stocks": [
         "宁德时代",
@@ -372,7 +481,7 @@
         "科达利",
         "华友钴业"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "电池是新能源车、储能和固态电池的中长期产业方向。",
@@ -405,21 +514,39 @@
             "价格战或排产不及预期"
           ]
         }
-      }
+      },
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "current_a_share_trading_stage": "decline",
+      "core_view": "电池战略评级C、交易评级D，阶段为decline。代表ETF日涨跌均值-1.61%；5日均值-5.15%；ETF站上20日线比例0%；行业上涨家数占比46.6%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "短期趋势已经转弱，若继续放量下跌，评级仍需下修。",
+      "score_components": {
+        "industry_logic": 10,
+        "policy_cycle": 8,
+        "fund_and_heat_proxy": 5,
+        "trend_strength": 5.0,
+        "breadth_diffusion": 9.7,
+        "earnings_validation": 5,
+        "crowding_penalty": 5
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "储能",
       "rating": "C",
-      "bucket_role": "theme_trial",
+      "bucket_role": "watch",
       "status": "active",
-      "score": 62,
-      "previous_rating": "B",
-      "change_type": "downgrade",
+      "score": 53.2,
+      "previous_rating": "C",
+      "change_type": "maintain",
       "reason": "Tushare数据显示，储能电池ETF广发当日-1.25%、5日-3.83；电气设备整体正收益，但储能分支趋势尚未充分确认。",
-      "position_impact": "从B下调至C档主题/观察。",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。",
       "related_etfs": [
-        "159305.SZ 储能电池ETF广发",
-        "电力设备ETF"
+        "159326.SZ",
+        "159755.SZ"
       ],
       "representative_stocks": [
         "宁德时代",
@@ -427,7 +554,7 @@
         "海博思创",
         "特锐德"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "储能是AI用电、绿电直连和新型电力系统的中长期方向。",
@@ -460,21 +587,39 @@
             "PCS、逆变器、储能电池分支无法扩散"
           ]
         }
-      }
+      },
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "current_a_share_trading_stage": "repair",
+      "core_view": "储能战略评级B、交易评级C，阶段为repair。代表ETF日涨跌均值-1.53%；5日均值-2.54%；ETF站上20日线比例0%；行业上涨家数占比51.71%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待代表ETF站回20日线、5日相对收益转正、行业扩散率回到50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 14,
+        "policy_cycle": 10,
+        "fund_and_heat_proxy": 8,
+        "trend_strength": 10.0,
+        "breadth_diffusion": 10.2,
+        "earnings_validation": 6,
+        "crowding_penalty": 5
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "机器人",
-      "rating": "C",
-      "bucket_role": "theme_trial",
+      "rating": "B",
+      "bucket_role": "offensive_candidate",
       "status": "active",
-      "score": 54,
+      "score": 69.3,
       "previous_rating": "C",
-      "change_type": "maintain",
+      "change_type": "upgrade",
       "reason": "Tushare数据显示，机器人ETF易方达当日-1.75%、5日-12.54，宇树IPO事件催化未转化为持续ETF趋势。",
-      "position_impact": "维持C档主题仓试错。",
+      "position_impact": "可保留跟踪或小比例结构性观察，不适合在市场弱势时主动扩张。",
       "related_etfs": [
-        "159530.SZ 机器人ETF易方达",
-        "机械ETF"
+        "562500.SH",
+        "159770.SZ"
       ],
       "representative_stocks": [
         "中大力德",
@@ -482,7 +627,7 @@
         "奥比中光",
         "优必选"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "机器人/具身智能是长期制造智能化方向。",
@@ -517,28 +662,46 @@
             "供应链标的放量滞涨"
           ]
         }
-      }
+      },
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "current_a_share_trading_stage": "confirmation",
+      "core_view": "机器人战略评级B、交易评级B，阶段为confirmation。代表ETF日涨跌均值2.92%；5日均值4.0%；ETF站上20日线比例100%；行业上涨家数占比62.69%。结论是保留主线跟踪，但新增动作必须等市场仓位约束解除。",
+      "next_trigger": "继续观察代表ETF能否连续站稳20日线，且行业扩散率维持在50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 13,
+        "policy_cycle": 9,
+        "fund_and_heat_proxy": 17,
+        "trend_strength": 20,
+        "breadth_diffusion": 11.3,
+        "earnings_validation": 5,
+        "crowding_penalty": 6
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "商业航天",
-      "rating": "C",
-      "bucket_role": "theme_trial",
+      "rating": "D",
+      "bucket_role": "avoid",
       "status": "active",
-      "score": 53,
+      "score": 44.0,
       "previous_rating": "C",
-      "change_type": "maintain",
+      "change_type": "downgrade",
       "reason": "Tushare数据显示，航天ETF华安当日-0.92%、5日-8.12，军工ETF国泰当日-1.17%、5日-7.78，交易趋势偏弱。",
-      "position_impact": "维持C档主题仓试错。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
       "related_etfs": [
-        "159267.SZ 航天ETF华安",
-        "512660.SH 军工ETF国泰"
+        "159206.SZ",
+        "512710.SH"
       ],
       "representative_stocks": [
         "中国卫星",
         "航天电子",
         "航天彩虹"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "商业航天是卫星互联网、商业发射和空间应用的长期方向。",
@@ -571,27 +734,46 @@
             "事件催化后成交萎缩"
           ]
         }
-      }
+      },
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "current_a_share_trading_stage": "decline",
+      "core_view": "商业航天战略评级C、交易评级D，阶段为decline。代表ETF日涨跌均值1.96%；5日均值1.29%；ETF站上20日线比例0%；行业上涨家数占比59.92%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 10,
+        "policy_cycle": 8,
+        "fund_and_heat_proxy": 8,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 11.0,
+        "earnings_validation": 4,
+        "crowding_penalty": 5
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "化工",
-      "rating": "C",
-      "bucket_role": "theme_trial",
+      "rating": "D",
+      "bucket_role": "avoid",
       "status": "active",
-      "score": 61,
+      "score": 49.6,
       "previous_rating": "C",
-      "change_type": "maintain",
+      "change_type": "downgrade",
       "reason": "Tushare行业数据显示，化工原料中位涨幅+1.72%、上涨占比73.83%；化工ETF国泰当日+1.88，但5日仍为-1.91，属于修复而非确认。",
-      "position_impact": "维持C档主题仓/周期修复观察。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
       "related_etfs": [
-        "516220.SH 化工ETF国泰"
+        "516020.SH",
+        "159870.SZ"
       ],
       "representative_stocks": [
         "万华化学",
         "华鲁恒升",
         "卫星化学"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "化工属于周期修复和新材料分支机会，不是统一长期成长主线。",
@@ -622,28 +804,46 @@
             "化工原料扩散失败"
           ]
         }
-      }
+      },
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "current_a_share_trading_stage": "decline",
+      "core_view": "化工战略评级C、交易评级D，阶段为decline。代表ETF日涨跌均值0.3%；5日均值0.06%；ETF站上20日线比例0%；行业上涨家数占比65.68%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 10,
+        "policy_cycle": 7,
+        "fund_and_heat_proxy": 12,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 11.6,
+        "earnings_validation": 6,
+        "crowding_penalty": 5
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
     },
     {
       "name": "无人驾驶",
       "rating": "D",
-      "bucket_role": "watch",
+      "bucket_role": "avoid",
       "status": "watch",
-      "score": 46,
+      "score": 46.4,
       "previous_rating": "D",
       "change_type": "maintain",
       "reason": "Tushare数据显示，智能驾驶ETF华泰柏瑞当日-0.91%、5日-7.46，缺少资金和趋势确认。",
-      "position_impact": "维持D档观察。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
       "related_etfs": [
-        "516520.SH 智能驾驶ETF华泰柏瑞",
-        "智能汽车ETF"
+        "159872.SZ",
+        "515250.SH"
       ],
       "representative_stocks": [
         "德赛西威",
         "华阳集团",
         "经纬恒润"
       ],
-      "last_review_file": "research/themes/theme_review_2026-06-01_231611.md",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
       "cycle": {
         "long_term_industry_cycle": {
           "judgment": "无人驾驶/智能驾驶是长期智能汽车方向。",
@@ -674,7 +874,57 @@
             "缺少政策和资金共振"
           ]
         }
-      }
+      },
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "current_a_share_trading_stage": "decline",
+      "core_view": "无人驾驶战略评级C、交易评级D，阶段为decline。代表ETF日涨跌均值-1.02%；5日均值-1.41%；ETF站上20日线比例0%；行业上涨家数占比63.87%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 9,
+        "policy_cycle": 7,
+        "fund_and_heat_proxy": 12,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 11.4,
+        "earnings_validation": 4,
+        "crowding_penalty": 5
+      },
+      "data_basis": "20260605",
+      "updated_at": "2026-06-08_102237"
+    },
+    {
+      "name": "低空经济",
+      "rating": "C",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "score": 54.6,
+      "previous_rating": null,
+      "change_type": "new",
+      "stage": "repair",
+      "current_a_share_trading_stage": "repair",
+      "bucket_role": "watch",
+      "core_view": "低空经济战略评级B、交易评级C，阶段为repair。代表ETF日涨跌均值2.34%；5日均值0.83%；ETF站上20日线比例0%；行业上涨家数占比65.72%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。",
+      "next_trigger": "等待代表ETF站回20日线、5日相对收益转正、行业扩散率回到50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。",
+      "score_components": {
+        "industry_logic": 13,
+        "policy_cycle": 11,
+        "fund_and_heat_proxy": 12,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 11.6,
+        "earnings_validation": 4,
+        "crowding_penalty": 5
+      },
+      "data_basis": "20260605",
+      "last_review_file": "theme_review_2026-06-08_102237.md",
+      "updated_at": "2026-06-08_102237",
+      "related_etfs": [
+        "159378.SZ",
+        "159206.SZ"
+      ]
     }
   ],
   "change_log": [
@@ -717,6 +967,12 @@
       "date": "2026-06-01",
       "change": "按 Tushare 数据重新复核首次正式主线研究，生成时间戳版本 theme_review_2026-06-01_231611.md / theme_review_2026-06-01_231611.json。",
       "impact": "评级和交易阶段结论维持不变；theme_registry.json 指向最新时间戳版本。"
+    },
+    {
+      "date": "2026-06-08_102237",
+      "basis_trade_date": "20260605",
+      "report": "theme_review_2026-06-08_102237.md",
+      "summary": "市场仓位分数41且进攻桶pause_new，机器人升为交易B但只作盘前观察，AI降为交易B，半导体/电力设备等交易评级继续收缩，新增低空经济观察项。"
     }
   ]
 }

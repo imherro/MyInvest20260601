@@ -1,0 +1,1248 @@
+{
+  "module": "THEME_RESEARCH",
+  "generated_at": "2026-06-08_102237",
+  "basis_trade_date": "20260605",
+  "market_context": {
+    "file": "market_score_2026-06-08_100643.json",
+    "basis_trade_date": "20260605",
+    "market_position_score": 41,
+    "equity_allocation_range": "40%-45%",
+    "bond_cash_allocation_range": "55%-60%",
+    "offensive_bucket_status": "pause_new",
+    "one_line_conclusion": "以 20260605 最新完整收盘数据看，指数普遍跌破20日线、Tushare资金流代理大幅净流出。虽然个股宽度有修复，但AI/半导体等进攻主线仍处弱势；市场仓位分数降至 41，权益建议从上一版 45%-50% 下调到 40%-45%。"
+  },
+  "policy_sources": [
+    {
+      "title": "中国政府网：AI智能体应用发展实施指南",
+      "url": "https://english.www.gov.cn/news/202605/08/content_WS69fde8e2c6d00ca5f9a0ad49.html",
+      "date": "2026-05-08",
+      "use": "AI+、智能体应用与标准/安全框架"
+    },
+    {
+      "title": "国家网信办：《人工智能拟人化互动服务管理暂行办法》",
+      "url": "https://www.cac.gov.cn/2026-04/10/c_1777558395023172.htm",
+      "date": "2026-04-10",
+      "use": "AI应用监管、安全评估与算法备案约束"
+    },
+    {
+      "title": "证券时报：政策护航量产落地，低空经济产业化按下快进键",
+      "url": "https://www.stcn.com/article/detail/3940215.html",
+      "date": "2026-06-03",
+      "use": "低空经济政策、量产与商业化进度观察"
+    },
+    {
+      "title": "上海证券报：硬科技方向重获资金抱团",
+      "url": "https://paper.cnstock.com/html/2026-06/03/content_2226984.htm",
+      "date": "2026-06-03",
+      "use": "AI硬件链、机器人、能源瓶颈等主线线索"
+    }
+  ],
+  "themes": [
+    {
+      "name": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "rating": "B",
+      "score": 62.9,
+      "previous_rating": "A",
+      "change_type": "downgrade",
+      "stage": "repair",
+      "bucket_role": "offensive_candidate",
+      "industry_logic": "AI产业链仍是长期主线，但当前更偏算力硬件、光通信、PCB和边缘应用的结构性分化。",
+      "policy_cycle": "AI+行动、智能体应用指南和拟人化互动监管同时推进，政策方向从单纯鼓励转向应用落地与安全约束并重。",
+      "industry_stats": {
+        "coverage": 884,
+        "median_pct_chg": 0.57,
+        "advance_ratio_pct": 58.71,
+        "top_movers": [
+          {
+            "name": "东土科技",
+            "industry": "通信设备",
+            "pct_chg": 20.0219
+          },
+          {
+            "name": "中青宝",
+            "industry": "互联网",
+            "pct_chg": 19.9816
+          },
+          {
+            "name": "雷曼光电",
+            "industry": "元器件",
+            "pct_chg": 19.9544
+          },
+          {
+            "name": "星图测控",
+            "industry": "软件服务",
+            "pct_chg": 14.7597
+          },
+          {
+            "name": "麦捷科技",
+            "industry": "元器件",
+            "pct_chg": 14.4325
+          }
+        ],
+        "net_mf_amount_100m_yuan": -195.39
+      },
+      "etf_stats": [
+        {
+          "ts_code": "159819.SZ",
+          "trade_date": "20260605",
+          "close": 1.952,
+          "pct_chg": -3.46,
+          "pct_5d": -0.81,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -1.79,
+          "dist_ma60_pct": 12.56,
+          "amount_vs_20d": 1.23
+        },
+        {
+          "ts_code": "515880.SH",
+          "trade_date": "20260605",
+          "close": 1.663,
+          "pct_chg": -2.64,
+          "pct_5d": 4.59,
+          "above_ma20": true,
+          "above_ma60": true,
+          "dist_ma20_pct": 6.65,
+          "dist_ma60_pct": 26.33,
+          "amount_vs_20d": 1.65
+        },
+        {
+          "ts_code": "588790.SH",
+          "trade_date": "20260605",
+          "close": 0.895,
+          "pct_chg": -2.82,
+          "pct_5d": -3.03,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -7.28,
+          "dist_ma60_pct": 3.42,
+          "amount_vs_20d": 0.83
+        },
+        {
+          "ts_code": "512930.SH",
+          "trade_date": "20260605",
+          "close": 0.696,
+          "pct_chg": -3.47,
+          "pct_5d": -0.71,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -58.01,
+          "dist_ma60_pct": -66.53,
+          "amount_vs_20d": 1.07
+        }
+      ],
+      "score_components": {
+        "industry_logic": 18,
+        "policy_cycle": 13,
+        "fund_and_heat_proxy": 8,
+        "trend_strength": 13.0,
+        "breadth_diffusion": 10.9,
+        "earnings_validation": 8,
+        "crowding_penalty": 8
+      },
+      "core_view": "AI战略评级A、交易评级B，阶段为repair。代表ETF日涨跌均值-3.1%；5日均值0.01%；ETF站上20日线比例25%；行业上涨家数占比58.71%。结论是保留主线跟踪，但新增动作必须等市场仓位约束解除。",
+      "position_impact": "可保留跟踪或小比例结构性观察，不适合在市场弱势时主动扩张。",
+      "next_trigger": "继续观察代表ETF能否连续站稳20日线，且行业扩散率维持在50%以上。",
+      "risk": "最大风险是长期逻辑强但交易结构弱，容易出现高开低走或反抽失败。"
+    },
+    {
+      "name": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "rating": "C",
+      "score": 58.1,
+      "previous_rating": "B",
+      "change_type": "downgrade",
+      "stage": "repair",
+      "bucket_role": "watch",
+      "industry_logic": "自主可控、先进封装、设备材料和AI算力链条构成长期产业逻辑，但短线波动对风险偏好高度敏感。",
+      "policy_cycle": "集成电路仍处于国产替代和关键核心技术攻关方向，政策连续性强，但交易层面需要价格重新站稳。",
+      "industry_stats": {
+        "coverage": 501,
+        "median_pct_chg": -0.76,
+        "advance_ratio_pct": 40.72,
+        "top_movers": [
+          {
+            "name": "雷曼光电",
+            "industry": "元器件",
+            "pct_chg": 19.9544
+          },
+          {
+            "name": "麦捷科技",
+            "industry": "元器件",
+            "pct_chg": 14.4325
+          },
+          {
+            "name": "戈碧迦",
+            "industry": "元器件",
+            "pct_chg": 12.3236
+          },
+          {
+            "name": "汇成股份",
+            "industry": "半导体",
+            "pct_chg": 11.4965
+          },
+          {
+            "name": "钧崴电子",
+            "industry": "元器件",
+            "pct_chg": 11.2434
+          }
+        ],
+        "net_mf_amount_100m_yuan": -365.41
+      },
+      "etf_stats": [
+        {
+          "ts_code": "588200.SH",
+          "trade_date": "20260605",
+          "close": 3.456,
+          "pct_chg": -4.58,
+          "pct_5d": -3.63,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -3.56,
+          "dist_ma60_pct": 17.69,
+          "amount_vs_20d": 0.82
+        },
+        {
+          "ts_code": "159558.SZ",
+          "trade_date": "20260605",
+          "close": 2.826,
+          "pct_chg": -3.05,
+          "pct_5d": -0.11,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -1.48,
+          "dist_ma60_pct": 20.93,
+          "amount_vs_20d": 0.69
+        },
+        {
+          "ts_code": "512760.SH",
+          "trade_date": "20260605",
+          "close": 1.121,
+          "pct_chg": -5.0,
+          "pct_5d": -3.69,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -3.12,
+          "dist_ma60_pct": -1.91,
+          "amount_vs_20d": 0.83
+        },
+        {
+          "ts_code": "159995.SZ",
+          "trade_date": "20260605",
+          "close": 2.403,
+          "pct_chg": -5.02,
+          "pct_5d": -3.53,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -2.62,
+          "dist_ma60_pct": 17.85,
+          "amount_vs_20d": 0.89
+        }
+      ],
+      "score_components": {
+        "industry_logic": 18,
+        "policy_cycle": 12,
+        "fund_and_heat_proxy": 8,
+        "trend_strength": 11.0,
+        "breadth_diffusion": 9.1,
+        "earnings_validation": 7,
+        "crowding_penalty": 7
+      },
+      "core_view": "半导体战略评级A、交易评级C，阶段为repair。代表ETF日涨跌均值-4.41%；5日均值-2.74%；ETF站上20日线比例0%；行业上涨家数占比40.72%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。",
+      "next_trigger": "等待代表ETF站回20日线、5日相对收益转正、行业扩散率回到50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    },
+    {
+      "name": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "rating": "D",
+      "score": 48.0,
+      "previous_rating": "B",
+      "change_type": "downgrade",
+      "stage": "decline",
+      "bucket_role": "avoid",
+      "industry_logic": "AI基建、再工业化和能源转型强化电网、储能、特高压和电力设备需求，但A股交易尚未形成合力。",
+      "policy_cycle": "能源安全和新型电力系统方向延续，但短线需要成交与价格确认。",
+      "industry_stats": {
+        "coverage": 581,
+        "median_pct_chg": -0.5,
+        "advance_ratio_pct": 43.37,
+        "top_movers": [
+          {
+            "name": "创远信科",
+            "industry": "电器仪表",
+            "pct_chg": 29.9586
+          },
+          {
+            "name": "华瑞股份",
+            "industry": "电气设备",
+            "pct_chg": 20.0119
+          },
+          {
+            "name": "莱伯泰科",
+            "industry": "电器仪表",
+            "pct_chg": 20.01
+          },
+          {
+            "name": "同惠电子",
+            "industry": "电器仪表",
+            "pct_chg": 16.1311
+          },
+          {
+            "name": "新天科技",
+            "industry": "电器仪表",
+            "pct_chg": 14.3925
+          }
+        ],
+        "net_mf_amount_100m_yuan": -234.21
+      },
+      "etf_stats": [
+        {
+          "ts_code": "159326.SZ",
+          "trade_date": "20260605",
+          "close": 2.054,
+          "pct_chg": -1.86,
+          "pct_5d": -0.29,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -1.62,
+          "dist_ma60_pct": 3.51,
+          "amount_vs_20d": 0.83
+        },
+        {
+          "ts_code": "516160.SH",
+          "trade_date": "20260605",
+          "close": 2.938,
+          "pct_chg": -2.36,
+          "pct_5d": -5.74,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -7.28,
+          "dist_ma60_pct": -6.73,
+          "amount_vs_20d": 0.8
+        },
+        {
+          "ts_code": "561700.SH",
+          "trade_date": "20260605",
+          "close": 1.242,
+          "pct_chg": -3.8,
+          "pct_5d": -4.9,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -0.86,
+          "dist_ma60_pct": 3.02,
+          "amount_vs_20d": 1.2
+        }
+      ],
+      "score_components": {
+        "industry_logic": 15,
+        "policy_cycle": 11,
+        "fund_and_heat_proxy": 5,
+        "trend_strength": 7.7,
+        "breadth_diffusion": 9.3,
+        "earnings_validation": 7,
+        "crowding_penalty": 7
+      },
+      "core_view": "电力设备战略评级B、交易评级D，阶段为decline。代表ETF日涨跌均值-2.67%；5日均值-3.64%；ETF站上20日线比例0%；行业上涨家数占比43.37%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "短期趋势已经转弱，若继续放量下跌，评级仍需下修。"
+    },
+    {
+      "name": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "rating": "C",
+      "score": 62.9,
+      "previous_rating": "B",
+      "change_type": "downgrade",
+      "stage": "repair",
+      "bucket_role": "watch",
+      "industry_logic": "工业母机、机器人零部件和设备更新构成制造升级线索，是弱市中相对容易出现局部修复的方向。",
+      "policy_cycle": "设备更新、新质生产力和高端制造政策仍提供中期支撑。",
+      "industry_stats": {
+        "coverage": 536,
+        "median_pct_chg": 1.23,
+        "advance_ratio_pct": 69.4,
+        "top_movers": [
+          {
+            "name": "N新睿",
+            "industry": "专用机械",
+            "pct_chg": 800.6749
+          },
+          {
+            "name": "丰光精密",
+            "industry": "机械基件",
+            "pct_chg": 29.9603
+          },
+          {
+            "name": "冠龙节能",
+            "industry": "机械基件",
+            "pct_chg": 20.0264
+          },
+          {
+            "name": "绿的谐波",
+            "industry": "机械基件",
+            "pct_chg": 20.0
+          },
+          {
+            "name": "津膜科技",
+            "industry": "专用机械",
+            "pct_chg": 19.9734
+          }
+        ],
+        "net_mf_amount_100m_yuan": -11.26
+      },
+      "etf_stats": [
+        {
+          "ts_code": "159667.SZ",
+          "trade_date": "20260605",
+          "close": 2.409,
+          "pct_chg": 0.59,
+          "pct_5d": 4.42,
+          "above_ma20": true,
+          "above_ma60": true,
+          "dist_ma20_pct": 2.75,
+          "dist_ma60_pct": 18.12,
+          "amount_vs_20d": 1.29
+        },
+        {
+          "ts_code": "516320.SH",
+          "trade_date": "20260605",
+          "close": 1.055,
+          "pct_chg": -1.59,
+          "pct_5d": -3.92,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -5.45,
+          "dist_ma60_pct": -3.62,
+          "amount_vs_20d": 0.79
+        }
+      ],
+      "score_components": {
+        "industry_logic": 14,
+        "policy_cycle": 10,
+        "fund_and_heat_proxy": 12,
+        "trend_strength": 14.0,
+        "breadth_diffusion": 11.9,
+        "earnings_validation": 7,
+        "crowding_penalty": 6
+      },
+      "core_view": "高端装备战略评级B、交易评级C，阶段为repair。代表ETF日涨跌均值-0.5%；5日均值0.25%；ETF站上20日线比例50%；行业上涨家数占比69.4%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。",
+      "next_trigger": "等待代表ETF站回20日线、5日相对收益转正、行业扩散率回到50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    },
+    {
+      "name": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "rating": "D",
+      "score": 49.5,
+      "previous_rating": "B",
+      "change_type": "downgrade",
+      "stage": "decline",
+      "bucket_role": "avoid",
+      "industry_logic": "能源与红利资产在弱势市场中提供防御属性，不能替代成长主线，但可作为仓位稳定器。",
+      "policy_cycle": "能源安全和红利资金偏好仍在，更多体现为防守配置而非进攻弹性。",
+      "industry_stats": {
+        "coverage": 113,
+        "median_pct_chg": -2.09,
+        "advance_ratio_pct": 18.58,
+        "top_movers": [
+          {
+            "name": "大有能源",
+            "industry": "煤炭开采",
+            "pct_chg": 10.0
+          },
+          {
+            "name": "平煤股份",
+            "industry": "煤炭开采",
+            "pct_chg": 4.8807
+          },
+          {
+            "name": "康普顿",
+            "industry": "石油加工",
+            "pct_chg": 3.8885
+          },
+          {
+            "name": "万邦达",
+            "industry": "石油加工",
+            "pct_chg": 3.7667
+          },
+          {
+            "name": "瑞华技术",
+            "industry": "石油加工",
+            "pct_chg": 3.4164
+          }
+        ],
+        "net_mf_amount_100m_yuan": -117.12
+      },
+      "etf_stats": [
+        {
+          "ts_code": "510880.SH",
+          "trade_date": "20260605",
+          "close": 3.321,
+          "pct_chg": -0.18,
+          "pct_5d": 3.59,
+          "above_ma20": true,
+          "above_ma60": true,
+          "dist_ma20_pct": 2.66,
+          "dist_ma60_pct": 1.84,
+          "amount_vs_20d": 1.26
+        },
+        {
+          "ts_code": "159301.SZ",
+          "trade_date": "20260605",
+          "close": 1.063,
+          "pct_chg": -3.1,
+          "pct_5d": -4.15,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -0.68,
+          "dist_ma60_pct": 2.39,
+          "amount_vs_20d": 1.14
+        },
+        {
+          "ts_code": "561560.SH",
+          "trade_date": "20260605",
+          "close": 1.432,
+          "pct_chg": -3.89,
+          "pct_5d": -4.85,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -0.9,
+          "dist_ma60_pct": 2.86,
+          "amount_vs_20d": 1.15
+        }
+      ],
+      "score_components": {
+        "industry_logic": 13,
+        "policy_cycle": 9,
+        "fund_and_heat_proxy": 6,
+        "trend_strength": 14.6,
+        "breadth_diffusion": 6.9,
+        "earnings_validation": 8,
+        "crowding_penalty": 8
+      },
+      "core_view": "能源战略评级B、交易评级D，阶段为decline。代表ETF日涨跌均值-2.39%；5日均值-1.8%；ETF站上20日线比例33%；行业上涨家数占比18.58%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    },
+    {
+      "name": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "rating": "D",
+      "score": 46.8,
+      "previous_rating": "C",
+      "change_type": "downgrade",
+      "stage": "decline",
+      "bucket_role": "avoid",
+      "industry_logic": "资源品受全球制造、能源转型和供给约束影响，但短线对美元、商品价格和风险偏好敏感。",
+      "policy_cycle": "战略资源安全提供底层逻辑，交易上仍需商品价格与板块价格同步确认。",
+      "industry_stats": {
+        "coverage": 139,
+        "median_pct_chg": -1.36,
+        "advance_ratio_pct": 38.13,
+        "top_movers": [
+          {
+            "name": "天力复合",
+            "industry": "小金属",
+            "pct_chg": 22.9768
+          },
+          {
+            "name": "宜安科技",
+            "industry": "小金属",
+            "pct_chg": 12.8571
+          },
+          {
+            "name": "江南新材",
+            "industry": "铜",
+            "pct_chg": 9.998
+          },
+          {
+            "name": "屹通新材",
+            "industry": "小金属",
+            "pct_chg": 7.788
+          },
+          {
+            "name": "福达合金",
+            "industry": "小金属",
+            "pct_chg": 7.6119
+          }
+        ],
+        "net_mf_amount_100m_yuan": -90.64
+      },
+      "etf_stats": [
+        {
+          "ts_code": "516150.SH",
+          "trade_date": "20260605",
+          "close": 1.969,
+          "pct_chg": 0.0,
+          "pct_5d": 2.98,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -1.5,
+          "dist_ma60_pct": -0.2,
+          "amount_vs_20d": 0.84
+        },
+        {
+          "ts_code": "562800.SH",
+          "trade_date": "20260605",
+          "close": 1.041,
+          "pct_chg": -1.23,
+          "pct_5d": -1.33,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -4.69,
+          "dist_ma60_pct": -2.96,
+          "amount_vs_20d": 0.89
+        },
+        {
+          "ts_code": "512400.SH",
+          "trade_date": "20260605",
+          "close": 1.926,
+          "pct_chg": -2.23,
+          "pct_5d": -1.98,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -5.35,
+          "dist_ma60_pct": -6.91,
+          "amount_vs_20d": 0.74
+        },
+        {
+          "ts_code": "159652.SZ",
+          "trade_date": "20260605",
+          "close": 1.643,
+          "pct_chg": -2.32,
+          "pct_5d": -2.61,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -6.21,
+          "dist_ma60_pct": -8.08,
+          "amount_vs_20d": 0.75
+        }
+      ],
+      "score_components": {
+        "industry_logic": 13,
+        "policy_cycle": 9,
+        "fund_and_heat_proxy": 6,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 8.8,
+        "earnings_validation": 7,
+        "crowding_penalty": 5
+      },
+      "core_view": "有色战略评级B、交易评级D，阶段为decline。代表ETF日涨跌均值-1.44%；5日均值-0.73%；ETF站上20日线比例0%；行业上涨家数占比38.13%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    },
+    {
+      "name": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "rating": "D",
+      "score": 37.7,
+      "previous_rating": "C",
+      "change_type": "downgrade",
+      "stage": "decline",
+      "bucket_role": "avoid",
+      "industry_logic": "电池链处于供需再平衡阶段，长期仍有技术迭代，但短线需观察价格和盈利改善。",
+      "policy_cycle": "新能源方向政策延续，当前核心是产能出清与盈利修复。",
+      "industry_stats": {
+        "coverage": 382,
+        "median_pct_chg": -0.17,
+        "advance_ratio_pct": 46.6,
+        "top_movers": [
+          {
+            "name": "华瑞股份",
+            "industry": "电气设备",
+            "pct_chg": 20.0119
+          },
+          {
+            "name": "球冠电缆",
+            "industry": "电气设备",
+            "pct_chg": 13.0709
+          },
+          {
+            "name": "龙磁科技",
+            "industry": "矿物制品",
+            "pct_chg": 12.5393
+          },
+          {
+            "name": "科力尔",
+            "industry": "电气设备",
+            "pct_chg": 10.0101
+          },
+          {
+            "name": "方大炭素",
+            "industry": "矿物制品",
+            "pct_chg": 10.0
+          }
+        ],
+        "net_mf_amount_100m_yuan": -73.61
+      },
+      "etf_stats": [
+        {
+          "ts_code": "159755.SZ",
+          "trade_date": "20260605",
+          "close": 1.075,
+          "pct_chg": -1.2,
+          "pct_5d": -4.78,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -6.58,
+          "dist_ma60_pct": -6.01,
+          "amount_vs_20d": 1.54
+        },
+        {
+          "ts_code": "561910.SH",
+          "trade_date": "20260605",
+          "close": 0.873,
+          "pct_chg": -2.02,
+          "pct_5d": -5.52,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -7.56,
+          "dist_ma60_pct": -3.16,
+          "amount_vs_20d": 0.87
+        }
+      ],
+      "score_components": {
+        "industry_logic": 10,
+        "policy_cycle": 8,
+        "fund_and_heat_proxy": 5,
+        "trend_strength": 5.0,
+        "breadth_diffusion": 9.7,
+        "earnings_validation": 5,
+        "crowding_penalty": 5
+      },
+      "core_view": "电池战略评级C、交易评级D，阶段为decline。代表ETF日涨跌均值-1.61%；5日均值-5.15%；ETF站上20日线比例0%；行业上涨家数占比46.6%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "短期趋势已经转弱，若继续放量下跌，评级仍需下修。"
+    },
+    {
+      "name": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "rating": "C",
+      "score": 53.2,
+      "previous_rating": "C",
+      "change_type": "maintain",
+      "stage": "repair",
+      "bucket_role": "watch",
+      "industry_logic": "AI电力需求和新型电力系统强化储能中期逻辑，但当前A股承接仍不足。",
+      "policy_cycle": "能源转型和电力系统建设支撑仍在。",
+      "industry_stats": {
+        "coverage": 760,
+        "median_pct_chg": 0.14,
+        "advance_ratio_pct": 51.71,
+        "top_movers": [
+          {
+            "name": "创远信科",
+            "industry": "电器仪表",
+            "pct_chg": 29.9586
+          },
+          {
+            "name": "华瑞股份",
+            "industry": "电气设备",
+            "pct_chg": 20.0119
+          },
+          {
+            "name": "莱伯泰科",
+            "industry": "电器仪表",
+            "pct_chg": 20.01
+          },
+          {
+            "name": "雷曼光电",
+            "industry": "元器件",
+            "pct_chg": 19.9544
+          },
+          {
+            "name": "同惠电子",
+            "industry": "电器仪表",
+            "pct_chg": 16.1311
+          }
+        ],
+        "net_mf_amount_100m_yuan": -166.73
+      },
+      "etf_stats": [
+        {
+          "ts_code": "159326.SZ",
+          "trade_date": "20260605",
+          "close": 2.054,
+          "pct_chg": -1.86,
+          "pct_5d": -0.29,
+          "above_ma20": false,
+          "above_ma60": true,
+          "dist_ma20_pct": -1.62,
+          "dist_ma60_pct": 3.51,
+          "amount_vs_20d": 0.83
+        },
+        {
+          "ts_code": "159755.SZ",
+          "trade_date": "20260605",
+          "close": 1.075,
+          "pct_chg": -1.2,
+          "pct_5d": -4.78,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -6.58,
+          "dist_ma60_pct": -6.01,
+          "amount_vs_20d": 1.54
+        }
+      ],
+      "score_components": {
+        "industry_logic": 14,
+        "policy_cycle": 10,
+        "fund_and_heat_proxy": 8,
+        "trend_strength": 10.0,
+        "breadth_diffusion": 10.2,
+        "earnings_validation": 6,
+        "crowding_penalty": 5
+      },
+      "core_view": "储能战略评级B、交易评级C，阶段为repair。代表ETF日涨跌均值-1.53%；5日均值-2.54%；ETF站上20日线比例0%；行业上涨家数占比51.71%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。",
+      "next_trigger": "等待代表ETF站回20日线、5日相对收益转正、行业扩散率回到50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    },
+    {
+      "name": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "rating": "B",
+      "score": 69.3,
+      "previous_rating": "C",
+      "change_type": "upgrade",
+      "stage": "confirmation",
+      "bucket_role": "offensive_candidate",
+      "industry_logic": "人形机器人产业进程进入上市、量产和供应链验证阶段，但主题波动仍大。",
+      "policy_cycle": "新质生产力和高端装备方向支撑，产业催化存在但需要订单兑现。",
+      "industry_stats": {
+        "coverage": 839,
+        "median_pct_chg": 0.98,
+        "advance_ratio_pct": 62.69,
+        "top_movers": [
+          {
+            "name": "N新睿",
+            "industry": "专用机械",
+            "pct_chg": 800.6749
+          },
+          {
+            "name": "丰光精密",
+            "industry": "机械基件",
+            "pct_chg": 29.9603
+          },
+          {
+            "name": "创远信科",
+            "industry": "电器仪表",
+            "pct_chg": 29.9586
+          },
+          {
+            "name": "冠龙节能",
+            "industry": "机械基件",
+            "pct_chg": 20.0264
+          },
+          {
+            "name": "莱伯泰科",
+            "industry": "电器仪表",
+            "pct_chg": 20.01
+          }
+        ],
+        "net_mf_amount_100m_yuan": -111.71
+      },
+      "etf_stats": [
+        {
+          "ts_code": "562500.SH",
+          "trade_date": "20260605",
+          "close": 1.163,
+          "pct_chg": 3.01,
+          "pct_5d": 4.03,
+          "above_ma20": true,
+          "above_ma60": true,
+          "dist_ma20_pct": 0.27,
+          "dist_ma60_pct": 11.39,
+          "amount_vs_20d": 1.36
+        },
+        {
+          "ts_code": "159770.SZ",
+          "trade_date": "20260605",
+          "close": 1.203,
+          "pct_chg": 2.82,
+          "pct_5d": 3.98,
+          "above_ma20": true,
+          "above_ma60": true,
+          "dist_ma20_pct": 0.19,
+          "dist_ma60_pct": 11.35,
+          "amount_vs_20d": 1.1
+        }
+      ],
+      "score_components": {
+        "industry_logic": 13,
+        "policy_cycle": 9,
+        "fund_and_heat_proxy": 17,
+        "trend_strength": 20,
+        "breadth_diffusion": 11.3,
+        "earnings_validation": 5,
+        "crowding_penalty": 6
+      },
+      "core_view": "机器人战略评级B、交易评级B，阶段为confirmation。代表ETF日涨跌均值2.92%；5日均值4.0%；ETF站上20日线比例100%；行业上涨家数占比62.69%。结论是保留主线跟踪，但新增动作必须等市场仓位约束解除。",
+      "position_impact": "可保留跟踪或小比例结构性观察，不适合在市场弱势时主动扩张。",
+      "next_trigger": "继续观察代表ETF能否连续站稳20日线，且行业扩散率维持在50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    },
+    {
+      "name": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "rating": "D",
+      "score": 44.0,
+      "previous_rating": "C",
+      "change_type": "downgrade",
+      "stage": "decline",
+      "bucket_role": "avoid",
+      "industry_logic": "商业航天和卫星互联网具备长期想象力，但A股可验证业绩与成交承接仍偏弱。",
+      "policy_cycle": "空天信息和低空安全通信提供方向催化，但主题仍需产业订单确认。",
+      "industry_stats": {
+        "coverage": 786,
+        "median_pct_chg": 0.78,
+        "advance_ratio_pct": 59.92,
+        "top_movers": [
+          {
+            "name": "N新睿",
+            "industry": "专用机械",
+            "pct_chg": 800.6749
+          },
+          {
+            "name": "东土科技",
+            "industry": "通信设备",
+            "pct_chg": 20.0219
+          },
+          {
+            "name": "津膜科技",
+            "industry": "专用机械",
+            "pct_chg": 19.9734
+          },
+          {
+            "name": "雷曼光电",
+            "industry": "元器件",
+            "pct_chg": 19.9544
+          },
+          {
+            "name": "麦捷科技",
+            "industry": "元器件",
+            "pct_chg": 14.4325
+          }
+        ],
+        "net_mf_amount_100m_yuan": -142.89
+      },
+      "etf_stats": [
+        {
+          "ts_code": "159206.SZ",
+          "trade_date": "20260605",
+          "close": 1.68,
+          "pct_chg": 3.19,
+          "pct_5d": 2.44,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -6.19,
+          "dist_ma60_pct": -3.98,
+          "amount_vs_20d": 1.03
+        },
+        {
+          "ts_code": "512710.SH",
+          "trade_date": "20260605",
+          "close": 0.691,
+          "pct_chg": 0.73,
+          "pct_5d": 0.14,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -6.2,
+          "dist_ma60_pct": -9.68,
+          "amount_vs_20d": 0.83
+        }
+      ],
+      "score_components": {
+        "industry_logic": 10,
+        "policy_cycle": 8,
+        "fund_and_heat_proxy": 8,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 11.0,
+        "earnings_validation": 4,
+        "crowding_penalty": 5
+      },
+      "core_view": "商业航天战略评级C、交易评级D，阶段为decline。代表ETF日涨跌均值1.96%；5日均值1.29%；ETF站上20日线比例0%；行业上涨家数占比59.92%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    },
+    {
+      "name": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "rating": "D",
+      "score": 49.6,
+      "previous_rating": "C",
+      "change_type": "downgrade",
+      "stage": "decline",
+      "bucket_role": "avoid",
+      "industry_logic": "部分细分化工存在周期修复和供给侧线索，但整体更适合观察分支景气。",
+      "policy_cycle": "产业升级和周期反转线索偏中性。",
+      "industry_stats": {
+        "coverage": 303,
+        "median_pct_chg": 0.55,
+        "advance_ratio_pct": 65.68,
+        "top_movers": [
+          {
+            "name": "华密新材",
+            "industry": "橡胶",
+            "pct_chg": 10.3785
+          },
+          {
+            "name": "天安新材",
+            "industry": "塑料",
+            "pct_chg": 10.0257
+          },
+          {
+            "name": "百傲化学",
+            "industry": "农药化肥",
+            "pct_chg": 10.0109
+          },
+          {
+            "name": "亚钾国际",
+            "industry": "农药化肥",
+            "pct_chg": 6.882
+          },
+          {
+            "name": "天宇股份",
+            "industry": "化学制药",
+            "pct_chg": 6.0254
+          }
+        ],
+        "net_mf_amount_100m_yuan": -22.88
+      },
+      "etf_stats": [
+        {
+          "ts_code": "516020.SH",
+          "trade_date": "20260605",
+          "close": 0.869,
+          "pct_chg": 0.35,
+          "pct_5d": 0.12,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -5.2,
+          "dist_ma60_pct": -8.08,
+          "amount_vs_20d": 0.93
+        },
+        {
+          "ts_code": "159870.SZ",
+          "trade_date": "20260605",
+          "close": 0.816,
+          "pct_chg": 0.25,
+          "pct_5d": 0.0,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -5.23,
+          "dist_ma60_pct": -8.21,
+          "amount_vs_20d": 0.6
+        }
+      ],
+      "score_components": {
+        "industry_logic": 10,
+        "policy_cycle": 7,
+        "fund_and_heat_proxy": 12,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 11.6,
+        "earnings_validation": 6,
+        "crowding_penalty": 5
+      },
+      "core_view": "化工战略评级C、交易评级D，阶段为decline。代表ETF日涨跌均值0.3%；5日均值0.06%；ETF站上20日线比例0%；行业上涨家数占比65.68%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    },
+    {
+      "name": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "rating": "D",
+      "score": 46.4,
+      "previous_rating": "D",
+      "change_type": "maintain",
+      "stage": "decline",
+      "bucket_role": "avoid",
+      "industry_logic": "智能驾驶长期空间仍在，但当前主题扩散不足，且与汽车链景气强绑定。",
+      "policy_cycle": "车路云、智能网联方向延续，但交易主线地位不足。",
+      "industry_stats": {
+        "coverage": 703,
+        "median_pct_chg": 0.65,
+        "advance_ratio_pct": 63.87,
+        "top_movers": [
+          {
+            "name": "东土科技",
+            "industry": "通信设备",
+            "pct_chg": 20.0219
+          },
+          {
+            "name": "易实精密",
+            "industry": "汽车配件",
+            "pct_chg": 16.9863
+          },
+          {
+            "name": "星图测控",
+            "industry": "软件服务",
+            "pct_chg": 14.7597
+          },
+          {
+            "name": "索辰科技",
+            "industry": "软件服务",
+            "pct_chg": 13.2438
+          },
+          {
+            "name": "嘉和美康",
+            "industry": "软件服务",
+            "pct_chg": 12.451
+          }
+        ],
+        "net_mf_amount_100m_yuan": -83.57
+      },
+      "etf_stats": [
+        {
+          "ts_code": "159872.SZ",
+          "trade_date": "20260605",
+          "close": 0.935,
+          "pct_chg": -0.11,
+          "pct_5d": -1.06,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -4.52,
+          "dist_ma60_pct": -4.47,
+          "amount_vs_20d": 0.35
+        },
+        {
+          "ts_code": "515250.SH",
+          "trade_date": "20260605",
+          "close": 1.064,
+          "pct_chg": -1.94,
+          "pct_5d": -1.75,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -5.18,
+          "dist_ma60_pct": -3.39,
+          "amount_vs_20d": 1.82
+        }
+      ],
+      "score_components": {
+        "industry_logic": 9,
+        "policy_cycle": 7,
+        "fund_and_heat_proxy": 12,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 11.4,
+        "earnings_validation": 4,
+        "crowding_penalty": 5
+      },
+      "core_view": "无人驾驶战略评级C、交易评级D，阶段为decline。代表ETF日涨跌均值-1.02%；5日均值-1.41%；ETF站上20日线比例0%；行业上涨家数占比63.87%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。",
+      "next_trigger": "等待政策或订单催化转化为成交放量与价格修复。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    },
+    {
+      "name": "低空经济",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "rating": "C",
+      "score": 54.6,
+      "previous_rating": null,
+      "change_type": "new",
+      "stage": "repair",
+      "bucket_role": "watch",
+      "industry_logic": "低空经济政策框架和产业化节点密集，但安全、空域、订单和商业闭环仍是验证门槛。",
+      "policy_cycle": "民用航空法修订、配套细则和地方场景推进让低空从主题期走向产业验证期。",
+      "industry_stats": {
+        "coverage": 528,
+        "median_pct_chg": 1.02,
+        "advance_ratio_pct": 65.72,
+        "top_movers": [
+          {
+            "name": "N新睿",
+            "industry": "专用机械",
+            "pct_chg": 800.6749
+          },
+          {
+            "name": "东土科技",
+            "industry": "通信设备",
+            "pct_chg": 20.0219
+          },
+          {
+            "name": "津膜科技",
+            "industry": "专用机械",
+            "pct_chg": 19.9734
+          },
+          {
+            "name": "中控技术",
+            "industry": "专用机械",
+            "pct_chg": 13.0966
+          },
+          {
+            "name": "工大高科",
+            "industry": "运输设备",
+            "pct_chg": 12.5188
+          }
+        ],
+        "net_mf_amount_100m_yuan": -44.34
+      },
+      "etf_stats": [
+        {
+          "ts_code": "159378.SZ",
+          "trade_date": "20260605",
+          "close": 1.161,
+          "pct_chg": 1.49,
+          "pct_5d": -0.77,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -8.11,
+          "dist_ma60_pct": -11.64,
+          "amount_vs_20d": 0.91
+        },
+        {
+          "ts_code": "159206.SZ",
+          "trade_date": "20260605",
+          "close": 1.68,
+          "pct_chg": 3.19,
+          "pct_5d": 2.44,
+          "above_ma20": false,
+          "above_ma60": false,
+          "dist_ma20_pct": -6.19,
+          "dist_ma60_pct": -3.98,
+          "amount_vs_20d": 1.03
+        }
+      ],
+      "score_components": {
+        "industry_logic": 13,
+        "policy_cycle": 11,
+        "fund_and_heat_proxy": 12,
+        "trend_strength": 8.0,
+        "breadth_diffusion": 11.6,
+        "earnings_validation": 4,
+        "crowding_penalty": 5
+      },
+      "core_view": "低空经济战略评级B、交易评级C，阶段为repair。代表ETF日涨跌均值2.34%；5日均值0.83%；ETF站上20日线比例0%；行业上涨家数占比65.72%。结论是先研究后交易，当前不承担进攻主线角色。",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。",
+      "next_trigger": "等待代表ETF站回20日线、5日相对收益转正、行业扩散率回到50%以上。",
+      "risk": "主要风险来自市场总仓位收缩、主题轮动过快和业绩兑现不足。"
+    }
+  ],
+  "data_gaps": [
+    "ETF申赎、完整成分重叠、长期估值分位不完整。",
+    "行业归类使用Tushare股票行业字段，不能完全替代主题指数成分。",
+    "不使用2026-06-08未收盘盘中行情作为评分依据。"
+  ]
+}
