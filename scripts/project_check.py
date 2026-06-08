@@ -26,6 +26,7 @@ RESEARCH_NAME_PATTERNS = {
     "actions": re.compile(
         rf"^action_plan_{TIMESTAMP}(_[A-Za-z0-9_-]+)?\.(md|json)$"
     ),
+    "briefings": re.compile(rf"^strategy_briefing_{TIMESTAMP}\.(md|json)$"),
     "alerts": re.compile(rf"^intraday_alert_{TIMESTAMP}\.(md|json)$"),
     "valuations": re.compile(rf"^valuation_.+_{TIMESTAMP}\.(md|json)$"),
     "checks": re.compile(rf"^premarket_check_{TIMESTAMP}\.(md|json)$"),

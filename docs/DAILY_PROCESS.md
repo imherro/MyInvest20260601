@@ -5,7 +5,8 @@
 核心原则：
 
 - 日常流程不是每天重做所有研究。
-- 盘前以读取和执行检查为主，只有必要时才更新市场仓位。
+- 盘前以读取、策略简报和执行检查为主，只有必要时才更新市场仓位。
+- 用户说“盘前分析”“盘前策略”“策略简报”“今日晨报”“市场策略”时，默认生成盘前策略简报。
 - 盘中只检查已定义触发条件，不发明新策略。
 - 盘后做复盘和必要更新。
 - 周末或单独会话负责深度研究、补 ETF/个股档案和规则修订。
@@ -32,13 +33,14 @@
 - 个股登记册和个股档案：`research/stocks/`
 - 组合快照：`research/portfolio/portfolio_snapshot_YYYY-MM-DD_HHMMSS.*`
 - 操作建议：`research/actions/action_plan_YYYY-MM-DD_HHMMSS_*.*`
+- 盘前策略简报：`research/briefings/strategy_briefing_YYYY-MM-DD_HHMMSS.*`
 - 盘前执行检查：`research/checks/premarket_check_YYYY-MM-DD_HHMMSS.*`
 
 注意：如果存在多个同类文件，默认读取时间戳最新版本。若不用最新版本，必须说明原因。
 
 ## 2. 盘前流程
 
-目标：确认当天能不能操作、按什么边界操作、哪些条件触发才操作。
+目标：先形成类似券商晨报的盘前策略视图，再确认当天能不能操作、按什么边界操作、哪些条件触发才操作。
 
 默认不重做所有研究。盘前优先读取：
 
@@ -47,6 +49,14 @@
 3. 最新组合快照。
 4. 最新 ETF/个股档案。
 5. 最新操作建议或上一交易日待执行计划。
+
+盘前策略简报适用场景：
+
+- 用户要求“盘前分析”“盘前策略”“策略简报”“今日晨报”“市场策略”。
+- 需要同时输出重大新闻、策略精要、市场分析、重点方向、核心观点和风险提示。
+- 需要把新闻、政策、外盘和最新研究结论合并成当日视图。
+
+此类请求默认按 `docs/modules/STRATEGY_BRIEFING.md` 输出 `research/briefings/strategy_briefing_YYYY-MM-DD_HHMMSS.md/json`。如果还需要执行门禁，再继续按 `docs/modules/PREMARKET_CHECK.md` 生成盘前执行检查。
 
 盘前只在以下情况更新市场仓位：
 
@@ -70,6 +80,8 @@
 盘前输出可以是：
 
 ```text
+research/briefings/strategy_briefing_YYYY-MM-DD_HHMMSS.md
+research/briefings/strategy_briefing_YYYY-MM-DD_HHMMSS.json
 research/checks/premarket_check_YYYY-MM-DD_HHMMSS.md
 research/checks/premarket_check_YYYY-MM-DD_HHMMSS.json
 research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.md
@@ -168,6 +180,7 @@ research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 | 主线研究会话 | 更新战略评级、交易评级和主线阶段 |
 | ETF/个股补研究会话 | 逐只生成档案，不给最终买卖建议 |
 | 操作建议会话 | 读取所有前置研究，生成比例级操作建议 |
+| 盘前策略简报会话 | 生成重大新闻、策略精要、市场分析、重点方向、核心观点和风险提示 |
 | 盘前执行检查会话 | 检查最新研究和操作建议是否可执行，输出盘中监控清单 |
 | 盘中提醒会话 | 只检查已定义触发条件 |
 
@@ -177,6 +190,7 @@ research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 
 | 场景 | 应做事项 |
 | --- | --- |
+| 盘前分析/盘前策略/策略简报 | 读取最新研究和事件信息，生成盘前策略简报 |
 | 只是盘前执行 | 读取最新文件，生成执行检查和触发条件 |
 | 市场明显变化 | 更新市场仓位模块 |
 | 主线触发条件变化 | 更新主线研究模块 |
@@ -192,6 +206,7 @@ research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 ```text
 请按 docs/DAILY_PROCESS.md 执行盘前流程。
 读取最新市场仓位、主线研究、组合快照、ETF/个股档案和最新操作建议。
+如果我说的是盘前分析、盘前策略或策略简报，请按 docs/modules/STRATEGY_BRIEFING.md 生成盘前策略简报，包含重大新闻、策略精要、市场分析、重点方向、核心观点和风险提示。
 请按 docs/modules/PREMARKET_CHECK.md 生成盘前执行检查和盘中监控清单，不临时改写主线，不新增未建档标的。
 只按比例分析，不使用金额。
 ```

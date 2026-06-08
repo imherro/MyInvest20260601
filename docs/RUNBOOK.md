@@ -32,10 +32,11 @@
 3. 如有必要，更新相关 ETF/个股档案；缺档案时标记 ResearchFirst。
 4. 读取或更新当前持仓快照。
 5. 运行组合分析。
-6. 生成盘前操作建议或读取已有操作建议。
-7. 生成盘前执行检查。
-8. 写入决策日志。
-9. 提交并推送。
+6. 如果用户说“盘前分析”“盘前策略”“策略简报”“今日晨报”或“市场策略”，生成盘前策略简报。
+7. 生成盘前操作建议或读取已有操作建议。
+8. 生成盘前执行检查。
+9. 写入决策日志。
+10. 提交并推送。
 
 产物：
 
@@ -44,6 +45,8 @@ research/market/market_score_YYYY-MM-DD_HHMMSS.md
 research/market/market_score_YYYY-MM-DD_HHMMSS.json
 research/portfolio/portfolio_snapshot_YYYY-MM-DD_HHMMSS.md
 research/portfolio/portfolio_snapshot_YYYY-MM-DD_HHMMSS.json
+research/briefings/strategy_briefing_YYYY-MM-DD_HHMMSS.md
+research/briefings/strategy_briefing_YYYY-MM-DD_HHMMSS.json
 research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.md
 research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.json
 research/checks/premarket_check_YYYY-MM-DD_HHMMSS.md
@@ -56,6 +59,7 @@ research/logs/decision_log.md
 ```text
 请按 docs/RUNBOOK.md 和 docs/DAILY_PROCESS.md 执行今日盘前流程。
 先读取最新市场仓位、主线登记册和组合快照；只有必要时才更新市场仓位或主线研究。
+如果我说的是盘前分析、盘前策略或策略简报，请按 docs/modules/STRATEGY_BRIEFING.md 输出券商晨报式盘前策略简报，包含重大新闻、策略精要、市场分析、重点方向、核心观点和风险提示。
 如操作建议已存在，请按 docs/modules/PREMARKET_CHECK.md 生成盘前执行检查。
 不要临时重写前置研究结论；缺少研究时输出 ResearchFirst。
 ```
@@ -201,6 +205,7 @@ docs/PROJECT_MEMORY.md
 research: update market position
 research: update theme review
 portfolio: update holdings analysis
+briefing: add premarket strategy briefing
 actions: add premarket action plan
 review: add post-market review
 docs: update project memory
@@ -224,6 +229,8 @@ docs: update project memory
 - 个股研究模块
 - 组合分析模块
 - 操作建议模块
+- 盘前策略简报模块
+- 盘前执行检查模块
 - 盘中提醒模块
 - 盘后复盘模块
 - 决策日志模块

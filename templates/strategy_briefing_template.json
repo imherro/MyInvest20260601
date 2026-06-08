@@ -1,0 +1,93 @@
+{
+  "module": "strategy_briefing",
+  "version": "1.0",
+  "date": "YYYY-MM-DD",
+  "session": "premarket",
+  "generated_at": "YYYY-MM-DD_HHMMSS",
+  "amount_policy": "ratio_only",
+  "input_files": {
+    "market_position": {"path": "", "is_latest": null, "status": ""},
+    "theme_research": {"path": "", "is_latest": null, "status": ""},
+    "theme_registry": {"path": "research/themes/theme_registry.json", "is_latest": null, "status": ""},
+    "portfolio_snapshot": {"path": "", "is_latest": null, "status": ""},
+    "etf_registry": {"path": "research/etfs/etf_registry.json", "is_latest": null, "status": ""},
+    "stock_registry": {"path": "research/stocks/stock_registry.json", "is_latest": null, "status": ""},
+    "action_plan": {"path": "", "is_latest": null, "status": "available|missing|stale"},
+    "premarket_check": {"path": "", "is_latest": null, "status": "available|missing|stale"},
+    "decision_log": {"path": "research/logs/decision_log.md", "is_latest": true, "status": ""}
+  },
+  "data_sources": [
+    {
+      "type": "tushare|qmt|baostock|web|manual",
+      "name": "",
+      "date_or_time": "",
+      "fields": [],
+      "notes": ""
+    }
+  ],
+  "major_news": [
+    {
+      "type": "policy|macro|industry|company|market",
+      "headline": "",
+      "source": "",
+      "source_date": "",
+      "affected_scope": [],
+      "strategy_implication": "",
+      "needs_module_review": true
+    }
+  ],
+  "summary": {
+    "briefing_status": "offensive_allowed|verify_only|risk_reduce_or_watch_only|research_first|blocked",
+    "one_line_conclusion": "",
+    "strategy_essentials": [],
+    "equity_range": "",
+    "cash_short_range": "",
+    "offensive_bucket_boundary": ""
+  },
+  "market_analysis": {
+    "index_trend": {"state": "", "evidence": [], "strategy_implication": ""},
+    "breadth": {"state": "", "evidence": [], "strategy_implication": ""},
+    "turnover_liquidity": {"state": "", "evidence": [], "strategy_implication": ""},
+    "funds_risk_appetite": {"state": "", "evidence": [], "strategy_implication": ""},
+    "valuation_odds": {"state": "", "evidence": [], "strategy_implication": ""},
+    "crowding_risk": {"state": "", "evidence": [], "strategy_implication": ""}
+  },
+  "focus_directions": [
+    {
+      "name": "",
+      "strategic_rating": "A|B|C|D|unknown",
+      "tactical_rating": "A|B|C|D|unknown",
+      "stage": "",
+      "today_view": "",
+      "watch_conditions": [],
+      "forbidden_actions": []
+    }
+  ],
+  "core_views": [],
+  "watchlist": [
+    {
+      "object": "",
+      "source_file": "",
+      "condition": "",
+      "after_trigger": "review|action_plan|research_first|log_only",
+      "requires_action_plan": false
+    }
+  ],
+  "risks": [],
+  "forbidden_actions": [
+    "do_not_rewrite_market_score",
+    "do_not_rewrite_theme_rating",
+    "do_not_add_unprofiled_security",
+    "do_not_use_amount",
+    "do_not_convert_news_to_trade_directly"
+  ],
+  "handoff": {
+    "market_position_module": [],
+    "theme_research_module": [],
+    "etf_stock_research_module": [],
+    "action_plan_module": [],
+    "premarket_check_module": [],
+    "intraday_alert_module": []
+  },
+  "decision_log_entry": ""
+}

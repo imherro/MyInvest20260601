@@ -1705,3 +1705,23 @@
 2026-06-08 盘前分析：使用 Tushare 核验 2026-06-05 最新完整行情，结论为 risk_reduce_or_watch_only；沿用 2026-06-03 权益 45%-50% 上限，2026-06-04 持仓快照显示权益约 55.01%、现金短融约 44.99%，今天不新增进攻仓，只允许人工确认后的减风险/回补 511360 或现金短融；输出 research/checks/premarket_check_2026-06-08_093102.json 和 research/checks/premarket_check_2026-06-08_093102.md。
 
 2026-06-08 盘中分析：QMT 一次快照返回 29/29 个标的，最新行情时间 20260608 09:31:06，生成时间 2026-06-08 09:41:06，因行情约滞后 10 分钟按开盘快照处理；触发 15 条提醒，进攻主线仓平均跌幅约 -3.67%，弱于防御仓约 -0.74%，维持 risk_reduce_or_watch_only，不新增进攻仓，只允许人工确认后的减风险/回补 511360 或现金短融；输出 research/alerts/intraday_alert_2026-06-08_094106.json 和 research/alerts/intraday_alert_2026-06-08_094106.md。
+
+### 决策：新增盘前策略简报模块
+
+- 决策类型：workflow_rule
+- 变化类型：new
+- 标的/主题：盘前分析、盘前策略、策略简报、今日晨报、市场策略
+- 更新文件：`docs/modules/STRATEGY_BRIEFING.md`、`templates/strategy_briefing_template.md`、`templates/strategy_briefing_template.json`、`docs/MODULES.md`、`docs/DAILY_PROCESS.md`、`docs/RUNBOOK.md`、`docs/FILE_NAMING.md`、`scripts/project_check.py`、`docs/PROJECT_MEMORY.md`
+- 新结论：用户说“盘前分析”“盘前策略”“策略简报”“今日晨报”或“市场策略”时，默认生成盘前策略简报，提供重大新闻、策略精要、市场分析、重点方向、核心观点和风险提示。
+
+边界：
+
+- 盘前策略简报只提供方向、观点、条件、风险和模块 handoff，不直接生成买入、加仓、减仓或卖出动作。
+- 具体操作仍必须由 `ACTION_PLAN` 读取市场仓位、主线研究、ETF/个股档案、组合快照和策略简报后生成。
+- 盘前执行检查仍只负责执行门禁和盘中监控清单，不替代策略简报或操作建议。
+
+复盘入口：
+
+- 复盘日期：下一次正式盘前策略简报生成后。
+- 成功标准：盘前分析类指令能稳定输出券商晨报式结构，并保留 Markdown + JSON 产物。
+- 失败标准：盘前分析仍只输出执行检查，或策略简报绕过 `ACTION_PLAN` 给出直接买卖动作。

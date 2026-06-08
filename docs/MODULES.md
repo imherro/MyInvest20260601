@@ -10,6 +10,7 @@
 → 更新主线研究
 → 更新 ETF/个股档案
 → 分析当前组合
+→ 生成盘前策略简报
 → 生成操作建议
 → 盘前执行检查
 → 记录决策日志
@@ -17,7 +18,7 @@
 → 盘后复盘
 ```
 
-操作建议模块不能绕过前置研究直接给出买卖结论。
+盘前策略简报模块提供类似券商晨报的综合视图，但不替代操作建议。操作建议模块不能绕过前置研究直接给出买卖结论。
 
 ## 01 市场仓位模块
 
@@ -272,7 +273,59 @@
 - 不重写市场仓位或主线评级。
 - 不给没有依据、没有条件、没有复盘点的操作。
 
-## 07 盘前执行检查模块
+## 07 盘前策略简报模块
+
+职责：生成类似券商晨报的盘前综合报告，汇总重大新闻、策略精要、市场分析、重点方向、核心观点和风险提示。
+
+触发口径：
+
+- 用户说“盘前分析”“盘前策略”“策略简报”“今日晨报”“市场策略”时，默认使用本模块。
+- 如果用户明确说“盘前执行检查”，才只进入盘前执行检查模块。
+
+核心问题：
+
+- 昨夜和今早有哪些重大新闻、政策、公告或外盘事件？
+- 这些事件影响市场仓位、主线、ETF、个股还是组合风险？
+- 今日市场环境是进攻、防守、观望，还是只允许减风险？
+- 今日重点方向和核心观点是什么？
+- 今日有哪些观察条件、禁止事项和风险提示？
+
+输入：
+
+- 最新市场仓位报告
+- 最新主线研究和主线登记册
+- 最新组合快照
+- ETF/个股登记册和档案
+- 最新操作建议和盘前执行检查，如存在
+- 新闻、政策、公告、外盘和宏观事件来源
+- 决策日志
+
+输出：
+
+- 重大新闻与事件清单
+- 策略精要
+- 市场分析
+- 重点方向
+- 核心观点
+- 今日观察清单
+- 风险提示和禁止事项
+- 需要交给其他模块处理的问题
+
+更新频率：
+
+- 每个交易日盘前
+- 重大隔夜新闻或政策事件后
+- 市场大幅波动或主线突发变化后
+
+禁止事项：
+
+- 不直接生成买入、加仓、减仓或卖出动作。
+- 不临时改写市场仓位或主线评级。
+- 不把新闻利好直接转换为买入建议。
+- 不新增未建档标的。
+- 不使用金额。
+
+## 08 盘前执行检查模块
 
 职责：在开盘前确认已有研究和操作建议是否可以进入执行。
 
@@ -313,7 +366,7 @@
 - 不新增未建档标的。
 - 不使用金额。
 
-## 08 盘中提醒模块
+## 09 盘中提醒模块
 
 职责：监控已定义触发条件，并提醒是否需要执行原计划。
 
@@ -346,7 +399,7 @@
 - 不在盘中临时发明新策略。
 - 不因为价格波动频繁改变原计划。
 
-## 09 盘后复盘模块
+## 10 盘后复盘模块
 
 职责：记录当天市场表现、操作执行、判断偏差和后续修正。
 
@@ -383,7 +436,7 @@
 - 不只记录涨跌结果。
 - 不把单日结果简单归因为策略正确或错误。
 
-## 10 决策日志模块
+## 11 决策日志模块
 
 职责：保存关键结论变化和操作理由，形成长期可追溯记录。
 
@@ -451,6 +504,9 @@ research/
     action_plan_YYYY-MM-DD_HHMMSS_premarket.json
     action_plan_YYYY-MM-DD_HHMMSS_close.md
     action_plan_YYYY-MM-DD_HHMMSS_close.json
+  briefings/
+    strategy_briefing_YYYY-MM-DD_HHMMSS.md
+    strategy_briefing_YYYY-MM-DD_HHMMSS.json
   checks/
     premarket_check_YYYY-MM-DD_HHMMSS.md
     premarket_check_YYYY-MM-DD_HHMMSS.json
@@ -469,9 +525,10 @@ research/
 5. 决策日志模板（已建立：`docs/modules/DECISION_LOG.md`、`templates/decision_log_entry_template.md`、`templates/decision_log_entry_template.json`、`research/logs/decision_log.md`）
 6. 组合分析模块模板（已建立：`docs/modules/PORTFOLIO_ANALYSIS.md`、`templates/portfolio_snapshot_template.md`、`templates/portfolio_snapshot_template.json`、`research/portfolio/current_holdings_template.md`）
 7. 操作建议模块模板（已建立：`docs/modules/ACTION_PLAN.md`、`templates/action_plan_template.md`、`templates/action_plan_template.json`）
-8. 盘前执行检查模块模板（已建立：`docs/modules/PREMARKET_CHECK.md`、`templates/premarket_check_template.md`、`templates/premarket_check_template.json`）
-9. 盘中提醒模块模板（已建立：`docs/modules/INTRADAY_ALERTS.md`、`templates/intraday_alert_template.md`、`templates/intraday_alert_template.json`）
-10. 盘后复盘模块模板（已建立：`docs/modules/POST_MARKET_REVIEW.md`、`templates/post_market_review_template.md`、`templates/post_market_review_template.json`）
+8. 盘前策略简报模块模板（已建立：`docs/modules/STRATEGY_BRIEFING.md`、`templates/strategy_briefing_template.md`、`templates/strategy_briefing_template.json`）
+9. 盘前执行检查模块模板（已建立：`docs/modules/PREMARKET_CHECK.md`、`templates/premarket_check_template.md`、`templates/premarket_check_template.json`）
+10. 盘中提醒模块模板（已建立：`docs/modules/INTRADAY_ALERTS.md`、`templates/intraday_alert_template.md`、`templates/intraday_alert_template.json`）
+11. 盘后复盘模块模板（已建立：`docs/modules/POST_MARKET_REVIEW.md`、`templates/post_market_review_template.md`、`templates/post_market_review_template.json`）
 
 暂时不做：
 

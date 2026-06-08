@@ -107,6 +107,20 @@ research/actions/action_plan_YYYY-MM-DD_HHMMSS_close.md
 research/actions/action_plan_YYYY-MM-DD_HHMMSS_close.json
 ```
 
+### 盘前策略简报
+
+```text
+research/briefings/strategy_briefing_YYYY-MM-DD_HHMMSS.md
+research/briefings/strategy_briefing_YYYY-MM-DD_HHMMSS.json
+```
+
+### 盘前执行检查
+
+```text
+research/checks/premarket_check_YYYY-MM-DD_HHMMSS.md
+research/checks/premarket_check_YYYY-MM-DD_HHMMSS.json
+```
+
 ### 盘中提醒
 
 ```text
