@@ -1,0 +1,319 @@
+{
+  "module": "staleness_check",
+  "version": "1.0",
+  "generated_at": "2026-06-08_153845",
+  "summary": {
+    "status": "stale",
+    "errors": 0,
+    "stale": 12,
+    "warnings": 0
+  },
+  "latest_modules": {
+    "action_plan": {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-03_201848_rare_metals_group.json",
+      "generated_at": "2026-06-03_201848",
+      "basis_trade_date": "2026-06-03",
+      "sha256": "14c52ca0e0e04324ba8e6c9c9bb0d5d2191bc84f5e703d2173a5495ddedd42b4",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "intraday_alerts": {
+      "module": "intraday_alerts",
+      "code": null,
+      "name": null,
+      "path": "research/alerts/intraday_alert_2026-06-08_094106.json",
+      "generated_at": "2026-06-08_094106",
+      "basis_trade_date": "2026-06-08",
+      "sha256": "5b280a660b2fb05f05a220431a6c5d02a488219f0a64007b2f71d333f0e3618a",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "intraday_rules": {
+      "module": "intraday_rules",
+      "code": null,
+      "name": null,
+      "path": "research/alerts/intraday_rules.json",
+      "generated_at": "2026-06-08_153800",
+      "basis_trade_date": null,
+      "sha256": "6ccd3d435d98abb210f59a2e2f2cb888e44206015418434923ec55460bb3485c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "stale"
+      }
+    },
+    "target_allocation": {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "generated_at": "2026-06-03_211833",
+      "basis_trade_date": "2026-06-03",
+      "sha256": "66777a9eaff5cd34724a647ecced56e0980c10ccf45e957d7120bd46c0d97ceb",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "premarket_check": {
+      "module": "premarket_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/premarket_check_2026-06-08_093102.json",
+      "generated_at": "2026-06-08_093102",
+      "basis_trade_date": "2026-06-08",
+      "sha256": "f1095c33a6b9034842f0d6fa47a06ec17f836e3c3dddcddc09b3d3bf1a8329d7",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "staleness_check": {
+      "module": "staleness_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/staleness_check_2026-06-08_153800.json",
+      "generated_at": "2026-06-08_153800",
+      "basis_trade_date": null,
+      "sha256": "e8fd1fa09f6eaafc3a1afd703df3c1b25ad194796719ff87be346da6d86295a3",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "bucket_registry": {
+      "module": "bucket_registry",
+      "code": null,
+      "name": null,
+      "path": "research/config/bucket_registry.json",
+      "generated_at": "2026-06-08_000000",
+      "basis_trade_date": null,
+      "sha256": "9aba34ffdff0cfa6ae8e8ba6e4b756348154a6a1594a4ca6165d968c203aff03",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "etf_profile": {
+      "module": "etf_profile",
+      "code": "562800.SH",
+      "name": "稀有金属ETF嘉实",
+      "path": "research/etfs/562800.SH_稀有金属ETF嘉实_2026-06-02_220936.json",
+      "generated_at": "2026-06-02_220936",
+      "basis_trade_date": "2026-06-02",
+      "sha256": "8b97c91d0d184c4fb23758b8c1d555842abfcbd87b4ad2707f7c8eab7ff1b128",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "market_score": {
+      "module": "market_score",
+      "code": null,
+      "name": null,
+      "path": "research/market/market_score_2026-06-08_100643.json",
+      "generated_at": "2026-06-08_100643",
+      "basis_trade_date": "20260605",
+      "sha256": "c5e1268c08822164215607e4246b4df721bbc54f47bb75c5ea5988f48067ff09",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "portfolio_snapshot": {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-08_135053.json",
+      "generated_at": "2026-06-08_135053",
+      "basis_trade_date": "2026-06-08",
+      "sha256": "f68f43db750d87507728de51b116e551e5e9ddfab5854cd508bda8c044c474ac",
+      "quality": {
+        "status": "error"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "post_market_review": {
+      "module": "post_market_review",
+      "code": null,
+      "name": null,
+      "path": "research/reviews/post_market_review_2026-06-02_152338.json",
+      "generated_at": "2026-06-02_152338",
+      "basis_trade_date": "2026-06-02",
+      "sha256": "6353e80d581ddd535ffb27c5dbbc16a76a83e57a00e5802d886601254761cdf8",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "stock_profile": {
+      "module": "stock_profile",
+      "code": "601318.SH",
+      "name": "中国平安",
+      "path": "research/stocks/601318_中国平安_v2_2026-06-04_133534.json",
+      "generated_at": "2026-06-04_133534",
+      "basis_trade_date": "2026-06-04",
+      "sha256": "bfd32456ce303a66b1dd3d976c42d00b406ca4d1fee31c0020b60d69d1276e82",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "theme_review": {
+      "module": "theme_review",
+      "code": null,
+      "name": null,
+      "path": "research/themes/theme_review_2026-06-08_102237.json",
+      "generated_at": "2026-06-08_102237",
+      "basis_trade_date": "20260605",
+      "sha256": "f8cd26cd7055197e14437dde7e7719d14dd678681375065e02c6e0d6b40d458a",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "valuation_report": {
+      "module": "valuation_report",
+      "code": "688333.SH",
+      "name": "西安铂力特",
+      "path": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-05_103909.json",
+      "generated_at": "2026-06-05_103909",
+      "basis_trade_date": "20260604",
+      "sha256": "b8c37fca9870de4383490d1a439a80fa9621206ca7a28c22b0320d01a793ad90",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    }
+  },
+  "findings": [
+    {
+      "level": "STALE",
+      "path": "research/actions/action_plan_2026-06-03_201848_rare_metals_group.json",
+      "dependency": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "dependency_module": "action_plan",
+      "latest_path": "research/actions/action_plan_2026-06-03_201848_rare_metals_group.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/actions/action_plan_2026-06-03_201848_rare_metals_group.json",
+      "dependency": "research/market/market_score_2026-06-01_231907.json",
+      "dependency_module": "market_score",
+      "latest_path": "research/market/market_score_2026-06-08_100643.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/actions/action_plan_2026-06-03_201848_rare_metals_group.json",
+      "dependency": "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+      "dependency_module": "portfolio_snapshot",
+      "latest_path": "research/portfolio/portfolio_snapshot_2026-06-08_135053.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/actions/action_plan_2026-06-03_201848_rare_metals_group.json",
+      "dependency": "research/themes/theme_review_2026-06-01_231611.json",
+      "dependency_module": "theme_review",
+      "latest_path": "research/themes/theme_review_2026-06-08_102237.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/alerts/intraday_rules.json",
+      "dependency": "research/market/market_score_2026-06-03_211833.json",
+      "dependency_module": "market_score",
+      "latest_path": "research/market/market_score_2026-06-08_100643.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "dependency": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+      "dependency_module": "action_plan",
+      "latest_path": "research/actions/action_plan_2026-06-03_201848_rare_metals_group.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "dependency": "research/allocation/target_allocation_2026-06-03_205732.json",
+      "dependency_module": "target_allocation",
+      "latest_path": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "dependency": "research/market/market_score_2026-06-03_211833.json",
+      "dependency_module": "market_score",
+      "latest_path": "research/market/market_score_2026-06-08_100643.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "dependency": "research/portfolio/portfolio_snapshot_2026-06-03_144641.json",
+      "dependency_module": "portfolio_snapshot",
+      "latest_path": "research/portfolio/portfolio_snapshot_2026-06-08_135053.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "dependency": "research/themes/theme_registry.json",
+      "dependency_module": "theme_review",
+      "latest_path": "research/themes/theme_review_2026-06-08_102237.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/allocation/target_allocation_2026-06-03_211833.json",
+      "reason": "target_allocation equity center is outside latest market_score equity range",
+      "latest_market_score": "research/market/market_score_2026-06-08_100643.json",
+      "market_equity_range": "40-45%",
+      "target_equity_center": 47.5
+    },
+    {
+      "level": "STALE",
+      "path": "research/alerts/intraday_rules.json",
+      "reason": "latest target_allocation is stale, so active intraday_rules must be degraded",
+      "dependency": "research/allocation/target_allocation_2026-06-03_211833.json"
+    }
+  ]
+}

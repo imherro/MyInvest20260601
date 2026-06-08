@@ -574,7 +574,7 @@
       "weight_pct": 0.0039,
       "day_change_pct": -3.0103,
       "reference_pnl_pct": null,
-      "cost_price": -0.095,
+      "cost_price": null,
       "current_price": 1.031,
       "category": "defensive",
       "allocation_bucket": "defense",
@@ -595,5 +595,19 @@
     "volume",
     "yesterday_volume"
   ],
-  "decision_log_entry": "2026-06-08 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-08_134649.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。"
+  "decision_log_entry": "2026-06-08 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-08_134649.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。",
+  "quality": {
+    "status": "error",
+    "errors": [
+      {
+        "code": "159301",
+        "field": "cost_price",
+        "value": -0.095,
+        "action": "set_null_and_exclude_from_reference_pnl_pct",
+        "reason": "Non-positive price field is invalid for portfolio analysis."
+      }
+    ],
+    "warnings": [],
+    "policy": "cost_price/current_price <= 0 are set to null and excluded from reference_pnl_pct; severe quality errors degrade downstream action use."
+  }
 }

@@ -14,6 +14,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from project_utils import latest_for_module, read_json as read_project_json
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PORTFOLIO_DIR = ROOT / "research" / "portfolio"
@@ -117,6 +119,23 @@ BUCKET_COLORS = {
     "defense": "#0f8b6f",
     "legacy_watch": "#9a6700",
 }
+
+BUCKET_REGISTRY = ROOT / "research" / "config" / "bucket_registry.json"
+
+
+def load_bucket_registry() -> None:
+    global BUCKET_BY_CODE, CATEGORY_BY_BUCKET, BUCKET_LABELS, BUCKET_COLORS
+    if not BUCKET_REGISTRY.exists():
+        return
+    config = read_project_json(BUCKET_REGISTRY, {})
+    BUCKET_BY_CODE = {**BUCKET_BY_CODE, **(config.get("code_to_bucket") or {})}
+    for key, meta in (config.get("buckets") or {}).items():
+        BUCKET_LABELS[key] = meta.get("label", BUCKET_LABELS.get(key, key))
+        BUCKET_COLORS[key] = meta.get("color", BUCKET_COLORS.get(key, "#9a6700"))
+        CATEGORY_BY_BUCKET[key] = meta.get("category", CATEGORY_BY_BUCKET.get(key, "other"))
+
+
+load_bucket_registry()
 
 
 @dataclass(frozen=True)
@@ -352,7 +371,7 @@ def tick_pct(tick: dict[str, Any], current_price: float | None) -> float | None:
     return (last / pre_close - 1.0) * 100
 
 
-def build_holdings(asset: Any, positions: list[Any], ticks: dict[str, dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, float]]:
+def build_holdings(asset: Any, positions: list[Any], ticks: dict[str, dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, float], list[dict[str, Any]], list[dict[str, Any]]]:
     names = name_maps()
     category_map = latest_category_map()
     total_asset = finite(getattr(asset, "total_asset", None))
@@ -360,6 +379,8 @@ def build_holdings(asset: Any, positions: list[Any], ticks: dict[str, dict[str, 
     denominator = total_asset if total_asset and total_asset > 0 else total_market_value
     holdings: list[dict[str, Any]] = []
     category_summary: dict[str, float] = {}
+    errors: list[dict[str, Any]] = []
+    warnings: list[dict[str, Any]] = []
 
     for pos in positions:
         code = normalize_code(getattr(pos, "stock_code", ""))
@@ -371,6 +392,36 @@ def build_holdings(asset: Any, positions: list[Any], ticks: dict[str, dict[str, 
         current_price = tick_last(tick)
         if current_price is None and market_value is not None and volume and volume > 0:
             current_price = market_value / volume
+        if open_price is not None and open_price <= 0:
+            errors.append(
+                {
+                    "code": raw,
+                    "field": "cost_price",
+                    "value": round(open_price, 4),
+                    "action": "set_null_and_exclude_from_reference_pnl_pct",
+                    "reason": "QMT open_price/cost field is non-positive and cannot be used as cost basis.",
+                }
+            )
+            open_price = None
+        if current_price is not None and current_price <= 0:
+            errors.append(
+                {
+                    "code": raw,
+                    "field": "current_price",
+                    "value": round(current_price, 4),
+                    "action": "set_null_and_block_precise_signal",
+                    "reason": "QMT current price is non-positive.",
+                }
+            )
+            current_price = None
+        if not names.get(raw):
+            warnings.append(
+                {
+                    "code": raw,
+                    "field": "name",
+                    "reason": "Name not found in intraday rules or previous portfolio snapshot; code used as fallback.",
+                }
+            )
         weight_pct = (market_value / denominator * 100.0) if market_value is not None and denominator else None
         reference_pnl_pct = ((current_price / open_price - 1.0) * 100.0) if current_price and open_price and open_price > 0 else None
         day_change_pct = tick_pct(tick, current_price)
@@ -396,7 +447,7 @@ def build_holdings(asset: Any, positions: list[Any], ticks: dict[str, dict[str, 
 
     holdings.sort(key=lambda item: float(item.get("weight_pct") or 0), reverse=True)
     category_summary = {key: round(value, 4) for key, value in sorted(category_summary.items(), key=lambda kv: kv[0])}
-    return holdings, category_summary
+    return holdings, category_summary, errors, warnings
 
 
 def build_snapshot(trader: Any, account: Any, xtdata: Any) -> dict[str, Any]:
@@ -407,7 +458,7 @@ def build_snapshot(trader: Any, account: Any, xtdata: Any) -> dict[str, Any]:
     positions = [item for item in positions if (finite(getattr(item, "market_value", None)) or 0) > 0]
     codes = [normalize_code(getattr(item, "stock_code", "")) for item in positions]
     ticks = tick_map(xtdata, codes)
-    holdings, category_summary = build_holdings(asset, positions, ticks)
+    holdings, category_summary, quality_errors, quality_warnings = build_holdings(asset, positions, ticks)
 
     total_asset = finite(getattr(asset, "total_asset", None))
     cash = finite(getattr(asset, "cash", None))
@@ -420,6 +471,15 @@ def build_snapshot(trader: Any, account: Any, xtdata: Any) -> dict[str, Any]:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     date = timestamp[:10]
     account_masked = mask_account(getattr(account, "account_id", ""))
+    weight_sum = round(sum(float(item.get("weight_pct") or 0) for item in holdings) + (cash_pct or 0), 4)
+    if abs(weight_sum - 100.0) > 0.2:
+        quality_errors.append(
+            {
+                "field": "summary.weight_sum_pct",
+                "value": weight_sum,
+                "reason": "Portfolio weights do not sum to 100±0.2.",
+            }
+        )
     return {
         "module": "portfolio_snapshot",
         "version": "qmt_readonly_ratio_only_v1",
@@ -433,12 +493,18 @@ def build_snapshot(trader: Any, account: Any, xtdata: Any) -> dict[str, Any]:
             "allowed_fields": ["code", "name", "weight_pct", "day_change_pct", "reference_pnl_pct", "cost_price", "current_price", "category", "allocation_bucket"],
             "excluded_fields": sorted(SENSITIVE_OUTPUT_FIELDS),
         },
+        "quality": {
+            "status": "error" if quality_errors else ("warning" if quality_warnings else "ok"),
+            "errors": quality_errors,
+            "warnings": quality_warnings,
+            "policy": "cost_price/current_price <= 0 are set to null and excluded from reference_pnl_pct; severe quality errors degrade downstream action use.",
+        },
         "summary": {
             "total_items": len(holdings),
             "equity_weight_pct": round(equity_weight, 4),
             "bond_cash_weight_pct": round(bond_cash_weight, 4),
             "cash_uninvested_pct": round_pct(cash_pct),
-            "weight_sum_pct": round(sum(float(item.get("weight_pct") or 0) for item in holdings) + (cash_pct or 0), 4),
+            "weight_sum_pct": weight_sum,
             "one_line_conclusion": "QMT只读持仓快照已生成；文件仅保存比例、价格和盈亏比例，不保存金额、数量或账号全号。",
         },
         "category_summary": category_summary,
@@ -531,6 +597,8 @@ def sync_intraday_rules(snapshot: dict[str, Any]) -> bool:
     if not ALERT_RULES.exists():
         return False
     rules = read_json(ALERT_RULES, {})
+    latest_allocation = latest_for_module("target_allocation")
+    stale_findings: list[dict[str, Any]] = []
     weights = {plain_code(item.get("code", "")): float(item.get("weight_pct") or 0) for item in snapshot.get("holdings", [])}
 
     actual_by_bucket = {key: 0.0 for key in BUCKET_LABELS}
@@ -539,6 +607,26 @@ def sync_intraday_rules(snapshot: dict[str, Any]) -> bool:
     actual_by_bucket["cash_short"] += float(snapshot.get("summary", {}).get("cash_uninvested_pct") or 0)
 
     allocation_map = rules.get("allocation_map") or {}
+    current_target_file = allocation_map.get("target_allocation_file")
+    if latest_allocation and current_target_file != latest_allocation.get("path"):
+        stale_findings.append(
+            {
+                "level": "STALE",
+                "path": "research/alerts/intraday_rules.json",
+                "reason": "QMT snapshot sync detected intraday_rules target_allocation_file is not latest",
+                "dependency": current_target_file,
+                "latest_path": latest_allocation.get("path"),
+            }
+        )
+    if snapshot.get("quality", {}).get("status") in {"error", "warning"}:
+        stale_findings.append(
+            {
+                "level": "WARN",
+                "path": "research/alerts/intraday_rules.json",
+                "reason": "latest QMT portfolio snapshot has data quality warnings/errors",
+                "dependency": f"research/portfolio/portfolio_snapshot_{snapshot['generated_at']}.json",
+            }
+        )
     old_buckets = allocation_map.get("buckets", [])
     target_by_bucket = {item.get("key"): float(item.get("target_pct") or 0) for item in old_buckets}
     buckets = []
@@ -574,6 +662,15 @@ def sync_intraday_rules(snapshot: dict[str, Any]) -> bool:
     )
     rules["allocation_map"] = allocation_map
     rules["last_portfolio_snapshot_sync"] = snapshot["generated_at"]
+    if stale_findings:
+        rules["staleness"] = {
+            "status": "stale" if any(item["level"] == "STALE" for item in stale_findings) else "degraded",
+            "checked_at": snapshot["generated_at"],
+            "mode": "degraded_observation_only",
+            "reason": "QMT只同步真实仓位；若目标仓位或数据质量异常，不允许静默形成新持仓+旧目标的状态。",
+            "findings": stale_findings,
+        }
+        rules.setdefault("global_gate", {})["default_market_gate"] = "verify_only"
     for subject in rules.get("subjects", []):
         raw = plain_code(subject.get("code", ""))
         ref = subject.setdefault("reference_metrics", {})

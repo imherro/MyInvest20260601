@@ -1,7 +1,7 @@
 {
   "module": "intraday_rules",
   "version": "1.1",
-  "last_updated": "2026-06-05",
+  "last_updated": "2026-06-08",
   "boundary": "Rules are alert triggers only. They do not create portfolio-level buy/sell orders and do not call any trading API.",
   "data_sources": [
     "docs/modules/INTRADAY_ALERTS.md",
@@ -5231,5 +5231,28 @@
       ]
     }
   ],
-  "last_portfolio_snapshot_sync": "2026-06-08_135053"
+  "last_portfolio_snapshot_sync": "2026-06-08_135053",
+  "staleness": {
+    "status": "stale",
+    "checked_at": "2026-06-08_153845",
+    "mode": "degraded_observation_only",
+    "reason": "当前盘中规则引用链存在过期或质量问题；stale/blocked/degraded 时禁止买入/加仓类提醒。",
+    "findings": [
+      {
+        "level": "STALE",
+        "path": "research/alerts/intraday_rules.json",
+        "dependency": "research/market/market_score_2026-06-03_211833.json",
+        "dependency_module": "market_score",
+        "latest_path": "research/market/market_score_2026-06-08_100643.json",
+        "reason": "dependency is not latest for its module"
+      },
+      {
+        "level": "STALE",
+        "path": "research/alerts/intraday_rules.json",
+        "reason": "latest target_allocation is stale, so active intraday_rules must be degraded",
+        "dependency": "research/allocation/target_allocation_2026-06-03_211833.json"
+      }
+    ]
+  },
+  "generated_at": "2026-06-08_153845"
 }

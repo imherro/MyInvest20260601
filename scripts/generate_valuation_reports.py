@@ -15,6 +15,8 @@ from typing import Any
 import pandas as pd
 import tushare as ts
 
+from project_utils import latest_for_module, load_latest_index, path_record
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "research" / "valuations"
@@ -33,6 +35,13 @@ ZONE_LABELS = {
     "reasonable_allocation": "合理配置区",
     "expensive": "偏贵区",
     "crowded_risk": "拥挤/风险区",
+}
+
+PRICE_POSITION_LABELS = {
+    "undervalued_observe": "价格低位区",
+    "reasonable_allocation": "价格合理区",
+    "expensive": "价格偏贵区",
+    "crowded_risk": "价格拥挤区",
 }
 
 BUCKETS = {
@@ -84,6 +93,21 @@ BUCKET_BY_CODE = {
     "562500": "legacy_watch",
     "562800": "attack_mainline",
 }
+
+BUCKET_REGISTRY = ROOT / "research" / "config" / "bucket_registry.json"
+
+
+def load_bucket_registry() -> None:
+    global BUCKETS, BUCKET_ORDER, BUCKET_BY_CODE, SNAPSHOT_CATEGORY_BUCKET
+    if not BUCKET_REGISTRY.exists():
+        return
+    config = read_json(BUCKET_REGISTRY, {})
+    buckets = config.get("buckets") or {}
+    if buckets:
+        BUCKETS = {key: {"label": value.get("label", key), "color": value.get("color", "#9a6700")} for key, value in buckets.items()}
+    BUCKET_ORDER = list(config.get("bucket_order") or BUCKET_ORDER)
+    BUCKET_BY_CODE = {**BUCKET_BY_CODE, **(config.get("code_to_bucket") or {})}
+    SNAPSHOT_CATEGORY_BUCKET = {**SNAPSHOT_CATEGORY_BUCKET, **(config.get("category_to_bucket") or {})}
 
 SNAPSHOT_CATEGORY_BUCKET = {
     "bond_cash": "cash_short",
@@ -168,6 +192,9 @@ def read_json(path: Path, default: Any = None) -> Any:
     if not path.exists():
         return default
     return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
+load_bucket_registry()
 
 
 def write_json(path: Path, data: Any) -> None:
@@ -276,10 +303,11 @@ def build_price_position_zones(close_series: pd.Series, current: float) -> tuple
 
 
 def latest_portfolio_weights() -> dict[str, float]:
-    files = sorted(PORTFOLIO_DIR.glob("portfolio_snapshot_*.json"), key=lambda p: p.stat().st_mtime, reverse=True)
-    if not files:
+    latest = latest_for_module("portfolio_snapshot")
+    path = ROOT / latest["path"] if latest else latest_file(PORTFOLIO_DIR, "portfolio_snapshot_*.json")
+    if path is None:
         return {}
-    snap = read_json(files[0], {})
+    snap = read_json(path, {})
     weights: dict[str, float] = {}
     for item in snap.get("holdings", []):
         code = str(item.get("code", "")).strip()
@@ -304,13 +332,21 @@ def parse_pct_text(value: Any, fallback: float) -> float:
         return fallback
 
 
-def security_stance(current_zone: str, confidence: str) -> dict[str, Any]:
-    stance_by_zone = {
-        "undervalued_observe": ("低估", "估值进入低估区，但仍需趋势、资金和基本面复核。"),
-        "reasonable_allocation": ("合理", "估值处于合理配置区。"),
-        "expensive": ("偏贵", "估值偏贵，控制新增，等待赔率改善。"),
-        "crowded_risk": ("泡沫", "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。"),
-    }
+def security_stance(current_zone: str, confidence: str, *, price_proxy_only: bool = False) -> dict[str, Any]:
+    if price_proxy_only:
+        stance_by_zone = {
+            "undervalued_observe": ("价格低位", "仅基于ETF价格/净值历史位置，不能直接称为低估。"),
+            "reasonable_allocation": ("价格合理", "仅基于ETF价格/净值历史位置。"),
+            "expensive": ("价格偏贵", "仅基于ETF价格/净值历史位置，控制新增需结合市场门禁。"),
+            "crowded_risk": ("价格拥挤", "仅基于ETF价格/净值历史位置进入高位，不能直接称为估值泡沫。"),
+        }
+    else:
+        stance_by_zone = {
+            "undervalued_observe": ("低估", "估值进入低估区，但仍需趋势、资金和基本面复核。"),
+            "reasonable_allocation": ("合理", "估值处于合理配置区。"),
+            "expensive": ("偏贵", "估值偏贵，控制新增，等待赔率改善。"),
+            "crowded_risk": ("泡沫", "估值进入泡沫/高风险区，需要优先复核风险暴露。"),
+        }
     label, reason = stance_by_zone.get(current_zone, ("合理", "估值分段不足，先维持观察。"))
     return {
         "label": label,
@@ -319,6 +355,7 @@ def security_stance(current_zone: str, confidence: str) -> dict[str, Any]:
         "scope": "security_level_only",
         "not_portfolio_action": True,
         "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only" if price_proxy_only else "valuation",
     }
 
 
@@ -328,14 +365,16 @@ def bucket_for_code(code: str) -> str:
 
 
 def latest_portfolio_snapshot() -> tuple[dict[str, Any], Path | None]:
-    path = latest_file(PORTFOLIO_DIR, "portfolio_snapshot_*.json")
+    latest = latest_for_module("portfolio_snapshot")
+    path = ROOT / latest["path"] if latest else latest_file(PORTFOLIO_DIR, "portfolio_snapshot_*.json")
     if path is None:
         return {}, None
     return read_json(path, {}), path
 
 
 def latest_target_allocation() -> tuple[dict[str, Any], Path | None]:
-    path = latest_file(ROOT / "research" / "allocation", "target_allocation_*.json")
+    latest = latest_for_module("target_allocation")
+    path = ROOT / latest["path"] if latest else latest_file(ROOT / "research" / "allocation", "target_allocation_*.json")
     if path is None:
         return {}, None
     return read_json(path, {}), path
@@ -735,6 +774,10 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
             zone["color"] = "#cbd5e1"
         zones[1]["color"] = "#5b6b7a"
     index_val = index_valuation(pro, target.benchmark, start, end) if target.benchmark else {"available": False, "reason": "theme index valuation not mapped"}
+    price_proxy_only = not bool(index_val.get("available")) and target.asset_type != "cash_etf"
+    if price_proxy_only:
+        for zone in zones:
+            zone["label"] = PRICE_POSITION_LABELS.get(zone["key"], zone["label"])
     ma20 = round(float(daily["close"].tail(20).mean()), 4)
     ma60 = round(float(daily["close"].tail(60).mean()), 4) if len(daily) >= 60 else None
     trend_visual = build_trend_visual(daily["close"], daily["trade_date"])
@@ -748,8 +791,8 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
         data_gaps.append("未取得最新基金单位净值，折溢价无法计算。")
     confidence = "中高" if target.asset_type == "broad_etf" and index_val.get("available") else "中低"
     basis = "跟踪指数估值 + ETF价格/净值位置" if index_val.get("available") else "ETF价格/净值位置代理"
-    stance = security_stance(current_zone, confidence)
-    one_line = f"{target.name} 当前处于{ZONE_LABELS[current_zone]}；{basis}，最终动作需由ACTION_PLAN结合市场仓位和组合暴露决定。"
+    stance = security_stance(current_zone, confidence, price_proxy_only=price_proxy_only)
+    one_line = f"{target.name} 当前处于{zones[[zone['key'] for zone in zones].index(current_zone)]['label']}；{basis}，最终动作需由ACTION_PLAN结合市场仓位和组合暴露决定。"
     if target.asset_type == "cash_etf":
         confidence = "高"
         data_gaps.append("现金/短融ETF不使用估值高低触发，只作为现金短融仓位锚和流动性观察工具。")
@@ -780,9 +823,10 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
             "metric": "price",
             "current_value": round(current, 4),
             "current_zone": current_zone,
-            "current_zone_label": ZONE_LABELS[current_zone],
+            "current_zone_label": next((zone["label"] for zone in zones if zone["key"] == current_zone), ZONE_LABELS[current_zone]),
             "zones": zones,
             "basis": basis,
+            "semantic_scope": "price_position_only" if price_proxy_only else "valuation",
             "premium_discount_pct": premium_discount,
         },
         "index_valuation": index_val,
@@ -925,25 +969,28 @@ def alert_rules_for_report(report: dict[str, Any], md_path: Path, json_path: Pat
     visual = report["valuation_visual"]
     low_max = visual["zones"][0]["max"]
     risk_min = visual["zones"][3]["min"]
+    low_label = visual["zones"][0].get("label", ZONE_LABELS["undervalued_observe"])
+    risk_label = visual["zones"][3].get("label", ZONE_LABELS["crowded_risk"])
+    price_proxy_only = visual.get("semantic_scope") == "price_position_only"
     valuation_rules = [
         {
             "id": f"{report['code'].replace('.', '_')}_valuation_low",
             "alert_type": "watch_trigger",
             "priority": "medium",
             "suggested_action": "wait",
-            "trigger_condition": f"进入{ZONE_LABELS['undervalued_observe']}，只触发估值观察复核",
+            "trigger_condition": f"进入{low_label}，只触发{'价格位置' if price_proxy_only else '估值'}观察复核",
             "conditions": [{"metric": "last", "op": "<=", "value": low_max}],
             "near_threshold_pct": 1.0,
-            "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-            "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-            "review_point": "复核估值口径、趋势、资金流和最新组合偏离。",
+            "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+            "invalidation_condition": f"价格重新离开{low_label}或基本面/指数估值口径恶化。",
+            "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。",
         },
         {
             "id": f"{report['code'].replace('.', '_')}_valuation_risk",
             "alert_type": "risk_trigger",
             "priority": "high",
             "suggested_action": "review",
-            "trigger_condition": f"进入{ZONE_LABELS['crowded_risk']}，触发拥挤/高估风险复核",
+            "trigger_condition": f"进入{risk_label}，触发拥挤/高位风险复核",
             "conditions": [{"metric": "last", "op": ">=", "value": risk_min}],
             "near_threshold_pct": 1.0,
             "execution_boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
@@ -971,6 +1018,24 @@ def alert_rules_for_report(report: dict[str, Any], md_path: Path, json_path: Pat
 
 def sync_intraday_rules(reports: list[tuple[dict[str, Any], Path, Path]]) -> None:
     existing = read_json(ALERT_RULES, {})
+    index = load_latest_index()
+    upstream_paths = []
+    for module in ["market_score", "target_allocation", "portfolio_snapshot"]:
+        latest = latest_for_module(module, index)
+        if latest:
+            upstream_paths.append(latest["path"])
+    dependencies = []
+    for path in upstream_paths + [rel_path(json_path) for _, _, json_path in reports]:
+        record = path_record(path, index) or {}
+        dependencies.append(
+            {
+                "module": record.get("module") or "unknown",
+                "path": path,
+                "generated_at": record.get("generated_at"),
+                "basis_trade_date": record.get("basis_trade_date"),
+                "sha256": record.get("sha256"),
+            }
+        )
     rules = {
         "module": "intraday_rules",
         "version": "1.1",
@@ -979,10 +1044,14 @@ def sync_intraday_rules(reports: list[tuple[dict[str, Any], Path, Path]]) -> Non
         "data_sources": [
             "docs/modules/INTRADAY_ALERTS.md",
             "docs/modules/VALUATION_RESEARCH.md",
-            "research/market/market_score_2026-06-03_211833.json",
-            "research/allocation/target_allocation_2026-06-03_211833.json",
         ]
+        + upstream_paths
         + [rel_path(json_path) for _, _, json_path in reports],
+        "dependencies": {
+            "required": dependencies,
+            "policy": "If any required upstream is not latest or has a newer replacement, intraday_rules must be marked stale/degraded and cannot emit buy/add alerts.",
+        },
+        "staleness": existing.get("staleness", {"status": "legacy_unknown", "mode": "requires_check"}),
         "global_gate": existing.get(
             "global_gate",
             {

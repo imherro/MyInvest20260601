@@ -47,7 +47,16 @@ BUCKET_STYLE = {
 BUCKET_ORDER = ["core_base", "attack_mainline", "defense", "legacy_watch", "cash_short"]
 ALLOCATION_DISPLAY_ORDER = ["core_base", "attack_mainline", "defense", "legacy_watch", "cash_short"]
 PRIORITY_RANK = {"high": 3, "medium": 2, "low": 1}
-STANCE_COLOR = {"低估": "#16a34a", "合理": "#475569", "偏贵": "#d97706", "泡沫": "#b91c1c"}
+STANCE_COLOR = {
+    "低估": "#16a34a",
+    "价格低位": "#16a34a",
+    "合理": "#475569",
+    "价格合理": "#475569",
+    "偏贵": "#d97706",
+    "价格偏贵": "#d97706",
+    "泡沫": "#b91c1c",
+    "价格拥挤": "#b91c1c",
+}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -571,6 +580,7 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
             "market_gate": rules.get("global_gate", {}).get("default_market_gate", "verify_only"),
             "target_equity_range": f"{fmt(allocation_map.get('target_equity_pct'), 1)}%" if allocation_map else "45%-50%",
             "allocation_map": allocation_map,
+            "staleness": rules.get("staleness", {"status": "legacy_unknown"}),
             "quote_health": {
                 "expected_count": len(expected_codes),
                 "received_count": len(received_codes),
@@ -692,10 +702,12 @@ class BattleMapWindow(QMainWindow):
         header = QHBoxLayout()
         self.status_card = self._card("市场门禁", "-")
         self.target_card = self._card("目标权益", "-")
+        self.freshness_card = self._card("规则状态", "-")
         self.source_card = self._card("数据源", "QMT实时 / 本地规则")
         self.time_card = self._card("刷新时间", "-")
         header.addWidget(self.status_card)
         header.addWidget(self.target_card)
+        header.addWidget(self.freshness_card)
         header.addWidget(self.source_card)
         header.addWidget(self.time_card)
         root.addLayout(header)
@@ -787,6 +799,11 @@ class BattleMapWindow(QMainWindow):
         gate_color = {"risk_reduce_only": "#b00020", "verify_only": "#9a6700", "allow_new_risk": "#0a7f2e"}.get(gate)
         self._set_card(self.status_card, gate, gate_color)
         self._set_card(self.target_card, context.get("target_equity_range", "-"))
+        stale = context.get("staleness") or report.get("staleness") or {}
+        stale_status = str(stale.get("status", "legacy_unknown"))
+        stale_color = {"fresh": "#0a7f2e", "stale": "#b00020", "blocked": "#b00020", "degraded": "#d97706", "legacy_unknown": "#9a6700"}.get(stale_status, "#9a6700")
+        self._set_card(self.freshness_card, stale_status, stale_color)
+        self.freshness_card.setToolTip(stale.get("reason", "缺少规则新鲜度信息；仅供观察。"))
         source_label, source_color, source_tip = self._quote_health_label(report)
         self._set_card(self.source_card, source_label, source_color)
         self.source_card.setToolTip(source_tip)
@@ -815,8 +832,9 @@ class BattleMapWindow(QMainWindow):
 
         summary = report.get("summary", {})
         self.detail.setText(
-            "状态：{state}；最高优先级：{priority}；{line}。提醒只代表需要复核，最终动作仍由 ACTION_PLAN 决定。".format(
+            "状态：{state}；规则={stale_status}；最高优先级：{priority}；{line}。stale/degraded 时禁止买入/加仓，仅供观察和风险复核。".format(
                 state=summary.get("alert_state"),
+                stale_status=stale_status,
                 priority=summary.get("highest_priority"),
                 line=summary.get("one_line_conclusion"),
             )
@@ -1006,10 +1024,16 @@ class BattleMapWindow(QMainWindow):
         text = label or ""
         if "低估" in text:
             return STANCE_COLOR.get("低估", "#16a34a")
+        if "价格低位" in text:
+            return STANCE_COLOR.get("价格低位", "#16a34a")
         if "合理" in text:
             return STANCE_COLOR.get("合理", "#475569")
+        if "价格合理" in text:
+            return STANCE_COLOR.get("价格合理", "#475569")
         if "偏贵" in text:
             return STANCE_COLOR.get("偏贵", "#d97706")
+        if "价格偏贵" in text:
+            return STANCE_COLOR.get("价格偏贵", "#d97706")
         if "拥挤" in text or "风险" in text or "泡沫" in text:
             return STANCE_COLOR.get("泡沫", "#b91c1c")
         return "#64748b"
@@ -1019,7 +1043,8 @@ class BattleMapWindow(QMainWindow):
         label = zone.get("label") or "待判定"
         changed = bool(quote.get("valuation_zone_changed"))
         color = "#b91c1c" if changed else self._zone_color(label)
-        prefix = "实时区间"
+        semantic_scope = (quote.get("valuation_visual") or {}).get("semantic_scope")
+        prefix = "实时价格位置" if semantic_scope == "price_position_only" else "实时区间"
         widget = QLabel(f"{prefix}：{label}")
         widget.setAlignment(Qt.AlignmentFlag.AlignCenter)
         widget.setStyleSheet(f"background:{color}; color:#ffffff; border-radius:6px; padding:4px 6px; font-weight:700;")
@@ -1030,7 +1055,7 @@ class BattleMapWindow(QMainWindow):
                     f"实时价格：{fmt(quote.get('last'), 4)}",
                     f"实时所在区间：{label}",
                     f"报告基准区间：{report.get('label') or '-'}，基准价 {fmt(report.get('value'), 4)}，基准日 {report.get('price_date') or '-'}",
-                    "实时区间由 QMT 当前价落入既有估值带计算，不代表盘中重算估值报告。",
+                    "实时区间由 QMT 当前价落入既有价格/估值带计算，不代表盘中重算估值报告。",
                     "实时区间与报告基准不一致，盘后应刷新估值规则。" if changed else "实时区间与报告基准一致。",
                 ]
             )

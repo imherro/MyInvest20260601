@@ -29,6 +29,18 @@ OPS = {
 
 
 PRIORITY_RANK = {"high": 3, "medium": 2, "low": 1, "none": 0}
+TRIGGER_SEVERITY = {
+    "blocked": 5.0,
+    "gate_blocked": 4.5,
+    "risk_trigger": 4.0,
+    "sell_trigger": 4.0,
+    "reduce_trigger": 3.5,
+    "invalidation_trigger": 3.5,
+    "watch_trigger": 2.0,
+    "near_trigger": 1.5,
+    "buy_trigger": 1.0,
+    "add_trigger": 1.0,
+}
 
 
 @dataclass
@@ -139,6 +151,44 @@ def market_gate_allows(rule: dict[str, Any], rules: dict[str, Any], snapshot: di
     return True
 
 
+def rules_are_stale(rules: dict[str, Any]) -> bool:
+    status = str((rules.get("staleness") or {}).get("status", "")).lower()
+    return status in {"stale", "blocked", "degraded", "legacy_unknown"}
+
+
+def action_blocked_by_staleness(rule: dict[str, Any], rules: dict[str, Any]) -> bool:
+    if not rules_are_stale(rules):
+        return False
+    return rule.get("alert_type") in {"buy_trigger", "add_trigger"} or rule.get("suggested_action") in {"buy", "add", "increase"}
+
+
+def subject_weight(subject: dict[str, Any]) -> float:
+    ref = subject.get("reference_metrics") or {}
+    try:
+        return float(ref.get("current_position_pct") or 0.0)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def priority_score(subject: dict[str, Any], alert: dict[str, Any], rules: dict[str, Any]) -> float:
+    weight = subject_weight(subject)
+    weight_score = max(0.2, min(2.5, 0.5 + weight / 10.0))
+    severity = TRIGGER_SEVERITY.get(alert.get("alert_type"), PRIORITY_RANK.get(alert.get("priority"), 1))
+    stale = rules_are_stale(rules)
+    market_multiplier = 1.0
+    if stale and alert.get("alert_type") not in {"risk_trigger", "sell_trigger", "reduce_trigger", "blocked", "gate_blocked"}:
+        market_multiplier = 0.35
+    data_multiplier = 0.6 if alert.get("alert_type") == "blocked" else 1.0
+    return round(weight_score * severity * market_multiplier * data_multiplier, 4)
+
+
+def attach_priority_score(subject: dict[str, Any], alert: dict[str, Any], rules: dict[str, Any]) -> dict[str, Any]:
+    alert["priority_label"] = alert.get("priority", "medium")
+    alert["priority_score"] = priority_score(subject, alert, rules)
+    alert["position_weight_pct"] = round(subject_weight(subject), 4)
+    return alert
+
+
 def evaluate_rule(
     subject: dict[str, Any],
     rule: dict[str, Any],
@@ -165,7 +215,7 @@ def evaluate_rule(
     }
 
     if blocked:
-        return {
+        return attach_priority_score(subject, {
             "priority": "high",
             "subject": base_subject,
             "alert_type": "blocked",
@@ -178,10 +228,26 @@ def evaluate_rule(
             "execution_boundary": "补齐QMT行情字段后重跑监测。",
             "invalidation_condition": "",
             "review_point": "确认QMT快照字段。"
-        }, None
+        }, rules), None
+
+    if passed and action_blocked_by_staleness(rule, rules):
+        return attach_priority_score(subject, {
+            "priority": "high",
+            "subject": base_subject,
+            "alert_type": "stale_blocked",
+            "trigger_condition": rule.get("trigger_condition", rule["id"]),
+            "current_state": "条件触发，但规则引用链过期，禁止买入/加仓",
+            "suggested_action": "review",
+            "needs_manual_confirmation": True,
+            "evidence": evidence + [f"rules.staleness={rules.get('staleness', {}).get('status')}"],
+            "risks": ["盘中规则引用旧上游，不能输出买入/加仓动作。"],
+            "execution_boundary": "先重建 market_score/theme/target_allocation/intraday_rules，再进入操作建议模块。",
+            "invalidation_condition": rule.get("invalidation_condition", ""),
+            "review_point": rule.get("review_point", ""),
+        }, rules), None
 
     if passed and not gate_allowed:
-        return {
+        return attach_priority_score(subject, {
             "priority": "high",
             "subject": base_subject,
             "alert_type": "gate_blocked",
@@ -194,10 +260,10 @@ def evaluate_rule(
             "execution_boundary": "进入操作建议模块复核，不能直接执行。",
             "invalidation_condition": rule.get("invalidation_condition", ""),
             "review_point": rule.get("review_point", "")
-        }, None
+        }, rules), None
 
     if passed:
-        return {
+        return attach_priority_score(subject, {
             "priority": rule.get("priority", "medium"),
             "subject": base_subject,
             "alert_type": rule.get("alert_type", "watch_trigger"),
@@ -210,7 +276,7 @@ def evaluate_rule(
             "execution_boundary": rule.get("execution_boundary", ""),
             "invalidation_condition": rule.get("invalidation_condition", ""),
             "review_point": rule.get("review_point", "")
-        }, None
+        }, rules), None
 
     if near:
         return None, {
@@ -275,8 +341,8 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
             if near:
                 near_triggers.append(near)
 
-    alerts.sort(key=lambda item: PRIORITY_RANK.get(item["priority"], 0), reverse=True)
-    highest = alerts[0]["priority"] if alerts else ("low" if near_triggers else "none")
+    alerts.sort(key=lambda item: (float(item.get("priority_score") or 0), PRIORITY_RANK.get(item["priority"], 0)), reverse=True)
+    highest = alerts[0].get("priority_label", alerts[0].get("priority")) if alerts else ("low" if near_triggers else "none")
     state = "triggered" if alerts else ("no_trigger" if not missing else "blocked")
     if missing and alerts:
         state = "review_needed"
@@ -299,6 +365,7 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
         "source_plan": rules.get("data_sources", []),
         "quote_source": snapshot.get("source", "unknown"),
         "market_context": snapshot.get("market_context", {}),
+        "staleness": rules.get("staleness", {"status": "legacy_unknown"}),
         "monitored_quotes": monitored_quotes,
         "summary": {
             "alert_state": state,
@@ -310,7 +377,7 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
         "missing_preconditions": missing,
         "decision_log_entry": (
             f"{timestamp} 盘中提醒：最高优先级={highest}；触发={len(alerts)}；"
-            f"接近触发={len(near_triggers)}；缺失={len(missing)}。"
+            f"接近触发={len(near_triggers)}；缺失={len(missing)}；staleness={rules.get('staleness', {}).get('status', 'legacy_unknown')}。"
         ),
     }
 
@@ -322,8 +389,9 @@ def md_table_alerts(alerts: list[dict[str, Any]]) -> str:
     for item in alerts:
         subject = item["subject"]
         rows.append(
-            "| {priority} | {code} {name} | {alert_type} | {condition} | {state} | {action} | 是 |".format(
-                priority=item["priority"],
+            "| {priority}({score}) | {code} {name} | {alert_type} | {condition} | {state} | {action} | 是 |".format(
+                priority=item.get("priority_label", item["priority"]),
+                score=item.get("priority_score", "-"),
                 code=subject["code"],
                 name=subject["name"],
                 alert_type=item["alert_type"],
