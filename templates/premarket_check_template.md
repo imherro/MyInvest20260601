@@ -81,13 +81,23 @@
 | --- | --- | --- | --- | --- |
 | 待填写 | 待填写 | 待填写 | execute/wait/cancel/review/log_only | 是/否 |
 
-## 8. Blocked / ResearchFirst
+## 8. 估值报告更新检查
+
+检查命令：`python scripts/check_valuation_updates.py`
+
+| 标的 | 来源 | 状态 | 原因 | 是否建议先更新 |
+| --- | --- | --- | --- | --- |
+| 待填写 | portfolio/intraday_rules | missing/update/ok | 待填写 | 是/否 |
+
+若存在缺失、基准日过旧或盘中跨区，先提示用户是否更新估值报告。
+
+## 9. Blocked / ResearchFirst
 
 | 类型 | 标的/模块 | 原因 | 下一步 |
 | --- | --- | --- | --- |
 | blocked/research_first | 待填写 | 待填写 | 待填写 |
 
-## 9. 需要交给其他模块处理
+## 10. 需要交给其他模块处理
 
 市场仓位模块：
 
@@ -109,7 +119,7 @@ ETF/个股研究模块：
 
 - 待填写
 
-## 10. 决策日志条目
+## 11. 决策日志条目
 
 ```text
 YYYY-MM-DD 盘前执行检查：
@@ -118,5 +128,6 @@ YYYY-MM-DD 盘前执行检查：
 - 今日允许动作：待填写
 - 今日禁止事项：待填写
 - 盘中监控重点：待填写
+- 估值报告更新检查：待填写
 - blocked/research_first：待填写
 ```

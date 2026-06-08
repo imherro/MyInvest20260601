@@ -7,6 +7,7 @@
     "market_position": "",
     "action_plan": "",
     "intraday_alerts": [],
+    "valuation_update_check": "",
     "execution_records": "",
     "portfolio_snapshot": ""
   },
@@ -75,12 +76,28 @@
   ],
   "research_updates_needed": [
     {
-      "module_or_file": "market_position|theme_research|etf_profile|stock_profile|portfolio_analysis|action_plan",
+      "module_or_file": "market_position|theme_research|valuation_report|etf_profile|stock_profile|portfolio_analysis|action_plan",
       "needs_update": null,
       "reason": "",
       "priority": "high|medium|low"
     }
   ],
+  "valuation_update_check": {
+    "command": "python scripts/check_valuation_updates.py --intraday-report runtime/alerts/intraday_once.json",
+    "update_required_count": null,
+    "items": [
+      {
+        "code": "",
+        "name": "",
+        "sources": [],
+        "severity": "missing|update",
+        "reasons": [],
+        "latest_valuation": "",
+        "suggested_prompt": "是否更新该估值报告？"
+      }
+    ],
+    "user_should_be_prompted": null
+  },
   "next_day_watch_points": [],
   "rule_revision_suggestion": {
     "suggested": null,

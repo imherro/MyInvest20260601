@@ -1643,6 +1643,21 @@
 - 当前 `ideal_allocation_map` 由 `target_allocation.groups` 降级映射得到，已经在规则中记录 `missing_upstream`，提示目标配置模块后续直接输出盘中仓位桶。
 - `security_stance` 当前由估值分段映射生成，后续 ETF/个股研究模块应输出更完整的标的级研究态度依据。
 
+### 决策：区分实时估值区间与报告基准区间，并加入估值更新提示
+
+- 决策类型：valuation_refresh_prompt_and_intraday_display
+- 变化类型：dashboard_clarity_and_workflow_guardrail
+- 更新文件：`scripts/intraday_dashboard.py`、`scripts/intraday_monitor.py`、`scripts/check_valuation_updates.py`、`docs/modules/INTRADAY_ALERTS.md`、`docs/modules/PREMARKET_CHECK.md`、`docs/modules/POST_MARKET_REVIEW.md`、`docs/modules/VALUATION_RESEARCH.md`、`templates/premarket_check_template.*`、`templates/post_market_review_template.*`
+- 新结论：盘中作战地图必须同时显示“实时估值区间”和“报告基准区间”。实时区间由 QMT 当前价格落入既有估值带计算，报告基准区间来自最新估值报告；两者不一致时提示估值待刷新。
+- 估值更新检查：新增 `scripts/check_valuation_updates.py`，扫描最新持仓和作战地图监控标的；若估值报告缺失、基准日过旧，或盘中实时价格已跨出报告基准区间，输出“是否更新该估值报告”的提示。
+- 工作流要求：盘前、盘中、盘后分析必须运行或引用估值更新检查；发现持仓股或待观察标的缺估值报告、过期或跨区时，先提示用户是否更新估值报告，不得把旧报告状态直接当作当前结论。
+- Tooltip 要求：图示区域 tooltip 使用长持续时间，鼠标移出控件后再消失，便于阅读风控位、估值区间、报告基准和回撤/反弹解释。
+
+边界：
+
+- 不要求每天全量重做所有 ETF/个股完整估值；完整重算由跨区、显著异动、财报/公告、指数估值口径更新或周期复核触发。
+- 盘中窗口不重算完整估值报告，只展示实时价格相对既有估值带的位置变化。
+
 ### 决策：修复未完成批量产物并增加离线预览回退
 
 - 决策类型：intraday_dashboard_maintenance
@@ -1771,3 +1786,9 @@
 - 决策影响：盘前策略应把主线研究作为“重大新闻、策略精要、市场分析、重点方向、核心观点”的主题层输入；总仓位约束仍由市场仓位研究优先决定。
 
 2026-06-08 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-08_134649.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+2026-06-08 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-08_135028.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+2026-06-08 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-08_135031.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+2026-06-08 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-08_135053.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。

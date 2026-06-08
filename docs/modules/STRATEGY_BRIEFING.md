@@ -36,7 +36,7 @@
 - 最新盘前执行检查，如存在：`research/checks/premarket_check_*.md/json`
 - 决策日志：`research/logs/decision_log.md`
 
-如涉及 A 股行情、指数、ETF、估值、财务或交易日历，必须先按 `docs/DATA_SOURCES.md` 检查并优先使用本地 Tushare。新闻、政策、公告和海外市场信息可以使用网页或公开来源补充，但必须注明来源和日期。
+如涉及 A 股行情、指数、ETF、估值、财务或交易日历，必须先按 `docs/DATA_SOURCES.md` 检查并优先使用本地 Tushare。盘中 A 股行情可用 QMT。新闻、政策、公告和海外市场信息可以使用网页或公开来源补充；海外股票、海外 ETF、外盘指数和 ADR 可调用 yfinance；美国利率、通胀、就业和金融条件等宏观序列可调用 FRED。所有数据必须注明来源和日期。
 
 ## 3. 输出内容
 
@@ -113,6 +113,6 @@ research/logs/decision_log.md
 请按 docs/modules/STRATEGY_BRIEFING.md 生成今日盘前策略简报。
 风格参考券商晨报，包含重大新闻、策略精要、市场分析、重点方向、核心观点和风险提示。
 必须读取最新市场仓位、主线研究、组合快照、ETF/个股登记册、最新操作建议和决策日志。
-如涉及 A 股结构化数据，优先使用本地 Tushare；新闻和政策必须注明来源和日期。
+如涉及 A 股结构化数据，优先使用本地 Tushare；如涉及海外行情可调用 yfinance；如涉及美国和全球宏观序列可调用 FRED；新闻和政策必须注明来源和日期。
 可以给方向、观点和条件，不要绕过 ACTION_PLAN 直接生成买卖指令。
 ```

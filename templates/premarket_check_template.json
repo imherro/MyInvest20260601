@@ -45,6 +45,11 @@
       "path": "",
       "is_latest": null,
       "status": "available|missing|stale"
+    },
+    "valuation_update_check": {
+      "path": "scripts/check_valuation_updates.py",
+      "is_latest": true,
+      "status": "run|required"
     }
   },
   "summary": {
@@ -109,6 +114,22 @@
       "requires_human_confirmation": true
     }
   ],
+  "valuation_update_check": {
+    "command": "python scripts/check_valuation_updates.py",
+    "update_required_count": null,
+    "items": [
+      {
+        "code": "",
+        "name": "",
+        "sources": [],
+        "severity": "missing|update",
+        "reasons": [],
+        "latest_valuation": "",
+        "suggested_prompt": "是否更新该估值报告？"
+      }
+    ],
+    "user_should_be_prompted": null
+  },
   "blocked_or_research_first": [
     {
       "type": "blocked|research_first",

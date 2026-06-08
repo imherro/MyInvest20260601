@@ -94,6 +94,19 @@ def valuation_zone_for_value(visual: dict[str, Any], value: Any) -> dict[str, An
     return zones[0] if current < float(zones[0]["min"]) else zones[-1]
 
 
+def valuation_zone_snapshot(visual: dict[str, Any], value: Any) -> dict[str, Any] | None:
+    zone = valuation_zone_for_value(visual, value)
+    if not zone:
+        return None
+    return {
+        "key": zone.get("key"),
+        "label": zone.get("label"),
+        "min": zone.get("min"),
+        "max": zone.get("max"),
+        "color": zone.get("color"),
+    }
+
+
 def subject_bucket(subject: dict[str, Any]) -> str:
     return subject.get("allocation_bucket") or subject.get("reference_metrics", {}).get("allocation_bucket") or "legacy_watch"
 
@@ -103,8 +116,10 @@ class LongToolTipFilter(QObject):
         if event.type() == QEvent.Type.ToolTip and isinstance(obj, QWidget):
             text = obj.toolTip()
             if text:
-                QToolTip.showText(event.globalPos(), text, obj, obj.rect(), 45000)
+                QToolTip.showText(event.globalPos(), text, obj, obj.rect(), 24 * 60 * 60 * 1000)
                 return True
+        if event.type() in {QEvent.Type.Leave, QEvent.Type.Hide} and isinstance(obj, QWidget):
+            QToolTip.hideText()
         return super().eventFilter(obj, event)
 
 
@@ -508,6 +523,9 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
         ref = subject.get("reference_metrics", {})
         live = ticks.get(code, {})
         last = live.get("last")
+        visual = ref.get("valuation_visual") or {}
+        realtime_zone = valuation_zone_snapshot(visual, last)
+        report_zone_key = visual.get("current_zone")
         if num(last) is not None:
             received_codes.append(code)
         if live.get("qmt_timetag"):
@@ -519,7 +537,16 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
             "pre_close": live.get("pre_close"),
             "pct_chg": live.get("pct_chg"),
             "qmt_timetag": live.get("qmt_timetag"),
-            "valuation_visual": ref.get("valuation_visual"),
+            "valuation_visual": visual,
+            "realtime_valuation_zone": realtime_zone,
+            "valuation_zone_changed": bool(realtime_zone and report_zone_key and realtime_zone.get("key") != report_zone_key),
+            "valuation_report_zone": {
+                "key": report_zone_key,
+                "label": visual.get("current_zone_label"),
+                "value": visual.get("current_value"),
+                "price_date": ref.get("price_date"),
+                "source_profile": subject.get("source_profile"),
+            },
             "trend_visual": ref.get("trend_visual"),
             "risk_markers": ref.get("risk_markers"),
             "security_stance": subject.get("security_stance") or ref.get("security_stance"),
@@ -942,7 +969,7 @@ class BattleMapWindow(QMainWindow):
         card = QFrame()
         card.setObjectName("subjectCard")
         card.setStyleSheet(f"QFrame#subjectCard {{ background:{bg}; border-left: 5px solid {style['accent']}; }}")
-        card.setMinimumHeight(126)
+        card.setMinimumHeight(146)
         grid = QGridLayout(card)
         grid.setContentsMargins(10, 8, 10, 8)
         grid.setHorizontalSpacing(10)
@@ -952,19 +979,21 @@ class BattleMapWindow(QMainWindow):
         title.setStyleSheet("font-size:14px; font-weight:700; color:#0f172a;")
         price = QLabel(f"现价 {fmt(quote.get('last'), 3)}")
         price.setStyleSheet("font-size:12px; color:#334155;")
-        stance = self._stance_badge(quote.get("security_stance"))
+        realtime_stance = self._realtime_zone_badge(quote)
+        report_stance = self._report_zone_badge(quote)
         status = self._status_badge(alert, near)
         grid.addWidget(title, 0, 0)
         grid.addWidget(price, 1, 0)
-        grid.addWidget(stance, 2, 0)
-        grid.addWidget(status, 3, 0)
+        grid.addWidget(realtime_stance, 2, 0)
+        grid.addWidget(report_stance, 3, 0)
+        grid.addWidget(status, 4, 0)
 
         visual = quote.get("valuation_visual") or {}
         markers = quote.get("risk_markers") or {}
         position = quote.get("position_visual") or {}
-        grid.addWidget(ValuationMapBar(visual, markers, quote.get("last"), bg, card), 0, 1, 4, 2)
-        grid.addWidget(MoveMap(quote.get("trend_visual"), bg, card), 0, 3, 4, 2)
-        grid.addWidget(PositionGapBar(position.get("current_position_pct"), position.get("target_position_range"), bg, card), 0, 5, 4, 1)
+        grid.addWidget(ValuationMapBar(visual, markers, quote.get("last"), bg, card), 0, 1, 5, 2)
+        grid.addWidget(MoveMap(quote.get("trend_visual"), bg, card), 0, 3, 5, 2)
+        grid.addWidget(PositionGapBar(position.get("current_position_pct"), position.get("target_position_range"), bg, card), 0, 5, 5, 1)
         grid.setColumnStretch(0, 0)
         grid.setColumnStretch(1, 3)
         grid.setColumnStretch(2, 1)
@@ -973,20 +1002,61 @@ class BattleMapWindow(QMainWindow):
         grid.setColumnStretch(5, 1)
         return card
 
-    def _stance_badge(self, stance: dict[str, Any] | None) -> QLabel:
-        stance = stance or {}
-        label = stance.get("label", "待研究")
-        color = STANCE_COLOR.get(label, "#64748b")
-        widget = QLabel(f"估值状态：{label}")
+    def _zone_color(self, label: str | None) -> str:
+        text = label or ""
+        if "低估" in text:
+            return STANCE_COLOR.get("低估", "#16a34a")
+        if "合理" in text:
+            return STANCE_COLOR.get("合理", "#475569")
+        if "偏贵" in text:
+            return STANCE_COLOR.get("偏贵", "#d97706")
+        if "拥挤" in text or "风险" in text or "泡沫" in text:
+            return STANCE_COLOR.get("泡沫", "#b91c1c")
+        return "#64748b"
+
+    def _realtime_zone_badge(self, quote: dict[str, Any]) -> QLabel:
+        zone = quote.get("realtime_valuation_zone") or {}
+        label = zone.get("label") or "待判定"
+        changed = bool(quote.get("valuation_zone_changed"))
+        color = "#b91c1c" if changed else self._zone_color(label)
+        prefix = "实时区间"
+        widget = QLabel(f"{prefix}：{label}")
+        widget.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        widget.setStyleSheet(f"background:{color}; color:#ffffff; border-radius:6px; padding:4px 6px; font-weight:700;")
+        report = quote.get("valuation_report_zone") or {}
+        widget.setToolTip(
+            "\n".join(
+                [
+                    f"实时价格：{fmt(quote.get('last'), 4)}",
+                    f"实时所在区间：{label}",
+                    f"报告基准区间：{report.get('label') or '-'}，基准价 {fmt(report.get('value'), 4)}，基准日 {report.get('price_date') or '-'}",
+                    "实时区间由 QMT 当前价落入既有估值带计算，不代表盘中重算估值报告。",
+                    "实时区间与报告基准不一致，盘后应刷新估值规则。" if changed else "实时区间与报告基准一致。",
+                ]
+            )
+        )
+        return widget
+
+    def _report_zone_badge(self, quote: dict[str, Any]) -> QLabel:
+        report = quote.get("valuation_report_zone") or {}
+        stance = quote.get("security_stance") or {}
+        label = report.get("label") or stance.get("label") or "缺报告"
+        changed = bool(quote.get("valuation_zone_changed"))
+        color = "#d97706" if changed else self._zone_color(label)
+        widget = QLabel(f"报告基准：{label}")
         widget.setAlignment(Qt.AlignmentFlag.AlignCenter)
         widget.setStyleSheet(f"background:{color}; color:#ffffff; border-radius:6px; padding:4px 6px; font-weight:700;")
         widget.setToolTip(
             "\n".join(
                 [
+                    f"估值报告：{report.get('source_profile') or '-'}",
+                    f"报告基准日：{report.get('price_date') or '-'}",
+                    f"报告基准价：{fmt(report.get('value'), 4)}",
                     stance.get("basis", "缺少标的级估值状态，上游ETF/个股研究模块需要补齐。"),
                     stance.get("boundary", "估值状态不等于组合级买卖动作。"),
+                    "该报告基准已被实时价格跨区，盘后分析需提示是否更新估值报告。" if changed else "",
                 ]
-            )
+            ).strip()
         )
         return widget
 
@@ -1036,6 +1106,8 @@ class BattleMapWindow(QMainWindow):
 
 
 def main(argv: list[str] | None = None) -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--rules-file", type=Path, default=DEFAULT_RULES)
     parser.add_argument("--qmt-site", type=Path, default=DEFAULT_QMT_SITE)

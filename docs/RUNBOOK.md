@@ -6,7 +6,7 @@
 
 1. 拉取最新项目。
 2. 阅读 `README.md`、`docs/PROJECT_MEMORY.md`、`docs/MODULES.md`。
-3. 阅读 `docs/DATA_SOURCES.md`，确认 Tushare 等数据源权限。
+3. 阅读 `docs/DATA_SOURCES.md`，确认 Tushare、QMT、BaoStock、yfinance、FRED 等数据源权限。
 4. 阅读 `docs/FILE_NAMING.md`，确认文件命名和最新版本读取规则。
 5. 阅读 `docs/DAILY_PROCESS.md`，确认本次要做的是读取、更新、复盘还是补研究。
 6. 查看 `research/logs/decision_log.md` 的最近记录。
@@ -18,6 +18,7 @@
 ```text
 请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DAILY_PROCESS.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md 和 research/logs/decision_log.md，然后按今天的任务继续。
 本项目已知可使用 Tushare 数据权限；做 A 股结构化数据研究时请优先检查并使用本地 Tushare token。
+如涉及盘中 A 股行情，可调用 QMT；如涉及海外行情、海外 ETF、ADR 或外盘风险，可调用 yfinance；如涉及美国利率、通胀、就业或全球宏观变量，可调用 FRED。
 生成研究产物时文件名必须包含 YYYY-MM-DD_HHMMSS；基于前期研究时默认读取同类最新时间戳版本。
 ```
 

@@ -16,6 +16,7 @@
 6. 是否存在缺档案、ResearchFirst 或 blocked？
 7. 今天盘中只需要盯哪些触发条件？
 8. 今天允许新增操作、只允许减风险，还是只能观察？
+9. 是否有持仓股或待观察股缺少估值报告，或估值报告应更新？
 
 盘前执行检查输出的是执行门禁，不直接给最终买卖动作。
 
@@ -31,6 +32,7 @@
 - ETF 登记册和相关 ETF 档案：`research/etfs/`
 - 个股登记册和相关个股档案：`research/stocks/`
 - 最新操作建议，如存在：`research/actions/`
+- 估值更新检查：`python scripts/check_valuation_updates.py`
 - 决策日志：`research/logs/decision_log.md`
 
 如果缺少关键文件，必须输出 `blocked` 或 `research_first`，不能直接给买卖建议。
@@ -89,6 +91,15 @@
 
 如果操作建议缺失，可以输出 `blocked_for_action_plan`，但仍可输出盘前风险检查。
 
+### 估值报告
+
+检查：
+
+- 最新持仓和作战地图监控标的是否都有 `research/valuations/valuation_*.json`。
+- 估值报告基准日是否覆盖最新完整交易日。
+- 若盘前发现缺失或应更新，必须在报告中单独列出，并询问用户是否先更新估值报告。
+- 未经更新的估值报告仍可作为参考带，但必须标注“估值待刷新”，不得把旧报告状态当作当前结论。
+
 ## 5. 盘前硬规则
 
 - 不临时重写市场仓位分数。
@@ -114,6 +125,7 @@
 - 今日允许动作范围
 - 今日禁止事项
 - 盘中监控清单
+- 估值报告缺失/应更新清单，以及是否建议先更新
 - blocked / research_first 清单
 - 需要交给其他模块处理的问题
 - 决策日志条目
@@ -138,6 +150,7 @@
 ```text
 请按 docs/modules/PREMARKET_CHECK.md 和 templates/premarket_check_template.md 生成今日盘前执行检查。
 必须读取 docs/DAILY_PROCESS.md、最新市场仓位、最新主线研究、theme_registry、最新组合快照、ETF/个股登记册和最新操作建议。
+必须运行或引用 scripts/check_valuation_updates.py；如果持仓股或待观察股估值缺失、基准日过旧或需要更新，先提示我是否更新估值报告。
 只输出执行门禁、允许动作范围、禁止事项和盘中监控清单。
 不要给具体买卖动作，不要使用金额，不要临时改写主线或市场仓位。
 ```

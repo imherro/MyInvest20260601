@@ -87,7 +87,7 @@ def check_env(findings: list[Finding]) -> None:
 
 
 def check_python_dependencies(findings: list[Finding]) -> None:
-    required_packages = ["baostock", "pandas", "tushare"]
+    required_packages = ["baostock", "fredapi", "pandas", "tushare", "yfinance"]
     for package in required_packages:
         if find_spec(package) is None:
             findings.append(

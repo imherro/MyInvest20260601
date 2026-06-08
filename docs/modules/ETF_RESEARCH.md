@@ -23,6 +23,8 @@ ETF 研究必须先读：
 - 最新时间戳版本的主线研究报告。
 - `research/themes/theme_registry.json` 中的战略评级、交易评级和交易阶段。
 - `research/etfs/etf_registry.json` 中的 ETF 登记状态。
+- 如研究海外 ETF、QDII、港股或 ADR 映射资产，可调用 yfinance 补充行情。
+- 如 ETF 受利率、美元、通胀或全球风险偏好影响明显，可调用 FRED 补充宏观序列。
 
 如果没有读取上述文件，ETF 操作评级只能给 `Watch` 或“待研究”，不能给 `Buy/Add`。
 
@@ -374,5 +376,6 @@ ETF 登记册只保存当前总览，不替代每只 ETF 的时间戳档案。�
 必须引用最新时间戳版本的市场仓位报告、最新时间戳版本的主线研究报告和 research/themes/theme_registry.json。
 必须输出对应主线的战略评级、交易评级和交易阶段。
 如果无法获得 ETF 份额、净申购、长期估值分位或完整持仓结构，必须在数据缺口中披露。
+如研究海外 ETF、QDII、港股或 ADR 映射资产，可调用 yfinance；如涉及利率、美元和宏观变量，可调用 FRED。必须注明来源、代码、日期和币种。
 只更新 ETF 档案，不直接生成组合买卖清单。
 ```

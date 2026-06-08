@@ -1,4 +1,6 @@
 baostock==0.9.1
+fredapi==0.5.2
 pandas>=3.0.1
 PySide6>=6.11.1
 tushare>=1.4.29
+yfinance==1.4.1
