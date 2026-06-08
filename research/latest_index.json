@@ -1,22 +1,22 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-08_155951",
+  "generated_at": "2026-06-08_205346",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
       "module": "action_plan",
       "code": null,
       "name": null,
-      "path": "research/actions/action_plan_2026-06-03_201848_rare_metals_group.json",
-      "generated_at": "2026-06-03_201848",
-      "basis_trade_date": "2026-06-03",
-      "sha256": "14c52ca0e0e04324ba8e6c9c9bb0d5d2191bc84f5e703d2173a5495ddedd42b4",
+      "path": "research/actions/action_plan_2026-06-08_205241_latest_ratio_only.json",
+      "generated_at": "2026-06-08_205241",
+      "basis_trade_date": "2026-06-08",
+      "sha256": "9e72dad71f3661a79af037152694ce05fef94d1f6c19fd83a2b604cf4f1ee451",
       "quality": {
-        "status": "legacy_unknown"
+        "status": "warning"
       },
       "staleness": {
-        "status": "legacy_unknown"
+        "status": "fresh"
       }
     },
     "intraday_alerts": {
@@ -39,9 +39,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-08_155914",
+      "generated_at": "2026-06-08_205232",
       "basis_trade_date": null,
-      "sha256": "7343bcc2ef242023ee81109eb939eeaf93082a52861129e0b4f017a097fd5f4c",
+      "sha256": "0a7bb5ee60824f181183cb94e5208e580dd615c987009ff8293f3d9f04e750ef",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -83,10 +83,10 @@
       "module": "staleness_check",
       "code": null,
       "name": null,
-      "path": "research/checks/staleness_check_2026-06-08_155914.json",
-      "generated_at": "2026-06-08_155914",
+      "path": "research/checks/staleness_check_2026-06-08_205252.json",
+      "generated_at": "2026-06-08_205252",
       "basis_trade_date": null,
-      "sha256": "d2cd56f62ec43f3703dab44cd8fc3457ae4e375b21ba7db0c3706fa414825294",
+      "sha256": "0edb2af48674c5680ee92fcce4b8de4411c66077eebb20908e341d77119d1676",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -337,6 +337,21 @@
       }
     },
     {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-08_205241_latest_ratio_only.json",
+      "generated_at": "2026-06-08_205241",
+      "basis_trade_date": "2026-06-08",
+      "sha256": "9e72dad71f3661a79af037152694ce05fef94d1f6c19fd83a2b604cf4f1ee451",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
       "module": "intraday_alerts",
       "code": null,
       "name": null,
@@ -401,9 +416,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-08_155914",
+      "generated_at": "2026-06-08_205232",
       "basis_trade_date": null,
-      "sha256": "7343bcc2ef242023ee81109eb939eeaf93082a52861129e0b4f017a097fd5f4c",
+      "sha256": "0a7bb5ee60824f181183cb94e5208e580dd615c987009ff8293f3d9f04e750ef",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -524,6 +539,21 @@
       "generated_at": "2026-06-08_155914",
       "basis_trade_date": null,
       "sha256": "d2cd56f62ec43f3703dab44cd8fc3457ae4e375b21ba7db0c3706fa414825294",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "staleness_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/staleness_check_2026-06-08_205252.json",
+      "generated_at": "2026-06-08_205252",
+      "basis_trade_date": null,
+      "sha256": "0edb2af48674c5680ee92fcce4b8de4411c66077eebb20908e341d77119d1676",
       "quality": {
         "status": "legacy_unknown"
       },

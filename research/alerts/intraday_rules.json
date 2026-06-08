@@ -5260,7 +5260,7 @@
   "last_portfolio_snapshot_sync": "2026-06-08_135053",
   "staleness": {
     "status": "degraded",
-    "checked_at": "2026-06-08_155914",
+    "checked_at": "2026-06-08_205232",
     "mode": "degraded_observation_only",
     "reason": "当前盘中规则引用最新上游，但存在数据质量警告；可观察和风险复核，涉及异常字段的精确建议需降级。",
     "findings": [
@@ -5272,7 +5272,7 @@
       }
     ]
   },
-  "generated_at": "2026-06-08_155914",
+  "generated_at": "2026-06-08_205232",
   "dependencies": {
     "required": [
       {

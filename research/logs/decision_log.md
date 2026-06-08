@@ -1792,3 +1792,12 @@
 2026-06-08 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-08_135031.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
 
 2026-06-08 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-08_135053.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+
+## 2026-06-08 20:52:41 最新操作建议（比例版）
+
+- 决策类型：action_plan
+- 生成文件：`research/actions/action_plan_2026-06-08_205241_latest_ratio_only.md`、`research/actions/action_plan_2026-06-08_205241_latest_ratio_only.json`
+- 读取前置文件：`research/market/market_score_2026-06-08_100643.json`、`research/themes/theme_review_2026-06-08_102237.json`、`research/portfolio/portfolio_snapshot_2026-06-08_135053.json`、`research/allocation/target_allocation_2026-06-08_155802.json`、`research/alerts/intraday_rules.json`
+- 金额口径：只使用比例和百分点，不使用金额、市值、盈亏金额或股数。
+- 结论：2026-06-08 最新操作建议（比例版）：生成 action_plan_2026-06-08_205241_latest_ratio_only.md/json；只使用比例和百分点，不使用金额、市值、盈亏金额或股数；结论为权益从约54.10%先降低9.1pp至11.6pp，目标回到40%-45%，现金/短融提高到55%-60%，暂停新增进攻仓，优先清理其他/待清理桶。
