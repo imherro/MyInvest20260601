@@ -1,7 +1,7 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-08_154039",
+  "generated_at": "2026-06-08_155951",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
@@ -39,29 +39,29 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-08_153845",
+      "generated_at": "2026-06-08_155914",
       "basis_trade_date": null,
-      "sha256": "20f341e1e780012c8c5253d13dbfddd832d0065605c92a723aa0ce8bcf09e5c6",
+      "sha256": "7343bcc2ef242023ee81109eb939eeaf93082a52861129e0b4f017a097fd5f4c",
       "quality": {
         "status": "legacy_unknown"
       },
       "staleness": {
-        "status": "stale"
+        "status": "degraded"
       }
     },
     "target_allocation": {
       "module": "target_allocation",
       "code": null,
       "name": null,
-      "path": "research/allocation/target_allocation_2026-06-03_211833.json",
-      "generated_at": "2026-06-03_211833",
-      "basis_trade_date": "2026-06-03",
-      "sha256": "66777a9eaff5cd34724a647ecced56e0980c10ccf45e957d7120bd46c0d97ceb",
+      "path": "research/allocation/target_allocation_2026-06-08_155802.json",
+      "generated_at": "2026-06-08_155802",
+      "basis_trade_date": "20260605",
+      "sha256": "bfa99d564bd0500d28e8eb114b27523dd2faf354e0e3e2e249d20c60aaf1fadf",
       "quality": {
-        "status": "legacy_unknown"
+        "status": "warning"
       },
       "staleness": {
-        "status": "legacy_unknown"
+        "status": "fresh"
       }
     },
     "premarket_check": {
@@ -83,10 +83,10 @@
       "module": "staleness_check",
       "code": null,
       "name": null,
-      "path": "research/checks/staleness_check_2026-06-08_153845.json",
-      "generated_at": "2026-06-08_153845",
+      "path": "research/checks/staleness_check_2026-06-08_155914.json",
+      "generated_at": "2026-06-08_155914",
       "basis_trade_date": null,
-      "sha256": "f994da5860df2188700f8e604d27f66aa0f86eef6969234db906317d4697b3e9",
+      "sha256": "d2cd56f62ec43f3703dab44cd8fc3457ae4e375b21ba7db0c3706fa414825294",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -401,14 +401,14 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-08_153845",
+      "generated_at": "2026-06-08_155914",
       "basis_trade_date": null,
-      "sha256": "20f341e1e780012c8c5253d13dbfddd832d0065605c92a723aa0ce8bcf09e5c6",
+      "sha256": "7343bcc2ef242023ee81109eb939eeaf93082a52861129e0b4f017a097fd5f4c",
       "quality": {
         "status": "legacy_unknown"
       },
       "staleness": {
-        "status": "stale"
+        "status": "degraded"
       }
     },
     {
@@ -439,6 +439,21 @@
       },
       "staleness": {
         "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-08_155802.json",
+      "generated_at": "2026-06-08_155802",
+      "basis_trade_date": "20260605",
+      "sha256": "bfa99d564bd0500d28e8eb114b27523dd2faf354e0e3e2e249d20c60aaf1fadf",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "fresh"
       }
     },
     {
@@ -494,6 +509,21 @@
       "generated_at": "2026-06-08_153845",
       "basis_trade_date": null,
       "sha256": "f994da5860df2188700f8e604d27f66aa0f86eef6969234db906317d4697b3e9",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "staleness_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/staleness_check_2026-06-08_155914.json",
+      "generated_at": "2026-06-08_155914",
+      "basis_trade_date": null,
+      "sha256": "d2cd56f62ec43f3703dab44cd8fc3457ae4e375b21ba7db0c3706fa414825294",
       "quality": {
         "status": "legacy_unknown"
       },

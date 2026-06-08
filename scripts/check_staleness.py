@@ -272,11 +272,28 @@ def update_intraday_rules(report: dict[str, Any]) -> bool:
     rule_path = rel_path(INTRADAY_RULES)
     findings = [item for item in report.get("findings", []) if item.get("path") == rule_path]
     status = status_from_findings(report.get("findings", []), rule_path)
+    quality = ((data.get("allocation_map") or {}).get("quality") or {}).get("status")
+    if status == "fresh" and quality in {"error", "warning"}:
+        status = "degraded"
+        findings.append(
+            {
+                "level": "WARN",
+                "path": rule_path,
+                "reason": "linked portfolio snapshot has data quality warnings/errors",
+                "quality_status": quality,
+            }
+        )
+    reason_by_status = {
+        "fresh": "当前盘中规则引用最新上游，可用于实时观察；买卖动作仍必须进入ACTION_PLAN。",
+        "degraded": "当前盘中规则引用最新上游，但存在数据质量警告；可观察和风险复核，涉及异常字段的精确建议需降级。",
+        "stale": "当前盘中规则引用链存在过期文件；禁止买入/加仓类提醒。",
+        "blocked": "当前盘中规则引用链存在缺失或严重错误；只能用于排错。",
+    }
     data["staleness"] = {
         "status": status,
         "checked_at": report["generated_at"],
         "mode": "degraded_observation_only" if status in {"stale", "blocked", "degraded"} else "fresh",
-        "reason": "当前盘中规则引用链存在过期或质量问题；stale/blocked/degraded 时禁止买入/加仓类提醒。",
+        "reason": reason_by_status.get(status, "规则新鲜度状态未知；仅供观察。"),
         "findings": findings[:20],
     }
     write_json(INTRADAY_RULES, data)

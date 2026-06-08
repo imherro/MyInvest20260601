@@ -166,6 +166,7 @@ def check_required_scripts(findings: list[Finding]) -> None:
         "scripts/build_latest_index.py",
         "scripts/check_staleness.py",
         "scripts/build_review_package.py",
+        "scripts/generate_target_allocation.py",
         "scripts/generate_valuation_reports.py",
         "scripts/check_valuation_updates.py",
         "scripts/qmt_portfolio_snapshot.py",
@@ -240,6 +241,9 @@ def check_intraday_references(findings: list[Finding], strict: bool) -> None:
                 f"research/alerts/intraday_rules.json is stale/degraded; run scripts/check_staleness.py and rebuild downstream rules before buy/add use",
             )
         )
+    status = str((rules.get("staleness") or {}).get("status", ""))
+    if status in {"stale", "blocked", "degraded"} and not rule_issues:
+        findings.append(Finding("WARN", f"research/alerts/intraday_rules.json staleness.status={status}; check quality before action use"))
 
 
 def main() -> int:
