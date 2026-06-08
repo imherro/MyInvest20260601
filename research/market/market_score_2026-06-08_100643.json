@@ -1,0 +1,1001 @@
+{
+  "module": "market_position",
+  "version": "1.4",
+  "date": "2026-06-08",
+  "session": "premarket",
+  "generated_at": "2026-06-08_100643",
+  "basis_trade_date": "20260605",
+  "basis_note": "2026-06-08 若为交易日盘中，最新完整收盘基准为 20260605，不使用未完整的当日盘中数据覆盖收盘结论。",
+  "data_sources": [
+    {
+      "name": "Tushare Pro",
+      "trade_date": "20260605",
+      "usage": "trade_cal、index_daily、daily、daily_basic、moneyflow、limit_list_d、stock_basic、fund_daily、index_dailybasic、margin"
+    },
+    {
+      "name": "research/themes/theme_registry.json",
+      "usage": "读取主线固化评级，不改写"
+    },
+    {
+      "name": "research/market/market_score_2026-06-03_211833.json",
+      "usage": "上一份市场仓位报告对比"
+    },
+    {
+      "name": "research/portfolio/portfolio_snapshot_2026-06-04_092931.json",
+      "usage": "仅用于操作含义中的组合偏离提示，不用于金额分析"
+    },
+    {
+      "name": "新浪财经操盘必读 2026-06-08",
+      "url": "https://finance.sina.com.cn/stock/cpbd/2026-06-08/doc-iniaruye4155580.shtml",
+      "usage": "盘前新闻和政策事件交叉验证"
+    },
+    {
+      "name": "证监会：稳定和增强资本市场信心",
+      "url": "https://www.csrc.gov.cn/shanxi/c106408/c7634251/content.shtml",
+      "usage": "资本市场政策环境参考"
+    }
+  ],
+  "summary": {
+    "market_state": "弱势震荡，风险收缩优先",
+    "opportunity_score": 49,
+    "crowding_penalty": 8,
+    "market_position_score": 41,
+    "equity_allocation_range": "40%-45%",
+    "bond_cash_allocation_range": "55%-60%",
+    "offensive_bucket_status": "pause_new",
+    "one_line_conclusion": "以 20260605 最新完整收盘数据看，指数普遍跌破20日线、Tushare资金流代理大幅净流出。虽然个股宽度有修复，但AI/半导体等进攻主线仍处弱势；市场仓位分数降至 41，权益建议从上一版 45%-50% 下调到 40%-45%。"
+  },
+  "market_observations": {
+    "indices": [
+      {
+        "name": "上证指数",
+        "ts_code": "000001.SH",
+        "close": 4027.74,
+        "pct_chg": -0.74,
+        "ma20": 4125.5,
+        "ma60": 4058.05,
+        "above_ma20": false,
+        "above_ma60": false,
+        "dist_ma20_pct": -2.37,
+        "dist_ma60_pct": -0.75,
+        "drawdown_60d_pct": -5.06,
+        "rebound_60d_pct": 5.62
+      },
+      {
+        "name": "深证成指",
+        "ts_code": "399001.SZ",
+        "close": 15314.7,
+        "pct_chg": -2.21,
+        "ma20": 15657.72,
+        "ma60": 14792.33,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -2.19,
+        "dist_ma60_pct": 3.53,
+        "drawdown_60d_pct": -4.82,
+        "rebound_60d_pct": 14.76
+      },
+      {
+        "name": "创业板指",
+        "ts_code": "399006.SZ",
+        "close": 3957.93,
+        "pct_chg": -3.2,
+        "ma20": 3987.27,
+        "ma60": 3628.89,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -0.74,
+        "dist_ma60_pct": 9.07,
+        "drawdown_60d_pct": -4.05,
+        "rebound_60d_pct": 25.66
+      },
+      {
+        "name": "科创50",
+        "ts_code": "000688.SH",
+        "close": 1668.33,
+        "pct_chg": -4.01,
+        "ma20": 1758.28,
+        "ma60": 1515.89,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -5.12,
+        "dist_ma60_pct": 10.06,
+        "drawdown_60d_pct": -12.01,
+        "rebound_60d_pct": 32.81
+      },
+      {
+        "name": "沪深300",
+        "ts_code": "000300.SH",
+        "close": 4816.92,
+        "pct_chg": -1.79,
+        "ma20": 4892.05,
+        "ma60": 4731.78,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -1.54,
+        "dist_ma60_pct": 1.8,
+        "drawdown_60d_pct": -3.63,
+        "rebound_60d_pct": 9.03
+      },
+      {
+        "name": "中证500",
+        "ts_code": "000905.SH",
+        "close": 8251.14,
+        "pct_chg": -1.26,
+        "ma20": 8548.38,
+        "ma60": 8221.58,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -3.48,
+        "dist_ma60_pct": 0.36,
+        "drawdown_60d_pct": -7.48,
+        "rebound_60d_pct": 10.89
+      },
+      {
+        "name": "中证1000",
+        "ts_code": "000852.SH",
+        "close": 8340.96,
+        "pct_chg": -0.94,
+        "ma20": 8632.48,
+        "ma60": 8264.48,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -3.38,
+        "dist_ma60_pct": 0.93,
+        "drawdown_60d_pct": -6.86,
+        "rebound_60d_pct": 12.58
+      }
+    ],
+    "breadth": {
+      "source": "Tushare daily, SH/SZ A-share sample",
+      "trade_date": "20260605",
+      "sample_count": 5197,
+      "advancers": 2982,
+      "decliners": 2091,
+      "flat": 124,
+      "advance_ratio_pct": 57.38,
+      "median_pct_change": 0.41,
+      "limit_up_approx_pct_chg_ge_9_8": 98,
+      "limit_down_approx_pct_chg_le_-9_8": 22,
+      "limit_list_d_counts": {
+        "U": 73,
+        "Z": 52,
+        "D": 11
+      }
+    },
+    "turnover": {
+      "total_amount_trillion_yuan": 3.069,
+      "prev_trade_date": "20260604",
+      "prev_total_amount_trillion_yuan": 2.757,
+      "amount_vs_previous_pct": 11.32,
+      "twenty_day_average_trillion_yuan": 3.122,
+      "amount_vs_20d_average": 0.98,
+      "twenty_day_daily_fetch": [
+        {
+          "trade_date": "20260511",
+          "amount_trillion_yuan": 3.539,
+          "rows": 5180
+        },
+        {
+          "trade_date": "20260512",
+          "amount_trillion_yuan": 3.242,
+          "rows": 5179
+        },
+        {
+          "trade_date": "20260513",
+          "amount_trillion_yuan": 3.24,
+          "rows": 5183
+        },
+        {
+          "trade_date": "20260514",
+          "amount_trillion_yuan": 3.362,
+          "rows": 5183
+        },
+        {
+          "trade_date": "20260515",
+          "amount_trillion_yuan": 3.344,
+          "rows": 5184
+        },
+        {
+          "trade_date": "20260518",
+          "amount_trillion_yuan": 2.894,
+          "rows": 5187
+        },
+        {
+          "trade_date": "20260519",
+          "amount_trillion_yuan": 2.886,
+          "rows": 5182
+        },
+        {
+          "trade_date": "20260520",
+          "amount_trillion_yuan": 2.953,
+          "rows": 5186
+        },
+        {
+          "trade_date": "20260521",
+          "amount_trillion_yuan": 3.481,
+          "rows": 5189
+        },
+        {
+          "trade_date": "20260522",
+          "amount_trillion_yuan": 2.903,
+          "rows": 5191
+        },
+        {
+          "trade_date": "20260525",
+          "amount_trillion_yuan": 3.205,
+          "rows": 5191
+        },
+        {
+          "trade_date": "20260526",
+          "amount_trillion_yuan": 3.243,
+          "rows": 5191
+        },
+        {
+          "trade_date": "20260527",
+          "amount_trillion_yuan": 3.238,
+          "rows": 5191
+        },
+        {
+          "trade_date": "20260528",
+          "amount_trillion_yuan": 2.968,
+          "rows": 5191
+        },
+        {
+          "trade_date": "20260529",
+          "amount_trillion_yuan": 3.319,
+          "rows": 5190
+        },
+        {
+          "trade_date": "20260601",
+          "amount_trillion_yuan": 2.877,
+          "rows": 5192
+        },
+        {
+          "trade_date": "20260602",
+          "amount_trillion_yuan": 2.793,
+          "rows": 5191
+        },
+        {
+          "trade_date": "20260603",
+          "amount_trillion_yuan": 3.13,
+          "rows": 5195
+        },
+        {
+          "trade_date": "20260604",
+          "amount_trillion_yuan": 2.757,
+          "rows": 5195
+        },
+        {
+          "trade_date": "20260605",
+          "amount_trillion_yuan": 3.069,
+          "rows": 5197
+        }
+      ]
+    },
+    "fund_flow": {
+      "status": "available",
+      "sample_count": 5197,
+      "net_mf_amount_10k_yuan": -9649325.46,
+      "net_mf_amount_100m_yuan": -964.93,
+      "note": "Tushare moneyflow ?A??????????????? ETF ?????????"
+    },
+    "margin_financing": {
+      "status": "available",
+      "rows": 3,
+      "rzye_100m_yuan": 288571533,
+      "rqye_100m_yuan": 2097276.95
+    },
+    "valuation": {
+      "all_a_median_pe_ttm": 45.97,
+      "all_a_median_pb": 2.88,
+      "all_a_weighted_harmonic_pe_ttm": 18.63,
+      "all_a_weighted_harmonic_pb": 1.88,
+      "index_rows": [
+        {
+          "name": "沪深300",
+          "ts_code": "000300.SH",
+          "date": "20260605",
+          "available": true,
+          "pe_ttm": 14.39,
+          "pb": 1.44,
+          "pe_ttm_60d_percentile": 45,
+          "pb_60d_percentile": 18.33,
+          "60d_sample_days": 60,
+          "pe_ttm_1y_percentile": 80.95,
+          "pb_1y_percentile": 30.95,
+          "1y_sample_days": 252,
+          "pe_ttm_3y_percentile": 93.65,
+          "pb_3y_percentile": 76.85,
+          "3y_sample_days": 756,
+          "pe_ttm_5y_percentile": 95.18,
+          "pb_5y_percentile": 77.19,
+          "5y_sample_days": 995
+        },
+        {
+          "name": "中证500",
+          "ts_code": "000905.SH",
+          "date": "20260605",
+          "available": true,
+          "pe_ttm": 36.12,
+          "pb": 2.51,
+          "pe_ttm_60d_percentile": 30,
+          "pb_60d_percentile": 36.67,
+          "60d_sample_days": 60,
+          "pe_ttm_1y_percentile": 69.05,
+          "pb_1y_percentile": 71.43,
+          "1y_sample_days": 252,
+          "pe_ttm_3y_percentile": 89.68,
+          "pb_3y_percentile": 90.48,
+          "3y_sample_days": 756,
+          "pe_ttm_5y_percentile": 92.16,
+          "pb_5y_percentile": 92.76,
+          "5y_sample_days": 995
+        },
+        {
+          "name": "创业板指",
+          "ts_code": "399006.SZ",
+          "date": "20260605",
+          "available": true,
+          "pe_ttm": 47.08,
+          "pb": 6.17,
+          "pe_ttm_60d_percentile": 70,
+          "pb_60d_percentile": 78.33,
+          "60d_sample_days": 60,
+          "pe_ttm_1y_percentile": 92.86,
+          "pb_1y_percentile": 94.84,
+          "1y_sample_days": 252,
+          "pe_ttm_3y_percentile": 97.62,
+          "pb_3y_percentile": 98.28,
+          "3y_sample_days": 756,
+          "pe_ttm_5y_percentile": 89.95,
+          "pb_5y_percentile": 93.97,
+          "5y_sample_days": 995
+        },
+        {
+          "name": "中证1000",
+          "ts_code": "000852.SH",
+          "available": false,
+          "reason": "index_dailybasic empty"
+        },
+        {
+          "name": "科创50",
+          "ts_code": "000688.SH",
+          "available": false,
+          "reason": "index_dailybasic empty"
+        }
+      ]
+    },
+    "industry": {
+      "top_by_median_pct": [
+        {
+          "industry": "轻工机械",
+          "sample": 7,
+          "median_pct": 2.8,
+          "advance_ratio_pct": 85.7
+        },
+        {
+          "industry": "机床制造",
+          "sample": 22,
+          "median_pct": 2.54,
+          "advance_ratio_pct": 90.9
+        },
+        {
+          "industry": "房产服务",
+          "sample": 13,
+          "median_pct": 2.41,
+          "advance_ratio_pct": 84.6
+        },
+        {
+          "industry": "陶瓷",
+          "sample": 5,
+          "median_pct": 1.84,
+          "advance_ratio_pct": 80
+        },
+        {
+          "industry": "超市连锁",
+          "sample": 8,
+          "median_pct": 1.81,
+          "advance_ratio_pct": 87.5
+        },
+        {
+          "industry": "百货",
+          "sample": 35,
+          "median_pct": 1.76,
+          "advance_ratio_pct": 85.7
+        },
+        {
+          "industry": "矿物制品",
+          "sample": 32,
+          "median_pct": 1.58,
+          "advance_ratio_pct": 62.5
+        },
+        {
+          "industry": "化纤",
+          "sample": 32,
+          "median_pct": 1.37,
+          "advance_ratio_pct": 78.1
+        },
+        {
+          "industry": "酒店餐饮",
+          "sample": 9,
+          "median_pct": 1.28,
+          "advance_ratio_pct": 88.9
+        },
+        {
+          "industry": "电器仪表",
+          "sample": 90,
+          "median_pct": 1.22,
+          "advance_ratio_pct": 70
+        }
+      ],
+      "bottom_by_median_pct": [
+        {
+          "industry": "火力发电",
+          "sample": 31,
+          "median_pct": -6.15,
+          "advance_ratio_pct": 3.2
+        },
+        {
+          "industry": "新型电力",
+          "sample": 31,
+          "median_pct": -3.99,
+          "advance_ratio_pct": 12.9
+        },
+        {
+          "industry": "水力发电",
+          "sample": 22,
+          "median_pct": -3.9,
+          "advance_ratio_pct": 9.1
+        },
+        {
+          "industry": "半导体",
+          "sample": 193,
+          "median_pct": -2.36,
+          "advance_ratio_pct": 23.8
+        },
+        {
+          "industry": "铅锌",
+          "sample": 13,
+          "median_pct": -2.33,
+          "advance_ratio_pct": 7.7
+        },
+        {
+          "industry": "铜",
+          "sample": 18,
+          "median_pct": -2.31,
+          "advance_ratio_pct": 27.8
+        },
+        {
+          "industry": "黄金",
+          "sample": 10,
+          "median_pct": -1.67,
+          "advance_ratio_pct": 10
+        },
+        {
+          "industry": "供气供热",
+          "sample": 43,
+          "median_pct": -1.27,
+          "advance_ratio_pct": 18.6
+        },
+        {
+          "industry": "煤炭开采",
+          "sample": 25,
+          "median_pct": -1.18,
+          "advance_ratio_pct": 20
+        },
+        {
+          "industry": "多元金融",
+          "sample": 23,
+          "median_pct": -1.14,
+          "advance_ratio_pct": 30.4
+        }
+      ]
+    },
+    "key_etfs": [
+      {
+        "code": "159819.SZ",
+        "name": "人工智能ETF易方达",
+        "date": "20260605",
+        "close": 1.952,
+        "pct_chg": -3.46,
+        "dist_ma20_pct": -1.79,
+        "dist_ma60_pct": 12.56,
+        "above_ma20": false,
+        "above_ma60": true,
+        "drawdown_60d_pct": -5.01
+      },
+      {
+        "code": "588200.SH",
+        "name": "科创芯片ETF嘉实",
+        "date": "20260605",
+        "close": 3.456,
+        "pct_chg": -4.58,
+        "dist_ma20_pct": -3.56,
+        "dist_ma60_pct": 17.69,
+        "above_ma20": false,
+        "above_ma60": true,
+        "drawdown_60d_pct": -11.48
+      },
+      {
+        "code": "159558.SZ",
+        "name": "半导体设备ETF易方达",
+        "date": "20260605",
+        "close": 2.826,
+        "pct_chg": -3.05,
+        "dist_ma20_pct": -1.48,
+        "dist_ma60_pct": 20.93,
+        "above_ma20": false,
+        "above_ma60": true,
+        "drawdown_60d_pct": -10.82
+      },
+      {
+        "code": "159326.SZ",
+        "name": "电网设备ETF华夏",
+        "date": "20260605",
+        "close": 2.054,
+        "pct_chg": -1.86,
+        "dist_ma20_pct": -1.62,
+        "dist_ma60_pct": 3.51,
+        "above_ma20": false,
+        "above_ma60": true,
+        "drawdown_60d_pct": -6.17
+      },
+      {
+        "code": "510300.SH",
+        "name": "沪深300ETF华泰柏瑞",
+        "date": "20260605",
+        "close": 4.843,
+        "pct_chg": -1.69,
+        "dist_ma20_pct": -1.43,
+        "dist_ma60_pct": 2.06,
+        "above_ma20": false,
+        "above_ma60": true,
+        "drawdown_60d_pct": -3.47
+      },
+      {
+        "code": "510500.SH",
+        "name": "中证500ETF南方",
+        "date": "20260605",
+        "close": 8.339,
+        "pct_chg": -1.29,
+        "dist_ma20_pct": -3.41,
+        "dist_ma60_pct": 0.53,
+        "above_ma20": false,
+        "above_ma60": true,
+        "drawdown_60d_pct": -7.44
+      },
+      {
+        "code": "510880.SH",
+        "name": "红利ETF华泰柏瑞",
+        "date": "20260605",
+        "close": 3.321,
+        "pct_chg": -0.18,
+        "dist_ma20_pct": 2.66,
+        "dist_ma60_pct": 1.84,
+        "above_ma20": true,
+        "above_ma60": true,
+        "drawdown_60d_pct": -1.77
+      },
+      {
+        "code": "511360.SH",
+        "name": "短融ETF海富通",
+        "date": "20260605",
+        "close": 113.551,
+        "pct_chg": 0.01,
+        "dist_ma20_pct": 0.05,
+        "dist_ma60_pct": 0.17,
+        "above_ma20": true,
+        "above_ma60": true,
+        "drawdown_60d_pct": 0
+      },
+      {
+        "code": "516150.SH",
+        "name": "稀土ETF嘉实",
+        "date": "20260605",
+        "close": 1.969,
+        "pct_chg": 0,
+        "dist_ma20_pct": -1.5,
+        "dist_ma60_pct": -0.2,
+        "above_ma20": false,
+        "above_ma60": false,
+        "drawdown_60d_pct": -8.93
+      },
+      {
+        "code": "562800.SH",
+        "name": "稀有金属ETF嘉实",
+        "date": "20260605",
+        "close": 1.041,
+        "pct_chg": -1.23,
+        "dist_ma20_pct": -4.69,
+        "dist_ma60_pct": -2.96,
+        "above_ma20": false,
+        "above_ma60": false,
+        "drawdown_60d_pct": -13.82
+      }
+    ],
+    "theme_registry_snapshot": [
+      {
+        "name": "AI",
+        "rating": "A",
+        "score": 80,
+        "bucket_role": "offensive_core",
+        "stage": "divergence",
+        "position_impact": "A档长期核心主线，但本轮交易阶段为分歧；进攻仓可保留核心暴露，不宜新增追涨。"
+      },
+      {
+        "name": "半导体",
+        "rating": "B",
+        "score": 66,
+        "bucket_role": "secondary",
+        "stage": "divergence",
+        "position_impact": "从A档下调为B档副线；长期逻辑保留，但当前不作为新增进攻仓核心。"
+      },
+      {
+        "name": "电力设备",
+        "rating": "B",
+        "score": 75,
+        "bucket_role": "secondary",
+        "stage": "launch",
+        "position_impact": "B档副线，若ETF和订单继续确认，可进入A档候选观察。"
+      },
+      {
+        "name": "高端装备",
+        "rating": "B",
+        "score": 66,
+        "bucket_role": "secondary",
+        "stage": "repair",
+        "position_impact": "B档副线偏观察。"
+      },
+      {
+        "name": "能源",
+        "rating": "B",
+        "score": 68,
+        "bucket_role": "secondary",
+        "stage": "acceleration",
+        "position_impact": "由C上调为B档副线，但不是进攻仓核心。"
+      },
+      {
+        "name": "有色",
+        "rating": "C",
+        "score": 58,
+        "bucket_role": "theme_trial",
+        "stage": "repair",
+        "position_impact": "从B下调至C档主题/观察。"
+      },
+      {
+        "name": "电池",
+        "rating": "C",
+        "score": 58,
+        "bucket_role": "theme_trial",
+        "stage": "repair",
+        "position_impact": "从B下调至C档主题/观察。"
+      },
+      {
+        "name": "储能",
+        "rating": "C",
+        "score": 62,
+        "bucket_role": "theme_trial",
+        "stage": "repair",
+        "position_impact": "从B下调至C档主题/观察。"
+      },
+      {
+        "name": "机器人",
+        "rating": "C",
+        "score": 54,
+        "bucket_role": "theme_trial",
+        "stage": "divergence",
+        "position_impact": "维持C档主题仓试错。"
+      },
+      {
+        "name": "商业航天",
+        "rating": "C",
+        "score": 53,
+        "bucket_role": "theme_trial",
+        "stage": "germination",
+        "position_impact": "维持C档主题仓试错。"
+      },
+      {
+        "name": "化工",
+        "rating": "C",
+        "score": 61,
+        "bucket_role": "theme_trial",
+        "stage": "repair",
+        "position_impact": "维持C档主题仓/周期修复观察。"
+      },
+      {
+        "name": "无人驾驶",
+        "rating": "D",
+        "score": 46,
+        "bucket_role": "watch",
+        "stage": "germination",
+        "position_impact": "维持D档观察。"
+      }
+    ]
+  },
+  "scores": {
+    "index_trend": {
+      "weight": 20,
+      "score": 9,
+      "evidence": "0/7 个主要指数站上20日线，6/7 个仍在60日线上方；短线趋势转弱但中期结构未全面破坏。"
+    },
+    "market_breadth": {
+      "weight": 15,
+      "score": 9,
+      "evidence": "Tushare沪深A股样本 5197 只，上涨占比 57.38%，中位涨跌幅 0.41%，宽度好于指数表现但不是强趋势确认。"
+    },
+    "volume_liquidity": {
+      "weight": 10,
+      "score": 7,
+      "evidence": "沪深A股成交额约 3.069 万亿元，约为20日均值 3.122 万亿元的 0.98 倍，流动性仍充足但未转化为上涨趋势。"
+    },
+    "fund_flow_risk_appetite": {
+      "weight": 15,
+      "score": 4,
+      "evidence": "Tushare moneyflow代理显示全A净流出约 -964.93 亿元；盘中快照也显示进攻主线弱于防御仓，风险偏好偏弱。",
+      "components": {
+        "all_a_moneyflow": {
+          "status": "available",
+          "conclusion": "净流出",
+          "evidence": "net_mf_amount=-964.93亿元"
+        },
+        "theme_industry_moneyflow": {
+          "status": "missing",
+          "conclusion": "缺少分主题连续资金流",
+          "evidence": "本次仅使用行业涨跌和ETF趋势代理"
+        },
+        "etf_turnover_change": {
+          "status": "available",
+          "conclusion": "主题ETF多处高波动",
+          "evidence": "fund_daily覆盖关键ETF趋势和涨跌幅"
+        },
+        "etf_share_or_subscription_change": {
+          "status": "missing",
+          "conclusion": "未纳入本次评分",
+          "evidence": "需后续ETF模块补份额变化"
+        },
+        "margin_financing_balance": {
+          "status": "available",
+          "conclusion": "??????????",
+          "evidence": "{\"status\": \"available\", \"rows\": 3, \"rzye_100m_yuan\": 288571533.0, \"rqye_100m_yuan\": 2097276.95}"
+        },
+        "northbound_or_foreign_flow": {
+          "status": "missing",
+          "conclusion": "缺失",
+          "evidence": "本项目当前未接入北向/外资日频口径"
+        },
+        "fx_external_risk_appetite": {
+          "status": "missing",
+          "conclusion": "未量化",
+          "evidence": "本次未接入汇率和海外风险偏好数据"
+        }
+      },
+      "confidence": "medium"
+    },
+    "theme_strength": {
+      "weight": 15,
+      "score": 7,
+      "evidence": "读取theme_registry：AI仍为长期A档但交易阶段divergence，半导体为B档；6月5日AI/芯片/半导体ETF均未站上20日线，不支持新增进攻仓。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 5,
+      "evidence": "沪深300、创业板等指数估值分位偏高，宽基与成长ETF在盘中规则中多处于拥挤/风险区；赔率不支持提高权益上限。",
+      "components": {
+        "short_term_60d_percentile": {
+          "status": "available",
+          "conclusion": "沪深300和创业板偏高",
+          "evidence": "index_dailybasic 60日分位见index_rows"
+        },
+        "medium_term_1y_percentile": {
+          "status": "available",
+          "conclusion": "部分指数偏高",
+          "evidence": "index_dailybasic 1年分位见index_rows"
+        },
+        "long_term_3y_5y_percentile": {
+          "status": "partial",
+          "conclusion": "部分指数可用，科创50/中证1000可能缺口",
+          "evidence": "index_dailybasic返回样本不完全"
+        },
+        "equity_bond_relative_value": {
+          "status": "missing",
+          "conclusion": "缺失",
+          "evidence": "未接入债券收益率实时口径"
+        },
+        "theme_industry_valuation": {
+          "status": "partial",
+          "conclusion": "主题ETF用价格/净值位置代理",
+          "evidence": "长期主题指数估值仍需ETF/估值模块补足"
+        }
+      },
+      "confidence": "medium"
+    },
+    "macro_policy": {
+      "weight": 10,
+      "score": 8,
+      "evidence": "政策环境仍偏托底和支持新质生产力、资本市场稳定；但政策项不能抵消指数、资金和主线转弱。"
+    },
+    "opportunity_score": 49,
+    "crowding_penalty": {
+      "score": 8,
+      "evidence": "多只宽基/科技/资源ETF仍处估值或价格拥挤区，且近期反弹后出现资金净流出和进攻仓走弱；拥挤惩罚维持中高位。",
+      "operation_limit": "不新增进攻仓，只允许观察或由ACTION_PLAN处理减风险。"
+    },
+    "market_position_score": 41
+  },
+  "allocation_mapping": {
+    "base_bucket": "41 -> 30%-45%",
+    "base_equity_range": "30%-45%",
+    "final_equity_range": "40%-45%",
+    "final_bond_cash_range": "55%-60%",
+    "reason": "得分落在弱势震荡上沿，同时Tushare资金流明显净流出、进攻主线弱，取保守区间。"
+  },
+  "hard_constraints": [
+    {
+      "name": "普通账户权益仓位上限85%",
+      "triggered": false,
+      "impact": "本次建议显著低于上限"
+    },
+    {
+      "name": "没有明确牛市主升浪证据不超过75%",
+      "triggered": true,
+      "impact": "短线指数转弱，不进入强进攻区"
+    },
+    {
+      "name": "没有A级主线不超过65%",
+      "triggered": false,
+      "impact": "AI仍为固化A档，但交易阶段分歧；不触发硬上限但限制进攻仓"
+    },
+    {
+      "name": "市场广度低于45%不超过60%",
+      "triggered": false,
+      "impact": "上涨占比 57.38% 未触发该硬约束"
+    },
+    {
+      "name": "指数趋势低于10分不超过60%",
+      "triggered": true,
+      "impact": "短线趋势偏弱，权益上限压在45%以内"
+    },
+    {
+      "name": "主线强度低于8分时进攻仓不超过股票仓25%",
+      "triggered": true,
+      "impact": "进攻仓暂停新增，已有暴露只保留观察或等ACTION_PLAN处理"
+    },
+    {
+      "name": "拥挤惩罚高于15不新增进攻仓",
+      "triggered": false,
+      "impact": "惩罚未高于15，但仍不支持新增进攻仓"
+    },
+    {
+      "name": "单一行业或主线不超过权益仓位30%-35%",
+      "triggered": null,
+      "impact": "需组合分析模块用最新持仓快照复核"
+    },
+    {
+      "name": "主题仓不超过权益仓位10%",
+      "triggered": null,
+      "impact": "需组合分析模块用最新持仓快照复核"
+    }
+  ],
+  "equity_bucket_suggestion": {
+    "role_definitions": {
+      "core": "宽基、自由现金流、红利低波等低换手核心暴露",
+      "offensive": "AI、半导体、高端制造等交易主线或高弹性产业方向",
+      "defensive": "红利、公用事业、医药、金融、现金替代等防御暴露",
+      "theme": "机器人、商业航天、低空经济等低确定性试错方向"
+    },
+    "core": {
+      "range": "权益仓的45%-55%",
+      "status": "maintain",
+      "note": "若总权益下降，核心仓也以维持质量为主，不追涨宽基。"
+    },
+    "offensive": {
+      "range": "权益仓的15%-25%",
+      "status": "pause_new",
+      "note": "AI分歧、半导体B档，且代表ETF短线转弱。"
+    },
+    "defensive": {
+      "range": "权益仓的15%-25%",
+      "status": "maintain",
+      "note": "防御仓可维持，但红利/公用事业若进入拥挤区也不追高。",
+      "normal_reference_range": "7%-12% of equity allocation"
+    },
+    "theme": {
+      "range": "权益仓的0%-5%",
+      "status": "pause",
+      "note": "主题仓只观察和清理，不新增试错。"
+    }
+  },
+  "trigger_based_adjustments": [
+    {
+      "trigger_condition": "沪深300、创业板、科创50重新站上20日线，且全A moneyflow连续转正",
+      "observed_indicators": [
+        "index_daily",
+        "moneyflow",
+        "daily breadth"
+      ],
+      "allocation_action": "权益上限可回到45%-50%，进攻仓从暂停新增转为低配观察",
+      "invalid_or_reverse_condition": "任一核心指数再度跌破20日线且资金流转负"
+    },
+    {
+      "trigger_condition": "AI代表ETF和半导体代表ETF至少两只重新站上20日线，且主线研究确认分歧修复",
+      "observed_indicators": [
+        "fund_daily",
+        "theme_registry"
+      ],
+      "allocation_action": "进攻仓可恢复到权益仓20%-30%的中性低配区",
+      "invalid_or_reverse_condition": "AI交易阶段转退潮或半导体继续弱于宽基"
+    },
+    {
+      "trigger_condition": "主要指数继续低于20日线、moneyflow继续大额净流出，或科创50/创业板继续破位",
+      "observed_indicators": [
+        "index_daily",
+        "moneyflow"
+      ],
+      "allocation_action": "权益区间下沿下调到35%-40%，现金/短融提高到60%左右",
+      "invalid_or_reverse_condition": "宽度和资金同步修复"
+    },
+    {
+      "trigger_condition": "红利、公用事业、资源等防御/周期方向放量滞涨或进入高拥挤区",
+      "observed_indicators": [
+        "fund_daily",
+        "intraday_rules"
+      ],
+      "allocation_action": "不再上调防御仓，只保留现金短融作为主要防守工具",
+      "invalid_or_reverse_condition": "防御方向回撤到合理区且市场风险未继续扩大"
+    }
+  ],
+  "operation_implications": {
+    "equity_total": "建议权益总仓位 40%-45%，若最新持仓仍高于上沿，应交由ACTION_PLAN评估减风险。",
+    "bond_cash": "建议债券/现金/短融 55%-60%，现金短融仍是主要防守承接。",
+    "offensive_bucket": "暂停新增AI、半导体、电网设备、稀有金属等进攻/弹性仓。",
+    "defensive_bucket": "防御仓维持，不追高红利或公用事业。",
+    "theme_bucket": "主题仓暂停新增，低空/机器人/游戏等只观察或按ACTION_PLAN处理。"
+  },
+  "risks": [
+    "指数跌破20日线后若资金继续流出，市场可能从震荡转入二次回撤。",
+    "主题ETF仍有价格拥挤和高波动，低开不等于低估买点。",
+    "最新组合快照不是今日实时持仓，执行级动作前必须刷新持仓。"
+  ],
+  "watchlist": [
+    "2026-06-08收盘后是否需要用完整当日数据再更新。",
+    "AI和半导体代表ETF是否重新站上20日线。",
+    "Tushare moneyflow是否从大额净流出转为连续净流入。",
+    "现金短融桶是否回到目标下沿。"
+  ],
+  "data_gaps": {
+    "fund_flow": [
+      "Tushare moneyflow为资金流代理，未等同ETF净申购或外资流。"
+    ],
+    "etf_share_or_subscription": [
+      "本次未系统拉取ETF份额变化/净申购。"
+    ],
+    "margin_financing": [],
+    "northbound_or_foreign_flow": [
+      "未接入北向/外资日频口径。"
+    ],
+    "long_term_valuation_percentile": [
+      "部分指数长期index_dailybasic样本不完整；主题ETF长期估值仍需估值模块补足。"
+    ],
+    "other": [
+      "6月8日盘中数据不作为完整收盘数据。"
+    ]
+  },
+  "needs_theme_module_confirmation": [
+    "AI当前交易阶段是否从divergence转入退潮或修复。",
+    "半导体是否仍维持B档，还是需在6月8日后进一步降级/修复。"
+  ],
+  "comparison_with_previous": {
+    "previous_file": "research/market/market_score_2026-06-03_211833.json",
+    "previous_date": "2026-06-03",
+    "previous_market_position_score": 46,
+    "previous_equity_allocation_range": "45%-50%",
+    "change_type": "downgrade",
+    "change_reasons": [
+      "主要指数从6月3日的部分站上20日线转为多数低于20日线。",
+      "Tushare moneyflow代理显示全A净流出约-964.93亿元，风险偏好弱于上一版。",
+      "AI/半导体代表ETF未恢复20日线，进攻仓缺少新增依据。"
+    ]
+  },
+  "decision_log_entry": "2026-06-08 市场仓位研究：以 20260605 为最新完整交易日，市场机会分数 49，拥挤惩罚 8，市场仓位分数 41；建议权益仓位 40%-45%、债券/现金/短融 55%-60%，较上一版 45%-50% 下调；进攻仓暂停新增，等待指数、资金流和AI/半导体主线修复确认；输出 research/market/market_score_2026-06-08_100643.md 和 .json。"
+}
