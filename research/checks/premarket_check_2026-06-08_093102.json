@@ -1,0 +1,490 @@
+{
+  "module": "premarket_check",
+  "version": "1.1",
+  "date": "2026-06-08",
+  "session": "premarket",
+  "generated_at": "2026-06-08_093102",
+  "amount_policy": "ratio_only; no market_value; no cost_amount; no profit_amount; no share count",
+  "status": "risk_reduce_or_watch_only",
+  "basis": {
+    "latest_complete_trade_date": "2026-06-05",
+    "market_score_file_date": "2026-06-03",
+    "portfolio_snapshot_date": "2026-06-04",
+    "intraday_rules_last_updated": "2026-06-05",
+    "staleness_note": "市场仓位分数和持仓快照不是今天生成；本报告用 2026-06-05 Tushare 行情做盘前核验，但不替代正式市场仓位报告。"
+  },
+  "read_files": {
+    "daily_process": "docs/DAILY_PROCESS.md",
+    "market_score": "research/market/market_score_2026-06-03_211833.json",
+    "target_allocation": "research/allocation/target_allocation_2026-06-03_211833.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-04_092931.json",
+    "action_plan": "research/actions/action_plan_2026-06-03_201349_full_portfolio_final.json",
+    "intraday_rules": "research/alerts/intraday_rules.json"
+  },
+  "market_probe": {
+    "basis_trade_date": "20260605",
+    "calendar": "2026-06-08 为交易日；盘前最近完整收盘数据为 2026-06-05。",
+    "index_check": [
+      {
+        "code": "000001.SH",
+        "name": "上证指数",
+        "pct_chg": -0.7404,
+        "above_ma20": false,
+        "dist_ma20_pct": -2.37,
+        "drawdown_60d_pct": -5.06,
+        "rebound_60d_pct": 5.62
+      },
+      {
+        "code": "000300.SH",
+        "name": "沪深300",
+        "pct_chg": -1.7906,
+        "above_ma20": false,
+        "dist_ma20_pct": -1.54,
+        "drawdown_60d_pct": -3.63,
+        "rebound_60d_pct": 9.03
+      },
+      {
+        "code": "000905.SH",
+        "name": "中证500",
+        "pct_chg": -1.2637,
+        "above_ma20": false,
+        "dist_ma20_pct": -3.48,
+        "drawdown_60d_pct": -7.48,
+        "rebound_60d_pct": 10.89
+      },
+      {
+        "code": "399006.SZ",
+        "name": "创业板指",
+        "pct_chg": -3.2026,
+        "above_ma20": false,
+        "dist_ma20_pct": -0.74,
+        "drawdown_60d_pct": -4.05,
+        "rebound_60d_pct": 25.66
+      },
+      {
+        "code": "000688.SH",
+        "name": "科创50",
+        "pct_chg": -4.0119,
+        "above_ma20": false,
+        "dist_ma20_pct": -5.12,
+        "drawdown_60d_pct": -12.01,
+        "rebound_60d_pct": 32.81
+      }
+    ],
+    "breadth": {
+      "total": 5514,
+      "up_pct": 59.43,
+      "down_pct": 38.32,
+      "median_pct_chg": 0.51,
+      "turnover_100m_yuan": 31006.9
+    },
+    "moneyflow_proxy": {
+      "net_mf_amount_100m_yuan": -964.93,
+      "note": "Tushare moneyflow 全A汇总；作为资金流代理，不等同于 ETF 份额或两融。"
+    },
+    "key_watch_assets": [
+      {
+        "code": "159819.SZ",
+        "name": "人工智能ETF易方达",
+        "pct_chg": -3.46,
+        "dist_ma20_pct": -1.79,
+        "drawdown_60d_pct": -5.01,
+        "rebound_60d_pct": 36.12
+      },
+      {
+        "code": "588200.SH",
+        "name": "科创芯片ETF嘉实",
+        "pct_chg": -4.58,
+        "dist_ma20_pct": -3.56,
+        "drawdown_60d_pct": -11.48,
+        "rebound_60d_pct": 50.79
+      },
+      {
+        "code": "159558.SZ",
+        "name": "半导体设备ETF易方达",
+        "pct_chg": -3.05,
+        "dist_ma20_pct": -1.48,
+        "drawdown_60d_pct": -10.82,
+        "rebound_60d_pct": 52.35
+      },
+      {
+        "code": "510880.SH",
+        "name": "红利ETF华泰柏瑞",
+        "pct_chg": -0.18,
+        "dist_ma20_pct": 2.66,
+        "drawdown_60d_pct": -1.77,
+        "rebound_60d_pct": 5.23
+      },
+      {
+        "code": "001280.SZ",
+        "name": "中国铀业",
+        "pct_chg": -2.9256,
+        "dist_ma20_pct": -8.81,
+        "drawdown_60d_pct": -23.81,
+        "rebound_60d_pct": 0
+      },
+      {
+        "code": "601318.SH",
+        "name": "中国平安",
+        "pct_chg": 0.4697,
+        "dist_ma20_pct": -2.49,
+        "drawdown_60d_pct": -14.5,
+        "rebound_60d_pct": 1.92
+      },
+      {
+        "code": "002241.SZ",
+        "name": "歌尔股份",
+        "pct_chg": -0.4812,
+        "dist_ma20_pct": -4.71,
+        "drawdown_60d_pct": -12.61,
+        "rebound_60d_pct": 11.75
+      },
+      {
+        "code": "603596.SH",
+        "name": "伯特利",
+        "pct_chg": -2.1898,
+        "dist_ma20_pct": -4.66,
+        "drawdown_60d_pct": -38.58,
+        "rebound_60d_pct": 1.28
+      }
+    ],
+    "interpretation": "宽度有修复，但指数普遍回落且科技主线跌幅更大，资金流代理为净流出；不足以上调权益仓位或新增进攻仓。"
+  },
+  "summary": {
+    "one_line_conclusion": "今日盘前维持风险收缩/观察模式：6 月 5 日市场宽度修复，但指数普遍跌破短期中枢、科创和半导体/AI 回撤明显，组合权益仍高于目标区间；不新增进攻仓。",
+    "allowed_actions": [
+      "继续观察作战地图",
+      "只允许人工确认后的减风险或把释放比例回到 511360/现金短融桶",
+      "盘中若触发风险位，优先处理泡沫/待清理仓和组合超配问题"
+    ],
+    "forbidden_actions": [
+      "不得因为单日反弹新增进攻仓",
+      "不得把 AI/半导体低开理解为自动加仓点",
+      "不得使用 2026-06-04 旧持仓快照生成精确执行单",
+      "不得操作未建档标的"
+    ]
+  },
+  "market_gate": {
+    "previous_market_position_score": 46,
+    "previous_equity_range": "45%-50%",
+    "previous_bond_cash_range": "50%-55%",
+    "today_gate": "fail_for_new_offense; pass_for_risk_reduce_and_watch",
+    "reason": "2026-06-05 宽度好于 6 月 3 日，但主要指数与 AI/半导体同步走弱，资金流代理净流出，不能确认风险偏好恢复。",
+    "refresh_needed": "建议盘后重做市场仓位报告；盘前先沿用 45%-50% 权益上限。"
+  },
+  "portfolio_gate": {
+    "snapshot_date": "2026-06-04",
+    "actual_equity_pct": 55.01,
+    "target_equity_pct": 47.5,
+    "actual_cash_short_pct": 44.99,
+    "target_cash_short_pct": 52.5,
+    "buckets": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "color": "#5b6b7a",
+        "target_pct": 52.5,
+        "actual_pct": 44.99,
+        "gap_pct": -7.51,
+        "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
+      },
+      {
+        "key": "core_base",
+        "label": "宽基/核心底仓",
+        "color": "#2f6fbd",
+        "target_pct": 14.62,
+        "actual_pct": 6.57,
+        "gap_pct": -8.05,
+        "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "color": "#8b5cf6",
+        "target_pct": 14.62,
+        "actual_pct": 8.88,
+        "gap_pct": -5.74,
+        "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "color": "#0f8b6f",
+        "target_pct": 18.26,
+        "actual_pct": 19.14,
+        "gap_pct": 0.88,
+        "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
+      },
+      {
+        "key": "legacy_watch",
+        "label": "其他/待清理",
+        "color": "#9a6700",
+        "target_pct": 0,
+        "actual_pct": 20.38,
+        "gap_pct": 20.38,
+        "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
+      }
+    ],
+    "conclusion": "旧快照显示权益约 55.01%，高于 47.5% 中心和 45%-50% 区间；现金短融约 44.99%，低于 50%-55% 目标。若实际持仓已变化，需先刷新快照。"
+  },
+  "watch_table": [
+    {
+      "code": "511360.SH",
+      "name": "短融ETF海富通",
+      "bucket": "cash_short",
+      "stance": "合理",
+      "zone": "合理配置区",
+      "position_pct": 44.99,
+      "target_position_range": "50%-55%",
+      "support": 108.5042,
+      "right_confirm": 113.3512,
+      "bubble_start": 112.5132,
+      "drawdown_from_high_pct": 0,
+      "rebound_from_low_pct": 6.31
+    },
+    {
+      "code": "510300.SH",
+      "name": "沪深300ETF华泰柏瑞",
+      "bucket": "core_base",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 0,
+      "target_position_range": "0%-20%",
+      "support": 3.5478,
+      "right_confirm": 4.7414,
+      "bubble_start": 4.6202,
+      "drawdown_from_high_pct": -1.81,
+      "rebound_from_low_pct": 54.52
+    },
+    {
+      "code": "510500.SH",
+      "name": "中证500ETF南方",
+      "bucket": "core_base",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 0,
+      "target_position_range": "0%-15%",
+      "support": 5.4276,
+      "right_confirm": 8.2955,
+      "bubble_start": 7.251,
+      "drawdown_from_high_pct": -6.23,
+      "rebound_from_low_pct": 86.82
+    },
+    {
+      "code": "159915.SZ",
+      "name": "创业板ETF易方达",
+      "bucket": "core_base",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 0,
+      "target_position_range": "0%-10%",
+      "support": 1.782,
+      "right_confirm": 3.6178,
+      "bubble_start": 3.0604,
+      "drawdown_from_high_pct": -1.09,
+      "rebound_from_low_pct": 173.33
+    },
+    {
+      "code": "159819.SZ",
+      "name": "人工智能ETF易方达",
+      "bucket": "attack_mainline",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 0.02,
+      "target_position_range": "0%-3%",
+      "support": 0.7348,
+      "right_confirm": 1.7272,
+      "bubble_start": 1.4592,
+      "drawdown_from_high_pct": -1.61,
+      "rebound_from_low_pct": 253.5
+    },
+    {
+      "code": "588200.SH",
+      "name": "科创芯片ETF嘉实",
+      "bucket": "attack_mainline",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 0.17,
+      "target_position_range": "0%-2%",
+      "support": 0.9928,
+      "right_confirm": 2.9208,
+      "bubble_start": 2.2682,
+      "drawdown_from_high_pct": -7.22,
+      "rebound_from_low_pct": 350.5
+    },
+    {
+      "code": "159558.SZ",
+      "name": "半导体设备ETF易方达",
+      "bucket": "attack_mainline",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 0.17,
+      "target_position_range": "0%-2%",
+      "support": 1.155,
+      "right_confirm": 2.3234,
+      "bubble_start": 1.885,
+      "drawdown_from_high_pct": -8.02,
+      "rebound_from_low_pct": 255.49
+    },
+    {
+      "code": "159326.SZ",
+      "name": "电网设备ETF华夏",
+      "bucket": "attack_mainline",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 0.87,
+      "target_position_range": "0%-2%",
+      "support": 1.0764,
+      "right_confirm": 1.9852,
+      "bubble_start": 1.7552,
+      "drawdown_from_high_pct": -4.39,
+      "rebound_from_low_pct": 112.92
+    },
+    {
+      "code": "159201.SZ",
+      "name": "自由现金流ETF华夏",
+      "bucket": "core_base",
+      "stance": "偏贵",
+      "zone": "偏贵区",
+      "position_pct": 4.59,
+      "target_position_range": "3%-6%",
+      "support": 1,
+      "right_confirm": 1.3014,
+      "bubble_start": 1.2986,
+      "drawdown_from_high_pct": -14.5,
+      "rebound_from_low_pct": 33.96
+    },
+    {
+      "code": "510880.SH",
+      "name": "红利ETF华泰柏瑞",
+      "bucket": "defense",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 2.92,
+      "target_position_range": "2%-5%",
+      "support": 3.015,
+      "right_confirm": 3.2606,
+      "bubble_start": 3.24,
+      "drawdown_from_high_pct": -2.26,
+      "rebound_from_low_pct": 20.2
+    },
+    {
+      "code": "516150.SH",
+      "name": "稀土ETF嘉实",
+      "bucket": "legacy_watch",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 3.71,
+      "target_position_range": "0%-3%",
+      "support": 0.9256,
+      "right_confirm": 1.9754,
+      "bubble_start": 1.7404,
+      "drawdown_from_high_pct": -14.65,
+      "rebound_from_low_pct": 173.85
+    },
+    {
+      "code": "562800.SH",
+      "name": "稀有金属ETF嘉实",
+      "bucket": "attack_mainline",
+      "stance": "泡沫",
+      "zone": "拥挤/风险区",
+      "position_pct": 0.85,
+      "target_position_range": "0%-2%",
+      "support": 0.4868,
+      "right_confirm": 1.0737,
+      "bubble_start": 0.837,
+      "drawdown_from_high_pct": -13.39,
+      "rebound_from_low_pct": 169.57
+    },
+    {
+      "code": "001280.SZ",
+      "name": "中国铀业",
+      "bucket": "attack_mainline",
+      "stance": "合理",
+      "zone": "合理配置区",
+      "position_pct": 0,
+      "target_position_range": "0%-1%",
+      "support": 69.8714,
+      "right_confirm": 81.0267,
+      "bubble_start": 90.1978,
+      "drawdown_from_high_pct": -28.68,
+      "rebound_from_low_pct": 17.88
+    },
+    {
+      "code": "601318.SH",
+      "name": "中国平安",
+      "bucket": "defense",
+      "stance": "合理",
+      "zone": "合理配置区",
+      "position_pct": 0,
+      "target_position_range": "0%-3%",
+      "support": 51.6728,
+      "right_confirm": 57.6675,
+      "bubble_start": 63.9857,
+      "drawdown_from_high_pct": -28.38,
+      "rebound_from_low_pct": 40.89
+    },
+    {
+      "code": "002241.SZ",
+      "name": "歌尔股份",
+      "bucket": "attack_mainline",
+      "stance": "低估",
+      "zone": "低估观察区",
+      "position_pct": 1.42,
+      "target_position_range": "0%-2%",
+      "support": 25.0396,
+      "right_confirm": 24.7183,
+      "bubble_start": 41.9415,
+      "drawdown_from_high_pct": -37,
+      "rebound_from_low_pct": 72.95
+    },
+    {
+      "code": "603596.SH",
+      "name": "伯特利",
+      "bucket": "attack_mainline",
+      "stance": "低估",
+      "zone": "低估观察区",
+      "position_pct": 1.73,
+      "target_position_range": "0%-2%",
+      "support": 34.7921,
+      "right_confirm": 41.9418,
+      "bubble_start": 54.9409,
+      "drawdown_from_high_pct": -66.13,
+      "rebound_from_low_pct": 3.55
+    },
+    {
+      "code": "688333.SH",
+      "name": "西安铂力特",
+      "bucket": "attack_mainline",
+      "stance": "偏贵",
+      "zone": "偏贵区",
+      "position_pct": 1.33,
+      "target_position_range": "0%-2%",
+      "support": 74.0742,
+      "right_confirm": 92.4707,
+      "bubble_start": 153.0918,
+      "drawdown_from_high_pct": -30.17,
+      "rebound_from_low_pct": 159.4
+    }
+  ],
+  "intraday_handoff": {
+    "dashboard_command": "start_intraday_dashboard.bat",
+    "qmt_requirement": "QMT 已登录并勾选独立交易；若行情字段为空，作战地图只看历史估值底图，不执行盘中触发。",
+    "watch_focus": [
+      "现金短融桶是否回补到目标下沿",
+      "AI/半导体是否继续破位而非右侧确认",
+      "宽基泡沫区是否继续回撤",
+      "低估个股只做观察，不因低估标签自动加仓"
+    ]
+  },
+  "blocked_or_research_first": [
+    {
+      "type": "stale_snapshot",
+      "subject": "portfolio_snapshot",
+      "reason": "最新持仓快照为 2026-06-04，不保证反映今天真实仓位。",
+      "next_step": "如需执行级建议，先粘贴今天最新持仓。"
+    }
+  ],
+  "decision_log_entry": "2026-06-08 盘前分析：使用 Tushare 核验 2026-06-05 最新完整行情，结论为 risk_reduce_or_watch_only；沿用 2026-06-03 权益 45%-50% 上限，2026-06-04 持仓快照显示权益约 55.01%、现金短融约 44.99%，今天不新增进攻仓，只允许人工确认后的减风险/回补 511360 或现金短融；输出 research/checks/premarket_check_2026-06-08_093102.json 和 research/checks/premarket_check_2026-06-08_093102.md。"
+}

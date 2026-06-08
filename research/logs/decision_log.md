@@ -1701,3 +1701,5 @@
 - 标的卡片：移除长/中/短趋势图；前高回撤和前低反弹改为上下两条横向图，上方最大回撤、下方最大反弹。
 - 交互：全局 tooltip 显示时间延长到约45秒，方便阅读风控位、右侧确认位、估值状态、回撤/反弹和仓位偏离说明。
 - 验证结果：`py -3.11 scripts\intraday_dashboard.py --preview-png runtime\alerts\intraday_dashboard_layout_update_preview.png` 已生成新版截图；QMT 自检读取 29/29 个标的。
+
+2026-06-08 盘前分析：使用 Tushare 核验 2026-06-05 最新完整行情，结论为 risk_reduce_or_watch_only；沿用 2026-06-03 权益 45%-50% 上限，2026-06-04 持仓快照显示权益约 55.01%、现金短融约 44.99%，今天不新增进攻仓，只允许人工确认后的减风险/回补 511360 或现金短融；输出 research/checks/premarket_check_2026-06-08_093102.json 和 research/checks/premarket_check_2026-06-08_093102.md。
