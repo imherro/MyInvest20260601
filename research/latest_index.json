@@ -1,17 +1,17 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-08_205346",
+  "generated_at": "2026-06-08_230154",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
       "module": "action_plan",
       "code": null,
       "name": null,
-      "path": "research/actions/action_plan_2026-06-08_205241_latest_ratio_only.json",
-      "generated_at": "2026-06-08_205241",
+      "path": "research/actions/action_plan_2026-06-08_225531_latest_ratio_only.json",
+      "generated_at": "2026-06-08_225531",
       "basis_trade_date": "2026-06-08",
-      "sha256": "9e72dad71f3661a79af037152694ce05fef94d1f6c19fd83a2b604cf4f1ee451",
+      "sha256": "4cceff90942b4752f1a6873d99e77f3e465df83239eab00d140b3a2933e4551b",
       "quality": {
         "status": "warning"
       },
@@ -39,9 +39,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-08_205232",
+      "generated_at": "2026-06-08_225511",
       "basis_trade_date": null,
-      "sha256": "0a7bb5ee60824f181183cb94e5208e580dd615c987009ff8293f3d9f04e750ef",
+      "sha256": "b752194dcdd30afa4afd71396f9074eb3cb5a6e3dc184261002ab3e3bfb9f2f5",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -53,10 +53,10 @@
       "module": "target_allocation",
       "code": null,
       "name": null,
-      "path": "research/allocation/target_allocation_2026-06-08_155802.json",
-      "generated_at": "2026-06-08_155802",
+      "path": "research/allocation/target_allocation_2026-06-08_225511.json",
+      "generated_at": "2026-06-08_225511",
       "basis_trade_date": "20260605",
-      "sha256": "bfa99d564bd0500d28e8eb114b27523dd2faf354e0e3e2e249d20c60aaf1fadf",
+      "sha256": "252ad221b70f3fec0318a5b4d97cf39b89a8994df410dfe3ff78288698c6a791",
       "quality": {
         "status": "warning"
       },
@@ -83,10 +83,10 @@
       "module": "staleness_check",
       "code": null,
       "name": null,
-      "path": "research/checks/staleness_check_2026-06-08_205252.json",
-      "generated_at": "2026-06-08_205252",
+      "path": "research/checks/staleness_check_2026-06-08_230118.json",
+      "generated_at": "2026-06-08_230118",
       "basis_trade_date": null,
-      "sha256": "0edb2af48674c5680ee92fcce4b8de4411c66077eebb20908e341d77119d1676",
+      "sha256": "469e81d51dccf31c95f0856e0b2d7d70c67dacf28730196532c71eec5dfd4c04",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -101,7 +101,7 @@
       "path": "research/config/bucket_registry.json",
       "generated_at": "2026-06-08_000000",
       "basis_trade_date": null,
-      "sha256": "9aba34ffdff0cfa6ae8e8ba6e4b756348154a6a1594a4ca6165d968c203aff03",
+      "sha256": "da739130f776635d225e2b9c3347602fdc19af385b87de4579ebae5d5ccd0c05",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -143,12 +143,12 @@
       "module": "portfolio_snapshot",
       "code": null,
       "name": null,
-      "path": "research/portfolio/portfolio_snapshot_2026-06-08_135053.json",
-      "generated_at": "2026-06-08_135053",
+      "path": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+      "generated_at": "2026-06-08_225306",
       "basis_trade_date": "2026-06-08",
-      "sha256": "f68f43db750d87507728de51b116e551e5e9ddfab5854cd508bda8c044c474ac",
+      "sha256": "b36083905f7df27428070fdaa00aa45e179da4cdbb8c4767977cfb66174fd893",
       "quality": {
-        "status": "error"
+        "status": "warning"
       },
       "staleness": {
         "status": "legacy_unknown"
@@ -158,10 +158,10 @@
       "module": "post_market_review",
       "code": null,
       "name": null,
-      "path": "research/reviews/post_market_review_2026-06-02_152338.json",
-      "generated_at": "2026-06-02_152338",
-      "basis_trade_date": "2026-06-02",
-      "sha256": "6353e80d581ddd535ffb27c5dbbc16a76a83e57a00e5802d886601254761cdf8",
+      "path": "research/reviews/post_market_review_2026-06-08_225756.json",
+      "generated_at": "2026-06-08_225756",
+      "basis_trade_date": "2026-06-08",
+      "sha256": "7a4eee8cd8ad2773884ffe9414d71a2301c542faad50d1620f87afa949e1a76c",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -352,6 +352,21 @@
       }
     },
     {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-08_225531_latest_ratio_only.json",
+      "generated_at": "2026-06-08_225531",
+      "basis_trade_date": "2026-06-08",
+      "sha256": "4cceff90942b4752f1a6873d99e77f3e465df83239eab00d140b3a2933e4551b",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
       "module": "intraday_alerts",
       "code": null,
       "name": null,
@@ -416,9 +431,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-08_205232",
+      "generated_at": "2026-06-08_225511",
       "basis_trade_date": null,
-      "sha256": "0a7bb5ee60824f181183cb94e5208e580dd615c987009ff8293f3d9f04e750ef",
+      "sha256": "b752194dcdd30afa4afd71396f9074eb3cb5a6e3dc184261002ab3e3bfb9f2f5",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -464,6 +479,21 @@
       "generated_at": "2026-06-08_155802",
       "basis_trade_date": "20260605",
       "sha256": "bfa99d564bd0500d28e8eb114b27523dd2faf354e0e3e2e249d20c60aaf1fadf",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-08_225511.json",
+      "generated_at": "2026-06-08_225511",
+      "basis_trade_date": "20260605",
+      "sha256": "252ad221b70f3fec0318a5b4d97cf39b89a8994df410dfe3ff78288698c6a791",
       "quality": {
         "status": "warning"
       },
@@ -562,13 +592,28 @@
       }
     },
     {
+      "module": "staleness_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/staleness_check_2026-06-08_230118.json",
+      "generated_at": "2026-06-08_230118",
+      "basis_trade_date": null,
+      "sha256": "469e81d51dccf31c95f0856e0b2d7d70c67dacf28730196532c71eec5dfd4c04",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "bucket_registry",
       "code": null,
       "name": null,
       "path": "research/config/bucket_registry.json",
       "generated_at": "2026-06-08_000000",
       "basis_trade_date": null,
-      "sha256": "9aba34ffdff0cfa6ae8e8ba6e4b756348154a6a1594a4ca6165d968c203aff03",
+      "sha256": "da739130f776635d225e2b9c3347602fdc19af385b87de4579ebae5d5ccd0c05",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1150,6 +1195,21 @@
       "module": "portfolio_snapshot",
       "code": null,
       "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+      "generated_at": "2026-06-08_225306",
+      "basis_trade_date": "2026-06-08",
+      "sha256": "b36083905f7df27428070fdaa00aa45e179da4cdbb8c4767977cfb66174fd893",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
       "path": "research/portfolio/research_backlog_2026-06-02_094121.json",
       "generated_at": "2026-06-02_094121",
       "basis_trade_date": "2026-06-02",
@@ -1259,6 +1319,21 @@
       "generated_at": "2026-06-02_152338",
       "basis_trade_date": "2026-06-02",
       "sha256": "6353e80d581ddd535ffb27c5dbbc16a76a83e57a00e5802d886601254761cdf8",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "post_market_review",
+      "code": null,
+      "name": null,
+      "path": "research/reviews/post_market_review_2026-06-08_225756.json",
+      "generated_at": "2026-06-08_225756",
+      "basis_trade_date": "2026-06-08",
+      "sha256": "7a4eee8cd8ad2773884ffe9414d71a2301c542faad50d1620f87afa949e1a76c",
       "quality": {
         "status": "legacy_unknown"
       },

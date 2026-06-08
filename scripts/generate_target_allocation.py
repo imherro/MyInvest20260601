@@ -296,7 +296,7 @@ def build_target_allocation(index: dict[str, Any]) -> dict[str, Any]:
         "quality": {
             "status": "warning" if (snapshot.get("quality") or {}).get("status") in {"error", "warning"} else "ok",
             "warnings": [
-                "最新QMT持仓快照存在数据质量错误，已用于比例偏离，但不允许用异常成本字段生成精确交易建议。"
+                "最新QMT持仓快照存在数据质量警告，已用于比例偏离，但不允许用异常成本字段生成精确交易建议。"
             ]
             if (snapshot.get("quality") or {}).get("status") in {"error", "warning"}
             else [],
@@ -468,4 +468,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

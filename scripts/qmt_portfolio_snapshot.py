@@ -21,6 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PORTFOLIO_DIR = ROOT / "research" / "portfolio"
 ALERT_RULES = ROOT / "research" / "alerts" / "intraday_rules.json"
 DECISION_LOG = ROOT / "research" / "logs" / "decision_log.md"
+ETF_REGISTRY = ROOT / "research" / "etfs" / "etf_registry.json"
+STOCK_REGISTRY = ROOT / "research" / "stocks" / "stock_registry.json"
 
 SENSITIVE_OUTPUT_FIELDS = {
     "account_id",
@@ -80,6 +82,7 @@ BUCKET_BY_CODE = {
     "603903": "legacy_watch",
     "516150": "legacy_watch",
     "512400": "legacy_watch",
+    "515880": "legacy_watch",
 }
 
 CATEGORY_BY_BUCKET = {
@@ -233,6 +236,14 @@ def latest_portfolio_snapshot() -> tuple[dict[str, Any], Path | None]:
 
 def name_maps() -> dict[str, str]:
     names: dict[str, str] = {}
+    for registry_path in [ETF_REGISTRY, STOCK_REGISTRY]:
+        registry = read_json(registry_path, {})
+        for section in ["etfs", "stocks", "items"]:
+            for item in registry.get(section, []) or []:
+                code = plain_code(item.get("code", "") or item.get("ts_code", ""))
+                name = item.get("name") or item.get("security_name")
+                if code and name:
+                    names[code] = str(name)
     rules = read_json(ALERT_RULES, {})
     for subject in rules.get("subjects", []):
         code = plain_code(subject.get("code", ""))
@@ -393,13 +404,13 @@ def build_holdings(asset: Any, positions: list[Any], ticks: dict[str, dict[str, 
         if current_price is None and market_value is not None and volume and volume > 0:
             current_price = market_value / volume
         if open_price is not None and open_price <= 0:
-            errors.append(
+            warnings.append(
                 {
                     "code": raw,
                     "field": "cost_price",
                     "value": round(open_price, 4),
                     "action": "set_null_and_exclude_from_reference_pnl_pct",
-                    "reason": "QMT open_price/cost field is non-positive and cannot be used as cost basis.",
+                    "reason": "QMT open_price/cost field is non-positive; cost-based PnL is unavailable, but ratio-level portfolio analysis can continue.",
                 }
             )
             open_price = None
@@ -497,7 +508,7 @@ def build_snapshot(trader: Any, account: Any, xtdata: Any) -> dict[str, Any]:
             "status": "error" if quality_errors else ("warning" if quality_warnings else "ok"),
             "errors": quality_errors,
             "warnings": quality_warnings,
-            "policy": "cost_price/current_price <= 0 are set to null and excluded from reference_pnl_pct; severe quality errors degrade downstream action use.",
+            "policy": "Invalid cost_price is downgraded to a warning and excluded from reference_pnl_pct; invalid current_price or broken weight totals remain errors.",
         },
         "summary": {
             "total_items": len(holdings),

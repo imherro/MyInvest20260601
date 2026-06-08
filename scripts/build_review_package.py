@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT_DIR = ROOT / "runtime" / "review_packages"
+OUTPUT_DIR = ROOT / "temp" / "review_packages"
 INCLUDE_PREFIXES = [
     "README.md",
     "requirements.txt",
@@ -111,4 +111,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

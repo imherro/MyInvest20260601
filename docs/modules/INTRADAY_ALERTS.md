@@ -177,7 +177,9 @@ python scripts\intraday_monitor.py --quotes-file path\to\qmt_snapshot.json
 py -3.11 scripts\intraday_dashboard.py
 ```
 
-实时作战地图直接读取 QMT 行情和 `research/alerts/intraday_rules.json`，每隔数秒刷新一次，不调用大模型、不生成报告、不自动下单。状态变化日志默认写入本地 `runtime/alerts/`，该目录不作为研究报告提交。
+实时作战地图直接读取 QMT 行情、`research/alerts/intraday_rules.json` 和最新 `action_plan`，每隔数秒刷新一次，不调用大模型、不生成报告、不自动下单。状态变化日志默认写入工程内 `temp/runtime/alerts/`，该目录已从 Git 同步中排除，不作为研究报告提交。
+
+作战地图中的 `action_plan` 只作为当日作战意图层：用于显示总仓位目标、各仓位桶建议动作和盘中复核条件。它不能覆盖实时规则，也不能绕过人工确认形成交易指令。
 
 盘中监控池由 `scripts/generate_valuation_reports.py` 每日或盘前同步生成。监控池应优先覆盖：
 
@@ -200,8 +202,8 @@ py -3.11 scripts\intraday_dashboard.py --once-json
 估值更新检查：
 
 ```powershell
-py -3.11 scripts\intraday_dashboard.py --once-json > runtime\alerts\intraday_once.json
-python scripts\check_valuation_updates.py --intraday-report runtime\alerts\intraday_once.json
+py -3.11 scripts\intraday_dashboard.py --once-json > temp\runtime\alerts\intraday_once.json
+python scripts\check_valuation_updates.py --intraday-report temp\runtime\alerts\intraday_once.json
 ```
 
 如果实时价格已经跨出估值报告基准区间，或持仓/观察标的缺少估值报告，盘中分析必须提示用户是否更新估值报告。盘中窗口本身不重算估值，只标记“实时区间”和“报告基准”的差异。
@@ -227,7 +229,7 @@ py -3.11 scripts\intraday_dashboard.py --once-json --reference-fallback
 窗口预览截图：
 
 ```powershell
-py -3.11 scripts\intraday_dashboard.py --preview-png runtime\alerts\intraday_dashboard_preview.png
+py -3.11 scripts\intraday_dashboard.py --preview-png temp\runtime\alerts\intraday_dashboard_preview.png
 ```
 
 该命令打开一次窗口、保存截图后退出，用于验证图示布局、文本重叠和分组显示。

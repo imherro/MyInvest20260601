@@ -1,0 +1,377 @@
+{
+  "module": "post_market_review",
+  "version": "1.1",
+  "date": "2026-06-08",
+  "generated_at": "2026-06-08_225756",
+  "review_type": "daily_brief",
+  "amount_policy": "ratio_only_no_market_value_no_profit_amount_no_total_amount_no_share_count",
+  "data_sources": {
+    "market_position": "research/market/market_score_2026-06-08_100643.json",
+    "theme_research": "research/themes/theme_review_2026-06-08_102237.json",
+    "action_plan": "research/actions/action_plan_2026-06-08_225531_latest_ratio_only.json",
+    "intraday_alerts": [
+      "research/alerts/intraday_alert_2026-06-08_094106.json"
+    ],
+    "valuation_update_check": "inline_check_valuation_updates",
+    "execution_records": "not_provided",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+    "premarket_check": "research/checks/premarket_check_2026-06-08_093102.json"
+  },
+  "summary": {
+    "review_conclusion": "insufficient_information",
+    "needs_research_update": true,
+    "needs_rule_revision": false,
+    "one_line_conclusion": "已自动生成盘后复盘底稿；缺少实际执行记录时只做计划/规则/风险复盘，不假设已执行。"
+  },
+  "market_review": {
+    "premarket_judgment": "弱势震荡，风险收缩优先; 权益目标 40%-45%; 最新目标权益为40%-45%，当前权益约54.10%，高于上沿约9.10pp；建议只做风险收缩：权益先降9.1pp至11.6pp，现金/短融提高到55%-60%，暂停新增进攻仓。",
+    "close_performance": "未接入收盘行情自动拉取；本脚本只引用已落盘市场报告和盘中提醒。",
+    "bias_assessment": "cannot_judge_close_bias_without_close_data",
+    "reason": "需要盘后市场数据或用户确认后再判断市场预判偏差。"
+  },
+  "theme_review": [
+    {
+      "theme": "AI",
+      "premarket_rating": "战略A / 交易B / repair",
+      "daily_performance": "not_loaded",
+      "matched_expectation": "partial",
+      "needs_update": false,
+      "note": "未接入收盘主线表现前，不因单日主观印象修改评级。"
+    },
+    {
+      "theme": "半导体",
+      "premarket_rating": "战略A / 交易C / repair",
+      "daily_performance": "not_loaded",
+      "matched_expectation": "partial",
+      "needs_update": false,
+      "note": "未接入收盘主线表现前，不因单日主观印象修改评级。"
+    },
+    {
+      "theme": "电力设备",
+      "premarket_rating": "战略B / 交易D / decline",
+      "daily_performance": "not_loaded",
+      "matched_expectation": "partial",
+      "needs_update": false,
+      "note": "未接入收盘主线表现前，不因单日主观印象修改评级。"
+    },
+    {
+      "theme": "高端装备",
+      "premarket_rating": "战略B / 交易C / repair",
+      "daily_performance": "not_loaded",
+      "matched_expectation": "partial",
+      "needs_update": false,
+      "note": "未接入收盘主线表现前，不因单日主观印象修改评级。"
+    },
+    {
+      "theme": "能源",
+      "premarket_rating": "战略B / 交易D / decline",
+      "daily_performance": "not_loaded",
+      "matched_expectation": "partial",
+      "needs_update": false,
+      "note": "未接入收盘主线表现前，不因单日主观印象修改评级。"
+    },
+    {
+      "theme": "有色",
+      "premarket_rating": "战略B / 交易D / decline",
+      "daily_performance": "not_loaded",
+      "matched_expectation": "partial",
+      "needs_update": false,
+      "note": "未接入收盘主线表现前，不因单日主观印象修改评级。"
+    },
+    {
+      "theme": "电池",
+      "premarket_rating": "战略C / 交易D / decline",
+      "daily_performance": "not_loaded",
+      "matched_expectation": "partial",
+      "needs_update": false,
+      "note": "未接入收盘主线表现前，不因单日主观印象修改评级。"
+    },
+    {
+      "theme": "储能",
+      "premarket_rating": "战略B / 交易C / repair",
+      "daily_performance": "not_loaded",
+      "matched_expectation": "partial",
+      "needs_update": false,
+      "note": "未接入收盘主线表现前，不因单日主观印象修改评级。"
+    }
+  ],
+  "action_plan_review": [
+    {
+      "subject": "权益总仓",
+      "premarket_suggestion": "Reduce 先降9.1pp至11.6pp",
+      "trigger_condition": "人工确认后执行；优先从legacy_watch和超配桶释放比例",
+      "triggered": null,
+      "executed": null,
+      "result": "等待用户提供实际执行信息；未提供前不能假设已执行。",
+      "bias": "execution_information_missing"
+    },
+    {
+      "subject": "现金/短融桶",
+      "premarket_suggestion": "Add 提高9.1pp至11.6pp",
+      "trigger_condition": "权益减仓动作同步完成后承接到现金/短融桶",
+      "triggered": null,
+      "executed": null,
+      "result": "等待用户提供实际执行信息；未提供前不能假设已执行。",
+      "bias": "execution_information_missing"
+    },
+    {
+      "subject": "其他/待清理桶",
+      "premarket_suggestion": "Reduce 第一阶段降低8.0pp至10.0pp",
+      "trigger_condition": "优先检查流动性、税费和是否已触发个券失效条件",
+      "triggered": null,
+      "executed": null,
+      "result": "等待用户提供实际执行信息；未提供前不能假设已执行。",
+      "bias": "execution_information_missing"
+    },
+    {
+      "subject": "进攻主线桶",
+      "premarket_suggestion": "Reduce 如清理legacy后权益仍高于45%，再降低1.0pp至3.0pp",
+      "trigger_condition": "legacy_watch清理后权益仍超目标，或代表ETF/个股继续破位",
+      "triggered": null,
+      "executed": null,
+      "result": "等待用户提供实际执行信息；未提供前不能假设已执行。",
+      "bias": "execution_information_missing"
+    },
+    {
+      "subject": "防御桶",
+      "premarket_suggestion": "Watch 暂不优先压缩；若权益仍高于45%，再评估降低1.0pp至3.0pp",
+      "trigger_condition": "红利、金融、医药等防御方向放量滞涨或组合仍超权益上限",
+      "triggered": null,
+      "executed": null,
+      "result": "等待用户提供实际执行信息；未提供前不能假设已执行。",
+      "bias": "execution_information_missing"
+    }
+  ],
+  "intraday_alert_review": [],
+  "execution_review": {
+    "actual_actions": [],
+    "followed_plan": null,
+    "execution_deviation": "未提供执行记录。",
+    "improvement_needed": "盘后补充实际买卖和未执行原因后再做执行偏差判断。"
+  },
+  "portfolio_risk_changes": {
+    "equity_allocation_change": "最新快照权益约 54.0964%，目标由 action_plan/target_allocation 约束。",
+    "theme_industry_concentration_change": "未生成盘后新持仓快照前，只能沿用最新快照。",
+    "single_security_risk_change": "未发现自动化脚本可确认的新增单标的超限。",
+    "hard_constraints_triggered": [
+      "当前权益约54.10%，高于40%-45%目标区间。",
+      "进攻仓暂停新增。",
+      "没有新增A档交易主线作为扩大权益的依据。",
+      "其他/待清理桶显著高于理想目标。"
+    ]
+  },
+  "biases": [
+    {
+      "type": "missing_research",
+      "exists": true,
+      "description": "缺少实际执行记录，不能评价执行偏差。",
+      "follow_up": "补充执行记录或刷新QMT快照。"
+    }
+  ],
+  "research_updates_needed": [
+    {
+      "module_or_file": "valuation_report",
+      "needs_update": true,
+      "reason": "发现 13 个估值报告缺失或应更新项，分析前应提示用户是否更新。",
+      "priority": "high"
+    },
+    {
+      "module_or_file": "portfolio_snapshot",
+      "needs_update": false,
+      "reason": "若今日有实际执行，应刷新QMT只读持仓快照。",
+      "priority": "medium"
+    }
+  ],
+  "valuation_update_check": {
+    "module": "valuation_update_check",
+    "generated_at": "2026-06-08_225756",
+    "basis_date": "20260605",
+    "scope": "latest_portfolio_and_intraday_rules",
+    "update_required_count": 13,
+    "items": [
+      {
+        "code": "002041.SZ",
+        "name": "登海种业",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 002041.SZ 登海种业 的估值报告？"
+      },
+      {
+        "code": "002258.SZ",
+        "name": "利尔化学",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 002258.SZ 利尔化学 的估值报告？"
+      },
+      {
+        "code": "002352.SZ",
+        "name": "顺丰控股",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 002352.SZ 顺丰控股 的估值报告？"
+      },
+      {
+        "code": "002920.SZ",
+        "name": "德赛西威",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 002920.SZ 德赛西威 的估值报告？"
+      },
+      {
+        "code": "159206.SZ",
+        "name": "卫星ETF永赢",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 159206.SZ 卫星ETF永赢 的估值报告？"
+      },
+      {
+        "code": "159667.SZ",
+        "name": "工业母机ETF国泰",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 159667.SZ 工业母机ETF国泰 的估值报告？"
+      },
+      {
+        "code": "300627.SZ",
+        "name": "华测导航",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 300627.SZ 华测导航 的估值报告？"
+      },
+      {
+        "code": "300760.SZ",
+        "name": "迈瑞医疗",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 300760.SZ 迈瑞医疗 的估值报告？"
+      },
+      {
+        "code": "512400.SH",
+        "name": "有色金属ETF南方",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 512400.SH 有色金属ETF南方 的估值报告？"
+      },
+      {
+        "code": "515880.SH",
+        "name": "通信ETF国泰",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 515880.SH 通信ETF国泰 的估值报告？"
+      },
+      {
+        "code": "603087.SH",
+        "name": "甘李药业",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 603087.SH 甘李药业 的估值报告？"
+      },
+      {
+        "code": "603903.SH",
+        "name": "中持股份",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 603903.SH 中持股份 的估值报告？"
+      },
+      {
+        "code": "688439.SH",
+        "name": "振华风光",
+        "sources": [
+          "portfolio"
+        ],
+        "severity": "missing",
+        "reasons": [
+          "缺少估值报告"
+        ],
+        "latest_valuation": null,
+        "suggested_prompt": "是否更新 688439.SH 振华风光 的估值报告？"
+      }
+    ],
+    "summary": "发现 13 个估值报告缺失或应更新项，分析前应提示用户是否更新。",
+    "command": "python scripts/check_valuation_updates.py --intraday-report temp/runtime/alerts/intraday_once.json"
+  },
+  "next_day_watch_points": [
+    "权益仓是否仍高于45%。",
+    "现金/短融是否回到55%-60%。",
+    "legacy_watch 是否按操作建议进入第一阶段清理。",
+    "市场门禁是否从 verify_only/risk_reduce_only 改善到允许新增风险。"
+  ],
+  "rule_revision_suggestion": {
+    "suggested": false,
+    "reason": "本次为自动底稿，不因单日结果修改规则。",
+    "files_to_update": []
+  },
+  "decision_log_entry": "2026-06-08 盘后复盘自动底稿：生成 post_market_review_2026-06-08_225756.md/json；读取最新 market/theme/action/portfolio/alerts，并运行估值更新检查；缺少执行记录时不判断已执行。"
+}

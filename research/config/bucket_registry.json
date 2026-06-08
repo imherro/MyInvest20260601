@@ -50,7 +50,8 @@
     "002041": "legacy_watch",
     "603903": "legacy_watch",
     "516150": "legacy_watch",
-    "512400": "legacy_watch"
+    "512400": "legacy_watch",
+    "515880": "legacy_watch"
   },
   "category_to_bucket": {
     "bond_cash": "cash_short",

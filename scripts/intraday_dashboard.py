@@ -33,9 +33,11 @@ import intraday_monitor
 
 
 ROOT = Path(__file__).resolve().parents[1]
+TEMP_ROOT = ROOT / "temp"
 DEFAULT_RULES = ROOT / "research" / "alerts" / "intraday_rules.json"
+LATEST_INDEX = ROOT / "research" / "latest_index.json"
 DEFAULT_QMT_SITE = Path(r"D:\国金证券QMT交易端\python\Lib\site-packages")
-RUNTIME_DIR = ROOT / "runtime" / "alerts"
+RUNTIME_DIR = TEMP_ROOT / "runtime" / "alerts"
 
 BUCKET_STYLE = {
     "cash_short": {"label": "现金/短融", "bg": "#eef2f7", "accent": "#5b6b7a"},
@@ -118,6 +120,65 @@ def valuation_zone_snapshot(visual: dict[str, Any], value: Any) -> dict[str, Any
 
 def subject_bucket(subject: dict[str, Any]) -> str:
     return subject.get("allocation_bucket") or subject.get("reference_metrics", {}).get("allocation_bucket") or "legacy_watch"
+
+
+def latest_module_path(module: str) -> Path | None:
+    index = load_json(LATEST_INDEX) if LATEST_INDEX.exists() else {}
+    record = (index.get("modules") or {}).get(module) or {}
+    path = record.get("path")
+    return ROOT / path if path else None
+
+
+def load_latest_action_plan() -> dict[str, Any]:
+    path = latest_module_path("action_plan")
+    if not path or not path.exists():
+        return {}
+    data = load_json(path)
+    data["_source_path"] = path.relative_to(ROOT).as_posix()
+    return data
+
+
+def action_bucket(action: dict[str, Any]) -> str | None:
+    role = str(action.get("bucket_role") or "").lower()
+    subject_name = str((action.get("subject") or {}).get("name") or "")
+    if role in {"bond_cash", "cash_short"} or "现金" in subject_name or "短融" in subject_name:
+        return "cash_short"
+    if role in {"core", "core_base"} or "核心" in subject_name or "宽基" in subject_name:
+        return "core_base"
+    if role in {"offensive", "attack_mainline"} or "进攻" in subject_name:
+        return "attack_mainline"
+    if role in {"defensive", "defense"} or "防御" in subject_name:
+        return "defense"
+    if role in {"theme", "legacy_watch"} or "待清理" in subject_name or "legacy" in subject_name:
+        return "legacy_watch"
+    return None
+
+
+def action_plan_context(action_plan: dict[str, Any]) -> dict[str, Any]:
+    if not action_plan:
+        return {}
+    bucket_actions: dict[str, list[dict[str, Any]]] = {}
+    for action in action_plan.get("actions", []):
+        bucket = action_bucket(action)
+        if bucket:
+            bucket_actions.setdefault(bucket, []).append(
+                {
+                    "priority": action.get("priority"),
+                    "action_type": action.get("action_type"),
+                    "subject": (action.get("subject") or {}).get("name"),
+                    "suggested_change": action.get("suggested_change"),
+                    "target_position": action.get("target_position"),
+                    "strength": action.get("recommendation_strength"),
+                }
+            )
+    return {
+        "source_path": action_plan.get("_source_path"),
+        "generated_at": action_plan.get("generated_at"),
+        "summary": action_plan.get("summary", {}),
+        "bucket_actions": bucket_actions,
+        "intraday_triggers": action_plan.get("intraday_triggers", []),
+        "hard_constraints": action_plan.get("triggered_hard_constraints", []),
+    }
 
 
 class LongToolTipFilter(QObject):
@@ -522,7 +583,64 @@ class AllocationMap(QWidget):
             cursor += seg_w
 
 
-def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, Any]]) -> dict[str, Any]:
+class ActionPlanPanel(QFrame):
+    def __init__(self, action_plan: dict[str, Any] | None, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.action_plan = action_plan or {}
+        self.setObjectName("bucketFrame")
+        self._build()
+
+    def _build(self) -> None:
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(12, 8, 12, 10)
+        layout.setSpacing(8)
+        if not self.action_plan:
+            label = QLabel("今日操作建议：未找到最新 action_plan")
+            label.setStyleSheet("color:#b91c1c; font-weight:700;")
+            layout.addWidget(label)
+            return
+        summary = self.action_plan.get("summary", {})
+        title = QLabel(f"今日操作建议｜{summary.get('action_state', '-')} / {summary.get('recommendation_strength', '-')}")
+        title.setStyleSheet("font-size:14px; font-weight:700; color:#0f172a;")
+        title.setToolTip(f"来源：{self.action_plan.get('_source_path', '-')}\n生成：{self.action_plan.get('generated_at', '-')}")
+        layout.addWidget(title)
+        line = QLabel(summary.get("one_line_conclusion", ""))
+        line.setWordWrap(True)
+        line.setStyleSheet("color:#334155;")
+        layout.addWidget(line)
+        chips = QHBoxLayout()
+        for action in self.action_plan.get("actions", [])[:6]:
+            bucket = action_bucket(action) or "legacy_watch"
+            style = BUCKET_STYLE.get(bucket, BUCKET_STYLE["legacy_watch"])
+            subject = (action.get("subject") or {}).get("name") or "-"
+            text = f"{action.get('action_type')}｜{subject}｜{action.get('suggested_change')}"
+            chip = QLabel(text)
+            chip.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            chip.setStyleSheet(f"background:{style['bg']}; color:#0f172a; border-left:4px solid {style['accent']}; border-radius:6px; padding:6px 8px; font-weight:700;")
+            chip.setToolTip(
+                "\n".join(
+                    [
+                        f"对象：{subject}",
+                        f"目标：{action.get('target_position') or '-'}",
+                        f"强度：{action.get('recommendation_strength') or '-'}",
+                        "证据：" + "；".join(action.get("evidence", [])[:3]),
+                    ]
+                )
+            )
+            chips.addWidget(chip)
+        chips.addStretch(1)
+        layout.addLayout(chips)
+
+    def update_action_plan(self, action_plan: dict[str, Any]) -> None:
+        self.action_plan = action_plan
+        while self.layout() and self.layout().count():
+            item = self.layout().takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+        self._build()
+
+def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, Any]], action_plan: dict[str, Any] | None = None) -> dict[str, Any]:
     quotes: dict[str, dict[str, Any]] = {}
     expected_codes = [item["code"] for item in rules.get("subjects", [])]
     received_codes = []
@@ -581,6 +699,7 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
             "target_equity_range": f"{fmt(allocation_map.get('target_equity_pct'), 1)}%" if allocation_map else "45%-50%",
             "allocation_map": allocation_map,
             "staleness": rules.get("staleness", {"status": "legacy_unknown"}),
+            "action_plan": action_plan_context(action_plan or {}),
             "quote_health": {
                 "expected_count": len(expected_codes),
                 "received_count": len(received_codes),
@@ -663,6 +782,7 @@ class BattleMapWindow(QMainWindow):
         super().__init__()
         self.rules_file = rules_file
         self.rules = load_json(rules_file)
+        self.action_plan = load_latest_action_plan()
         self.provider = QmtQuoteProvider(qmt_site)
         self.interval_ms = interval_ms
         self.allow_reference_fallback = allow_reference_fallback
@@ -714,6 +834,8 @@ class BattleMapWindow(QMainWindow):
 
         self.allocation_map = AllocationMap(self.rules.get("allocation_map"))
         root.addWidget(self.allocation_map)
+        self.action_panel = ActionPlanPanel(self.action_plan)
+        root.addWidget(self.action_panel)
 
         controls = QHBoxLayout()
         controls.addWidget(QLabel("排序"))
@@ -768,7 +890,7 @@ class BattleMapWindow(QMainWindow):
                 label.setStyleSheet(f"color:{color}; font-size:20px; font-weight:700;")
 
     def build_snapshot(self, ticks: dict[str, dict[str, Any]]) -> dict[str, Any]:
-        return build_snapshot_from_rules(self.rules, ticks)
+        return build_snapshot_from_rules(self.rules, ticks, self.action_plan)
 
     def refresh(self) -> None:
         codes = [item["code"] for item in self.rules.get("subjects", [])]
@@ -826,17 +948,19 @@ class BattleMapWindow(QMainWindow):
             ]
             if not bucket_quotes:
                 continue
-            frame = self._bucket_frame(bucket, bucket_quotes, alerts_by_code, near_by_code, context.get("allocation_map", {}))
+            frame = self._bucket_frame(bucket, bucket_quotes, alerts_by_code, near_by_code, context.get("allocation_map", {}), context.get("action_plan", {}))
             self.card_layout.addWidget(frame)
         self.card_layout.addStretch(1)
 
         summary = report.get("summary", {})
+        action_summary = ((context.get("action_plan") or {}).get("summary") or {}).get("one_line_conclusion")
         self.detail.setText(
-            "状态：{state}；规则={stale_status}；最高优先级：{priority}；{line}。stale/degraded 时禁止买入/加仓，仅供观察和风险复核。".format(
+            "状态：{state}；规则={stale_status}；最高优先级：{priority}；{line}。今日建议：{action_line}。stale/degraded 时禁止买入/加仓，仅供观察和风险复核。".format(
                 state=summary.get("alert_state"),
                 stale_status=stale_status,
                 priority=summary.get("highest_priority"),
                 line=summary.get("one_line_conclusion"),
+                action_line=action_summary or "未载入",
             )
         )
 
@@ -935,6 +1059,7 @@ class BattleMapWindow(QMainWindow):
         alerts_by_code: dict[str, dict[str, Any]],
         near_by_code: dict[str, dict[str, Any]],
         allocation_map: dict[str, Any],
+        action_context: dict[str, Any],
     ) -> QFrame:
         style = BUCKET_STYLE.get(bucket, BUCKET_STYLE["legacy_watch"])
         frame = QFrame()
@@ -944,6 +1069,7 @@ class BattleMapWindow(QMainWindow):
         layout.setSpacing(8)
 
         bucket_info = next((item for item in allocation_map.get("buckets", []) if item.get("key") == bucket), {})
+        bucket_actions = (action_context.get("bucket_actions") or {}).get(bucket, [])
         alerts = sum(1 for quote in quotes if quote["code"] in alerts_by_code)
         near = sum(1 for quote in quotes if quote["code"] in near_by_code)
         hot = alerts * 2 + near + abs(num(bucket_info.get("gap_pct")) or 0) / 5
@@ -954,6 +1080,10 @@ class BattleMapWindow(QMainWindow):
         collapsed = self.collapsed_buckets.get(bucket, False)
         toggle.setText(("▶ " if collapsed else "▼ ") + style["label"])
         toggle.clicked.connect(lambda _checked=False, key=bucket: self._toggle_bucket(key))
+        action_hint = ""
+        if bucket_actions:
+            first = bucket_actions[0]
+            action_hint = f"；建议 {first.get('action_type')} {first.get('suggested_change')}"
         summary = QLabel(
             "目标 {target}%，实际 {actual}%，偏离 {gap:+.2f}pp；标的 {count}，触发 {alerts}，接近 {near}".format(
                 target=fmt(bucket_info.get("target_pct")),
@@ -962,10 +1092,13 @@ class BattleMapWindow(QMainWindow):
                 count=len(quotes),
                 alerts=alerts,
                 near=near,
-            )
+            ) + action_hint
         )
         summary.setStyleSheet(f"background:{hot_color}; color:#334155; padding:5px 8px; border-radius:6px;")
-        summary.setToolTip("分组热力由触发数量、接近触发和实际仓位偏离共同决定。")
+        tips = ["分组热力由触发数量、接近触发和实际仓位偏离共同决定。"]
+        for action in bucket_actions:
+            tips.append(f"{action.get('action_type')} {action.get('subject')}：{action.get('suggested_change')}，目标 {action.get('target_position')}")
+        summary.setToolTip("\n".join(tips))
         header.addWidget(toggle)
         header.addWidget(summary, stretch=1)
         layout.addLayout(header)
@@ -1152,7 +1285,8 @@ def main(argv: list[str] | None = None) -> int:
             if not args.reference_fallback:
                 raise
             ticks = build_reference_ticks(rules)
-        snapshot = build_snapshot_from_rules(rules, ticks)
+        action_plan = load_latest_action_plan()
+        snapshot = build_snapshot_from_rules(rules, ticks, action_plan)
         if args.reference_fallback and all(item.get("qmt_timetag") == "offline_reference_preview" for item in ticks.values()):
             snapshot["source"] = "offline_reference_preview"
         report = intraday_monitor.build_report(rules, snapshot)

@@ -163,3 +163,17 @@
 必须运行或引用 scripts/check_valuation_updates.py；如果持仓股或待观察股估值缺失、基准日过旧或盘中已跨区，先提示我是否更新估值报告。
 不要用事后结果重写事前判断；如果缺少实际执行信息，请明确标注。
 ```
+
+自动生成底稿：
+
+```powershell
+python scripts\generate_post_market_review.py
+```
+
+如已提供执行记录文件：
+
+```powershell
+python scripts\generate_post_market_review.py --execution-records path\to\execution_records.json
+```
+
+该脚本只生成复盘底稿：读取最新市场仓位、主线、操作建议、盘中提醒、持仓快照，并调用估值更新检查。若缺少实际执行记录，必须输出 `execution_information_missing`，不得假设买卖已经执行。

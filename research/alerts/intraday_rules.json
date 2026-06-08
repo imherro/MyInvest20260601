@@ -8,8 +8,8 @@
     "docs/modules/VALUATION_RESEARCH.md",
     "research/market/market_score_2026-06-08_100643.json",
     "research/themes/theme_review_2026-06-08_102237.json",
-    "research/allocation/target_allocation_2026-06-08_155802.json",
-    "research/portfolio/portfolio_snapshot_2026-06-08_135053.json",
+    "research/allocation/target_allocation_2026-06-08_225511.json",
+    "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
     "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-05_103909.json",
     "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-05_103909.json",
     "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-05_103909.json",
@@ -54,8 +54,8 @@
   },
   "allocation_map": {
     "basis": "latest_target_allocation_and_qmt_readonly_portfolio_snapshot",
-    "target_allocation_file": "research/allocation/target_allocation_2026-06-08_155802.json",
-    "portfolio_snapshot_file": "research/portfolio/portfolio_snapshot_2026-06-08_135053.json",
+    "target_allocation_file": "research/allocation/target_allocation_2026-06-08_225511.json",
+    "portfolio_snapshot_file": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
     "target_equity_pct": 42.5,
     "target_cash_short_pct": 57.5,
     "actual_equity_pct": 54.0964,
@@ -183,18 +183,31 @@
       }
     ],
     "quality": {
-      "status": "error",
-      "errors": [
+      "status": "warning",
+      "errors": [],
+      "warnings": [
         {
           "code": "159301",
           "field": "cost_price",
           "value": -0.095,
           "action": "set_null_and_exclude_from_reference_pnl_pct",
-          "reason": "Non-positive price field is invalid for portfolio analysis."
+          "reason": "成本字段无效，已排除参考盈亏比例；该问题不阻断比例级仓位分析。"
         }
       ],
-      "warnings": [],
-      "policy": "cost_price/current_price <= 0 are set to null and excluded from reference_pnl_pct; severe quality errors degrade downstream action use."
+      "repairs": [
+        {
+          "type": "name_mapping",
+          "codes": [
+            "515880"
+          ],
+          "reason": "补充 ETF/股票登记册中的正式名称。"
+        },
+        {
+          "type": "cost_quality_downgrade",
+          "reason": "无效成本字段不再使比例级组合快照整体 blocked；相关参考盈亏比例保持为空。"
+        }
+      ],
+      "policy": "Invalid cost_price is excluded from reference_pnl_pct and kept as a warning; ratio-only bucket analysis remains usable."
     }
   },
   "subjects": [
@@ -5257,22 +5270,17 @@
       ]
     }
   ],
-  "last_portfolio_snapshot_sync": "2026-06-08_135053",
+  "last_portfolio_snapshot_sync": "2026-06-08_225306",
   "staleness": {
     "status": "degraded",
-    "checked_at": "2026-06-08_205232",
-    "mode": "degraded_observation_only",
-    "reason": "当前盘中规则引用最新上游，但存在数据质量警告；可观察和风险复核，涉及异常字段的精确建议需降级。",
+    "checked_at": "2026-06-08_225511",
+    "mode": "fresh_rules_with_quality_warning",
+    "reason": "已同步最新目标配置；若QMT快照存在质量警告，则禁止用异常成本字段生成精确交易建议。",
     "findings": [
-      {
-        "level": "WARN",
-        "path": "research/alerts/intraday_rules.json",
-        "reason": "linked portfolio snapshot has data quality warnings/errors",
-        "quality_status": "error"
-      }
+      "最新QMT持仓快照存在数据质量警告，已用于比例偏离，但不允许用异常成本字段生成精确交易建议。"
     ]
   },
-  "generated_at": "2026-06-08_205232",
+  "generated_at": "2026-06-08_225511",
   "dependencies": {
     "required": [
       {
@@ -5291,17 +5299,17 @@
       },
       {
         "module": "target_allocation",
-        "path": "research/allocation/target_allocation_2026-06-08_155802.json",
-        "generated_at": "2026-06-08_155802",
+        "path": "research/allocation/target_allocation_2026-06-08_225511.json",
+        "generated_at": "2026-06-08_225511",
         "basis_trade_date": "20260605",
-        "sha256": "bfa99d564bd0500d28e8eb114b27523dd2faf354e0e3e2e249d20c60aaf1fadf"
+        "sha256": "252ad221b70f3fec0318a5b4d97cf39b89a8994df410dfe3ff78288698c6a791"
       },
       {
         "module": "portfolio_snapshot",
-        "path": "research/portfolio/portfolio_snapshot_2026-06-08_135053.json",
-        "generated_at": "2026-06-08_135053",
+        "path": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+        "generated_at": "2026-06-08_225306",
         "basis_trade_date": "2026-06-08",
-        "sha256": "f68f43db750d87507728de51b116e551e5e9ddfab5854cd508bda8c044c474ac"
+        "sha256": "b36083905f7df27428070fdaa00aa45e179da4cdbb8c4767977cfb66174fd893"
       },
       {
         "module": "valuation_report",

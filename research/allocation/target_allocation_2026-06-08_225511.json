@@ -1,0 +1,419 @@
+{
+  "module": "target_allocation",
+  "version": "2.0",
+  "date": "2026-06-08",
+  "generated_at": "2026-06-08_225511",
+  "basis_trade_date": "20260605",
+  "session": "engineering_hardened_from_latest_inputs",
+  "amount_policy": "ratio_only_no_market_value_no_cost_no_profit_no_share_count",
+  "dependencies": {
+    "required": [
+      {
+        "module": "market_score",
+        "path": "research/market/market_score_2026-06-08_100643.json",
+        "generated_at": "2026-06-08_100643",
+        "basis_trade_date": "20260605",
+        "sha256": "c5e1268c08822164215607e4246b4df721bbc54f47bb75c5ea5988f48067ff09"
+      },
+      {
+        "module": "theme_review",
+        "path": "research/themes/theme_review_2026-06-08_102237.json",
+        "generated_at": "2026-06-08_102237",
+        "basis_trade_date": "20260605",
+        "sha256": "f8cd26cd7055197e14437dde7e7719d14dd678681375065e02c6e0d6b40d458a"
+      },
+      {
+        "module": "portfolio_snapshot",
+        "path": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+        "generated_at": "2026-06-08_225306",
+        "basis_trade_date": "2026-06-08",
+        "sha256": "b36083905f7df27428070fdaa00aa45e179da4cdbb8c4767977cfb66174fd893"
+      },
+      {
+        "module": "bucket_registry",
+        "path": "research/config/bucket_registry.json",
+        "generated_at": "2026-06-08_000000",
+        "basis_trade_date": null,
+        "sha256": "da739130f776635d225e2b9c3347602fdc19af385b87de4579ebae5d5ccd0c05"
+      }
+    ],
+    "policy": "Target allocation is invalid if market_score, theme_review, or portfolio_snapshot is replaced by a newer file."
+  },
+  "data_sources": [
+    "research/market/market_score_2026-06-08_100643.json",
+    "research/themes/theme_review_2026-06-08_102237.json",
+    "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+    "research/config/bucket_registry.json"
+  ],
+  "summary": {
+    "market_state": "弱势震荡，风险收缩优先",
+    "market_position_score": 41,
+    "recommended_equity_center": "42.5%",
+    "recommended_equity_range": "40%-45%",
+    "recommended_bond_cash_center": "57.5%",
+    "recommended_bond_cash_range": "55%-60%",
+    "offensive_bucket_status": "pause_new",
+    "one_line_conclusion": "目标权益下调到40%-45%区间，中枢42.5%；现金/短融中枢57.5%。进攻主线只保留低配观察，不新增；真实权益高于目标上沿，偏离主要来自legacy/主题与进攻/防御暴露。"
+  },
+  "target_allocation": {
+    "groups": [
+      {
+        "group": "511360 / 现金短融桶",
+        "target_range": "55%-60%",
+        "target_center_pct": 57.5,
+        "vehicles": [
+          "511360",
+          "cash_short_duration"
+        ],
+        "role": "防守锚和机动资金",
+        "principle": "承接弱项释放资金，等待指数和主线重新确认。"
+      },
+      {
+        "group": "宽基/核心底仓",
+        "target_range": "20%-24%",
+        "target_center_pct": 22.0,
+        "vehicles": [
+          "510300",
+          "510500",
+          "159915",
+          "159201",
+          "002352"
+        ],
+        "role": "权益核心底仓",
+        "principle": "弱市里作为优先保留方向，但不因为低配直接新增。"
+      },
+      {
+        "group": "进攻主线仓",
+        "target_range": "5%-8%",
+        "target_center_pct": 6.5,
+        "vehicles": [
+          "159819",
+          "588200",
+          "159558",
+          "159326",
+          "159667",
+          "002241",
+          "688333",
+          "603596",
+          "562800"
+        ],
+        "role": "低配观察",
+        "principle": "AI交易B、半导体交易C；市场门禁未解除前不新增。"
+      },
+      {
+        "group": "防御仓",
+        "target_range": "12%-16%",
+        "target_center_pct": 14.0,
+        "vehicles": [
+          "510880",
+          "159301",
+          "512880",
+          "159842",
+          "512070",
+          "159992",
+          "513120",
+          "601318",
+          "300760",
+          "603087"
+        ],
+        "role": "权益内防守",
+        "principle": "用于平衡科技波动，但红利/金融/医药若处高位也不追高。"
+      },
+      {
+        "group": "其他/待清理",
+        "target_range": "0%",
+        "target_center_pct": 0.0,
+        "vehicles": [
+          "159378",
+          "512710",
+          "159869",
+          "562500",
+          "513180",
+          "513050",
+          "512400",
+          "516150",
+          "002258",
+          "002041",
+          "603903",
+          "515880"
+        ],
+        "role": "偏离暴露",
+        "principle": "不作为理想配置目标；只作为后续ACTION_PLAN的偏离清理候选。"
+      }
+    ],
+    "total_target_pct_sum": 100.0,
+    "equity_internal_pct": {
+      "core_base": 51.76,
+      "attack_mainline": 15.29,
+      "defense": 32.94,
+      "legacy_watch": 0.0
+    }
+  },
+  "ideal_allocation_map": {
+    "basis": "latest_market_position_and_theme_analysis",
+    "target_equity_pct": 42.5,
+    "target_cash_short_pct": 57.5,
+    "segments": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "target_pct": 57.5,
+        "color": "#5b6b7a",
+        "basis": "市场仓位分数41，现金/短融作为主要防守和等待确认的仓位锚。"
+      },
+      {
+        "key": "core_base",
+        "label": "宽基/核心底仓",
+        "target_pct": 22.0,
+        "color": "#2f6fbd",
+        "basis": "权益内部优先保留宽基、自由现金流、质量类低换手核心暴露；当前不因低配直接加仓。"
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "target_pct": 6.5,
+        "color": "#8b5cf6",
+        "basis": "市场模块显示进攻仓暂停新增，AI交易评级B、半导体交易评级C，进攻仓仅保留低配观察。"
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "target_pct": 14.0,
+        "color": "#0f8b6f",
+        "basis": "弱势环境保留红利、公用事业、金融和医药等防御暴露，但不追高。"
+      },
+      {
+        "key": "legacy_watch",
+        "label": "其他/待清理",
+        "target_pct": 0.0,
+        "color": "#9a6700",
+        "basis": "C/D主题、遗留小仓和未进入当前主线的标的目标为0，只作为偏离暴露。"
+      }
+    ],
+    "actual_overlay_source": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+    "boundary": "理想仓位只由市场仓位、主题强度和配置约束决定；真实持仓只作为覆盖层，不反向改变理想结构。",
+    "validation": {
+      "segments_target_pct_sum": 100.0,
+      "status": "ok"
+    }
+  },
+  "actual_allocation_overlay": {
+    "source": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+    "actual_equity_pct": 54.0964,
+    "actual_cash_short_pct": 45.9036,
+    "buckets": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "color": "#5b6b7a",
+        "target_pct": 57.5,
+        "actual_pct": 45.9036,
+        "gap_pct": -11.5964
+      },
+      {
+        "key": "core_base",
+        "label": "宽基/核心底仓",
+        "color": "#2f6fbd",
+        "target_pct": 22.0,
+        "actual_pct": 7.8184,
+        "gap_pct": -14.1816
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "color": "#8b5cf6",
+        "target_pct": 6.5,
+        "actual_pct": 9.6113,
+        "gap_pct": 3.1113
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "color": "#0f8b6f",
+        "target_pct": 14.0,
+        "actual_pct": 18.5488,
+        "gap_pct": 4.5488
+      },
+      {
+        "key": "legacy_watch",
+        "label": "其他/待清理",
+        "color": "#9a6700",
+        "target_pct": 0.0,
+        "actual_pct": 18.1229,
+        "gap_pct": 18.1229
+      }
+    ],
+    "quality": {
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        {
+          "code": "159301",
+          "field": "cost_price",
+          "value": -0.095,
+          "action": "set_null_and_exclude_from_reference_pnl_pct",
+          "reason": "成本字段无效，已排除参考盈亏比例；该问题不阻断比例级仓位分析。"
+        }
+      ],
+      "repairs": [
+        {
+          "type": "name_mapping",
+          "codes": [
+            "515880"
+          ],
+          "reason": "补充 ETF/股票登记册中的正式名称。"
+        },
+        {
+          "type": "cost_quality_downgrade",
+          "reason": "无效成本字段不再使比例级组合快照整体 blocked；相关参考盈亏比例保持为空。"
+        }
+      ],
+      "policy": "Invalid cost_price is excluded from reference_pnl_pct and kept as a warning; ratio-only bucket analysis remains usable."
+    }
+  },
+  "transition_targets": [
+    {
+      "subject": "equity_total",
+      "current_pct": 54.0964,
+      "target_range": "40%-45%",
+      "priority": "high",
+      "reason": "真实权益高于最新市场仓位上沿；具体动作交由ACTION_PLAN决定。"
+    },
+    {
+      "subject": "cash_short",
+      "current_pct": 45.9036,
+      "target_range": "55%-60%",
+      "priority": "high",
+      "reason": "现金短融低于目标区间，弱势市场需要提高防守锚。"
+    },
+    {
+      "subject": "legacy_watch",
+      "current_pct": 18.1229,
+      "target_range": "0%",
+      "priority": "high",
+      "reason": "其他/待清理暴露显著高于理想目标，是后续清理优先来源。"
+    },
+    {
+      "subject": "attack_mainline",
+      "current_pct": 9.6113,
+      "target_range": "5%-8%",
+      "priority": "medium",
+      "reason": "进攻仓略高于目标中枢，且市场门禁为pause_new。"
+    }
+  ],
+  "rules": {
+    "no_direct_trade": true,
+    "buy_add_blocked_when_intraday_rules_stale": true,
+    "offensive_add_blocked": true,
+    "action_plan_required_for_any_trade": true,
+    "core_underweight_does_not_trigger_buy": true
+  },
+  "activation_triggers": [
+    {
+      "trigger_condition": "沪深300、创业板、科创50重新站上20日线，且全A moneyflow连续转正",
+      "observed_indicators": [
+        "index_daily",
+        "moneyflow",
+        "daily breadth"
+      ],
+      "allocation_action": "权益上限可回到45%-50%，进攻仓从暂停新增转为低配观察",
+      "invalid_or_reverse_condition": "任一核心指数再度跌破20日线且资金流转负"
+    },
+    {
+      "trigger_condition": "AI代表ETF和半导体代表ETF至少两只重新站上20日线，且主线研究确认分歧修复",
+      "observed_indicators": [
+        "fund_daily",
+        "theme_registry"
+      ],
+      "allocation_action": "进攻仓可恢复到权益仓20%-30%的中性低配区",
+      "invalid_or_reverse_condition": "AI交易阶段转退潮或半导体继续弱于宽基"
+    },
+    {
+      "trigger_condition": "主要指数继续低于20日线、moneyflow继续大额净流出，或科创50/创业板继续破位",
+      "observed_indicators": [
+        "index_daily",
+        "moneyflow"
+      ],
+      "allocation_action": "权益区间下沿下调到35%-40%，现金/短融提高到60%左右",
+      "invalid_or_reverse_condition": "宽度和资金同步修复"
+    },
+    {
+      "trigger_condition": "红利、公用事业、资源等防御/周期方向放量滞涨或进入高拥挤区",
+      "observed_indicators": [
+        "fund_daily",
+        "intraday_rules"
+      ],
+      "allocation_action": "不再上调防御仓，只保留现金短融作为主要防守工具",
+      "invalid_or_reverse_condition": "防御方向回撤到合理区且市场风险未继续扩大"
+    }
+  ],
+  "theme_summary": [
+    {
+      "name": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "bucket_role": "offensive_candidate",
+      "position_impact": "可保留跟踪或小比例结构性观察，不适合在市场弱势时主动扩张。"
+    },
+    {
+      "name": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "bucket_role": "watch",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。"
+    },
+    {
+      "name": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "bucket_role": "avoid",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。"
+    },
+    {
+      "name": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "bucket_role": "watch",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。"
+    },
+    {
+      "name": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "bucket_role": "avoid",
+      "position_impact": "暂不作为主线配置依据，仅保留长期观察。"
+    },
+    {
+      "name": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "bucket_role": "offensive_candidate",
+      "position_impact": "可保留跟踪或小比例结构性观察，不适合在市场弱势时主动扩张。"
+    },
+    {
+      "name": "低空经济",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "bucket_role": "watch",
+      "position_impact": "研究观察优先，等待价格站回均线、行业扩散和资金流修复后再进入交易讨论。"
+    }
+  ],
+  "quality": {
+    "status": "warning",
+    "warnings": [
+      "最新QMT持仓快照存在数据质量警告，已用于比例偏离，但不允许用异常成本字段生成精确交易建议。"
+    ]
+  },
+  "staleness": {
+    "status": "fresh",
+    "checked_at": "2026-06-08_225511"
+  },
+  "decision_log_entry": "2026-06-08 目标仓位重建：基于最新 market_score/theme_review/QMT snapshot，权益目标40%-45%、现金短融55%-60%；进攻仓暂停新增，盘中规则需同步至本目标配置。"
+}

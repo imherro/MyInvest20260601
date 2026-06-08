@@ -125,7 +125,7 @@
 
 ## 10. 估值报告更新检查
 
-检查命令：`python scripts/check_valuation_updates.py --intraday-report runtime/alerts/intraday_once.json`
+检查命令：`python scripts/check_valuation_updates.py --intraday-report temp/runtime/alerts/intraday_once.json`
 
 | 标的 | 来源 | 状态 | 原因 | 是否建议更新 |
 | --- | --- | --- | --- | --- |

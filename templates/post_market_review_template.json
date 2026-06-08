@@ -83,7 +83,7 @@
     }
   ],
   "valuation_update_check": {
-    "command": "python scripts/check_valuation_updates.py --intraday-report runtime/alerts/intraday_once.json",
+    "command": "python scripts/check_valuation_updates.py --intraday-report temp/runtime/alerts/intraday_once.json",
     "update_required_count": null,
     "items": [
       {
