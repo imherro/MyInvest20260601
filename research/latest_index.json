@@ -1,7 +1,7 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-09_133938",
+  "generated_at": "2026-06-09_141431",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
@@ -239,6 +239,21 @@
       "sha256": "b145cfa84ef762ba124ea36a87f6f793bbef76b5f33559aa8210a1fec12c30df",
       "quality": {
         "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "theme_leaders": {
+      "module": "theme_leaders",
+      "code": null,
+      "name": null,
+      "path": "research/theme_leaders/theme_leaders_2026-06-09_140848.json",
+      "generated_at": "2026-06-09_140848",
+      "basis_trade_date": null,
+      "sha256": "60a775f6c849311119c90da67290cc757bbe7c962d0a6ce4f6f4c7dc282944b4",
+      "quality": {
+        "status": "fresh"
       },
       "staleness": {
         "status": "legacy_unknown"
@@ -3286,6 +3301,21 @@
       "sha256": "b145cfa84ef762ba124ea36a87f6f793bbef76b5f33559aa8210a1fec12c30df",
       "quality": {
         "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "theme_leaders",
+      "code": null,
+      "name": null,
+      "path": "research/theme_leaders/theme_leaders_2026-06-09_140848.json",
+      "generated_at": "2026-06-09_140848",
+      "basis_trade_date": null,
+      "sha256": "60a775f6c849311119c90da67290cc757bbe7c962d0a6ce4f6f4c7dc282944b4",
+      "quality": {
+        "status": "fresh"
       },
       "staleness": {
         "status": "legacy_unknown"

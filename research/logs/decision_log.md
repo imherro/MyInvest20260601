@@ -1880,3 +1880,11 @@
 - 原始日志：2026-06-09_133432 盘中提醒：最高优先级=high；触发=24；接近触发=0；缺失=0；staleness=degraded。
 - 估值更新提示：发现 29 个估值报告缺失或应更新项；该提示不新增盘中交易条件，不改变 intraday_alert 触发结论。
 
+## 2026-06-09_140848 主线龙头候选池
+
+- 决策类型：theme_leaders / ResearchFirst routing
+- 生成文件：`research/theme_leaders/theme_leaders_2026-06-09_140848.md`、`research/theme_leaders/theme_leaders_2026-06-09_140848.json`
+- 规则：默认只有交易评级 A / A- / B+ 且阶段不为 decline 的 active 主线进入确认候选池；普通 B 不自动进入进攻复核，可通过脚本 `--include-b` 显式放宽。
+- 当前结果：读取 13 条主线，确认主线 0 条，可进入复核 0 项，ResearchFirst 0 项，仅观察 84 项。
+- 关键边界：候选池不是可买清单；主线强只提供优先研究资格，仍必须经过 ETF/个股档案、估值报告、市场仓位、组合约束和盘中规则复核。
+- 当前半导体处理：战略评级 A，但交易评级 C，因此半导体相关 ETF 和代表股全部保持 watch_only，不进入操作复核。
