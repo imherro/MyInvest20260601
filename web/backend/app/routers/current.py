@@ -15,6 +15,7 @@ from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
 from ..services.system_check import SystemCheckService
+from ..services.target_allocation_generation import TargetAllocationGenerationService
 
 
 router = APIRouter()
@@ -109,6 +110,24 @@ def action_plan(session: Session = Depends(get_session)) -> dict[str, Any]:
 def target_allocation(session: Session = Depends(get_session)) -> dict[str, Any]:
     service = CurrentStateService(session)
     return respond({"target_allocation": service.target_allocation()}, source=service.source_for_module("target_allocation"))
+
+
+@router.get("/target-allocation/shadow")
+def target_allocation_shadow(session: Session = Depends(get_session)) -> dict[str, Any]:
+    service = TargetAllocationGenerationService(session)
+    return respond(
+        {"target_allocation_shadow": service.get_shadow_summary()},
+        source={"path": TargetAllocationGenerationService.shadow_source},
+    )
+
+
+@router.get("/target-allocation/shadow/compare")
+def target_allocation_shadow_compare(session: Session = Depends(get_session)) -> dict[str, Any]:
+    service = TargetAllocationGenerationService(session)
+    return respond(
+        {"comparison": service.compare_with_current_json()},
+        source={"path": TargetAllocationGenerationService.shadow_source},
+    )
 
 
 @router.get("/research-first/current")

@@ -12,6 +12,8 @@ def test_required_api_endpoints(client):
         "/api/market-position/score/25",
         "/api/action-plan/current",
         "/api/target-allocation/current",
+        "/api/target-allocation/shadow",
+        "/api/target-allocation/shadow/compare",
         "/api/portfolio/current",
         "/api/intraday-rules/current",
         "/api/research-first/current",

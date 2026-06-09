@@ -18,7 +18,7 @@ LATEST_INDEX = ROOT / "research" / "latest_index.json"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add market position mapping service baseline"
+COMMIT_MESSAGE = "feat(web): add target allocation shadow generation"
 
 API_PATHS = [
     "/api/health",
@@ -33,6 +33,8 @@ API_PATHS = [
     "/api/market-position/score/100",
     "/api/action-plan/current",
     "/api/target-allocation/current",
+    "/api/target-allocation/shadow",
+    "/api/target-allocation/shadow/compare",
     "/api/portfolio/current",
     "/api/intraday-rules/current",
     "/api/research-first/current",
@@ -91,6 +93,10 @@ PHASE5A_DOC_FILES = [
 
 PHASE5C_TEST_FILES = [
     ROOT / "web" / "backend" / "tests" / "test_market_position_service.py",
+]
+
+PHASE5C2_TEST_FILES = [
+    ROOT / "web" / "backend" / "tests" / "test_target_allocation_generation_shadow.py",
 ]
 
 REQUIRED_EXPORT_MODULES = {
@@ -250,6 +256,7 @@ class WebCheck:
         self.check_no_research_logic_changes()
         self.check_phase5a_contract_files()
         self.check_phase5c_contract_files()
+        self.check_phase5c2_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -286,6 +293,19 @@ class WebCheck:
             )
         else:
             self.add_result("phase5c_market_position_files", "PASS", "market-position service tests present")
+
+    def check_phase5c2_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE5C2_TEST_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase5c2_shadow_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase5c2_shadow_files",
+                ", ".join(missing),
+                "Phase 5C-2 target-allocation shadow tests are missing.",
+                "Add the shadow-generation test file, then rerun scripts/web_check.py.",
+            )
+        else:
+            self.add_result("phase5c2_shadow_files", "PASS", "target-allocation shadow tests present")
 
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])

@@ -132,6 +132,39 @@ Read-only API:
 
 The endpoints return only scores, labels, percentage ranges, and `source = "db.market_position_mappings"`. They do not read `latest_index.files`.
 
+## Phase 5C-2 Target Allocation Shadow Mode
+
+Phase 5C-2 adds `TargetAllocationGenerationService` in shadow mode. The service computes an in-memory target allocation from current SQLite state, `MarketPositionService`, portfolio ratios, and bucket policy, then compares core fields with the current target allocation JSON.
+
+It does not:
+
+- write `research/allocation`
+- update `research/latest_index.json`
+- update `current_modules` or `artifacts`
+- replace `generate_target_allocation.py`
+- generate action plans
+- generate orders, fills, share counts, or cash-value instructions
+
+Direct checks:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_target_allocation_generation_shadow.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+Read-only API:
+
+- `GET /api/target-allocation/shadow`
+- `GET /api/target-allocation/shadow/compare`
+
+The compare endpoint returns `matched`, `diffs`, `compared_fields`, `unsupported_fields`, `source_shadow`, and `source_reference`. Core-field diffs block the milestone. Unsupported fields are allowed only when explicit and not used to hide core mismatches.
+
 ## API and Page Smoke Check
 
 ```bash
@@ -145,6 +178,7 @@ Then open:
 - `http://127.0.0.1:8000/docs`
 - `http://127.0.0.1:8000/api/current`
 - `http://127.0.0.1:8000/api/market-position/current`
+- `http://127.0.0.1:8000/api/target-allocation/shadow/compare`
 - `http://127.0.0.1:8000/api/modules/current`
 - `http://127.0.0.1:8000/api/export/review_package?format=json`
 

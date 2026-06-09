@@ -23,6 +23,8 @@ Endpoints:
 - `GET /api/market-position/score/{score}`
 - `GET /api/action-plan/current`
 - `GET /api/target-allocation/current`
+- `GET /api/target-allocation/shadow`
+- `GET /api/target-allocation/shadow/compare`
 - `GET /api/research-first/current`
 - `GET /api/portfolio/current`
 - `GET /api/intraday-rules/current`
@@ -45,6 +47,17 @@ Phase 5C-1 adds read-only market-position endpoints backed by SQLite
 - `GET /api/market-position/score/{score}` maps an explicit score to the active range.
 
 These endpoints do not generate target allocations or action plans. They return only score ranges, labels, percentage ranges, and `source = "db.market_position_mappings"`. Invalid scores return a non-500 error without local paths.
+
+## Target Allocation Shadow
+
+Phase 5C-2 adds read-only target-allocation shadow endpoints:
+
+- `GET /api/target-allocation/shadow`
+- `GET /api/target-allocation/shadow/compare`
+
+The shadow service reads current SQLite state, calls `MarketPositionService`, computes ratio-only bucket targets, and compares core fields with the current `latest_index.modules.target_allocation` JSON. It does not write `research/allocation`, does not update `current_modules`, and does not generate action plans.
+
+`/api/target-allocation/shadow/compare` returns `matched`, `diffs`, `compared_fields`, `unsupported_fields`, `source_shadow`, and `source_reference`. Core-field mismatches are test failures; unsupported fields must be explicit and are not used to hide core diffs.
 
 ## Review Package Export
 

@@ -283,3 +283,7 @@ trade_amount, profit_amount, account, full_account, order, fill
 | status | VARCHAR | no | `ok` or `fail`. | yes | check result |
 | message | TEXT | yes | Sanitized check output snippet. | yes | check output |
 | generated_at | VARCHAR | no | Ingest/check timestamp. | yes | generated |
+
+## Shadow Services
+
+Phase 5C-2 `TargetAllocationGenerationService` does not add tables. Its shadow output is computed in memory from the existing current SQLite read model and current module source paths. It must not insert rows, update `current_modules`, update `artifacts`, or write files under `research/allocation`.

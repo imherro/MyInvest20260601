@@ -38,6 +38,8 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/market-position/score/100",
         "/api/action-plan/current",
         "/api/target-allocation/current",
+        "/api/target-allocation/shadow",
+        "/api/target-allocation/shadow/compare",
         "/api/research-first/current",
         "/api/portfolio/current",
         "/api/intraday-rules/current",
