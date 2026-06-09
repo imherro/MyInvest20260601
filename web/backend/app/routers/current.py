@@ -11,6 +11,7 @@ from ..db import get_session
 from ..services.allocation_consistency import AllocationConsistencyService
 from ..services.current_state import CurrentStateService
 from ..services.export_package import ReviewPackageExportService
+from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
 from ..services.system_check import SystemCheckService
@@ -52,6 +53,7 @@ def current(session: Session = Depends(get_session)) -> dict[str, Any]:
         {
             "latest_index": service.latest_index(),
             "market_score": service.market_score(),
+            "market_position": MarketPositionService(session).get_current_market_position(),
             "action_plan": service.action_plan(),
             "target_allocation": service.target_allocation(),
             "portfolio": service.portfolio(),
@@ -66,6 +68,35 @@ def current(session: Session = Depends(get_session)) -> dict[str, Any]:
 def current_modules(session: Session = Depends(get_session)) -> dict[str, Any]:
     service = CurrentStateService(session)
     return respond({"modules": service.current_modules()}, source={"path": "research/latest_index.json"})
+
+
+@router.get("/market-position/mapping")
+def market_position_mapping(session: Session = Depends(get_session)) -> dict[str, Any]:
+    service = MarketPositionService(session)
+    return respond(
+        {"mappings": service.get_active_mapping()},
+        source={"path": MarketPositionService.source},
+    )
+
+
+@router.get("/market-position/current")
+def current_market_position(session: Session = Depends(get_session)) -> dict[str, Any]:
+    service = MarketPositionService(session)
+    try:
+        position = service.get_current_market_position()
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="current market score is missing") from exc
+    return respond({"market_position": position}, source={"path": MarketPositionService.source})
+
+
+@router.get("/market-position/score/{score}")
+def market_position_for_score(score: float, session: Session = Depends(get_session)) -> dict[str, Any]:
+    service = MarketPositionService(session)
+    try:
+        position = service.get_position_for_score(score)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail="market position mapping not found for score") from exc
+    return respond({"market_position": position}, source={"path": MarketPositionService.source})
 
 
 @router.get("/action-plan/current")

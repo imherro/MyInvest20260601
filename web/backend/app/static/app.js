@@ -230,6 +230,7 @@
   function renderDashboard(data) {
     const plan = data.action_plan || {};
     const market = data.market_score || {};
+    const marketPosition = data.market_position || {};
     const portfolio = data.portfolio || {};
     const target = data.target_allocation || {};
     const intraday = data.intraday_rules || {};
@@ -237,6 +238,9 @@
     const projectCheck = (checks.checks || []).find((item) => item.check_name === "project_check_current_only") || {};
     setBind("action_generated_at", plan.generated_at);
     setBind("market_state", market.state);
+    setBind("market_position_score", marketPosition.score);
+    setBind("market_position_label", marketPosition.label);
+    setBind("market_position_source", marketPosition.source);
     setBind("equity_current", pct(portfolio.equity_pct));
     setBind("equity_target", range(target.equity_min_pct, target.equity_max_pct));
     setBind("cash_current", pct(portfolio.cash_short_pct));

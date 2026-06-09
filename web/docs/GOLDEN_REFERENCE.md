@@ -17,6 +17,9 @@ The goal is to make later service migration measurable. Future code that generat
 
 The baseline covers:
 
+- market-position mapping JSON vs SQLite rows
+- market-position service output vs `scripts/project_utils.py::market_position_for_score`
+- market-position boundary scores: `0`, `25`, `30`, `31`, `45`, `46`, `60`, `61`, `75`, `76`, `85`, `86`, `100`
 - current action plan path
 - action plan `generated_at`
 - action count
@@ -41,6 +44,12 @@ Run the golden baseline directly:
 python -m pytest web/backend/tests/test_golden_current_state.py
 ```
 
+Run the Phase 5C-1 market-position baseline directly:
+
+```bash
+python -m pytest web/backend/tests/test_market_position_service.py
+```
+
 The test performs a fresh ingest through the shared test fixture, reads current JSON through `latest_index.modules`, then reads the same facts from `temp/web_db/myinvest.sqlite`.
 
 ## Migration Policy
@@ -52,4 +61,4 @@ When a future service replaces part of the old generation flow:
 3. Extend the golden test to compare the relevant ratio-only fields.
 4. Do not switch callers to the service if the golden test differs.
 
-This policy applies first to market-position mapping reads, then target allocation generation, then action plan generation.
+This policy now applies to target allocation generation, then action plan generation. Market-position mapping reads have a Phase 5C-1 read-only baseline and must continue to match the JSON config and old helper before target allocation shadow mode begins.

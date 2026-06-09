@@ -18,6 +18,9 @@ Endpoints:
 - `GET /api/current`
 - `GET /api/latest-index`
 - `GET /api/modules/current`
+- `GET /api/market-position/mapping`
+- `GET /api/market-position/current`
+- `GET /api/market-position/score/{score}`
 - `GET /api/action-plan/current`
 - `GET /api/target-allocation/current`
 - `GET /api/research-first/current`
@@ -31,6 +34,17 @@ Endpoints:
 All responses pass `RatioOnlyService` before returning. A sanitizer failure returns HTTP 500.
 
 OpenAPI docs are exposed by FastAPI at `GET /docs` while the local server is running.
+
+## Market Position
+
+Phase 5C-1 adds read-only market-position endpoints backed by SQLite
+`market_position_mappings`.
+
+- `GET /api/market-position/mapping` returns active score ranges.
+- `GET /api/market-position/current` reads the current market score from SQLite and maps it to the active range.
+- `GET /api/market-position/score/{score}` maps an explicit score to the active range.
+
+These endpoints do not generate target allocations or action plans. They return only score ranges, labels, percentage ranges, and `source = "db.market_position_mappings"`. Invalid scores return a non-500 error without local paths.
 
 ## Review Package Export
 

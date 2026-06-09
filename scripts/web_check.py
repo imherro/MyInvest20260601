@@ -18,13 +18,19 @@ LATEST_INDEX = ROOT / "research" / "latest_index.json"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "test(web): add database contract and golden current-state checks"
+COMMIT_MESSAGE = "feat(web): add market position mapping service baseline"
 
 API_PATHS = [
     "/api/health",
     "/api/current",
     "/api/latest-index",
     "/api/modules/current",
+    "/api/market-position/mapping",
+    "/api/market-position/current",
+    "/api/market-position/score/25",
+    "/api/market-position/score/30",
+    "/api/market-position/score/31",
+    "/api/market-position/score/100",
     "/api/action-plan/current",
     "/api/target-allocation/current",
     "/api/portfolio/current",
@@ -81,6 +87,10 @@ PHASE5A_DOC_FILES = [
     ROOT / "web" / "docs" / "CURRENT_STATE_CONTRACT.md",
     ROOT / "web" / "docs" / "GOLDEN_REFERENCE.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+]
+
+PHASE5C_TEST_FILES = [
+    ROOT / "web" / "backend" / "tests" / "test_market_position_service.py",
 ]
 
 REQUIRED_EXPORT_MODULES = {
@@ -239,6 +249,7 @@ class WebCheck:
         self.check_git_scope()
         self.check_no_research_logic_changes()
         self.check_phase5a_contract_files()
+        self.check_phase5c_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -262,6 +273,19 @@ class WebCheck:
             )
         else:
             self.add_result("phase5a_contract_files", "PASS", "schema, current-state, golden docs/tests present")
+
+    def check_phase5c_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE5C_TEST_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase5c_market_position_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase5c_market_position_files",
+                ", ".join(missing),
+                "Phase 5C-1 market-position golden/API tests are missing.",
+                "Add the MarketPositionService test file, then rerun scripts/web_check.py.",
+            )
+        else:
+            self.add_result("phase5c_market_position_files", "PASS", "market-position service tests present")
 
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])

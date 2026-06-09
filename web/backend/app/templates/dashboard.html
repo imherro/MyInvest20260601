@@ -11,6 +11,11 @@
       <strong data-bind="market_state">{{ market.state if market else "n/a" }}</strong>
     </div>
     <div class="metric">
+      <span class="subtle">Market Position</span>
+      <strong><span data-bind="market_position_score">{{ "%.0f"|format(market_position.score) if market_position else "n/a" }}</span> / <span data-bind="market_position_label">{{ market_position.label if market_position else "n/a" }}</span></strong>
+      <span class="subtle" data-bind="market_position_source">{{ market_position.source if market_position else "n/a" }}</span>
+    </div>
+    <div class="metric">
       <span class="subtle">Equity Current / Target</span>
       <strong><span data-bind="equity_current">{{ "%.2f"|format(portfolio.equity_pct) if portfolio else "n/a" }}%</span> / <span data-bind="equity_target">{{ "%.2f"|format(target.equity_min_pct) if target else "n/a" }}-{{ "%.2f"|format(target.equity_max_pct) if target else "n/a" }}%</span></strong>
     </div>

@@ -10,6 +10,7 @@ from .config import STATIC_DIR, TEMPLATE_DIR
 from .db import get_session
 from .routers.current import router as current_router
 from .services.current_state import CurrentStateService
+from .services.market_position import MarketPositionService
 from .services.system_check import SystemCheckService
 
 
@@ -44,6 +45,7 @@ def dashboard(request: Request, session: Session = Depends(get_session)) -> HTML
             target=current.target_allocation(),
             portfolio=current.portfolio(),
             market=current.market_score(),
+            market_position=MarketPositionService(session).get_current_market_position(),
             checks=SystemCheckService(session).current(),
         ),
     )

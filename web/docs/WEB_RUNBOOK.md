@@ -105,6 +105,33 @@ python -m pytest web/backend/tests/test_golden_current_state.py
 
 The golden test dynamically resolves `latest_index.modules` and compares current JSON with SQLite fields. It does not read `latest_index.files` and does not hard-code action-plan timestamps.
 
+## Phase 5C-1 Market Position Baseline
+
+Phase 5C-1 adds `MarketPositionService` as a read-only baseline for `market_position_mapping` reads. It maps a market score to equity/cash percentage ranges from SQLite and keeps `scripts/project_utils.py::market_position_for_score` as the reference implementation.
+
+This phase does not generate target allocation, action plans, orders, fills, share counts, or cash-value instructions. `TargetAllocationGenerationService` remains the next step and should start in shadow mode only.
+
+Direct checks:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_market_position_service.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+Read-only API:
+
+- `GET /api/market-position/mapping`
+- `GET /api/market-position/current`
+- `GET /api/market-position/score/{score}`
+
+The endpoints return only scores, labels, percentage ranges, and `source = "db.market_position_mappings"`. They do not read `latest_index.files`.
+
 ## API and Page Smoke Check
 
 ```bash
@@ -117,6 +144,7 @@ Then open:
 - `http://127.0.0.1:8000/`
 - `http://127.0.0.1:8000/docs`
 - `http://127.0.0.1:8000/api/current`
+- `http://127.0.0.1:8000/api/market-position/current`
 - `http://127.0.0.1:8000/api/modules/current`
 - `http://127.0.0.1:8000/api/export/review_package?format=json`
 
