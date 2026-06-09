@@ -4,6 +4,9 @@ import io
 import json
 import zipfile
 
+from sqlalchemy import text
+
+from web.backend.app.db import engine
 from web.backend.tests.test_api_no_forbidden_fields import walk
 
 
@@ -42,3 +45,35 @@ def test_review_package_zip_export_contains_sanitized_snapshot(client):
     snapshot = json.loads(archive.read("current_snapshot.json").decode("utf-8"))
     assert snapshot["package"]["mode"] == "current-only"
     walk(snapshot)
+
+
+def test_system_check_runtime_messages_are_not_exported(client):
+    unsafe_message = (
+        "MyInvest project check\n"
+        "Root: C:/Users/example/MyInvest\n"
+        "Result: 0 FAIL, 2 WARN\n"
+        "[WARN] .env is missing; copy .env.example and set TUSHARE_TOKEN\n"
+        "[WARN] Python package pandas is not installed"
+    )
+    with engine.begin() as conn:
+        conn.execute(
+            text(
+                """
+                UPDATE system_check_results
+                SET message = :message
+                WHERE check_name = 'project_check_current_only'
+                """
+            ),
+            {"message": unsafe_message},
+        )
+
+    system_response = client.get("/api/system-check/current")
+    assert system_response.status_code == 200
+    export_response = client.get("/api/export/review_package?format=json")
+    assert export_response.status_code == 200
+
+    combined = system_response.text + export_response.text
+    assert ".env is missing" not in combined
+    assert "C:/Users/" not in combined
+    assert "pandas is not installed" not in combined
+    assert "current-only validation passed" in combined

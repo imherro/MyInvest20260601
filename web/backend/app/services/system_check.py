@@ -14,7 +14,7 @@ class SystemCheckService:
         self.allocation = AllocationConsistencyService(session)
 
     def current(self) -> dict:
-        checks = self.state.system_check_results()
+        checks = [self._safe_check_row(item) for item in self.state.system_check_results()]
         gate = self.gate.check()
         allocation = self.allocation.check()
         status = "ok"
@@ -28,3 +28,15 @@ class SystemCheckService:
             "sensitive_scan": {"status": "ok", "summary": "ratio-only sanitizer passed"},
             "counts": self.state.table_counts(),
         }
+
+    @staticmethod
+    def _safe_check_row(item: dict) -> dict:
+        status = str(item.get("status") or "unknown").lower()
+        summary = "current-only validation passed"
+        if status == "fail":
+            summary = "current-only validation failed; inspect local validation output"
+        elif status not in {"ok", "pass"}:
+            summary = "current-only validation status recorded"
+        safe = dict(item)
+        safe["message"] = summary
+        return safe
