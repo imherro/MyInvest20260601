@@ -34,6 +34,39 @@ The Web UI is FastAPI + Jinja2 with a small static refresh script. There is no R
 pytest web/backend/tests
 ```
 
+## Phase 3 Milestone Check
+
+Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.
+
+Run the one-command gate before committing Web milestone changes:
+
+```bash
+python scripts/web_check.py
+```
+
+The check runs:
+
+- `python scripts/ingest_current_state.py`
+- `python -m pytest web/backend/tests`
+- `python scripts/check_ratio_only.py --path <latest_index.modules.action_plan.path>`
+- `python scripts/check_research_first_gate.py --path <latest_index.modules.action_plan.path>`
+- `python scripts/check_cross_file_allocation_consistency.py`
+- `python scripts/project_check.py --current-only`
+- API and export forbidden-field scans
+- export ZIP/JSON current-only and ratio-only scans
+- page interaction hook checks for refresh, search, sort, pagination, expandable rows, Dashboard status cards, and the frontend ratio-only sanitizer
+- Git scope checks for forbidden runtime or sensitive files
+
+Output statuses:
+
+- `PASS`: safe to prepare a commit.
+- `WARN`: command passed, but a non-blocking warning needs review.
+- `FAIL`: blocks commit; fix the listed file/reason and rerun the check.
+
+The script prints a suggested commit message and the files that belong in the commit. Do not commit `temp/`, SQLite/DB files, `runtime/`, caches, `node_modules/`, build/dist outputs, `.env`, ZIP, or log artifacts.
+
+The same gate runs in GitHub Actions via `.github/workflows/web_check.yml` on push and pull request.
+
 ## API and Page Smoke Check
 
 ```bash
