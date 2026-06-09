@@ -1,17 +1,17 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-09_112943",
+  "generated_at": "2026-06-09_133938",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
       "module": "action_plan",
       "code": null,
       "name": null,
-      "path": "research/actions/action_plan_2026-06-09_105818_latest_ratio_only.json",
-      "generated_at": "2026-06-09_105818",
+      "path": "research/actions/action_plan_2026-06-09_131356_latest_ratio_only.json",
+      "generated_at": "2026-06-09_131356",
       "basis_trade_date": "20260608",
-      "sha256": "80252be7291d033208a94b817a3f9ceedcfbd7651851f15a46e923ee914d6ede",
+      "sha256": "4618ff5dbb1b87caf25ab57de388a9bfd25b8c2fb53b0bb3bbbeb9c808282f6a",
       "quality": {
         "status": "warning"
       },
@@ -23,15 +23,15 @@
       "module": "intraday_alerts",
       "code": null,
       "name": null,
-      "path": "research/alerts/intraday_alert_2026-06-08_094106.json",
-      "generated_at": "2026-06-08_094106",
-      "basis_trade_date": "2026-06-08",
-      "sha256": "5b280a660b2fb05f05a220431a6c5d02a488219f0a64007b2f71d333f0e3618a",
+      "path": "research/alerts/intraday_alert_2026-06-09_133432.json",
+      "generated_at": "2026-06-09_133432",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "4f6ed22c394c507ff3cfc4f9c4a1e583ab32a16a8b24cb8348f85d8ab8428d8e",
       "quality": {
         "status": "legacy_unknown"
       },
       "staleness": {
-        "status": "legacy_unknown"
+        "status": "degraded"
       }
     },
     "intraday_rules": {
@@ -39,9 +39,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_112659",
+      "generated_at": "2026-06-09_131355",
       "basis_trade_date": null,
-      "sha256": "2f4171c9b5777373bc1767757b239161ecec483c8b16db02faa27c094b9df22d",
+      "sha256": "98bcf078b45b34caa0312493820e9366d443b233670727d17939fc5bbd0d9d8e",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -53,15 +53,15 @@
       "module": "target_allocation",
       "code": null,
       "name": null,
-      "path": "research/allocation/target_allocation_2026-06-09_105818.json",
-      "generated_at": "2026-06-09_105818",
+      "path": "research/allocation/target_allocation_2026-06-09_131355.json",
+      "generated_at": "2026-06-09_131355",
       "basis_trade_date": "20260608",
-      "sha256": "e67eb9fe037b78435e25934410a70963acb9c1aba00bb066fa02d1e3ccb5f8c2",
+      "sha256": "bd4091a0e43cdf3b5b9744e1a145b1809ff1e37cb0903246a530d848f79ade8e",
       "quality": {
         "status": "warning"
       },
       "staleness": {
-        "status": "fresh"
+        "status": "legacy_unknown"
       }
     },
     "STRATEGY_BRIEFING": {
@@ -117,6 +117,21 @@
       "generated_at": "2026-06-08_000000",
       "basis_trade_date": null,
       "sha256": "da739130f776635d225e2b9c3347602fdc19af385b87de4579ebae5d5ccd0c05",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "market_position_mapping": {
+      "module": "market_position_mapping",
+      "code": null,
+      "name": null,
+      "path": "research/config/market_position_mapping.json",
+      "generated_at": "2026-06-09_000000",
+      "basis_trade_date": null,
+      "sha256": "cb47f9270453a0c3957418694201c0e36a7acb628b695716d991b81107ff3f93",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -397,6 +412,36 @@
       }
     },
     {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-09_123827_latest_ratio_only.json",
+      "generated_at": "2026-06-09_123827",
+      "basis_trade_date": "20260608",
+      "sha256": "af51b2dd21467ab9f4d6cb7231b68555e638099c3b002fb51f1d4082b43a0430",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-09_131356_latest_ratio_only.json",
+      "generated_at": "2026-06-09_131356",
+      "basis_trade_date": "20260608",
+      "sha256": "4618ff5dbb1b87caf25ab57de388a9bfd25b8c2fb53b0bb3bbbeb9c808282f6a",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
       "module": "intraday_alerts",
       "code": null,
       "name": null,
@@ -448,7 +493,7 @@
       "path": "research/alerts/intraday_alert_2026-06-08_094106.json",
       "generated_at": "2026-06-08_094106",
       "basis_trade_date": "2026-06-08",
-      "sha256": "5b280a660b2fb05f05a220431a6c5d02a488219f0a64007b2f71d333f0e3618a",
+      "sha256": "5fc43c206a1633cd98543db0ab92d1d0c19aee95959816f4fb08408f86108e78",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -457,13 +502,28 @@
       }
     },
     {
+      "module": "intraday_alerts",
+      "code": null,
+      "name": null,
+      "path": "research/alerts/intraday_alert_2026-06-09_133432.json",
+      "generated_at": "2026-06-09_133432",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "4f6ed22c394c507ff3cfc4f9c4a1e583ab32a16a8b24cb8348f85d8ab8428d8e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "degraded"
+      }
+    },
+    {
       "module": "intraday_rules",
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_112659",
+      "generated_at": "2026-06-09_131355",
       "basis_trade_date": null,
-      "sha256": "2f4171c9b5777373bc1767757b239161ecec483c8b16db02faa27c094b9df22d",
+      "sha256": "98bcf078b45b34caa0312493820e9366d443b233670727d17939fc5bbd0d9d8e",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -544,6 +604,36 @@
       },
       "staleness": {
         "status": "fresh"
+      }
+    },
+    {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-09_123826.json",
+      "generated_at": "2026-06-09_123826",
+      "basis_trade_date": "20260608",
+      "sha256": "9d89a8e6e8eef81db2a3d24885093fdf1e2545f8147d20e6847362cc48a5f4bc",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-09_131355.json",
+      "generated_at": "2026-06-09_131355",
+      "basis_trade_date": "20260608",
+      "sha256": "bd4091a0e43cdf3b5b9744e1a145b1809ff1e37cb0903246a530d848f79ade8e",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
       }
     },
     {
@@ -685,21 +775,6 @@
       "module": "staleness_check",
       "code": null,
       "name": null,
-      "path": "research/checks/staleness_check_2026-06-09_112745.json",
-      "generated_at": "2026-06-09_112745",
-      "basis_trade_date": null,
-      "sha256": "454ce95ff064d736d67643ec49ee42030386c6979bba0ea4d1f810bae5c84555",
-      "quality": {
-        "status": "legacy_unknown"
-      },
-      "staleness": {
-        "status": "legacy_unknown"
-      }
-    },
-    {
-      "module": "staleness_check",
-      "code": null,
-      "name": null,
       "path": "research/checks/staleness_check_2026-06-09_112849.json",
       "generated_at": "2026-06-09_112849",
       "basis_trade_date": null,
@@ -719,6 +794,21 @@
       "generated_at": "2026-06-08_000000",
       "basis_trade_date": null,
       "sha256": "da739130f776635d225e2b9c3347602fdc19af385b87de4579ebae5d5ccd0c05",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "market_position_mapping",
+      "code": null,
+      "name": null,
+      "path": "research/config/market_position_mapping.json",
+      "generated_at": "2026-06-09_000000",
+      "basis_trade_date": null,
+      "sha256": "cb47f9270453a0c3957418694201c0e36a7acb628b695716d991b81107ff3f93",
       "quality": {
         "status": "legacy_unknown"
       },

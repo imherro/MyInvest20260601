@@ -19,6 +19,10 @@ VALUATION_DIR = ROOT / "research" / "valuations"
 ALERT_RULES = ROOT / "research" / "alerts" / "intraday_rules.json"
 
 
+def rel_path(path: Path) -> str:
+    return path.relative_to(ROOT).as_posix()
+
+
 def read_json(path: Path, default: Any = None) -> Any:
     if not path.exists():
         return default
@@ -205,7 +209,7 @@ def check_updates(basis_date: str, intraday_report: Path | None, stale_days: int
                     "sources": sorted(set(target.get("sources", []))),
                     "severity": severity,
                     "reasons": reasons,
-                    "latest_valuation": valuation_path.as_posix() if valuation_path else None,
+                    "latest_valuation": rel_path(valuation_path) if valuation_path else None,
                     "suggested_prompt": f"是否更新 {code} {target.get('name', '')} 的估值报告？",
                 }
             )

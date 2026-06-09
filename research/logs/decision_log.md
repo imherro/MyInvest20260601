@@ -1849,3 +1849,34 @@
 - 生成文件：`research/valuations/valuation_*_2026-06-09_112659.md/json`。
 - 同步文件：`research/alerts/intraday_rules.json`、`research/latest_index.json`。
 - 结论：13个missing缺口已关闭；报告为价格位置代理估值区间，不等同于长期基本面估值赔率。后续若恢复Tushare运行环境，应重算这些标的的完整估值版本。
+
+## 2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约46.93%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-09_123827_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-09_123827_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-09_103426.json` generated_at=2026-06-09_103426 basis=2026-06-09
+  - `research/allocation/target_allocation_2026-06-09_123826.json` generated_at=2026-06-09_123826 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-09_123826 basis=None
+
+## 2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约46.93%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-09_131356_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-09_131356_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-09_103426.json` generated_at=2026-06-09_103426 basis=2026-06-09
+  - `research/allocation/target_allocation_2026-06-09_131355.json` generated_at=2026-06-09_131355 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-09_131355 basis=None
+
+## 2026-06-09_133432 盘中提醒
+
+- 决策类型：intraday_alert
+- 生成文件：`research/alerts/intraday_alert_2026-06-09_133432.md`、`research/alerts/intraday_alert_2026-06-09_133432.json`
+- 来源计划：`research/actions/action_plan_2026-06-09_131356_latest_ratio_only.json`
+- QMT行情：返回 42/42，缺失 0，最新行情时间 20260609 13:34:31。
+- 结论：触发24条提醒，接近触发0条，缺失前置0项；规则状态=degraded；所有提醒均需人工确认，不构成自动交易指令。
+- 原始日志：2026-06-09_133432 盘中提醒：最高优先级=high；触发=24；接近触发=0；缺失=0；staleness=degraded。
+- 估值更新提示：发现 29 个估值报告缺失或应更新项；该提示不新增盘中交易条件，不改变 intraday_alert 触发结论。
+

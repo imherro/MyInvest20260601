@@ -1,0 +1,56 @@
+{
+  "module": "market_position_mapping",
+  "version": "1.0",
+  "generated_at": "2026-06-09_000000",
+  "basis": "Canonical market-position score to portfolio exposure mapping. Score 25 maps to equity 30%-40% per the 2026-06-09 market score and target allocation refresh.",
+  "ranges": [
+    {
+      "score_min": 0,
+      "score_max": 30,
+      "market_state": "极弱/风险收缩",
+      "equity_allocation_range": "30%-40%",
+      "bond_cash_allocation_range": "60%-70%",
+      "offensive_bucket_status": "pause_new"
+    },
+    {
+      "score_min": 31,
+      "score_max": 45,
+      "market_state": "弱势震荡",
+      "equity_allocation_range": "40%-45%",
+      "bond_cash_allocation_range": "55%-60%",
+      "offensive_bucket_status": "pause_new"
+    },
+    {
+      "score_min": 46,
+      "score_max": 60,
+      "market_state": "中性修复",
+      "equity_allocation_range": "45%-55%",
+      "bond_cash_allocation_range": "45%-55%",
+      "offensive_bucket_status": "selective"
+    },
+    {
+      "score_min": 61,
+      "score_max": 75,
+      "market_state": "强势可进攻",
+      "equity_allocation_range": "55%-70%",
+      "bond_cash_allocation_range": "30%-45%",
+      "offensive_bucket_status": "allow_if_theme_confirmed"
+    },
+    {
+      "score_min": 76,
+      "score_max": 85,
+      "market_state": "高景气进攻期",
+      "equity_allocation_range": "70%-80%",
+      "bond_cash_allocation_range": "20%-30%",
+      "offensive_bucket_status": "allow"
+    },
+    {
+      "score_min": 86,
+      "score_max": 100,
+      "market_state": "强趋势且风险未失控",
+      "equity_allocation_range": "75%-85%",
+      "bond_cash_allocation_range": "15%-25%",
+      "offensive_bucket_status": "allow"
+    }
+  ]
+}
