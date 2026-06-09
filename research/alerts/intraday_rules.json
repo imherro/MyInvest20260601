@@ -1,7 +1,7 @@
 {
   "module": "intraday_rules",
   "version": "1.1",
-  "generated_at": "2026-06-09_150808",
+  "generated_at": "2026-06-09_152618",
   "last_updated": "2026-06-09",
   "boundary": "Rules are alert triggers only. They do not create portfolio-level buy/sell orders and do not call any trading API.",
   "data_sources": [
@@ -67,14 +67,14 @@
         "path": "research/allocation/target_allocation_2026-06-09_150300.json",
         "generated_at": "2026-06-09_150300",
         "basis_trade_date": "20260608",
-        "sha256": "93f7acb1c034861c05cfa1e92eb1db8d2053a06435846f89148e3427e107b8f0"
+        "sha256": "0dbbe6c38577d2c227c8408c9a888802c3906c3d874c26c3626137c457416775"
       },
       {
         "module": "portfolio_snapshot",
         "path": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
         "generated_at": "2026-06-09_143440",
         "basis_trade_date": "2026-06-09",
-        "sha256": "96c7972349c4a493384484aa136f449c7f45fe708fbdf55cb9a6531cac069940"
+        "sha256": "fa080e8c470e11f1127550661eb46fb4ee1af8cce185c9af4865edb0a3cbc566"
       },
       {
         "module": "valuation_report",
@@ -375,9 +375,9 @@
   },
   "staleness": {
     "status": "fresh",
-    "checked_at": "2026-06-09_150808",
+    "checked_at": "2026-06-09_152618",
     "mode": "fresh",
-    "reason": "当前盘中规则引用最新上游，可用于实时观察；买卖动作仍必须进入ACTION_PLAN。",
+    "reason": "?????????????????????????????? ACTION_PLAN?",
     "findings": []
   },
   "global_gate": {

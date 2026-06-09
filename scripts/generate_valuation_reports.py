@@ -115,8 +115,10 @@ def load_bucket_registry() -> None:
 
 SNAPSHOT_CATEGORY_BUCKET = {
     "bond_cash": "cash_short",
-    "core_quality": "core_base",
-    "core_quality_logistics": "core_base",
+    "broad_base": "core_base",
+    "core_quality": "defense",
+    "core_quality_cashflow": "defense",
+    "core_quality_logistics": "attack_mainline",
     "technology": "attack_mainline",
     "technology_terminal": "attack_mainline",
     "high_end_equipment": "attack_mainline",
@@ -460,14 +462,20 @@ def build_allocation_map() -> dict[str, Any]:
     category_summary = snapshot.get("category_summary", {})
 
     actual_by_bucket = {key: 0.0 for key in BUCKETS}
-    for category, weight in category_summary.items():
-        bucket = SNAPSHOT_CATEGORY_BUCKET.get(category, "legacy_watch")
-        actual_by_bucket[bucket] += float(weight or 0)
-    if not category_summary:
-        for item in snapshot.get("holdings", []):
+    holdings = snapshot.get("holdings", [])
+    if holdings:
+        for item in holdings:
             code = str(item.get("code", "")).strip()
-            bucket = bucket_for_code(code)
+            bucket = str(item.get("allocation_bucket") or "")
+            if bucket not in BUCKETS:
+                category = str(item.get("category") or "")
+                bucket = SNAPSHOT_CATEGORY_BUCKET.get(category) or bucket_for_code(code)
             actual_by_bucket[bucket] += float(item.get("weight_pct") or 0)
+        actual_by_bucket["cash_short"] += float(category_summary.get("cash_uninvested") or 0)
+    else:
+        for category, weight in category_summary.items():
+            bucket = SNAPSHOT_CATEGORY_BUCKET.get(category, "legacy_watch")
+            actual_by_bucket[bucket] += float(weight or 0)
 
     target_by_bucket = {key: 0.0 for key in BUCKETS}
     if ideal_segments_source:

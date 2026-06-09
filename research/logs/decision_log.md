@@ -2008,3 +2008,28 @@
   - `research/portfolio/portfolio_snapshot_2026-06-09_143440.json` generated_at=2026-06-09_143440 basis=2026-06-09
   - `research/allocation/target_allocation_2026-06-09_150300.json` generated_at=2026-06-09_150300 basis=20260608
   - `research/alerts/intraday_rules.json` generated_at=2026-06-09_150808 basis=None
+
+
+## 2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约43.52%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-09_152542_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-09_152542_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-09_143440.json` generated_at=2026-06-09_143440 basis=2026-06-09
+  - `research/allocation/target_allocation_2026-06-09_150300.json` generated_at=2026-06-09_150300 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-09_152542 basis=None
+
+## 2026-06-09_152618 盘中规则本地依赖指纹刷新：同步四桶仓位口径，不重算估值。
+- 更新：`research/alerts/intraday_rules.json` 的 portfolio_snapshot 等依赖哈希与最新索引一致。
+- 边界：本次只修正仓位桶归属和真实持仓覆盖层；估值报告、买卖建议未重新生成。
+
+## 2026-06-09_152840 portfolio cleanup review: ResearchFirst active=0; focus on ratio-level risk reduction and legacy/watch compression.
+- Markdown: `research/portfolio/portfolio_cleanup_2026-06-09_152840.md`
+- JSON: `research/portfolio/portfolio_cleanup_2026-06-09_152840.json`
+- Boundary: ratio-only portfolio cleanup review.
+
+## 2026-06-09_152840 current holding research quality audit: P0=1, P1=20, P2=1, OK=13.
+- Markdown: `research/portfolio/research_quality_audit_2026-06-09_152840.md`
+- JSON: `research/portfolio/research_quality_audit_2026-06-09_152840.json`
+- Boundary: current holdings only; ratio-only.

@@ -1,0 +1,564 @@
+{
+  "module": "portfolio_cleanup_review",
+  "version": "ratio_only_v1",
+  "generated_at": "2026-06-09_152840",
+  "basis_trade_date": "2026-06-09",
+  "privacy_policy": "ratio_only_no_monetary_values_no_unit_counts",
+  "dependencies": {
+    "required": [
+      "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+      "research/allocation/target_allocation_2026-06-09_150300.json",
+      "research/actions/action_plan_2026-06-09_152542_latest_ratio_only.json",
+      "research/portfolio/research_backlog_2026-06-09_151312.json"
+    ]
+  },
+  "summary": {
+    "market_state": "极弱/风险收缩",
+    "target_equity_range": "30%-40%",
+    "target_cash_short_range": "60%-70%",
+    "actual_equity_pct": 43.5206,
+    "actual_cash_short_pct": 56.4826,
+    "research_first_active": 0,
+    "one_line_conclusion": "ResearchFirst is cleared; portfolio work should focus on ratio-level equity risk reduction and legacy/watch compression, not new equity adds."
+  },
+  "bucket_deviation": [
+    {
+      "key": "cash_short",
+      "label": "现金/短融",
+      "color": "#5b6b7a",
+      "target_pct": 65.0,
+      "actual_pct": 56.4826,
+      "gap_pct": -8.5174
+    },
+    {
+      "key": "core_base",
+      "label": "宽基底仓",
+      "color": "#2f6fbd",
+      "target_pct": 19.95,
+      "actual_pct": 1.345,
+      "gap_pct": -18.605
+    },
+    {
+      "key": "attack_mainline",
+      "label": "进攻主线仓",
+      "color": "#8b5cf6",
+      "target_pct": 4.9,
+      "actual_pct": 12.4332,
+      "gap_pct": 7.5332
+    },
+    {
+      "key": "defense",
+      "label": "防御仓",
+      "color": "#0f8b6f",
+      "target_pct": 10.15,
+      "actual_pct": 17.4622,
+      "gap_pct": 7.3122
+    },
+    {
+      "key": "legacy_watch",
+      "label": "其他/待清理",
+      "color": "#9a6700",
+      "target_pct": 0.0,
+      "actual_pct": 12.2802,
+      "gap_pct": 12.2802
+    }
+  ],
+  "cleanup_priorities": [
+    {
+      "priority": 1,
+      "bucket": "cash_short",
+      "label": "现金/短融",
+      "issue": "cash_short_below_target",
+      "gap_pct": -8.5174,
+      "principle": "restore only paired with equity risk reduction"
+    },
+    {
+      "priority": 3,
+      "bucket": "attack_mainline",
+      "label": "进攻主线仓",
+      "issue": "equity_bucket_above_target",
+      "gap_pct": 7.5332,
+      "principle": "no new adds while market gate is risk-off"
+    },
+    {
+      "priority": 3,
+      "bucket": "defense",
+      "label": "防御仓",
+      "issue": "equity_bucket_above_target",
+      "gap_pct": 7.3122,
+      "principle": "no new adds while market gate is risk-off"
+    },
+    {
+      "priority": 2,
+      "bucket": "legacy_watch",
+      "label": "其他/待清理",
+      "issue": "legacy_watch_above_target",
+      "gap_pct": 12.2802,
+      "principle": "compress legacy/watch before considering equity adds"
+    }
+  ],
+  "holdings_by_bucket": {
+    "cash_short": [
+      {
+        "code": "511360",
+        "ts_code": "511360.SH",
+        "name": "短融ETF海富通",
+        "type": "ETF",
+        "weight_pct": 56.3926,
+        "category": "bond_cash",
+        "reference_pnl_pct": 0.0547,
+        "allocation_bucket": "cash_short"
+      }
+    ],
+    "defense": [
+      {
+        "code": "159201",
+        "ts_code": "159201.SZ",
+        "name": "自由现金流ETF华夏",
+        "type": "ETF",
+        "weight_pct": 4.4709,
+        "category": "defensive",
+        "reference_pnl_pct": -7.3037,
+        "allocation_bucket": "defense"
+      },
+      {
+        "code": "159992",
+        "ts_code": "159992.SZ",
+        "name": "创新药ETF银华",
+        "type": "ETF",
+        "weight_pct": 3.9753,
+        "category": "medicine",
+        "reference_pnl_pct": -22.3943,
+        "allocation_bucket": "defense"
+      },
+      {
+        "code": "512070",
+        "ts_code": "512070.SH",
+        "name": "证券保险ETF易方达",
+        "type": "ETF",
+        "weight_pct": 3.3463,
+        "category": "financial",
+        "reference_pnl_pct": -14.6603,
+        "allocation_bucket": "defense"
+      },
+      {
+        "code": "159842",
+        "ts_code": "159842.SZ",
+        "name": "券商ETF银华",
+        "type": "ETF",
+        "weight_pct": 1.7375,
+        "category": "financial",
+        "reference_pnl_pct": -23.0192,
+        "allocation_bucket": "defense"
+      },
+      {
+        "code": "512880",
+        "ts_code": "512880.SH",
+        "name": "证券ETF国泰",
+        "type": "ETF",
+        "weight_pct": 1.2452,
+        "category": "financial",
+        "reference_pnl_pct": -8.9796,
+        "allocation_bucket": "defense"
+      },
+      {
+        "code": "513120",
+        "ts_code": "513120.SH",
+        "name": "港股创新药ETF广发",
+        "type": "ETF",
+        "weight_pct": 1.2203,
+        "category": "medicine",
+        "reference_pnl_pct": -19.8069,
+        "allocation_bucket": "defense"
+      },
+      {
+        "code": "603087",
+        "ts_code": "603087.SH",
+        "name": "甘李药业",
+        "type": "stock",
+        "weight_pct": 1.1096,
+        "category": "medicine",
+        "reference_pnl_pct": -10.3161,
+        "allocation_bucket": "defense"
+      },
+      {
+        "code": "300760",
+        "ts_code": "300760.SZ",
+        "name": "迈瑞医疗",
+        "type": "stock",
+        "weight_pct": 0.3532,
+        "category": "medicine",
+        "reference_pnl_pct": -9.892,
+        "allocation_bucket": "defense"
+      },
+      {
+        "code": "159301",
+        "ts_code": "159301.SZ",
+        "name": "公用事业ETF华夏",
+        "type": "ETF",
+        "weight_pct": 0.0039,
+        "category": "defensive",
+        "reference_pnl_pct": null,
+        "allocation_bucket": "defense"
+      }
+    ],
+    "legacy_watch": [
+      {
+        "code": "516150",
+        "ts_code": "516150.SH",
+        "name": "稀土ETF嘉实",
+        "type": "ETF",
+        "weight_pct": 2.5126,
+        "category": "resources",
+        "reference_pnl_pct": -13.542,
+        "allocation_bucket": "legacy_watch"
+      },
+      {
+        "code": "159378",
+        "ts_code": "159378.SZ",
+        "name": "通用航空ETF永赢",
+        "type": "ETF",
+        "weight_pct": 1.7029,
+        "category": "military_low_altitude",
+        "reference_pnl_pct": -18.4922,
+        "allocation_bucket": "legacy_watch"
+      },
+      {
+        "code": "513180",
+        "ts_code": "513180.SH",
+        "name": "恒生科技ETF华夏",
+        "type": "ETF",
+        "weight_pct": 1.6078,
+        "category": "hk_cn_tech",
+        "reference_pnl_pct": -6.8051,
+        "allocation_bucket": "legacy_watch"
+      },
+      {
+        "code": "512400",
+        "ts_code": "512400.SH",
+        "name": "有色金属ETF南方",
+        "type": "ETF",
+        "weight_pct": 1.5492,
+        "category": "resources",
+        "reference_pnl_pct": -6.2366,
+        "allocation_bucket": "legacy_watch"
+      },
+      {
+        "code": "512710",
+        "ts_code": "512710.SH",
+        "name": "军工龙头ETF富国",
+        "type": "ETF",
+        "weight_pct": 1.4734,
+        "category": "military_low_altitude",
+        "reference_pnl_pct": -26.0571,
+        "allocation_bucket": "legacy_watch"
+      },
+      {
+        "code": "002258",
+        "ts_code": "002258.SZ",
+        "name": "利尔化学",
+        "type": "stock",
+        "weight_pct": 1.1918,
+        "category": "other",
+        "reference_pnl_pct": -23.3683,
+        "allocation_bucket": "legacy_watch"
+      },
+      {
+        "code": "159869",
+        "ts_code": "159869.SZ",
+        "name": "游戏ETF华夏",
+        "type": "ETF",
+        "weight_pct": 1.104,
+        "category": "theme",
+        "reference_pnl_pct": -31.5757,
+        "allocation_bucket": "legacy_watch"
+      },
+      {
+        "code": "002041",
+        "ts_code": "002041.SZ",
+        "name": "登海种业",
+        "type": "stock",
+        "weight_pct": 0.589,
+        "category": "other",
+        "reference_pnl_pct": -26.7024,
+        "allocation_bucket": "legacy_watch"
+      },
+      {
+        "code": "603903",
+        "ts_code": "603903.SH",
+        "name": "中持股份",
+        "type": "stock",
+        "weight_pct": 0.4477,
+        "category": "other",
+        "reference_pnl_pct": -16.8845,
+        "allocation_bucket": "legacy_watch"
+      },
+      {
+        "code": "159206",
+        "ts_code": "159206.SZ",
+        "name": "卫星ETF永赢",
+        "type": "ETF",
+        "weight_pct": 0.1018,
+        "category": "military_low_altitude",
+        "reference_pnl_pct": -13.5933,
+        "allocation_bucket": "legacy_watch"
+      }
+    ],
+    "attack_mainline": [
+      {
+        "code": "002920",
+        "ts_code": "002920.SZ",
+        "name": "德赛西威",
+        "type": "stock",
+        "weight_pct": 2.3285,
+        "category": "auto",
+        "reference_pnl_pct": -20.563,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "002352",
+        "ts_code": "002352.SZ",
+        "name": "顺丰控股",
+        "type": "stock",
+        "weight_pct": 1.9856,
+        "category": "technology",
+        "reference_pnl_pct": -10.0302,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "603596",
+        "ts_code": "603596.SH",
+        "name": "伯特利",
+        "type": "stock",
+        "weight_pct": 1.5967,
+        "category": "auto",
+        "reference_pnl_pct": -18.9716,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "562500",
+        "ts_code": "562500.SH",
+        "name": "机器人ETF华夏",
+        "type": "ETF",
+        "weight_pct": 1.2815,
+        "category": "technology",
+        "reference_pnl_pct": 1.9877,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "688333",
+        "ts_code": "688333.SH",
+        "name": "西安铂力特",
+        "type": "stock",
+        "weight_pct": 1.2101,
+        "category": "military_low_altitude",
+        "reference_pnl_pct": -13.7544,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "688439",
+        "ts_code": "688439.SH",
+        "name": "振华风光",
+        "type": "stock",
+        "weight_pct": 1.1191,
+        "category": "military_low_altitude",
+        "reference_pnl_pct": -22.9,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "159326",
+        "ts_code": "159326.SZ",
+        "name": "电网设备ETF华夏",
+        "type": "ETF",
+        "weight_pct": 0.8853,
+        "category": "power_equipment",
+        "reference_pnl_pct": -1.4802,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "562800",
+        "ts_code": "562800.SH",
+        "name": "稀有金属ETF嘉实",
+        "type": "ETF",
+        "weight_pct": 0.8379,
+        "category": "resources",
+        "reference_pnl_pct": -14.3623,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "300627",
+        "ts_code": "300627.SZ",
+        "name": "华测导航",
+        "type": "stock",
+        "weight_pct": 0.6522,
+        "category": "military_low_altitude",
+        "reference_pnl_pct": -11.469,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "159558",
+        "ts_code": "159558.SZ",
+        "name": "半导体设备ETF易方达",
+        "type": "ETF",
+        "weight_pct": 0.1837,
+        "category": "technology",
+        "reference_pnl_pct": 15.1841,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "588200",
+        "ts_code": "588200.SH",
+        "name": "科创芯片ETF嘉实",
+        "type": "ETF",
+        "weight_pct": 0.1726,
+        "category": "technology",
+        "reference_pnl_pct": 107.6131,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "515880",
+        "ts_code": "515880.SH",
+        "name": "通信ETF国泰",
+        "type": "ETF",
+        "weight_pct": 0.1257,
+        "category": "technology",
+        "reference_pnl_pct": 3.8237,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "159667",
+        "ts_code": "159667.SZ",
+        "name": "工业母机ETF国泰",
+        "type": "ETF",
+        "weight_pct": 0.0302,
+        "category": "high_end_equipment",
+        "reference_pnl_pct": 22.1831,
+        "allocation_bucket": "attack_mainline"
+      },
+      {
+        "code": "159819",
+        "ts_code": "159819.SZ",
+        "name": "人工智能ETF易方达",
+        "type": "ETF",
+        "weight_pct": 0.0241,
+        "category": "technology",
+        "reference_pnl_pct": 287.4251,
+        "allocation_bucket": "attack_mainline"
+      }
+    ],
+    "core_base": [
+      {
+        "code": "510500",
+        "ts_code": "510500.SH",
+        "name": "中证500ETF南方",
+        "type": "ETF",
+        "weight_pct": 1.345,
+        "category": "broad_base",
+        "reference_pnl_pct": 1.9806,
+        "allocation_bucket": "core_base"
+      }
+    ]
+  },
+  "action_plan_inputs": [
+    {
+      "priority": "high",
+      "action_type": "Reduce",
+      "subject": {
+        "code": "",
+        "name": "overall equity exposure",
+        "type": "portfolio"
+      },
+      "bucket_role": "portfolio",
+      "current_position": "43.52%",
+      "suggested_change": "reduce 3.5pp to 8.5pp",
+      "target_position": "30%-40%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "market score 25 maps to equity 30%-40%",
+        "actual equity is above target upper bound",
+        "offensive add gate is not open"
+      ],
+      "trigger_conditions": [
+        "manual confirmation and no newer upstream file"
+      ],
+      "invalidation_conditions": [
+        "new market score raises equity target above current exposure"
+      ],
+      "risks": [
+        "do not convert risk-reduction output into a single-name forced sell list without dossier checks"
+      ],
+      "review_points": [
+        "rebuild portfolio snapshot after execution"
+      ]
+    },
+    {
+      "priority": "high",
+      "action_type": "Add",
+      "subject": {
+        "code": "511360",
+        "name": "cash/short-duration bucket",
+        "type": "bond_cash"
+      },
+      "bucket_role": "cash_short",
+      "current_position": "56.48%",
+      "suggested_change": "increase 3.5pp to 8.5pp",
+      "target_position": "60%-70%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "cash/short-duration target is 60%-70%",
+        "this is risk-reduction parking, not equity add exposure"
+      ],
+      "trigger_conditions": [
+        "paired with equity-risk reduction"
+      ],
+      "invalidation_conditions": [
+        "new target allocation lowers cash/short-duration target"
+      ],
+      "risks": [
+        "confirm liquidity and short-duration instrument boundary"
+      ],
+      "review_points": [
+        "cash/short-duration ratio returns to target range"
+      ]
+    },
+    {
+      "priority": "high",
+      "action_type": "Reduce",
+      "subject": {
+        "code": "",
+        "name": "其他/待清理",
+        "type": "bucket"
+      },
+      "bucket_role": "legacy_watch",
+      "current_position": "12.28%",
+      "suggested_change": "reduce in stages before considering core adds",
+      "target_position": "0.00%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "legacy/watch target is zero or near zero in target allocation",
+        "legacy/watch is a main source of equity deviation"
+      ],
+      "trigger_conditions": [
+        "profile/liquidity/manual review before single-name action"
+      ],
+      "invalidation_conditions": [
+        "bucket registry or theme registry explicitly promotes a holding to current core/attack/defense"
+      ],
+      "risks": [
+        "stage changes to avoid overreacting to short-term rebound"
+      ],
+      "review_points": [
+        "overall equity exposure after staged reduction"
+      ]
+    }
+  ],
+  "boundaries": [
+    "No single-security buy/sell/add/reduce instruction.",
+    "Use percentage points and bucket deviations only.",
+    "Regenerate a portfolio snapshot after execution."
+  ],
+  "decision_log_entry": "2026-06-09_152840 portfolio cleanup review: ResearchFirst active=0; focus on ratio-level risk reduction and legacy/watch compression."
+}

@@ -1,17 +1,17 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-09_151336",
+  "generated_at": "2026-06-09_153032",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
       "module": "action_plan",
       "code": null,
       "name": null,
-      "path": "research/actions/action_plan_2026-06-09_151329_latest_ratio_only.json",
-      "generated_at": "2026-06-09_151329",
+      "path": "research/actions/action_plan_2026-06-09_152542_latest_ratio_only.json",
+      "generated_at": "2026-06-09_152542",
       "basis_trade_date": "20260608",
-      "sha256": "af98f0d148273cf778ca539bd3bec161219d44a4d077d69c389cbe1b467fd6c6",
+      "sha256": "1888c828c7665054cff6e079fc4686b0c99a0a399e9950772f641d090714aa09",
       "quality": {
         "status": "ok"
       },
@@ -39,9 +39,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_150808",
+      "generated_at": "2026-06-09_152618",
       "basis_trade_date": null,
-      "sha256": "2664d6ac026b32089419331a1a7762077e1610ee215b7bd6ef6f2bc500ad1350",
+      "sha256": "2bbaea223914d707c23f0b4c4bb5840fb2e2b1492c734d134d7de10e3cc5f0eb",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -98,10 +98,10 @@
       "module": "staleness_check",
       "code": null,
       "name": null,
-      "path": "research/checks/staleness_check_2026-06-09_150808.json",
-      "generated_at": "2026-06-09_150808",
+      "path": "research/checks/staleness_check_2026-06-09_152542.json",
+      "generated_at": "2026-06-09_152542",
       "basis_trade_date": null,
-      "sha256": "54a5329f1644ad949f3b80414265fa4bc6f164759d57a99e102019359487308e",
+      "sha256": "b52dca43c3d28e3470a5d796c765ca336d199710edc5f381f126f61ece908239",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -116,7 +116,7 @@
       "path": "research/config/bucket_registry.json",
       "generated_at": "2026-06-08_000000",
       "basis_trade_date": null,
-      "sha256": "134603270ff9e65f0513d5e7d2b1d1d9ca60224f0eded248b7aada0ca18919d0",
+      "sha256": "abcd504611da1817ccaae375d35cdd0fdff36468a91f461ff844f2448373731d",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -176,7 +176,22 @@
       "path": "research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.json",
       "generated_at": "2026-06-09_150409",
       "basis_trade_date": "20260608",
-      "sha256": "b93a41cee73dac2461e6682e2dafb62d70576120bd07dbc58f03c7de769d17c2",
+      "sha256": "4925af7b9b75a6d1f9fbfbff1069bc0e88c698c406b86dd65d9c5dcaa1c29373",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "etf_registry": {
+      "module": "etf_registry",
+      "code": null,
+      "name": null,
+      "path": "research/etfs/etf_registry.json",
+      "generated_at": "2026-06-09_150409",
+      "basis_trade_date": null,
+      "sha256": "d84bceb0040bb56bf8aa2db139b5826a1ce56c2a31397264fb4496705ecbf829",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -199,6 +214,21 @@
         "status": "legacy_unknown"
       }
     },
+    "portfolio_cleanup_review": {
+      "module": "portfolio_cleanup_review",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_cleanup_2026-06-09_152840.json",
+      "generated_at": "2026-06-09_152840",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "5b0dc469ac50641d81db235dc99bb258b699e2d8abcde5a1d5c761f5a88b8741",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
     "portfolio_snapshot": {
       "module": "portfolio_snapshot",
       "code": null,
@@ -206,7 +236,7 @@
       "path": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
       "generated_at": "2026-06-09_143440",
       "basis_trade_date": "2026-06-09",
-      "sha256": "aee0e89ab58244f2dae8f07a8314c41de2f15c873ad31256adf48e293a2d417a",
+      "sha256": "fa080e8c470e11f1127550661eb46fb4ee1af8cce185c9af4865edb0a3cbc566",
       "quality": {
         "status": "ok"
       },
@@ -222,6 +252,21 @@
       "generated_at": "2026-06-09_151312",
       "basis_trade_date": "2026-06-09",
       "sha256": "91e2a1da8edc8e7883956a9f4db24ef7c2dd46ef15f9ea6d6e17301ca17c038d",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "research_quality_audit": {
+      "module": "research_quality_audit",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/research_quality_audit_2026-06-09_152840.json",
+      "generated_at": "2026-06-09_152840",
+      "basis_trade_date": null,
+      "sha256": "9566f1f37f75f3422e6716bc75834e00eed0df82d42bfd5668b5797e373f9637",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -246,12 +291,27 @@
     },
     "stock_profile": {
       "module": "stock_profile",
+      "code": "601318.SH",
+      "name": "中国平安",
+      "path": "research/stocks/601318_中国平安_v2_2026-06-04_133534.json",
+      "generated_at": "2026-06-04_133534",
+      "basis_trade_date": "2026-06-04",
+      "sha256": "bfd32456ce303a66b1dd3d976c42d00b406ca4d1fee31c0020b60d69d1276e82",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "stock_registry": {
+      "module": "stock_registry",
       "code": null,
       "name": null,
       "path": "research/stocks/stock_registry.json",
       "generated_at": "2026-06-09",
       "basis_trade_date": null,
-      "sha256": "7c858fb1852b77763a524a7d7321ea0a352ef82fabfddd96dc02845720aa132c",
+      "sha256": "ba5f9b1144ba24d8c9c52ba6d1ba38d998de93562398e1a1a7f381e4337ef1a7",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -269,6 +329,21 @@
       "sha256": "60a775f6c849311119c90da67290cc757bbe7c962d0a6ce4f6f4c7dc282944b4",
       "quality": {
         "status": "fresh"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "theme_registry": {
+      "module": "theme_registry",
+      "code": null,
+      "name": null,
+      "path": "research/themes/theme_registry.json",
+      "generated_at": "2026-06-08_102237",
+      "basis_trade_date": null,
+      "sha256": "8528c79e0b7e62ae061f1d580942390dcc688bc46325297e233bfadd48f966a2",
+      "quality": {
+        "status": "legacy_unknown"
       },
       "staleness": {
         "status": "legacy_unknown"
@@ -562,6 +637,21 @@
       }
     },
     {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-09_152542_latest_ratio_only.json",
+      "generated_at": "2026-06-09_152542",
+      "basis_trade_date": "20260608",
+      "sha256": "1888c828c7665054cff6e079fc4686b0c99a0a399e9950772f641d090714aa09",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
       "module": "intraday_alerts",
       "code": null,
       "name": null,
@@ -641,9 +731,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_150808",
+      "generated_at": "2026-06-09_152618",
       "basis_trade_date": null,
-      "sha256": "2664d6ac026b32089419331a1a7762077e1610ee215b7bd6ef6f2bc500ad1350",
+      "sha256": "2bbaea223914d707c23f0b4c4bb5840fb2e2b1492c734d134d7de10e3cc5f0eb",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -952,13 +1042,28 @@
       }
     },
     {
+      "module": "staleness_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/staleness_check_2026-06-09_152542.json",
+      "generated_at": "2026-06-09_152542",
+      "basis_trade_date": null,
+      "sha256": "b52dca43c3d28e3470a5d796c765ca336d199710edc5f381f126f61ece908239",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "bucket_registry",
       "code": null,
       "name": null,
       "path": "research/config/bucket_registry.json",
       "generated_at": "2026-06-08_000000",
       "basis_trade_date": null,
-      "sha256": "134603270ff9e65f0513d5e7d2b1d1d9ca60224f0eded248b7aada0ca18919d0",
+      "sha256": "abcd504611da1817ccaae375d35cdd0fdff36468a91f461ff844f2448373731d",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1243,7 +1348,7 @@
       "path": "research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.json",
       "generated_at": "2026-06-09_150409",
       "basis_trade_date": "20260608",
-      "sha256": "b93a41cee73dac2461e6682e2dafb62d70576120bd07dbc58f03c7de769d17c2",
+      "sha256": "4925af7b9b75a6d1f9fbfbff1069bc0e88c698c406b86dd65d9c5dcaa1c29373",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1303,7 +1408,7 @@
       "path": "research/etfs/513180.SH_恒生科技ETF华夏_2026-06-09_145346.json",
       "generated_at": "2026-06-09_145346",
       "basis_trade_date": "20260608",
-      "sha256": "ac82a48c32c019ee7402b834da68da565f4cc54e89db5422280a25f5b7ea75a6",
+      "sha256": "242bf387438429df1dea50ece66ceb676c492e6e16366e7906fc74ff34412699",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1417,7 +1522,7 @@
       }
     },
     {
-      "module": "etf_profile",
+      "module": "etf_registry",
       "code": null,
       "name": null,
       "path": "research/etfs/etf_registry.json",
@@ -1499,6 +1604,21 @@
       "generated_at": "2026-06-09_100448",
       "basis_trade_date": "20260608",
       "sha256": "81120794d927db64d32053739d064c8ba42533d05a6929103cecb5674a5c77ef",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_cleanup_review",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_cleanup_2026-06-09_152840.json",
+      "generated_at": "2026-06-09_152840",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "5b0dc469ac50641d81db235dc99bb258b699e2d8abcde5a1d5c761f5a88b8741",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1678,7 +1798,7 @@
       "path": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
       "generated_at": "2026-06-09_143440",
       "basis_trade_date": "2026-06-09",
-      "sha256": "aee0e89ab58244f2dae8f07a8314c41de2f15c873ad31256adf48e293a2d417a",
+      "sha256": "fa080e8c470e11f1127550661eb46fb4ee1af8cce185c9af4865edb0a3cbc566",
       "quality": {
         "status": "ok"
       },
@@ -1814,6 +1934,21 @@
       "generated_at": "2026-06-09_151312",
       "basis_trade_date": "2026-06-09",
       "sha256": "91e2a1da8edc8e7883956a9f4db24ef7c2dd46ef15f9ea6d6e17301ca17c038d",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "research_quality_audit",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/research_quality_audit_2026-06-09_152840.json",
+      "generated_at": "2026-06-09_152840",
+      "basis_trade_date": null,
+      "sha256": "9566f1f37f75f3422e6716bc75834e00eed0df82d42bfd5668b5797e373f9637",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2107,13 +2242,13 @@
       }
     },
     {
-      "module": "stock_profile",
+      "module": "stock_registry",
       "code": null,
       "name": null,
       "path": "research/stocks/stock_registry.json",
       "generated_at": "2026-06-09",
       "basis_trade_date": null,
-      "sha256": "7c858fb1852b77763a524a7d7321ea0a352ef82fabfddd96dc02845720aa132c",
+      "sha256": "ba5f9b1144ba24d8c9c52ba6d1ba38d998de93562398e1a1a7f381e4337ef1a7",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2137,7 +2272,7 @@
       }
     },
     {
-      "module": "theme_review",
+      "module": "theme_registry",
       "code": null,
       "name": null,
       "path": "research/themes/theme_registry.json",

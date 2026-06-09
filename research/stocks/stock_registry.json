@@ -195,11 +195,11 @@
       "related_theme": "not_current_holding",
       "rating": "not_applicable",
       "action_rating": "Watch",
-      "target_position_range": "0%; not current holding, no ResearchFirst work unless user re-adds to holdings/watchlist.",
-      "reason": "Not present in latest QMT portfolio snapshot; user requested non-holdings should no longer be researched.",
+      "target_position_range": "0%; not current holding, no ResearchFirst work unless re-added to holdings/watchlist.",
+      "reason": "Not present in latest portfolio snapshot; non-holdings are excluded from active ResearchFirst work.",
       "last_profile_file": "",
       "last_checked_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
-      "last_status_change": "2026-06-09_151312"
+      "last_status_change": "2026-06-09_151956"
     },
     {
       "code": "688032",
@@ -210,11 +210,11 @@
       "related_theme": "not_current_holding",
       "rating": "not_applicable",
       "action_rating": "Watch",
-      "target_position_range": "0%; not current holding, no ResearchFirst work unless user re-adds to holdings/watchlist.",
-      "reason": "Not present in latest QMT portfolio snapshot; user requested non-holdings should no longer be researched.",
+      "target_position_range": "0%; not current holding, no ResearchFirst work unless re-added to holdings/watchlist.",
+      "reason": "Not present in latest portfolio snapshot; non-holdings are excluded from active ResearchFirst work.",
       "last_profile_file": "",
       "last_checked_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
-      "last_status_change": "2026-06-09_151312"
+      "last_status_change": "2026-06-09_151956"
     },
     {
       "code": "000970",
@@ -225,11 +225,11 @@
       "related_theme": "not_current_holding",
       "rating": "not_applicable",
       "action_rating": "Watch",
-      "target_position_range": "0%; not current holding, no ResearchFirst work unless user re-adds to holdings/watchlist.",
-      "reason": "Not present in latest QMT portfolio snapshot; user requested non-holdings should no longer be researched.",
+      "target_position_range": "0%; not current holding, no ResearchFirst work unless re-added to holdings/watchlist.",
+      "reason": "Not present in latest portfolio snapshot; non-holdings are excluded from active ResearchFirst work.",
       "last_profile_file": "",
       "last_checked_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
-      "last_status_change": "2026-06-09_151312"
+      "last_status_change": "2026-06-09_151956"
     },
     {
       "code": "300724",
@@ -240,11 +240,11 @@
       "related_theme": "not_current_holding",
       "rating": "not_applicable",
       "action_rating": "Watch",
-      "target_position_range": "0%; not current holding, no ResearchFirst work unless user re-adds to holdings/watchlist.",
-      "reason": "Not present in latest QMT portfolio snapshot; user requested non-holdings should no longer be researched.",
+      "target_position_range": "0%; not current holding, no ResearchFirst work unless re-added to holdings/watchlist.",
+      "reason": "Not present in latest portfolio snapshot; non-holdings are excluded from active ResearchFirst work.",
       "last_profile_file": "",
       "last_checked_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
-      "last_status_change": "2026-06-09_151312"
+      "last_status_change": "2026-06-09_151956"
     },
     {
       "code": "001280",
@@ -330,6 +330,18 @@
       "date": "2026-06-09",
       "timestamp": "2026-06-09_151312",
       "change": "Marked non-current holdings from latest ResearchFirst backlog as not_current_holding_skip_research.",
+      "codes": [
+        "000970",
+        "300724",
+        "600764",
+        "688032"
+      ],
+      "basis_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json"
+    },
+    {
+      "date": "2026-06-09",
+      "timestamp": "2026-06-09_151956",
+      "change": "Filtered non-current holdings out of active ResearchFirst work.",
       "codes": [
         "000970",
         "300724",

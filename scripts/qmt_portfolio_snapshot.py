@@ -95,8 +95,10 @@ CATEGORY_BY_BUCKET = {
 
 SNAPSHOT_CATEGORY_BUCKET = {
     "bond_cash": "cash_short",
-    "core_quality": "core_base",
-    "core_quality_logistics": "core_base",
+    "broad_base": "core_base",
+    "core_quality": "defense",
+    "core_quality_cashflow": "defense",
+    "core_quality_logistics": "attack_mainline",
     "technology": "attack_mainline",
     "technology_terminal": "attack_mainline",
     "high_end_equipment": "attack_mainline",

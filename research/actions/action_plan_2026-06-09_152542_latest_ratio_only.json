@@ -1,0 +1,237 @@
+{
+  "module": "action_plan",
+  "version": "ratio_only_v3_config_driven",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09_152542",
+  "basis_trade_date": "20260608",
+  "session": "latest_ratio_only",
+  "privacy_policy": "ratio_only_no_monetary_values_no_unit_counts",
+  "dependencies": {
+    "required": [
+      {
+        "module": "market_score",
+        "path": "research/market/market_score_2026-06-09_100448.json",
+        "generated_at": "2026-06-09_100448",
+        "basis_trade_date": "20260608",
+        "sha256": "81120794d927db64d32053739d064c8ba42533d05a6929103cecb5674a5c77ef"
+      },
+      {
+        "module": "theme_review",
+        "path": "research/themes/theme_review_2026-06-08_102237.json",
+        "generated_at": "2026-06-08_102237",
+        "basis_trade_date": "20260605",
+        "sha256": "f8cd26cd7055197e14437dde7e7719d14dd678681375065e02c6e0d6b40d458a"
+      },
+      {
+        "module": "portfolio_snapshot",
+        "path": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+        "generated_at": "2026-06-09_143440",
+        "basis_trade_date": "2026-06-09",
+        "sha256": "fa080e8c470e11f1127550661eb46fb4ee1af8cce185c9af4865edb0a3cbc566"
+      },
+      {
+        "module": "target_allocation",
+        "path": "research/allocation/target_allocation_2026-06-09_150300.json",
+        "generated_at": "2026-06-09_150300",
+        "basis_trade_date": "20260608",
+        "sha256": "0dbbe6c38577d2c227c8408c9a888802c3906c3d874c26c3626137c457416775"
+      },
+      {
+        "module": "intraday_rules",
+        "path": "research/alerts/intraday_rules.json",
+        "generated_at": "2026-06-09_152542",
+        "basis_trade_date": null,
+        "sha256": "73b356850e63e3efb95c82402cc3402f62847fa5ba325b82c3e0265b2747784f"
+      }
+    ],
+    "policy": "Invalid if any required upstream is replaced by a newer file."
+  },
+  "source_files": {
+    "market_position": "research/market/market_score_2026-06-09_100448.json",
+    "theme_registry": "research/themes/theme_review_2026-06-08_102237.json",
+    "portfolio_analysis": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+    "target_allocation": "research/allocation/target_allocation_2026-06-09_150300.json",
+    "intraday_rules": "research/alerts/intraday_rules.json",
+    "decision_log": "research/logs/decision_log.md"
+  },
+  "summary": {
+    "action_state": "actionable",
+    "recommendation_strength": "Normal",
+    "one_line_conclusion": "Target equity is 30%-40%; actual equity is about 43.52%. Allowed actions are ratio-only risk reduction and cash/short-duration restoration; no direct single-name add is allowed without fresh dossiers."
+  },
+  "quality": {
+    "status": "ok",
+    "warnings": []
+  },
+  "staleness": {
+    "status": "fresh",
+    "checked_at": "2026-06-09_152542"
+  },
+  "preconditions": {
+    "market_position": {
+      "conclusion": "score 25 -> equity 30%-40%, cash 60%-70%",
+      "impact": "risk reduction first"
+    },
+    "theme_rating": {
+      "conclusion": "theme context read from latest theme_review",
+      "impact": "no attack add unless theme and market gates recover"
+    },
+    "portfolio_deviation": {
+      "conclusion": "actual equity 43.52%, cash/short-duration 56.48%",
+      "impact": "bucket deviations drive staged actions"
+    },
+    "hard_constraints": {
+      "conclusion": "ratio-only and ResearchFirst profile/valuation/liquidity gates active",
+      "impact": "unprofiled or liquidity-unverified holdings cannot receive direct actions"
+    }
+  },
+  "actions": [
+    {
+      "priority": "high",
+      "action_type": "Reduce",
+      "subject": {
+        "code": "",
+        "name": "overall equity exposure",
+        "type": "portfolio"
+      },
+      "bucket_role": "portfolio",
+      "current_position": "43.52%",
+      "suggested_change": "reduce 3.5pp to 8.5pp",
+      "target_position": "30%-40%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "market score 25 maps to equity 30%-40%",
+        "actual equity is above target upper bound",
+        "offensive add gate is not open"
+      ],
+      "trigger_conditions": [
+        "manual confirmation and no newer upstream file"
+      ],
+      "invalidation_conditions": [
+        "new market score raises equity target above current exposure"
+      ],
+      "risks": [
+        "do not convert risk-reduction output into a single-name forced sell list without dossier checks"
+      ],
+      "review_points": [
+        "rebuild portfolio snapshot after execution"
+      ]
+    },
+    {
+      "priority": "high",
+      "action_type": "Add",
+      "subject": {
+        "code": "511360",
+        "name": "cash/short-duration bucket",
+        "type": "bond_cash"
+      },
+      "bucket_role": "cash_short",
+      "current_position": "56.48%",
+      "suggested_change": "increase 3.5pp to 8.5pp",
+      "target_position": "60%-70%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "cash/short-duration target is 60%-70%",
+        "this is risk-reduction parking, not equity add exposure"
+      ],
+      "trigger_conditions": [
+        "paired with equity-risk reduction"
+      ],
+      "invalidation_conditions": [
+        "new target allocation lowers cash/short-duration target"
+      ],
+      "risks": [
+        "confirm liquidity and short-duration instrument boundary"
+      ],
+      "review_points": [
+        "cash/short-duration ratio returns to target range"
+      ]
+    },
+    {
+      "priority": "high",
+      "action_type": "Reduce",
+      "subject": {
+        "code": "",
+        "name": "其他/待清理",
+        "type": "bucket"
+      },
+      "bucket_role": "legacy_watch",
+      "current_position": "12.28%",
+      "suggested_change": "reduce in stages before considering core adds",
+      "target_position": "0.00%",
+      "recommendation_strength": "Normal",
+      "needs_manual_confirmation": true,
+      "evidence": [
+        "legacy/watch target is zero or near zero in target allocation",
+        "legacy/watch is a main source of equity deviation"
+      ],
+      "trigger_conditions": [
+        "profile/liquidity/manual review before single-name action"
+      ],
+      "invalidation_conditions": [
+        "bucket registry or theme registry explicitly promotes a holding to current core/attack/defense"
+      ],
+      "risks": [
+        "stage changes to avoid overreacting to short-term rebound"
+      ],
+      "review_points": [
+        "overall equity exposure after staged reduction"
+      ]
+    }
+  ],
+  "no_action_list": [
+    {
+      "subject": "core_base bucket",
+      "reason": "underweight is not an add signal while overall equity is above target",
+      "watch_points": [
+        "wait for market score or target range improvement"
+      ]
+    },
+    {
+      "subject": "attack_mainline bucket",
+      "reason": "offensive gate is controlled by market/theme status",
+      "watch_points": [
+        "actual 12.43%",
+        "no new attack exposure while pause_new"
+      ]
+    },
+    {
+      "subject": "defense bucket",
+      "reason": "defensive equity is still equity exposure",
+      "watch_points": [
+        "actual 17.46%",
+        "do not treat defense bucket as cash"
+      ]
+    }
+  ],
+  "research_first_list": [],
+  "intraday_triggers": [
+    {
+      "subject": "all buy/add triggers",
+      "trigger_condition": "disabled while intraday rules are degraded or market offensive gate is pause_new",
+      "action_after_trigger": "rebuild market_score, target_allocation, intraday_rules, then regenerate action_plan"
+    }
+  ],
+  "risks": [
+    "Registry or valuation staleness can only loosen actions after refresh.",
+    "This file is ratio-only and must not be translated into monetary or unit instructions."
+  ],
+  "triggered_hard_constraints": [
+    "No monetary-value fields.",
+    "No unit-count fields.",
+    "No direct buy/add/reduce/sell for ResearchFirst subjects.",
+    "Single-security executable actions require profile, valuation and liquidity gate pass.",
+    "Cash/short-duration actions require liquidity, duration-boundary and interest-rate/credit/liquidity risk checks."
+  ],
+  "comparison_with_previous": {
+    "main_changes": [
+      "action plan now reads target ranges from target_allocation instead of hardcoded bands"
+    ],
+    "change_reasons": [
+      "ChatGPT review found stale fixed-band assumptions in generator scripts"
+    ]
+  },
+  "decision_log_entry": "2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约43.52%，仅允许比例级风险收缩和ResearchFirst门禁。"
+}

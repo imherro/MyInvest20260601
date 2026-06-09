@@ -17,6 +17,7 @@ ACTION_DIR = ROOT / "research" / "actions"
 DECISION_LOG = ROOT / "research" / "logs" / "decision_log.md"
 ETF_REGISTRY = ROOT / "research" / "etfs" / "etf_registry.json"
 STOCK_REGISTRY = ROOT / "research" / "stocks" / "stock_registry.json"
+INTRADAY_WATCHLIST = ROOT / "research" / "config" / "intraday_watchlist.json"
 
 
 def dep_record(module: str, path: str, data: dict[str, Any]) -> dict[str, Any]:
@@ -48,7 +49,43 @@ def find_bucket(overlay: dict[str, Any], key: str) -> dict[str, Any]:
     return {"key": key, "label": key, "target_pct": 0.0, "actual_pct": 0.0, "gap_pct": 0.0}
 
 
-def registry_research_first() -> list[dict[str, str]]:
+def normalize_code(value: Any) -> str:
+    code = str(value or "").strip().upper()
+    if not code:
+        return ""
+    if "." in code:
+        return code
+    if code.startswith(("0", "3")):
+        return f"{code}.SZ"
+    if code.startswith(("5", "6", "9")):
+        return f"{code}.SH"
+    return code
+
+
+def current_holding_codes(portfolio: dict[str, Any]) -> set[str]:
+    codes: set[str] = set()
+    for item in portfolio.get("holdings", []) or []:
+        for key in ["code", "ts_code"]:
+            code = normalize_code(item.get(key))
+            if code:
+                codes.add(code)
+                codes.add(code.split(".", 1)[0])
+    return codes
+
+
+def explicit_watch_codes() -> set[str]:
+    data = read_json(INTRADAY_WATCHLIST, {})
+    codes: set[str] = set()
+    for item in data.get("include_codes", []) or []:
+        code = normalize_code(item.get("code") if isinstance(item, dict) else item)
+        if code:
+            codes.add(code)
+            codes.add(code.split(".", 1)[0])
+    return codes
+
+
+def registry_research_first(portfolio: dict[str, Any]) -> list[dict[str, str]]:
+    eligible_codes = current_holding_codes(portfolio) | explicit_watch_codes()
     rows: list[dict[str, str]] = []
     for path, list_key, subject_type in [
         (ETF_REGISTRY, "etfs", "ETF"),
@@ -59,6 +96,10 @@ def registry_research_first() -> list[dict[str, str]]:
             status = str(item.get("status") or "").lower()
             if status in {"to_research", "researchfirst", "research_first", "pending"}:
                 code = item.get("code") or ""
+                normalized = normalize_code(code)
+                raw = normalized.split(".", 1)[0] if normalized else str(code)
+                if normalized not in eligible_codes and raw not in eligible_codes:
+                    continue
                 name = item.get("name") or ""
                 rows.append(
                     {
@@ -236,7 +277,7 @@ def build_plan(index: dict[str, Any], generated_at: str) -> dict[str, Any]:
         },
         "actions": actions,
         "no_action_list": no_action,
-        "research_first_list": registry_research_first(),
+        "research_first_list": registry_research_first(portfolio),
         "intraday_triggers": [
             {
                 "subject": "all buy/add triggers",

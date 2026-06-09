@@ -18,25 +18,36 @@ MARKET_POSITION_MAPPING = RESEARCH / "config" / "market_position_mapping.json"
 TIMESTAMP_RE = re.compile(r"(\d{4}-\d{2}-\d{2}_\d{6})")
 
 MODULE_ALIASES = {
+    "MARKET_POSITION": "market_score",
     "market_position": "market_score",
     "market_score": "market_score",
+    "THEME_RESEARCH": "theme_review",
+    "theme_research": "theme_review",
     "theme_review": "theme_review",
     "theme_leaders": "theme_leaders",
     "target_allocation_reference": "target_allocation",
     "target_allocation": "target_allocation",
+    "portfolio_analysis": "portfolio_snapshot",
     "portfolio_snapshot": "portfolio_snapshot",
     "portfolio_research_backlog": "research_backlog",
     "research_backlog": "research_backlog",
+    "portfolio_cleanup_review": "portfolio_cleanup_review",
+    "current_holding_research_quality_audit": "research_quality_audit",
     "valuation_report": "valuation_report",
     "intraday_rules": "intraday_rules",
     "intraday_alert": "intraday_alerts",
     "intraday_analysis": "intraday_alerts",
     "intraday_alerts": "intraday_alerts",
     "premarket_check": "premarket_check",
+    "PREMARKET_CHECK": "premarket_check",
     "action_plan": "action_plan",
     "post_market_review": "post_market_review",
     "staleness_check": "staleness_check",
+    "ETF_RESEARCH": "etf_profile",
+    "etf_research": "etf_profile",
     "stock_profile": "stock_profile",
+    "STOCK_RESEARCH": "stock_profile",
+    "stock_research": "stock_profile",
     "etf_profile": "etf_profile",
 }
 
@@ -117,6 +128,11 @@ def normalize_module(value: Any, path: Path | None = None) -> str:
     text = str(value or "").strip()
     if text in MODULE_ALIASES:
         return MODULE_ALIASES[text]
+    lowered = text.lower()
+    if lowered in MODULE_ALIASES:
+        return MODULE_ALIASES[lowered]
+    if text:
+        return text
     if path is not None:
         try:
             parts = path.relative_to(RESEARCH).parts

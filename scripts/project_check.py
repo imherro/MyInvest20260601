@@ -29,7 +29,7 @@ RESEARCH_NAME_PATTERNS = {
     "etfs": re.compile(rf"^.+_{TIMESTAMP}\.(md|json)$"),
     "stocks": re.compile(rf"^.+_{TIMESTAMP}\.(md|json)$"),
     "portfolio": re.compile(
-        rf"^(portfolio_snapshot|research_backlog)_{TIMESTAMP}\.(md|json)$"
+        rf"^(portfolio_snapshot|research_backlog|portfolio_cleanup|research_quality_audit)_{TIMESTAMP}\.(md|json)$"
     ),
     "allocation": re.compile(rf"^target_allocation_{TIMESTAMP}\.(md|json)$"),
     "actions": re.compile(
