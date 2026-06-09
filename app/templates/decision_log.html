@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Decision Log</h1>
+  {% if entries %}
+    <div class="stack">
+      {% for item in entries %}
+        <article class="row-card">
+          <strong>{{ item.entry_date or "" }}</strong>
+          <div>{{ item.title }}</div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty">No decision log entries loaded.</div>
+  {% endif %}
+{% endblock %}

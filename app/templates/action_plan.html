@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Action Plan</h1>
+  {% if action_plan %}
+    <div class="metric-grid">
+      <div class="metric"><span class="subtle">State</span><strong>{{ action_plan.action_state or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Strength</span><strong>{{ action_plan.recommendation_strength or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Generated</span><strong>{{ action_plan.generated_at or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Basis</span><strong>{{ action_plan.basis_trade_date or "n/a" }}</strong></div>
+    </div>
+    <p class="subtle">{{ action_plan.one_line_conclusion or "" }}</p>
+  {% endif %}
+
+  <h2>Items</h2>
+  {% if items %}
+    <table>
+      <thead>
+        <tr>
+          <th>Priority</th>
+          <th>Action</th>
+          <th>Subject</th>
+          <th>Current</th>
+          <th>Change</th>
+          <th>Target</th>
+          <th>Evidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+          <tr>
+            <td>{{ item.priority or "" }}</td>
+            <td>{{ item.action_type or "" }}</td>
+            <td>{{ item.name or item.code or "" }}</td>
+            <td>{{ item.current_position or "" }}</td>
+            <td>{{ item.suggested_change or "" }}</td>
+            <td>{{ item.target_position or "" }}</td>
+            <td>
+              <ul class="list">
+                {% for line in item.evidence %}
+                  <li>{{ line }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No action items.</div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Dashboard</h1>
+  <div class="metric-grid">
+    <div class="metric">
+      <span class="subtle">Action State</span>
+      <strong>{{ plan.action_state if plan else "n/a" }}</strong>
+    </div>
+    <div class="metric">
+      <span class="subtle">Equity Ratio</span>
+      <strong>{{ "%.2f"|format(portfolio.equity_weight_pct) if portfolio else "n/a" }}%</strong>
+    </div>
+    <div class="metric">
+      <span class="subtle">Cash/Short Ratio</span>
+      <strong>{{ "%.2f"|format(portfolio.bond_cash_weight_pct) if portfolio else "n/a" }}%</strong>
+    </div>
+    <div class="metric">
+      <span class="subtle">Database</span>
+      <strong>{{ checks.mode }}</strong>
+    </div>
+  </div>
+
+  <h2>Current Modules</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>Generated</th>
+        <th>Basis</th>
+        <th>Quality</th>
+        <th>Staleness</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in modules %}
+        <tr>
+          <td>{{ item.module }}</td>
+          <td>{{ item.generated_at or "" }}</td>
+          <td>{{ item.basis_trade_date or "" }}</td>
+          <td><span class="status {{ 'warn' if item.quality_status not in ['ok', 'fresh'] else '' }}">{{ item.quality_status or "n/a" }}</span></td>
+          <td><span class="status {{ 'warn' if item.staleness_status not in ['ok', 'fresh'] else '' }}">{{ item.staleness_status or "n/a" }}</span></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

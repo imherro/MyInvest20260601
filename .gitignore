@@ -1,6 +1,7 @@
 .env
 runtime/
 temp/
+data/local/
 .env.*
 !.env.example
 *.log
