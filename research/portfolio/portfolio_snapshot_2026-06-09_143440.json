@@ -53,20 +53,19 @@
   "category_summary": {
     "auto": 3.9252,
     "bond_cash": 56.3926,
-    "core_quality": 5.8159,
-    "core_quality_logistics": 1.9856,
-    "defensive": 0.0039,
+    "cash_uninvested": 0.09,
+    "core_quality": 1.345,
+    "defensive": 4.4748,
     "financial": 6.329,
     "high_end_equipment": 0.0302,
     "hk_cn_tech": 1.6078,
     "medicine": 6.6584,
     "military_low_altitude": 6.2595,
-    "other": 2.3542,
+    "other": 2.2285,
     "power_equipment": 0.8853,
     "resources": 4.8997,
-    "technology": 0.3804,
-    "theme": 2.3855,
-    "cash_uninvested": 0.09
+    "technology": 3.7732,
+    "theme": 1.104
   },
   "holdings": [
     {
@@ -97,8 +96,8 @@
       "raw_cost_price": null,
       "cost_basis_status": "normal",
       "current_price": 1.17,
-      "category": "core_quality",
-      "allocation_bucket": "core_base",
+      "category": "defensive",
+      "allocation_bucket": "defense",
       "qmt_timetag": "20260609 14:34:39"
     },
     {
@@ -177,8 +176,8 @@
       "raw_cost_price": null,
       "cost_basis_status": "normal",
       "current_price": 34.03,
-      "category": "core_quality_logistics",
-      "allocation_bucket": "core_base",
+      "category": "technology",
+      "allocation_bucket": "attack_mainline",
       "qmt_timetag": "20260609 14:34:39"
     },
     {
@@ -305,8 +304,8 @@
       "raw_cost_price": null,
       "cost_basis_status": "normal",
       "current_price": 1.177,
-      "category": "theme",
-      "allocation_bucket": "legacy_watch",
+      "category": "technology",
+      "allocation_bucket": "attack_mainline",
       "qmt_timetag": "20260609 14:34:38"
     },
     {
@@ -561,8 +560,8 @@
       "raw_cost_price": null,
       "cost_basis_status": "normal",
       "current_price": 1.688,
-      "category": "other",
-      "allocation_bucket": "legacy_watch",
+      "category": "technology",
+      "allocation_bucket": "attack_mainline",
       "qmt_timetag": "20260609 14:34:40"
     },
     {

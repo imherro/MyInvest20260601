@@ -1,7 +1,7 @@
 {
   "module": "stock_registry",
   "version": "2.0",
-  "last_updated": "2026-06-04",
+  "last_updated": "2026-06-09",
   "notes": "当前文件保存个股研究模块的总览登记。根据用户当前持仓，已登记持仓股为待研究状态；正式个股操作建议前必须逐只建立个股档案。",
   "stocks": [
     {
@@ -189,54 +189,62 @@
     {
       "code": "600764",
       "name": "中国海防",
-      "status": "to_research",
-      "current_weight_pct": 1.57,
-      "bucket_role": "unknown",
-      "related_theme": "pending",
-      "rating": "pending",
+      "status": "not_current_holding_skip_research",
+      "current_weight_pct": null,
+      "bucket_role": "not_current_holding",
+      "related_theme": "not_current_holding",
+      "rating": "not_applicable",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。",
-      "last_profile_file": ""
+      "target_position_range": "0%; not current holding, no ResearchFirst work unless user re-adds to holdings/watchlist.",
+      "reason": "Not present in latest QMT portfolio snapshot; user requested non-holdings should no longer be researched.",
+      "last_profile_file": "",
+      "last_checked_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+      "last_status_change": "2026-06-09_151312"
     },
     {
       "code": "688032",
       "name": "禾迈股份",
-      "status": "to_research",
-      "current_weight_pct": 1.36,
-      "bucket_role": "unknown",
-      "related_theme": "pending",
-      "rating": "pending",
+      "status": "not_current_holding_skip_research",
+      "current_weight_pct": null,
+      "bucket_role": "not_current_holding",
+      "related_theme": "not_current_holding",
+      "rating": "not_applicable",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。",
-      "last_profile_file": ""
+      "target_position_range": "0%; not current holding, no ResearchFirst work unless user re-adds to holdings/watchlist.",
+      "reason": "Not present in latest QMT portfolio snapshot; user requested non-holdings should no longer be researched.",
+      "last_profile_file": "",
+      "last_checked_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+      "last_status_change": "2026-06-09_151312"
     },
     {
       "code": "000970",
       "name": "中科三环",
-      "status": "to_research",
-      "current_weight_pct": 1.75,
-      "bucket_role": "unknown",
-      "related_theme": "pending",
-      "rating": "pending",
+      "status": "not_current_holding_skip_research",
+      "current_weight_pct": null,
+      "bucket_role": "not_current_holding",
+      "related_theme": "not_current_holding",
+      "rating": "not_applicable",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。",
-      "last_profile_file": ""
+      "target_position_range": "0%; not current holding, no ResearchFirst work unless user re-adds to holdings/watchlist.",
+      "reason": "Not present in latest QMT portfolio snapshot; user requested non-holdings should no longer be researched.",
+      "last_profile_file": "",
+      "last_checked_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+      "last_status_change": "2026-06-09_151312"
     },
     {
       "code": "300724",
       "name": "捷佳伟创",
-      "status": "to_research",
-      "current_weight_pct": 1.29,
-      "bucket_role": "unknown",
-      "related_theme": "pending",
-      "rating": "pending",
+      "status": "not_current_holding_skip_research",
+      "current_weight_pct": null,
+      "bucket_role": "not_current_holding",
+      "related_theme": "not_current_holding",
+      "rating": "not_applicable",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "当前持仓股；用户要求按比例做组合分析，正式操作建议前需建立个股档案。",
-      "last_profile_file": ""
+      "target_position_range": "0%; not current holding, no ResearchFirst work unless user re-adds to holdings/watchlist.",
+      "reason": "Not present in latest QMT portfolio snapshot; user requested non-holdings should no longer be researched.",
+      "last_profile_file": "",
+      "last_checked_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+      "last_status_change": "2026-06-09_151312"
     },
     {
       "code": "001280",
@@ -317,6 +325,18 @@
       "date": "2026-06-04",
       "change": "升级个股研究模块到v2，并重新生成001280中国铀业、601318中国平安A股v2研究报告。",
       "impact": "后续个股研究必须包含数据新鲜度、资产分类、估值区间、三情景推演、同业/估值锚、市场风格适配、条件化策略、风险排序和证伪条件；本次仍不生成组合级买卖清单。"
+    },
+    {
+      "date": "2026-06-09",
+      "timestamp": "2026-06-09_151312",
+      "change": "Marked non-current holdings from latest ResearchFirst backlog as not_current_holding_skip_research.",
+      "codes": [
+        "000970",
+        "300724",
+        "600764",
+        "688032"
+      ],
+      "basis_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json"
     }
   ]
 }

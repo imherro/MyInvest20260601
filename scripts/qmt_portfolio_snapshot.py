@@ -46,8 +46,8 @@ BUCKET_BY_CODE = {
     "510300": "core_base",
     "510500": "core_base",
     "159915": "core_base",
-    "159201": "core_base",
-    "002352": "core_base",
+    "159201": "defense",
+    "002352": "attack_mainline",
     "159819": "attack_mainline",
     "588200": "attack_mainline",
     "159558": "attack_mainline",
@@ -75,19 +75,19 @@ BUCKET_BY_CODE = {
     "513180": "legacy_watch",
     "513050": "legacy_watch",
     "159378": "legacy_watch",
-    "562500": "legacy_watch",
+    "562500": "attack_mainline",
     "159869": "legacy_watch",
     "002258": "legacy_watch",
     "002041": "legacy_watch",
     "603903": "legacy_watch",
     "516150": "legacy_watch",
     "512400": "legacy_watch",
-    "515880": "legacy_watch",
+    "515880": "attack_mainline",
 }
 
 CATEGORY_BY_BUCKET = {
     "cash_short": "bond_cash",
-    "core_base": "core_quality",
+    "core_base": "broad_base",
     "attack_mainline": "technology",
     "defense": "defensive",
     "legacy_watch": "other",
@@ -109,7 +109,7 @@ SNAPSHOT_CATEGORY_BUCKET = {
 
 BUCKET_LABELS = {
     "cash_short": "现金/短融",
-    "core_base": "宽基/核心质量底仓",
+    "core_base": "宽基底仓",
     "attack_mainline": "进攻主线仓",
     "defense": "防御仓",
     "legacy_watch": "其他/待清理",

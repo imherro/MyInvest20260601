@@ -73,7 +73,7 @@
         "principle": "Risk-off anchor from market-position mapping."
       },
       {
-        "group": "宽基/核心质量底仓",
+        "group": "宽基底仓",
         "target_center_pct": 19.95,
         "target_range": "see ideal_allocation_map",
         "role": "target_bucket",
@@ -117,7 +117,7 @@
       },
       {
         "key": "core_base",
-        "label": "宽基/核心质量底仓",
+        "label": "宽基底仓",
         "target_pct": 19.95,
         "color": "#2f6fbd",
         "basis": "Keep core equity exposure, but do not add while total equity is above target."
@@ -160,35 +160,35 @@
       },
       {
         "key": "core_base",
-        "label": "宽基/核心质量底仓",
+        "label": "宽基底仓",
         "color": "#2f6fbd",
         "target_pct": 19.95,
-        "actual_pct": 7.8015,
-        "gap_pct": -12.1485
+        "actual_pct": 1.345,
+        "gap_pct": -18.605
       },
       {
         "key": "attack_mainline",
         "label": "进攻主线仓",
         "color": "#8b5cf6",
         "target_pct": 4.9,
-        "actual_pct": 9.0404,
-        "gap_pct": 4.1404
+        "actual_pct": 12.4332,
+        "gap_pct": 7.5332
       },
       {
         "key": "defense",
         "label": "防御仓",
         "color": "#0f8b6f",
         "target_pct": 10.15,
-        "actual_pct": 12.9913,
-        "gap_pct": 2.8413
+        "actual_pct": 17.4622,
+        "gap_pct": 7.3122
       },
       {
         "key": "legacy_watch",
         "label": "其他/待清理",
         "color": "#9a6700",
         "target_pct": 0.0,
-        "actual_pct": 13.6874,
-        "gap_pct": 13.6874
+        "actual_pct": 12.2802,
+        "gap_pct": 12.2802
       }
     ],
     "quality": {
@@ -203,39 +203,44 @@
       "actual_pct": 56.4826,
       "target_pct": 65.0,
       "gap_pct": -8.5174,
-      "priority": "P0"
+      "priority": "P0",
+      "color": "#5b6b7a"
     },
     {
       "key": "core_base",
-      "label": "宽基/核心质量底仓",
-      "actual_pct": 7.8015,
+      "label": "宽基底仓",
+      "actual_pct": 1.345,
       "target_pct": 19.95,
-      "gap_pct": -12.1485,
-      "priority": "Observe"
+      "gap_pct": -18.605,
+      "priority": "Observe",
+      "color": "#2f6fbd"
     },
     {
       "key": "attack_mainline",
       "label": "进攻主线仓",
-      "actual_pct": 9.0404,
+      "actual_pct": 12.4332,
       "target_pct": 4.9,
-      "gap_pct": 4.1404,
-      "priority": "P1"
+      "gap_pct": 7.5332,
+      "priority": "P1",
+      "color": "#8b5cf6"
     },
     {
       "key": "defense",
       "label": "防御仓",
-      "actual_pct": 12.9913,
+      "actual_pct": 17.4622,
       "target_pct": 10.15,
-      "gap_pct": 2.8413,
-      "priority": "P1"
+      "gap_pct": 7.3122,
+      "priority": "P1",
+      "color": "#0f8b6f"
     },
     {
       "key": "legacy_watch",
       "label": "其他/待清理",
-      "actual_pct": 13.6874,
+      "actual_pct": 12.2802,
       "target_pct": 0.0,
-      "gap_pct": 13.6874,
-      "priority": "P0"
+      "gap_pct": 12.2802,
+      "priority": "P0",
+      "color": "#9a6700"
     }
   ],
   "quality": {

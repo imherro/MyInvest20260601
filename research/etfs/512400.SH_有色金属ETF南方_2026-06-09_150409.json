@@ -1,0 +1,297 @@
+{
+  "module": "etf_research",
+  "version": "1.1",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09_150409",
+  "basis_trade_date": "20260608",
+  "code": "512400.SH",
+  "name": "有色金属ETF南方",
+  "rating": "D",
+  "data_sources": [
+    "Tushare fund_basic",
+    "Tushare fund_daily",
+    "Tushare fund_nav",
+    "Tushare fund_share",
+    "Tushare fund_portfolio",
+    "Tushare stock_basic for component names",
+    "research/market/market_score_2026-06-09_100448.json",
+    "research/themes/theme_review_2026-06-08_102237.json",
+    "theme_registry reference: research/themes/theme_registry.json (non-versioned binding registry)",
+    "research/portfolio/research_backlog_2026-06-09_150400.json",
+    "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_145910.json"
+  ],
+  "privacy_policy": {
+    "ratio_only": true,
+    "excluded_fields": [
+      "account_identifier_field",
+      "position_quantity",
+      "profit_raw_value",
+      "portfolio_raw_value",
+      "component_raw_quantity",
+      "component_raw_value",
+      "turnover_raw_value",
+      "fund_share_raw_value"
+    ],
+    "note": "本档案只保存比例、分位、状态和研究结论，不保存敏感原值。"
+  },
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-09_100448.json",
+    "theme_research_report": "research/themes/theme_review_2026-06-08_102237.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "research_backlog": "research/portfolio/research_backlog_2026-06-09_150400.json",
+    "valuation_report": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_145910.json"
+  },
+  "summary": {
+    "bucket_role": "theme",
+    "action_rating": "Watch",
+    "etf_score": 29,
+    "target_position_range": "0%-2%，仅作资源周期观察上限参考，不构成操作指令",
+    "confidence": "medium",
+    "one_line_conclusion": "有色金属ETF南方跟踪中证申万有色金属指数，是资源/有色周期暴露工具；Tushare显示流动性可用、持仓结构可取得，但价格位置仍处拥挤区，近20/60日趋势明显走弱，所属有色主线为战略B、交易D、阶段decline，因此本档案只解除ResearchFirst中的profile/liquidity/theme binding缺口，不给买卖或加减仓指令。"
+  },
+  "basic_info": {
+    "fund_code": "512400.SH",
+    "fund_name": "有色金属ETF南方",
+    "tracked_index_or_asset": "中证申万有色金属指数收益率",
+    "fund_company": "南方基金",
+    "fee": "管理费 0.5%，托管费 0.1%",
+    "long_term_holding_suitable": "不适合作为当前进攻主线工具；只能作为资源周期观察标的，等待主线和趋势修复。"
+  },
+  "position_role": {
+    "bucket_role": "theme",
+    "allocation_bucket": "legacy_watch",
+    "related_theme": "有色 / 资源周期",
+    "strategic_theme_rating": "B",
+    "tactical_theme_rating": "D",
+    "theme_stage": "decline",
+    "allocation_purpose": "观察资源周期弹性，不替代科技进攻主线，也不作为防御仓。",
+    "alternative_etfs": [
+      "516150.SH 稀土ETF嘉实",
+      "562800.SH 稀有金属ETF嘉实"
+    ],
+    "overlap_with_existing_holdings": "与516150、562800、000970等资源/稀土/磁材方向存在较高主题相关性；组合层面应合并看资源桶风险。"
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 17,
+      "evidence": "被动指数型ETF，Tushare benchmark=中证申万有色金属指数收益率。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 3,
+      "evidence": "最新估值代理为价格拥挤；1年价格分位57.14%，可用长期样本分位85.21%，缺少指数PE/PB长期分位。"
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": 3,
+      "evidence": "截至20260608，近5日-6.62%，近20日-17.57%，近60日-20.14%；价格低于20日和60日均线。"
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": 9,
+      "evidence": "最新成交活跃度处于近一年约90.41%分位，20日平均约89.32%分位；本档案不保存原始成交数据。"
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": 4,
+      "evidence": "基金份额代理近5日0.56%，近20日-0.61%，近60日-22.34%；本档案不保存份额原值。"
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 2,
+      "evidence": "theme_registry显示有色战略B、交易D、阶段decline；不能进入当前进攻主线复核。"
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": 3,
+      "evidence": "与既有稀土、稀有金属、磁材个股方向相关，组合互补性弱，更多是资源桶重复暴露。"
+    },
+    "base_score": 41,
+    "crowding_structure_risk": {
+      "score": 12,
+      "evidence": "价格位置拥挤、短中期趋势破坏、主题交易评级D、资源桶重叠。",
+      "operation_limit": "不因本档案生成任何买卖或加减仓动作。"
+    },
+    "final_score": 29
+  },
+  "valuation": {
+    "status": "available_as_price_position_proxy",
+    "latest_valuation_file": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_145910.json",
+    "short_term_60d_percentile": {
+      "status": "available",
+      "conclusion": "1.67%分位",
+      "evidence": "ETF价格位置代理，不是指数PE/PB。"
+    },
+    "medium_term_1y_percentile": {
+      "status": "available",
+      "conclusion": "57.14%分位",
+      "evidence": "ETF价格位置代理。"
+    },
+    "long_term_3y_5y_percentile": {
+      "status": "partial",
+      "conclusion": "可用样本约730日，分位85.21%",
+      "evidence": "缺少指数长期估值分位。"
+    },
+    "dividend_or_earnings_yield": {
+      "status": "missing",
+      "conclusion": "未取得",
+      "evidence": "本次未取得跟踪指数股息率/盈利收益率。"
+    },
+    "relative_value": {
+      "status": "partial",
+      "conclusion": "与516150、562800存在资源主题重叠",
+      "evidence": "同类ETF比较需要统一刷新profile后再判断。"
+    },
+    "premium_discount_pct": 0.17
+  },
+  "trend_and_flow": {
+    "ma20_ma60_trend": {
+      "status": "available",
+      "conclusion": "价格低于20日和60日均线，趋势偏弱",
+      "evidence": "close=1.8200，ma20=2.0154，ma60=2.0612。"
+    },
+    "relative_strength": {
+      "status": "available",
+      "conclusion": "近20/60日明显走弱",
+      "evidence": "近20日-17.57%，近60日-20.14%。"
+    },
+    "etf_share_change": {
+      "status": "available_ratio_only",
+      "conclusion": "中期份额代理明显下降",
+      "evidence": "近60日-22.34%。"
+    },
+    "subscription_redemption": {
+      "status": "missing",
+      "conclusion": "未取得官方净申购/赎回原始数据",
+      "evidence": "Tushare本次仅取得份额代理。"
+    },
+    "turnover_liquidity": {
+      "status": "available_ratio_only",
+      "conclusion": "交易活跃度较高",
+      "evidence": "成交活跃度近一年分位约90.41%。"
+    }
+  },
+  "holdings_structure": {
+    "top_holdings": [
+      {
+        "code": "601899.SH",
+        "name": "紫金矿业",
+        "weight_pct": 9.44
+      },
+      {
+        "code": "603993.SH",
+        "name": "洛阳钼业",
+        "weight_pct": 6.8
+      },
+      {
+        "code": "600111.SH",
+        "name": "北方稀土",
+        "weight_pct": 5.48
+      },
+      {
+        "code": "601600.SH",
+        "name": "中国铝业",
+        "weight_pct": 4.1
+      },
+      {
+        "code": "603799.SH",
+        "name": "华友钴业",
+        "weight_pct": 4.05
+      },
+      {
+        "code": "002460.SZ",
+        "name": "赣锋锂业",
+        "weight_pct": 4.03
+      },
+      {
+        "code": "600489.SH",
+        "name": "中金黄金",
+        "weight_pct": 3.53
+      },
+      {
+        "code": "600547.SH",
+        "name": "山东黄金",
+        "weight_pct": 3.31
+      },
+      {
+        "code": "600988.SH",
+        "name": "赤峰黄金",
+        "weight_pct": 3.26
+      },
+      {
+        "code": "000807.SZ",
+        "name": "云铝股份",
+        "weight_pct": 2.93
+      }
+    ],
+    "concentration_risk": "最新披露期20260331前十大成分合计约46.93%，成分集中度中等偏高。",
+    "portfolio_overlap": "与516150、562800、000970等资源/稀土/磁材方向存在主题重叠。",
+    "alternative_etf_comparison": [
+      {
+        "code": "516150.SH",
+        "name": "稀土ETF嘉实",
+        "advantages": [
+          "稀土方向更集中"
+        ],
+        "disadvantages": [
+          "同属资源周期风险"
+        ],
+        "preferred": null
+      },
+      {
+        "code": "562800.SH",
+        "name": "稀有金属ETF嘉实",
+        "advantages": [
+          "稀有金属弹性更集中"
+        ],
+        "disadvantages": [
+          "同属资源周期风险"
+        ],
+        "preferred": null
+      }
+    ]
+  },
+  "research_triggers_only": {
+    "profile_completed": true,
+    "valuation_completed": true,
+    "liquidity_completed": true,
+    "theme_binding_completed": true,
+    "no_trade_instruction": true,
+    "review_conditions": [
+      "有色交易评级由D修复到B以上，且ETF重新站上20日和60日均线后，才允许进入后续复核。",
+      "若价格仍处拥挤区且趋势继续弱，不得因资源长期逻辑放大该方向。",
+      "资源桶相关标的需要合并看，不单独把512400视为低风险分散工具。"
+    ]
+  },
+  "risks": [
+    "资源周期价格波动大，受全球流动性、美元、供需和政策影响。",
+    "价格位置仍处拥挤区，短中期趋势已明显走弱。",
+    "有色主线当前交易评级D、阶段decline。",
+    "与稀土、稀有金属、磁材个股存在重复暴露。"
+  ],
+  "data_gaps": {
+    "etf_share_or_subscription": [
+      "仅取得份额变化比例，未取得官方净申购/赎回原始数据。"
+    ],
+    "long_term_valuation_percentile": [
+      "缺少中证申万有色金属指数长期PE/PB分位，估值使用ETF价格/净值位置代理。"
+    ],
+    "full_holdings_structure": [],
+    "portfolio_overlap": [
+      "与516150、562800、000970等资源方向的精确重叠需要组合模块计算。"
+    ],
+    "other": [
+      "未使用基金公司官网核验最新申赎清单。"
+    ]
+  },
+  "next_update_triggers": [
+    "有色主题交易评级从D修复到B以上。",
+    "价格重新站上20日和60日均线。",
+    "价格位置脱离拥挤区。",
+    "份额代理由中期下降转为稳定。",
+    "组合中资源桶暴露发生明显变化。"
+  ],
+  "decision_log_entry": "2026-06-09_150409 ETF补档：512400.SH 有色金属ETF南方；生成正式ETF profile，补齐profile/liquidity/theme binding；估值引用valuation_512400_SH_有色金属ETF南方_2026-06-09_145910.json；结论为D/Watch，仅研究补档，不生成交易指令。"
+}

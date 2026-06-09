@@ -41,7 +41,7 @@ RUNTIME_DIR = TEMP_ROOT / "runtime" / "alerts"
 
 BUCKET_STYLE = {
     "cash_short": {"label": "现金/短融", "bg": "#eef2f7", "accent": "#5b6b7a"},
-    "core_base": {"label": "宽基/核心质量底仓", "bg": "#eaf2ff", "accent": "#2f6fbd"},
+    "core_base": {"label": "宽基底仓", "bg": "#eaf2ff", "accent": "#2f6fbd"},
     "attack_mainline": {"label": "进攻主线仓", "bg": "#f2ecff", "accent": "#8b5cf6"},
     "defense": {"label": "防御仓", "bg": "#e8f7f1", "accent": "#0f8b6f"},
     "legacy_watch": {"label": "其他/待清理", "bg": "#fff4df", "accent": "#9a6700"},
@@ -305,14 +305,18 @@ def subject_attribute_tags(subject: dict[str, Any], quote: dict[str, Any] | None
     stance = ((quote or {}).get("security_stance") or subject.get("security_stance") or {})
     stance_label = str(stance.get("label") or "")
     text = f"{group} {role}"
+    if code == "159201.SZ":
+        return ["权益防御", "质量现金流", "因子策略"]
+    if code == "002352.SZ":
+        return ["质量修复", "绩优超跌", "物流龙头", "单股风险"]
     tags: list[str] = []
 
     def add(label: str) -> None:
         if label and label not in tags:
             tags.append(label)
 
-    if bucket == "core_base" or "核心质量" in text or "核心" in text:
-        add("核心质量")
+    if bucket == "core_base":
+        add("宽基底仓")
     if bucket == "defense" or any(key in text for key in ["防御", "红利", "公用事业", "金融", "医药"]):
         add("防御属性")
     if bucket == "attack_mainline" or "进攻" in text:
@@ -320,10 +324,7 @@ def subject_attribute_tags(subject: dict[str, Any], quote: dict[str, Any] | None
     if bucket == "legacy_watch" or "待清理" in text or "遗留" in text:
         add("待清理观察")
 
-    if code == "159201.SZ":
-        add("防御属性")
-        add("因子底仓")
-    if code == "002352.SZ" or ("核心质量" in text and "价格低位" in stance_label):
+    if "价格低位" in stance_label and "核心质量" in text:
         add("超跌修复观察")
     if "价格低位" in stance_label and "超跌修复观察" not in tags:
         add("低位观察")

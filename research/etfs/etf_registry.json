@@ -1,8 +1,8 @@
 {
   "module": "etf_registry",
   "version": "1.4",
-  "last_updated": "2026-06-02",
-  "generated_at": "2026-06-02_220936",
+  "last_updated": "2026-06-09",
+  "generated_at": "2026-06-09_150409",
   "notes": "当前文件保存用户关注ETF池的最新总览。进入观察池不等于可买清单；正式操作前仍需组合分析和操作建议模块。",
   "input_research_files": {
     "market_position_report": "research/market/market_score_2026-06-01_231907.md",
@@ -383,17 +383,17 @@
     {
       "code": "562500.SH",
       "name": "机器人ETF华夏",
-      "bucket_role": "theme",
-      "pool": "theme_trial",
+      "bucket_role": "offensive",
+      "pool": "technology_offensive",
       "status": "profile_generated",
       "related_theme": "机器人",
-      "strategic_theme_rating": "C",
-      "tactical_theme_rating": "C",
-      "theme_stage": "divergence",
+      "strategic_theme_rating": "B",
+      "tactical_theme_rating": "B",
+      "theme_stage": "confirmation",
       "rating": "D",
       "action_rating": "Watch",
       "target_position_range": "单只主题工具 0%-1%，主题仓合计不超过权益仓10%，当前暂停新增",
-      "reason": "机器人ETF华夏跟踪中证机器人指数收益率，角色为主题仓；对应主线战略评级C、交易评级C、阶段divergence。最新市场仓位要求权益45%-55%且进攻仓收缩，因此本档案只给观察和触发条件。",
+      "reason": "机器人ETF华夏跟踪中证机器人指数收益率，角色修正为进攻主线观察；最新主线研究中机器人战略评级B、交易评级B、阶段confirmation。当前仍只给观察和风险复核，不因归入进攻主线仓而自动加仓。",
       "last_profile_file": "research/etfs/562500.SH_机器人ETF华夏_2026-06-02_000715.md",
       "last_profile_json": "research/etfs/562500.SH_机器人ETF华夏_2026-06-02_000715.json",
       "data_gaps": [
@@ -497,48 +497,55 @@
     },
     {
       "code": "512400.SH",
-      "name": "Nonferrous Metals ETF Southern",
+      "name": "有色金属ETF南方",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
-      "status": "to_research",
-      "current_weight_pct": 1.58,
-      "related_theme": "pending",
-      "strategic_theme_rating": "pending",
-      "tactical_theme_rating": "pending",
-      "theme_stage": "pending",
-      "rating": "pending",
+      "status": "profile_generated",
+      "current_weight_pct": 1.5492,
+      "related_theme": "有色 / 资源周期",
+      "strategic_theme_rating": "B",
+      "tactical_theme_rating": "D",
+      "theme_stage": "decline",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
-      "last_profile_file": "",
-      "last_profile_json": "",
+      "target_position_range": "0%-2%，仅作资源周期观察上限参考，不构成操作指令",
+      "reason": "有色金属ETF南方跟踪中证申万有色金属指数，是资源/有色周期暴露工具；Tushare显示流动性可用、持仓结构可取得，但价格位置仍处拥挤区，近20/60日趋势明显走弱，所属有色主线为战略B、交易D、阶段decline，因此本档案只解除ResearchFirst中的profile/liquidity/theme binding缺口，不给买卖或加减仓指令。",
+      "last_profile_file": "research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.md",
+      "last_profile_json": "research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.json",
+      "last_valuation_file": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_145910.json",
+      "liquidity_status": "profile_verified_ratio_only",
+      "theme_binding_status": "theme_registry_B_D_decline",
       "data_gaps": [
-        "ETF profile not generated",
-        "theme binding pending",
-        "peer comparison pending"
+        "中证申万有色金属指数长期PE/PB分位未取得",
+        "官方净申购/赎回原始数据未取得",
+        "与516150、562800、000970等资源方向精确重叠未计算"
       ]
     },
     {
       "code": "513180.SH",
-      "name": "Hang Seng Tech ETF ChinaAMC",
+      "name": "恒生科技ETF华夏",
       "bucket_role": "theme",
       "pool": "current_holding_to_research",
-      "status": "to_research",
-      "current_weight_pct": 1.61,
-      "related_theme": "pending",
-      "strategic_theme_rating": "pending",
-      "tactical_theme_rating": "pending",
-      "theme_stage": "pending",
-      "rating": "pending",
+      "status": "profile_generated",
+      "current_weight_pct": 1.6078,
+      "related_theme": "港股科技 / 恒生科技 / 中概科技跨市场观察",
+      "strategic_theme_rating": "未纳入A股theme_registry",
+      "tactical_theme_rating": "未纳入A股交易主线",
+      "theme_stage": "cross_market_watch",
+      "rating": "D",
       "action_rating": "Watch",
-      "target_position_range": "",
-      "reason": "Current holding ETF without a timestamped ETF profile. Research is required before any new action recommendation.",
-      "last_profile_file": "",
-      "last_profile_json": "",
+      "target_position_range": "0%-2%，仅作小仓跨市场观察上限参考，不构成操作指令",
+      "reason": "恒生科技ETF华夏跟踪恒生科技指数，是港股科技/中概科技跨市场暴露工具；估值代理处于价格合理区，但趋势弱、份额代理回落，且不属于当前A股A/B进攻主线，因此本档案只解除ResearchFirst中的profile/liquidity/theme binding缺口，不给买卖或加减仓指令。",
+      "last_profile_file": "research/etfs/513180.SH_恒生科技ETF华夏_2026-06-09_145346.md",
+      "last_profile_json": "research/etfs/513180.SH_恒生科技ETF华夏_2026-06-09_145346.json",
+      "last_valuation_file": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-09_144942.json",
+      "liquidity_status": "profile_verified_ratio_only",
+      "theme_binding_status": "cross_market_watch_not_a_share_mainline",
       "data_gaps": [
-        "ETF profile not generated",
-        "theme binding pending",
-        "peer comparison pending"
+        "恒生科技指数长期PE/PB分位未取得",
+        "官方净申购/赎回金额未取得",
+        "Tushare fund_portfolio 返回空表，完整持仓结构未取得",
+        "与513050及A股科技方向精确重叠未计算"
       ]
     },
     {
@@ -734,6 +741,16 @@
       "date": "2026-06-02",
       "generated_at": "2026-06-02_220936",
       "change": "Generated ETF profile for 562800.SH and refreshed status to profile_generated; no buy/sell/rebalance action created."
+    },
+    {
+      "date": "2026-06-09_145346",
+      "change": "补齐513180.SH 恒生科技ETF华夏 ETF profile、liquidity和theme binding。",
+      "impact": "ResearchFirst档案缺口关闭；不生成交易指令。"
+    },
+    {
+      "date": "2026-06-09_150409",
+      "change": "补齐512400.SH 有色金属ETF南方 ETF profile、liquidity和theme binding。",
+      "impact": "ResearchFirst档案缺口关闭；不生成交易指令。"
     }
   ]
 }

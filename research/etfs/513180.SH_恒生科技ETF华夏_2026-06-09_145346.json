@@ -1,0 +1,234 @@
+{
+  "module": "etf_research",
+  "version": "1.1",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09_145346",
+  "basis_trade_date": "20260608",
+  "code": "513180.SH",
+  "name": "恒生科技ETF华夏",
+  "rating": "D",
+  "data_sources": [
+    "Tushare fund_basic",
+    "Tushare fund_daily",
+    "Tushare fund_nav",
+    "Tushare fund_share",
+    "Tushare fund_portfolio 返回空表，完整持仓结构未取得",
+    "research/market/market_score_2026-06-09_100448.json",
+    "research/themes/theme_review_2026-06-08_102237.json",
+    "theme_registry reference: research/themes/theme_registry.json (non-versioned binding registry)",
+    "research/portfolio/research_backlog_2026-06-09_150400.json",
+    "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-09_144942.json"
+  ],
+  "privacy_policy": {
+    "ratio_only": true,
+    "excluded_fields": [
+      "portfolio_amount",
+      "market_value",
+      "profit_amount",
+      "account_identifier_field",
+      "holding_shares",
+      "raw_fund_share",
+      "raw_turnover_amount"
+    ],
+    "note": "本档案只保存比例、分位、状态和研究结论，不保存组合金额、持仓数量、盈亏金额或基金成交额/份额原值。"
+  },
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-09_100448.json",
+    "theme_research_report": "research/themes/theme_review_2026-06-08_102237.json",
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "research_backlog": "research/portfolio/research_backlog_2026-06-09_150400.json",
+    "valuation_report": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-09_144942.json"
+  },
+  "summary": {
+    "bucket_role": "theme",
+    "action_rating": "Watch",
+    "etf_score": 47,
+    "target_position_range": "0%-2%，仅作小仓跨市场观察上限参考，不构成操作指令",
+    "confidence": "medium_low",
+    "one_line_conclusion": "恒生科技ETF华夏跟踪恒生科技指数，是港股科技/中概科技跨市场暴露工具；估值代理处于价格合理区，但趋势弱、份额代理回落，且不属于当前A股A/B进攻主线，因此本档案只解除ResearchFirst中的profile/liquidity/theme binding缺口，不给买卖或加减仓指令。"
+  },
+  "basic_info": {
+    "fund_code": "513180.SH",
+    "fund_name": "恒生科技ETF华夏",
+    "tracked_index_or_asset": "恒生科技指数收益率(使用估值汇率折算)",
+    "fund_company": "华夏基金",
+    "fee": "管理费 0.5%，托管费 0.15%",
+    "long_term_holding_suitable": "仅适合在港股科技趋势修复且组合允许跨市场风险时小比例观察；不适合作为A股核心仓或进攻主线替代品。"
+  },
+  "position_role": {
+    "bucket_role": "theme",
+    "allocation_bucket": "legacy_watch",
+    "related_theme": "港股科技 / 恒生科技 / 中概科技跨市场观察",
+    "strategic_theme_rating": "未纳入A股theme_registry战略评级",
+    "tactical_theme_rating": "未纳入A股交易主线评级",
+    "theme_stage": "cross_market_watch",
+    "allocation_purpose": "补充港股科技弹性暴露，和A股AI/半导体分开管理。",
+    "alternative_etfs": [
+      "513050.SH 中概互联网ETF易方达"
+    ],
+    "overlap_with_existing_holdings": "与513050中概互联网ETF、A股AI/半导体/通信方向存在科技风险偏好相关性；不能因为AI或半导体长期逻辑而自动放大本ETF。"
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 17,
+      "evidence": "被动指数型ETF，Tushare benchmark=恒生科技指数收益率(使用估值汇率折算)。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 10,
+      "evidence": "最新估值代理为价格合理；60日价格分位8.33%，1年价格分位1.98%，但缺少恒生科技指数长期PE/PB分位。"
+    },
+    "trend_status": {
+      "weight": 20,
+      "score": 5,
+      "evidence": "截至20260608，近5日-3.98%，近20日-7.37%，近60日-7.37%；价格低于20日和60日均线。"
+    },
+    "liquidity_turnover": {
+      "weight": 10,
+      "score": 8,
+      "evidence": "最新成交活跃度处于近一年约51.78%分位，20日平均成交活跃度约65.34%分位；可用于观察，但近期活跃度不强。本档案不保存成交额原值。"
+    },
+    "fund_flow": {
+      "weight": 10,
+      "score": 3,
+      "evidence": "基金份额代理近5日-3.19%，近20日-9.31%，近60日-6.29%；本档案不保存份额原值。"
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 5,
+      "evidence": "不属于当前A股theme_registry的A/B进攻主线；只能作为港股科技跨市场小仓观察。"
+    },
+    "portfolio_complementarity": {
+      "weight": 10,
+      "score": 5,
+      "evidence": "可提供港股科技弹性，但与中概互联网、AI、半导体等风险偏好方向相关；当前组合中归legacy_watch。"
+    },
+    "base_score": 53,
+    "crowding_structure_risk": {
+      "score": 6,
+      "evidence": "趋势弱、份额代理回落、跨市场和汇率风险、完整持仓结构缺失。",
+      "operation_limit": "不因本档案生成任何买卖或加减仓动作。"
+    },
+    "final_score": 47
+  },
+  "valuation": {
+    "status": "available_as_price_position_proxy",
+    "latest_valuation_file": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-09_144942.json",
+    "short_term_60d_percentile": {
+      "status": "available",
+      "conclusion": "8.33%分位",
+      "evidence": "ETF价格位置代理，不是指数PE/PB。"
+    },
+    "medium_term_1y_percentile": {
+      "status": "available",
+      "conclusion": "1.98%分位",
+      "evidence": "ETF价格位置代理。"
+    },
+    "long_term_3y_5y_percentile": {
+      "status": "partial",
+      "conclusion": "可用样本约730日，分位47.26%",
+      "evidence": "上市历史和数据样本限制，缺少长期指数估值分位。"
+    },
+    "dividend_or_earnings_yield": {
+      "status": "missing",
+      "conclusion": "未取得",
+      "evidence": "本次未取得恒生科技指数股息率/盈利收益率。"
+    },
+    "relative_value": {
+      "status": "missing",
+      "conclusion": "未完成同类ETF估值比较",
+      "evidence": "需补513050等同类ETF的完整profile后再比较。"
+    },
+    "premium_discount_pct": -0.76
+  },
+  "trend_and_flow": {
+    "ma20_ma60_trend": {
+      "status": "available",
+      "conclusion": "价格低于20日和60日均线，趋势偏弱",
+      "evidence": "close=0.6030，ma20=0.6266，ma60=0.6303。"
+    },
+    "relative_strength": {
+      "status": "available",
+      "conclusion": "近20/60日仍偏弱",
+      "evidence": "近20日-7.37%，近60日-7.37%。"
+    },
+    "etf_share_change": {
+      "status": "available_ratio_only",
+      "conclusion": "份额代理回落",
+      "evidence": "近20日-9.31%。"
+    },
+    "subscription_redemption": {
+      "status": "missing",
+      "conclusion": "未取得官方净申购/赎回金额",
+      "evidence": "Tushare本次仅取得份额代理。"
+    },
+    "turnover_liquidity": {
+      "status": "available_ratio_only",
+      "conclusion": "流动性可观察但近期活跃度不高",
+      "evidence": "成交活跃度近一年分位约51.78%；不保存成交额原值。"
+    }
+  },
+  "holdings_structure": {
+    "top_holdings": [],
+    "concentration_risk": "Tushare fund_portfolio 本次返回空表，无法验证前十大成分和集中度。",
+    "portfolio_overlap": "与513050及A股科技成长方向存在风险偏好重叠，需要组合模块复核。",
+    "alternative_etf_comparison": [
+      {
+        "code": "513050.SH",
+        "name": "中概互联网ETF易方达",
+        "advantages": [
+          "同属港股/中概科技观察方向"
+        ],
+        "disadvantages": [
+          "尚需单独profile比较"
+        ],
+        "preferred": null
+      }
+    ]
+  },
+  "research_triggers_only": {
+    "profile_completed": true,
+    "valuation_completed": true,
+    "liquidity_completed": true,
+    "theme_binding_completed": true,
+    "no_trade_instruction": true,
+    "review_conditions": [
+      "恒生科技ETF重新站上20日和60日均线后，可由盘前/操作建议模块复核是否仍需保留观察。",
+      "若份额代理继续下降且价格跌破估值报告风控位，应由操作建议模块复核风险，而不是本档案直接给卖出指令。",
+      "若港股科技与A股科技同时走弱，不得把本ETF作为AI/半导体进攻仓替代品。"
+    ]
+  },
+  "risks": [
+    "港股科技波动和政策风险。",
+    "人民币计价ETF受港股资产、汇率和跨市场风险共同影响。",
+    "与中概互联网、AI、半导体等科技风险偏好方向相关，组合层面可能重复暴露。",
+    "完整持仓结构缺失，无法验证成分集中度。"
+  ],
+  "data_gaps": {
+    "etf_share_or_subscription": [
+      "仅取得份额变化比例，未取得官方净申购/赎回金额。"
+    ],
+    "long_term_valuation_percentile": [
+      "缺少恒生科技指数长期PE/PB分位，估值使用ETF价格/净值位置代理。"
+    ],
+    "full_holdings_structure": [
+      "Tushare fund_portfolio 返回空表。"
+    ],
+    "portfolio_overlap": [
+      "与513050及A股科技方向的精确重叠需要后续组合模块计算。"
+    ],
+    "other": [
+      "未使用基金公司官网核验最新完整持仓和申赎清单。"
+    ]
+  },
+  "next_update_triggers": [
+    "港股科技方向被单独纳入主题登记册或明确移出legacy_watch。",
+    "价格重新站上20日和60日均线。",
+    "份额代理由连续下降转为稳定。",
+    "补齐基金公司官网持仓或申赎清单。",
+    "组合中513050或科技方向暴露发生明显变化。"
+  ],
+  "decision_log_entry": "2026-06-09_145346 ETF补档：513180.SH 恒生科技ETF华夏；生成正式ETF profile，补齐profile/liquidity/theme binding；估值引用valuation_513180_SH_恒生科技ETF华夏_2026-06-09_144942.json；结论为C/Watch，仅研究补档，不生成交易指令。"
+}

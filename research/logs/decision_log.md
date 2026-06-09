@@ -1931,6 +1931,21 @@
 - 当前效果：源规则 42 项，实际监控 35 项，隐藏清仓/非观察 7 项；`513050.SH 中概互联网ETF易方达` 已因不在最新真实持仓且未进入显式观察池而隐藏。
 - 边界：盘中窗口不为缺少规则的真实持仓临时生成估值或策略；缺规则项应由盘前/盘后模块提示补估值报告和盘中规则。
 
+## 2026-06-09_150501 进攻主线仓映射纠偏
+
+- 决策类型：bucket_mapping_fix
+- 口径：`515880.SH 通信ETF国泰` 和 `562500.SH 机器人ETF华夏` 从 `legacy_watch` 修正为 `attack_mainline`。通信 ETF 已在 ETF 登记册中为 offensive/technology_offensive；机器人最新主线研究为战略 B、交易 B、confirmation，不能继续视为待清理。
+- 当前效果：最新真实持仓中约 1.4072 个百分点从“其他/待清理”转入“进攻主线仓”；进攻主线仓实际约 10.45%，其他/待清理约 12.28%。
+- 边界：该修正仅改变资产暴露归类；`515880` 仍显示价格拥挤，`562500` 仍显示泡沫/风险复核，不构成追高或加仓指令。
+
+## 2026-06-09_151452 四桶仓位口径修正
+
+- 决策类型：bucket_taxonomy_fix
+- 口径：四桶体系固定为宽基底仓、防御仓、主线仓、现金；宽基底仓只放宽基指数 ETF，不再混入因子 ETF 或单一个股。
+- 当前调整：`159201.SZ 自由现金流ETF华夏` 从宽基底仓改入防御仓，标签口径为权益防御/质量现金流/因子策略；`002352.SZ 顺丰控股` 从宽基底仓改入主线仓，标签口径为质量修复/绩优超跌/物流龙头/单股风险。
+- 当前效果：最新真实覆盖中宽基底仓约 1.35%，防御仓约 17.46%，进攻主线仓约 12.43%，其他/待清理约 12.28%。
+- 边界：该修正仅改变风险来源归类；自由现金流 ETF 不是现金/短债级低风险资产，顺丰控股也不是景气赛道买入信号，所有动作仍受估值区、市场门禁和组合约束限制。
+
 2026-06-09 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-09_143440.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
 
 
@@ -1954,3 +1969,42 @@
 - ????????????????????????
 - ?????ratio-only????????????????
 - ?????????????????????? ResearchFirst ???
+
+
+## 2026-06-09_145346 ResearchFirst补档：513180.SH 恒生科技ETF华夏
+
+- 决策类型：ETF_RESEARCH / ResearchFirst profile completion
+- 生成文件：`research/etfs/513180.SH_恒生科技ETF华夏_2026-06-09_145346.md`、`research/etfs/513180.SH_恒生科技ETF华夏_2026-06-09_145346.json`
+- 估值文件：`research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-09_144942.json`
+- 补齐项：profile、liquidity、theme binding；valuation 已刷新并引用。
+- 结论：D/Watch；港股科技跨市场观察，未纳入当前A股A/B进攻主线。
+- 边界：研究补档，不生成买入、卖出、加仓或减仓指令；保持ratio-only，不保存组合金额、持仓数量、盈亏金额、基金成交额原值或份额原值。
+- 缺口：恒生科技指数长期PE/PB分位、官方净申购/赎回金额、完整持仓结构、与513050及A股科技方向精确重叠。
+
+
+## 2026-06-09_150409 ResearchFirst补档：512400.SH 有色金属ETF南方
+
+- 决策类型：ETF_RESEARCH / ResearchFirst profile completion
+- 生成文件：`research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.md`、`research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.json`
+- 估值文件：`research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_145910.json`
+- 补齐项：profile、liquidity、theme binding；valuation 已刷新并引用。
+- 结论：D/Watch；有色主题战略B、交易D、阶段decline，保持legacy_watch。
+- 边界：研究补档，不生成买入、卖出、加仓或减仓指令；保持ratio-only，不保存敏感原值。
+- 缺口：中证申万有色金属指数长期PE/PB分位、官方净申购/赎回原始数据、资源方向精确重叠。
+
+## 2026-06-09_151312 ResearchFirst队列按最新持仓过滤：active=0，completed_current=2，skipped_not_current=4。
+- Markdown: `research/portfolio/research_backlog_2026-06-09_151312.md`
+- JSON: `research/portfolio/research_backlog_2026-06-09_151312.json`
+- Registry: `research/stocks/stock_registry.json`
+- Basis snapshot: `research/portfolio/portfolio_snapshot_2026-06-09_143440.json`
+- 结论：非当前持仓不再进入主动 ResearchFirst 补档；如未来重新买回或加入重点观察池，需要重新入队。
+
+## 2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约43.52%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-09_151329_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-09_151329_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-09_143440.json` generated_at=2026-06-09_143440 basis=2026-06-09
+  - `research/allocation/target_allocation_2026-06-09_150300.json` generated_at=2026-06-09_150300 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-09_150808 basis=None

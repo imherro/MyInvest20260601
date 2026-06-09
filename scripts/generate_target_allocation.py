@@ -31,7 +31,7 @@ ALERT_RULES = ROOT / "research" / "alerts" / "intraday_rules.json"
 BUCKET_ORDER = ["cash_short", "core_base", "attack_mainline", "defense", "legacy_watch"]
 BUCKET_LABELS = {
     "cash_short": "现金/短融",
-    "core_base": "宽基/核心质量底仓",
+    "core_base": "宽基底仓",
     "attack_mainline": "进攻主线仓",
     "defense": "防御仓",
     "legacy_watch": "其他/待清理",

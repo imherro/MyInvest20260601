@@ -33,7 +33,7 @@
     "basis": "market_position_and_theme_analysis",
     "segments": [
       {"key": "cash_short", "label": "现金/短融", "target_pct": 0},
-      {"key": "core_base", "label": "宽基/核心质量底仓", "target_pct": 0},
+      {"key": "core_base", "label": "宽基底仓", "target_pct": 0},
       {"key": "attack_mainline", "label": "进攻主线仓", "target_pct": 0},
       {"key": "defense", "label": "防御仓", "target_pct": 0}
     ]
