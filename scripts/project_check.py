@@ -39,7 +39,7 @@ RESEARCH_NAME_PATTERNS = {
     "alerts": re.compile(rf"^intraday_alert_{TIMESTAMP}\.(md|json)$"),
     "valuations": re.compile(rf"^valuation_.+_{TIMESTAMP}\.(md|json)$"),
     "checks": re.compile(
-        rf"^(premarket_check|staleness_check|engineering_hardening_report)_{TIMESTAMP}\.(md|json)$"
+        rf"^(premarket_check|staleness_check|valuation_update_check|engineering_hardening_report)_{TIMESTAMP}\.(md|json)$"
     ),
     "reviews": re.compile(
         rf"^post_market_review_{TIMESTAMP}(_[A-Za-z0-9_-]+)?\.(md|json)$"
@@ -182,6 +182,7 @@ def check_required_scripts(findings: list[Finding]) -> None:
         "scripts/generate_target_allocation.py",
         "scripts/generate_valuation_reports.py",
         "scripts/check_valuation_updates.py",
+        "scripts/generate_premarket_check.py",
         "scripts/qmt_portfolio_snapshot.py",
         "scripts/intraday_monitor.py",
         "scripts/intraday_dashboard.py",

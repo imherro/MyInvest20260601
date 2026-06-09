@@ -198,6 +198,7 @@ py -3.11 scripts\intraday_dashboard.py --once-json
 ```
 
 该命令只读取一次 QMT 实时行情并输出 JSON，不打开窗口，适合排查 QMT 连接、字段缺失和规则误报。
+输出 JSON 会包含 `valuation_update_check`，用于提示实时价格/净值是否已经跨出估值报告基准区间；该提示只要求复核估值，不构成交易指令。
 
 估值更新检查：
 

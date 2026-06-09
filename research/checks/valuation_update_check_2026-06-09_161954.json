@@ -1,0 +1,141 @@
+{
+  "module": "valuation_update_check",
+  "version": "ratio_only_v2",
+  "generated_at": "2026-06-09_161954",
+  "basis_date": "20260609",
+  "scope": "latest_portfolio_and_intraday_rules",
+  "stale_days": 1,
+  "status": "update_needed",
+  "blocking_for_new_actions": true,
+  "update_required_count": 7,
+  "items": [
+    {
+      "code": "001280.SZ",
+      "name": "中国铀业",
+      "sources": [
+        "intraday_rules"
+      ],
+      "source_files": [
+        "research/alerts/intraday_rules.json"
+      ],
+      "severity": "update",
+      "reasons": [
+        "估值基准日 20260604 距离检查基准日 20260609 已超过 1 天"
+      ],
+      "latest_valuation": "research/valuations/valuation_001280_SZ_中国铀业_2026-06-05_103909.json",
+      "valuation_price_date": "20260604",
+      "age_days": 5,
+      "suggested_next_step": "先确认是否刷新 001280.SZ 中国铀业 的估值报告；未刷新前不得把旧估值状态当作当前结论。"
+    },
+    {
+      "code": "002241.SZ",
+      "name": "歌尔股份",
+      "sources": [
+        "intraday_rules"
+      ],
+      "source_files": [
+        "research/alerts/intraday_rules.json"
+      ],
+      "severity": "update",
+      "reasons": [
+        "估值基准日 20260604 距离检查基准日 20260609 已超过 1 天"
+      ],
+      "latest_valuation": "research/valuations/valuation_002241_SZ_歌尔股份_2026-06-05_103909.json",
+      "valuation_price_date": "20260604",
+      "age_days": 5,
+      "suggested_next_step": "先确认是否刷新 002241.SZ 歌尔股份 的估值报告；未刷新前不得把旧估值状态当作当前结论。"
+    },
+    {
+      "code": "159915.SZ",
+      "name": "创业板ETF易方达",
+      "sources": [
+        "intraday_rules"
+      ],
+      "source_files": [
+        "research/alerts/intraday_rules.json"
+      ],
+      "severity": "update",
+      "reasons": [
+        "估值基准日 20260604 距离检查基准日 20260609 已超过 1 天"
+      ],
+      "latest_valuation": "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-05_103909.json",
+      "valuation_price_date": "20260604",
+      "age_days": 5,
+      "suggested_next_step": "先确认是否刷新 159915.SZ 创业板ETF易方达 的估值报告；未刷新前不得把旧估值状态当作当前结论。"
+    },
+    {
+      "code": "510300.SH",
+      "name": "沪深300ETF华泰柏瑞",
+      "sources": [
+        "intraday_rules"
+      ],
+      "source_files": [
+        "research/alerts/intraday_rules.json"
+      ],
+      "severity": "update",
+      "reasons": [
+        "估值基准日 20260604 距离检查基准日 20260609 已超过 1 天"
+      ],
+      "latest_valuation": "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-05_103909.json",
+      "valuation_price_date": "20260604",
+      "age_days": 5,
+      "suggested_next_step": "先确认是否刷新 510300.SH 沪深300ETF华泰柏瑞 的估值报告；未刷新前不得把旧估值状态当作当前结论。"
+    },
+    {
+      "code": "510880.SH",
+      "name": "红利ETF华泰柏瑞",
+      "sources": [
+        "intraday_rules"
+      ],
+      "source_files": [
+        "research/alerts/intraday_rules.json"
+      ],
+      "severity": "update",
+      "reasons": [
+        "估值基准日 20260604 距离检查基准日 20260609 已超过 1 天"
+      ],
+      "latest_valuation": "research/valuations/valuation_510880_SH_红利ETF华泰柏瑞_2026-06-05_103909.json",
+      "valuation_price_date": "20260604",
+      "age_days": 5,
+      "suggested_next_step": "先确认是否刷新 510880.SH 红利ETF华泰柏瑞 的估值报告；未刷新前不得把旧估值状态当作当前结论。"
+    },
+    {
+      "code": "513050.SH",
+      "name": "中概互联网ETF易方达",
+      "sources": [
+        "intraday_rules"
+      ],
+      "source_files": [
+        "research/alerts/intraday_rules.json"
+      ],
+      "severity": "update",
+      "reasons": [
+        "估值基准日 20260604 距离检查基准日 20260609 已超过 1 天"
+      ],
+      "latest_valuation": "research/valuations/valuation_513050_SH_中概互联网ETF易方达_2026-06-05_103909.json",
+      "valuation_price_date": "20260604",
+      "age_days": 5,
+      "suggested_next_step": "先确认是否刷新 513050.SH 中概互联网ETF易方达 的估值报告；未刷新前不得把旧估值状态当作当前结论。"
+    },
+    {
+      "code": "601318.SH",
+      "name": "中国平安",
+      "sources": [
+        "intraday_rules"
+      ],
+      "source_files": [
+        "research/alerts/intraday_rules.json"
+      ],
+      "severity": "update",
+      "reasons": [
+        "估值基准日 20260604 距离检查基准日 20260609 已超过 1 天"
+      ],
+      "latest_valuation": "research/valuations/valuation_601318_SH_中国平安_2026-06-05_103909.json",
+      "valuation_price_date": "20260604",
+      "age_days": 5,
+      "suggested_next_step": "先确认是否刷新 601318.SH 中国平安 的估值报告；未刷新前不得把旧估值状态当作当前结论。"
+    }
+  ],
+  "summary": "发现 7 个估值报告缺失、过期或盘中跨区项；新增单标的动作前应先确认是否刷新估值报告。",
+  "boundary": "Valuation refresh check only; no buy/sell/add/reduce instruction."
+}

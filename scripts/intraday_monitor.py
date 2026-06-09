@@ -43,6 +43,58 @@ TRIGGER_SEVERITY = {
 }
 
 
+def build_valuation_update_check(
+    monitored_quotes: list[dict[str, Any]],
+    timestamp: str,
+    basis_date: str,
+) -> dict[str, Any]:
+    items: list[dict[str, Any]] = []
+    for quote in monitored_quotes:
+        if quote.get("allocation_bucket") == "cash_short":
+            continue
+        if not quote.get("valuation_zone_changed"):
+            continue
+
+        report_zone = quote.get("valuation_report_zone") or {}
+        realtime_zone = quote.get("realtime_valuation_zone") or {}
+        report_label = report_zone.get("label") or report_zone.get("key") or "unknown"
+        realtime_label = realtime_zone.get("label") or realtime_zone.get("key") or "unknown"
+        items.append(
+            {
+                "code": quote.get("code"),
+                "name": quote.get("name"),
+                "severity": "update",
+                "reasons": [
+                    f"实时价格/净值已从估值报告区间 {report_label} 跨入 {realtime_label}",
+                    "盘中监测只提示估值复核，不生成买入、卖出、加仓、减仓指令",
+                ],
+                "latest_valuation": {
+                    "report_zone": report_zone,
+                    "realtime_zone": realtime_zone,
+                },
+                "suggested_next_step": "盘后或盘前重做该标的估值报告，并同步盘中规则。",
+            }
+        )
+
+    return {
+        "module": "valuation_update_check",
+        "version": "intraday_overlay_v1",
+        "generated_at": timestamp,
+        "basis_date": basis_date,
+        "scope": "intraday_monitored_quotes",
+        "status": "update_needed" if items else "ok",
+        "blocking_for_new_actions": bool(items),
+        "update_required_count": len(items),
+        "items": items,
+        "summary": (
+            f"盘中发现 {len(items)} 个标的实时价格/净值跨估值区间，新增风险动作前需要先复核估值。"
+            if items
+            else "盘中未发现监控标的跨估值区间。"
+        ),
+        "boundary": "Valuation refresh check only; no buy/sell/add/reduce instruction.",
+    }
+
+
 @dataclass
 class ConditionResult:
     passed: bool
@@ -355,10 +407,14 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
     timestamp = normalize_timestamp(snapshot.get("timestamp"))
     date_part = timestamp[:10]
     time_part = timestamp[11:]
+    valuation_check = build_valuation_update_check(monitored_quotes, timestamp, date_part.replace("-", ""))
+    valuation_count = int(valuation_check.get("update_required_count") or 0)
+    if valuation_count:
+        one_line = f"{one_line} 估值更新提示{valuation_count}项。"
 
     return {
         "module": "intraday_alerts",
-        "version": "1.1",
+        "version": "1.2",
         "date": date_part,
         "time": time_part,
         "generated_at": timestamp,
@@ -371,13 +427,17 @@ def build_report(rules: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, A
             "alert_state": state,
             "highest_priority": highest,
             "one_line_conclusion": one_line,
+            "valuation_update_required_count": valuation_count,
         },
         "alerts": alerts,
         "near_triggers": near_triggers,
         "missing_preconditions": missing,
+        "valuation_update_check": valuation_check,
         "decision_log_entry": (
             f"{timestamp} 盘中提醒：最高优先级={highest}；触发={len(alerts)}；"
-            f"接近触发={len(near_triggers)}；缺失={len(missing)}；staleness={rules.get('staleness', {}).get('status', 'legacy_unknown')}。"
+            f"接近触发={len(near_triggers)}；缺失={len(missing)}；"
+            f"valuation_updates={valuation_count}；"
+            f"staleness={rules.get('staleness', {}).get('status', 'legacy_unknown')}。"
         ),
     }
 
@@ -428,6 +488,23 @@ def md_table_quotes(quotes: list[dict[str, Any]]) -> str:
                 mf5=fmt_value(item.get("moneyflow_5d")),
                 mf20=fmt_value(item.get("moneyflow_20d")),
                 time=fmt_value(item.get("qmt_timetag")),
+            )
+        )
+    return "\n".join(rows)
+
+
+def md_table_valuation_updates(items: list[dict[str, Any]]) -> str:
+    if not items:
+        return "| 无 | 无 | ok | 无需更新 |"
+    rows = []
+    for item in items:
+        rows.append(
+            "| {code} {name} | {severity} | {reason} | {next_step} |".format(
+                code=item.get("code", ""),
+                name=item.get("name", ""),
+                severity=item.get("severity", ""),
+                reason="；".join(str(text) for text in item.get("reasons", [])),
+                next_step=item.get("suggested_next_step", ""),
             )
         )
     return "\n".join(rows)
@@ -530,7 +607,15 @@ def render_markdown(report: dict[str, Any]) -> str:
 | --- | --- | --- |
 {missing_rows}
 
-## 6. 决策日志条目
+## 6. 估值更新检查
+
+状态：{report.get('valuation_update_check', {}).get('status', 'unknown')}
+
+| 标的 | 状态 | 原因 | 下一步 |
+| --- | --- | --- | --- |
+{md_table_valuation_updates((report.get('valuation_update_check') or {}).get('items', []))}
+
+## 7. 决策日志条目
 
 ```text
 {report['decision_log_entry']}

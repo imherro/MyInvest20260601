@@ -2082,3 +2082,9 @@
 - JSON: `research/portfolio/portfolio_cleanup_2026-06-09_160500.json`
 - Basis audit: `research/portfolio/research_quality_audit_2026-06-09_160248.json`
 - Boundary: ratio-only review; no single-security operation instruction.
+
+2026-06-09_162003 premarket_check: status=risk_reduce_only; valuation_updates=7; ratio-only; no single-security operation instruction.
+- Markdown: `research/checks/premarket_check_2026-06-09_162003.md`
+- JSON: `research/checks/premarket_check_2026-06-09_162003.json`
+
+2026-06-09 盘后复盘自动底稿：生成 post_market_review_2026-06-09_162342.md/json；读取最新 market/theme/action/portfolio/alerts，并运行估值更新检查；缺少执行记录时不判断已执行。

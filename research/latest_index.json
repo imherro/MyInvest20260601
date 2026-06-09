@@ -1,7 +1,7 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-09_160501",
+  "generated_at": "2026-06-09_162417",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
@@ -83,10 +83,10 @@
       "module": "premarket_check",
       "code": null,
       "name": null,
-      "path": "research/checks/premarket_check_2026-06-09_100605.json",
-      "generated_at": "2026-06-09_100605",
+      "path": "research/checks/premarket_check_2026-06-09_162003.json",
+      "generated_at": "2026-06-09_162003",
       "basis_trade_date": "2026-06-09",
-      "sha256": "af367976f29ff61c9c31ba83d6e0313892cf596e6d45d421b202e79ee5b43813",
+      "sha256": "6f68479cc5b88feec1b259a3dd92822cc9aa82ad95b4cf3f279cb1778d51f1e7",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -102,6 +102,21 @@
       "generated_at": "2026-06-09_152542",
       "basis_trade_date": null,
       "sha256": "b52dca43c3d28e3470a5d796c765ca336d199710edc5f381f126f61ece908239",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "valuation_update_check": {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-09_161954.json",
+      "generated_at": "2026-06-09_161954",
+      "basis_trade_date": "20260609",
+      "sha256": "28b40fdd1bccac50ea23cfb56e728a99ed6373889980cb26ec57dafade0baaab",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -278,10 +293,10 @@
       "module": "post_market_review",
       "code": null,
       "name": null,
-      "path": "research/reviews/post_market_review_2026-06-08_225756.json",
-      "generated_at": "2026-06-08_225756",
-      "basis_trade_date": "2026-06-08",
-      "sha256": "7a4eee8cd8ad2773884ffe9414d71a2301c542faad50d1620f87afa949e1a76c",
+      "path": "research/reviews/post_market_review_2026-06-09_162342.json",
+      "generated_at": "2026-06-09_162342",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "e62e2751a5f900fd357c39d95ebf922559bbf855b97f0687ed8fa4c9e5b402db",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -982,6 +997,21 @@
       }
     },
     {
+      "module": "premarket_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/premarket_check_2026-06-09_162003.json",
+      "generated_at": "2026-06-09_162003",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "6f68479cc5b88feec1b259a3dd92822cc9aa82ad95b4cf3f279cb1778d51f1e7",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "staleness_check",
       "code": null,
       "name": null,
@@ -1079,6 +1109,21 @@
       "generated_at": "2026-06-09_152542",
       "basis_trade_date": null,
       "sha256": "b52dca43c3d28e3470a5d796c765ca336d199710edc5f381f126f61ece908239",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-09_161954.json",
+      "generated_at": "2026-06-09_161954",
+      "basis_trade_date": "20260609",
+      "sha256": "28b40fdd1bccac50ea23cfb56e728a99ed6373889980cb26ec57dafade0baaab",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2099,6 +2144,21 @@
       "generated_at": "2026-06-08_225756",
       "basis_trade_date": "2026-06-08",
       "sha256": "7a4eee8cd8ad2773884ffe9414d71a2301c542faad50d1620f87afa949e1a76c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "post_market_review",
+      "code": null,
+      "name": null,
+      "path": "research/reviews/post_market_review_2026-06-09_162342.json",
+      "generated_at": "2026-06-09_162342",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "e62e2751a5f900fd357c39d95ebf922559bbf855b97f0687ed8fa4c9e5b402db",
       "quality": {
         "status": "legacy_unknown"
       },

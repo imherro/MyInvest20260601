@@ -1262,11 +1262,15 @@ class BattleMapWindow(QMainWindow):
         )
         state_text = SUMMARY_STATE_LABELS.get(str(summary.get("alert_state")), str(summary.get("alert_state") or "-"))
         priority_text = PRIORITY_LABELS.get(str(summary.get("highest_priority")), str(summary.get("highest_priority") or "-"))
+        valuation_check = report.get("valuation_update_check") or {}
+        valuation_count = int(valuation_check.get("update_required_count") or 0)
+        valuation_line = f"估值复核 {valuation_count} 项；" if valuation_count else "估值区间未跨档；"
         self.detail.setText(
-            "状态：{state}；规则={stale_status}；最高优先级：{priority}；{line}。{monitor_line}今日建议：{action_line}。规则过期或降级时禁止买入/加仓，仅供观察和风险复核。".format(
+            "状态：{state}；规则={stale_status}；最高优先级：{priority}；{valuation_line}{line}。{monitor_line}今日建议：{action_line}。规则过期或降级时禁止买入/加仓，仅供观察和风险复核。".format(
                 state=state_text,
                 stale_status=STALE_LABELS.get(stale_status, stale_status),
                 priority=priority_text,
+                valuation_line=valuation_line,
                 line=summary.get("one_line_conclusion"),
                 monitor_line=monitor_line,
                 action_line=display_ui_text(action_summary) if action_summary else "未载入",

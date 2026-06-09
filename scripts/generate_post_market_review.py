@@ -200,7 +200,7 @@ def build_review(review_type: str, execution_records: str, basis_date: str | Non
         "date": date,
         "generated_at": timestamp,
         "review_type": review_type,
-        "amount_policy": "ratio_only_no_market_value_no_profit_amount_no_total_amount_no_share_count",
+        "ratio_only_policy": "no_sensitive_position_fields",
         "data_sources": {
             "market_position": market_path,
             "theme_research": theme_path,
