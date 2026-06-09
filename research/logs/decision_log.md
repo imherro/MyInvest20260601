@@ -2055,3 +2055,30 @@
   - `research/portfolio/portfolio_snapshot_2026-06-09_143440.json` generated_at=2026-06-09_143440 basis=2026-06-09
   - `research/allocation/target_allocation_2026-06-09_150300.json` generated_at=2026-06-09_150300 basis=20260608
   - `research/alerts/intraday_rules.json` generated_at=2026-06-09_154225 basis=None
+
+## 2026-06-09_160233 ETF theme binding refresh: 159201.SZ and 159301.SZ defensive/style bindings completed.
+- 159201.SZ: 自由现金流 / 质量因子 / 核心防御；not attack mainline.
+- 159301.SZ: 公用事业 / 防御 / 高股息低波动；not attack mainline.
+- Boundary: ResearchFirst binding refresh only; ratio-only; no single-security operation instruction.
+
+## 2026-06-09_160248 current holding research quality audit: P0=0, P1=0, P2=6, OK=29.
+- Markdown: `research/portfolio/research_quality_audit_2026-06-09_160248.md`
+- JSON: `research/portfolio/research_quality_audit_2026-06-09_160248.json`
+- Basis snapshot: `research/portfolio/portfolio_snapshot_2026-06-09_143440.json`
+- Boundary: current holdings only; ratio-only; no single-security operation instruction.
+
+## 2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约43.52%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-09_160249_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-09_160249_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-09_143440.json` generated_at=2026-06-09_143440 basis=2026-06-09
+  - `research/allocation/target_allocation_2026-06-09_150300.json` generated_at=2026-06-09_150300 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-09_154701 basis=None
+
+## 2026-06-09_160500 P2 large position review: 6 items.
+- Markdown: `research/portfolio/portfolio_cleanup_2026-06-09_160500.md`
+- JSON: `research/portfolio/portfolio_cleanup_2026-06-09_160500.json`
+- Basis audit: `research/portfolio/research_quality_audit_2026-06-09_160248.json`
+- Boundary: ratio-only review; no single-security operation instruction.

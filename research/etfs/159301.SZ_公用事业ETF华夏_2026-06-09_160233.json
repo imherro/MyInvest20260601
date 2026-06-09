@@ -1,0 +1,36 @@
+{
+  "module": "etf_research",
+  "version": "theme_binding_refresh_v1",
+  "generated_at": "2026-06-09_160233",
+  "basis_trade_date": "20260608",
+  "code": "159301.SZ",
+  "name": "公用事业ETF华夏",
+  "privacy_policy": "ratio_only_no_monetary_values_no_unit_counts",
+  "source_files": [
+    "research/etfs/etf_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+    "research/themes/theme_review_2026-06-08_102237.json"
+  ],
+  "summary": {
+    "bucket_role": "defensive",
+    "pool": "defensive",
+    "related_theme": "公用事业 / 防御 / 高股息低波动",
+    "theme_binding_status": "defensive_utility_not_attack_mainline",
+    "action_rating": "Watch",
+    "one_line_conclusion": "公用事业ETF华夏属于公用事业/防御风格暴露，主要用于平衡科技进攻仓波动；它不替代AI、半导体等进攻主线。当前仅补齐theme binding，不生成买入、卖出、加仓或减仓指令。"
+  },
+  "position_role": {
+    "bucket_role": "defensive",
+    "related_theme": "公用事业 / 防御 / 高股息低波动",
+    "strategic_theme_rating": "不适用；防御风格，不作为产业主线评级",
+    "tactical_theme_rating": "不适用；防御轮动，不作为进攻主线评级",
+    "theme_stage": "defensive_utility",
+    "allocation_purpose": "公用事业ETF华夏属于公用事业/防御风格暴露，主要用于平衡科技进攻仓波动；它不替代AI、半导体等进攻主线。当前仅补齐theme binding，不生成买入、卖出、加仓或减仓指令。"
+  },
+  "data_gaps": [
+    "本次仅刷新theme binding，未重拉完整基金持仓。",
+    "官方净申购/赎回金额仍未取得。",
+    "3年/5年长期估值分位仍以后续估值模块为准。"
+  ],
+  "boundary": "ResearchFirst theme binding refresh only; no buy/sell/add/reduce instruction."
+}

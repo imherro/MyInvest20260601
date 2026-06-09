@@ -1,0 +1,36 @@
+{
+  "module": "etf_research",
+  "version": "theme_binding_refresh_v1",
+  "generated_at": "2026-06-09_160233",
+  "basis_trade_date": "20260608",
+  "code": "159201.SZ",
+  "name": "自由现金流ETF华夏",
+  "privacy_policy": "ratio_only_no_monetary_values_no_unit_counts",
+  "source_files": [
+    "research/etfs/etf_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+    "research/themes/theme_review_2026-06-08_102237.json"
+  ],
+  "summary": {
+    "bucket_role": "defensive",
+    "pool": "core_quality",
+    "related_theme": "自由现金流 / 质量因子 / 核心防御",
+    "theme_binding_status": "style_factor_core_defense_not_attack_mainline",
+    "action_rating": "Watch",
+    "one_line_conclusion": "自由现金流ETF华夏属于质量因子/自由现金流风格暴露，可作为核心防御或低换手权益工具观察；它不代表产业主线，不应被盘前/盘中模块误读为AI、半导体等进攻主线。当前仅补齐theme binding，不生成买入、卖出、加仓或减仓指令。"
+  },
+  "position_role": {
+    "bucket_role": "defensive",
+    "related_theme": "自由现金流 / 质量因子 / 核心防御",
+    "strategic_theme_rating": "不适用；因子质量核心，不作为产业主线评级",
+    "tactical_theme_rating": "不适用；防御/质量风格，不作为进攻主线评级",
+    "theme_stage": "style_factor_core_defense",
+    "allocation_purpose": "自由现金流ETF华夏属于质量因子/自由现金流风格暴露，可作为核心防御或低换手权益工具观察；它不代表产业主线，不应被盘前/盘中模块误读为AI、半导体等进攻主线。当前仅补齐theme binding，不生成买入、卖出、加仓或减仓指令。"
+  },
+  "data_gaps": [
+    "本次仅刷新theme binding，未重拉完整基金持仓。",
+    "官方净申购/赎回金额仍未取得。",
+    "3年/5年长期估值分位仍以后续估值模块为准。"
+  ],
+  "boundary": "ResearchFirst theme binding refresh only; no buy/sell/add/reduce instruction."
+}

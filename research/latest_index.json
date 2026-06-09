@@ -1,17 +1,17 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-09_155135",
+  "generated_at": "2026-06-09_160501",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
       "module": "action_plan",
       "code": null,
       "name": null,
-      "path": "research/actions/action_plan_2026-06-09_154226_latest_ratio_only.json",
-      "generated_at": "2026-06-09_154226",
+      "path": "research/actions/action_plan_2026-06-09_160249_latest_ratio_only.json",
+      "generated_at": "2026-06-09_160249",
       "basis_trade_date": "20260608",
-      "sha256": "e04eb6480e145421ed6be42c625c3098b694a1b76f93d45f49be7f6c54dd2167",
+      "sha256": "461d0d5d503acf61302362381f1b2f09e8dcb8131dd4fa7ef8b5cb6cd853f366",
       "quality": {
         "status": "ok"
       },
@@ -171,12 +171,12 @@
     },
     "etf_profile": {
       "module": "etf_profile",
-      "code": "510500.SH",
-      "name": "中证500ETF南方",
-      "path": "research/etfs/510500.SH_中证500ETF南方_2026-06-09_153805.json",
-      "generated_at": "2026-06-09_153805",
+      "code": "159301.SZ",
+      "name": "公用事业ETF华夏",
+      "path": "research/etfs/159301.SZ_公用事业ETF华夏_2026-06-09_160233.json",
+      "generated_at": "2026-06-09_160233",
       "basis_trade_date": "20260608",
-      "sha256": "a5b7adc92092209afba84c47eb45bcc5b9b59d088c18ba784151b3cc7a9e8170",
+      "sha256": "6ef617d2b031259601f594e587ef8785261f5ae3b6b023e6b8ed360cfcaa2c99",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -189,9 +189,9 @@
       "code": null,
       "name": null,
       "path": "research/etfs/etf_registry.json",
-      "generated_at": "2026-06-09_153805",
+      "generated_at": "2026-06-09_160233",
       "basis_trade_date": null,
-      "sha256": "d5c5a04e8be1e340e7f967131e6c8dc90514822d523338fea5af454df60eb95f",
+      "sha256": "31a40bbe79306d0b4be17717ace30dfbf09ac91148ff2f054fbf4e8afc4ae635",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -218,10 +218,10 @@
       "module": "portfolio_cleanup_review",
       "code": null,
       "name": null,
-      "path": "research/portfolio/portfolio_cleanup_2026-06-09_152840.json",
-      "generated_at": "2026-06-09_152840",
-      "basis_trade_date": "2026-06-09",
-      "sha256": "5b0dc469ac50641d81db235dc99bb258b699e2d8abcde5a1d5c761f5a88b8741",
+      "path": "research/portfolio/portfolio_cleanup_2026-06-09_160500.json",
+      "generated_at": "2026-06-09_160500",
+      "basis_trade_date": null,
+      "sha256": "78334ef582bc8aa7f2381d07141b01b19ace39e8ff62f104f8f1a5e23adaf78c",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -263,10 +263,10 @@
       "module": "research_quality_audit",
       "code": null,
       "name": null,
-      "path": "research/portfolio/research_quality_audit_2026-06-09_154120.json",
-      "generated_at": "2026-06-09_154120",
+      "path": "research/portfolio/research_quality_audit_2026-06-09_160248.json",
+      "generated_at": "2026-06-09_160248",
       "basis_trade_date": null,
-      "sha256": "5c53e0b3926763c5bba8b82966f0d5429e062199c1aad43526b06569f9fb7990",
+      "sha256": "665b87ccdeaadea164cacf1bb64fbf55a87e533b730712adcd369655f7f9242d",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -659,6 +659,21 @@
       "generated_at": "2026-06-09_154226",
       "basis_trade_date": "20260608",
       "sha256": "e04eb6480e145421ed6be42c625c3098b694a1b76f93d45f49be7f6c54dd2167",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-09_160249_latest_ratio_only.json",
+      "generated_at": "2026-06-09_160249",
+      "basis_trade_date": "20260608",
+      "sha256": "461d0d5d503acf61302362381f1b2f09e8dcb8131dd4fa7ef8b5cb6cd853f366",
       "quality": {
         "status": "ok"
       },
@@ -1148,6 +1163,21 @@
     },
     {
       "module": "etf_profile",
+      "code": "159201.SZ",
+      "name": "自由现金流ETF华夏",
+      "path": "research/etfs/159201.SZ_自由现金流ETF华夏_2026-06-09_160233.json",
+      "generated_at": "2026-06-09_160233",
+      "basis_trade_date": "20260608",
+      "sha256": "331da51cd65fdd97b24e34292fb459f93b687865adcf88c63ef41b9ec9d85a68",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "etf_profile",
       "code": "159206.SZ",
       "name": "卫星ETF永赢",
       "path": "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.json",
@@ -1169,6 +1199,21 @@
       "generated_at": "2026-06-02_000715",
       "basis_trade_date": "2026-06-01",
       "sha256": "28c4c541338018741150237a7749b9f1baba9085394a31af4082a6d9006b0649",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "etf_profile",
+      "code": "159301.SZ",
+      "name": "公用事业ETF华夏",
+      "path": "research/etfs/159301.SZ_公用事业ETF华夏_2026-06-09_160233.json",
+      "generated_at": "2026-06-09_160233",
+      "basis_trade_date": "20260608",
+      "sha256": "6ef617d2b031259601f594e587ef8785261f5ae3b6b023e6b8ed360cfcaa2c99",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1556,9 +1601,9 @@
       "code": null,
       "name": null,
       "path": "research/etfs/etf_registry.json",
-      "generated_at": "2026-06-09_153805",
+      "generated_at": "2026-06-09_160233",
       "basis_trade_date": null,
-      "sha256": "d5c5a04e8be1e340e7f967131e6c8dc90514822d523338fea5af454df60eb95f",
+      "sha256": "31a40bbe79306d0b4be17717ace30dfbf09ac91148ff2f054fbf4e8afc4ae635",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1649,6 +1694,21 @@
       "generated_at": "2026-06-09_152840",
       "basis_trade_date": "2026-06-09",
       "sha256": "5b0dc469ac50641d81db235dc99bb258b699e2d8abcde5a1d5c761f5a88b8741",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_cleanup_review",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_cleanup_2026-06-09_160500.json",
+      "generated_at": "2026-06-09_160500",
+      "basis_trade_date": null,
+      "sha256": "78334ef582bc8aa7f2381d07141b01b19ace39e8ff62f104f8f1a5e23adaf78c",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1994,6 +2054,21 @@
       "generated_at": "2026-06-09_154120",
       "basis_trade_date": null,
       "sha256": "5c53e0b3926763c5bba8b82966f0d5429e062199c1aad43526b06569f9fb7990",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "research_quality_audit",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/research_quality_audit_2026-06-09_160248.json",
+      "generated_at": "2026-06-09_160248",
+      "basis_trade_date": null,
+      "sha256": "665b87ccdeaadea164cacf1bb64fbf55a87e533b730712adcd369655f7f9242d",
       "quality": {
         "status": "legacy_unknown"
       },
