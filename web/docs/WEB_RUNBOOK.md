@@ -67,6 +67,44 @@ The script prints a suggested commit message and the files that belong in the co
 
 The same gate runs in GitHub Actions via `.github/workflows/web_check.yml` on push and pull request.
 
+## Phase 5A Schema And Golden Baseline
+
+Phase 5A freezes the database schema contract and adds a golden current-state baseline for later service migration. It does not migrate target-allocation generation, action-plan generation, trading logic, order creation, execution handling, or QMT write interfaces.
+
+Core documents:
+
+- `web/docs/DATABASE_SCHEMA.md`
+- `web/docs/CURRENT_STATE_CONTRACT.md`
+- `web/docs/GOLDEN_REFERENCE.md`
+- `web/docs/SERVICE_LAYER_PLAN.md`
+
+Run all Phase 5A checks through the one-command gate:
+
+```bash
+python scripts/web_check.py
+```
+
+Run the golden reference test directly:
+
+```bash
+python -m pytest web/backend/tests/test_golden_current_state.py
+```
+
+Run schema and current-state contract tests directly:
+
+```bash
+python -m pytest web/backend/tests/test_database_schema_contract.py web/backend/tests/test_current_state_contract.py
+```
+
+Confirm DB and current JSON alignment by running:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_golden_current_state.py
+```
+
+The golden test dynamically resolves `latest_index.modules` and compares current JSON with SQLite fields. It does not read `latest_index.files` and does not hard-code action-plan timestamps.
+
 ## API and Page Smoke Check
 
 ```bash

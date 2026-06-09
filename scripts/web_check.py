@@ -18,7 +18,7 @@ LATEST_INDEX = ROOT / "research" / "latest_index.json"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): Phase 3 Web milestone automated verification"
+COMMIT_MESSAGE = "test(web): add database contract and golden current-state checks"
 
 API_PATHS = [
     "/api/health",
@@ -68,6 +68,19 @@ JS_CHECKS = [
     "expandable-row",
     "setInterval(refresh",
     "fetch(apiPath",
+]
+
+PHASE5A_TEST_FILES = [
+    ROOT / "web" / "backend" / "tests" / "test_database_schema_contract.py",
+    ROOT / "web" / "backend" / "tests" / "test_current_state_contract.py",
+    ROOT / "web" / "backend" / "tests" / "test_golden_current_state.py",
+]
+
+PHASE5A_DOC_FILES = [
+    ROOT / "web" / "docs" / "DATABASE_SCHEMA.md",
+    ROOT / "web" / "docs" / "CURRENT_STATE_CONTRACT.md",
+    ROOT / "web" / "docs" / "GOLDEN_REFERENCE.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
 ]
 
 REQUIRED_EXPORT_MODULES = {
@@ -225,6 +238,7 @@ class WebCheck:
     def run(self) -> int:
         self.check_git_scope()
         self.check_no_research_logic_changes()
+        self.check_phase5a_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -235,6 +249,19 @@ class WebCheck:
         self.check_current_only_code_paths()
         self.print_summary()
         return 1 if self.failures else 0
+
+    def check_phase5a_contract_files(self) -> None:
+        missing = [rel(path) for path in [*PHASE5A_TEST_FILES, *PHASE5A_DOC_FILES] if not path.exists()]
+        if missing:
+            self.add_result("phase5a_contract_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase5a_contract_files",
+                ", ".join(missing),
+                "Phase 5A schema/current-state/golden contract files are missing.",
+                "Add the missing docs/tests, then rerun scripts/web_check.py.",
+            )
+        else:
+            self.add_result("phase5a_contract_files", "PASS", "schema, current-state, golden docs/tests present")
 
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
