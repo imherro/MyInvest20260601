@@ -1,0 +1,200 @@
+{
+  "module": "portfolio_research_backlog",
+  "version": "latest_index_subjects_v1",
+  "generated_at": "2026-06-09_150400",
+  "basis_trade_date": "2026-06-09",
+  "basis_action_plan": "research/actions/action_plan_2026-06-09_150301_latest_ratio_only.json",
+  "basis_portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+  "boundary": "ResearchFirst subject queue only. It is not a trade list and contains no buy/sell/add/reduce instruction.",
+  "privacy_policy": {
+    "ratio_only": true,
+    "allowed_fields": [
+      "code",
+      "name",
+      "current_weight_pct",
+      "allocation_bucket",
+      "gate status",
+      "source paths"
+    ],
+    "excluded_field_groups": [
+      "cash_value_fields",
+      "unit_count_fields",
+      "identity_fields"
+    ]
+  },
+  "summary": {
+    "total_subjects": 6,
+    "p0_current_gate": 6,
+    "basis_action_count": 3,
+    "note": "Generated from latest_index current action plan research_first_list."
+  },
+  "items": [
+    {
+      "priority": "P0_current_gate",
+      "code": "513180",
+      "ts_code": "513180.SH",
+      "name": "恒生科技ETF华夏",
+      "subject_type": "ETF",
+      "current_weight_pct": 1.6078,
+      "allocation_bucket": "legacy_watch",
+      "action_plan_blocker": "ResearchFirst gate: no direct buy/add/reduce/sell action before profile completion.",
+      "missing_gate_inputs": [
+        "profile",
+        "liquidity",
+        "theme_binding"
+      ],
+      "profile_status": "to_research",
+      "profile_source": "",
+      "valuation_source": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-05_103909.json",
+      "liquidity_status": "not_machine_verified_without_profile",
+      "theme_binding_status": "needs_review",
+      "target_module": "ETF_RESEARCH",
+      "needs_tushare_data": true,
+      "needs_theme_binding": true,
+      "next_step": "Generate or refresh ETF dossier, then rebuild registry and action plan.",
+      "boundary": "Research queue only; no buy/sell/reduce/add instruction.",
+      "rank": 1
+    },
+    {
+      "priority": "P0_current_gate",
+      "code": "512400",
+      "ts_code": "512400.SH",
+      "name": "有色金属ETF南方",
+      "subject_type": "ETF",
+      "current_weight_pct": 1.5492,
+      "allocation_bucket": "legacy_watch",
+      "action_plan_blocker": "ResearchFirst gate: no direct buy/add/reduce/sell action before profile completion.",
+      "missing_gate_inputs": [
+        "profile",
+        "liquidity",
+        "theme_binding"
+      ],
+      "profile_status": "to_research",
+      "profile_source": "",
+      "valuation_source": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_112659.json",
+      "liquidity_status": "not_machine_verified_without_profile",
+      "theme_binding_status": "needs_review",
+      "target_module": "ETF_RESEARCH",
+      "needs_tushare_data": true,
+      "needs_theme_binding": true,
+      "next_step": "Generate or refresh ETF dossier, then rebuild registry and action plan.",
+      "boundary": "Research queue only; no buy/sell/reduce/add instruction.",
+      "rank": 2
+    },
+    {
+      "priority": "P0_current_gate",
+      "code": "600764",
+      "ts_code": "",
+      "name": "中国海防",
+      "subject_type": "stock",
+      "current_weight_pct": null,
+      "allocation_bucket": null,
+      "action_plan_blocker": "ResearchFirst gate: no direct buy/add/reduce/sell action before profile completion.",
+      "missing_gate_inputs": [
+        "profile",
+        "valuation",
+        "liquidity",
+        "theme_binding"
+      ],
+      "profile_status": "to_research",
+      "profile_source": "",
+      "valuation_source": null,
+      "liquidity_status": "not_machine_verified_without_profile",
+      "theme_binding_status": "needs_review",
+      "target_module": "STOCK_RESEARCH",
+      "needs_tushare_data": true,
+      "needs_theme_binding": true,
+      "next_step": "Generate or refresh stock dossier, then rebuild registry and action plan.",
+      "boundary": "Research queue only; no buy/sell/reduce/add instruction.",
+      "rank": 3
+    },
+    {
+      "priority": "P0_current_gate",
+      "code": "688032",
+      "ts_code": "",
+      "name": "禾迈股份",
+      "subject_type": "stock",
+      "current_weight_pct": null,
+      "allocation_bucket": null,
+      "action_plan_blocker": "ResearchFirst gate: no direct buy/add/reduce/sell action before profile completion.",
+      "missing_gate_inputs": [
+        "profile",
+        "valuation",
+        "liquidity",
+        "theme_binding"
+      ],
+      "profile_status": "to_research",
+      "profile_source": "",
+      "valuation_source": null,
+      "liquidity_status": "not_machine_verified_without_profile",
+      "theme_binding_status": "needs_review",
+      "target_module": "STOCK_RESEARCH",
+      "needs_tushare_data": true,
+      "needs_theme_binding": true,
+      "next_step": "Generate or refresh stock dossier, then rebuild registry and action plan.",
+      "boundary": "Research queue only; no buy/sell/reduce/add instruction.",
+      "rank": 4
+    },
+    {
+      "priority": "P0_current_gate",
+      "code": "000970",
+      "ts_code": "",
+      "name": "中科三环",
+      "subject_type": "stock",
+      "current_weight_pct": null,
+      "allocation_bucket": null,
+      "action_plan_blocker": "ResearchFirst gate: no direct buy/add/reduce/sell action before profile completion.",
+      "missing_gate_inputs": [
+        "profile",
+        "valuation",
+        "liquidity",
+        "theme_binding"
+      ],
+      "profile_status": "to_research",
+      "profile_source": "",
+      "valuation_source": null,
+      "liquidity_status": "not_machine_verified_without_profile",
+      "theme_binding_status": "needs_review",
+      "target_module": "STOCK_RESEARCH",
+      "needs_tushare_data": true,
+      "needs_theme_binding": true,
+      "next_step": "Generate or refresh stock dossier, then rebuild registry and action plan.",
+      "boundary": "Research queue only; no buy/sell/reduce/add instruction.",
+      "rank": 5
+    },
+    {
+      "priority": "P0_current_gate",
+      "code": "300724",
+      "ts_code": "",
+      "name": "捷佳伟创",
+      "subject_type": "stock",
+      "current_weight_pct": null,
+      "allocation_bucket": null,
+      "action_plan_blocker": "ResearchFirst gate: no direct buy/add/reduce/sell action before profile completion.",
+      "missing_gate_inputs": [
+        "profile",
+        "valuation",
+        "liquidity",
+        "theme_binding"
+      ],
+      "profile_status": "to_research",
+      "profile_source": "",
+      "valuation_source": null,
+      "liquidity_status": "not_machine_verified_without_profile",
+      "theme_binding_status": "needs_review",
+      "target_module": "STOCK_RESEARCH",
+      "needs_tushare_data": true,
+      "needs_theme_binding": true,
+      "next_step": "Generate or refresh stock dossier, then rebuild registry and action plan.",
+      "boundary": "Research queue only; no buy/sell/reduce/add instruction.",
+      "rank": 6
+    }
+  ],
+  "decision_log_entry": {
+    "timestamp": "2026-06-09_150400",
+    "markdown": "research/portfolio/research_backlog_2026-06-09_150400.md",
+    "json": "research/portfolio/research_backlog_2026-06-09_150400.json",
+    "basis_action_plan": "research/actions/action_plan_2026-06-09_150301_latest_ratio_only.json",
+    "boundary": "Research queue only; ratio-only."
+  }
+}

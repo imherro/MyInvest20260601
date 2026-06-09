@@ -6,6 +6,8 @@ from __future__ import annotations
 import json
 import re
 import sys
+import argparse
+import subprocess
 from importlib.util import find_spec
 from dataclasses import dataclass
 from pathlib import Path
@@ -13,7 +15,8 @@ from typing import Any
 
 from check_staleness import build_report as build_stale_report
 from check_staleness import cascade_findings, check_downstream
-from project_utils import abs_path, build_latest_index, latest_for_module, read_json
+from check_ratio_only import check_file as check_ratio_only_file
+from project_utils import abs_path, build_latest_index, latest_for_module, market_position_for_score, read_json
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +44,7 @@ RESEARCH_NAME_PATTERNS = {
     "reviews": re.compile(
         rf"^post_market_review_{TIMESTAMP}(_[A-Za-z0-9_-]+)?\.(md|json)$"
     ),
+    "config": re.compile(r"^[A-Za-z0-9_-]+\.json$"),
 }
 
 FIXED_RESEARCH_FILES = {
@@ -51,6 +55,7 @@ FIXED_RESEARCH_FILES = {
     "logs/decision_log.md",
     "portfolio/current_holdings_template.md",
     "config/bucket_registry.json",
+    "config/market_position_mapping.json",
     "latest_index.json",
 }
 
@@ -110,10 +115,11 @@ def check_python_dependencies(findings: list[Finding]) -> None:
 
 def check_json(findings: list[Finding]) -> None:
     for path in sorted(ROOT.rglob("*.json")):
-        if ".git" in path.parts or "runtime" in path.relative_to(ROOT).parts:
+        rel_parts = path.relative_to(ROOT).parts
+        if ".git" in path.parts or "runtime" in rel_parts or "temp" in rel_parts:
             continue
         try:
-            json.loads(path.read_text(encoding="utf-8"))
+            json.loads(path.read_text(encoding="utf-8-sig"))
         except Exception as exc:  # noqa: BLE001 - report parser detail to user.
             findings.append(Finding("FAIL", f"{rel(path)} is not valid JSON: {exc}"))
 
@@ -155,6 +161,8 @@ def check_required_files(findings: list[Finding]) -> None:
         "docs/DATA_SOURCES.md",
         "docs/FILE_NAMING.md",
         "research/logs/decision_log.md",
+        "research/config/market_position_mapping.json",
+        "research/config/liquidity_gate_registry.json",
     ]
     for item in required:
         if not (ROOT / item).exists():
@@ -167,6 +175,10 @@ def check_required_scripts(findings: list[Finding]) -> None:
         "scripts/build_latest_index.py",
         "scripts/check_staleness.py",
         "scripts/build_review_package.py",
+        "scripts/check_review_package_integrity.py",
+        "scripts/check_cross_file_allocation_consistency.py",
+        "scripts/check_ratio_only.py",
+        "scripts/check_research_first_gate.py",
         "scripts/generate_target_allocation.py",
         "scripts/generate_valuation_reports.py",
         "scripts/check_valuation_updates.py",
@@ -177,6 +189,95 @@ def check_required_scripts(findings: list[Finding]) -> None:
     for item in required:
         if not (ROOT / item).exists():
             findings.append(Finding("FAIL", f"{item} is missing"))
+
+
+def check_transient_roots(findings: list[Finding]) -> None:
+    for name in ["runtime", "review_package"]:
+        path = ROOT / name
+        if path.exists():
+            findings.append(Finding("FAIL", f"{name}/ exists at repo root; move transient output under temp/"))
+
+
+def check_market_position_mapping(findings: list[Finding]) -> None:
+    market = latest_for_module("market_score")
+    if not market:
+        return
+    data = read_json(abs_path(market["path"]), {})
+    summary = data.get("summary") or {}
+    score = summary.get("market_position_score")
+    mapping = market_position_for_score(score)
+    if not mapping:
+        findings.append(Finding("FAIL", f"{market['path']} market_position_score={score} has no config mapping"))
+        return
+    for field in ["equity_allocation_range", "bond_cash_allocation_range", "offensive_bucket_status"]:
+        actual = summary.get(field)
+        expected = mapping.get(field)
+        if actual and expected and actual != expected:
+            findings.append(
+                Finding(
+                    "FAIL",
+                    f"{market['path']} {field}={actual} differs from research/config/market_position_mapping.json expected {expected}",
+                )
+            )
+
+
+def check_latest_action_ratio_only(findings: list[Finding]) -> None:
+    latest = latest_for_module("action_plan")
+    if not latest:
+        return
+    path = abs_path(latest["path"])
+    for item in check_ratio_only_file(path):
+        findings.append(Finding("FAIL", f"{latest['path']} ratio-only violation: {item}"))
+
+
+def check_latest_index_timestamp(findings: list[Finding]) -> None:
+    latest_path = ROOT / "research" / "latest_index.json"
+    if not latest_path.exists():
+        return
+    index = read_json(latest_path, {})
+    index_dt = parse_project_dt(index.get("generated_at"))
+    if not index_dt:
+        findings.append(Finding("WARN", "research/latest_index.json generated_at is missing or invalid"))
+        return
+    module_times = [
+        parse_project_dt(item.get("generated_at"))
+        for item in (index.get("modules") or {}).values()
+        if isinstance(item, dict)
+    ]
+    module_times = [item for item in module_times if item is not None]
+    if module_times and index_dt < max(module_times):
+        findings.append(Finding("WARN", "research/latest_index.json generated_at is earlier than a current module pointer"))
+
+
+def parse_project_dt(value: Any):
+    if value is None:
+        return None
+    from datetime import datetime
+
+    for fmt in ("%Y-%m-%d_%H%M%S", "%Y%m%d", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(str(value), fmt)
+        except ValueError:
+            continue
+    return None
+
+
+def check_research_first_gate(findings: list[Finding]) -> None:
+    script = ROOT / "scripts" / "check_research_first_gate.py"
+    if not script.exists():
+        findings.append(Finding("FAIL", "scripts/check_research_first_gate.py is missing"))
+        return
+    completed = subprocess.run(
+        [sys.executable, str(script)],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if completed.returncode != 0:
+        detail = (completed.stdout or completed.stderr or "").strip().splitlines()
+        suffix = f": {'; '.join(detail[:5])}" if detail else ""
+        findings.append(Finding("FAIL", f"ResearchFirst gate failed{suffix}"))
 
 
 def as_float(value: Any) -> float | None:
@@ -201,6 +302,12 @@ def check_weight_math(findings: list[Finding]) -> None:
             for field in ["cost_price", "current_price"]:
                 value = as_float(item.get(field))
                 if value is not None and value <= 0:
+                    if (
+                        field == "cost_price"
+                        and str(item.get("cost_basis_status") or "").lower() == "principal_recovered"
+                        and item.get("reference_pnl_pct") is None
+                    ):
+                        continue
                     findings.append(Finding("FAIL", f"{portfolio['path']} {code} has invalid {field}={value}"))
 
     allocation = latest_for_module("target_allocation")
@@ -216,13 +323,14 @@ def check_weight_math(findings: list[Finding]) -> None:
             findings.append(Finding("FAIL", f"{allocation['path']} ideal segments sum to {segment_total:.2f}, not 100±0.2"))
 
 
-def check_intraday_references(findings: list[Finding], strict: bool) -> None:
+def check_intraday_references(findings: list[Finding], strict: bool, current_only: bool = False) -> None:
     rules_path = ROOT / "research" / "alerts" / "intraday_rules.json"
     if not rules_path.exists():
         return
     rules = read_json(rules_path, {})
     references = []
-    references.extend(item for item in rules.get("data_sources", []) if isinstance(item, str) and item.endswith(".json"))
+    if not current_only:
+        references.extend(item for item in rules.get("data_sources", []) if isinstance(item, str) and item.endswith(".json"))
     allocation_map = rules.get("allocation_map") or {}
     for key in ["target_allocation_file", "portfolio_snapshot_file"]:
         value = allocation_map.get(key)
@@ -247,17 +355,28 @@ def check_intraday_references(findings: list[Finding], strict: bool) -> None:
         findings.append(Finding("WARN", f"research/alerts/intraday_rules.json staleness.status={status}; check quality before action use"))
 
 
-def main() -> int:
-    strict = "--strict" in sys.argv
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--strict", action="store_true")
+    parser.add_argument("--current-only", action="store_true", help="Use current audit-package scope; ignore legacy intraday data_sources.")
+    args = parser.parse_args(argv)
+    strict = args.strict
     findings: list[Finding] = []
     check_required_files(findings)
     check_required_scripts(findings)
-    check_env(findings)
+    check_transient_roots(findings)
+    is_review_package = (ROOT / "REVIEW_PACKAGE_MANIFEST.md").exists()
+    if not (args.current_only and is_review_package):
+        check_env(findings)
     check_python_dependencies(findings)
     check_json(findings)
     check_research_names(findings)
     check_weight_math(findings)
-    check_intraday_references(findings, strict)
+    check_latest_index_timestamp(findings)
+    check_market_position_mapping(findings)
+    check_latest_action_ratio_only(findings)
+    check_research_first_gate(findings)
+    check_intraday_references(findings, strict, current_only=args.current_only)
 
     failures = [item for item in findings if item.level == "FAIL"]
     warnings = [item for item in findings if item.level == "WARN"]

@@ -50,7 +50,7 @@ PRICE_POSITION_LABELS = {
 
 BUCKETS = {
     "cash_short": {"label": "现金/短融", "color": "#5b6b7a"},
-    "core_base": {"label": "宽基/核心底仓", "color": "#2f6fbd"},
+    "core_base": {"label": "宽基/核心质量底仓", "color": "#2f6fbd"},
     "attack_mainline": {"label": "进攻主线仓", "color": "#8b5cf6"},
     "defense": {"label": "防御仓", "color": "#0f8b6f"},
     "legacy_watch": {"label": "其他/待清理", "color": "#9a6700"},

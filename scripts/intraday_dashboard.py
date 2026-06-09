@@ -10,8 +10,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from PySide6.QtCore import QEvent, QObject, QPointF, QRectF, Qt, QTimer
-from PySide6.QtGui import QColor, QFont, QPainter, QPen, QPolygonF
+from PySide6.QtCore import QEvent, QObject, QPoint, QPointF, QRectF, Qt, QTimer
+from PySide6.QtGui import QColor, QCursor, QFont, QPainter, QPen, QPolygonF
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
@@ -24,7 +24,6 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QToolButton,
-    QToolTip,
     QVBoxLayout,
     QWidget,
 )
@@ -36,12 +35,13 @@ ROOT = Path(__file__).resolve().parents[1]
 TEMP_ROOT = ROOT / "temp"
 DEFAULT_RULES = ROOT / "research" / "alerts" / "intraday_rules.json"
 LATEST_INDEX = ROOT / "research" / "latest_index.json"
+DEFAULT_WATCHLIST = ROOT / "research" / "config" / "intraday_watchlist.json"
 DEFAULT_QMT_SITE = Path(r"D:\国金证券QMT交易端\python\Lib\site-packages")
 RUNTIME_DIR = TEMP_ROOT / "runtime" / "alerts"
 
 BUCKET_STYLE = {
     "cash_short": {"label": "现金/短融", "bg": "#eef2f7", "accent": "#5b6b7a"},
-    "core_base": {"label": "宽基/核心底仓", "bg": "#eaf2ff", "accent": "#2f6fbd"},
+    "core_base": {"label": "宽基/核心质量底仓", "bg": "#eaf2ff", "accent": "#2f6fbd"},
     "attack_mainline": {"label": "进攻主线仓", "bg": "#f2ecff", "accent": "#8b5cf6"},
     "defense": {"label": "防御仓", "bg": "#e8f7f1", "accent": "#0f8b6f"},
     "legacy_watch": {"label": "其他/待清理", "bg": "#fff4df", "accent": "#9a6700"},
@@ -49,6 +49,80 @@ BUCKET_STYLE = {
 BUCKET_ORDER = ["core_base", "attack_mainline", "defense", "legacy_watch", "cash_short"]
 ALLOCATION_DISPLAY_ORDER = ["core_base", "attack_mainline", "defense", "legacy_watch", "cash_short"]
 PRIORITY_RANK = {"high": 3, "medium": 2, "low": 1}
+PRIORITY_LABELS = {"high": "高", "medium": "中", "low": "低", "none": "无"}
+GATE_LABELS = {
+    "risk_reduce_only": "只允许降风险",
+    "verify_only": "只验证/观察",
+    "allow_new_risk": "允许新增风险",
+    "unknown": "门禁未知",
+}
+STALE_LABELS = {
+    "fresh": "规则新鲜",
+    "stale": "规则过期",
+    "blocked": "规则阻断",
+    "degraded": "规则降级",
+    "legacy_unknown": "新鲜度未知",
+}
+SUMMARY_STATE_LABELS = {
+    "triggered": "已触发",
+    "near_trigger": "接近触发",
+    "no_trigger": "未触发",
+    "blocked": "前置缺失",
+    "stale_blocked": "规则过期阻断",
+    "gate_blocked": "门禁阻断",
+}
+ALERT_TYPE_LABELS = {
+    "watch_trigger": "观察触发",
+    "risk_trigger": "风险复核",
+    "buy_trigger": "买入复核",
+    "add_trigger": "加仓复核",
+    "reduce_trigger": "减仓复核",
+    "sell_trigger": "卖出复核",
+    "near_trigger": "接近触发",
+    "blocked": "前置缺失",
+    "stale_blocked": "规则过期阻断",
+    "gate_blocked": "门禁阻断",
+    "invalidation_trigger": "失效复核",
+}
+ACTION_TYPE_LABELS = {
+    "Add": "增配",
+    "Reduce": "降配",
+    "Hold": "持有",
+    "Watch": "观察",
+    "ResearchFirst": "先研究",
+}
+UI_TEXT_REPLACEMENTS = {
+    "Target equity is": "目标权益仓位为",
+    "actual equity is about": "当前权益约",
+    "Allowed actions are ratio-only risk reduction and cash/short-duration restoration; no direct single-name add is allowed without fresh dossiers.": "只允许按比例降风险和恢复现金/短融仓；没有新鲜研究档案前，不允许直接单标的加仓。",
+    "overall equity exposure": "总权益仓位",
+    "cash/short-duration bucket": "现金/短融桶",
+    "market score": "市场分数",
+    "maps to equity": "对应权益仓位",
+    "actual equity is above target upper bound": "当前权益高于目标上沿",
+    "offensive add gate is not open": "进攻加仓门禁未打开",
+    "cash/short-duration target is": "现金/短融目标为",
+    "this is risk-reduction parking, not equity add exposure": "这是降风险后的停泊仓，不是新增权益风险",
+    "legacy/watch target is zero or near zero in target allocation": "其他/待清理仓在目标配置中为零或接近零",
+    "legacy/watch is a main source of equity deviation": "其他/待清理仓是权益偏离的主要来源",
+    "Synced with latest target allocation; quality warnings block buy/add use.": "已同步最新目标配置；质量警告阻断买入/加仓使用。",
+    "QMT open_price/cost field is non-positive; cost-based PnL is unavailable, but ratio-level portfolio analysis can continue.": "QMT 开盘价/成本字段为非正数，无法计算成本口径盈亏；比例级组合分析仍可继续。",
+    "quality warnings block buy/add use": "质量警告阻断买入/加仓使用",
+    "Normal": "常规",
+    "Watch": "观察",
+    "actionable": "有可复核动作",
+    "watch": "观察",
+}
+ACTION_TEXT_REPLACEMENTS = {
+    "reduce in stages before considering core adds": "分阶段降低，再考虑核心仓增配",
+    "in stages before considering core adds": "分阶段处理，再考虑核心仓增配",
+    " to ": " 至 ",
+    "reduce": "降低",
+    "increase": "增加",
+    "add": "增加",
+    "hold": "持有",
+    "watch": "观察",
+}
 STANCE_COLOR = {
     "低估": "#16a34a",
     "价格低位": "#16a34a",
@@ -122,6 +196,160 @@ def subject_bucket(subject: dict[str, Any]) -> str:
     return subject.get("allocation_bucket") or subject.get("reference_metrics", {}).get("allocation_bucket") or "legacy_watch"
 
 
+def code_key(value: Any) -> str:
+    return str(value or "").strip().upper().split(".", 1)[0]
+
+
+def full_code_key(value: Any) -> str:
+    return str(value or "").strip().upper()
+
+
+def load_latest_portfolio_snapshot() -> tuple[dict[str, Any], Path | None]:
+    path = latest_module_path("portfolio_snapshot")
+    if not path or not path.exists():
+        return {}, None
+    return load_json(path), path
+
+
+def portfolio_holding_codes(snapshot: dict[str, Any]) -> set[str]:
+    codes: set[str] = set()
+    for item in snapshot.get("holdings", []):
+        for key in ["ts_code", "code"]:
+            value = item.get(key)
+            if value:
+                codes.add(code_key(value))
+                codes.add(full_code_key(value))
+    return codes
+
+
+def load_intraday_watchlist(path: Path = DEFAULT_WATCHLIST) -> dict[str, Any]:
+    if not path.exists():
+        return {"include_codes": [], "hide_codes": []}
+    return load_json(path)
+
+
+def watchlist_codes(watchlist: dict[str, Any], key: str) -> set[str]:
+    codes: set[str] = set()
+    for value in watchlist.get(key, []):
+        if isinstance(value, dict):
+            raw = value.get("code") or value.get("ts_code")
+        else:
+            raw = value
+        if raw:
+            codes.add(code_key(raw))
+            codes.add(full_code_key(raw))
+    return codes
+
+
+def filter_rules_for_monitor_pool(rules: dict[str, Any]) -> dict[str, Any]:
+    snapshot, snapshot_path = load_latest_portfolio_snapshot()
+    holding_codes = portfolio_holding_codes(snapshot)
+    watchlist = load_intraday_watchlist()
+    include_codes = watchlist_codes(watchlist, "include_codes")
+    hide_codes = watchlist_codes(watchlist, "hide_codes")
+
+    if not holding_codes and not include_codes:
+        scoped = dict(rules)
+        scoped["monitor_scope"] = {
+            "mode": "rules_all_due_missing_portfolio_snapshot",
+            "portfolio_snapshot_file": str(snapshot_path.relative_to(ROOT)).replace("\\", "/") if snapshot_path else None,
+            "watchlist_file": str(DEFAULT_WATCHLIST.relative_to(ROOT)).replace("\\", "/") if DEFAULT_WATCHLIST.exists() else None,
+            "source_subject_count": len(rules.get("subjects", [])),
+            "active_subject_count": len(rules.get("subjects", [])),
+            "hidden_subjects": [],
+        }
+        return scoped
+
+    subjects = []
+    hidden = []
+    for subject in rules.get("subjects", []):
+        code = subject.get("code")
+        keys = {code_key(code), full_code_key(code)}
+        is_holding = bool(keys & holding_codes)
+        is_watch = bool(keys & include_codes)
+        is_hidden = bool(keys & hide_codes)
+        if is_holding or (is_watch and not is_hidden):
+            kept = dict(subject)
+            kept["monitor_source"] = "真实持仓" if is_holding else "显式观察"
+            subjects.append(kept)
+        else:
+            hidden.append(
+                {
+                    "code": code,
+                    "name": subject.get("name"),
+                    "reason": "不在最新真实持仓，也不在盘中显式观察池",
+                }
+            )
+
+    scoped = dict(rules)
+    scoped["subjects"] = subjects
+    scoped["monitor_scope"] = {
+        "mode": "holdings_plus_explicit_watchlist",
+        "portfolio_snapshot_file": str(snapshot_path.relative_to(ROOT)).replace("\\", "/") if snapshot_path else None,
+        "watchlist_file": str(DEFAULT_WATCHLIST.relative_to(ROOT)).replace("\\", "/") if DEFAULT_WATCHLIST.exists() else None,
+        "source_subject_count": len(rules.get("subjects", [])),
+        "active_subject_count": len(subjects),
+        "holding_code_count": len({code_key(code) for code in holding_codes if "." not in code}),
+        "explicit_watch_count": len({code_key(code) for code in include_codes if "." not in code}),
+        "hidden_subjects": hidden,
+    }
+    return scoped
+
+
+def subject_attribute_tags(subject: dict[str, Any], quote: dict[str, Any] | None = None) -> list[str]:
+    """Display research attributes separately from the allocation bucket."""
+    code = str(subject.get("code") or (quote or {}).get("code") or "")
+    group = str(subject.get("group") or "")
+    role = str(subject.get("role") or "")
+    bucket = subject_bucket(subject)
+    stance = ((quote or {}).get("security_stance") or subject.get("security_stance") or {})
+    stance_label = str(stance.get("label") or "")
+    text = f"{group} {role}"
+    tags: list[str] = []
+
+    def add(label: str) -> None:
+        if label and label not in tags:
+            tags.append(label)
+
+    if bucket == "core_base" or "核心质量" in text or "核心" in text:
+        add("核心质量")
+    if bucket == "defense" or any(key in text for key in ["防御", "红利", "公用事业", "金融", "医药"]):
+        add("防御属性")
+    if bucket == "attack_mainline" or "进攻" in text:
+        add("进攻属性")
+    if bucket == "legacy_watch" or "待清理" in text or "遗留" in text:
+        add("待清理观察")
+
+    if code == "159201.SZ":
+        add("防御属性")
+        add("因子底仓")
+    if code == "002352.SZ" or ("核心质量" in text and "价格低位" in stance_label):
+        add("超跌修复观察")
+    if "价格低位" in stance_label and "超跌修复观察" not in tags:
+        add("低位观察")
+
+    return tags[:4]
+
+
+def display_action_type(value: Any) -> str:
+    text = str(value or "-")
+    return ACTION_TYPE_LABELS.get(text, text)
+
+
+def display_ui_text(value: Any) -> str:
+    text = str(value or "-")
+    for source, target in UI_TEXT_REPLACEMENTS.items():
+        text = text.replace(source, target)
+    return text
+
+
+def display_action_text(value: Any) -> str:
+    text = display_ui_text(value)
+    for source, target in ACTION_TEXT_REPLACEMENTS.items():
+        text = text.replace(source, target)
+    return text.replace("pp", "个百分点")
+
+
 def latest_module_path(module: str) -> Path | None:
     index = load_json(LATEST_INDEX) if LATEST_INDEX.exists() else {}
     record = (index.get("modules") or {}).get(module) or {}
@@ -182,15 +410,61 @@ def action_plan_context(action_plan: dict[str, Any]) -> dict[str, Any]:
 
 
 class LongToolTipFilter(QObject):
+    def __init__(self, parent: QObject | None = None) -> None:
+        super().__init__(parent)
+        self.current_widget: QWidget | None = None
+        self.popup = QLabel()
+        self.popup.setWindowFlags(
+            Qt.WindowType.ToolTip
+            | Qt.WindowType.FramelessWindowHint
+            | Qt.WindowType.WindowStaysOnTopHint
+        )
+        self.popup.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating, True)
+        self.popup.setWordWrap(True)
+        self.popup.setMinimumWidth(260)
+        self.popup.setMaximumWidth(560)
+        self.popup.setStyleSheet(
+            """
+            QLabel {
+                background: #111827;
+                color: #f8fafc;
+                border: 1px solid #334155;
+                border-radius: 6px;
+                padding: 8px 10px;
+                font-size: 12px;
+                line-height: 1.4;
+            }
+            """
+        )
+
     def eventFilter(self, obj: QObject, event: QEvent) -> bool:  # noqa: N802 - Qt override.
-        if event.type() == QEvent.Type.ToolTip and isinstance(obj, QWidget):
-            text = obj.toolTip()
-            if text:
-                QToolTip.showText(event.globalPos(), text, obj, obj.rect(), 24 * 60 * 60 * 1000)
+        if not isinstance(obj, QWidget):
+            return super().eventFilter(obj, event)
+
+        if event.type() in {QEvent.Type.Enter, QEvent.Type.ToolTip}:
+            if obj.toolTip():
+                self._show_for(obj)
                 return True
-        if event.type() in {QEvent.Type.Leave, QEvent.Type.Hide} and isinstance(obj, QWidget):
-            QToolTip.hideText()
+
+        if event.type() == QEvent.Type.MouseMove and obj is self.current_widget and self.popup.isVisible():
+            self._move_popup()
+            return False
+
+        if event.type() in {QEvent.Type.Leave, QEvent.Type.Hide} and obj is self.current_widget:
+            self.popup.hide()
+            self.current_widget = None
+
         return super().eventFilter(obj, event)
+
+    def _show_for(self, widget: QWidget) -> None:
+        self.current_widget = widget
+        self.popup.setText(widget.toolTip())
+        self.popup.adjustSize()
+        self._move_popup()
+        self.popup.show()
+
+    def _move_popup(self) -> None:
+        self.popup.move(QCursor.pos() + QPoint(18, 22))
 
 
 class ValuationMapBar(QWidget):
@@ -595,16 +869,21 @@ class ActionPlanPanel(QFrame):
         layout.setContentsMargins(12, 8, 12, 10)
         layout.setSpacing(8)
         if not self.action_plan:
-            label = QLabel("今日操作建议：未找到最新 action_plan")
+            label = QLabel("今日操作建议：未找到最新操作计划")
             label.setStyleSheet("color:#b91c1c; font-weight:700;")
             layout.addWidget(label)
             return
         summary = self.action_plan.get("summary", {})
-        title = QLabel(f"今日操作建议｜{summary.get('action_state', '-')} / {summary.get('recommendation_strength', '-')}")
+        title = QLabel(
+            "今日操作建议｜{state} / {strength}".format(
+                state=display_ui_text(summary.get("action_state", "-")),
+                strength=display_ui_text(summary.get("recommendation_strength", "-")),
+            )
+        )
         title.setStyleSheet("font-size:14px; font-weight:700; color:#0f172a;")
         title.setToolTip(f"来源：{self.action_plan.get('_source_path', '-')}\n生成：{self.action_plan.get('generated_at', '-')}")
         layout.addWidget(title)
-        line = QLabel(summary.get("one_line_conclusion", ""))
+        line = QLabel(display_ui_text(summary.get("one_line_conclusion", "")))
         line.setWordWrap(True)
         line.setStyleSheet("color:#334155;")
         layout.addWidget(line)
@@ -612,8 +891,8 @@ class ActionPlanPanel(QFrame):
         for action in self.action_plan.get("actions", [])[:6]:
             bucket = action_bucket(action) or "legacy_watch"
             style = BUCKET_STYLE.get(bucket, BUCKET_STYLE["legacy_watch"])
-            subject = (action.get("subject") or {}).get("name") or "-"
-            text = f"{action.get('action_type')}｜{subject}｜{action.get('suggested_change')}"
+            subject = display_ui_text((action.get("subject") or {}).get("name") or "-")
+            text = f"{display_action_type(action.get('action_type'))}｜{subject}｜{display_action_text(action.get('suggested_change'))}"
             chip = QLabel(text)
             chip.setAlignment(Qt.AlignmentFlag.AlignCenter)
             chip.setStyleSheet(f"background:{style['bg']}; color:#0f172a; border-left:4px solid {style['accent']}; border-radius:6px; padding:6px 8px; font-weight:700;")
@@ -622,8 +901,8 @@ class ActionPlanPanel(QFrame):
                     [
                         f"对象：{subject}",
                         f"目标：{action.get('target_position') or '-'}",
-                        f"强度：{action.get('recommendation_strength') or '-'}",
-                        "证据：" + "；".join(action.get("evidence", [])[:3]),
+                        f"强度：{display_action_text(action.get('recommendation_strength') or '-')}",
+                        "证据：" + "；".join(display_ui_text(item) for item in action.get("evidence", [])[:3]),
                     ]
                 )
             )
@@ -700,6 +979,7 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
             "allocation_map": allocation_map,
             "staleness": rules.get("staleness", {"status": "legacy_unknown"}),
             "action_plan": action_plan_context(action_plan or {}),
+            "monitor_scope": rules.get("monitor_scope", {}),
             "quote_health": {
                 "expected_count": len(expected_codes),
                 "received_count": len(received_codes),
@@ -781,7 +1061,8 @@ class BattleMapWindow(QMainWindow):
     def __init__(self, rules_file: Path, qmt_site: Path, interval_ms: int, allow_reference_fallback: bool = False) -> None:
         super().__init__()
         self.rules_file = rules_file
-        self.rules = load_json(rules_file)
+        self.raw_rules = load_json(rules_file)
+        self.rules = filter_rules_for_monitor_pool(self.raw_rules)
         self.action_plan = load_latest_action_plan()
         self.provider = QmtQuoteProvider(qmt_site)
         self.interval_ms = interval_ms
@@ -919,13 +1200,13 @@ class BattleMapWindow(QMainWindow):
         context = report.get("market_context", {})
         gate = context.get("market_gate", "unknown")
         gate_color = {"risk_reduce_only": "#b00020", "verify_only": "#9a6700", "allow_new_risk": "#0a7f2e"}.get(gate)
-        self._set_card(self.status_card, gate, gate_color)
+        self._set_card(self.status_card, GATE_LABELS.get(gate, str(gate)), gate_color)
         self._set_card(self.target_card, context.get("target_equity_range", "-"))
         stale = context.get("staleness") or report.get("staleness") or {}
         stale_status = str(stale.get("status", "legacy_unknown"))
         stale_color = {"fresh": "#0a7f2e", "stale": "#b00020", "blocked": "#b00020", "degraded": "#d97706", "legacy_unknown": "#9a6700"}.get(stale_status, "#9a6700")
-        self._set_card(self.freshness_card, stale_status, stale_color)
-        self.freshness_card.setToolTip(stale.get("reason", "缺少规则新鲜度信息；仅供观察。"))
+        self._set_card(self.freshness_card, STALE_LABELS.get(stale_status, stale_status), stale_color)
+        self.freshness_card.setToolTip(display_ui_text(stale.get("reason", "缺少规则新鲜度信息；仅供观察。")))
         source_label, source_color, source_tip = self._quote_health_label(report)
         self._set_card(self.source_card, source_label, source_color)
         self.source_card.setToolTip(source_tip)
@@ -954,13 +1235,25 @@ class BattleMapWindow(QMainWindow):
 
         summary = report.get("summary", {})
         action_summary = ((context.get("action_plan") or {}).get("summary") or {}).get("one_line_conclusion")
+        monitor_scope = context.get("monitor_scope") or {}
+        source_subject_count = monitor_scope.get("source_subject_count")
+        active_subject_count = monitor_scope.get("active_subject_count")
+        hidden_count = len(monitor_scope.get("hidden_subjects") or [])
+        monitor_line = (
+            f"监控 {active_subject_count}/{source_subject_count}，隐藏清仓/非观察 {hidden_count} 项。"
+            if source_subject_count is not None and active_subject_count is not None
+            else ""
+        )
+        state_text = SUMMARY_STATE_LABELS.get(str(summary.get("alert_state")), str(summary.get("alert_state") or "-"))
+        priority_text = PRIORITY_LABELS.get(str(summary.get("highest_priority")), str(summary.get("highest_priority") or "-"))
         self.detail.setText(
-            "状态：{state}；规则={stale_status}；最高优先级：{priority}；{line}。今日建议：{action_line}。stale/degraded 时禁止买入/加仓，仅供观察和风险复核。".format(
-                state=summary.get("alert_state"),
-                stale_status=stale_status,
-                priority=summary.get("highest_priority"),
+            "状态：{state}；规则={stale_status}；最高优先级：{priority}；{line}。{monitor_line}今日建议：{action_line}。规则过期或降级时禁止买入/加仓，仅供观察和风险复核。".format(
+                state=state_text,
+                stale_status=STALE_LABELS.get(stale_status, stale_status),
+                priority=priority_text,
                 line=summary.get("one_line_conclusion"),
-                action_line=action_summary or "未载入",
+                monitor_line=monitor_line,
+                action_line=display_ui_text(action_summary) if action_summary else "未载入",
             )
         )
 
@@ -1083,7 +1376,7 @@ class BattleMapWindow(QMainWindow):
         action_hint = ""
         if bucket_actions:
             first = bucket_actions[0]
-            action_hint = f"；建议 {first.get('action_type')} {first.get('suggested_change')}"
+            action_hint = f"；建议 {display_action_type(first.get('action_type'))} {display_action_text(first.get('suggested_change'))}"
         summary = QLabel(
             "目标 {target}%，实际 {actual}%，偏离 {gap:+.2f}pp；标的 {count}，触发 {alerts}，接近 {near}".format(
                 target=fmt(bucket_info.get("target_pct")),
@@ -1097,7 +1390,10 @@ class BattleMapWindow(QMainWindow):
         summary.setStyleSheet(f"background:{hot_color}; color:#334155; padding:5px 8px; border-radius:6px;")
         tips = ["分组热力由触发数量、接近触发和实际仓位偏离共同决定。"]
         for action in bucket_actions:
-            tips.append(f"{action.get('action_type')} {action.get('subject')}：{action.get('suggested_change')}，目标 {action.get('target_position')}")
+            tips.append(
+                f"{display_action_type(action.get('action_type'))} {display_ui_text(action.get('subject'))}："
+                f"{display_action_text(action.get('suggested_change'))}，目标 {action.get('target_position')}"
+            )
         summary.setToolTip("\n".join(tips))
         header.addWidget(toggle)
         header.addWidget(summary, stretch=1)
@@ -1130,21 +1426,23 @@ class BattleMapWindow(QMainWindow):
         title.setStyleSheet("font-size:14px; font-weight:700; color:#0f172a;")
         price = QLabel(f"现价 {fmt(quote.get('last'), 3)}")
         price.setStyleSheet("font-size:12px; color:#334155;")
+        tag_badge = self._attribute_badge(subject, quote)
         realtime_stance = self._realtime_zone_badge(quote)
         report_stance = self._report_zone_badge(quote)
         status = self._status_badge(alert, near)
         grid.addWidget(title, 0, 0)
         grid.addWidget(price, 1, 0)
-        grid.addWidget(realtime_stance, 2, 0)
-        grid.addWidget(report_stance, 3, 0)
-        grid.addWidget(status, 4, 0)
+        grid.addWidget(tag_badge, 2, 0)
+        grid.addWidget(realtime_stance, 3, 0)
+        grid.addWidget(report_stance, 4, 0)
+        grid.addWidget(status, 5, 0)
 
         visual = quote.get("valuation_visual") or {}
         markers = quote.get("risk_markers") or {}
         position = quote.get("position_visual") or {}
-        grid.addWidget(ValuationMapBar(visual, markers, quote.get("last"), bg, card), 0, 1, 5, 2)
-        grid.addWidget(MoveMap(quote.get("trend_visual"), bg, card), 0, 3, 5, 2)
-        grid.addWidget(PositionGapBar(position.get("current_position_pct"), position.get("target_position_range"), bg, card), 0, 5, 5, 1)
+        grid.addWidget(ValuationMapBar(visual, markers, quote.get("last"), bg, card), 0, 1, 6, 2)
+        grid.addWidget(MoveMap(quote.get("trend_visual"), bg, card), 0, 3, 6, 2)
+        grid.addWidget(PositionGapBar(position.get("current_position_pct"), position.get("target_position_range"), bg, card), 0, 5, 6, 1)
         grid.setColumnStretch(0, 0)
         grid.setColumnStretch(1, 3)
         grid.setColumnStretch(2, 1)
@@ -1152,6 +1450,29 @@ class BattleMapWindow(QMainWindow):
         grid.setColumnStretch(4, 2)
         grid.setColumnStretch(5, 1)
         return card
+
+    def _attribute_badge(self, subject: dict[str, Any], quote: dict[str, Any]) -> QLabel:
+        tags = subject_attribute_tags(subject, quote)
+        text = " / ".join(tags) if tags else "属性待补"
+        bucket = quote.get("allocation_bucket") or subject_bucket(subject)
+        bucket_label = BUCKET_STYLE.get(bucket, BUCKET_STYLE["legacy_watch"])["label"]
+        widget = QLabel(text)
+        widget.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        widget.setWordWrap(True)
+        widget.setStyleSheet(
+            "background:#f8fafc; color:#334155; border:1px solid #cbd5e1; "
+            "border-radius:6px; padding:3px 5px; font-size:11px; font-weight:700;"
+        )
+        widget.setToolTip(
+            "\n".join(
+                [
+                    f"标的属性：{text}",
+                    f"仓位桶：{bucket_label}",
+                    "属性标签来自规则中的分组、角色和估值状态，用来解释标的性质；仓位桶仍用于组合层目标仓位计算。",
+                ]
+            )
+        )
+        return widget
 
     def _zone_color(self, label: str | None) -> str:
         text = label or ""
@@ -1220,7 +1541,9 @@ class BattleMapWindow(QMainWindow):
 
     def _status_badge(self, alert: dict[str, Any] | None, near: dict[str, Any] | None) -> QLabel:
         if alert:
-            text = f"{alert.get('priority')} / {alert.get('alert_type')}"
+            priority = PRIORITY_LABELS.get(str(alert.get("priority")), str(alert.get("priority") or "-"))
+            alert_type = ALERT_TYPE_LABELS.get(str(alert.get("alert_type")), str(alert.get("alert_type") or "-"))
+            text = f"{priority} / {alert_type}"
             color = "#b91c1c" if alert.get("priority") == "high" else "#b45309"
             tooltip = "\n".join([alert.get("trigger_condition", ""), alert.get("execution_boundary", "")])
         elif near:
@@ -1276,7 +1599,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.once_json:
-        rules = load_json(args.rules_file)
+        rules = filter_rules_for_monitor_pool(load_json(args.rules_file))
         provider = QmtQuoteProvider(args.qmt_site)
         codes = [item["code"] for item in rules.get("subjects", [])]
         try:

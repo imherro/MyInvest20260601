@@ -1,0 +1,13 @@
+{
+  "module": "intraday_watchlist",
+  "version": "1.0",
+  "updated_at": "2026-06-09_150000",
+  "policy": "作战地图默认显示最新真实持仓；非持仓标的只有进入 include_codes 才作为显式观察项显示。",
+  "include_codes": [],
+  "hide_codes": [],
+  "notes": [
+    "include_codes 用于已清仓但仍需盘中观察的标的，例如 [{\"code\":\"510300.SH\",\"reason\":\"宽基观察\"}]。",
+    "hide_codes 仅作用于非持仓显式观察项；真实持仓始终显示。",
+    "本文件不生成买卖指令，只定义盘中窗口显示和拉取行情的标的范围。"
+  ]
+}

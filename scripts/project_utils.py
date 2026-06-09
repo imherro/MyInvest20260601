@@ -14,15 +14,19 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 RESEARCH = ROOT / "research"
 LATEST_INDEX = RESEARCH / "latest_index.json"
+MARKET_POSITION_MAPPING = RESEARCH / "config" / "market_position_mapping.json"
 TIMESTAMP_RE = re.compile(r"(\d{4}-\d{2}-\d{2}_\d{6})")
 
 MODULE_ALIASES = {
     "market_position": "market_score",
     "market_score": "market_score",
     "theme_review": "theme_review",
+    "theme_leaders": "theme_leaders",
     "target_allocation_reference": "target_allocation",
     "target_allocation": "target_allocation",
     "portfolio_snapshot": "portfolio_snapshot",
+    "portfolio_research_backlog": "research_backlog",
+    "research_backlog": "research_backlog",
     "valuation_report": "valuation_report",
     "intraday_rules": "intraday_rules",
     "intraday_alert": "intraday_alerts",
@@ -39,6 +43,7 @@ MODULE_ALIASES = {
 MODULE_BY_DIR = {
     "market": "market_score",
     "themes": "theme_review",
+    "theme_leaders": "theme_leaders",
     "allocation": "target_allocation",
     "portfolio": "portfolio_snapshot",
     "valuations": "valuation_report",
@@ -72,6 +77,32 @@ def read_json(path: Path, default: Any = None) -> Any:
 def write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def pct_range(text: Any, default: tuple[float, float] = (0.0, 0.0)) -> tuple[float, float]:
+    try:
+        left, right = str(text).replace("%", "").split("-", 1)
+        return float(left), float(right)
+    except (TypeError, ValueError):
+        return default
+
+
+def format_pct_range(low: float, high: float) -> str:
+    return f"{low:g}%-{high:g}%"
+
+
+def market_position_for_score(score: Any) -> dict[str, Any] | None:
+    try:
+        value = float(score)
+    except (TypeError, ValueError):
+        return None
+    config = read_json(MARKET_POSITION_MAPPING, {})
+    for row in config.get("ranges", []):
+        low = float(row.get("score_min", 0))
+        high = float(row.get("score_max", 0))
+        if low <= value <= high:
+            return dict(row)
+    return None
 
 
 def file_sha256(path: Path) -> str:
@@ -174,10 +205,15 @@ def build_latest_index() -> dict[str, Any]:
         module = record["module"]
         if module not in modules or sort_key(record) > sort_key(modules[module]):
             modules[module] = record
+    generated_dt = datetime.now()
+    for record in modules.values():
+        record_dt = parse_dt(record.get("generated_at"))
+        if record_dt and record_dt > generated_dt:
+            generated_dt = record_dt
     return {
         "module": "latest_index",
         "version": "1.0",
-        "generated_at": datetime.now().strftime("%Y-%m-%d_%H%M%S"),
+        "generated_at": generated_dt.strftime("%Y-%m-%d_%H%M%S"),
         "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
         "modules": modules,
         "files": files,

@@ -5,7 +5,7 @@
   "bucket_order": ["core_base", "attack_mainline", "defense", "legacy_watch", "cash_short"],
   "buckets": {
     "cash_short": {"label": "现金/短融", "color": "#5b6b7a", "category": "bond_cash"},
-    "core_base": {"label": "宽基/核心底仓", "color": "#2f6fbd", "category": "core_quality"},
+    "core_base": {"label": "宽基/核心质量底仓", "color": "#2f6fbd", "category": "core_quality"},
     "attack_mainline": {"label": "进攻主线仓", "color": "#8b5cf6", "category": "technology"},
     "defense": {"label": "防御仓", "color": "#0f8b6f", "category": "defensive"},
     "legacy_watch": {"label": "其他/待清理", "color": "#9a6700", "category": "other"}

@@ -3,7 +3,7 @@
   "version": "1.0",
   "date": "2026-06-08",
   "generated_at": "2026-06-08_094106",
-  "source_report": "C:/Users/kunpeng/Documents/MyInvest20260601/runtime/alerts/intraday_once_json_2026-06-08_latest.json",
+  "source_report": "local_snapshot_redacted",
   "source": "QMT via scripts/intraday_dashboard.py --once-json; decoded from local GBK output and saved as UTF-8",
   "quote_health": {
     "expected_count": 29,

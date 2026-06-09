@@ -1880,6 +1880,27 @@
 - 原始日志：2026-06-09_133432 盘中提醒：最高优先级=high；触发=24；接近触发=0；缺失=0；staleness=degraded。
 - 估值更新提示：发现 29 个估值报告缺失或应更新项；该提示不新增盘中交易条件，不改变 intraday_alert 触发结论。
 
+
+## 2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约46.93%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-09_141500_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-09_141500_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-09_103426.json` generated_at=2026-06-09_103426 basis=2026-06-09
+  - `research/allocation/target_allocation_2026-06-09_131355.json` generated_at=2026-06-09_131355 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-09_131355 basis=None
+
+## 2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约46.93%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-09_142000_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-09_142000_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-09_103426.json` generated_at=2026-06-09_103426 basis=2026-06-09
+  - `research/allocation/target_allocation_2026-06-09_131355.json` generated_at=2026-06-09_131355 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-09_131355 basis=None
+
 ## 2026-06-09_140848 主线龙头候选池
 
 - 决策类型：theme_leaders / ResearchFirst routing
@@ -1888,3 +1909,48 @@
 - 当前结果：读取 13 条主线，确认主线 0 条，可进入复核 0 项，ResearchFirst 0 项，仅观察 84 项。
 - 关键边界：候选池不是可买清单；主线强只提供优先研究资格，仍必须经过 ETF/个股档案、估值报告、市场仓位、组合约束和盘中规则复核。
 - 当前半导体处理：战略评级 A，但交易评级 C，因此半导体相关 ETF 和代表股全部保持 watch_only，不进入操作复核。
+
+## 2026-06-09_141902 盘中作战地图展示口径修正
+
+- 决策类型：intraday_dashboard_ui
+- 口径：`core_base` 展示名从“宽基/核心底仓”调整为“宽基/核心质量底仓”，明确自由现金流 ETF、顺丰控股归入该桶的原因是“核心质量”属性，不是宽基属性。
+- 范围：仅调整仓位桶展示名、规则配置展示名和窗口中文提示；不改变 `159201.SZ`、`002352.SZ` 的仓位桶归属，不改变触发规则，不新增交易指令。
+- 验证：`py_compile`、`project_check.py`、`intraday_dashboard.py --once-json`、`intraday_dashboard.py --preview-png` 均已通过；项目检查仍提示 intraday_rules 为 degraded，因此盘中结果仍仅供观察和风险复核。
+
+## 2026-06-09_142824 盘中作战地图标的属性标签
+
+- 决策类型：intraday_dashboard_ui
+- 口径：新增标的属性标签展示层，将“核心质量”“防御属性”“因子底仓”“超跌修复观察”等研究属性与组合仓位桶拆开显示。
+- 范围：自由现金流 ETF 在核心质量底仓内可显示防御属性/因子底仓；顺丰控股在核心质量底仓内可显示超跌修复观察；不改变 `allocation_bucket`、目标仓位、触发规则或交易边界。
+- 边界：属性标签解释标的性质，仓位桶仍负责组合层目标仓位和偏离计算。
+
+## 2026-06-09_144649 盘中作战地图监控池过滤
+
+- 决策类型：intraday_dashboard_monitor_pool
+- 口径：作战地图不再把 `intraday_rules.subjects` 全量当作显示池；默认只显示最新真实持仓中已有盘中规则的标的，并补充 `research/config/intraday_watchlist.json` 中显式加入的观察项。
+- 当前效果：源规则 42 项，实际监控 35 项，隐藏清仓/非观察 7 项；`513050.SH 中概互联网ETF易方达` 已因不在最新真实持仓且未进入显式观察池而隐藏。
+- 边界：盘中窗口不为缺少规则的真实持仓临时生成估值或策略；缺规则项应由盘前/盘后模块提示补估值报告和盘中规则。
+
+2026-06-09 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-09_143440.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+
+## 2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约43.52%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-09_150301_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-09_150301_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-09_143440.json` generated_at=2026-06-09_143440 basis=2026-06-09
+  - `research/allocation/target_allocation_2026-06-09_150300.json` generated_at=2026-06-09_150300 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-09_150300 basis=None
+
+
+## 2026-06-09_150400 latest_index ResearchFirst ????
+- ?????portfolio_research_backlog / ResearchFirst routing
+- Markdown: `research/portfolio/research_backlog_2026-06-09_150400.md`
+- JSON: `research/portfolio/research_backlog_2026-06-09_150400.json`
+- Basis action plan: `research/actions/action_plan_2026-06-09_150301_latest_ratio_only.json`
+- Basis portfolio snapshot: `research/portfolio/portfolio_snapshot_2026-06-09_143440.json`
+- ????????????????????????
+- ?????ratio-only????????????????
+- ?????????????????????? ResearchFirst ???

@@ -1,0 +1,23 @@
+{
+  "module": "liquidity_gate_registry",
+  "version": "1.0",
+  "generated_at": "2026-06-09_141800",
+  "policy": "Executable single-security actions require profile, valuation, and liquidity gates. Cash/short-duration tools additionally require duration boundary and interest-rate/credit/liquidity risk disclosure.",
+  "instruments": {
+    "511360": {
+      "code": "511360.SH",
+      "name": "短融ETF海富通",
+      "bucket_role": "cash_short",
+      "liquidity_status": "pass",
+      "liquidity_basis": "profile_turnover_liquidity_available",
+      "valuation_status": "pass",
+      "valuation_source": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-05_103909.json",
+      "duration_boundary_confirmed": true,
+      "cash_equivalent_boundary": "short-duration bond ETF, not bank cash",
+      "interest_rate_risk_disclosed": true,
+      "credit_risk_disclosed": true,
+      "liquidity_risk_disclosed": true,
+      "source_profile": "research/etfs/511360.SH_短融ETF海富通_2026-06-02_095258.json"
+    }
+  }
+}
