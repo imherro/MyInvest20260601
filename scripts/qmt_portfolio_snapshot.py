@@ -399,11 +399,16 @@ def build_holdings(asset: Any, positions: list[Any], ticks: dict[str, dict[str, 
         market_value = finite(getattr(pos, "market_value", None))
         volume = finite(getattr(pos, "volume", None))
         open_price = finite(getattr(pos, "open_price", None))
+        raw_open_price = open_price
+        cost_basis_status = "normal" if open_price is not None and open_price > 0 else "unknown"
         tick = ticks.get(code, {})
         current_price = tick_last(tick)
         if current_price is None and market_value is not None and volume and volume > 0:
             current_price = market_value / volume
-        if open_price is not None and open_price <= 0:
+        if open_price is not None and open_price < 0 and current_price is not None and current_price > 0:
+            cost_basis_status = "principal_recovered"
+            open_price = 0.0
+        elif open_price is not None and open_price <= 0:
             warnings.append(
                 {
                     "code": raw,
@@ -413,6 +418,7 @@ def build_holdings(asset: Any, positions: list[Any], ticks: dict[str, dict[str, 
                     "reason": "QMT open_price/cost field is non-positive; cost-based PnL is unavailable, but ratio-level portfolio analysis can continue.",
                 }
             )
+            cost_basis_status = "invalid"
             open_price = None
         if current_price is not None and current_price <= 0:
             errors.append(
@@ -447,6 +453,8 @@ def build_holdings(asset: Any, positions: list[Any], ticks: dict[str, dict[str, 
             "day_change_pct": round_pct(day_change_pct),
             "reference_pnl_pct": round_pct(reference_pnl_pct),
             "cost_price": round(open_price, 4) if open_price is not None else None,
+            "raw_cost_price": round(raw_open_price, 4) if raw_open_price is not None and raw_open_price < 0 else None,
+            "cost_basis_status": cost_basis_status,
             "current_price": round(current_price, 4) if current_price is not None else None,
             "category": category,
             "allocation_bucket": bucket,
@@ -499,16 +507,28 @@ def build_snapshot(trader: Any, account: Any, xtdata: Any) -> dict[str, Any]:
         "source": "qmt_xttrader_readonly",
         "session": "qmt_readonly",
         "account_masked": account_masked,
-        "amount_policy": "ratio_only; cost_price/current_price/pnl_pct allowed; no market_value, cash amount, cost amount, profit amount, volume, available volume, or full account id saved",
+        "amount_policy": "ratio_only; cost_price/raw_cost_price/current_price/pnl_pct allowed; no market_value, cash amount, cost amount, profit amount, volume, available volume, or full account id saved",
         "privacy_policy": {
-            "allowed_fields": ["code", "name", "weight_pct", "day_change_pct", "reference_pnl_pct", "cost_price", "current_price", "category", "allocation_bucket"],
+            "allowed_fields": [
+                "code",
+                "name",
+                "weight_pct",
+                "day_change_pct",
+                "reference_pnl_pct",
+                "cost_price",
+                "raw_cost_price",
+                "cost_basis_status",
+                "current_price",
+                "category",
+                "allocation_bucket",
+            ],
             "excluded_fields": sorted(SENSITIVE_OUTPUT_FIELDS),
         },
         "quality": {
             "status": "error" if quality_errors else ("warning" if quality_warnings else "ok"),
             "errors": quality_errors,
             "warnings": quality_warnings,
-            "policy": "Invalid cost_price is downgraded to a warning and excluded from reference_pnl_pct; invalid current_price or broken weight totals remain errors.",
+            "policy": "Negative cost_price with valid current_price is treated as principal_recovered and excluded from reference_pnl_pct without a quality warning; zero/invalid cost_price remains a warning; invalid current_price or broken weight totals remain errors.",
         },
         "summary": {
             "total_items": len(holdings),
@@ -542,15 +562,18 @@ def assert_no_sensitive_fields(data: Any, path: str = "") -> None:
 def render_markdown(snapshot: dict[str, Any]) -> str:
     rows = []
     for item in snapshot.get("holdings", []):
+        cost_status = item.get("cost_basis_status") or "normal"
+        cost_text = "本金已收回" if cost_status == "principal_recovered" else ("-" if item.get("cost_price") is None else f"{float(item['cost_price']):.4f}")
         rows.append(
-            "| {code} | {name} | {bucket} | {weight:.4f}% | {day} | {pnl} | {cost} | {price} |".format(
+            "| {code} | {name} | {bucket} | {weight:.4f}% | {day} | {pnl} | {cost} | {cost_status} | {price} |".format(
                 code=item.get("code", ""),
                 name=item.get("name", ""),
                 bucket=BUCKET_LABELS.get(item.get("allocation_bucket"), item.get("allocation_bucket", "")),
                 weight=float(item.get("weight_pct") or 0),
                 day="-" if item.get("day_change_pct") is None else f"{float(item['day_change_pct']):.4f}%",
                 pnl="-" if item.get("reference_pnl_pct") is None else f"{float(item['reference_pnl_pct']):.4f}%",
-                cost="-" if item.get("cost_price") is None else f"{float(item['cost_price']):.4f}",
+                cost=cost_text,
+                cost_status=cost_status,
                 price="-" if item.get("current_price") is None else f"{float(item['current_price']):.4f}",
             )
         )
@@ -587,9 +610,9 @@ def render_markdown(snapshot: dict[str, Any]) -> str:
 
 ## 4. 持仓明细
 
-| 代码 | 名称 | 仓位桶 | 仓位比例 | 当日涨跌幅 | 参考盈亏比例 | 成本价 | 现价 |
-| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
-{chr(10).join(rows) if rows else '| 无 | 无 | 无 | 0% | - | - | - | - |'}
+| 代码 | 名称 | 仓位桶 | 仓位比例 | 当日涨跌幅 | 参考盈亏比例 | 成本价 | 成本状态 | 现价 |
+| --- | --- | --- | ---: | ---: | ---: | --- | --- | ---: |
+{chr(10).join(rows) if rows else '| 无 | 无 | 无 | 0% | - | - | - | - | - |'}
 
 ## 5. 决策日志条目
 
