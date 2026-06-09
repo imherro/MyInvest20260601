@@ -1,0 +1,198 @@
+{
+  "module": "valuation_report",
+  "version": "1.0",
+  "code": "300760.SZ",
+  "name": "迈瑞医疗",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09_112659",
+  "basis_date": "20260609",
+  "asset_type": "stock",
+  "group": "医疗器械",
+  "role": "防御/观察仓",
+  "confidence": "中低",
+  "security_stance": {
+    "label": "价格低位",
+    "basis": "仅基于ETF价格/净值历史位置，不能直接称为低估。",
+    "confidence": "中低",
+    "scope": "security_level_only",
+    "not_portfolio_action": true,
+    "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+    "semantic_scope": "price_position_only"
+  },
+  "one_line_conclusion": "迈瑞医疗 当前处于价格低位区；本报告为QMT 本地历史日线价格位置代理，不是组合级买卖指令。",
+  "valuation_visual": {
+    "metric": "price",
+    "current_value": 140.99,
+    "current_zone": "undervalued_observe",
+    "current_zone_label": "价格低位区",
+    "zones": [
+      {
+        "key": "undervalued_observe",
+        "label": "价格低位区",
+        "min": 140.99,
+        "max": 213.26,
+        "color": "#2f9e44"
+      },
+      {
+        "key": "reasonable_allocation",
+        "label": "价格合理区",
+        "min": 213.26,
+        "max": 252.96,
+        "color": "#74b816"
+      },
+      {
+        "key": "expensive",
+        "label": "价格偏贵区",
+        "min": 252.96,
+        "max": 286.47,
+        "color": "#f59f00"
+      },
+      {
+        "key": "crowded_risk",
+        "label": "价格拥挤区",
+        "min": 286.47,
+        "max": 301.095,
+        "color": "#e03131"
+      }
+    ],
+    "basis": "QMT 本地历史日线价格位置代理",
+    "semantic_scope": "price_position_only",
+    "premium_discount_pct": null
+  },
+  "index_valuation": {
+    "available": false,
+    "reason": "QMT price history fallback; Tushare valuation metrics unavailable"
+  },
+  "stock_valuation_metrics": [],
+  "reference_metrics": {
+    "price_date": "20260609",
+    "last_reference": 140.99,
+    "ma20": 152.16,
+    "ma60": 161.0342,
+    "moneyflow_5d": null,
+    "moneyflow_20d": null,
+    "support": 213.26,
+    "right_confirm": 161.0342,
+    "risk_zone_start": 286.47,
+    "current_position_pct": 0.355,
+    "target_position_range": "0%-1%",
+    "valuation_visual": {
+      "metric": "price",
+      "current_value": 140.99,
+      "current_zone": "undervalued_observe",
+      "current_zone_label": "价格低位区",
+      "zones": [
+        {
+          "key": "undervalued_observe",
+          "label": "价格低位区",
+          "min": 140.99,
+          "max": 213.26,
+          "color": "#2f9e44"
+        },
+        {
+          "key": "reasonable_allocation",
+          "label": "价格合理区",
+          "min": 213.26,
+          "max": 252.96,
+          "color": "#74b816"
+        },
+        {
+          "key": "expensive",
+          "label": "价格偏贵区",
+          "min": 252.96,
+          "max": 286.47,
+          "color": "#f59f00"
+        },
+        {
+          "key": "crowded_risk",
+          "label": "价格拥挤区",
+          "min": 286.47,
+          "max": 301.095,
+          "color": "#e03131"
+        }
+      ],
+      "basis": "QMT 本地历史日线价格位置代理",
+      "semantic_scope": "price_position_only",
+      "premium_discount_pct": null
+    },
+    "trend_visual": {
+      "available": true,
+      "current": 140.99,
+      "trends": [
+        {
+          "key": "long",
+          "label": "长期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -38.84,
+          "window_days": 250
+        },
+        {
+          "key": "mid",
+          "label": "中期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -21.92,
+          "window_days": 60
+        },
+        {
+          "key": "short",
+          "label": "短期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -15.27,
+          "window_days": 20
+        }
+      ],
+      "drawdown": {
+        "from_sample_high_pct": -56.55,
+        "sample_high": 324.5,
+        "sample_high_date": "20241008",
+        "common_120d_drawdown_pct": -21.65,
+        "deep_120d_drawdown_pct": -26.62,
+        "max_120d_drawdown_pct": -36.45
+      },
+      "rebound": {
+        "from_sample_low_pct": 0.0,
+        "sample_low": 140.99,
+        "sample_low_date": "20260609",
+        "common_120d_rebound_pct": 6.95,
+        "strong_120d_rebound_pct": 13.24,
+        "max_120d_rebound_pct": 45.95
+      }
+    },
+    "risk_markers": {
+      "support": {
+        "label": "风控位",
+        "value": 213.26,
+        "color": "#2563eb",
+        "shape": "triangle"
+      },
+      "right_confirm": {
+        "label": "右侧确认",
+        "value": 161.0342,
+        "color": "#06b6d4",
+        "shape": "diamond"
+      },
+      "risk_zone_start": {
+        "label": "风险区起点",
+        "value": 286.47,
+        "color": "#dc2626",
+        "shape": "flag"
+      }
+    },
+    "allocation_bucket": "defense"
+  },
+  "data_gaps": [
+    "当前 Python 环境未安装 Tushare，未计算指数PE/PB或个股PE/PB/PS历史分位。",
+    "本报告使用 QMT 本地历史日线价格位置代理 个股 估值区间，不等同于长期基本面估值赔率。",
+    "未取得财务估值指标，个股估值状态只能解释为价格位置状态。"
+  ],
+  "source": {
+    "qmt": [
+      "xtdata.get_market_data_ex",
+      "period=1d"
+    ],
+    "history_sample_days": 731
+  }
+}

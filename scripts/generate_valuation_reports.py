@@ -13,7 +13,11 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-import tushare as ts
+
+try:
+    import tushare as ts
+except Exception:  # pragma: no cover - environment capability guard
+    ts = None
 
 from project_utils import latest_for_module, load_latest_index, path_record
 
@@ -185,7 +189,42 @@ TARGETS = [
     Target("002241.SZ", "歌尔股份", "stock", "AI终端/消费电子", "进攻仓观察", "歌尔股份观察", "0%-2%"),
     Target("603596.SH", "伯特利", "stock", "汽车零部件", "个股观察", "伯特利观察", "0%-2%"),
     Target("688333.SH", "西安铂力特", "stock", "高端装备/军工", "进攻仓观察", "西安铂力特观察", "0%-2%"),
+    Target("002352.SZ", "顺丰控股", "stock", "核心质量/物流", "核心仓观察", "顺丰控股观察", "0%-2%"),
+    Target("002920.SZ", "德赛西威", "stock", "智能汽车", "进攻仓观察", "德赛西威观察", "0%-2%"),
+    Target("300627.SZ", "华测导航", "stock", "卫星导航/低空经济", "进攻仓观察", "华测导航观察", "0%-1%"),
+    Target("688439.SH", "振华风光", "stock", "军工电子", "进攻仓观察", "振华风光观察", "0%-1%"),
+    Target("300760.SZ", "迈瑞医疗", "stock", "医疗器械", "防御/观察仓", "迈瑞医疗观察", "0%-1%"),
+    Target("603087.SH", "甘李药业", "stock", "医药", "防御/观察仓", "甘李药业观察", "0%-1%"),
+    Target("002258.SZ", "利尔化学", "stock", "化工/农化", "遗留/待清理观察", "利尔化学观察", "0%-1%"),
+    Target("002041.SZ", "登海种业", "stock", "农业/种业", "遗留/待清理观察", "登海种业观察", "0%-1%"),
+    Target("603903.SH", "中持股份", "stock", "环保/公用事业", "遗留/待清理观察", "中持股份观察", "0%-1%"),
+    Target("159206.SZ", "卫星ETF永赢", "theme_etf", "商业航天/卫星", "遗留/主题观察", "卫星ETF观察", "0%-1%"),
+    Target("159667.SZ", "工业母机ETF国泰", "theme_etf", "高端装备/工业母机", "进攻仓观察", "工业母机观察", "0%-1%"),
+    Target("512400.SH", "有色金属ETF南方", "theme_etf", "有色金属", "遗留/周期观察", "有色金属观察", "0%-2%"),
+    Target("515880.SH", "通信ETF国泰", "theme_etf", "通信主题", "遗留/主题观察", "通信ETF观察", "0%-1%"),
 ]
+
+
+def normalize_code(code: str) -> str:
+    text = str(code).strip().upper()
+    if "." in text:
+        return text
+    plain = "".join(ch for ch in text if ch.isdigit())[:6]
+    if not plain:
+        return text
+    suffix = "SH" if plain.startswith(("5", "6", "9")) else "SZ"
+    return f"{plain}.{suffix}"
+
+
+def select_targets(codes: list[str] | None = None) -> list[Target]:
+    if not codes:
+        return TARGETS
+    wanted = [normalize_code(code) for code in codes]
+    target_by_code = {target.code: target for target in TARGETS}
+    missing = [code for code in wanted if code not in target_by_code]
+    if missing:
+        raise RuntimeError(f"Unknown valuation target(s): {', '.join(missing)}")
+    return [target_by_code[code] for code in wanted]
 
 
 def read_json(path: Path, default: Any = None) -> Any:
@@ -222,6 +261,8 @@ def tushare_client():
     token = os.environ.get("TUSHARE_TOKEN")
     if not token:
         raise RuntimeError("TUSHARE_TOKEN is missing. Copy .env.example to .env and configure the token.")
+    if ts is None:
+        raise RuntimeError("tushare package is unavailable in the current Python environment.")
     ts.set_token(token)
     return ts.pro_api()
 
@@ -947,6 +988,90 @@ def make_report_for_stock(pro: Any, target: Target, start: str, end: str, timest
     }
 
 
+def make_report_from_history(target: Target, rows: list[dict[str, Any]], timestamp: str, weights: dict[str, float]) -> dict[str, Any]:
+    df = pd.DataFrame(rows)
+    if df.empty or "close" not in df.columns:
+        raise RuntimeError(f"No usable QMT history rows for {target.code}.")
+    df["close"] = pd.to_numeric(df["close"], errors="coerce")
+    df = df.dropna(subset=["close"]).sort_values("trade_date").reset_index(drop=True)
+    if len(df) < 20:
+        raise RuntimeError(f"Not enough QMT history rows for {target.code}.")
+    current = float(df.iloc[-1]["close"])
+    zones, current_zone = build_price_position_zones(df["close"], current)
+    for zone in zones:
+        zone["label"] = PRICE_POSITION_LABELS.get(zone["key"], zone["label"])
+    ma20 = round(float(df["close"].tail(20).mean()), 4)
+    ma60 = round(float(df["close"].tail(60).mean()), 4) if len(df) >= 60 else None
+    trend_visual = build_trend_visual(df["close"], df["trade_date"])
+    code_plain = target.code.split(".")[0]
+    asset_label = "ETF" if target.asset_type.endswith("etf") else "个股"
+    data_gaps = [
+        "当前 Python 环境未安装 Tushare，未计算指数PE/PB或个股PE/PB/PS历史分位。",
+        f"本报告使用 QMT 本地历史日线价格位置代理 {asset_label} 估值区间，不等同于长期基本面估值赔率。",
+    ]
+    if target.asset_type.endswith("etf"):
+        data_gaps.append("未取得基金单位净值和折溢价，盘中仅按二级市场价格区间监测。")
+    else:
+        data_gaps.append("未取得财务估值指标，个股估值状态只能解释为价格位置状态。")
+    confidence = "中低" if len(df) >= 240 else "低"
+    basis = "QMT 本地历史日线价格位置代理"
+    stance = security_stance(current_zone, confidence, price_proxy_only=True)
+    current_zone_label = next((zone["label"] for zone in zones if zone["key"] == current_zone), PRICE_POSITION_LABELS[current_zone])
+    return {
+        "module": "valuation_report",
+        "version": "1.0",
+        "code": target.code,
+        "name": target.name,
+        "date": datetime.now().strftime("%Y-%m-%d"),
+        "generated_at": timestamp,
+        "basis_date": str(df.iloc[-1]["trade_date"]),
+        "asset_type": target.asset_type,
+        "group": target.group,
+        "role": target.role,
+        "confidence": confidence,
+        "security_stance": stance,
+        "one_line_conclusion": f"{target.name} 当前处于{current_zone_label}；本报告为{basis}，不是组合级买卖指令。",
+        "valuation_visual": {
+            "metric": "price",
+            "current_value": round(current, 4),
+            "current_zone": current_zone,
+            "current_zone_label": current_zone_label,
+            "zones": zones,
+            "basis": basis,
+            "semantic_scope": "price_position_only",
+            "premium_discount_pct": None,
+        },
+        "index_valuation": {"available": False, "reason": "QMT price history fallback; Tushare valuation metrics unavailable"},
+        "stock_valuation_metrics": [],
+        "reference_metrics": {
+            "price_date": str(df.iloc[-1]["trade_date"]),
+            "last_reference": round(current, 4),
+            "ma20": ma20,
+            "ma60": ma60,
+            "moneyflow_5d": None,
+            "moneyflow_20d": None,
+            "support": zones[0]["max"],
+            "right_confirm": ma60,
+            "risk_zone_start": zones[3]["min"],
+            "current_position_pct": weights.get(code_plain, 0),
+            "target_position_range": target.target_position_range,
+            "valuation_visual": None,
+            "trend_visual": trend_visual,
+            "risk_markers": {
+                "support": {"label": "风控位", "value": zones[0]["max"], "color": "#2563eb", "shape": "triangle"},
+                "right_confirm": {"label": "右侧确认", "value": ma60, "color": "#06b6d4", "shape": "diamond"},
+                "risk_zone_start": {"label": "风险区起点", "value": zones[3]["min"], "color": "#dc2626", "shape": "flag"},
+            },
+            "allocation_bucket": bucket_for_code(target.code),
+        },
+        "data_gaps": data_gaps,
+        "source": {
+            "qmt": ["xtdata.get_market_data_ex", "period=1d"],
+            "history_sample_days": int(len(df)),
+        },
+    }
+
+
 def report_filename(report: dict[str, Any], suffix: str) -> Path:
     code = report["code"].replace(".", "_")
     name = "".join(ch for ch in report["name"] if ch not in '\\/:*?"<>|')
@@ -1016,7 +1141,7 @@ def alert_rules_for_report(report: dict[str, Any], md_path: Path, json_path: Pat
     }
 
 
-def sync_intraday_rules(reports: list[tuple[dict[str, Any], Path, Path]]) -> None:
+def sync_intraday_rules(reports: list[tuple[dict[str, Any], Path, Path]], *, partial: bool = False) -> None:
     existing = read_json(ALERT_RULES, {})
     index = load_latest_index()
     upstream_paths = []
@@ -1024,8 +1149,33 @@ def sync_intraday_rules(reports: list[tuple[dict[str, Any], Path, Path]]) -> Non
         latest = latest_for_module(module, index)
         if latest:
             upstream_paths.append(latest["path"])
+    new_subjects = [alert_rules_for_report(report, md_path, json_path) for report, md_path, json_path in reports]
+    subjects = new_subjects
+    if partial:
+        new_by_code = {subject["code"]: subject for subject in new_subjects}
+        subjects = []
+        seen: set[str] = set()
+        for subject in existing.get("subjects", []):
+            code = normalize_code(str(subject.get("code", "")))
+            if code in new_by_code:
+                subjects.append(new_by_code[code])
+                seen.add(code)
+            else:
+                subjects.append(subject)
+                if code:
+                    seen.add(code)
+        for subject in new_subjects:
+            if subject["code"] not in seen:
+                subjects.append(subject)
+
+    subject_profile_paths = []
+    for subject in subjects:
+        path = subject.get("source_profile")
+        if path:
+            subject_profile_paths.append(str(path))
+    unique_subject_profile_paths = list(dict.fromkeys(subject_profile_paths))
     dependencies = []
-    for path in upstream_paths + [rel_path(json_path) for _, _, json_path in reports]:
+    for path in upstream_paths + unique_subject_profile_paths:
         record = path_record(path, index) or {}
         dependencies.append(
             {
@@ -1039,6 +1189,7 @@ def sync_intraday_rules(reports: list[tuple[dict[str, Any], Path, Path]]) -> Non
     rules = {
         "module": "intraday_rules",
         "version": "1.1",
+        "generated_at": datetime.now().strftime("%Y-%m-%d_%H%M%S"),
         "last_updated": datetime.now().strftime("%Y-%m-%d"),
         "boundary": "Rules are alert triggers only. They do not create portfolio-level buy/sell orders and do not call any trading API.",
         "data_sources": [
@@ -1046,7 +1197,7 @@ def sync_intraday_rules(reports: list[tuple[dict[str, Any], Path, Path]]) -> Non
             "docs/modules/VALUATION_RESEARCH.md",
         ]
         + upstream_paths
-        + [rel_path(json_path) for _, _, json_path in reports],
+        + unique_subject_profile_paths,
         "dependencies": {
             "required": dependencies,
             "policy": "If any required upstream is not latest or has a newer replacement, intraday_rules must be marked stale/degraded and cannot emit buy/add alerts.",
@@ -1063,33 +1214,45 @@ def sync_intraday_rules(reports: list[tuple[dict[str, Any], Path, Path]]) -> Non
             },
         ),
         "allocation_map": build_allocation_map(),
-        "subjects": [alert_rules_for_report(report, md_path, json_path) for report, md_path, json_path in reports],
+        "subjects": subjects,
     }
     write_json(ALERT_RULES, rules)
 
 
-def generate() -> list[tuple[dict[str, Any], Path, Path]]:
-    pro = tushare_client()
-    end = latest_complete_trade_date(pro)
-    start = (datetime.strptime(end, "%Y%m%d") - timedelta(days=365 * 3 + 20)).strftime("%Y%m%d")
+def generate(codes: list[str] | None = None, history_json: Path | None = None) -> list[tuple[dict[str, Any], Path, Path]]:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     weights = latest_portfolio_weights()
     written: list[tuple[dict[str, Any], Path, Path]] = []
-    for target in TARGETS:
-        if target.asset_type.endswith("etf"):
+    targets = select_targets(codes)
+    history_by_code: dict[str, list[dict[str, Any]]] = {}
+    pro = None
+    start = end = ""
+    if history_json:
+        history_payload = read_json(history_json, {})
+        history_by_code = history_payload.get("items") or {}
+    else:
+        pro = tushare_client()
+        end = latest_complete_trade_date(pro)
+        start = (datetime.strptime(end, "%Y%m%d") - timedelta(days=365 * 3 + 20)).strftime("%Y%m%d")
+    for target in targets:
+        if history_json:
+            report = make_report_from_history(target, history_by_code.get(target.code, []), timestamp, weights)
+        elif target.asset_type.endswith("etf"):
             report = make_report_for_etf(pro, target, start, end, timestamp, weights)
         else:
             report = make_report_for_stock(pro, target, start, end, timestamp, weights)
         md_path, json_path = write_report(report)
         written.append((report, md_path, json_path))
-    sync_intraday_rules(written)
+    sync_intraday_rules(written, partial=bool(codes))
     return written
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
-    written = generate()
+    parser.add_argument("--codes", nargs="+", help="Generate only the specified ts_codes/plain codes and merge them into intraday rules.")
+    parser.add_argument("--history-json", type=Path, help="Use exported QMT daily history JSON instead of Tushare.")
+    args = parser.parse_args()
+    written = generate(args.codes, args.history_json)
     print(json.dumps({"created": [p.as_posix() for _, md, js in written for p in (md, js)], "updated": ALERT_RULES.as_posix()}, ensure_ascii=False, indent=2))
     return 0
 

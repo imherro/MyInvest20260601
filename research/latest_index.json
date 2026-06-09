@@ -1,7 +1,7 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-09_105833",
+  "generated_at": "2026-06-09_112943",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
@@ -39,9 +39,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_105818",
+      "generated_at": "2026-06-09_112659",
       "basis_trade_date": null,
-      "sha256": "0b02aa57237fe42936b87d405146b847c51a07125845fb536fcc384fe87591a4",
+      "sha256": "2f4171c9b5777373bc1767757b239161ecec483c8b16db02faa27c094b9df22d",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -98,10 +98,10 @@
       "module": "staleness_check",
       "code": null,
       "name": null,
-      "path": "research/checks/staleness_check_2026-06-08_230118.json",
-      "generated_at": "2026-06-08_230118",
+      "path": "research/checks/staleness_check_2026-06-09_112849.json",
+      "generated_at": "2026-06-09_112849",
       "basis_trade_date": null,
-      "sha256": "469e81d51dccf31c95f0856e0b2d7d70c67dacf28730196532c71eec5dfd4c04",
+      "sha256": "e6db333eb835fdade738c9053d2c3f46b48cb26e73a0c0a5b56a69de54991ff7",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -216,12 +216,12 @@
     },
     "valuation_report": {
       "module": "valuation_report",
-      "code": "688333.SH",
-      "name": "西安铂力特",
-      "path": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-05_103909.json",
-      "generated_at": "2026-06-05_103909",
-      "basis_trade_date": "20260604",
-      "sha256": "b8c37fca9870de4383490d1a439a80fa9621206ca7a28c22b0320d01a793ad90",
+      "code": "688439.SH",
+      "name": "振华风光",
+      "path": "research/valuations/valuation_688439_SH_振华风光_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "b145cfa84ef762ba124ea36a87f6f793bbef76b5f33559aa8210a1fec12c30df",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -461,9 +461,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_105818",
+      "generated_at": "2026-06-09_112659",
       "basis_trade_date": null,
-      "sha256": "0b02aa57237fe42936b87d405146b847c51a07125845fb536fcc384fe87591a4",
+      "sha256": "2f4171c9b5777373bc1767757b239161ecec483c8b16db02faa27c094b9df22d",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -674,6 +674,36 @@
       "generated_at": "2026-06-08_230118",
       "basis_trade_date": null,
       "sha256": "469e81d51dccf31c95f0856e0b2d7d70c67dacf28730196532c71eec5dfd4c04",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "staleness_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/staleness_check_2026-06-09_112745.json",
+      "generated_at": "2026-06-09_112745",
+      "basis_trade_date": null,
+      "sha256": "454ce95ff064d736d67643ec49ee42030386c6979bba0ea4d1f810bae5c84555",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "staleness_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/staleness_check_2026-06-09_112849.json",
+      "generated_at": "2026-06-09_112849",
+      "basis_trade_date": null,
+      "sha256": "e6db333eb835fdade738c9053d2c3f46b48cb26e73a0c0a5b56a69de54991ff7",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1868,6 +1898,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "002041.SZ",
+      "name": "登海种业",
+      "path": "research/valuations/valuation_002041_SZ_登海种业_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "a18c19659a9dac8c3b3e96e0d67e6bff2c0638bab28c171d26db1df11a4af42e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "002241.SZ",
       "name": "歌尔股份",
       "path": "research/valuations/valuation_002241_SZ_歌尔股份_2026-06-05_102437.json",
@@ -1898,6 +1943,51 @@
     },
     {
       "module": "valuation_report",
+      "code": "002258.SZ",
+      "name": "利尔化学",
+      "path": "research/valuations/valuation_002258_SZ_利尔化学_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "46189813d2f6b7f2301e6877056088dde2ce02e4e2b04957cf3daba9c3c4d5d7",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "002352.SZ",
+      "name": "顺丰控股",
+      "path": "research/valuations/valuation_002352_SZ_顺丰控股_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "5d8d603bccebf9263e889d602b3e1d2ca2aec27c39f830c613c330f86516020f",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "002920.SZ",
+      "name": "德赛西威",
+      "path": "research/valuations/valuation_002920_SZ_德赛西威_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "9fd204e0cfdb176ad649e0493fa28dfe904dd5fc82e0f83fedd0971d505bda72",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159201.SZ",
       "name": "自由现金流ETF华夏",
       "path": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-05_102437.json",
@@ -1919,6 +2009,21 @@
       "generated_at": "2026-06-05_103909",
       "basis_trade_date": "20260604",
       "sha256": "79817c13e9c8851693c047de7782565ad44e1dba568d32030065a70329ad8460",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159206.SZ",
+      "name": "卫星ETF永赢",
+      "path": "research/valuations/valuation_159206_SZ_卫星ETF永赢_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "370e67d6e504a78bea84f978728437649297c54d4f3ded57fc133f4214cdb03a",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2084,6 +2189,21 @@
       "generated_at": "2026-06-05_103909",
       "basis_trade_date": "20260604",
       "sha256": "4d7583c0d80fb28b9de80260485dc9251e4a217404cbaf1eecb2d16b3834c284",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159667.SZ",
+      "name": "工业母机ETF国泰",
+      "path": "research/valuations/valuation_159667_SZ_工业母机ETF国泰_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "a66b9ca4b1aa7678acf751bb90d6cb3e7999f8141c32cacb8223cbf8df29bea4",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2279,6 +2399,36 @@
       "generated_at": "2026-06-05_103909",
       "basis_trade_date": "20260604",
       "sha256": "ac29ca2564419ed60972b63017b469842caa09fc4083c2e81223c19e68308f28",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "300627.SZ",
+      "name": "华测导航",
+      "path": "research/valuations/valuation_300627_SZ_华测导航_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "bafdb0dbc5902cdb7527a79bf02c87547b0bb906903cb774fa84a5800e572607",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "300760.SZ",
+      "name": "迈瑞医疗",
+      "path": "research/valuations/valuation_300760_SZ_迈瑞医疗_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "e4f33a5e29e5229886e95028e61a6d9d11a934b292e536f36fb8937f6a84b6a6",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2528,6 +2678,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "512400.SH",
+      "name": "有色金属ETF南方",
+      "path": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "07020b3620b71ec5a155af96524559665540935c88f3dedcf22cc7bfa9065b89",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "512710.SH",
       "name": "军工龙头ETF富国",
       "path": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-05_102437.json",
@@ -2669,6 +2834,21 @@
       "generated_at": "2026-06-05_103909",
       "basis_trade_date": "20260604",
       "sha256": "4fc632b7b39ba7a8395d5c26f85fa2f683de341448b078df05528d6489c05945",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "515880.SH",
+      "name": "通信ETF国泰",
+      "path": "research/valuations/valuation_515880_SH_通信ETF国泰_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "a3561734c8a05b7b84fd1885f62bdd444e1495479539a795a0af1ba79102f3f5",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2918,6 +3098,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "603087.SH",
+      "name": "甘李药业",
+      "path": "research/valuations/valuation_603087_SH_甘李药业_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "a43408309c2ac0d7b952becf552edf20476268d8bade2ce0a97a14521feb2dce",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "603596.SH",
       "name": "伯特利",
       "path": "research/valuations/valuation_603596_SH_伯特利_2026-06-05_102437.json",
@@ -2948,6 +3143,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "603903.SH",
+      "name": "中持股份",
+      "path": "research/valuations/valuation_603903_SH_中持股份_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "28a5f396cd2aa23da72a64e6033f2f5ced571ba21d65339c73fb37c8f2bef58e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "688333.SH",
       "name": "西安铂力特",
       "path": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-05_102437.json",
@@ -2969,6 +3179,21 @@
       "generated_at": "2026-06-05_103909",
       "basis_trade_date": "20260604",
       "sha256": "b8c37fca9870de4383490d1a439a80fa9621206ca7a28c22b0320d01a793ad90",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "688439.SH",
+      "name": "振华风光",
+      "path": "research/valuations/valuation_688439_SH_振华风光_2026-06-09_112659.json",
+      "generated_at": "2026-06-09_112659",
+      "basis_trade_date": "20260609",
+      "sha256": "b145cfa84ef762ba124ea36a87f6f793bbef76b5f33559aa8210a1fec12c30df",
       "quality": {
         "status": "legacy_unknown"
       },
