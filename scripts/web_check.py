@@ -18,7 +18,7 @@ LATEST_INDEX = ROOT / "research" / "latest_index.json"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add target allocation shadow generation"
+COMMIT_MESSAGE = "feat(web): add controlled target allocation shadow export"
 
 API_PATHS = [
     "/api/health",
@@ -35,6 +35,7 @@ API_PATHS = [
     "/api/target-allocation/current",
     "/api/target-allocation/shadow",
     "/api/target-allocation/shadow/compare",
+    "/api/target-allocation/shadow/export?format=json",
     "/api/portfolio/current",
     "/api/intraday-rules/current",
     "/api/research-first/current",
@@ -99,6 +100,12 @@ PHASE5C2_TEST_FILES = [
     ROOT / "web" / "backend" / "tests" / "test_target_allocation_generation_shadow.py",
 ]
 
+PHASE5C3_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "target_allocation_export.py",
+    ROOT / "web" / "backend" / "tests" / "test_target_allocation_controlled_export.py",
+    ROOT / "scripts" / "export_target_allocation_shadow.py",
+]
+
 REQUIRED_EXPORT_MODULES = {
     "action_plan",
     "target_allocation",
@@ -120,6 +127,14 @@ EXPECTED_ZIP_FILES = {
     "bucket_registry.json",
     "liquidity_gate_registry.json",
     "decision_log.json",
+    "system_checks.json",
+}
+
+CONTROLLED_EXPORT_ZIP_FILES = {
+    "manifest.json",
+    "shadow_target_allocation.json",
+    "compare_result.json",
+    "provenance.json",
     "system_checks.json",
 }
 
@@ -257,6 +272,7 @@ class WebCheck:
         self.check_phase5a_contract_files()
         self.check_phase5c_contract_files()
         self.check_phase5c2_contract_files()
+        self.check_phase5c3_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -306,6 +322,19 @@ class WebCheck:
             )
         else:
             self.add_result("phase5c2_shadow_files", "PASS", "target-allocation shadow tests present")
+
+    def check_phase5c3_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE5C3_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase5c3_controlled_export_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase5c3_controlled_export_files",
+                ", ".join(missing),
+                "Phase 5C-3 controlled export service/script/tests are missing.",
+                "Add the controlled export files, then rerun scripts/web_check.py.",
+            )
+        else:
+            self.add_result("phase5c3_controlled_export_files", "PASS", "controlled export service/script/tests present")
 
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
@@ -408,6 +437,7 @@ class WebCheck:
         self.check_api_is_read_only(client)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
+        self.check_controlled_shadow_export(client, ratio)
 
     def check_api_is_read_only(self, client: Any) -> None:
         response = client.get("/openapi.json")
@@ -492,6 +522,81 @@ class WebCheck:
         else:
             self.add_result("export_zip", "PASS", ", ".join(sorted(EXPECTED_ZIP_FILES)))
 
+    def check_controlled_shadow_export(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/target-allocation/shadow/export?format=json")
+            if response.status_code != 200:
+                raise ValueError(f"JSON API status {response.status_code}")
+            wrapper = response.json()
+            payload = wrapper.get("data")
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            if not ((payload or {}).get("compare") or {}).get("matched"):
+                raise ValueError("controlled export compare.matched is not true")
+            if ((payload or {}).get("compare") or {}).get("diffs"):
+                raise ValueError("controlled export compare has diffs")
+
+            zip_response = client.get("/api/target-allocation/shadow/export?format=zip")
+            if zip_response.status_code != 200:
+                raise ValueError(f"ZIP API status {zip_response.status_code}")
+            with zipfile.ZipFile(io.BytesIO(zip_response.content)) as archive:
+                names = set(archive.namelist())
+                if names != CONTROLLED_EXPORT_ZIP_FILES:
+                    raise ValueError(f"controlled ZIP names mismatch: {sorted(names)}")
+                for name in names:
+                    payload = json.loads(archive.read(name).decode("utf-8"))
+                    ratio.assert_safe(payload)
+                    assert_safe_payload(payload)
+
+            self.check_controlled_export_cli_output(ratio)
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "controlled_shadow_export",
+                "target-allocation shadow export",
+                f"Controlled export safety/current-only scan failed: {exc}",
+                "Fix the controlled export service/API/CLI and rerun scripts/web_check.py.",
+            )
+            self.add_result("controlled_shadow_export", "FAIL", str(exc))
+        else:
+            self.add_result("controlled_shadow_export", "PASS", "API and CLI JSON/ZIP safe")
+
+    def check_controlled_export_cli_output(self, ratio: Any) -> None:
+        dry = self.run_command("controlled_export_dry_run", [sys.executable, "scripts/export_target_allocation_shadow.py", "--dry-run"])
+        dry_summary = json.loads(dry)
+        if dry_summary.get("output_path") is not None or dry_summary.get("matched") is not True:
+            raise ValueError(f"unexpected dry-run summary: {dry_summary}")
+
+        for format_name in ["json", "zip"]:
+            output = self.run_command(
+                f"controlled_export_{format_name}",
+                [sys.executable, "scripts/export_target_allocation_shadow.py", "--format", format_name],
+            )
+            summary = json.loads(output)
+            rel_path_text = str(summary.get("output_path") or "")
+            if not rel_path_text.startswith("temp/web_exports/"):
+                raise ValueError(f"controlled export path outside temp/web_exports: {rel_path_text}")
+            output_path = ROOT / rel_path_text
+            if not output_path.exists():
+                raise ValueError(f"controlled export file missing: {rel_path_text}")
+            if not is_forbidden_git_path(rel_path_text):
+                raise ValueError(f"controlled export output is not covered by forbidden/ignored temp patterns: {rel_path_text}")
+            try:
+                if format_name == "json":
+                    payload = json.loads(output_path.read_text(encoding="utf-8"))
+                    ratio.assert_safe(payload)
+                    assert_safe_payload(payload)
+                else:
+                    with zipfile.ZipFile(output_path) as archive:
+                        names = set(archive.namelist())
+                        if names != CONTROLLED_EXPORT_ZIP_FILES:
+                            raise ValueError(f"controlled CLI ZIP names mismatch: {sorted(names)}")
+                        for name in names:
+                            payload = json.loads(archive.read(name).decode("utf-8"))
+                            ratio.assert_safe(payload)
+                            assert_safe_payload(payload)
+            finally:
+                output_path.unlink(missing_ok=True)
+
     def assert_export_sources_current(self, payload: dict[str, Any]) -> None:
         latest = json.loads(LATEST_INDEX.read_text(encoding="utf-8-sig"))
         modules = latest.get("modules", {})
@@ -566,6 +671,7 @@ class WebCheck:
         files = [
             ROOT / "scripts" / "ingest_current_state.py",
             ROOT / "scripts" / "ingest_current_state_to_web_db.py",
+            ROOT / "scripts" / "export_target_allocation_shadow.py",
             ROOT / "web" / "scripts" / "ingest_current_state.py",
             *list((ROOT / "web" / "backend" / "app").rglob("*.py")),
         ]

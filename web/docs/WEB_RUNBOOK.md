@@ -165,6 +165,42 @@ Read-only API:
 
 The compare endpoint returns `matched`, `diffs`, `compared_fields`, `unsupported_fields`, `source_shadow`, and `source_reference`. Core-field diffs block the milestone. Unsupported fields are allowed only when explicit and not used to hide core mismatches.
 
+## Phase 5C-3 Controlled Export
+
+Phase 5C-3 adds controlled export for shadow target allocation. API exports are in memory. CLI exports write only to `temp/web_exports/`, which is ignored by Git.
+
+It does not:
+
+- write `research/allocation`
+- update `research/latest_index.json`
+- update `current_modules` or `artifacts`
+- generate action plans
+- replace current target allocation
+- create trading or execution runtime files
+
+Direct checks:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_target_allocation_controlled_export.py
+```
+
+CLI:
+
+```bash
+python scripts/export_target_allocation_shadow.py --dry-run
+python scripts/export_target_allocation_shadow.py --format json
+python scripts/export_target_allocation_shadow.py --format zip
+```
+
+Read-only API:
+
+- `GET /api/target-allocation/shadow/export`
+- `GET /api/target-allocation/shadow/export?format=json`
+- `GET /api/target-allocation/shadow/export?format=zip`
+
+The ZIP contains only `manifest.json`, `shadow_target_allocation.json`, `compare_result.json`, `provenance.json`, and `system_checks.json`. If shadow compare has core diffs, controlled export fails instead of producing an audit artifact.
+
 ## API and Page Smoke Check
 
 ```bash
@@ -179,6 +215,7 @@ Then open:
 - `http://127.0.0.1:8000/api/current`
 - `http://127.0.0.1:8000/api/market-position/current`
 - `http://127.0.0.1:8000/api/target-allocation/shadow/compare`
+- `http://127.0.0.1:8000/api/target-allocation/shadow/export?format=json`
 - `http://127.0.0.1:8000/api/modules/current`
 - `http://127.0.0.1:8000/api/export/review_package?format=json`
 

@@ -287,3 +287,5 @@ trade_amount, profit_amount, account, full_account, order, fill
 ## Shadow Services
 
 Phase 5C-2 `TargetAllocationGenerationService` does not add tables. Its shadow output is computed in memory from the existing current SQLite read model and current module source paths. It must not insert rows, update `current_modules`, update `artifacts`, or write files under `research/allocation`.
+
+Phase 5C-3 `TargetAllocationControlledExportService` also does not add tables. API export is in memory; CLI export writes only temporary files under `temp/web_exports/`, outside Git scope.

@@ -40,6 +40,7 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/target-allocation/current",
         "/api/target-allocation/shadow",
         "/api/target-allocation/shadow/compare",
+        "/api/target-allocation/shadow/export?format=json",
         "/api/research-first/current",
         "/api/portfolio/current",
         "/api/intraday-rules/current",

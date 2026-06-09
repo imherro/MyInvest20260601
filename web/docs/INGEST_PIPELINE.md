@@ -19,3 +19,5 @@ Pipeline:
 The pipeline never reads `latest_index.files` as current state.
 
 The Web review-package export also resolves source files through `current_modules` and does not use `latest_index.files` as current state.
+
+Phase 5C-3 controlled target-allocation shadow export reads the ingested current SQLite state and current module source paths. API export is in memory. CLI export writes only to `temp/web_exports/`. It does not write `research/allocation`, does not update `latest_index`, and does not update `current_modules`.

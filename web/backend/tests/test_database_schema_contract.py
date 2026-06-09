@@ -52,6 +52,7 @@ API_PATHS = [
     "/api/target-allocation/current",
     "/api/target-allocation/shadow",
     "/api/target-allocation/shadow/compare",
+    "/api/target-allocation/shadow/export?format=json",
     "/api/portfolio/current",
     "/api/intraday-rules/current",
     "/api/research-first/current",

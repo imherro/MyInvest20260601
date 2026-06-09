@@ -25,6 +25,7 @@ Endpoints:
 - `GET /api/target-allocation/current`
 - `GET /api/target-allocation/shadow`
 - `GET /api/target-allocation/shadow/compare`
+- `GET /api/target-allocation/shadow/export`
 - `GET /api/research-first/current`
 - `GET /api/portfolio/current`
 - `GET /api/intraday-rules/current`
@@ -58,6 +59,24 @@ Phase 5C-2 adds read-only target-allocation shadow endpoints:
 The shadow service reads current SQLite state, calls `MarketPositionService`, computes ratio-only bucket targets, and compares core fields with the current `latest_index.modules.target_allocation` JSON. It does not write `research/allocation`, does not update `current_modules`, and does not generate action plans.
 
 `/api/target-allocation/shadow/compare` returns `matched`, `diffs`, `compared_fields`, `unsupported_fields`, `source_shadow`, and `source_reference`. Core-field mismatches are test failures; unsupported fields must be explicit and are not used to hide core diffs.
+
+## Target Allocation Controlled Export
+
+Phase 5C-3 adds a controlled export for the shadow target allocation:
+
+- `GET /api/target-allocation/shadow/export`
+- `GET /api/target-allocation/shadow/export?format=json`
+- `GET /api/target-allocation/shadow/export?format=zip`
+
+The API is read-only and generates the export in memory. It does not write `research/allocation`, does not update `latest_index`, does not update `current_modules`, and does not generate action plans. The ZIP contains only:
+
+- `manifest.json`
+- `shadow_target_allocation.json`
+- `compare_result.json`
+- `provenance.json`
+- `system_checks.json`
+
+The CLI companion writes only to `temp/web_exports/`, which is ignored by Git.
 
 ## Review Package Export
 

@@ -21,6 +21,7 @@ The baseline covers:
 - market-position service output vs `scripts/project_utils.py::market_position_for_score`
 - market-position boundary scores: `0`, `25`, `30`, `31`, `45`, `46`, `60`, `61`, `75`, `76`, `85`, `86`, `100`
 - target-allocation shadow output vs current `latest_index.modules.target_allocation` JSON
+- controlled target-allocation shadow export JSON/ZIP vs shadow compare result
 - current action plan path
 - action plan `generated_at`
 - action count
@@ -32,6 +33,7 @@ The baseline covers:
 - `defense` target, actual, and gap
 - `legacy_watch` target, actual, and gap
 - target-allocation shadow no-mutation checks for `latest_index`, `current_modules`, `artifacts`, and `research/allocation`
+- controlled export no-mutation checks for `latest_index`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions`
 - intraday rules status
 - ResearchFirst gate status
 - 511360 liquidity status, valuation status, duration boundary, and risk disclosure gates
@@ -58,6 +60,12 @@ Run the Phase 5C-2 target-allocation shadow baseline directly:
 python -m pytest web/backend/tests/test_target_allocation_generation_shadow.py
 ```
 
+Run the Phase 5C-3 controlled export baseline directly:
+
+```bash
+python -m pytest web/backend/tests/test_target_allocation_controlled_export.py
+```
+
 The test performs a fresh ingest through the shared test fixture, reads current JSON through `latest_index.modules`, then reads the same facts from `temp/web_db/myinvest.sqlite`.
 
 ## Migration Policy
@@ -69,4 +77,4 @@ When a future service replaces part of the old generation flow:
 3. Extend the golden test to compare the relevant ratio-only fields.
 4. Do not switch callers to the service if the golden test differs.
 
-Target allocation is now in Phase 5C-2 shadow mode. The shadow service may compute in-memory target allocation fields and compare them with the current reference, but it must not replace old outputs, update `latest_index`, or write files under `research/allocation`. Future replacement requires the golden comparison to remain clean over multiple runs.
+Target allocation is now in Phase 5C-2 shadow mode. The shadow service may compute in-memory target allocation fields and compare them with the current reference, but it must not replace old outputs, update `latest_index`, or write files under `research/allocation`. Phase 5C-3 controlled export may write temporary JSON/ZIP files only under `temp/web_exports/`; these files are for human audit and migration comparison, not current-state replacement. Future replacement requires the golden comparison to remain clean over multiple runs.

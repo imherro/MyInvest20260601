@@ -15,6 +15,7 @@ from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
 from ..services.system_check import SystemCheckService
+from ..services.target_allocation_export import TargetAllocationControlledExportService
 from ..services.target_allocation_generation import TargetAllocationGenerationService
 
 
@@ -127,6 +128,23 @@ def target_allocation_shadow_compare(session: Session = Depends(get_session)) ->
     return respond(
         {"comparison": service.compare_with_current_json()},
         source={"path": TargetAllocationGenerationService.shadow_source},
+    )
+
+
+@router.get("/target-allocation/shadow/export", response_model=None)
+def target_allocation_shadow_export(
+    format: Literal["zip", "json"] = "zip",
+    session: Session = Depends(get_session),
+) -> Any:
+    service = TargetAllocationControlledExportService(session)
+    payload = service.build_export_payload()
+    if format == "json":
+        return respond(payload, source={"path": "db.TargetAllocationControlledExportService"})
+    content = service.build_zip_bytes(payload)
+    return Response(
+        content=content,
+        media_type="application/zip",
+        headers={"Content-Disposition": 'attachment; filename="target_allocation_shadow_export.zip"'},
     )
 
 
