@@ -255,7 +255,8 @@ python scripts\intraday_monitor.py --quotes-file path\to\qmt_snapshot.json --rul
 
 ```text
 请按 docs/modules/INTRADAY_ALERTS.md 和 templates/intraday_alert_template.md 检查盘中提醒。
-只能检查已定义触发条件，不要临时生成新策略。
+只能检查盘前计划、intraday_rules 和标的档案中已定义触发条件，不要临时生成新策略。
+必须运行或引用 scripts/check_valuation_updates.py；估值更新提示只作为数据质量提示，不新增交易条件。
 如果缺少盘前计划或标的档案，输出 blocked。
 ```
 

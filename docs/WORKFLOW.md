@@ -17,7 +17,7 @@
 建议对 Codex 的开场指令：
 
 ```text
-请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DAILY_PROCESS.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md 和 research/logs/decision_log.md，了解本项目已经确定的投资策略、模块边界、每日流程、数据源权限、文件命名规则和协作规则。之后再继续当前任务。
+请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/WORKFLOW.md、docs/RUNBOOK.md、docs/DAILY_PROCESS.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md、research/latest_index.json 和 research/logs/decision_log.md，了解本项目已经确定的投资策略、模块边界、每日流程、数据源权限、文件命名规则和协作规则。之后再继续当前任务。
 ```
 
 ## 2. 文件职责
@@ -94,6 +94,7 @@ workflow: refine collaboration rules
 2. 重要决议已经写入 `docs/PROJECT_MEMORY.md`。
 3. 研究结论没有只覆盖旧记录，而是保留变化原因。
 4. commit message 能看出本次变更目的。
+5. 只暂存本次任务相关文件；如果工作区已有其他未提交改动，不要顺手提交或回退。
 
 ## 7. 多电脑协同建议
 

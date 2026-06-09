@@ -8,9 +8,10 @@
 2. 先阅读 [项目记忆](docs/PROJECT_MEMORY.md)，了解已经确定的策略、规则和历史决议。
 3. 阅读 [数据源与权限](docs/DATA_SOURCES.md)，确认本地数据权限配置。
 4. 运行 `python scripts/project_check.py`，检查本地 `.env`、JSON 文件和研究产物命名状态。
-5. 再阅读 [协作规则](docs/WORKFLOW.md) 和 [每日流程标准](docs/DAILY_PROCESS.md)，按固定流程继续工作。
-6. 每次和 Codex 形成新的重要决议后，更新 `docs/PROJECT_MEMORY.md` 或对应研究文件。
-7. 每次更新后提交 Git commit，保持多台电脑之间的上下文一致。
+5. 读取 `research/latest_index.json`，确认默认使用的最新研究产物；如索引缺失或明显过期，只运行 `python scripts/build_latest_index.py` 重建索引。
+6. 再阅读 [协作规则](docs/WORKFLOW.md) 和 [每日流程标准](docs/DAILY_PROCESS.md)，按固定流程继续工作。
+7. 每次和 Codex 形成新的重要决议后，更新 `docs/PROJECT_MEMORY.md` 或对应研究文件。
+8. 每次更新后先查看 `git status`，只提交本次任务相关文件，保持多台电脑之间的上下文一致。
 
 ## 核心原则
 

@@ -22,7 +22,10 @@
 5. `docs/DAILY_PROCESS.md`
 6. `docs/DATA_SOURCES.md`
 7. `docs/FILE_NAMING.md`
-8. `research/logs/decision_log.md`
+8. `research/latest_index.json`
+9. `research/logs/decision_log.md`
+
+如果 `research/latest_index.json` 缺失或明显过期，只运行 `python scripts/build_latest_index.py` 重建索引；不得借重建索引顺手生成新的研究产物。
 
 然后按任务读取最新时间戳版本：
 
@@ -90,6 +93,8 @@ research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.json
 
 如果操作建议已经由单独会话生成，盘前流程应优先生成执行检查，而不是重复生成操作建议。
 
+盘前执行检查必须运行或引用 `scripts/check_valuation_updates.py`。如果持仓股、观察标的或盘中规则标的存在估值报告缺失、基准日过旧或需要更新，只提示是否更新估值报告，不得把旧估值状态直接当作当前结论。
+
 ## 3. 盘中流程
 
 目标：只检查触发条件。
@@ -100,6 +105,8 @@ research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.json
 2. 操作建议中的触发条件。
 3. ETF/个股档案中的买入、加仓、减仓、失效条件。
 4. 市场仓位报告中的触发式仓位调整表。
+5. 固化盘中规则：`research/alerts/intraday_rules.json`。
+6. QMT 实时行情快照。
 
 盘中允许输出：
 
@@ -114,6 +121,8 @@ research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.json
 - 不临时改变市场仓位区间。
 - 不新增未建档标的。
 - 不把盘中波动解释成长期结论。
+- 不从行情或档案临时生成新触发条件；缺少规则或档案时输出 `blocked`。
+- 不把估值更新提示转换成买卖动作。
 
 盘中输出可以是：
 
@@ -121,6 +130,8 @@ research/actions/action_plan_YYYY-MM-DD_HHMMSS_premarket.json
 research/alerts/intraday_alert_YYYY-MM-DD_HHMMSS.md
 research/alerts/intraday_alert_YYYY-MM-DD_HHMMSS.json
 ```
+
+盘中必须运行或引用 `scripts/check_valuation_updates.py`。如果实时价格跨出估值报告基准区间，或持仓/观察标的缺少估值报告，只提示是否更新估值报告，不改变本次触发结论。
 
 ## 4. 盘后流程
 
@@ -140,6 +151,7 @@ research/alerts/intraday_alert_YYYY-MM-DD_HHMMSS.json
 - 操作建议是否触发、是否执行、是否失效。
 - 组合结构是否偏离更大。
 - 是否需要写入决策日志。
+- 是否存在估值报告缺失、过期或盘中跨区，是否需要先更新估值报告。
 
 盘后禁止事项：
 
@@ -196,6 +208,7 @@ research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 | 主线触发条件变化 | 更新主线研究模块 |
 | 持仓变化 | 更新组合快照 |
 | 标的缺少档案 | 进入补研究会话 |
+| 估值报告缺失、过期或盘中跨区 | 先提示是否更新估值报告，不直接改操作结论 |
 | 已有操作建议待执行 | 盘中只检查触发条件 |
 | 规则反复失效 | 回到策略与流程会话修正规则 |
 
@@ -208,6 +221,7 @@ research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 读取最新市场仓位、主线研究、组合快照、ETF/个股档案和最新操作建议。
 如果我说的是盘前分析、盘前策略或策略简报，请按 docs/modules/STRATEGY_BRIEFING.md 生成盘前策略简报，包含重大新闻、策略精要、市场分析、重点方向、核心观点和风险提示。
 请按 docs/modules/PREMARKET_CHECK.md 生成盘前执行检查和盘中监控清单，不临时改写主线，不新增未建档标的。
+必须运行或引用 scripts/check_valuation_updates.py；如估值报告缺失、过期或需要更新，先提示是否更新估值报告。
 只按比例分析，不使用金额。
 ```
 
@@ -215,7 +229,8 @@ research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 
 ```text
 请按 docs/DAILY_PROCESS.md 执行盘中流程。
-只检查当日盘前操作建议、ETF/个股档案和市场仓位触发条件是否触发。
+只检查当日盘前操作建议、intraday_rules、ETF/个股档案和市场仓位触发条件是否触发。
+必须运行或引用 scripts/check_valuation_updates.py；估值更新提示只作为数据质量提示，不新增交易条件。
 未定义的条件不要临时发挥；缺少档案时输出 blocked/research_first。
 ```
 
@@ -224,6 +239,7 @@ research/reviews/post_market_review_YYYY-MM-DD_HHMMSS.json
 ```text
 请按 docs/DAILY_PROCESS.md 执行盘后流程。
 对比盘前计划、盘中提醒和实际执行；不要用事后结果重写事前判断。
+必须运行或引用 scripts/check_valuation_updates.py；如缺估值、估值过期或盘中跨区，先提示是否更新估值报告。
 需要更新市场仓位、主线、组合或日志时，说明原因并生成时间戳文件。
 ```
 

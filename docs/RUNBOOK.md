@@ -5,21 +5,23 @@
 ## 1. 每次开始前
 
 1. 拉取最新项目。
-2. 阅读 `README.md`、`docs/PROJECT_MEMORY.md`、`docs/MODULES.md`。
+2. 阅读 `README.md`、`docs/PROJECT_MEMORY.md`、`docs/MODULES.md`、`docs/WORKFLOW.md`。
 3. 阅读 `docs/DATA_SOURCES.md`，确认 Tushare、QMT、BaoStock、yfinance、FRED 等数据源权限。
 4. 阅读 `docs/FILE_NAMING.md`，确认文件命名和最新版本读取规则。
 5. 阅读 `docs/DAILY_PROCESS.md`，确认本次要做的是读取、更新、复盘还是补研究。
 6. 查看 `research/logs/decision_log.md` 的最近记录。
-7. 确认本次要做的是盘前、盘中、盘后、周末，还是临时事件更新。
-8. 完成后提交并推送。
+7. 读取 `research/latest_index.json`；如果索引缺失或明显过期，只运行 `python scripts/build_latest_index.py` 重建索引，不顺带生成其他研究产物。
+8. 确认本次要做的是盘前、盘中、盘后、周末，还是临时事件更新。
+9. 完成后先查看 `git status` 和暂存清单，只提交本次任务相关文件，再推送。
 
 推荐开场指令：
 
 ```text
-请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/RUNBOOK.md、docs/DAILY_PROCESS.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md 和 research/logs/decision_log.md，然后按今天的任务继续。
+请先阅读 README.md、docs/PROJECT_MEMORY.md、docs/MODULES.md、docs/WORKFLOW.md、docs/RUNBOOK.md、docs/DAILY_PROCESS.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md、research/latest_index.json 和 research/logs/decision_log.md，然后按今天的任务继续。
 本项目已知可使用 Tushare 数据权限；做 A 股结构化数据研究时请优先检查并使用本地 Tushare token。
 如涉及盘中 A 股行情，可调用 QMT；如涉及海外行情、海外 ETF、ADR 或外盘风险，可调用 yfinance；如涉及美国利率、通胀、就业或全球宏观变量，可调用 FRED。
 生成研究产物时文件名必须包含 YYYY-MM-DD_HHMMSS；基于前期研究时默认读取同类最新时间戳版本。
+提交前先查看 git status，只提交本次任务相关文件，不混入其他未提交改动。
 ```
 
 ## 2. 盘前流程
@@ -62,6 +64,7 @@ research/logs/decision_log.md
 先读取最新市场仓位、主线登记册和组合快照；只有必要时才更新市场仓位或主线研究。
 如果我说的是盘前分析、盘前策略或策略简报，请按 docs/modules/STRATEGY_BRIEFING.md 输出券商晨报式盘前策略简报，包含重大新闻、策略精要、市场分析、重点方向、核心观点和风险提示。
 如操作建议已存在，请按 docs/modules/PREMARKET_CHECK.md 生成盘前执行检查。
+必须运行或引用 scripts/check_valuation_updates.py；如估值报告缺失、过期或需要更新，先提示是否更新估值报告。
 不要临时重写前置研究结论；缺少研究时输出 ResearchFirst。
 ```
 
@@ -78,13 +81,15 @@ QMT 前置条件：
 
 步骤：
 
-1. 读取当日盘前操作建议。
-2. 读取 ETF/个股档案中的触发条件。
-3. 检查是否触发买入、加仓、减仓、卖出、失效或风险条件。
-4. 输出盘中提醒。
-5. 如果实际执行，记录执行信息。
-6. 必要时写入决策日志。
-7. 提交并推送重要变更。
+1. 读取当日盘前操作建议或盘前执行检查。
+2. 读取 `research/alerts/intraday_rules.json`，只使用已经固化的触发条件。
+3. 读取 ETF/个股档案中的触发条件；如果档案或规则缺失，标记 `blocked`，不得临时补算。
+4. 用 QMT 实时行情检查是否触发买入、加仓、减仓、卖出、失效、观察或风险条件。
+5. 运行或引用 `scripts/check_valuation_updates.py`；若估值报告缺失、过期或实时区间跨出报告基准区间，只提示是否更新估值报告，不改变触发结论。
+6. 输出盘中提醒。
+7. 如果实际执行，记录执行信息。
+8. 必要时写入决策日志。
+9. 提交并推送重要变更。
 
 产物：
 
@@ -98,7 +103,8 @@ research/logs/decision_log.md
 
 ```text
 请按 docs/DAILY_PROCESS.md 和 docs/modules/INTRADAY_ALERTS.md 检查当前盘中提醒。
-只能检查盘前计划和标的档案中已经定义的触发条件。
+只能检查盘前计划、intraday_rules 和标的档案中已经定义的触发条件。
+必须运行或引用 scripts/check_valuation_updates.py；估值更新提示只作为数据质量提示，不新增交易条件。
 如果缺少盘前计划或标的档案，输出 blocked。
 ```
 
@@ -130,6 +136,7 @@ research/logs/decision_log.md
 ```text
 请按 docs/DAILY_PROCESS.md 和 docs/modules/POST_MARKET_REVIEW.md 做今日盘后复盘。
 必须对比盘前计划、盘中提醒和实际执行。
+必须运行或引用 scripts/check_valuation_updates.py；如缺估值、估值过期或盘中跨区，先提示是否更新估值报告。
 不要用事后结果重写事前判断；如果缺少实际执行信息，请明确标注。
 ```
 
@@ -219,6 +226,8 @@ docs: update project memory
 - 结论变化有原因。
 - 操作建议有依据、触发条件和失效条件。
 - 重要变化已写入 `research/logs/decision_log.md`。
+- 提交前查看 `git status` 和 `git diff --cached --name-status`，只暂存本次任务相关文件。
+- 如果工作区已有其他未提交改动，保留它们，不要为本次任务顺手提交或回退。
 
 ## 8. 当前系统状态
 
@@ -241,4 +250,4 @@ docs: update project memory
 - 补齐全部持仓个股档案
 - 补齐持仓中尚未建档的 ETF 档案
 - 完成操作建议、盘中提醒和盘后复盘的持续样例
-- 自动化数据接入和质量检查
+- 自动化交易、数据库化沉淀和更完整的质量检查
