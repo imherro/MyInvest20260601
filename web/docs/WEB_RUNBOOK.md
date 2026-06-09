@@ -201,6 +201,54 @@ Read-only API:
 
 The ZIP contains only `manifest.json`, `shadow_target_allocation.json`, `compare_result.json`, `provenance.json`, and `system_checks.json`. If shadow compare has core diffs, controlled export fails instead of producing an audit artifact.
 
+## Phase 5D Shadow Replay Fixtures
+
+Phase 5D adds multi-scenario replay fixtures for `TargetAllocationGenerationService`. The fixtures live under:
+
+```text
+web/backend/tests/fixtures/target_allocation_scenarios/
+```
+
+They are not current state. Production Web APIs still read SQLite current state generated from `research/latest_index.json` `modules`.
+
+The replay covers:
+
+- risk-off current-like state
+- score boundary 30
+- score boundary 31
+- neutral mid-score state
+- risk-on high score
+- max score 100
+- legacy-watch overweight
+- attack-mainline overweight
+- cash-short underweight
+- missing bucket actual
+
+Direct checks:
+
+```bash
+python -m pytest web/backend/tests/test_target_allocation_shadow_replay.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+Replay fixtures must remain ratio-only and must not include local absolute paths, runtime paths, `.env`, SQLite files, ZIP/log artifacts, monetary amounts, share counts, account identifiers, order records, fill records, or QMT write behavior.
+
+Phase 5D still does not:
+
+- replace `scripts/generate_target_allocation.py`
+- replace `scripts/generate_action_plan.py`
+- write `research/allocation`
+- write `research/actions`
+- update `research/latest_index.json`
+- update `current_modules` or `artifacts`
+- generate action plans
+- create trading or execution runtime files
+
 ## API and Page Smoke Check
 
 ```bash

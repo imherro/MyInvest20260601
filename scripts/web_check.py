@@ -18,7 +18,7 @@ LATEST_INDEX = ROOT / "research" / "latest_index.json"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add controlled target allocation shadow export"
+COMMIT_MESSAGE = "test(web): add target allocation shadow replay fixtures"
 
 API_PATHS = [
     "/api/health",
@@ -105,6 +105,13 @@ PHASE5C3_FILES = [
     ROOT / "web" / "backend" / "tests" / "test_target_allocation_controlled_export.py",
     ROOT / "scripts" / "export_target_allocation_shadow.py",
 ]
+
+PHASE5D_FILES = [
+    ROOT / "web" / "backend" / "tests" / "test_target_allocation_shadow_replay.py",
+    ROOT / "web" / "docs" / "TARGET_ALLOCATION_RULES.md",
+]
+
+PHASE5D_FIXTURE_DIR = ROOT / "web" / "backend" / "tests" / "fixtures" / "target_allocation_scenarios"
 
 REQUIRED_EXPORT_MODULES = {
     "action_plan",
@@ -273,6 +280,7 @@ class WebCheck:
         self.check_phase5c_contract_files()
         self.check_phase5c2_contract_files()
         self.check_phase5c3_contract_files()
+        self.check_phase5d_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -335,6 +343,38 @@ class WebCheck:
             )
         else:
             self.add_result("phase5c3_controlled_export_files", "PASS", "controlled export service/script/tests present")
+
+    def check_phase5d_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE5D_FILES if not path.exists()]
+        if not PHASE5D_FIXTURE_DIR.exists():
+            missing.append(rel(PHASE5D_FIXTURE_DIR))
+        fixture_paths = sorted(PHASE5D_FIXTURE_DIR.glob("*.json")) if PHASE5D_FIXTURE_DIR.exists() else []
+        if len(fixture_paths) < 10:
+            missing.append(f"{rel(PHASE5D_FIXTURE_DIR)}/*.json >= 10")
+        if missing:
+            self.add_result("phase5d_replay_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase5d_replay_files",
+                ", ".join(missing),
+                "Phase 5D replay fixtures, tests, or target-allocation rules doc are missing.",
+                "Add replay fixtures, test_target_allocation_shadow_replay.py, and TARGET_ALLOCATION_RULES.md.",
+            )
+            return
+        try:
+            for path in fixture_paths:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+                assert_safe_payload(payload)
+                assert_no_export_runtime_terms(payload)
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase5d_fixture_safety", "FAIL", str(exc))
+            self.fail(
+                "phase5d_fixture_safety",
+                rel(path),
+                f"Fixture failed ratio-only/current-only safety scan: {exc}",
+                "Remove forbidden fields, local paths, runtime terms, or invalid JSON from replay fixtures.",
+            )
+            return
+        self.add_result("phase5d_replay_files", "PASS", f"{len(fixture_paths)} replay fixtures safe")
 
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])

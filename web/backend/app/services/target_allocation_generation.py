@@ -74,6 +74,65 @@ class TargetAllocationGenerationService:
         RatioOnlyService.assert_safe(result)
         return result
 
+    @classmethod
+    def generate_shadow_from_inputs(
+        cls,
+        *,
+        market_score: dict[str, Any],
+        market_position_mapping: list[dict[str, Any]],
+        actual_by_bucket: dict[str, Any],
+        bucket_registry: dict[str, Any] | None = None,
+        scenario_name: str | None = None,
+        missing_bucket_policy: str = "zero",
+    ) -> dict[str, Any]:
+        """Build shadow allocation from explicit test inputs without reading current state."""
+
+        position = cls._position_from_mapping(float(market_score["score"]), market_position_mapping)
+        equity_min = float(position["equity_min_pct"])
+        equity_max = float(position["equity_max_pct"])
+        cash_min = float(position["cash_min_pct"])
+        cash_max = float(position["cash_max_pct"])
+        equity_center = round((equity_min + equity_max) / 2, 2)
+        cash_center = round((cash_min + cash_max) / 2, 2)
+        segments = cls._build_segments_from_registry(equity_center, cash_center, bucket_registry or {})
+        actual, warnings = cls._normalize_actual_by_bucket(actual_by_bucket, missing_bucket_policy)
+        buckets = cls._build_buckets_from_actual(segments, actual, "fixture.TargetAllocationGenerationService.shadow_replay")
+        result = {
+            "module": "target_allocation_shadow_replay",
+            "mode": "shadow_replay",
+            "scenario": scenario_name,
+            "market_score": float(market_score["score"]),
+            "market_state": position["label"],
+            "market_score_state": market_score.get("state"),
+            "basis_trade_date": market_score.get("basis_trade_date"),
+            "equity_range": {"min_pct": equity_min, "max_pct": equity_max, "center_pct": equity_center},
+            "cash_short_range": {"min_pct": cash_min, "max_pct": cash_max, "center_pct": cash_center},
+            "target_equity_pct": equity_center,
+            "target_cash_short_pct": cash_center,
+            "actual_equity_pct": round(sum(actual.get(key, 0.0) for key in ["core_base", "attack_mainline", "defense", "legacy_watch"]), 4),
+            "actual_cash_short_pct": round(actual.get("cash_short", 0.0), 4),
+            "segments": segments,
+            "buckets": buckets,
+            "warnings": warnings,
+            "unsupported_fields": [],
+            "source": "fixture.TargetAllocationGenerationService.shadow_replay",
+            "inputs": {
+                "market_position": "fixture.market_position_mapping",
+                "market_score": "fixture.market_score",
+                "portfolio": "fixture.portfolio_bucket_actual",
+                "bucket_registry": "fixture.bucket_registry",
+            },
+            "constraints": [
+                "shadow_only",
+                "fixture_only",
+                "does_not_write_research_allocation",
+                "does_not_replace_current_modules",
+                "does_not_generate_action_plan",
+            ],
+        }
+        RatioOnlyService.assert_safe(result)
+        return result
+
     def compare_with_current_json(self) -> dict[str, Any]:
         shadow = self.generate_shadow_current()
         reference_artifact = self._current_artifact("target_allocation")
@@ -128,6 +187,10 @@ class TargetAllocationGenerationService:
         }
 
     def _build_segments(self, equity_center: float, cash_center: float, registry: dict[str, Any]) -> list[dict[str, Any]]:
+        return self._build_segments_from_registry(equity_center, cash_center, registry)
+
+    @staticmethod
+    def _build_segments_from_registry(equity_center: float, cash_center: float, registry: dict[str, Any]) -> list[dict[str, Any]]:
         buckets = registry.get("buckets") if isinstance(registry.get("buckets"), dict) else {}
         targets = {
             "cash_short": round(cash_center, 2),
@@ -155,6 +218,10 @@ class TargetAllocationGenerationService:
         ]
 
     def _build_buckets(self, segments: list[dict[str, Any]], actual: dict[str, float]) -> list[dict[str, Any]]:
+        return self._build_buckets_from_actual(segments, actual, self.shadow_source)
+
+    @staticmethod
+    def _build_buckets_from_actual(segments: list[dict[str, Any]], actual: dict[str, float], source: str) -> list[dict[str, Any]]:
         rows = []
         for item in segments:
             key = item["key"]
@@ -168,10 +235,74 @@ class TargetAllocationGenerationService:
                     "target_pct": round(target, 4),
                     "actual_pct": round(current, 4),
                     "gap_pct": round(current - target, 4),
-                    "source": self.shadow_source,
+                    "source": source,
                 }
             )
         return rows
+
+    @classmethod
+    def _normalize_actual_by_bucket(cls, actual_by_bucket: dict[str, Any], missing_bucket_policy: str) -> tuple[dict[str, float], list[dict[str, str]]]:
+        if missing_bucket_policy not in {"zero", "fail"}:
+            raise ValueError("missing_bucket_policy must be zero or fail")
+        actual: dict[str, float] = {}
+        warnings: list[dict[str, str]] = []
+        for key in BUCKET_ORDER:
+            if key in actual_by_bucket:
+                actual[key] = round(float(actual_by_bucket.get(key) or 0.0), 4)
+                continue
+            if missing_bucket_policy == "fail":
+                raise ValueError(f"missing bucket actual for {key}")
+            actual[key] = 0.0
+            warnings.append(
+                {
+                    "code": "missing_bucket_actual",
+                    "bucket": key,
+                    "message": "bucket actual missing; treated as 0 pct",
+                }
+            )
+        return actual, warnings
+
+    @staticmethod
+    def _position_from_mapping(score: float, mapping: list[dict[str, Any]]) -> dict[str, Any]:
+        if not 0 <= score <= 100:
+            raise ValueError("score must be between 0 and 100")
+        for row in mapping:
+            low = float(row["score_min"])
+            high = float(row["score_max"])
+            if low <= score <= high:
+                equity_min, equity_max = TargetAllocationGenerationService._range_pair(
+                    row,
+                    "equity_min_pct",
+                    "equity_max_pct",
+                    "equity_allocation_range",
+                )
+                cash_min, cash_max = TargetAllocationGenerationService._range_pair(
+                    row,
+                    "cash_min_pct",
+                    "cash_max_pct",
+                    "bond_cash_allocation_range",
+                )
+                return {
+                    "score_min": low,
+                    "score_max": high,
+                    "label": row.get("label") or row.get("market_state"),
+                    "equity_min_pct": equity_min,
+                    "equity_max_pct": equity_max,
+                    "cash_min_pct": cash_min,
+                    "cash_max_pct": cash_max,
+                }
+        raise ValueError(f"market position mapping not found for score={score:g}")
+
+    @staticmethod
+    def _range_pair(row: dict[str, Any], min_key: str, max_key: str, range_key: str) -> tuple[float, float]:
+        if row.get(min_key) is not None and row.get(max_key) is not None:
+            return float(row[min_key]), float(row[max_key])
+        text_value = str(row.get(range_key) or "").replace("%", "")
+        try:
+            left, right = text_value.split("-", 1)
+            return float(left), float(right)
+        except ValueError as exc:
+            raise ValueError(f"mapping range missing for {range_key}") from exc
 
     def _actual_by_bucket(self, snapshot_id: int, cash_short_pct: float | None) -> dict[str, float]:
         rows = self.session.execute(

@@ -22,6 +22,7 @@ The baseline covers:
 - market-position boundary scores: `0`, `25`, `30`, `31`, `45`, `46`, `60`, `61`, `75`, `76`, `85`, `86`, `100`
 - target-allocation shadow output vs current `latest_index.modules.target_allocation` JSON
 - controlled target-allocation shadow export JSON/ZIP vs shadow compare result
+- target-allocation shadow replay fixtures across risk-off, boundary, neutral, risk-on, max-score, overweight, underweight, and missing-bucket scenarios
 - current action plan path
 - action plan `generated_at`
 - action count
@@ -66,6 +67,12 @@ Run the Phase 5C-3 controlled export baseline directly:
 python -m pytest web/backend/tests/test_target_allocation_controlled_export.py
 ```
 
+Run the Phase 5D replay fixture baseline directly:
+
+```bash
+python -m pytest web/backend/tests/test_target_allocation_shadow_replay.py
+```
+
 The test performs a fresh ingest through the shared test fixture, reads current JSON through `latest_index.modules`, then reads the same facts from `temp/web_db/myinvest.sqlite`.
 
 ## Migration Policy
@@ -77,4 +84,6 @@ When a future service replaces part of the old generation flow:
 3. Extend the golden test to compare the relevant ratio-only fields.
 4. Do not switch callers to the service if the golden test differs.
 
-Target allocation is now in Phase 5C-2 shadow mode. The shadow service may compute in-memory target allocation fields and compare them with the current reference, but it must not replace old outputs, update `latest_index`, or write files under `research/allocation`. Phase 5C-3 controlled export may write temporary JSON/ZIP files only under `temp/web_exports/`; these files are for human audit and migration comparison, not current-state replacement. Future replacement requires the golden comparison to remain clean over multiple runs.
+Target allocation is now in Phase 5C-2 shadow mode. The shadow service may compute in-memory target allocation fields and compare them with the current reference, but it must not replace old outputs, update `latest_index`, or write files under `research/allocation`. Phase 5C-3 controlled export may write temporary JSON/ZIP files only under `temp/web_exports/`; these files are for human audit and migration comparison, not current-state replacement.
+
+Phase 5D adds multi-scenario replay fixtures under `web/backend/tests/fixtures/target_allocation_scenarios/`. These fixtures are not current state, are never read by production APIs, and exist only to harden shadow migration coverage across representative score and bucket cases. Future replacement requires both current golden comparison and fixture replay to remain clean over multiple runs.
