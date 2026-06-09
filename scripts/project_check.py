@@ -22,6 +22,7 @@ TIMESTAMP = r"\d{4}-\d{2}-\d{2}_\d{6}"
 RESEARCH_NAME_PATTERNS = {
     "market": re.compile(rf"^market_score_{TIMESTAMP}\.(md|json)$"),
     "themes": re.compile(rf"^theme_review_{TIMESTAMP}\.(md|json)$"),
+    "theme_leaders": re.compile(rf"^theme_leaders_{TIMESTAMP}\.(md|json)$"),
     "etfs": re.compile(rf"^.+_{TIMESTAMP}\.(md|json)$"),
     "stocks": re.compile(rf"^.+_{TIMESTAMP}\.(md|json)$"),
     "portfolio": re.compile(

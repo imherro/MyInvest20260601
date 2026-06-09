@@ -1,0 +1,33 @@
+{
+  "module": "theme_leaders",
+  "version": "1.0",
+  "generated_at": "YYYY-MM-DD_HHMMSS",
+  "basis": {
+    "theme_registry": "research/themes/theme_registry.json",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "stock_registry": "research/stocks/stock_registry.json",
+    "valuation_dir": "research/valuations"
+  },
+  "selection_policy": {
+    "confirmed_tactical_ratings": ["A", "A-", "B+"],
+    "exclude_stages": ["decline"],
+    "candidate_source": "theme_registry.related_etfs + theme_registry.representative_stocks",
+    "operation_boundary": "候选池不是可买清单；操作建议必须另行读取市场仓位、组合约束、档案、估值和盘中规则。"
+  },
+  "summary": {
+    "themes_total": 0,
+    "themes_confirmed": 0,
+    "ready_for_review": 0,
+    "research_first": 0,
+    "watch_only": 0
+  },
+  "themes": [],
+  "ready_for_review": [],
+  "research_first": [],
+  "watch_only": [],
+  "data_sources": [],
+  "quality": {
+    "status": "fresh",
+    "warnings": []
+  }
+}
