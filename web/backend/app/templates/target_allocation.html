@@ -3,10 +3,10 @@
   <h1>Target Allocation</h1>
   {% if target_allocation %}
     <div class="metric-grid">
-      <div class="metric"><span class="subtle">Equity Target</span><strong>{{ target_allocation.recommended_equity_range or "n/a" }}</strong></div>
-      <div class="metric"><span class="subtle">Cash/Short Target</span><strong>{{ target_allocation.recommended_bond_cash_range or "n/a" }}</strong></div>
-      <div class="metric"><span class="subtle">Market Score</span><strong>{{ target_allocation.market_position_score or "n/a" }}</strong></div>
-      <div class="metric"><span class="subtle">Offensive Gate</span><strong>{{ target_allocation.offensive_bucket_status or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Equity Target</span><strong>{{ "%.2f"|format(target_allocation.equity_min_pct) }}%-{{ "%.2f"|format(target_allocation.equity_max_pct) }}%</strong></div>
+      <div class="metric"><span class="subtle">Cash/Short Target</span><strong>{{ "%.2f"|format(target_allocation.cash_min_pct) }}%-{{ "%.2f"|format(target_allocation.cash_max_pct) }}%</strong></div>
+      <div class="metric"><span class="subtle">Generated</span><strong>{{ target_allocation.generated_at or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Basis</span><strong>{{ target_allocation.basis_trade_date or "n/a" }}</strong></div>
     </div>
     <h2>Bucket Overlay</h2>
     <table>
@@ -21,7 +21,7 @@
       <tbody>
         {% for bucket in target_allocation.buckets %}
           <tr>
-            <td>{{ bucket.label or bucket.bucket_key }}</td>
+            <td>{{ bucket.bucket }}</td>
             <td class="num">{{ "%.2f"|format(bucket.target_pct) if bucket.target_pct is not none else "" }}</td>
             <td class="num">{{ "%.2f"|format(bucket.actual_pct) if bucket.actual_pct is not none else "" }}</td>
             <td class="num">{{ "%.2f"|format(bucket.gap_pct) if bucket.gap_pct is not none else "" }}</td>

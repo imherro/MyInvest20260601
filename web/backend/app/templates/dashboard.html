@@ -3,20 +3,20 @@
   <h1>Dashboard</h1>
   <div class="metric-grid">
     <div class="metric">
-      <span class="subtle">Action State</span>
-      <strong>{{ plan.action_state if plan else "n/a" }}</strong>
+      <span class="subtle">Action Status</span>
+      <strong>{{ plan.status if plan else "n/a" }}</strong>
     </div>
     <div class="metric">
       <span class="subtle">Equity Ratio</span>
-      <strong>{{ "%.2f"|format(portfolio.equity_weight_pct) if portfolio else "n/a" }}%</strong>
+      <strong>{{ "%.2f"|format(portfolio.equity_pct) if portfolio else "n/a" }}%</strong>
     </div>
     <div class="metric">
       <span class="subtle">Cash/Short Ratio</span>
-      <strong>{{ "%.2f"|format(portfolio.bond_cash_weight_pct) if portfolio else "n/a" }}%</strong>
+      <strong>{{ "%.2f"|format(portfolio.cash_short_pct) if portfolio else "n/a" }}%</strong>
     </div>
     <div class="metric">
-      <span class="subtle">Database</span>
-      <strong>{{ checks.mode }}</strong>
+      <span class="subtle">System</span>
+      <strong>{{ checks.status }}</strong>
     </div>
   </div>
 
@@ -37,8 +37,8 @@
           <td>{{ item.module }}</td>
           <td>{{ item.generated_at or "" }}</td>
           <td>{{ item.basis_trade_date or "" }}</td>
-          <td><span class="status {{ 'warn' if item.quality_status not in ['ok', 'fresh'] else '' }}">{{ item.quality_status or "n/a" }}</span></td>
-          <td><span class="status {{ 'warn' if item.staleness_status not in ['ok', 'fresh'] else '' }}">{{ item.staleness_status or "n/a" }}</span></td>
+          <td><span class="status">{{ item.sha256[:8] if item.sha256 else "n/a" }}</span></td>
+          <td><span class="status">{{ "current" }}</span></td>
         </tr>
       {% endfor %}
     </tbody>

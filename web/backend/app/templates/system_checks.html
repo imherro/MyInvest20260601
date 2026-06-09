@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>System Checks</h1>
+  <div class="metric-grid">
+    <div class="metric"><span class="subtle">System</span><strong>{{ checks.status }}</strong></div>
+    <div class="metric"><span class="subtle">Sanitizer</span><strong>{{ checks.sensitive_scan.status }}</strong></div>
+    <div class="metric"><span class="subtle">ResearchFirst</span><strong>{{ checks.research_first_gate.status }}</strong></div>
+    <div class="metric"><span class="subtle">Allocation</span><strong>{{ checks.allocation_consistency.status }}</strong></div>
+  </div>
+  <h2>Table Counts</h2>
+  <table>
+    <thead>
+      <tr><th>Table</th><th class="num">Rows</th></tr>
+    </thead>
+    <tbody>
+      {% for table, count in checks.counts.items() %}
+        <tr><td>{{ table }}</td><td class="num">{{ count }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

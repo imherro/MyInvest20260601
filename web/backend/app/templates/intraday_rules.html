@@ -3,10 +3,10 @@
   <h1>Intraday Rules</h1>
   {% if intraday_rules %}
     <div class="metric-grid">
-      <div class="metric"><span class="subtle">Default Gate</span><strong>{{ intraday_rules.default_market_gate or "n/a" }}</strong></div>
-      <div class="metric"><span class="subtle">Staleness</span><strong>{{ intraday_rules.staleness_status or "n/a" }}</strong></div>
-      <div class="metric"><span class="subtle">Target Equity</span><strong>{{ "%.2f"|format(intraday_rules.target_equity_pct) }}%</strong></div>
-      <div class="metric"><span class="subtle">Actual Equity</span><strong>{{ "%.2f"|format(intraday_rules.actual_equity_pct) }}%</strong></div>
+      <div class="metric"><span class="subtle">Risk Mode</span><strong>{{ intraday_rules.risk_mode or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Status</span><strong>{{ intraday_rules.status or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Stale</span><strong>{{ "yes" if intraday_rules.stale_flag else "no" }}</strong></div>
+      <div class="metric"><span class="subtle">Degraded</span><strong>{{ "yes" if intraday_rules.degraded_flag else "no" }}</strong></div>
     </div>
     <h2>Bucket Rules</h2>
     <table>
@@ -22,11 +22,11 @@
       <tbody>
         {% for bucket in intraday_rules.buckets %}
           <tr>
-            <td>{{ bucket.label or bucket.bucket_key }}</td>
+            <td>{{ bucket.bucket }}</td>
             <td class="num">{{ "%.2f"|format(bucket.target_pct) if bucket.target_pct is not none else "" }}</td>
             <td class="num">{{ "%.2f"|format(bucket.actual_pct) if bucket.actual_pct is not none else "" }}</td>
             <td class="num">{{ "%.2f"|format(bucket.gap_pct) if bucket.gap_pct is not none else "" }}</td>
-            <td>{{ bucket.note or "" }}</td>
+            <td></td>
           </tr>
         {% endfor %}
       </tbody>

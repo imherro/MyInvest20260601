@@ -5,8 +5,8 @@
     <div class="stack">
       {% for item in entries %}
         <article class="row-card">
-          <strong>{{ item.entry_date or "" }}</strong>
-          <div>{{ item.title }}</div>
+          <strong>{{ item.entry_time or "" }}</strong>
+          <div>{{ item.summary }}</div>
         </article>
       {% endfor %}
     </div>
