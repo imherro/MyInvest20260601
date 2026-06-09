@@ -2033,3 +2033,25 @@
 - Markdown: `research/portfolio/research_quality_audit_2026-06-09_152840.md`
 - JSON: `research/portfolio/research_quality_audit_2026-06-09_152840.json`
 - Boundary: current holdings only; ratio-only.
+
+## 2026-06-09_153805 ResearchFirst补档：510500.SH 中证500ETF南方；rating=C，score=55，role=core_base，boundary=research_only。
+- Markdown: `research/etfs/510500.SH_中证500ETF南方_2026-06-09_153805.md`
+- JSON: `research/etfs/510500.SH_中证500ETF南方_2026-06-09_153805.json`
+- Valuation: `research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-09_153429.json`
+- Boundary: ETF research only; no single-security operation instruction.
+
+## 2026-06-09_154120 current holding research quality audit after 510500 profile and P1 valuation refresh: P0=0, P1=2, P2=5, OK=28.
+- Markdown: `research/portfolio/research_quality_audit_2026-06-09_154120.md`
+- JSON: `research/portfolio/research_quality_audit_2026-06-09_154120.json`
+- Basis snapshot: `research/portfolio/portfolio_snapshot_2026-06-09_143440.json`
+- Boundary: current holdings only; ratio-only; no single-security operation instruction.
+
+## 2026-06-09 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约43.52%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-09_154226_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-09_154226_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-09_143440.json` generated_at=2026-06-09_143440 basis=2026-06-09
+  - `research/allocation/target_allocation_2026-06-09_150300.json` generated_at=2026-06-09_150300 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-09_154225 basis=None

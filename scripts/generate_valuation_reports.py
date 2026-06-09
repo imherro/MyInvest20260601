@@ -429,6 +429,7 @@ def build_allocation_map() -> dict[str, Any]:
     summary = allocation.get("summary", {})
     equity_target = parse_pct_text(summary.get("recommended_equity_center"), 50.0)
     cash_target = parse_pct_text(summary.get("recommended_bond_cash_center"), 100.0 - equity_target)
+    allocation_overlay_rows = ((allocation.get("actual_allocation_overlay") or {}).get("buckets")) or []
     missing_upstream = []
     if not allocation_path:
         missing_upstream.append(
@@ -459,46 +460,54 @@ def build_allocation_map() -> dict[str, Any]:
                 "fallback": "真实持仓覆盖层为空。",
             }
         )
-    category_summary = snapshot.get("category_summary", {})
-
     actual_by_bucket = {key: 0.0 for key in BUCKETS}
-    holdings = snapshot.get("holdings", [])
-    if holdings:
-        for item in holdings:
-            code = str(item.get("code", "")).strip()
-            bucket = str(item.get("allocation_bucket") or "")
-            if bucket not in BUCKETS:
-                category = str(item.get("category") or "")
-                bucket = SNAPSHOT_CATEGORY_BUCKET.get(category) or bucket_for_code(code)
-            actual_by_bucket[bucket] += float(item.get("weight_pct") or 0)
-        actual_by_bucket["cash_short"] += float(category_summary.get("cash_uninvested") or 0)
-    else:
-        for category, weight in category_summary.items():
-            bucket = SNAPSHOT_CATEGORY_BUCKET.get(category, "legacy_watch")
-            actual_by_bucket[bucket] += float(weight or 0)
-
     target_by_bucket = {key: 0.0 for key in BUCKETS}
-    if ideal_segments_source:
-        for item in ideal_segments_source:
-            key = str(item.get("key", ""))
-            if key in target_by_bucket:
-                target_by_bucket[key] += float(item.get("target_pct") or 0)
+    if allocation_overlay_rows:
+        for row in allocation_overlay_rows:
+            key = str(row.get("key") or "")
+            if key not in BUCKETS:
+                continue
+            actual_by_bucket[key] = float(row.get("actual_pct") or 0)
+            target_by_bucket[key] = float(row.get("target_pct") or 0)
     else:
-        target_by_bucket["cash_short"] = cash_target
-        raw_equity_buckets = {key: 0.0 for key in ["core_base", "attack_mainline", "defense"]}
-        for group in allocation.get("target_allocation", {}).get("groups", []):
-            bucket = target_group_bucket(group)
-            if bucket in raw_equity_buckets:
-                raw_equity_buckets[bucket] += float(group.get("target_center_pct") or 0)
-
-        raw_total = sum(raw_equity_buckets.values())
-        if raw_total > 0:
-            for key, value in raw_equity_buckets.items():
-                target_by_bucket[key] = equity_target * value / raw_total
+        category_summary = snapshot.get("category_summary", {})
+        holdings = snapshot.get("holdings", [])
+        if holdings:
+            for item in holdings:
+                code = str(item.get("code", "")).strip()
+                bucket = str(item.get("allocation_bucket") or "")
+                if bucket not in BUCKETS:
+                    category = str(item.get("category") or "")
+                    bucket = SNAPSHOT_CATEGORY_BUCKET.get(category) or bucket_for_code(code)
+                actual_by_bucket[bucket] += float(item.get("weight_pct") or 0)
+            actual_by_bucket["cash_short"] += float(category_summary.get("cash_uninvested") or 0)
         else:
-            target_by_bucket["core_base"] = equity_target * 0.40
-            target_by_bucket["attack_mainline"] = equity_target * 0.40
-            target_by_bucket["defense"] = equity_target * 0.20
+            for category, weight in category_summary.items():
+                bucket = SNAPSHOT_CATEGORY_BUCKET.get(category, "legacy_watch")
+                actual_by_bucket[bucket] += float(weight or 0)
+
+    if not allocation_overlay_rows:
+        if ideal_segments_source:
+            for item in ideal_segments_source:
+                key = str(item.get("key", ""))
+                if key in target_by_bucket:
+                    target_by_bucket[key] += float(item.get("target_pct") or 0)
+        else:
+            target_by_bucket["cash_short"] = cash_target
+            raw_equity_buckets = {key: 0.0 for key in ["core_base", "attack_mainline", "defense"]}
+            for group in allocation.get("target_allocation", {}).get("groups", []):
+                bucket = target_group_bucket(group)
+                if bucket in raw_equity_buckets:
+                    raw_equity_buckets[bucket] += float(group.get("target_center_pct") or 0)
+
+            raw_total = sum(raw_equity_buckets.values())
+            if raw_total > 0:
+                for key, value in raw_equity_buckets.items():
+                    target_by_bucket[key] = equity_target * value / raw_total
+            else:
+                target_by_bucket["core_base"] = equity_target * 0.40
+                target_by_bucket["attack_mainline"] = equity_target * 0.40
+                target_by_bucket["defense"] = equity_target * 0.20
 
     buckets = []
     for key in BUCKET_ORDER:

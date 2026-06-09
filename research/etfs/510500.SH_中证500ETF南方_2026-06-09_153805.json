@@ -1,0 +1,233 @@
+{
+  "module": "etf_research",
+  "version": "1.1",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09_153805",
+  "basis_trade_date": "20260608",
+  "code": "510500.SH",
+  "name": "中证500ETF南方",
+  "rating": "C",
+  "data_sources": [
+    "Tushare fund_basic",
+    "Tushare fund_daily",
+    "Tushare fund_nav",
+    "Tushare fund_share",
+    "Tushare fund_portfolio",
+    "Tushare stock_basic for component names",
+    "research/market/market_score_2026-06-09_100448.json",
+    "research/allocation/target_allocation_2026-06-09_150300.json",
+    "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+    "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-09_153429.json"
+  ],
+  "privacy_policy": {
+    "ratio_only": true,
+    "excluded_fields": [
+      "account_identifier_field",
+      "position_quantity",
+      "portfolio_raw_value",
+      "profit_raw_value",
+      "turnover_raw_value",
+      "fund_share_raw_value",
+      "component_raw_value"
+    ]
+  },
+  "input_research_files": {
+    "market_position_report": "research/market/market_score_2026-06-09_100448.json",
+    "target_allocation": "research/allocation/target_allocation_2026-06-09_150300.json",
+    "portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+    "valuation_report": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-09_153429.json"
+  },
+  "summary": {
+    "bucket_role": "core_base",
+    "action_rating": "Watch",
+    "etf_score": 55,
+    "target_position_range": "宽基/核心底仓候选；具体比例只由目标仓位和组合模块决定，不构成本档案指令。",
+    "confidence": "medium",
+    "one_line_conclusion": "中证500ETF南方是中证500宽基 beta 工具，适合作为核心底仓候选输入；但当前市场仓位处于风险收缩区，且估值代理处于拥挤/风险区，因此本档案只补齐 ResearchFirst 缺口，不生成单只 ETF 买入、卖出、加仓或减仓指令。"
+  },
+  "basic_info": {
+    "fund_code": "510500.SH",
+    "fund_name": "中证500ETF南方",
+    "tracked_index_or_asset": "中证500指数",
+    "fund_company": "南方基金",
+    "fee": "管理费 0.15%，托管费 0.05%",
+    "long_term_holding_suitable": "适合作为宽基核心底仓候选，但不应脱离市场仓位上限和估值拥挤约束。"
+  },
+  "position_role": {
+    "bucket_role": "core_base",
+    "allocation_bucket": "core_base",
+    "related_theme": "宽基 / 中证500 / A股中盘核心beta",
+    "strategic_theme_rating": "不适用",
+    "tactical_theme_rating": "不适用",
+    "theme_stage": "broad_base",
+    "allocation_purpose": "补足核心宽基底仓候选工具，不承担进攻主线角色。",
+    "alternative_etfs": [
+      "510300.SH 沪深300ETF华泰柏瑞",
+      "159915.SZ 创业板ETF易方达"
+    ],
+    "overlap_with_existing_holdings": "与单一行业主题ETF重叠较低，但与全市场权益仓方向同涨同跌；组合层需控制总权益上限。"
+  },
+  "scores": {
+    "index_asset_representation": {
+      "weight": 20,
+      "score": 19,
+      "evidence": "中证500宽基ETF，代表A股中盘宽基beta。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 5,
+      "evidence": "估值/价格代理状态：拥挤/风险区；缺少完整长期指数PE/PB分位。"
+    },
+    "trend": {
+      "weight": 20,
+      "score": 5,
+      "evidence": "5日-3.61%，20日-9.47%，60日-4.87%；相对20/60日均线需跟踪。"
+    },
+    "liquidity": {
+      "weight": 10,
+      "score": 9,
+      "evidence": "成交活跃度分位约72.4%，本档案不保存成交额原值。"
+    },
+    "flow_proxy": {
+      "weight": 10,
+      "score": 4,
+      "evidence": "份额代理20日-17.65%，60日-51.87%；不是官方净申购赎回。"
+    },
+    "theme_allocation_fit": {
+      "weight": 15,
+      "score": 13,
+      "evidence": "宽基核心底仓候选，与核心仓结构匹配。"
+    },
+    "portfolio_complement": {
+      "weight": 10,
+      "score": 8,
+      "evidence": "可改善核心宽基不足，但市场总权益上限优先。"
+    },
+    "base_score": 63,
+    "risk_penalty": 8,
+    "final_score": 55
+  },
+  "valuation": {
+    "valuation_report": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-09_153429.json",
+    "current_zone": "拥挤/风险区",
+    "price_percentile_60d": 30.0,
+    "price_percentile_1y": 68.8,
+    "price_percentile_available": 89.32,
+    "premium_discount_pct": 34.97,
+    "method": "ETF价格/净值位置代理 + 可用估值报告；长期指数PE/PB分位仍需补充。"
+  },
+  "trend_and_flow": {
+    "latest_trade_date": "20260608",
+    "returns_pct": {
+      "5d": -3.61,
+      "20d": -9.47,
+      "60d": -4.87,
+      "120d": 13.24
+    },
+    "ma20": 8.5914,
+    "ma60": 8.2883,
+    "fund_share_change_pct": {
+      "20d": -17.65,
+      "60d": -51.87
+    },
+    "activity_percentile": {
+      "latest": 72.4,
+      "avg20": 79.2
+    }
+  },
+  "holdings_structure": {
+    "fund_portfolio_available": true,
+    "latest_disclosure_top10_weight_pct": null,
+    "top_holdings": [
+      {
+        "symbol": "300604.SZ",
+        "name": "长川科技",
+        "weight_pct": null
+      },
+      {
+        "symbol": "688795.SH",
+        "name": "摩尔线程",
+        "weight_pct": null
+      },
+      {
+        "symbol": "688802.SH",
+        "name": "沐曦股份",
+        "weight_pct": null
+      },
+      {
+        "symbol": "301683.SZ",
+        "name": "慧谷新材",
+        "weight_pct": null
+      },
+      {
+        "symbol": "300136.SZ",
+        "name": "信维通信",
+        "weight_pct": null
+      },
+      {
+        "symbol": "002353.SZ",
+        "name": "杰瑞股份",
+        "weight_pct": null
+      },
+      {
+        "symbol": "002202.SZ",
+        "name": "金风科技",
+        "weight_pct": null
+      },
+      {
+        "symbol": "001280.SZ",
+        "name": "中国铀业",
+        "weight_pct": null
+      },
+      {
+        "symbol": "400174.NQ",
+        "name": "",
+        "weight_pct": null
+      },
+      {
+        "symbol": "688525.SH",
+        "name": "佰维存储",
+        "weight_pct": null
+      }
+    ]
+  },
+  "research_triggers_only": {
+    "upgrade_conditions": [
+      "市场仓位分数修复，允许提高核心宽基配置",
+      "估值从拥挤/风险区回到合理配置区",
+      "中证500相对沪深300或全市场宽度出现持续修复"
+    ],
+    "downgrade_conditions": [
+      "估值继续拥挤且市场仓位仍处风险收缩",
+      "跌破关键趋势位且市场广度继续恶化",
+      "组合总权益仍高于目标区间"
+    ],
+    "execution_boundary": "本档案只作为 ETF_RESEARCH 输入，实际动作必须由 ACTION_PLAN 结合总仓位和组合偏离生成。"
+  },
+  "risks": [
+    "宽基ETF不能抵消总权益风险，市场仓位低时仍需服从总仓位上限。",
+    "当前估值代理偏拥挤，不能因核心底仓角色而忽视赔率。",
+    "中证500风格相对中小盘，波动可能高于沪深300。"
+  ],
+  "data_gaps": {
+    "long_term_valuation_percentile": [
+      "缺少中证500指数长期PE/PB分位，本次主要使用ETF价格/净值位置代理。"
+    ],
+    "etf_share_or_subscription": [
+      "仅取得份额变化比例，未取得官方净申购/赎回原始数据。"
+    ],
+    "portfolio_overlap": [
+      "与其他宽基及主题ETF的精确成分重叠需组合模块另算。"
+    ],
+    "other": [
+      "未使用基金公司官网核验最新申赎清单。"
+    ]
+  },
+  "next_update_triggers": [
+    "市场仓位目标变化",
+    "估值区间变化",
+    "组合核心底仓比例变化",
+    "中证500相对强弱明显变化"
+  ],
+  "decision_log_entry": "2026-06-09_153805 ResearchFirst补档：510500.SH 中证500ETF南方；rating=C，score=55，role=core_base，boundary=research_only。"
+}

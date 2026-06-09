@@ -344,6 +344,21 @@ def display_ui_text(value: Any) -> str:
     return text
 
 
+def staleness_tooltip(stale: dict[str, Any]) -> str:
+    reason = str(stale.get("reason") or "").strip()
+    if not reason or "???" in reason:
+        status = str(stale.get("status") or "legacy_unknown")
+        fallback = {
+            "fresh": "规则依赖检查通过；盘中窗口仅用于观察和风险复核，具体买卖仍以 ACTION_PLAN 为准。",
+            "stale": "规则依赖已过期；盘中窗口仅供观察，不能作为买入或加仓依据。",
+            "blocked": "规则被阻断；缺少必要上游数据或检查未通过。",
+            "degraded": "规则处于降级状态；只能用于观察和风险复核。",
+            "legacy_unknown": "缺少规则状态信息；仅供观察。",
+        }
+        reason = fallback.get(status, "缺少规则状态信息；仅供观察。")
+    return display_ui_text(reason).replace("ACTION_PLAN?", "ACTION_PLAN。")
+
+
 def display_action_text(value: Any) -> str:
     text = display_ui_text(value)
     for source, target in ACTION_TEXT_REPLACEMENTS.items():
@@ -1207,7 +1222,7 @@ class BattleMapWindow(QMainWindow):
         stale_status = str(stale.get("status", "legacy_unknown"))
         stale_color = {"fresh": "#0a7f2e", "stale": "#b00020", "blocked": "#b00020", "degraded": "#d97706", "legacy_unknown": "#9a6700"}.get(stale_status, "#9a6700")
         self._set_card(self.freshness_card, STALE_LABELS.get(stale_status, stale_status), stale_color)
-        self.freshness_card.setToolTip(display_ui_text(stale.get("reason", "缺少规则新鲜度信息；仅供观察。")))
+        self.freshness_card.setToolTip(staleness_tooltip(stale))
         source_label, source_color, source_tip = self._quote_health_label(report)
         self._set_card(self.source_card, source_label, source_color)
         self.source_card.setToolTip(source_tip)

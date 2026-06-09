@@ -1,0 +1,226 @@
+{
+  "module": "valuation_report",
+  "version": "1.0",
+  "code": "603596.SH",
+  "name": "伯特利",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09_153822",
+  "basis_date": "20260608",
+  "asset_type": "stock",
+  "group": "汽车零部件",
+  "role": "个股观察",
+  "confidence": "中",
+  "security_stance": {
+    "label": "低估",
+    "basis": "估值进入低估区，但仍需趋势、资金和基本面复核。",
+    "confidence": "中",
+    "scope": "security_level_only",
+    "not_portfolio_action": true,
+    "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+    "semantic_scope": "valuation"
+  },
+  "one_line_conclusion": "伯特利 当前处于低估观察区；估值区间来自PE/PB/PS历史分位映射价格区间，不是组合级买卖指令。",
+  "valuation_visual": {
+    "metric": "price",
+    "current_value": 29.08,
+    "current_zone": "undervalued_observe",
+    "current_zone_label": "低估观察区",
+    "zones": [
+      {
+        "key": "undervalued_observe",
+        "label": "低估观察区",
+        "min": 29.08,
+        "max": 34.7162,
+        "color": "#2f9e44"
+      },
+      {
+        "key": "reasonable_allocation",
+        "label": "合理配置区",
+        "min": 34.7162,
+        "max": 39.6975,
+        "color": "#74b816"
+      },
+      {
+        "key": "expensive",
+        "label": "偏贵区",
+        "min": 39.6975,
+        "max": 54.3054,
+        "color": "#f59f00"
+      },
+      {
+        "key": "crowded_risk",
+        "label": "拥挤/风险区",
+        "min": 54.3054,
+        "max": 68.8958,
+        "color": "#e03131"
+      }
+    ],
+    "basis": "PE/PB/PS历史分位映射价格区间",
+    "evidence": [
+      "pe_ttm current=19.96, percentile=0.27%",
+      "ps_ttm current=2.17, percentile=0.14%",
+      "pb current=3.33, percentile=0.14%"
+    ]
+  },
+  "index_valuation": {
+    "available": false,
+    "reason": "stock valuation uses daily_basic metrics"
+  },
+  "stock_valuation_metrics": [
+    {
+      "metric": "pe_ttm",
+      "value": 19.961,
+      "percentile": 0.27,
+      "date": "20260608"
+    },
+    {
+      "metric": "pb",
+      "value": 3.3335,
+      "percentile": 0.14,
+      "date": "20260608"
+    },
+    {
+      "metric": "ps_ttm",
+      "value": 2.1662,
+      "percentile": 0.14,
+      "date": "20260608"
+    },
+    {
+      "metric": "dv_ttm",
+      "value": 0.8829,
+      "percentile": 98.33,
+      "date": "20260608"
+    }
+  ],
+  "reference_metrics": {
+    "price_date": "20260608",
+    "last_reference": 29.08,
+    "ma20": 32.1595,
+    "ma60": 41.2965,
+    "moneyflow_5d": -25170.31,
+    "moneyflow_20d": -150483.33,
+    "support": 34.7162,
+    "right_confirm": 41.2965,
+    "risk_zone_start": 54.3054,
+    "current_position_pct": 1.5967,
+    "target_position_range": "0%-2%",
+    "valuation_visual": {
+      "metric": "price",
+      "current_value": 29.08,
+      "current_zone": "undervalued_observe",
+      "current_zone_label": "低估观察区",
+      "zones": [
+        {
+          "key": "undervalued_observe",
+          "label": "低估观察区",
+          "min": 29.08,
+          "max": 34.7162,
+          "color": "#2f9e44"
+        },
+        {
+          "key": "reasonable_allocation",
+          "label": "合理配置区",
+          "min": 34.7162,
+          "max": 39.6975,
+          "color": "#74b816"
+        },
+        {
+          "key": "expensive",
+          "label": "偏贵区",
+          "min": 39.6975,
+          "max": 54.3054,
+          "color": "#f59f00"
+        },
+        {
+          "key": "crowded_risk",
+          "label": "拥挤/风险区",
+          "min": 54.3054,
+          "max": 68.8958,
+          "color": "#e03131"
+        }
+      ],
+      "basis": "PE/PB/PS历史分位映射价格区间",
+      "evidence": [
+        "pe_ttm current=19.96, percentile=0.27%",
+        "ps_ttm current=2.17, percentile=0.14%",
+        "pb current=3.33, percentile=0.14%"
+      ]
+    },
+    "trend_visual": {
+      "available": true,
+      "current": 29.08,
+      "trends": [
+        {
+          "key": "long",
+          "label": "长期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -46.89,
+          "window_days": 250
+        },
+        {
+          "key": "mid",
+          "label": "中期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -41.38,
+          "window_days": 60
+        },
+        {
+          "key": "short",
+          "label": "短期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -10.22,
+          "window_days": 20
+        }
+      ],
+      "drawdown": {
+        "from_sample_high_pct": -68.74,
+        "sample_high": 93.04,
+        "sample_high_date": "20230711",
+        "common_120d_drawdown_pct": -28.96,
+        "deep_120d_drawdown_pct": -40.99,
+        "max_120d_drawdown_pct": -55.57
+      },
+      "rebound": {
+        "from_sample_low_pct": 0.0,
+        "sample_low": 29.08,
+        "sample_low_date": "20260608",
+        "common_120d_rebound_pct": 16.47,
+        "strong_120d_rebound_pct": 34.37,
+        "max_120d_rebound_pct": 98.41
+      }
+    },
+    "risk_markers": {
+      "support": {
+        "label": "风控位",
+        "value": 34.7162,
+        "color": "#2563eb",
+        "shape": "triangle"
+      },
+      "right_confirm": {
+        "label": "右侧确认",
+        "value": 41.2965,
+        "color": "#06b6d4",
+        "shape": "diamond"
+      },
+      "risk_zone_start": {
+        "label": "风险区起点",
+        "value": 54.3054,
+        "color": "#dc2626",
+        "shape": "flag"
+      }
+    },
+    "allocation_bucket": "attack_mainline"
+  },
+  "data_gaps": [],
+  "source": {
+    "tushare": [
+      "daily",
+      "daily_basic",
+      "moneyflow"
+    ],
+    "history_sample_days": 738
+  }
+}

@@ -1,7 +1,7 @@
 {
   "module": "intraday_rules",
   "version": "1.1",
-  "generated_at": "2026-06-09_152618",
+  "generated_at": "2026-06-09_154701",
   "last_updated": "2026-06-09",
   "boundary": "Rules are alert triggers only. They do not create portfolio-level buy/sell orders and do not call any trading API.",
   "data_sources": [
@@ -10,35 +10,35 @@
     "research/market/market_score_2026-06-09_100448.json",
     "research/allocation/target_allocation_2026-06-09_150300.json",
     "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
-    "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-05_103909.json",
+    "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-09_153822.json",
     "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-05_103909.json",
-    "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-05_103909.json",
+    "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-09_153429.json",
     "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-05_103909.json",
-    "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-05_103909.json",
-    "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-05_103909.json",
-    "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-05_103909.json",
-    "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-05_103909.json",
-    "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-05_103909.json",
+    "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-09_153822.json",
+    "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-09_153822.json",
+    "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-09_153822.json",
+    "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-09_153822.json",
+    "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-09_153822.json",
     "research/valuations/valuation_510880_SH_红利ETF华泰柏瑞_2026-06-05_103909.json",
-    "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-05_103909.json",
-    "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-05_103909.json",
-    "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-05_103909.json",
-    "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-05_103909.json",
-    "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-05_103909.json",
-    "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-05_103909.json",
-    "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-05_103909.json",
-    "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-05_103909.json",
-    "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-05_103909.json",
-    "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-05_103909.json",
-    "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-05_103909.json",
-    "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-05_103909.json",
+    "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-09_153822.json",
+    "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-09_153822.json",
+    "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-09_153822.json",
+    "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-09_153822.json",
+    "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-09_153822.json",
+    "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-09_153822.json",
+    "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-09_153822.json",
+    "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-09_153822.json",
+    "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-09_153822.json",
+    "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-09_153822.json",
+    "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-09_153822.json",
+    "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-09_153822.json",
     "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-09_144942.json",
     "research/valuations/valuation_513050_SH_中概互联网ETF易方达_2026-06-05_103909.json",
     "research/valuations/valuation_001280_SZ_中国铀业_2026-06-05_103909.json",
     "research/valuations/valuation_601318_SH_中国平安_2026-06-05_103909.json",
     "research/valuations/valuation_002241_SZ_歌尔股份_2026-06-05_103909.json",
-    "research/valuations/valuation_603596_SH_伯特利_2026-06-05_103909.json",
-    "research/valuations/valuation_688333_SH_西安铂力特_2026-06-05_103909.json",
+    "research/valuations/valuation_603596_SH_伯特利_2026-06-09_153822.json",
+    "research/valuations/valuation_688333_SH_西安铂力特_2026-06-09_153822.json",
     "research/valuations/valuation_002041_SZ_登海种业_2026-06-09_112659.json",
     "research/valuations/valuation_002258_SZ_利尔化学_2026-06-09_112659.json",
     "research/valuations/valuation_002352_SZ_顺丰控股_2026-06-09_112659.json",
@@ -78,10 +78,10 @@
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "9dfbafb00ec9b0da1cf80d9c20bca5ab3bf90790d05f9f105530dc679365fa7c"
+        "path": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "6bce0c92f1407b6997063b5392f6d69f4b40afaa054340e3af2ebc0117f37074"
       },
       {
         "module": "valuation_report",
@@ -92,10 +92,10 @@
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "d6195c17ab107ae8139d0123e176b0e40dc2d4b3f872d09ea7cb944fb508e8f7"
+        "path": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-09_153429.json",
+        "generated_at": "2026-06-09_153429",
+        "basis_trade_date": "20260608",
+        "sha256": "29d3953c8dd51caaa7c35dad88f871ec6eafa2559d0e9a716d63122f8db3211d"
       },
       {
         "module": "valuation_report",
@@ -106,38 +106,38 @@
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "79817c13e9c8851693c047de7782565ad44e1dba568d32030065a70329ad8460"
+        "path": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "a48dcde0fd73cfe831be64f077f7a3724a0d22bec06c0d1ca44ebc0770fddc2c"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "33dd3eb010d0e322e2a7b84fda3e7ee2c128a80d8dff25da9370335e1a8c1805"
+        "path": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "b617a80aae14fe7ae0e58720ba75ef2e740346eddb1934ffa0ae537fb1522e87"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "4d7583c0d80fb28b9de80260485dc9251e4a217404cbaf1eecb2d16b3834c284"
+        "path": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "3cc21c164378c0c01a37c3fa1893fb61291558f4bdb8d7b94ca66153fb8c0d60"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "f09fc39ba42f3ea01ee9f1079ff216b7fba5e2ecbc1124d4394e79436df1af5a"
+        "path": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "901f5ef8d2054e9a1cd384ad85d60d5fbe996a774fc731c51faca64b2bcda438"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "f2287958204bce10b3e81895afd4b5937e2fbaa1a565f19c719fd91edd30c9e6"
+        "path": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "4ef6643b8a26350ccaf058ad8da385e271852ff0fb9dc52aaf4ee2422589ffde"
       },
       {
         "module": "valuation_report",
@@ -148,87 +148,87 @@
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "3553cd0d31fc3a08cb65e77d2aba9a741707265c13242888524ab915e79a6117"
+        "path": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "6df4719731f5c0f142ead593491a31bfb6cb4242988403ac4c3094c892aa8b43"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "cf0e371209c64e59b8783d2c034506af2750653c82740e70bb8d5650097e8309"
+        "path": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "9fe1bf9588ce7ed51162e9d49064cf2e8cfc75fe4d5d8c08faf4edab1da9bcfd"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "6dc4d325f9ff789da2127b1481d6fe75dcea807989dce50e9940c2fc294a2c05"
+        "path": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "dc860e82e6b0b8fbe4f7033f5c5852df89c0b5dfe7b04cde9cd0bc4c4d70eb05"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "6d617c33204b6e4add13f7e28dac2f514087d54fc2d2fb475da635ebe62299f1"
+        "path": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "d89b9a3bc56cda13a80af2c609feb6e7ca82f938490294e0f096b484393bd1ca"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "ac29ca2564419ed60972b63017b469842caa09fc4083c2e81223c19e68308f28"
+        "path": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "9e6df1aff12bf6f56517f827fe83ab57d667ed8c062ad82b186f33ac29e856ec"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "c8db9c8b8b93c249cfa46aea518c82b2ffcb309c393f15817c77470f60ba9c29"
+        "path": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "3ffd24ae419662138813e393e0865277ee42af3583a43140701a854ad3c5e432"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "bb805905945aeaf3aa2a5401a61fef8a0ae5289e01fea2fc14c4ecb2d7187c1f"
+        "path": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "5d0345f2333a74996a28b12f7550caa9cd10ae76f2858960f07f72b3f581ed2e"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "4df688b1b50f2a4e5d2d387013d2e31287161a4a8c0ed1be024ed38d967b91bf"
+        "path": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "3dae1fa510e106b559e6f3e05b3d2ddb5120430750e86853e097e332c6d1cef2"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "08c68d634c80abc8255ca14ef4f9e01d1de8f0830e1b09547176e5061c3e27f6"
+        "path": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "1708262eb5f46290c58d483dd7478648f00fa2a07cdb0eb3682ddd872be70183"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "f47fc78b47255e339fd0afcc8439f398fdfc4df72e47960a6c1bbbb9f517f590"
+        "path": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "edd7b09f678e8b41bb2b4638e68f4587a0706dce585fc691d7876240c360c969"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "87cb01c3c6a12a5cee0460a7f0c851044b385f573e5d6d59661d46b5b67d542f"
+        "path": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "3b5fd31fda0c132ba25b1cb35c2b4db122133623ddfcbe4b75a4efe71c72199c"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "64bc44fdc83fb844e27cdcb05a047fb36e20f12756f9d9e24cc78929fd81fcac"
+        "path": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "b6a1c46aa2f9413ea3bee222cf31fe51a82469e435d83b18b097713e2181f27e"
       },
       {
         "module": "valuation_report",
@@ -267,17 +267,17 @@
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_603596_SH_伯特利_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "09d67d6270dc3371f38f4777c96a9bac276f170f76ac9062f0e7af0a0d1bf87b"
+        "path": "research/valuations/valuation_603596_SH_伯特利_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "4d0956b554392b39d4ed875cc189a0aca452696945f0f50065a6539cb45d19eb"
       },
       {
         "module": "valuation_report",
-        "path": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "b8c37fca9870de4383490d1a439a80fa9621206ca7a28c22b0320d01a793ad90"
+        "path": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-09_153822.json",
+        "generated_at": "2026-06-09_153822",
+        "basis_trade_date": "20260608",
+        "sha256": "a7b10a6dc4ae38e2e746e9066a94415bf30fe7495768373563284043e370184e"
       },
       {
         "module": "valuation_report",
@@ -375,9 +375,9 @@
   },
   "staleness": {
     "status": "fresh",
-    "checked_at": "2026-06-09_152618",
+    "checked_at": "2026-06-09_154225",
     "mode": "fresh",
-    "reason": "?????????????????????????????? ACTION_PLAN?",
+    "reason": "当前盘中规则引用最新上游，可用于实时观察；买卖动作仍必须进入ACTION_PLAN。",
     "findings": []
   },
   "global_gate": {
@@ -398,8 +398,8 @@
     "portfolio_snapshot_file": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
     "target_equity_pct": 35.0,
     "target_cash_short_pct": 65.0,
-    "actual_equity_pct": 43.61,
-    "actual_cash_short_pct": 56.39,
+    "actual_equity_pct": 43.52,
+    "actual_cash_short_pct": 56.48,
     "bucket_model": "理想仓位由目标配置模块提供；真实持仓只作为覆盖层，不反向改变理想结构。",
     "ideal_segments": [
       {
@@ -432,36 +432,36 @@
         "key": "core_base",
         "label": "宽基底仓",
         "color": "#2f6fbd",
-        "actual_pct": 1.345,
-        "gap_pct": -18.605
+        "actual_pct": 1.34,
+        "gap_pct": -18.61
       },
       {
         "key": "attack_mainline",
         "label": "进攻主线仓",
         "color": "#8b5cf6",
-        "actual_pct": 12.4332,
-        "gap_pct": 7.5332
+        "actual_pct": 12.43,
+        "gap_pct": 7.53
       },
       {
         "key": "defense",
         "label": "防御仓",
         "color": "#0f8b6f",
-        "actual_pct": 17.4622,
-        "gap_pct": 7.3122
+        "actual_pct": 17.46,
+        "gap_pct": 7.31
       },
       {
         "key": "legacy_watch",
         "label": "其他/待清理",
         "color": "#9a6700",
-        "actual_pct": 12.2802,
-        "gap_pct": 12.2802
+        "actual_pct": 12.28,
+        "gap_pct": 12.28
       },
       {
         "key": "cash_short",
         "label": "现金/短融",
         "color": "#5b6b7a",
-        "actual_pct": 56.4826,
-        "gap_pct": -8.5174
+        "actual_pct": 56.48,
+        "gap_pct": -8.52
       }
     ],
     "buckets": [
@@ -470,8 +470,8 @@
         "label": "宽基底仓",
         "color": "#2f6fbd",
         "target_pct": 19.95,
-        "actual_pct": 1.345,
-        "gap_pct": -18.605,
+        "actual_pct": 1.34,
+        "gap_pct": -18.61,
         "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
       },
       {
@@ -479,8 +479,8 @@
         "label": "进攻主线仓",
         "color": "#8b5cf6",
         "target_pct": 4.9,
-        "actual_pct": 12.4332,
-        "gap_pct": 7.5332,
+        "actual_pct": 12.43,
+        "gap_pct": 7.53,
         "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
       },
       {
@@ -488,8 +488,8 @@
         "label": "防御仓",
         "color": "#0f8b6f",
         "target_pct": 10.15,
-        "actual_pct": 17.4622,
-        "gap_pct": 7.3122,
+        "actual_pct": 17.46,
+        "gap_pct": 7.31,
         "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
       },
       {
@@ -497,8 +497,8 @@
         "label": "其他/待清理",
         "color": "#9a6700",
         "target_pct": 0.0,
-        "actual_pct": 12.2802,
-        "gap_pct": 12.2802,
+        "actual_pct": 12.28,
+        "gap_pct": 12.28,
         "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
       },
       {
@@ -506,8 +506,8 @@
         "label": "现金/短融",
         "color": "#5b6b7a",
         "target_pct": 65.0,
-        "actual_pct": 56.4826,
-        "gap_pct": -8.5174,
+        "actual_pct": 56.48,
+        "gap_pct": -8.52,
         "note": "以最新市场仓位中心换算；其他/待清理目标为0，用来暴露组合拖尾。"
       }
     ],
@@ -518,8 +518,8 @@
       "code": "511360.SH",
       "name": "短融ETF海富通",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-09_153822.md",
       "group": "现金短融",
       "role": "现金/短融桶",
       "allocation_bucket": "cash_short",
@@ -533,65 +533,66 @@
         "boundary": "现金/短融仓位动作由市场仓位和ACTION_PLAN决定，不由短融ETF价格分位决定。"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 113.535,
-        "ma20": 113.4875,
-        "ma60": 113.3512,
+        "price_date": "20260608",
+        "last_reference": 113.558,
+        "ma20": 113.4995,
+        "ma60": 113.3648,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 108.5042,
-        "right_confirm": 113.3512,
-        "risk_zone_start": 112.5132,
+        "support": 108.5286,
+        "right_confirm": 113.3648,
+        "risk_zone_start": 112.5242,
         "current_position_pct": 56.3926,
         "target_position_range": "50%-55%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 113.535,
+          "current_value": 113.558,
           "current_zone": "reasonable_allocation",
           "current_zone_label": "合理配置区",
           "zones": [
             {
               "key": "undervalued_observe",
               "label": "低估观察区",
-              "min": 107.5848,
-              "max": 108.5042,
+              "min": 107.6147,
+              "max": 108.5286,
               "color": "#cbd5e1"
             },
             {
               "key": "reasonable_allocation",
               "label": "合理配置区",
-              "min": 108.5042,
-              "max": 110.8075,
+              "min": 108.5286,
+              "max": 110.823,
               "color": "#5b6b7a"
             },
             {
               "key": "expensive",
               "label": "偏贵区",
-              "min": 110.8075,
-              "max": 112.5132,
+              "min": 110.823,
+              "max": 112.5242,
               "color": "#cbd5e1"
             },
             {
               "key": "crowded_risk",
               "label": "拥挤/风险区",
-              "min": 112.5132,
-              "max": 113.535,
+              "min": 112.5242,
+              "max": 113.558,
               "color": "#cbd5e1"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": -0.01
+          "semantic_scope": "valuation",
+          "premium_discount_pct": 0.0
         },
         "trend_visual": {
           "available": true,
-          "current": 113.535,
+          "current": 113.558,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": 1.54,
+              "change_pct": 1.56,
               "window_days": 250
             },
             {
@@ -607,20 +608,20 @@
               "label": "短期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": 0.11,
+              "change_pct": 0.1,
               "window_days": 20
             }
           ],
           "drawdown": {
             "from_sample_high_pct": 0.0,
-            "sample_high": 113.535,
-            "sample_high_date": "20260604",
+            "sample_high": 113.558,
+            "sample_high_date": "20260608",
             "common_120d_drawdown_pct": -0.0,
             "deep_120d_drawdown_pct": -0.01,
             "max_120d_drawdown_pct": -1.06
           },
           "rebound": {
-            "from_sample_low_pct": 6.31,
+            "from_sample_low_pct": 6.33,
             "sample_low": 106.794,
             "sample_low_date": "20230908",
             "common_120d_rebound_pct": 0.9,
@@ -631,19 +632,19 @@
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 108.5042,
+            "value": 108.5286,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 113.3512,
+            "value": 113.3648,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 112.5132,
+            "value": 112.5242,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -831,80 +832,82 @@
       "code": "510500.SH",
       "name": "中证500ETF南方",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-09_153429.json",
+      "source_report": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-09_153429.md",
       "group": "核心宽基",
       "role": "核心仓",
       "allocation_bucket": "core_base",
       "ideal_position_range": "0%-15%",
       "security_stance": {
         "label": "泡沫",
-        "basis": "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。",
+        "basis": "估值进入泡沫/高风险区，需要优先复核风险暴露。",
         "confidence": "中高",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "valuation"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 8.448,
-        "ma20": 8.6551,
-        "ma60": 8.2955,
+        "price_date": "20260608",
+        "last_reference": 8.068,
+        "ma20": 8.5914,
+        "ma60": 8.2883,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 5.4276,
-        "right_confirm": 8.2955,
-        "risk_zone_start": 7.251,
+        "support": 5.4268,
+        "right_confirm": 8.2883,
+        "risk_zone_start": 7.2616,
         "current_position_pct": 1.345,
         "target_position_range": "0%-15%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 8.448,
+          "current_value": 8.068,
           "current_zone": "crowded_risk",
           "current_zone_label": "拥挤/风险区",
           "zones": [
             {
               "key": "undervalued_observe",
               "label": "低估观察区",
-              "min": 4.7915,
-              "max": 5.4276,
+              "min": 4.7907,
+              "max": 5.4268,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
               "label": "合理配置区",
-              "min": 5.4276,
-              "max": 5.8945,
+              "min": 5.4268,
+              "max": 5.893,
               "color": "#74b816"
             },
             {
               "key": "expensive",
               "label": "偏贵区",
-              "min": 5.8945,
-              "max": 7.251,
+              "min": 5.893,
+              "max": 7.2616,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
               "label": "拥挤/风险区",
-              "min": 7.251,
-              "max": 8.448,
+              "min": 7.2616,
+              "max": 8.4303,
               "color": "#e03131"
             }
           ],
           "basis": "跟踪指数估值 + ETF价格/净值位置",
-          "premium_discount_pct": -0.05
+          "semantic_scope": "valuation",
+          "premium_discount_pct": 0.12
         },
         "trend_visual": {
           "available": true,
-          "current": 8.448,
+          "current": 8.068,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 49.21,
+              "change_pct": 42.62,
               "window_days": 250
             },
             {
@@ -912,7 +915,7 @@
               "label": "中期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": 0.32,
+              "change_pct": -4.87,
               "window_days": 60
             },
             {
@@ -920,43 +923,43 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -3.68,
+              "change_pct": -9.47,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -6.23,
+            "from_sample_high_pct": -10.45,
             "sample_high": 9.009,
             "sample_high_date": "20260513",
-            "common_120d_drawdown_pct": -10.35,
-            "deep_120d_drawdown_pct": -14.09,
+            "common_120d_drawdown_pct": -10.39,
+            "deep_120d_drawdown_pct": -14.1,
             "max_120d_drawdown_pct": -24.68
           },
           "rebound": {
-            "from_sample_low_pct": 86.82,
+            "from_sample_low_pct": 78.42,
             "sample_low": 4.522,
             "sample_low_date": "20240913",
-            "common_120d_rebound_pct": 17.92,
-            "strong_120d_rebound_pct": 29.8,
+            "common_120d_rebound_pct": 17.95,
+            "strong_120d_rebound_pct": 29.85,
             "max_120d_rebound_pct": 42.24
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 5.4276,
+            "value": 5.4268,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 8.2955,
+            "value": 8.2883,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 7.251,
+            "value": 7.2616,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -974,25 +977,25 @@
             {
               "metric": "last",
               "op": "<=",
-              "value": 5.4276
+              "value": 5.4268
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
           "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "510500_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入拥挤/风险区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 7.251
+              "value": 7.2616
             }
           ],
           "near_threshold_pct": 1.0,
@@ -1181,80 +1184,82 @@
       "code": "159201.SZ",
       "name": "自由现金流ETF华夏",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-09_153822.md",
       "group": "权益防御/质量现金流",
       "role": "防御仓观察",
       "allocation_bucket": "defense",
       "ideal_position_range": "3%-6%",
       "security_stance": {
-        "label": "偏贵",
-        "basis": "估值偏贵，控制新增，等待赔率改善。",
+        "label": "价格偏贵",
+        "basis": "仅基于ETF价格/净值历史位置，控制新增需结合市场门禁。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 1.203,
-        "ma20": 1.253,
-        "ma60": 1.3014,
+        "price_date": "20260608",
+        "last_reference": 1.172,
+        "ma20": 1.2402,
+        "ma60": 1.2945,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
         "support": 1.0,
-        "right_confirm": 1.3014,
-        "risk_zone_start": 1.2986,
+        "right_confirm": 1.2945,
+        "risk_zone_start": 1.2982,
         "current_position_pct": 4.4709,
         "target_position_range": "3%-6%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 1.203,
+          "current_value": 1.172,
           "current_zone": "expensive",
-          "current_zone_label": "偏贵区",
+          "current_zone_label": "价格偏贵区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 0.96,
               "max": 1.0,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
+              "label": "价格合理区",
               "min": 1.0,
-              "max": 1.149,
+              "max": 1.1505,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 1.149,
-              "max": 1.2986,
+              "label": "价格偏贵区",
+              "min": 1.1505,
+              "max": 1.2982,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 1.2986,
-              "max": 1.3537,
+              "label": "价格拥挤区",
+              "min": 1.2982,
+              "max": 1.3536,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": 0.02
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.29
         },
         "trend_visual": {
           "available": true,
-          "current": 1.203,
+          "current": 1.172,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 21.64,
+              "change_pct": 19.23,
               "window_days": 250
             },
             {
@@ -1262,7 +1267,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -13.52,
+              "change_pct": -15.62,
               "window_days": 60
             },
             {
@@ -1270,24 +1275,24 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -8.38,
+              "change_pct": -10.81,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -14.5,
+            "from_sample_high_pct": -16.7,
             "sample_high": 1.407,
             "sample_high_date": "20260312",
-            "common_120d_drawdown_pct": -5.85,
-            "deep_120d_drawdown_pct": -7.75,
-            "max_120d_drawdown_pct": -14.5
+            "common_120d_drawdown_pct": -5.9,
+            "deep_120d_drawdown_pct": -7.89,
+            "max_120d_drawdown_pct": -16.7
           },
           "rebound": {
-            "from_sample_low_pct": 33.96,
+            "from_sample_low_pct": 30.51,
             "sample_low": 0.898,
             "sample_low_date": "20250407",
-            "common_120d_rebound_pct": 18.49,
-            "strong_120d_rebound_pct": 23.0,
+            "common_120d_rebound_pct": 18.46,
+            "strong_120d_rebound_pct": 22.97,
             "max_120d_rebound_pct": 28.49
           }
         },
@@ -1300,13 +1305,13 @@
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.3014,
+            "value": 1.2945,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 1.2986,
+            "value": 1.2982,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -1319,7 +1324,7 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
@@ -1328,21 +1333,21 @@
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "159201_SZ_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 1.2986
+              "value": 1.2982
             }
           ],
           "near_threshold_pct": 1.0,
@@ -1356,80 +1361,82 @@
       "code": "159819.SZ",
       "name": "人工智能ETF易方达",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-09_153822.md",
       "group": "AI主线",
       "role": "进攻仓观察",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-3%",
       "security_stance": {
-        "label": "泡沫",
-        "basis": "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。",
+        "label": "价格拥挤",
+        "basis": "仅基于ETF价格/净值历史位置进入高位，不能直接称为估值泡沫。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 2.022,
-        "ma20": 1.9844,
-        "ma60": 1.7272,
+        "price_date": "20260608",
+        "last_reference": 1.876,
+        "ma20": 1.984,
+        "ma60": 1.7392,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 0.7348,
-        "right_confirm": 1.7272,
-        "risk_zone_start": 1.4592,
+        "support": 0.7344,
+        "right_confirm": 1.7392,
+        "risk_zone_start": 1.46,
         "current_position_pct": 0.0241,
         "target_position_range": "0%-3%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 2.022,
+          "current_value": 1.876,
           "current_zone": "crowded_risk",
-          "current_zone_label": "拥挤/风险区",
+          "current_zone_label": "价格拥挤区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
-              "min": 0.65,
-              "max": 0.7348,
+              "label": "价格低位区",
+              "min": 0.6499,
+              "max": 0.7344,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 0.7348,
-              "max": 0.8995,
+              "label": "价格合理区",
+              "min": 0.7344,
+              "max": 0.9025,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 0.8995,
-              "max": 1.4592,
+              "label": "价格偏贵区",
+              "min": 0.9025,
+              "max": 1.46,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 1.4592,
-              "max": 2.022,
+              "label": "价格拥挤区",
+              "min": 1.46,
+              "max": 1.876,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": -0.03
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.15
         },
         "trend_visual": {
           "available": true,
-          "current": 2.022,
+          "current": 1.876,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 123.92,
+              "change_pct": 109.61,
               "window_days": 250
             },
             {
@@ -1437,51 +1444,51 @@
               "label": "中期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 30.45,
+              "change_pct": 19.41,
               "window_days": 60
             },
             {
               "key": "short",
               "label": "短期",
-              "state": "上行",
-              "color": "#dc2626",
-              "change_pct": 6.42,
+              "state": "下行",
+              "color": "#16a34a",
+              "change_pct": -3.7,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -1.61,
+            "from_sample_high_pct": -8.71,
             "sample_high": 2.055,
             "sample_high_date": "20260525",
-            "common_120d_drawdown_pct": -17.56,
-            "deep_120d_drawdown_pct": -24.52,
+            "common_120d_drawdown_pct": -17.6,
+            "deep_120d_drawdown_pct": -24.53,
             "max_120d_drawdown_pct": -33.26
           },
           "rebound": {
-            "from_sample_low_pct": 253.5,
+            "from_sample_low_pct": 227.97,
             "sample_low": 0.572,
             "sample_low_date": "20240205",
-            "common_120d_rebound_pct": 25.52,
-            "strong_120d_rebound_pct": 55.25,
+            "common_120d_rebound_pct": 25.7,
+            "strong_120d_rebound_pct": 55.37,
             "max_120d_rebound_pct": 91.22
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 0.7348,
+            "value": 0.7344,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.7272,
+            "value": 1.7392,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 1.4592,
+            "value": 1.46,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -1494,30 +1501,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 0.7348
+              "value": 0.7344
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "159819_SZ_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 1.4592
+              "value": 1.46
             }
           ],
           "near_threshold_pct": 1.0,
@@ -1531,80 +1538,82 @@
       "code": "159558.SZ",
       "name": "半导体设备ETF易方达",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-09_153822.md",
       "group": "半导体主线",
       "role": "进攻仓观察",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "泡沫",
-        "basis": "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。",
+        "label": "价格拥挤",
+        "basis": "仅基于ETF价格/净值历史位置进入高位，不能直接称为估值泡沫。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 2.915,
-        "ma20": 2.8478,
-        "ma60": 2.3234,
+        "price_date": "20260608",
+        "last_reference": 2.736,
+        "ma20": 2.8762,
+        "ma60": 2.3481,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 1.155,
-        "right_confirm": 2.3234,
-        "risk_zone_start": 1.885,
+        "support": 1.1554,
+        "right_confirm": 2.3481,
+        "risk_zone_start": 1.897,
         "current_position_pct": 0.1837,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 2.915,
+          "current_value": 2.736,
           "current_zone": "crowded_risk",
-          "current_zone_label": "拥挤/风险区",
+          "current_zone_label": "价格拥挤区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
-              "min": 0.9042,
-              "max": 1.155,
+              "label": "价格低位区",
+              "min": 0.905,
+              "max": 1.1554,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 1.155,
-              "max": 1.268,
+              "label": "价格合理区",
+              "min": 1.1554,
+              "max": 1.2695,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 1.268,
-              "max": 1.885,
+              "label": "价格偏贵区",
+              "min": 1.2695,
+              "max": 1.897,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 1.885,
-              "max": 2.915,
+              "label": "价格拥挤区",
+              "min": 1.897,
+              "max": 2.736,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": 0.05
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.03
         },
         "trend_visual": {
           "available": true,
-          "current": 2.915,
+          "current": 2.736,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 150.21,
+              "change_pct": 134.05,
               "window_days": 250
             },
             {
@@ -1612,7 +1621,7 @@
               "label": "中期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 40.41,
+              "change_pct": 32.49,
               "window_days": 60
             },
             {
@@ -1620,43 +1629,43 @@
               "label": "短期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 18.35,
+              "change_pct": 6.05,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -8.02,
+            "from_sample_high_pct": -13.66,
             "sample_high": 3.169,
             "sample_high_date": "20260525",
-            "common_120d_drawdown_pct": -13.94,
+            "common_120d_drawdown_pct": -13.93,
             "deep_120d_drawdown_pct": -17.92,
             "max_120d_drawdown_pct": -25.05
           },
           "rebound": {
-            "from_sample_low_pct": 255.49,
+            "from_sample_low_pct": 233.66,
             "sample_low": 0.82,
             "sample_low_date": "20240923",
-            "common_120d_rebound_pct": 41.5,
-            "strong_120d_rebound_pct": 56.65,
+            "common_120d_rebound_pct": 41.78,
+            "strong_120d_rebound_pct": 56.76,
             "max_120d_rebound_pct": 99.68
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 1.155,
+            "value": 1.1554,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 2.3234,
+            "value": 2.3481,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 1.885,
+            "value": 1.897,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -1669,30 +1678,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 1.155
+              "value": 1.1554
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "159558_SZ_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 1.885
+              "value": 1.897
             }
           ],
           "near_threshold_pct": 1.0,
@@ -1706,80 +1715,82 @@
       "code": "588200.SH",
       "name": "科创芯片ETF嘉实",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-09_153822.md",
       "group": "半导体主线",
       "role": "进攻仓观察",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "泡沫",
-        "basis": "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。",
+        "label": "价格拥挤",
+        "basis": "仅基于ETF价格/净值历史位置进入高位，不能直接称为估值泡沫。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 3.622,
-        "ma20": 3.5728,
-        "ma60": 2.9208,
+        "price_date": "20260608",
+        "last_reference": 3.299,
+        "ma20": 3.5771,
+        "ma60": 2.9485,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 0.9928,
-        "right_confirm": 2.9208,
-        "risk_zone_start": 2.2682,
+        "support": 0.9924,
+        "right_confirm": 2.9485,
+        "risk_zone_start": 2.2812,
         "current_position_pct": 0.1726,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 3.622,
+          "current_value": 3.299,
           "current_zone": "crowded_risk",
-          "current_zone_label": "拥挤/风险区",
+          "current_zone_label": "价格拥挤区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
-              "min": 0.8949,
-              "max": 0.9928,
+              "label": "价格低位区",
+              "min": 0.8947,
+              "max": 0.9924,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 0.9928,
-              "max": 1.4265,
+              "label": "价格合理区",
+              "min": 0.9924,
+              "max": 1.434,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 1.4265,
-              "max": 2.2682,
+              "label": "价格偏贵区",
+              "min": 1.434,
+              "max": 2.2812,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 2.2682,
-              "max": 3.622,
+              "label": "价格拥挤区",
+              "min": 2.2812,
+              "max": 3.299,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": -0.07
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.06
         },
         "trend_visual": {
           "available": true,
-          "current": 3.622,
+          "current": 3.299,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 145.23,
+              "change_pct": 124.42,
               "window_days": 250
             },
             {
@@ -1787,51 +1798,51 @@
               "label": "中期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 41.21,
+              "change_pct": 27.92,
               "window_days": 60
             },
             {
               "key": "short",
               "label": "短期",
-              "state": "上行",
-              "color": "#dc2626",
-              "change_pct": 8.7,
+              "state": "下行",
+              "color": "#16a34a",
+              "change_pct": -3.76,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -7.22,
+            "from_sample_high_pct": -15.5,
             "sample_high": 3.904,
             "sample_high_date": "20260525",
             "common_120d_drawdown_pct": -15.98,
-            "deep_120d_drawdown_pct": -21.45,
+            "deep_120d_drawdown_pct": -21.47,
             "max_120d_drawdown_pct": -33.28
           },
           "rebound": {
-            "from_sample_low_pct": 350.5,
+            "from_sample_low_pct": 310.32,
             "sample_low": 0.804,
             "sample_low_date": "20240205",
-            "common_120d_rebound_pct": 17.91,
-            "strong_120d_rebound_pct": 65.87,
+            "common_120d_rebound_pct": 18.35,
+            "strong_120d_rebound_pct": 65.96,
             "max_120d_rebound_pct": 106.35
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 0.9928,
+            "value": 0.9924,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 2.9208,
+            "value": 2.9485,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 2.2682,
+            "value": 2.2812,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -1844,30 +1855,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 0.9928
+              "value": 0.9924
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "588200_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 2.2682
+              "value": 2.2812
             }
           ],
           "near_threshold_pct": 1.0,
@@ -1881,80 +1892,82 @@
       "code": "159326.SZ",
       "name": "电网设备ETF华夏",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-09_153822.md",
       "group": "电力设备副线",
       "role": "进攻仓观察",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "泡沫",
-        "basis": "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。",
+        "label": "价格拥挤",
+        "basis": "仅基于ETF价格/净值历史位置进入高位，不能直接称为估值泡沫。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 2.093,
-        "ma20": 2.0883,
-        "ma60": 1.9852,
+        "price_date": "20260608",
+        "last_reference": 1.999,
+        "ma20": 2.0833,
+        "ma60": 1.9825,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 1.0764,
-        "right_confirm": 1.9852,
-        "risk_zone_start": 1.7552,
+        "support": 1.0772,
+        "right_confirm": 1.9825,
+        "risk_zone_start": 1.764,
         "current_position_pct": 0.8853,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 2.093,
+          "current_value": 1.999,
           "current_zone": "crowded_risk",
-          "current_zone_label": "拥挤/风险区",
+          "current_zone_label": "价格拥挤区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 1.039,
-              "max": 1.0764,
+              "max": 1.0772,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 1.0764,
-              "max": 1.162,
+              "label": "价格合理区",
+              "min": 1.0772,
+              "max": 1.163,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 1.162,
-              "max": 1.7552,
+              "label": "价格偏贵区",
+              "min": 1.163,
+              "max": 1.764,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 1.7552,
-              "max": 2.093,
+              "label": "价格拥挤区",
+              "min": 1.764,
+              "max": 2.062,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": -0.05
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.15
         },
         "trend_visual": {
           "available": true,
-          "current": 2.093,
+          "current": 1.999,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 100.29,
+              "change_pct": 91.48,
               "window_days": 250
             },
             {
@@ -1962,20 +1975,20 @@
               "label": "中期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": 0.77,
+              "change_pct": -5.48,
               "window_days": 60
             },
             {
               "key": "short",
               "label": "短期",
-              "state": "震荡",
-              "color": "#f59e0b",
-              "change_pct": 0.87,
+              "state": "下行",
+              "color": "#16a34a",
+              "change_pct": -4.4,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -4.39,
+            "from_sample_high_pct": -8.68,
             "sample_high": 2.189,
             "sample_high_date": "20260513",
             "common_120d_drawdown_pct": -9.6,
@@ -1983,30 +1996,30 @@
             "max_120d_drawdown_pct": -17.9
           },
           "rebound": {
-            "from_sample_low_pct": 112.92,
+            "from_sample_low_pct": 103.36,
             "sample_low": 0.983,
             "sample_low_date": "20240909",
-            "common_120d_rebound_pct": 20.06,
-            "strong_120d_rebound_pct": 44.64,
+            "common_120d_rebound_pct": 20.24,
+            "strong_120d_rebound_pct": 44.8,
             "max_120d_rebound_pct": 76.99
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 1.0764,
+            "value": 1.0772,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.9852,
+            "value": 1.9825,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 1.7552,
+            "value": 1.764,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -2019,30 +2032,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 1.0764
+              "value": 1.0772
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "159326_SZ_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 1.7552
+              "value": 1.764
             }
           ],
           "near_threshold_pct": 1.0,
@@ -2231,101 +2244,103 @@
       "code": "159301.SZ",
       "name": "公用事业ETF华夏",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-09_153822.md",
       "group": "公用事业防御",
       "role": "防御仓",
       "allocation_bucket": "defense",
       "ideal_position_range": "1%-3%",
       "security_stance": {
-        "label": "泡沫",
-        "basis": "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。",
+        "label": "价格拥挤",
+        "basis": "仅基于ETF价格/净值历史位置进入高位，不能直接称为估值泡沫。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 1.097,
-        "ma20": 1.069,
-        "ma60": 1.0377,
+        "price_date": "20260608",
+        "last_reference": 1.036,
+        "ma20": 1.0695,
+        "ma60": 1.0381,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
         "support": 0.915,
-        "right_confirm": 1.0377,
-        "risk_zone_start": 0.9828,
+        "right_confirm": 1.0381,
+        "risk_zone_start": 0.9864,
         "current_position_pct": 0.0039,
         "target_position_range": "1%-3%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 1.097,
+          "current_value": 1.036,
           "current_zone": "crowded_risk",
-          "current_zone_label": "拥挤/风险区",
+          "current_zone_label": "价格拥挤区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 0.885,
               "max": 0.915,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
+              "label": "价格合理区",
               "min": 0.915,
               "max": 0.947,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
+              "label": "价格偏贵区",
               "min": 0.947,
-              "max": 0.9828,
+              "max": 0.9864,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 0.9828,
-              "max": 1.097,
+              "label": "价格拥挤区",
+              "min": 0.9864,
+              "max": 1.049,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": 0.12
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": 0.11
         },
         "trend_visual": {
           "available": true,
-          "current": 1.097,
+          "current": 1.036,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 18.59,
+              "change_pct": 11.88,
               "window_days": 250
             },
             {
               "key": "mid",
               "label": "中期",
-              "state": "上行",
-              "color": "#dc2626",
-              "change_pct": 6.61,
+              "state": "震荡",
+              "color": "#f59e0b",
+              "change_pct": -0.29,
               "window_days": 60
             },
             {
               "key": "short",
               "label": "短期",
-              "state": "上行",
-              "color": "#dc2626",
-              "change_pct": 5.79,
+              "state": "震荡",
+              "color": "#f59e0b",
+              "change_pct": -1.43,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -2.23,
+            "from_sample_high_pct": -7.66,
             "sample_high": 1.122,
             "sample_high_date": "20260601",
             "common_120d_drawdown_pct": -7.21,
@@ -2333,11 +2348,11 @@
             "max_120d_drawdown_pct": -14.03
           },
           "rebound": {
-            "from_sample_low_pct": 26.09,
+            "from_sample_low_pct": 19.08,
             "sample_low": 0.87,
             "sample_low_date": "20240912",
-            "common_120d_rebound_pct": 6.09,
-            "strong_120d_rebound_pct": 8.97,
+            "common_120d_rebound_pct": 6.12,
+            "strong_120d_rebound_pct": 9.06,
             "max_120d_rebound_pct": 18.98
           }
         },
@@ -2350,13 +2365,13 @@
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.0377,
+            "value": 1.0381,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 0.9828,
+            "value": 0.9864,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -2369,7 +2384,7 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
@@ -2378,21 +2393,21 @@
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "159301_SZ_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 0.9828
+              "value": 0.9864
             }
           ],
           "near_threshold_pct": 1.0,
@@ -2406,80 +2421,82 @@
       "code": "512880.SH",
       "name": "证券ETF国泰",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-09_153822.md",
       "group": "金融证券",
       "role": "防御/周期观察",
       "allocation_bucket": "defense",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "合理",
-        "basis": "估值处于合理配置区。",
+        "label": "价格合理",
+        "basis": "仅基于ETF价格/净值历史位置。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 1.022,
-        "ma20": 1.0531,
-        "ma60": 1.065,
+        "price_date": "20260608",
+        "last_reference": 1.001,
+        "ma20": 1.0452,
+        "ma60": 1.0614,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
         "support": 0.878,
-        "right_confirm": 1.065,
+        "right_confirm": 1.0614,
         "risk_zone_start": 1.197,
         "current_position_pct": 1.2452,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 1.022,
+          "current_value": 1.001,
           "current_zone": "reasonable_allocation",
-          "current_zone_label": "合理配置区",
+          "current_zone_label": "价格合理区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
-              "min": 0.805,
+              "label": "价格低位区",
+              "min": 0.8049,
               "max": 0.878,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
+              "label": "价格合理区",
               "min": 0.878,
-              "max": 1.044,
+              "max": 1.045,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 1.044,
+              "label": "价格偏贵区",
+              "min": 1.045,
               "max": 1.197,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
+              "label": "价格拥挤区",
               "min": 1.197,
-              "max": 1.259,
+              "max": 1.2591,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": -0.01
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": 0.1
         },
         "trend_visual": {
           "available": true,
-          "current": 1.022,
+          "current": 1.001,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": -2.01,
+              "change_pct": -3.93,
               "window_days": 250
             },
             {
@@ -2487,7 +2504,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -9.64,
+              "change_pct": -10.63,
               "window_days": 60
             },
             {
@@ -2495,24 +2512,24 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -6.15,
+              "change_pct": -8.75,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -25.07,
+            "from_sample_high_pct": -26.61,
             "sample_high": 1.364,
             "sample_high_date": "20241107",
-            "common_120d_drawdown_pct": -16.09,
-            "deep_120d_drawdown_pct": -19.36,
+            "common_120d_drawdown_pct": -16.15,
+            "deep_120d_drawdown_pct": -19.43,
             "max_120d_drawdown_pct": -28.23
           },
           "rebound": {
-            "from_sample_low_pct": 36.63,
+            "from_sample_low_pct": 33.82,
             "sample_low": 0.748,
             "sample_low_date": "20240708",
-            "common_120d_rebound_pct": 9.22,
-            "strong_120d_rebound_pct": 26.46,
+            "common_120d_rebound_pct": 9.3,
+            "strong_120d_rebound_pct": 26.58,
             "max_120d_rebound_pct": 82.35
           }
         },
@@ -2525,7 +2542,7 @@
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.065,
+            "value": 1.0614,
             "color": "#06b6d4",
             "shape": "diamond"
           },
@@ -2544,7 +2561,7 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
@@ -2553,16 +2570,16 @@
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "512880_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
@@ -2581,80 +2598,82 @@
       "code": "159842.SZ",
       "name": "券商ETF银华",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-09_153822.md",
       "group": "金融证券",
       "role": "防御/周期观察",
       "allocation_bucket": "defense",
       "ideal_position_range": "0%-3%",
       "security_stance": {
-        "label": "合理",
-        "basis": "估值处于合理配置区。",
+        "label": "价格合理",
+        "basis": "仅基于ETF价格/净值历史位置。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 0.974,
-        "ma20": 1.0014,
-        "ma60": 1.0123,
+        "price_date": "20260608",
+        "last_reference": 0.952,
+        "ma20": 0.9941,
+        "ma60": 1.0089,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 0.8418,
-        "right_confirm": 1.0123,
+        "support": 0.8414,
+        "right_confirm": 1.0089,
         "risk_zone_start": 1.134,
         "current_position_pct": 1.7375,
         "target_position_range": "0%-3%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 0.974,
+          "current_value": 0.952,
           "current_zone": "reasonable_allocation",
-          "current_zone_label": "合理配置区",
+          "current_zone_label": "价格合理区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 0.772,
-              "max": 0.8418,
+              "max": 0.8414,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 0.8418,
-              "max": 0.992,
+              "label": "价格合理区",
+              "min": 0.8414,
+              "max": 0.9925,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 0.992,
+              "label": "价格偏贵区",
+              "min": 0.9925,
               "max": 1.134,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
+              "label": "价格拥挤区",
               "min": 1.134,
               "max": 1.194,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": 0.2
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": 0.07
         },
         "trend_visual": {
           "available": true,
-          "current": 0.974,
+          "current": 0.952,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": -1.62,
+              "change_pct": -3.55,
               "window_days": 250
             },
             {
@@ -2662,7 +2681,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -9.31,
+              "change_pct": -10.61,
               "window_days": 60
             },
             {
@@ -2670,37 +2689,37 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -5.89,
+              "change_pct": -8.37,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -24.38,
+            "from_sample_high_pct": -26.09,
             "sample_high": 1.288,
             "sample_high_date": "20241107",
-            "common_120d_drawdown_pct": -15.89,
-            "deep_120d_drawdown_pct": -19.1,
+            "common_120d_drawdown_pct": -15.91,
+            "deep_120d_drawdown_pct": -19.14,
             "max_120d_drawdown_pct": -28.03
           },
           "rebound": {
-            "from_sample_low_pct": 35.65,
+            "from_sample_low_pct": 32.59,
             "sample_low": 0.718,
             "sample_low_date": "20240708",
-            "common_120d_rebound_pct": 9.21,
-            "strong_120d_rebound_pct": 26.43,
+            "common_120d_rebound_pct": 9.25,
+            "strong_120d_rebound_pct": 26.52,
             "max_120d_rebound_pct": 79.39
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 0.8418,
+            "value": 0.8414,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.0123,
+            "value": 1.0089,
             "color": "#06b6d4",
             "shape": "diamond"
           },
@@ -2719,25 +2738,25 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 0.8418
+              "value": 0.8414
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "159842_SZ_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
@@ -2756,80 +2775,82 @@
       "code": "512070.SH",
       "name": "证券保险ETF易方达",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-09_153822.md",
       "group": "金融证券",
       "role": "防御/周期观察",
       "allocation_bucket": "defense",
       "ideal_position_range": "0%-4%",
       "security_stance": {
-        "label": "合理",
-        "basis": "估值处于合理配置区。",
+        "label": "价格合理",
+        "basis": "仅基于ETF价格/净值历史位置。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 0.75,
-        "ma20": 0.7731,
-        "ma60": 0.7946,
+        "price_date": "20260608",
+        "last_reference": 0.742,
+        "ma20": 0.7659,
+        "ma60": 0.7914,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 0.5968,
-        "right_confirm": 0.7946,
-        "risk_zone_start": 0.8542,
+        "support": 0.5964,
+        "right_confirm": 0.7914,
+        "risk_zone_start": 0.8546,
         "current_position_pct": 3.3463,
         "target_position_range": "0%-4%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 0.75,
+          "current_value": 0.742,
           "current_zone": "reasonable_allocation",
-          "current_zone_label": "合理配置区",
+          "current_zone_label": "价格合理区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 0.567,
-              "max": 0.5968,
+              "max": 0.5964,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 0.5968,
+              "label": "价格合理区",
+              "min": 0.5964,
               "max": 0.756,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
+              "label": "价格偏贵区",
               "min": 0.756,
-              "max": 0.8542,
+              "max": 0.8546,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 0.8542,
+              "label": "价格拥挤区",
+              "min": 0.8546,
               "max": 0.915,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": 0.15
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": 0.09
         },
         "trend_visual": {
           "available": true,
-          "current": 0.75,
+          "current": 0.742,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": -0.79,
+              "change_pct": -1.72,
               "window_days": 250
             },
             {
@@ -2837,7 +2858,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -12.08,
+              "change_pct": -12.19,
               "window_days": 60
             },
             {
@@ -2845,43 +2866,43 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -8.2,
+              "change_pct": -9.62,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -24.55,
+            "from_sample_high_pct": -25.35,
             "sample_high": 0.994,
             "sample_high_date": "20260106",
-            "common_120d_drawdown_pct": -16.0,
-            "deep_120d_drawdown_pct": -19.83,
+            "common_120d_drawdown_pct": -16.08,
+            "deep_120d_drawdown_pct": -19.92,
             "max_120d_drawdown_pct": -26.62
           },
           "rebound": {
-            "from_sample_low_pct": 38.63,
+            "from_sample_low_pct": 37.15,
             "sample_low": 0.541,
             "sample_low_date": "20240412",
             "common_120d_rebound_pct": 9.38,
-            "strong_120d_rebound_pct": 26.73,
+            "strong_120d_rebound_pct": 26.79,
             "max_120d_rebound_pct": 73.35
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 0.5968,
+            "value": 0.5964,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 0.7946,
+            "value": 0.7914,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 0.8542,
+            "value": 0.8546,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -2894,30 +2915,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 0.5968
+              "value": 0.5964
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "512070_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 0.8542
+              "value": 0.8546
             }
           ],
           "near_threshold_pct": 1.0,
@@ -2931,80 +2952,82 @@
       "code": "159992.SZ",
       "name": "创新药ETF银华",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-09_153822.md",
       "group": "医药防御成长",
       "role": "防御/观察仓",
       "allocation_bucket": "defense",
       "ideal_position_range": "0%-4%",
       "security_stance": {
-        "label": "合理",
-        "basis": "估值处于合理配置区。",
+        "label": "价格合理",
+        "basis": "仅基于ETF价格/净值历史位置。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 0.724,
-        "ma20": 0.7827,
-        "ma60": 0.8108,
+        "price_date": "20260608",
+        "last_reference": 0.707,
+        "ma20": 0.7707,
+        "ma60": 0.8079,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
         "support": 0.697,
-        "right_confirm": 0.8108,
-        "risk_zone_start": 0.868,
+        "right_confirm": 0.8079,
+        "risk_zone_start": 0.8666,
         "current_position_pct": 3.9753,
         "target_position_range": "0%-4%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 0.724,
+          "current_value": 0.707,
           "current_zone": "reasonable_allocation",
-          "current_zone_label": "合理配置区",
+          "current_zone_label": "价格合理区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 0.6159,
               "max": 0.697,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
+              "label": "价格合理区",
               "min": 0.697,
-              "max": 0.7895,
+              "max": 0.787,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 0.7895,
-              "max": 0.868,
+              "label": "价格偏贵区",
+              "min": 0.787,
+              "max": 0.8666,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 0.868,
-              "max": 0.9271,
+              "label": "价格拥挤区",
+              "min": 0.8666,
+              "max": 0.9272,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": -0.04
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.03
         },
         "trend_visual": {
           "available": true,
-          "current": 0.724,
+          "current": 0.707,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": -5.48,
+              "change_pct": -7.58,
               "window_days": 250
             },
             {
@@ -3012,7 +3035,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -9.61,
+              "change_pct": -13.04,
               "window_days": 60
             },
             {
@@ -3020,23 +3043,23 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -13.91,
+              "change_pct": -16.53,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -28.25,
+            "from_sample_high_pct": -29.93,
             "sample_high": 1.009,
             "sample_high_date": "20250908",
-            "common_120d_drawdown_pct": -17.78,
-            "deep_120d_drawdown_pct": -21.7,
+            "common_120d_drawdown_pct": -17.95,
+            "deep_120d_drawdown_pct": -21.73,
             "max_120d_drawdown_pct": -32.22
           },
           "rebound": {
-            "from_sample_low_pct": 22.09,
+            "from_sample_low_pct": 19.22,
             "sample_low": 0.593,
             "sample_low_date": "20240704",
-            "common_120d_rebound_pct": 11.8,
+            "common_120d_rebound_pct": 11.87,
             "strong_120d_rebound_pct": 22.09,
             "max_120d_rebound_pct": 47.08
           }
@@ -3050,13 +3073,13 @@
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 0.8108,
+            "value": 0.8079,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 0.868,
+            "value": 0.8666,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -3069,7 +3092,7 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
@@ -3078,21 +3101,21 @@
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "159992_SZ_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 0.868
+              "value": 0.8666
             }
           ],
           "near_threshold_pct": 1.0,
@@ -3106,80 +3129,82 @@
       "code": "513120.SH",
       "name": "港股创新药ETF广发",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-09_153822.md",
       "group": "港股创新药",
       "role": "防御/观察仓",
       "allocation_bucket": "defense",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "偏贵",
-        "basis": "估值偏贵，控制新增，等待赔率改善。",
+        "label": "价格偏贵",
+        "basis": "仅基于ETF价格/净值历史位置，控制新增需结合市场门禁。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 1.03,
-        "ma20": 1.1301,
-        "ma60": 1.1996,
+        "price_date": "20260608",
+        "last_reference": 0.986,
+        "ma20": 1.1083,
+        "ma60": 1.1933,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 0.6848,
-        "right_confirm": 1.1996,
-        "risk_zone_start": 1.261,
+        "support": 0.6844,
+        "right_confirm": 1.1933,
+        "risk_zone_start": 1.263,
         "current_position_pct": 1.2203,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 1.03,
+          "current_value": 0.986,
           "current_zone": "expensive",
-          "current_zone_label": "偏贵区",
+          "current_zone_label": "价格偏贵区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 0.623,
-              "max": 0.6848,
+              "max": 0.6844,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 0.6848,
-              "max": 0.8275,
+              "label": "价格合理区",
+              "min": 0.6844,
+              "max": 0.827,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 0.8275,
-              "max": 1.261,
+              "label": "价格偏贵区",
+              "min": 0.827,
+              "max": 1.263,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 1.261,
-              "max": 1.4652,
+              "label": "价格拥挤区",
+              "min": 1.263,
+              "max": 1.4657,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": -0.89
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.99
         },
         "trend_visual": {
           "available": true,
-          "current": 1.03,
+          "current": 0.986,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": 5.86,
+              "change_pct": 0.61,
               "window_days": 250
             },
             {
@@ -3187,7 +3212,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -14.1,
+              "change_pct": -19.18,
               "window_days": 60
             },
             {
@@ -3195,43 +3220,43 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -16.87,
+              "change_pct": -19.64,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -34.97,
+            "from_sample_high_pct": -37.75,
             "sample_high": 1.584,
             "sample_high_date": "20250908",
-            "common_120d_drawdown_pct": -19.38,
-            "deep_120d_drawdown_pct": -26.32,
+            "common_120d_drawdown_pct": -19.44,
+            "deep_120d_drawdown_pct": -26.46,
             "max_120d_drawdown_pct": -38.29
           },
           "rebound": {
-            "from_sample_low_pct": 78.51,
+            "from_sample_low_pct": 70.88,
             "sample_low": 0.577,
             "sample_low_date": "20240419",
             "common_120d_rebound_pct": 14.7,
-            "strong_120d_rebound_pct": 36.78,
+            "strong_120d_rebound_pct": 36.83,
             "max_120d_rebound_pct": 105.38
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 0.6848,
+            "value": 0.6844,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.1996,
+            "value": 1.1933,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 1.261,
+            "value": 1.263,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -3244,30 +3269,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 0.6848
+              "value": 0.6844
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "513120_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 1.261
+              "value": 1.263
             }
           ],
           "near_threshold_pct": 1.0,
@@ -3281,80 +3306,82 @@
       "code": "516150.SH",
       "name": "稀土ETF嘉实",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-09_153822.md",
       "group": "稀土资源",
       "role": "顺周期观察",
       "allocation_bucket": "legacy_watch",
       "ideal_position_range": "0%-3%",
       "security_stance": {
-        "label": "泡沫",
-        "basis": "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。",
+        "label": "价格拥挤",
+        "basis": "仅基于ETF价格/净值历史位置进入高位，不能直接称为估值泡沫。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 1.969,
-        "ma20": 2.0058,
-        "ma60": 1.9754,
+        "price_date": "20260608",
+        "last_reference": 1.875,
+        "ma20": 1.9846,
+        "ma60": 1.9684,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 0.9256,
-        "right_confirm": 1.9754,
-        "risk_zone_start": 1.7404,
+        "support": 0.9248,
+        "right_confirm": 1.9684,
+        "risk_zone_start": 1.7452,
         "current_position_pct": 2.5126,
         "target_position_range": "0%-3%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 1.969,
+          "current_value": 1.875,
           "current_zone": "crowded_risk",
-          "current_zone_label": "拥挤/风险区",
+          "current_zone_label": "价格拥挤区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
-              "min": 0.8169,
-              "max": 0.9256,
+              "label": "价格低位区",
+              "min": 0.8167,
+              "max": 0.9248,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 0.9256,
-              "max": 1.0855,
+              "label": "价格合理区",
+              "min": 0.9248,
+              "max": 1.0845,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 1.0855,
-              "max": 1.7404,
+              "label": "价格偏贵区",
+              "min": 1.0845,
+              "max": 1.7452,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 1.7404,
-              "max": 2.0351,
+              "label": "价格拥挤区",
+              "min": 1.7452,
+              "max": 2.0352,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": 0.32
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.13
         },
         "trend_visual": {
           "available": true,
-          "current": 1.969,
+          "current": 1.875,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 82.31,
+              "change_pct": 74.42,
               "window_days": 250
             },
             {
@@ -3362,7 +3389,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -8.08,
+              "change_pct": -12.42,
               "window_days": 60
             },
             {
@@ -3370,23 +3397,23 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -6.51,
+              "change_pct": -13.27,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -14.65,
+            "from_sample_high_pct": -18.73,
             "sample_high": 2.307,
             "sample_high_date": "20260227",
-            "common_120d_drawdown_pct": -15.06,
-            "deep_120d_drawdown_pct": -18.99,
+            "common_120d_drawdown_pct": -15.22,
+            "deep_120d_drawdown_pct": -19.0,
             "max_120d_drawdown_pct": -33.12
           },
           "rebound": {
-            "from_sample_low_pct": 173.85,
+            "from_sample_low_pct": 160.78,
             "sample_low": 0.719,
             "sample_low_date": "20240205",
-            "common_120d_rebound_pct": 21.26,
+            "common_120d_rebound_pct": 21.28,
             "strong_120d_rebound_pct": 44.52,
             "max_120d_rebound_pct": 90.07
           }
@@ -3394,19 +3421,19 @@
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 0.9256,
+            "value": 0.9248,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.9754,
+            "value": 1.9684,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 1.7404,
+            "value": 1.7452,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -3419,30 +3446,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 0.9256
+              "value": 0.9248
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "516150_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 1.7404
+              "value": 1.7452
             }
           ],
           "near_threshold_pct": 1.0,
@@ -3456,88 +3483,90 @@
       "code": "562800.SH",
       "name": "稀有金属ETF嘉实",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-09_153822.md",
       "group": "稀有金属",
       "role": "顺周期观察",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "泡沫",
-        "basis": "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。",
+        "label": "价格拥挤",
+        "basis": "仅基于ETF价格/净值历史位置进入高位，不能直接称为估值泡沫。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 1.054,
-        "ma20": 1.0993,
-        "ma60": 1.0737,
+        "price_date": "20260608",
+        "last_reference": 0.988,
+        "ma20": 1.0815,
+        "ma60": 1.0706,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 0.4868,
-        "right_confirm": 1.0737,
-        "risk_zone_start": 0.837,
+        "support": 0.4864,
+        "right_confirm": 1.0706,
+        "risk_zone_start": 0.8386,
         "current_position_pct": 0.8379,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 1.054,
+          "current_value": 0.988,
           "current_zone": "crowded_risk",
-          "current_zone_label": "拥挤/风险区",
+          "current_zone_label": "价格拥挤区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 0.411,
-              "max": 0.4868,
+              "max": 0.4864,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 0.4868,
+              "label": "价格合理区",
+              "min": 0.4864,
               "max": 0.53,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
+              "label": "价格偏贵区",
               "min": 0.53,
-              "max": 0.837,
+              "max": 0.8386,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 0.837,
-              "max": 1.092,
+              "label": "价格拥挤区",
+              "min": 0.8386,
+              "max": 1.0921,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
+          "semantic_scope": "price_position_only",
           "premium_discount_pct": -0.1
         },
         "trend_visual": {
           "available": true,
-          "current": 1.054,
+          "current": 0.988,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 111.65,
+              "change_pct": 99.6,
               "window_days": 250
             },
             {
               "key": "mid",
               "label": "中期",
-              "state": "震荡",
-              "color": "#f59e0b",
-              "change_pct": -5.13,
+              "state": "下行",
+              "color": "#16a34a",
+              "change_pct": -11.63,
               "window_days": 60
             },
             {
@@ -3545,43 +3574,43 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -12.24,
+              "change_pct": -17.8,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -13.39,
+            "from_sample_high_pct": -18.82,
             "sample_high": 1.217,
             "sample_high_date": "20260302",
-            "common_120d_drawdown_pct": -17.13,
-            "deep_120d_drawdown_pct": -21.82,
+            "common_120d_drawdown_pct": -17.15,
+            "deep_120d_drawdown_pct": -21.84,
             "max_120d_drawdown_pct": -34.23
           },
           "rebound": {
-            "from_sample_low_pct": 169.57,
+            "from_sample_low_pct": 152.69,
             "sample_low": 0.391,
             "sample_low_date": "20240823",
-            "common_120d_rebound_pct": 24.23,
-            "strong_120d_rebound_pct": 46.04,
+            "common_120d_rebound_pct": 24.37,
+            "strong_120d_rebound_pct": 46.07,
             "max_120d_rebound_pct": 86.46
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 0.4868,
+            "value": 0.4864,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.0737,
+            "value": 1.0706,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 0.837,
+            "value": 0.8386,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -3594,30 +3623,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 0.4868
+              "value": 0.4864
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "562800_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 0.837
+              "value": 0.8386
             }
           ],
           "near_threshold_pct": 1.0,
@@ -3631,80 +3660,82 @@
       "code": "159378.SZ",
       "name": "通用航空ETF永赢",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-09_153822.md",
       "group": "低空经济",
       "role": "遗留/主题观察",
       "allocation_bucket": "legacy_watch",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "合理",
-        "basis": "估值处于合理配置区。",
+        "label": "价格合理",
+        "basis": "仅基于ETF价格/净值历史位置。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 1.144,
-        "ma20": 1.2762,
-        "ma60": 1.3188,
+        "price_date": "20260608",
+        "last_reference": 1.132,
+        "ma20": 1.2492,
+        "ma60": 1.3083,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
         "support": 1.101,
-        "right_confirm": 1.3188,
+        "right_confirm": 1.3083,
         "risk_zone_start": 1.333,
         "current_position_pct": 1.7029,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 1.144,
+          "current_value": 1.132,
           "current_zone": "reasonable_allocation",
-          "current_zone_label": "合理配置区",
+          "current_zone_label": "价格合理区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
-              "min": 1.0205,
+              "label": "价格低位区",
+              "min": 1.0207,
               "max": 1.101,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
+              "label": "价格合理区",
               "min": 1.101,
-              "max": 1.2135,
+              "max": 1.213,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 1.2135,
+              "label": "价格偏贵区",
+              "min": 1.213,
               "max": 1.333,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
+              "label": "价格拥挤区",
               "min": 1.333,
-              "max": 1.48,
+              "max": 1.4796,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": -0.05
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.11
         },
         "trend_visual": {
           "available": true,
-          "current": 1.144,
+          "current": 1.132,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": 7.42,
+              "change_pct": 5.3,
               "window_days": 250
             },
             {
@@ -3712,7 +3743,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -22.34,
+              "change_pct": -22.99,
               "window_days": 60
             },
             {
@@ -3720,24 +3751,24 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -17.04,
+              "change_pct": -20.11,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -31.99,
+            "from_sample_high_pct": -32.7,
             "sample_high": 1.682,
             "sample_high_date": "20260112",
-            "common_120d_drawdown_pct": -13.52,
-            "deep_120d_drawdown_pct": -21.17,
-            "max_120d_drawdown_pct": -31.99
+            "common_120d_drawdown_pct": -13.67,
+            "deep_120d_drawdown_pct": -21.7,
+            "max_120d_drawdown_pct": -32.7
           },
           "rebound": {
-            "from_sample_low_pct": 21.83,
+            "from_sample_low_pct": 20.55,
             "sample_low": 0.939,
             "sample_low_date": "20250408",
-            "common_120d_rebound_pct": 17.76,
-            "strong_120d_rebound_pct": 28.32,
+            "common_120d_rebound_pct": 17.72,
+            "strong_120d_rebound_pct": 28.27,
             "max_120d_rebound_pct": 47.16
           }
         },
@@ -3750,7 +3781,7 @@
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.3188,
+            "value": 1.3083,
             "color": "#06b6d4",
             "shape": "diamond"
           },
@@ -3769,7 +3800,7 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
@@ -3778,16 +3809,16 @@
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "159378_SZ_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
@@ -3806,80 +3837,82 @@
       "code": "512710.SH",
       "name": "军工龙头ETF富国",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-09_153822.md",
       "group": "军工",
       "role": "遗留/主题观察",
       "allocation_bucket": "legacy_watch",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "偏贵",
-        "basis": "估值偏贵，控制新增，等待赔率改善。",
+        "label": "价格偏贵",
+        "basis": "仅基于ETF价格/净值历史位置，控制新增需结合市场门禁。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 0.686,
-        "ma20": 0.7428,
-        "ma60": 0.768,
+        "price_date": "20260608",
+        "last_reference": 0.662,
+        "ma20": 0.7286,
+        "ma60": 0.7614,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
         "support": 0.557,
-        "right_confirm": 0.768,
+        "right_confirm": 0.7614,
         "risk_zone_start": 0.701,
         "current_position_pct": 1.4734,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 0.686,
+          "current_value": 0.662,
           "current_zone": "expensive",
-          "current_zone_label": "偏贵区",
+          "current_zone_label": "价格偏贵区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 0.512,
               "max": 0.557,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
+              "label": "价格合理区",
               "min": 0.557,
-              "max": 0.6345,
+              "max": 0.634,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 0.6345,
+              "label": "价格偏贵区",
+              "min": 0.634,
               "max": 0.701,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
+              "label": "价格拥挤区",
               "min": 0.701,
-              "max": 0.8392,
+              "max": 0.8396,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": 0.07
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.2
         },
         "trend_visual": {
           "available": true,
-          "current": 0.686,
+          "current": 0.662,
           "trends": [
             {
               "key": "long",
               "label": "长期",
-              "state": "上行",
-              "color": "#dc2626",
-              "change_pct": 12.27,
+              "state": "震荡",
+              "color": "#f59e0b",
+              "change_pct": 8.17,
               "window_days": 250
             },
             {
@@ -3887,7 +3920,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -22.49,
+              "change_pct": -24.69,
               "window_days": 60
             },
             {
@@ -3895,20 +3928,20 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -13.16,
+              "change_pct": -19.56,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -29.93,
+            "from_sample_high_pct": -32.38,
             "sample_high": 0.979,
             "sample_high_date": "20260112",
-            "common_120d_drawdown_pct": -16.85,
-            "deep_120d_drawdown_pct": -21.42,
+            "common_120d_drawdown_pct": -16.93,
+            "deep_120d_drawdown_pct": -21.51,
             "max_120d_drawdown_pct": -34.8
           },
           "rebound": {
-            "from_sample_low_pct": 54.5,
+            "from_sample_low_pct": 49.1,
             "sample_low": 0.444,
             "sample_low_date": "20240205",
             "common_120d_rebound_pct": 16.87,
@@ -3925,7 +3958,7 @@
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 0.768,
+            "value": 0.7614,
             "color": "#06b6d4",
             "shape": "diamond"
           },
@@ -3944,7 +3977,7 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
@@ -3953,16 +3986,16 @@
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "512710_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
@@ -3981,80 +4014,82 @@
       "code": "159869.SZ",
       "name": "游戏ETF华夏",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-09_153822.md",
       "group": "游戏主题",
       "role": "待清理主题观察",
       "allocation_bucket": "legacy_watch",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "合理",
-        "basis": "估值处于合理配置区。",
+        "label": "价格合理",
+        "basis": "仅基于ETF价格/净值历史位置。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 1.11,
-        "ma20": 1.2213,
-        "ma60": 1.2892,
+        "price_date": "20260608",
+        "last_reference": 1.096,
+        "ma20": 1.198,
+        "ma60": 1.2788,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 0.9574,
-        "right_confirm": 1.2892,
-        "risk_zone_start": 1.39,
+        "support": 0.9562,
+        "right_confirm": 1.2788,
+        "risk_zone_start": 1.3892,
         "current_position_pct": 1.104,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 1.11,
+          "current_value": 1.096,
           "current_zone": "reasonable_allocation",
-          "current_zone_label": "合理配置区",
+          "current_zone_label": "价格合理区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
-              "min": 0.7619,
-              "max": 0.9574,
+              "label": "价格低位区",
+              "min": 0.7617,
+              "max": 0.9562,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 0.9574,
-              "max": 1.136,
+              "label": "价格合理区",
+              "min": 0.9562,
+              "max": 1.134,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 1.136,
-              "max": 1.39,
+              "label": "价格偏贵区",
+              "min": 1.134,
+              "max": 1.3892,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 1.39,
-              "max": 1.5703,
+              "label": "价格拥挤区",
+              "min": 1.3892,
+              "max": 1.571,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": 0.07
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": -0.14
         },
         "trend_visual": {
           "available": true,
-          "current": 1.11,
+          "current": 1.096,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": 2.12,
+              "change_pct": -1.17,
               "window_days": 250
             },
             {
@@ -4062,7 +4097,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -21.33,
+              "change_pct": -23.41,
               "window_days": 60
             },
             {
@@ -4070,23 +4105,23 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -17.04,
+              "change_pct": -17.72,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -34.71,
+            "from_sample_high_pct": -35.53,
             "sample_high": 1.7,
             "sample_high_date": "20260112",
-            "common_120d_drawdown_pct": -27.89,
-            "deep_120d_drawdown_pct": -32.58,
+            "common_120d_drawdown_pct": -27.9,
+            "deep_120d_drawdown_pct": -32.83,
             "max_120d_drawdown_pct": -43.38
           },
           "rebound": {
-            "from_sample_low_pct": 55.68,
+            "from_sample_low_pct": 53.72,
             "sample_low": 0.713,
             "sample_low_date": "20240724",
-            "common_120d_rebound_pct": 18.07,
+            "common_120d_rebound_pct": 17.87,
             "strong_120d_rebound_pct": 38.52,
             "max_120d_rebound_pct": 83.13
           }
@@ -4094,19 +4129,19 @@
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 0.9574,
+            "value": 0.9562,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.2892,
+            "value": 1.2788,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 1.39,
+            "value": 1.3892,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -4119,30 +4154,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 0.9574
+              "value": 0.9562
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "159869_SZ_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 1.39
+              "value": 1.3892
             }
           ],
           "near_threshold_pct": 1.0,
@@ -4156,80 +4191,82 @@
       "code": "562500.SH",
       "name": "机器人ETF华夏",
       "type": "ETF",
-      "source_profile": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-09_153822.md",
       "group": "机器人主题",
       "role": "进攻主线观察",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "泡沫",
-        "basis": "估值或价格位置进入拥挤/泡沫区，需要优先复核风险暴露。",
+        "label": "价格拥挤",
+        "basis": "仅基于ETF价格/净值历史位置进入高位，不能直接称为估值泡沫。",
         "confidence": "中低",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "price_position_only"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 1.129,
-        "ma20": 1.1579,
-        "ma60": 1.0416,
+        "price_date": "20260608",
+        "last_reference": 1.168,
+        "ma20": 1.1613,
+        "ma60": 1.0463,
         "moneyflow_5d": null,
         "moneyflow_20d": null,
-        "support": 0.7048,
-        "right_confirm": 1.0416,
-        "risk_zone_start": 0.983,
+        "support": 0.7044,
+        "right_confirm": 1.0463,
+        "risk_zone_start": 0.9852,
         "current_position_pct": 1.2815,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 1.129,
+          "current_value": 1.168,
           "current_zone": "crowded_risk",
-          "current_zone_label": "拥挤/风险区",
+          "current_zone_label": "价格拥挤区",
           "zones": [
             {
               "key": "undervalued_observe",
-              "label": "低估观察区",
+              "label": "价格低位区",
               "min": 0.576,
-              "max": 0.7048,
+              "max": 0.7044,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
-              "label": "合理配置区",
-              "min": 0.7048,
-              "max": 0.8145,
+              "label": "价格合理区",
+              "min": 0.7044,
+              "max": 0.816,
               "color": "#74b816"
             },
             {
               "key": "expensive",
-              "label": "偏贵区",
-              "min": 0.8145,
-              "max": 0.983,
+              "label": "价格偏贵区",
+              "min": 0.816,
+              "max": 0.9852,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
-              "label": "拥挤/风险区",
-              "min": 0.983,
-              "max": 1.129,
+              "label": "价格拥挤区",
+              "min": 0.9852,
+              "max": 1.168,
               "color": "#e03131"
             }
           ],
           "basis": "ETF价格/净值位置代理",
-          "premium_discount_pct": 0.0
+          "semantic_scope": "price_position_only",
+          "premium_discount_pct": 0.2
         },
         "trend_visual": {
           "available": true,
-          "current": 1.129,
+          "current": 1.168,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 33.29,
+              "change_pct": 39.55,
               "window_days": 250
             },
             {
@@ -4237,7 +4274,7 @@
               "label": "中期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 10.15,
+              "change_pct": 12.63,
               "window_days": 60
             },
             {
@@ -4245,23 +4282,23 @@
               "label": "短期",
               "state": "震荡",
               "color": "#f59e0b",
-              "change_pct": 2.92,
+              "change_pct": 2.37,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -7.15,
+            "from_sample_high_pct": -3.95,
             "sample_high": 1.216,
             "sample_high_date": "20260525",
-            "common_120d_drawdown_pct": -16.51,
-            "deep_120d_drawdown_pct": -21.41,
+            "common_120d_drawdown_pct": -16.53,
+            "deep_120d_drawdown_pct": -21.44,
             "max_120d_drawdown_pct": -31.27
           },
           "rebound": {
-            "from_sample_low_pct": 108.3,
+            "from_sample_low_pct": 115.5,
             "sample_low": 0.542,
             "sample_low_date": "20240822",
-            "common_120d_rebound_pct": 17.62,
+            "common_120d_rebound_pct": 17.81,
             "strong_120d_rebound_pct": 33.03,
             "max_120d_rebound_pct": 89.67
           }
@@ -4269,19 +4306,19 @@
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 0.7048,
+            "value": 0.7044,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 1.0416,
+            "value": 1.0463,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 0.983,
+            "value": 0.9852,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -4294,30 +4331,30 @@
           "alert_type": "watch_trigger",
           "priority": "medium",
           "suggested_action": "wait",
-          "trigger_condition": "进入低估观察区，只触发估值观察复核",
+          "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
           "conditions": [
             {
               "metric": "last",
               "op": "<=",
-              "value": 0.7048
+              "value": 0.7044
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
-          "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "invalidation_condition": "价格重新离开价格低位区或基本面/指数估值口径恶化。",
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "562500_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 0.983
+              "value": 0.9852
             }
           ],
           "near_threshold_pct": 1.0,
@@ -5220,8 +5257,8 @@
       "code": "603596.SH",
       "name": "伯特利",
       "type": "stock",
-      "source_profile": "research/valuations/valuation_603596_SH_伯特利_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_603596_SH_伯特利_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_603596_SH_伯特利_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_603596_SH_伯特利_2026-06-09_153822.md",
       "group": "汽车零部件",
       "role": "个股观察",
       "allocation_bucket": "attack_mainline",
@@ -5232,72 +5269,73 @@
         "confidence": "中",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "valuation"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 31.51,
-        "ma20": 33.2045,
-        "ma60": 41.9418,
-        "moneyflow_5d": -41768.21,
-        "moneyflow_20d": -143606.43,
-        "support": 34.7921,
-        "right_confirm": 41.9418,
-        "risk_zone_start": 54.9409,
+        "price_date": "20260608",
+        "last_reference": 29.08,
+        "ma20": 32.1595,
+        "ma60": 41.2965,
+        "moneyflow_5d": -25170.31,
+        "moneyflow_20d": -150483.33,
+        "support": 34.7162,
+        "right_confirm": 41.2965,
+        "risk_zone_start": 54.3054,
         "current_position_pct": 1.5967,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 31.51,
+          "current_value": 29.08,
           "current_zone": "undervalued_observe",
           "current_zone_label": "低估观察区",
           "zones": [
             {
               "key": "undervalued_observe",
               "label": "低估观察区",
-              "min": 31.317,
-              "max": 34.7921,
+              "min": 29.08,
+              "max": 34.7162,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
               "label": "合理配置区",
-              "min": 34.7921,
-              "max": 39.7502,
+              "min": 34.7162,
+              "max": 39.6975,
               "color": "#74b816"
             },
             {
               "key": "expensive",
               "label": "偏贵区",
-              "min": 39.7502,
-              "max": 54.9409,
+              "min": 39.6975,
+              "max": 54.3054,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
               "label": "拥挤/风险区",
-              "min": 54.9409,
-              "max": 68.8884,
+              "min": 54.3054,
+              "max": 68.8958,
               "color": "#e03131"
             }
           ],
           "basis": "PE/PB/PS历史分位映射价格区间",
           "evidence": [
-            "pe_ttm current=21.63, percentile=8.11%",
-            "ps_ttm current=2.35, percentile=4.59%",
-            "pb current=3.61, percentile=4.86%"
+            "pe_ttm current=19.96, percentile=0.27%",
+            "ps_ttm current=2.17, percentile=0.14%",
+            "pb current=3.33, percentile=0.14%"
           ]
         },
         "trend_visual": {
           "available": true,
-          "current": 31.51,
+          "current": 29.08,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -46.37,
+              "change_pct": -46.89,
               "window_days": 250
             },
             {
@@ -5305,7 +5343,7 @@
               "label": "中期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -38.55,
+              "change_pct": -41.38,
               "window_days": 60
             },
             {
@@ -5313,43 +5351,43 @@
               "label": "短期",
               "state": "下行",
               "color": "#16a34a",
-              "change_pct": -33.66,
+              "change_pct": -10.22,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -66.13,
+            "from_sample_high_pct": -68.74,
             "sample_high": 93.04,
             "sample_high_date": "20230711",
-            "common_120d_drawdown_pct": -28.74,
-            "deep_120d_drawdown_pct": -40.64,
+            "common_120d_drawdown_pct": -28.96,
+            "deep_120d_drawdown_pct": -40.99,
             "max_120d_drawdown_pct": -55.57
           },
           "rebound": {
-            "from_sample_low_pct": 3.55,
-            "sample_low": 30.43,
-            "sample_low_date": "20260520",
-            "common_120d_rebound_pct": 17.96,
-            "strong_120d_rebound_pct": 37.23,
+            "from_sample_low_pct": 0.0,
+            "sample_low": 29.08,
+            "sample_low_date": "20260608",
+            "common_120d_rebound_pct": 16.47,
+            "strong_120d_rebound_pct": 34.37,
             "max_120d_rebound_pct": 98.41
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 34.7921,
+            "value": 34.7162,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 41.9418,
+            "value": 41.2965,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 54.9409,
+            "value": 54.3054,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -5367,25 +5405,25 @@
             {
               "metric": "last",
               "op": "<=",
-              "value": 34.7921
+              "value": 34.7162
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
           "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "603596_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入拥挤/风险区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 54.9409
+              "value": 54.3054
             }
           ],
           "near_threshold_pct": 1.0,
@@ -5399,136 +5437,137 @@
       "code": "688333.SH",
       "name": "西安铂力特",
       "type": "stock",
-      "source_profile": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-05_103909.json",
-      "source_report": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-05_103909.md",
+      "source_profile": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-09_153822.json",
+      "source_report": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-09_153822.md",
       "group": "高端装备/军工",
       "role": "进攻仓观察",
       "allocation_bucket": "attack_mainline",
       "ideal_position_range": "0%-2%",
       "security_stance": {
-        "label": "偏贵",
-        "basis": "估值偏贵，控制新增，等待赔率改善。",
+        "label": "合理",
+        "basis": "估值处于合理配置区。",
         "confidence": "中",
         "scope": "security_level_only",
         "not_portfolio_action": true,
-        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。"
+        "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+        "semantic_scope": "valuation"
       },
       "reference_metrics": {
-        "price_date": "20260604",
-        "last_reference": 97.95,
-        "ma20": 94.543,
-        "ma60": 92.4707,
-        "moneyflow_5d": -21315.79,
-        "moneyflow_20d": -46608.74,
-        "support": 74.0742,
-        "right_confirm": 92.4707,
-        "risk_zone_start": 153.0918,
+        "price_date": "20260608",
+        "last_reference": 87.21,
+        "ma20": 94.3445,
+        "ma60": 92.2087,
+        "moneyflow_5d": -23094.23,
+        "moneyflow_20d": -71040.77,
+        "support": 74.0414,
+        "right_confirm": 92.2087,
+        "risk_zone_start": 153.4766,
         "current_position_pct": 1.2101,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
-          "current_value": 97.95,
-          "current_zone": "expensive",
-          "current_zone_label": "偏贵区",
+          "current_value": 87.21,
+          "current_zone": "reasonable_allocation",
+          "current_zone_label": "合理配置区",
           "zones": [
             {
               "key": "undervalued_observe",
               "label": "低估观察区",
-              "min": 57.9076,
-              "max": 74.0742,
+              "min": 57.8907,
+              "max": 74.0414,
               "color": "#2f9e44"
             },
             {
               "key": "reasonable_allocation",
               "label": "合理配置区",
-              "min": 74.0742,
-              "max": 94.6301,
+              "min": 74.0414,
+              "max": 94.3092,
               "color": "#74b816"
             },
             {
               "key": "expensive",
               "label": "偏贵区",
-              "min": 94.6301,
-              "max": 153.0918,
+              "min": 94.3092,
+              "max": 153.4766,
               "color": "#f59f00"
             },
             {
               "key": "crowded_risk",
               "label": "拥挤/风险区",
-              "min": 153.0918,
-              "max": 186.5157,
+              "min": 153.4766,
+              "max": 186.5697,
               "color": "#e03131"
             }
           ],
           "basis": "PE/PB/PS历史分位映射价格区间",
           "evidence": [
-            "pe_ttm current=114.09, percentile=42.03%",
-            "ps_ttm current=13.78, percentile=56.89%",
-            "pb current=5.37, percentile=71.89%"
+            "pe_ttm current=101.58, percentile=29.67%",
+            "ps_ttm current=12.27, percentile=33.88%",
+            "pb current=4.78, percentile=65.18%"
           ]
         },
         "trend_visual": {
           "available": true,
-          "current": 97.95,
+          "current": 87.21,
           "trends": [
             {
               "key": "long",
               "label": "长期",
               "state": "上行",
               "color": "#dc2626",
-              "change_pct": 63.25,
+              "change_pct": 50.44,
               "window_days": 250
             },
             {
               "key": "mid",
               "label": "中期",
-              "state": "震荡",
-              "color": "#f59e0b",
-              "change_pct": -4.11,
+              "state": "下行",
+              "color": "#16a34a",
+              "change_pct": -15.33,
               "window_days": 60
             },
             {
               "key": "short",
               "label": "短期",
-              "state": "上行",
-              "color": "#dc2626",
-              "change_pct": 6.18,
+              "state": "下行",
+              "color": "#16a34a",
+              "change_pct": -9.33,
               "window_days": 20
             }
           ],
           "drawdown": {
-            "from_sample_high_pct": -30.17,
+            "from_sample_high_pct": -37.83,
             "sample_high": 140.27,
             "sample_high_date": "20260112",
-            "common_120d_drawdown_pct": -36.3,
-            "deep_120d_drawdown_pct": -46.94,
+            "common_120d_drawdown_pct": -36.33,
+            "deep_120d_drawdown_pct": -46.95,
             "max_120d_drawdown_pct": -59.92
           },
           "rebound": {
-            "from_sample_low_pct": 159.4,
+            "from_sample_low_pct": 130.96,
             "sample_low": 37.76,
             "sample_low_date": "20240920",
-            "common_120d_rebound_pct": 31.87,
-            "strong_120d_rebound_pct": 51.24,
+            "common_120d_rebound_pct": 30.14,
+            "strong_120d_rebound_pct": 50.95,
             "max_120d_rebound_pct": 138.35
           }
         },
         "risk_markers": {
           "support": {
             "label": "风控位",
-            "value": 74.0742,
+            "value": 74.0414,
             "color": "#2563eb",
             "shape": "triangle"
           },
           "right_confirm": {
             "label": "右侧确认",
-            "value": 92.4707,
+            "value": 92.2087,
             "color": "#06b6d4",
             "shape": "diamond"
           },
           "risk_zone_start": {
             "label": "风险区起点",
-            "value": 153.0918,
+            "value": 153.4766,
             "color": "#dc2626",
             "shape": "flag"
           }
@@ -5546,25 +5585,25 @@
             {
               "metric": "last",
               "op": "<=",
-              "value": 74.0742
+              "value": 74.0414
             }
           ],
           "near_threshold_pct": 1.0,
-          "execution_boundary": "估值观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+          "execution_boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
           "invalidation_condition": "价格重新离开低估观察区或基本面/指数估值口径恶化。",
-          "review_point": "复核估值口径、趋势、资金流和最新组合偏离。"
+          "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。"
         },
         {
           "id": "688333_SH_valuation_risk",
           "alert_type": "risk_trigger",
           "priority": "high",
           "suggested_action": "review",
-          "trigger_condition": "进入拥挤/风险区，触发拥挤/高估风险复核",
+          "trigger_condition": "进入拥挤/风险区，触发拥挤/高位风险复核",
           "conditions": [
             {
               "metric": "last",
               "op": ">=",
-              "value": 153.0918
+              "value": 153.4766
             }
           ],
           "near_threshold_pct": 1.0,
