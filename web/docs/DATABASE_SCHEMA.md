@@ -5,7 +5,7 @@ The Web database is a read-only current-state cache generated from repository re
 Location:
 
 ```text
-temp/web_db/myinvest_web.sqlite
+temp/web_db/myinvest.sqlite
 ```
 
 Core tables:

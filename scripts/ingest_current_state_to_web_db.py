@@ -373,7 +373,24 @@ def import_target_allocation(session: Session, data: dict[str, Any], market_scor
     return target
 
 
-def import_intraday_rules(session: Session, data: dict[str, Any]) -> IntradayRule:
+def extract_disabled_triggers(action_plan: dict[str, Any]) -> list[dict[str, Any]]:
+    disabled = []
+    for item in action_plan.get("intraday_triggers") or []:
+        condition = str(item.get("trigger_condition") or "")
+        after = str(item.get("action_after_trigger") or "")
+        if not re.search(r"disabled|cancel|pause|wait", f"{condition} {after}", re.IGNORECASE):
+            continue
+        disabled.append(
+            {
+                "subject": RatioOnlyService.sanitize_text(str(item.get("subject") or "")),
+                "trigger_condition": RatioOnlyService.sanitize_text(condition),
+                "action_after_trigger": RatioOnlyService.sanitize_text(after),
+            }
+        )
+    return disabled
+
+
+def import_intraday_rules(session: Session, data: dict[str, Any], action_plan: dict[str, Any]) -> IntradayRule:
     staleness = data.get("staleness") or {}
     gate = data.get("global_gate") or {}
     status = str(staleness.get("status") or "unknown")
@@ -389,6 +406,7 @@ def import_intraday_rules(session: Session, data: dict[str, Any]) -> IntradayRul
                 "generated_at": data.get("generated_at"),
                 "status": status,
                 "risk_mode": gate.get("default_market_gate"),
+                "disabled_triggers": extract_disabled_triggers(action_plan),
             }
         ),
     )
@@ -620,7 +638,7 @@ def ingest() -> dict[str, int]:
         import_market_position_mapping(session, data["market_position_mapping"])
         import_portfolio(session, data["portfolio_snapshot"], subjects)
         import_target_allocation(session, data["target_allocation"], market_score)
-        import_intraday_rules(session, data["intraday_rules"])
+        import_intraday_rules(session, data["intraday_rules"], data["action_plan"])
         action_plan = import_action_plan(session, data["action_plan"], subjects)
         import_511360_gates(session, index, data["etf_registry"], data["liquidity_gate_registry"], subjects)
         import_decision_log(session, action_plan.id)

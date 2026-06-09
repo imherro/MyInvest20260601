@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
-from .config import TEMPLATE_DIR
+from .config import STATIC_DIR, TEMPLATE_DIR
 from .db import get_session
 from .routers.current import router as current_router
 from .services.current_state import CurrentStateService
@@ -14,11 +15,12 @@ from .services.system_check import SystemCheckService
 
 app = FastAPI(title="MyInvest Web", version="0.2.0")
 app.include_router(current_router, prefix="/api")
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 
 
-def page_context(request: Request, page: str, **extra):
-    context = {"request": request, "page": page}
+def page_context(request: Request, page: str, api_path: str, **extra):
+    context = {"request": request, "page": page, "api_path": api_path}
     context.update(extra)
     return context
 
@@ -36,6 +38,7 @@ def dashboard(request: Request, session: Session = Depends(get_session)) -> HTML
         page_context(
             request,
             "dashboard",
+            "/api/current",
             modules=current.current_modules(),
             plan=current.action_plan(),
             target=current.target_allocation(),
@@ -51,7 +54,7 @@ def action_plan_page(request: Request, session: Session = Depends(get_session)) 
     return templates.TemplateResponse(
         request,
         "action_plan.html",
-        page_context(request, "action-plan", action_plan=service(session).action_plan()),
+        page_context(request, "action-plan", "/api/action-plan/current", action_plan=service(session).action_plan()),
     )
 
 
@@ -60,7 +63,7 @@ def target_allocation_page(request: Request, session: Session = Depends(get_sess
     return templates.TemplateResponse(
         request,
         "target_allocation.html",
-        page_context(request, "target-allocation", target_allocation=service(session).target_allocation()),
+        page_context(request, "target-allocation", "/api/target-allocation/current", target_allocation=service(session).target_allocation()),
     )
 
 
@@ -69,7 +72,7 @@ def research_first_page(request: Request, session: Session = Depends(get_session
     return templates.TemplateResponse(
         request,
         "research_first.html",
-        page_context(request, "research-first", items=service(session).research_first_items()),
+        page_context(request, "research-first", "/api/research-first/current", items=service(session).research_first_items()),
     )
 
 
@@ -78,7 +81,7 @@ def portfolio_page(request: Request, session: Session = Depends(get_session)) ->
     return templates.TemplateResponse(
         request,
         "portfolio.html",
-        page_context(request, "portfolio", portfolio=service(session).portfolio()),
+        page_context(request, "portfolio", "/api/portfolio/current", portfolio=service(session).portfolio()),
     )
 
 
@@ -87,7 +90,7 @@ def intraday_rules_page(request: Request, session: Session = Depends(get_session
     return templates.TemplateResponse(
         request,
         "intraday_rules.html",
-        page_context(request, "intraday-rules", intraday_rules=service(session).intraday_rules()),
+        page_context(request, "intraday-rules", "/api/intraday-rules/current", intraday_rules=service(session).intraday_rules()),
     )
 
 
@@ -96,7 +99,7 @@ def decision_log_page(request: Request, session: Session = Depends(get_session))
     return templates.TemplateResponse(
         request,
         "decision_log.html",
-        page_context(request, "decision-log", entries=service(session).decision_log_entries()),
+        page_context(request, "decision-log", "/api/decision-log/current", entries=service(session).decision_log_entries()),
     )
 
 
@@ -105,5 +108,5 @@ def system_checks_page(request: Request, session: Session = Depends(get_session)
     return templates.TemplateResponse(
         request,
         "system_checks.html",
-        page_context(request, "system-checks", checks=SystemCheckService(session).current()),
+        page_context(request, "system-checks", "/api/system-check/current", checks=SystemCheckService(session).current()),
     )

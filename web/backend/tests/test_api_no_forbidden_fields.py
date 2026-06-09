@@ -9,7 +9,7 @@ FORBIDDEN_KEY_RE = re.compile(
     r"available_qty|available_quantity|trade_amount|account|full_account|order|fill|deal)($|_)",
     re.IGNORECASE,
 )
-LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:[\\/]|\\\\|/Users/|/home/)")
+LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:(?!//)[\\/]|\\\\|/Users/|/home/)")
 
 
 def walk(value: Any, path: str = "$"):
@@ -26,7 +26,10 @@ def walk(value: Any, path: str = "$"):
 
 def test_current_apis_do_not_return_forbidden_fields(client):
     paths = [
+        "/api/health",
         "/api/current",
+        "/api/latest-index",
+        "/api/modules/current",
         "/api/action-plan/current",
         "/api/target-allocation/current",
         "/api/research-first/current",
@@ -34,6 +37,8 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/intraday-rules/current",
         "/api/system-check/current",
         "/api/decision-log/current",
+        "/api/allocation-consistency/current",
+        "/api/export/review_package?format=json",
     ]
     for path in paths:
         response = client.get(path)

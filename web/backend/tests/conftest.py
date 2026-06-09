@@ -14,11 +14,11 @@ ROOT = Path(__file__).resolve().parents[3]
 @pytest.fixture(scope="session", autouse=True)
 def web_db() -> Path:
     subprocess.run(
-        [sys.executable, "scripts/ingest_current_state_to_web_db.py"],
+        [sys.executable, "scripts/ingest_current_state.py"],
         cwd=ROOT,
         check=True,
     )
-    return ROOT / "temp" / "web_db" / "myinvest_web.sqlite"
+    return ROOT / "temp" / "web_db" / "myinvest.sqlite"
 
 
 @pytest.fixture()

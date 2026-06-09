@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MyInvest Current</title>
-    <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
     <style>
       :root {
         color-scheme: light;
@@ -76,6 +75,53 @@
         font-size: 18px;
       }
       .subtle { color: var(--muted); }
+      .page-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .page-actions,
+      .table-tools {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      button,
+      .button-link,
+      input[type="search"] {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--panel);
+        color: var(--ink);
+        min-height: 34px;
+        padding: 6px 10px;
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+        font-weight: 650;
+      }
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        font-weight: 650;
+      }
+      button:hover,
+      .button-link:hover {
+        background: #e9eef6;
+      }
+      input[type="search"] {
+        min-width: 220px;
+      }
+      .refresh-status {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .refresh-status.warn { color: var(--amber); }
       .metric-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -94,6 +140,9 @@
         margin-top: 6px;
         font-size: 22px;
       }
+      .metric.ok { border-color: #81c7b4; background: #f1faf7; }
+      .metric.warn { border-color: #e4b35e; background: #fff8e9; }
+      .metric.fail { border-color: #e29b9b; background: #fff1f1; }
       .status {
         display: inline-flex;
         align-items: center;
@@ -129,8 +178,86 @@
         color: #344052;
         font-weight: 650;
       }
+      th[data-sort] {
+        cursor: pointer;
+        user-select: none;
+      }
+      th[data-sort]::after {
+        content: " \2195";
+        color: var(--muted);
+        font-weight: 400;
+      }
       tr:last-child td { border-bottom: 0; }
       .num { text-align: right; font-variant-numeric: tabular-nums; }
+      .gap-chart {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+      .gap-row {
+        display: grid;
+        grid-template-columns: minmax(110px, 180px) 1fr minmax(70px, auto);
+        gap: 10px;
+        align-items: center;
+      }
+      .gap-track {
+        position: relative;
+        min-height: 20px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--panel);
+        overflow: hidden;
+      }
+      .gap-track::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: #8b95a6;
+      }
+      .gap-bar {
+        position: absolute;
+        top: 3px;
+        bottom: 3px;
+        min-width: 2px;
+        border-radius: 4px;
+        background: var(--green);
+      }
+      .gap-bar.positive {
+        left: 50%;
+        background: #b36b00;
+      }
+      .gap-bar.negative {
+        right: 50%;
+        background: #235ea8;
+      }
+      .detail-row td {
+        background: #f9fbfd;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      tr.expandable-row {
+        cursor: pointer;
+      }
+      .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        margin: 8px 0 16px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .pagination button {
+        min-height: 30px;
+        padding: 4px 8px;
+      }
+      .pagination button:disabled {
+        cursor: default;
+        opacity: 0.45;
+      }
       .stack {
         display: grid;
         gap: 10px;
@@ -148,12 +275,14 @@
       }
       @media (max-width: 720px) {
         .bar { align-items: flex-start; flex-direction: column; }
+        .page-top { align-items: flex-start; flex-direction: column; }
         nav { justify-content: flex-start; }
         table { display: block; overflow-x: auto; }
       }
     </style>
+    <script src="/static/app.js" defer></script>
   </head>
-  <body hx-boost="true">
+  <body data-page="{{ page }}" data-api-path="{{ api_path }}">
     <header>
       <div class="bar">
         <div class="brand">MyInvest Current</div>
@@ -170,6 +299,17 @@
       </div>
     </header>
     <main>
+      <div class="page-top">
+        <div>
+          <h1>{% block title %}{% endblock %}</h1>
+          <div class="subtle">Read-only current state from latest_index.modules.</div>
+        </div>
+        <div class="page-actions">
+          <button type="button" data-refresh>Refresh</button>
+          <a class="button-link" href="/api/export/review_package">Export Review Package</a>
+          <span class="refresh-status" data-refresh-status>waiting</span>
+        </div>
+      </div>
       {% block content %}{% endblock %}
     </main>
   </body>

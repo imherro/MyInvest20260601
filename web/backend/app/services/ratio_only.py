@@ -16,7 +16,7 @@ class RatioOnlyService:
         r"cost_price|raw_cost_price|current_price|qmt_timetag)($|_)",
         re.IGNORECASE,
     )
-    local_path_re = re.compile(r"(?:[A-Za-z]:[\\/][^\s,;)]*|\\\\[^\s,;)]*|/Users/[^\s,;)]*|/home/[^\s,;)]*)")
+    local_path_re = re.compile(r"(?:[A-Za-z]:(?!//)[\\/][^\s,;)]*|\\\\[^\s,;)]*|/Users/[^\s,;)]*|/home/[^\s,;)]*)")
     forbidden_text_re = re.compile(
         r"(总资产|金额|市值|股数|数量|可用数量|交易金额|盈亏金额|账号|完整账号|订单|委托|成交|"
         r"total asset|market value|profit amount|trade amount|share count|available quantity|full account|"

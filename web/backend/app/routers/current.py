@@ -1,15 +1,18 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import Response
 from sqlalchemy.orm import Session
 
 from ..config import DB_PATH
 from ..db import get_session
 from ..services.allocation_consistency import AllocationConsistencyService
 from ..services.current_state import CurrentStateService
+from ..services.export_package import ReviewPackageExportService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
+from ..services.research_first_gate import ResearchFirstGateService
 from ..services.system_check import SystemCheckService
 
 
@@ -32,7 +35,7 @@ def health() -> dict[str, Any]:
         "app": "MyInvest Web",
         "mode": "read-only",
         "current_only": True,
-        "database": "temp/web_db/myinvest_web.sqlite",
+        "database": "temp/web_db/myinvest.sqlite",
     }
 
 
@@ -53,9 +56,16 @@ def current(session: Session = Depends(get_session)) -> dict[str, Any]:
             "target_allocation": service.target_allocation(),
             "portfolio": service.portfolio(),
             "intraday_rules": service.intraday_rules(),
+            "system_check": SystemCheckService(session).current(),
         },
         source={"path": "research/latest_index.json"},
     )
+
+
+@router.get("/modules/current")
+def current_modules(session: Session = Depends(get_session)) -> dict[str, Any]:
+    service = CurrentStateService(session)
+    return respond({"modules": service.current_modules()}, source={"path": "research/latest_index.json"})
 
 
 @router.get("/action-plan/current")
@@ -73,7 +83,10 @@ def target_allocation(session: Session = Depends(get_session)) -> dict[str, Any]
 @router.get("/research-first/current")
 def research_first(session: Session = Depends(get_session)) -> dict[str, Any]:
     service = CurrentStateService(session)
-    return respond({"items": service.research_first_items()}, source=service.source_for_module("action_plan"))
+    return respond(
+        {"gate": ResearchFirstGateService(session).check(), "items": service.research_first_items()},
+        source=service.source_for_module("action_plan"),
+    )
 
 
 @router.get("/portfolio/current")
@@ -90,7 +103,7 @@ def intraday_rules(session: Session = Depends(get_session)) -> dict[str, Any]:
 
 @router.get("/system-check/current")
 def system_check(session: Session = Depends(get_session)) -> dict[str, Any]:
-    return respond(SystemCheckService(session).current(), source={"path": "temp/web_db/myinvest_web.sqlite"})
+    return respond(SystemCheckService(session).current(), source={"path": "temp/web_db/myinvest.sqlite"})
 
 
 @router.get("/decision-log/current")
@@ -103,3 +116,20 @@ def decision_log(session: Session = Depends(get_session)) -> dict[str, Any]:
 def allocation_consistency(session: Session = Depends(get_session)) -> dict[str, Any]:
     service = CurrentStateService(session)
     return respond(AllocationConsistencyService(session).check(), source=service.source_for_module("intraday_rules"))
+
+
+@router.get("/export/review_package", response_model=None)
+def export_review_package(
+    format: Literal["zip", "json"] = "zip",
+    session: Session = Depends(get_session),
+) -> Any:
+    service = ReviewPackageExportService(session)
+    payload = service.payload()
+    if format == "json":
+        return respond(payload, source={"path": "research/latest_index.json"})
+    content = service.zip_bytes(payload)
+    return Response(
+        content=content,
+        media_type="application/zip",
+        headers={"Content-Disposition": 'attachment; filename="myinvest_current_review_package.zip"'},
+    )
