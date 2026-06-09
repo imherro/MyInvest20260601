@@ -1,17 +1,17 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-08_230154",
+  "generated_at": "2026-06-09_105833",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
       "module": "action_plan",
       "code": null,
       "name": null,
-      "path": "research/actions/action_plan_2026-06-08_225531_latest_ratio_only.json",
-      "generated_at": "2026-06-08_225531",
-      "basis_trade_date": "2026-06-08",
-      "sha256": "4cceff90942b4752f1a6873d99e77f3e465df83239eab00d140b3a2933e4551b",
+      "path": "research/actions/action_plan_2026-06-09_105818_latest_ratio_only.json",
+      "generated_at": "2026-06-09_105818",
+      "basis_trade_date": "20260608",
+      "sha256": "80252be7291d033208a94b817a3f9ceedcfbd7651851f15a46e923ee914d6ede",
       "quality": {
         "status": "warning"
       },
@@ -39,9 +39,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-08_225511",
+      "generated_at": "2026-06-09_105818",
       "basis_trade_date": null,
-      "sha256": "b752194dcdd30afa4afd71396f9074eb3cb5a6e3dc184261002ab3e3bfb9f2f5",
+      "sha256": "0b02aa57237fe42936b87d405146b847c51a07125845fb536fcc384fe87591a4",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -53,10 +53,10 @@
       "module": "target_allocation",
       "code": null,
       "name": null,
-      "path": "research/allocation/target_allocation_2026-06-08_225511.json",
-      "generated_at": "2026-06-08_225511",
-      "basis_trade_date": "20260605",
-      "sha256": "252ad221b70f3fec0318a5b4d97cf39b89a8994df410dfe3ff78288698c6a791",
+      "path": "research/allocation/target_allocation_2026-06-09_105818.json",
+      "generated_at": "2026-06-09_105818",
+      "basis_trade_date": "20260608",
+      "sha256": "e67eb9fe037b78435e25934410a70963acb9c1aba00bb066fa02d1e3ccb5f8c2",
       "quality": {
         "status": "warning"
       },
@@ -64,14 +64,29 @@
         "status": "fresh"
       }
     },
+    "STRATEGY_BRIEFING": {
+      "module": "STRATEGY_BRIEFING",
+      "code": null,
+      "name": null,
+      "path": "research/briefings/strategy_briefing_2026-06-09_100605.json",
+      "generated_at": "2026-06-09_100605",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "265c72814bf78efd9993226e39aa6b16ec3a38fe783ce4ebb5e4a329c039ea40",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
     "premarket_check": {
       "module": "premarket_check",
       "code": null,
       "name": null,
-      "path": "research/checks/premarket_check_2026-06-08_093102.json",
-      "generated_at": "2026-06-08_093102",
-      "basis_trade_date": "2026-06-08",
-      "sha256": "f1095c33a6b9034842f0d6fa47a06ec17f836e3c3dddcddc09b3d3bf1a8329d7",
+      "path": "research/checks/premarket_check_2026-06-09_100605.json",
+      "generated_at": "2026-06-09_100605",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "af367976f29ff61c9c31ba83d6e0313892cf596e6d45d421b202e79ee5b43813",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -128,10 +143,10 @@
       "module": "market_score",
       "code": null,
       "name": null,
-      "path": "research/market/market_score_2026-06-08_100643.json",
-      "generated_at": "2026-06-08_100643",
-      "basis_trade_date": "20260605",
-      "sha256": "c5e1268c08822164215607e4246b4df721bbc54f47bb75c5ea5988f48067ff09",
+      "path": "research/market/market_score_2026-06-09_100448.json",
+      "generated_at": "2026-06-09_100448",
+      "basis_trade_date": "20260608",
+      "sha256": "81120794d927db64d32053739d064c8ba42533d05a6929103cecb5674a5c77ef",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -143,10 +158,10 @@
       "module": "portfolio_snapshot",
       "code": null,
       "name": null,
-      "path": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
-      "generated_at": "2026-06-08_225306",
-      "basis_trade_date": "2026-06-08",
-      "sha256": "b36083905f7df27428070fdaa00aa45e179da4cdbb8c4767977cfb66174fd893",
+      "path": "research/portfolio/portfolio_snapshot_2026-06-09_103426.json",
+      "generated_at": "2026-06-09_103426",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "108de510c0599c11cf63c8634d42e3fd836d012978f4279c44b1b45c14d83686",
       "quality": {
         "status": "warning"
       },
@@ -367,6 +382,21 @@
       }
     },
     {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-09_105818_latest_ratio_only.json",
+      "generated_at": "2026-06-09_105818",
+      "basis_trade_date": "20260608",
+      "sha256": "80252be7291d033208a94b817a3f9ceedcfbd7651851f15a46e923ee914d6ede",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
       "module": "intraday_alerts",
       "code": null,
       "name": null,
@@ -431,9 +461,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-08_225511",
+      "generated_at": "2026-06-09_105818",
       "basis_trade_date": null,
-      "sha256": "b752194dcdd30afa4afd71396f9074eb3cb5a6e3dc184261002ab3e3bfb9f2f5",
+      "sha256": "0b02aa57237fe42936b87d405146b847c51a07125845fb536fcc384fe87591a4",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -502,6 +532,36 @@
       }
     },
     {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-09_105818.json",
+      "generated_at": "2026-06-09_105818",
+      "basis_trade_date": "20260608",
+      "sha256": "e67eb9fe037b78435e25934410a70963acb9c1aba00bb066fa02d1e3ccb5f8c2",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
+      "module": "STRATEGY_BRIEFING",
+      "code": null,
+      "name": null,
+      "path": "research/briefings/strategy_briefing_2026-06-09_100605.json",
+      "generated_at": "2026-06-09_100605",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "265c72814bf78efd9993226e39aa6b16ec3a38fe783ce4ebb5e4a329c039ea40",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "premarket_check",
       "code": null,
       "name": null,
@@ -539,6 +599,21 @@
       "generated_at": "2026-06-08_093102",
       "basis_trade_date": "2026-06-08",
       "sha256": "f1095c33a6b9034842f0d6fa47a06ec17f836e3c3dddcddc09b3d3bf1a8329d7",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "premarket_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/premarket_check_2026-06-09_100605.json",
+      "generated_at": "2026-06-09_100605",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "af367976f29ff61c9c31ba83d6e0313892cf596e6d45d421b202e79ee5b43813",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1072,6 +1147,21 @@
       }
     },
     {
+      "module": "market_score",
+      "code": null,
+      "name": null,
+      "path": "research/market/market_score_2026-06-09_100448.json",
+      "generated_at": "2026-06-09_100448",
+      "basis_trade_date": "20260608",
+      "sha256": "81120794d927db64d32053739d064c8ba42533d05a6929103cecb5674a5c77ef",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "portfolio_snapshot",
       "code": null,
       "name": null,
@@ -1199,6 +1289,36 @@
       "generated_at": "2026-06-08_225306",
       "basis_trade_date": "2026-06-08",
       "sha256": "b36083905f7df27428070fdaa00aa45e179da4cdbb8c4767977cfb66174fd893",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-09_094936.json",
+      "generated_at": "2026-06-09_094936",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "82cdf845c69a3ffcc8422e81b26807ca6168316e4628c32630bf05c9458b9978",
+      "quality": {
+        "status": "warning"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-09_103426.json",
+      "generated_at": "2026-06-09_103426",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "108de510c0599c11cf63c8634d42e3fd836d012978f4279c44b1b45c14d83686",
       "quality": {
         "status": "warning"
       },

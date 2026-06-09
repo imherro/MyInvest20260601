@@ -1819,26 +1819,6 @@
 
 2026-06-09 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-09_094936.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
 
-## 2026-06-09_100307 盘前流程
-
-- 模块：DAILY_PREMARKET / STRATEGY_BRIEFING / PREMARKET_CHECK
-- 数据基准日：20260608
-- 读取：research\market\market_score_2026-06-09_100307.json；research\themes\theme_review_2026-06-08_102237.json；research\themes\theme_registry.json；research\portfolio\portfolio_snapshot_2026-06-09_094936.json；research\actions\action_plan_2026-06-08_225531_latest_ratio_only.json
-- 产物：research\briefings\strategy_briefing_2026-06-09_100307.md；research\briefings\strategy_briefing_2026-06-09_100307.json；research\checks\premarket_check_2026-06-09_100307.md；research\checks\premarket_check_2026-06-09_100307.json
-- 结论：弱修复不等于进攻门禁解除；今日以执行既有风险收缩、提高现金/短融、观察机器人/AI修复质量为主。
-- 执行门禁：可进入盘中触发监控，但仅限既有风险收缩和现金/短融承接动作；新增进攻仓禁止。
-- ResearchFirst：估值报告缺失或应更新42项；未建档/估值缺口标的不转成新增买卖动作。
-
-## 2026-06-09_100448 盘前流程
-
-- 模块：DAILY_PREMARKET / STRATEGY_BRIEFING / PREMARKET_CHECK
-- 数据基准日：20260608
-- 读取：research\market\market_score_2026-06-09_100448.json；research\themes\theme_review_2026-06-08_102237.json；research\themes\theme_registry.json；research\portfolio\portfolio_snapshot_2026-06-09_094936.json；research\actions\action_plan_2026-06-08_225531_latest_ratio_only.json
-- 产物：research\briefings\strategy_briefing_2026-06-09_100448.md；research\briefings\strategy_briefing_2026-06-09_100448.json；research\checks\premarket_check_2026-06-09_100448.md；research\checks\premarket_check_2026-06-09_100448.json
-- 结论：市场仓位进一步收缩，弱修复不等于进攻门禁解除；既有操作建议的降风险方向有效，但精确目标区间已过期，执行前需要刷新ACTION_PLAN。
-- 执行门禁：只能进入风险收缩方向监控；由于市场目标已从旧操作建议的40%-45%收紧到30%-40%，精确执行前必须刷新ACTION_PLAN。
-- ResearchFirst：估值报告缺失或应更新42项；未建档/估值缺口标的不转成新增买卖动作。
-
 ## 2026-06-09_100605 盘前流程
 
 - 模块：DAILY_PREMARKET / STRATEGY_BRIEFING / PREMARKET_CHECK
@@ -1848,3 +1828,15 @@
 - 结论：市场仓位进一步收缩，弱修复不等于进攻门禁解除；既有操作建议的降风险方向有效，但精确目标区间已过期，执行前需要刷新ACTION_PLAN。
 - 执行门禁：只能进入风险收缩方向监控；由于市场目标已从旧操作建议的40%-45%收紧到30%-40%，精确执行前必须刷新ACTION_PLAN。
 - ResearchFirst：估值报告缺失或应更新42项；intraday_rules为stale/degraded；未建档/估值缺口标的不转成新增买卖动作。
+
+2026-06-09 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-09_103426.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+## 2026-06-09_105818 最新操作建议（比例版）
+
+- 决策类型：action_plan / target_allocation_refresh
+- 数据基准日：20260608
+- 生成文件：`research/allocation/target_allocation_2026-06-09_105818.md`、`research/allocation/target_allocation_2026-06-09_105818.json`、`research/actions/action_plan_2026-06-09_105818_latest_ratio_only.md`、`research/actions/action_plan_2026-06-09_105818_latest_ratio_only.json`
+- 读取前置文件：`research/market/market_score_2026-06-09_100448.json`、`research/themes/theme_review_2026-06-08_102237.json`、`research/portfolio/portfolio_snapshot_2026-06-09_103426.json`、`research/alerts/intraday_rules.json`
+- 金额口径：只使用比例和百分点，不使用金额、市值、盈亏金额或股数。
+- 结论：最新目标权益为30%-40%，当前权益约46.96%，高于上沿约6.96pp；建议只做风险收缩：权益先降低7.0pp至12.0pp，现金/短融提高到60%-70%，暂停新增进攻仓。
+- ResearchFirst：估值报告缺失或应更新42项；盘中规则degraded，买入/加仓触发不可用。

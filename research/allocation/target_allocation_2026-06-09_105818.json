@@ -1,0 +1,260 @@
+{
+  "module": "target_allocation",
+  "version": "2026-06-09_dynamic",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09_105818",
+  "basis_trade_date": "20260608",
+  "session": "latest_ratio_only",
+  "amount_policy": "ratio_only_no_market_value_no_profit_amount_no_total_amount_no_share_count",
+  "dependencies": {
+    "required": [
+      {
+        "module": "market_score",
+        "path": "research/market/market_score_2026-06-09_100448.json",
+        "generated_at": "2026-06-09_100448",
+        "basis_trade_date": "20260608"
+      },
+      {
+        "module": "theme_review",
+        "path": "research/themes/theme_review_2026-06-08_102237.json",
+        "generated_at": "2026-06-08_102237",
+        "basis_trade_date": "20260605"
+      },
+      {
+        "module": "portfolio_snapshot",
+        "path": "research/portfolio/portfolio_snapshot_2026-06-09_103426.json",
+        "generated_at": "2026-06-09_103426",
+        "basis_trade_date": "2026-06-09"
+      }
+    ],
+    "policy": "任一前置文件被更新后，本目标仓位失效。"
+  },
+  "data_sources": [
+    "research/market/market_score_2026-06-09_100448.json",
+    "research/themes/theme_review_2026-06-08_102237.json",
+    "research/portfolio/portfolio_snapshot_2026-06-09_103426.json"
+  ],
+  "summary": {
+    "market_state": "弱势震荡，风险收缩优先",
+    "market_position_score": 25,
+    "recommended_equity_center": "35%",
+    "recommended_equity_range": "30%-40%",
+    "recommended_bond_cash_center": "65%",
+    "recommended_bond_cash_range": "60%-70%",
+    "offensive_bucket_status": "pause_new",
+    "one_line_conclusion": "目标权益按最新市场仓位收紧到30%-40%，中枢35%；现金/短融目标60%-70%，中枢65%。真实权益仍高于目标上沿，后续action_plan只能处理风险收缩。"
+  },
+  "target_allocation": {
+    "groups": [
+      {
+        "group": "现金/短融",
+        "target_center_pct": 65.0,
+        "target_range": "见ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "市场仓位分数降至弱势区间，现金/短融是主要防守锚。"
+      },
+      {
+        "group": "宽基/核心底仓",
+        "target_center_pct": 19.95,
+        "target_range": "见ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "保留核心权益底仓，但在总权益超标时不因低配直接加仓。"
+      },
+      {
+        "group": "进攻主线仓",
+        "target_center_pct": 4.9,
+        "target_range": "见ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "无交易A主线且进攻桶pause_new，只保留极低配观察。"
+      },
+      {
+        "group": "防御仓",
+        "target_center_pct": 10.15,
+        "target_range": "见ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "防御权益也属于权益仓，弱势环境下不能替代现金/短融。"
+      },
+      {
+        "group": "其他/待清理",
+        "target_center_pct": 0.0,
+        "target_range": "见ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "非当前主线、缺档案或弱趋势暴露目标为0，只作为清理候选。"
+      }
+    ],
+    "total_target_pct_sum": 100.0
+  },
+  "ideal_allocation_map": {
+    "basis": "latest_market_position_and_theme_analysis",
+    "target_equity_pct": 35.0,
+    "target_cash_short_pct": 65.0,
+    "segments": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "target_pct": 65.0,
+        "color": "#5b6b7a",
+        "basis": "市场仓位分数降至弱势区间，现金/短融是主要防守锚。"
+      },
+      {
+        "key": "core_base",
+        "label": "宽基/核心底仓",
+        "target_pct": 19.95,
+        "color": "#2f6fbd",
+        "basis": "保留核心权益底仓，但在总权益超标时不因低配直接加仓。"
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "target_pct": 4.9,
+        "color": "#8b5cf6",
+        "basis": "无交易A主线且进攻桶pause_new，只保留极低配观察。"
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "target_pct": 10.15,
+        "color": "#0f8b6f",
+        "basis": "防御权益也属于权益仓，弱势环境下不能替代现金/短融。"
+      },
+      {
+        "key": "legacy_watch",
+        "label": "其他/待清理",
+        "target_pct": 0.0,
+        "color": "#9a6700",
+        "basis": "非当前主线、缺档案或弱趋势暴露目标为0，只作为清理候选。"
+      }
+    ],
+    "actual_overlay_source": "research/portfolio/portfolio_snapshot_2026-06-09_103426.json",
+    "boundary": "理想仓位只由市场仓位、主题强度和配置约束决定；真实持仓只作为覆盖层。",
+    "validation": {
+      "segments_target_pct_sum": 100.0,
+      "status": "ok"
+    }
+  },
+  "actual_allocation_overlay": {
+    "source": "research/portfolio/portfolio_snapshot_2026-06-09_103426.json",
+    "actual_equity_pct": 46.9635,
+    "actual_cash_short_pct": 53.0365,
+    "buckets": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "color": "#5b6b7a",
+        "target_pct": 65.0,
+        "actual_pct": 53.0365,
+        "gap_pct": -11.9635
+      },
+      {
+        "key": "core_base",
+        "label": "宽基/核心底仓",
+        "color": "#2f6fbd",
+        "target_pct": 19.95,
+        "actual_pct": 7.8082,
+        "gap_pct": -12.1418
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "color": "#8b5cf6",
+        "target_pct": 4.9,
+        "actual_pct": 9.6124,
+        "gap_pct": 4.7124
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "color": "#0f8b6f",
+        "target_pct": 10.15,
+        "actual_pct": 15.9612,
+        "gap_pct": 5.8112
+      },
+      {
+        "key": "legacy_watch",
+        "label": "其他/待清理",
+        "color": "#9a6700",
+        "target_pct": 0.0,
+        "actual_pct": 13.552,
+        "gap_pct": 13.552
+      }
+    ],
+    "quality": {
+      "status": "warning",
+      "errors": [],
+      "warnings": [
+        {
+          "code": "159301",
+          "field": "cost_price",
+          "value": -0.095,
+          "action": "set_null_and_exclude_from_reference_pnl_pct",
+          "reason": "QMT open_price/cost field is non-positive; cost-based PnL is unavailable, but ratio-level portfolio analysis can continue."
+        }
+      ],
+      "policy": "Invalid cost_price is downgraded to a warning and excluded from reference_pnl_pct; invalid current_price or broken weight totals remain errors."
+    }
+  },
+  "transition_targets": [
+    {
+      "subject": "equity_total",
+      "current_pct": 46.9635,
+      "target_range": "30%-40%",
+      "priority": "high",
+      "reason": "真实权益高于最新市场仓位上沿。"
+    },
+    {
+      "subject": "cash_short",
+      "current_pct": 53.0365,
+      "target_range": "60%-70%",
+      "priority": "high",
+      "reason": "现金/短融仍低于最新目标区间。"
+    },
+    {
+      "subject": "legacy_watch",
+      "current_pct": 13.552,
+      "target_range": "0%",
+      "priority": "high",
+      "reason": "其他/待清理桶仍是主要超配来源。"
+    }
+  ],
+  "rules": {
+    "no_direct_trade": true,
+    "buy_add_blocked_when_intraday_rules_stale": true,
+    "offensive_add_blocked": true,
+    "action_plan_required_for_any_trade": true,
+    "core_underweight_does_not_trigger_buy": true
+  },
+  "activation_triggers": [
+    {
+      "trigger_condition": "至少3个核心指数站上20日线，且Tushare moneyflow连续两日为正",
+      "allocation_action": "权益上沿可复核至45%-50%",
+      "invalid_or_reverse_condition": "指数重新跌破20日线或资金流转负"
+    },
+    {
+      "trigger_condition": "theme_registry确认至少一个交易A主线，且代表ETF站稳20日线",
+      "allocation_action": "进攻仓从pause_new转为verify_only",
+      "invalid_or_reverse_condition": "主题回到分歧/退潮或市场仓位分数低于45"
+    },
+    {
+      "trigger_condition": "指数修复失败且资金流重新大幅净流出",
+      "allocation_action": "权益下沿向35%-40%复核，现金/短融上调",
+      "invalid_or_reverse_condition": "宽度与资金同步改善"
+    }
+  ],
+  "quality": {
+    "status": "warning",
+    "warnings": [
+      {
+        "code": "159301",
+        "field": "cost_price",
+        "value": -0.095,
+        "action": "set_null_and_exclude_from_reference_pnl_pct",
+        "reason": "QMT open_price/cost field is non-positive; cost-based PnL is unavailable, but ratio-level portfolio analysis can continue."
+      }
+    ]
+  },
+  "staleness": {
+    "status": "fresh",
+    "checked_at": "2026-06-09_105818"
+  },
+  "decision_log_entry": "2026-06-09_105818 目标仓位刷新：权益目标30%-40%，现金/短融目标60%-70%；真实权益仍超上沿，交由ACTION_PLAN处理风险收缩。"
+}

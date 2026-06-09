@@ -1,15 +1,15 @@
 {
   "module": "intraday_rules",
   "version": "1.1",
-  "last_updated": "2026-06-08",
+  "last_updated": "2026-06-09",
   "boundary": "Rules are alert triggers only. They do not create portfolio-level buy/sell orders and do not call any trading API.",
   "data_sources": [
     "docs/modules/INTRADAY_ALERTS.md",
     "docs/modules/VALUATION_RESEARCH.md",
-    "research/market/market_score_2026-06-08_100643.json",
+    "research/market/market_score_2026-06-09_100448.json",
     "research/themes/theme_review_2026-06-08_102237.json",
-    "research/allocation/target_allocation_2026-06-08_225511.json",
-    "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+    "research/portfolio/portfolio_snapshot_2026-06-09_103426.json",
+    "research/allocation/target_allocation_2026-06-09_105818.json",
     "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-05_103909.json",
     "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-05_103909.json",
     "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-05_103909.json",
@@ -54,132 +54,132 @@
   },
   "allocation_map": {
     "basis": "latest_target_allocation_and_qmt_readonly_portfolio_snapshot",
-    "target_allocation_file": "research/allocation/target_allocation_2026-06-08_225511.json",
-    "portfolio_snapshot_file": "research/portfolio/portfolio_snapshot_2026-06-09_094936.json",
-    "target_equity_pct": 42.5,
-    "target_cash_short_pct": 57.5,
-    "actual_equity_pct": 54.151,
-    "actual_cash_short_pct": 45.849,
-    "bucket_model": "理想仓位由目标配置模块提供；真实持仓只作为覆盖层，不反向改变理想结构。",
+    "target_allocation_file": "research/allocation/target_allocation_2026-06-09_105818.json",
+    "portfolio_snapshot_file": "research/portfolio/portfolio_snapshot_2026-06-09_103426.json",
+    "target_equity_pct": 35.0,
+    "target_cash_short_pct": 65.0,
+    "actual_equity_pct": 46.9635,
+    "actual_cash_short_pct": 53.0365,
+    "bucket_model": "理想仓位由目标配置模块提供；真实持仓只作为覆盖层。",
     "ideal_segments": [
       {
         "key": "cash_short",
         "label": "现金/短融",
-        "target_pct": 57.5,
+        "target_pct": 65.0,
         "color": "#5b6b7a",
-        "basis": "市场仓位分数41，现金/短融作为主要防守和等待确认的仓位锚。"
+        "basis": "市场仓位分数降至弱势区间，现金/短融是主要防守锚。"
       },
       {
         "key": "core_base",
         "label": "宽基/核心底仓",
-        "target_pct": 22.0,
+        "target_pct": 19.95,
         "color": "#2f6fbd",
-        "basis": "权益内部优先保留宽基、自由现金流、质量类低换手核心暴露；当前不因低配直接加仓。"
+        "basis": "保留核心权益底仓，但在总权益超标时不因低配直接加仓。"
       },
       {
         "key": "attack_mainline",
         "label": "进攻主线仓",
-        "target_pct": 6.5,
+        "target_pct": 4.9,
         "color": "#8b5cf6",
-        "basis": "市场模块显示进攻仓暂停新增，AI交易评级B、半导体交易评级C，进攻仓仅保留低配观察。"
+        "basis": "无交易A主线且进攻桶pause_new，只保留极低配观察。"
       },
       {
         "key": "defense",
         "label": "防御仓",
-        "target_pct": 14.0,
+        "target_pct": 10.15,
         "color": "#0f8b6f",
-        "basis": "弱势环境保留红利、公用事业、金融和医药等防御暴露，但不追高。"
+        "basis": "防御权益也属于权益仓，弱势环境下不能替代现金/短融。"
       },
       {
         "key": "legacy_watch",
         "label": "其他/待清理",
         "target_pct": 0.0,
         "color": "#9a6700",
-        "basis": "C/D主题、遗留小仓和未进入当前主线的标的目标为0，只作为偏离暴露。"
+        "basis": "非当前主线、缺档案或弱趋势暴露目标为0，只作为清理候选。"
       }
     ],
     "actual_overlay": [
       {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "color": "#5b6b7a",
+        "actual_pct": 53.0365,
+        "gap_pct": -11.9635
+      },
+      {
         "key": "core_base",
         "label": "宽基/核心底仓",
         "color": "#2f6fbd",
-        "actual_pct": 7.8245,
-        "gap_pct": -14.1755
+        "actual_pct": 7.8082,
+        "gap_pct": -12.1418
       },
       {
         "key": "attack_mainline",
         "label": "进攻主线仓",
         "color": "#8b5cf6",
-        "actual_pct": 9.6055,
-        "gap_pct": 3.1055
+        "actual_pct": 9.6124,
+        "gap_pct": 4.7124
       },
       {
         "key": "defense",
         "label": "防御仓",
         "color": "#0f8b6f",
-        "actual_pct": 18.4646,
-        "gap_pct": 4.4646
+        "actual_pct": 15.9612,
+        "gap_pct": 5.8112
       },
       {
         "key": "legacy_watch",
         "label": "其他/待清理",
         "color": "#9a6700",
-        "actual_pct": 18.185,
-        "gap_pct": 18.185
-      },
-      {
-        "key": "cash_short",
-        "label": "现金/短融",
-        "color": "#5b6b7a",
-        "actual_pct": 45.849,
-        "gap_pct": -11.651
+        "actual_pct": 13.552,
+        "gap_pct": 13.552
       }
     ],
     "buckets": [
       {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "color": "#5b6b7a",
+        "target_pct": 65.0,
+        "actual_pct": 53.0365,
+        "gap_pct": -11.9635,
+        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
+      },
+      {
         "key": "core_base",
         "label": "宽基/核心底仓",
         "color": "#2f6fbd",
-        "target_pct": 22.0,
-        "actual_pct": 7.8245,
-        "gap_pct": -14.1755,
-        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
+        "target_pct": 19.95,
+        "actual_pct": 7.8082,
+        "gap_pct": -12.1418,
+        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
       },
       {
         "key": "attack_mainline",
         "label": "进攻主线仓",
         "color": "#8b5cf6",
-        "target_pct": 6.5,
-        "actual_pct": 9.6055,
-        "gap_pct": 3.1055,
-        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
+        "target_pct": 4.9,
+        "actual_pct": 9.6124,
+        "gap_pct": 4.7124,
+        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
       },
       {
         "key": "defense",
         "label": "防御仓",
         "color": "#0f8b6f",
-        "target_pct": 14.0,
-        "actual_pct": 18.4646,
-        "gap_pct": 4.4646,
-        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
+        "target_pct": 10.15,
+        "actual_pct": 15.9612,
+        "gap_pct": 5.8112,
+        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
       },
       {
         "key": "legacy_watch",
         "label": "其他/待清理",
         "color": "#9a6700",
         "target_pct": 0.0,
-        "actual_pct": 18.185,
-        "gap_pct": 18.185,
-        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
-      },
-      {
-        "key": "cash_short",
-        "label": "现金/短融",
-        "color": "#5b6b7a",
-        "target_pct": 57.5,
-        "actual_pct": 45.849,
-        "gap_pct": -11.651,
-        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
+        "actual_pct": 13.552,
+        "gap_pct": 13.552,
+        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
       }
     ],
     "quality": {
@@ -191,23 +191,10 @@
           "field": "cost_price",
           "value": -0.095,
           "action": "set_null_and_exclude_from_reference_pnl_pct",
-          "reason": "成本字段无效，已排除参考盈亏比例；该问题不阻断比例级仓位分析。"
+          "reason": "QMT open_price/cost field is non-positive; cost-based PnL is unavailable, but ratio-level portfolio analysis can continue."
         }
       ],
-      "repairs": [
-        {
-          "type": "name_mapping",
-          "codes": [
-            "515880"
-          ],
-          "reason": "补充 ETF/股票登记册中的正式名称。"
-        },
-        {
-          "type": "cost_quality_downgrade",
-          "reason": "无效成本字段不再使比例级组合快照整体 blocked；相关参考盈亏比例保持为空。"
-        }
-      ],
-      "policy": "Invalid cost_price is excluded from reference_pnl_pct and kept as a warning; ratio-only bucket analysis remains usable."
+      "policy": "Invalid cost_price is downgraded to a warning and excluded from reference_pnl_pct; invalid current_price or broken weight totals remain errors."
     }
   },
   "subjects": [
@@ -239,7 +226,7 @@
         "support": 108.5042,
         "right_confirm": 113.3512,
         "risk_zone_start": 112.5132,
-        "current_position_pct": 45.8387,
+        "current_position_pct": 53.0085,
         "target_position_range": "50%-55%",
         "valuation_visual": {
           "metric": "price",
@@ -552,7 +539,7 @@
         "support": 5.4276,
         "right_confirm": 8.2955,
         "risk_zone_start": 7.251,
-        "current_position_pct": 1.3213,
+        "current_position_pct": 1.3182,
         "target_position_range": "0%-15%",
         "valuation_visual": {
           "metric": "price",
@@ -902,7 +889,7 @@
         "support": 1.0,
         "right_confirm": 1.3014,
         "risk_zone_start": 1.2986,
-        "current_position_pct": 4.4866,
+        "current_position_pct": 4.4751,
         "target_position_range": "3%-6%",
         "valuation_visual": {
           "metric": "price",
@@ -1077,7 +1064,7 @@
         "support": 0.7348,
         "right_confirm": 1.7272,
         "risk_zone_start": 1.4592,
-        "current_position_pct": 0.0238,
+        "current_position_pct": 0.0235,
         "target_position_range": "0%-3%",
         "valuation_visual": {
           "metric": "price",
@@ -1252,7 +1239,7 @@
         "support": 1.155,
         "right_confirm": 2.3234,
         "risk_zone_start": 1.885,
-        "current_position_pct": 0.1752,
+        "current_position_pct": 0.1747,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -1427,7 +1414,7 @@
         "support": 0.9928,
         "right_confirm": 2.9208,
         "risk_zone_start": 2.2682,
-        "current_position_pct": 0.1675,
+        "current_position_pct": 0.1666,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -1602,7 +1589,7 @@
         "support": 1.0764,
         "right_confirm": 1.9852,
         "risk_zone_start": 1.7552,
-        "current_position_pct": 0.8734,
+        "current_position_pct": 0.8658,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -1777,7 +1764,7 @@
         "support": 3.015,
         "right_confirm": 3.2606,
         "risk_zone_start": 3.24,
-        "current_position_pct": 2.9583,
+        "current_position_pct": 2.9531,
         "target_position_range": "2%-5%",
         "valuation_visual": {
           "metric": "price",
@@ -1952,7 +1939,7 @@
         "support": 0.915,
         "right_confirm": 1.0377,
         "risk_zone_start": 0.9828,
-        "current_position_pct": 0.0038,
+        "current_position_pct": 0.0039,
         "target_position_range": "1%-3%",
         "valuation_visual": {
           "metric": "price",
@@ -2127,7 +2114,7 @@
         "support": 0.878,
         "right_confirm": 1.065,
         "risk_zone_start": 1.197,
-        "current_position_pct": 1.2421,
+        "current_position_pct": 1.2398,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -2302,7 +2289,7 @@
         "support": 0.8418,
         "right_confirm": 1.0123,
         "risk_zone_start": 1.134,
-        "current_position_pct": 4.3206,
+        "current_position_pct": 1.7311,
         "target_position_range": "0%-3%",
         "valuation_visual": {
           "metric": "price",
@@ -2477,7 +2464,7 @@
         "support": 0.5968,
         "right_confirm": 0.7946,
         "risk_zone_start": 0.8542,
-        "current_position_pct": 3.3355,
+        "current_position_pct": 3.3327,
         "target_position_range": "0%-4%",
         "valuation_visual": {
           "metric": "price",
@@ -2652,7 +2639,7 @@
         "support": 0.697,
         "right_confirm": 0.8108,
         "risk_zone_start": 0.868,
-        "current_position_pct": 3.9275,
+        "current_position_pct": 3.9915,
         "target_position_range": "0%-4%",
         "valuation_visual": {
           "metric": "price",
@@ -2827,7 +2814,7 @@
         "support": 0.6848,
         "right_confirm": 1.1996,
         "risk_zone_start": 1.261,
-        "current_position_pct": 1.2158,
+        "current_position_pct": 1.2298,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3002,7 +2989,7 @@
         "support": 0.9256,
         "right_confirm": 1.9754,
         "risk_zone_start": 1.7404,
-        "current_position_pct": 3.7004,
+        "current_position_pct": 2.4467,
         "target_position_range": "0%-3%",
         "valuation_visual": {
           "metric": "price",
@@ -3177,7 +3164,7 @@
         "support": 0.4868,
         "right_confirm": 1.0737,
         "risk_zone_start": 0.837,
-        "current_position_pct": 0.8148,
+        "current_position_pct": 0.8068,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3352,7 +3339,7 @@
         "support": 1.101,
         "right_confirm": 1.3188,
         "risk_zone_start": 1.333,
-        "current_position_pct": 2.5312,
+        "current_position_pct": 1.694,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3527,7 +3514,7 @@
         "support": 0.557,
         "right_confirm": 0.768,
         "risk_zone_start": 0.701,
-        "current_position_pct": 2.1879,
+        "current_position_pct": 1.4574,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3702,7 +3689,7 @@
         "support": 0.9574,
         "right_confirm": 1.2892,
         "risk_zone_start": 1.39,
-        "current_position_pct": 1.6572,
+        "current_position_pct": 1.1059,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3877,7 +3864,7 @@
         "support": 0.7048,
         "right_confirm": 1.0416,
         "risk_zone_start": 0.983,
-        "current_position_pct": 2.5261,
+        "current_position_pct": 1.2652,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -4052,7 +4039,7 @@
         "support": 0.5,
         "right_confirm": 0.6314,
         "risk_zone_start": 0.7412,
-        "current_position_pct": 1.6028,
+        "current_position_pct": 1.5988,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -4760,7 +4747,7 @@
         "support": 25.0396,
         "right_confirm": 24.7183,
         "risk_zone_start": 41.9415,
-        "current_position_pct": 0.6279,
+        "current_position_pct": 0.6312,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -4939,7 +4926,7 @@
         "support": 34.7921,
         "right_confirm": 41.9418,
         "risk_zone_start": 54.9409,
-        "current_position_pct": 1.639,
+        "current_position_pct": 1.6044,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -5118,7 +5105,7 @@
         "support": 74.0742,
         "right_confirm": 92.4707,
         "risk_zone_start": 153.0918,
-        "current_position_pct": 1.203,
+        "current_position_pct": 1.2058,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -5270,256 +5257,158 @@
       ]
     }
   ],
-  "last_portfolio_snapshot_sync": "2026-06-09_094936",
+  "last_portfolio_snapshot_sync": "2026-06-09_103426",
   "staleness": {
     "status": "degraded",
-    "checked_at": "2026-06-09_094936",
-    "mode": "degraded_observation_only",
-    "reason": "QMT只同步真实仓位；若目标仓位或数据质量异常，不允许静默形成新持仓+旧目标的状态。",
+    "checked_at": "2026-06-09_105818",
+    "mode": "fresh_rules_with_quality_warning",
+    "reason": "已同步最新目标配置；QMT快照仍有质量警告，因此禁止买入/加仓触发，只保留观察和风险收缩提示。",
     "findings": [
       {
-        "level": "WARN",
-        "path": "research/alerts/intraday_rules.json",
-        "reason": "latest QMT portfolio snapshot has data quality warnings/errors",
-        "dependency": "research/portfolio/portfolio_snapshot_2026-06-09_094936.json"
+        "code": "159301",
+        "field": "cost_price",
+        "value": -0.095,
+        "action": "set_null_and_exclude_from_reference_pnl_pct",
+        "reason": "QMT open_price/cost field is non-positive; cost-based PnL is unavailable, but ratio-level portfolio analysis can continue."
       }
     ]
   },
-  "generated_at": "2026-06-08_225511",
+  "generated_at": "2026-06-09_105818",
   "dependencies": {
     "required": [
       {
-        "module": "market_score",
-        "path": "research/market/market_score_2026-06-08_100643.json",
-        "generated_at": "2026-06-08_100643",
-        "basis_trade_date": "20260605",
-        "sha256": "c5e1268c08822164215607e4246b4df721bbc54f47bb75c5ea5988f48067ff09"
+        "module": "upstream",
+        "path": "research/market/market_score_2026-06-09_100448.json"
       },
       {
-        "module": "theme_review",
-        "path": "research/themes/theme_review_2026-06-08_102237.json",
-        "generated_at": "2026-06-08_102237",
-        "basis_trade_date": "20260605",
-        "sha256": "f8cd26cd7055197e14437dde7e7719d14dd678681375065e02c6e0d6b40d458a"
+        "module": "upstream",
+        "path": "research/themes/theme_review_2026-06-08_102237.json"
       },
       {
-        "module": "target_allocation",
-        "path": "research/allocation/target_allocation_2026-06-08_225511.json",
-        "generated_at": "2026-06-08_225511",
-        "basis_trade_date": "20260605",
-        "sha256": "252ad221b70f3fec0318a5b4d97cf39b89a8994df410dfe3ff78288698c6a791"
+        "module": "upstream",
+        "path": "research/portfolio/portfolio_snapshot_2026-06-09_103426.json"
       },
       {
-        "module": "portfolio_snapshot",
-        "path": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
-        "generated_at": "2026-06-08_225306",
-        "basis_trade_date": "2026-06-08",
-        "sha256": "b36083905f7df27428070fdaa00aa45e179da4cdbb8c4767977cfb66174fd893"
+        "module": "upstream",
+        "path": "research/allocation/target_allocation_2026-06-09_105818.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "9dfbafb00ec9b0da1cf80d9c20bca5ab3bf90790d05f9f105530dc679365fa7c"
+        "module": "upstream",
+        "path": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "622fd4c4d79f799c514756e7fd2a1914429092129dec257512ce3c232a07eea4"
+        "module": "upstream",
+        "path": "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "d6195c17ab107ae8139d0123e176b0e40dc2d4b3f872d09ea7cb944fb508e8f7"
+        "module": "upstream",
+        "path": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "7e62adbf58f22cef9bbdf052e4b78aaa97f1631f01a2659dbb26aa4d3b6e85c4"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "79817c13e9c8851693c047de7782565ad44e1dba568d32030065a70329ad8460"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "33dd3eb010d0e322e2a7b84fda3e7ee2c128a80d8dff25da9370335e1a8c1805"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "4d7583c0d80fb28b9de80260485dc9251e4a217404cbaf1eecb2d16b3834c284"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "f09fc39ba42f3ea01ee9f1079ff216b7fba5e2ecbc1124d4394e79436df1af5a"
+        "module": "upstream",
+        "path": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "f2287958204bce10b3e81895afd4b5937e2fbaa1a565f19c719fd91edd30c9e6"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_510880_SH_红利ETF华泰柏瑞_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "074b77c0b869466d20d53281c4e551edd5e9c451ddd398fe61265a68b5b9d38f"
+        "module": "upstream",
+        "path": "research/valuations/valuation_510880_SH_红利ETF华泰柏瑞_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "3553cd0d31fc3a08cb65e77d2aba9a741707265c13242888524ab915e79a6117"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "cf0e371209c64e59b8783d2c034506af2750653c82740e70bb8d5650097e8309"
+        "module": "upstream",
+        "path": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "6dc4d325f9ff789da2127b1481d6fe75dcea807989dce50e9940c2fc294a2c05"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "6d617c33204b6e4add13f7e28dac2f514087d54fc2d2fb475da635ebe62299f1"
+        "module": "upstream",
+        "path": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "ac29ca2564419ed60972b63017b469842caa09fc4083c2e81223c19e68308f28"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "c8db9c8b8b93c249cfa46aea518c82b2ffcb309c393f15817c77470f60ba9c29"
+        "module": "upstream",
+        "path": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "bb805905945aeaf3aa2a5401a61fef8a0ae5289e01fea2fc14c4ecb2d7187c1f"
+        "module": "upstream",
+        "path": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "4df688b1b50f2a4e5d2d387013d2e31287161a4a8c0ed1be024ed38d967b91bf"
+        "module": "upstream",
+        "path": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "08c68d634c80abc8255ca14ef4f9e01d1de8f0830e1b09547176e5061c3e27f6"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "f47fc78b47255e339fd0afcc8439f398fdfc4df72e47960a6c1bbbb9f517f590"
+        "module": "upstream",
+        "path": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "87cb01c3c6a12a5cee0460a7f0c851044b385f573e5d6d59661d46b5b67d542f"
+        "module": "upstream",
+        "path": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "64bc44fdc83fb844e27cdcb05a047fb36e20f12756f9d9e24cc78929fd81fcac"
+        "module": "upstream",
+        "path": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "4fc632b7b39ba7a8395d5c26f85fa2f683de341448b078df05528d6489c05945"
+        "module": "upstream",
+        "path": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_513050_SH_中概互联网ETF易方达_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "e276a5715ac8d23a3291eced8c5628d8b47a96868f4cf4219edfa5c1188a41a2"
+        "module": "upstream",
+        "path": "research/valuations/valuation_513050_SH_中概互联网ETF易方达_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_001280_SZ_中国铀业_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "0db524909df534ad32fd0d71709ec6a0bf74b90345156caaa8ab6745cec8064a"
+        "module": "upstream",
+        "path": "research/valuations/valuation_001280_SZ_中国铀业_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_601318_SH_中国平安_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "bab356c952677df2d73263cbbd40ef071410e400e5d3f8db3ee0650da373eaee"
+        "module": "upstream",
+        "path": "research/valuations/valuation_601318_SH_中国平安_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_002241_SZ_歌尔股份_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "965df50fb67f637e3861a923a07454a148d7162816f7aed6796a0f76b4689a1a"
+        "module": "upstream",
+        "path": "research/valuations/valuation_002241_SZ_歌尔股份_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_603596_SH_伯特利_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "09d67d6270dc3371f38f4777c96a9bac276f170f76ac9062f0e7af0a0d1bf87b"
+        "module": "upstream",
+        "path": "research/valuations/valuation_603596_SH_伯特利_2026-06-05_103909.json"
       },
       {
-        "module": "valuation_report",
-        "path": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-05_103909.json",
-        "generated_at": "2026-06-05_103909",
-        "basis_trade_date": "20260604",
-        "sha256": "b8c37fca9870de4383490d1a439a80fa9621206ca7a28c22b0320d01a793ad90"
+        "module": "upstream",
+        "path": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-05_103909.json"
       }
     ],
-    "policy": "If any required upstream is replaced by a newer file, intraday_rules must be marked stale/degraded and cannot emit buy/add alerts."
+    "policy": "任一前置文件更新后，盘中规则必须重建；degraded期间不得发出买入/加仓触发。"
   }
 }
