@@ -1,0 +1,199 @@
+{
+  "module": "MARKET_POSITION",
+  "version": "v1.1",
+  "date": "2026-06-09",
+  "session": "premarket",
+  "generated_at": "2026-06-09_100448",
+  "basis_trade_date": "20260608",
+  "basis_note": "盘前流程使用最新完整交易日，不使用未收盘盘中数据。",
+  "data_sources": [
+    "Tushare trade_cal",
+    "Tushare index_daily",
+    "Tushare daily",
+    "Tushare moneyflow",
+    "theme_registry.json"
+  ],
+  "summary": {
+    "market_state": "弱势震荡，风险收缩优先",
+    "opportunity_score": 34,
+    "crowding_penalty": 9,
+    "market_position_score": 25,
+    "equity_allocation_range": "30%-40%",
+    "bond_cash_allocation_range": "60%-70%",
+    "offensive_bucket_status": "pause_new",
+    "one_line_conclusion": "以 20260608 最新完整收盘数据看，主要指数站上20日线数量为 0/7，全A上涨占比 16.3%，资金流代理 -901.85 亿元；市场仓位分数为 25，权益目标维持 30%-40%，进攻仓仍为 pause_new。"
+  },
+  "market_observations": {
+    "index_rows": [
+      {
+        "ts_code": "000001.SH",
+        "name": "上证指数",
+        "pct_chg": -1.7,
+        "close": 3959.34,
+        "above_ma20": false,
+        "above_ma60": false,
+        "dist_ma20_pct": -3.72,
+        "dist_ma60_pct": -2.37
+      },
+      {
+        "ts_code": "000300.SH",
+        "name": "沪深300",
+        "pct_chg": -2.14,
+        "close": 4713.64,
+        "above_ma20": false,
+        "above_ma60": false,
+        "dist_ma20_pct": -3.41,
+        "dist_ma60_pct": -0.4
+      },
+      {
+        "ts_code": "000905.SH",
+        "name": "中证500",
+        "pct_chg": -3.49,
+        "close": 7963.45,
+        "above_ma20": false,
+        "above_ma60": false,
+        "dist_ma20_pct": -6.36,
+        "dist_ma60_pct": -3.05
+      },
+      {
+        "ts_code": "000852.SH",
+        "name": "中证1000",
+        "pct_chg": -3.11,
+        "close": 8081.26,
+        "above_ma20": false,
+        "above_ma60": false,
+        "dist_ma20_pct": -5.96,
+        "dist_ma60_pct": -2.16
+      },
+      {
+        "ts_code": "399001.SZ",
+        "name": "深证成指",
+        "pct_chg": -3.22,
+        "close": 14821.19,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -5.02,
+        "dist_ma60_pct": 0.14
+      },
+      {
+        "ts_code": "399006.SZ",
+        "name": "创业板指",
+        "pct_chg": -3.69,
+        "close": 3811.79,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -4.26,
+        "dist_ma60_pct": 4.8
+      },
+      {
+        "ts_code": "000688.SH",
+        "name": "科创50",
+        "pct_chg": -4.3,
+        "close": 1596.57,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -8.89,
+        "dist_ma60_pct": 5.12
+      }
+    ],
+    "daily_breadth": {
+      "total_count": 5515,
+      "advance_ratio_pct": 16.3,
+      "median_pct_chg": -2.98
+    },
+    "liquidity": {
+      "total_amount_100m_yuan": 28234.29,
+      "avg20_amount_100m_yuan": 31086.05,
+      "amount_vs_20d": 0.91
+    },
+    "moneyflow": {
+      "net_mf_amount_100m_yuan": -901.85
+    }
+  },
+  "scores": {
+    "index_trend": {
+      "weight": 20,
+      "score": 3,
+      "evidence": "0/7 个主要指数站上20日线，3/7 个站上60日线。"
+    },
+    "market_breadth": {
+      "weight": 15,
+      "score": 3,
+      "evidence": "Tushare全A样本5515只，上涨占比16.3%，中位涨跌幅-2.98%。"
+    },
+    "volume_liquidity": {
+      "weight": 10,
+      "score": 5,
+      "evidence": "全A成交额约28234.29亿元，约为20日均值31086.05亿元的0.91倍。"
+    },
+    "fund_flow_risk_appetite": {
+      "weight": 15,
+      "score": 2,
+      "evidence": "Tushare moneyflow代理净流入约-901.85亿元。"
+    },
+    "theme_strength": {
+      "weight": 15,
+      "score": 9,
+      "evidence": "沿用theme_registry：交易A主线0个，交易B主线2个；盘前不临时重写主题评级。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 6,
+      "evidence": "估值报告更新检查显示多项待刷新，本次不因旧估值上调风险偏好。"
+    },
+    "macro_policy": {
+      "weight": 10,
+      "score": 6,
+      "evidence": "隔夜美股科技修复但国内门禁仍取决于A股价格、资金和主线确认。"
+    }
+  },
+  "allocation_mapping": {
+    "base_bucket": "25 -> 30%-40%",
+    "base_equity_range": "30%-40%",
+    "final_equity_range": "30%-40%",
+    "final_bond_cash_range": "60%-70%",
+    "reason": "最新收盘日有修复信号，但交易A主线缺失且估值/档案更新缺口较多，维持风险收缩边界。"
+  },
+  "hard_constraints": [
+    "无交易A档主线时不新增进攻仓。",
+    "组合权益高于目标上沿时优先执行风险收缩。",
+    "估值/档案缺口标记ResearchFirst，不绕过ACTION_PLAN给新动作。"
+  ],
+  "trigger_based_adjustments": [
+    {
+      "trigger_condition": "至少3个核心指数站上20日线，且Tushare moneyflow连续两日为正",
+      "allocation_action": "权益上沿可复核至45%-50%",
+      "invalid_or_reverse_condition": "指数重新跌破20日线或资金流转负"
+    },
+    {
+      "trigger_condition": "theme_registry确认至少一个交易A主线，且代表ETF站稳20日线",
+      "allocation_action": "进攻仓从pause_new转为verify_only",
+      "invalid_or_reverse_condition": "主题回到分歧/退潮或市场仓位分数低于45"
+    },
+    {
+      "trigger_condition": "指数修复失败且资金流重新大幅净流出",
+      "allocation_action": "权益下沿向35%-40%复核，现金/短融上调",
+      "invalid_or_reverse_condition": "宽度与资金同步改善"
+    }
+  ],
+  "operation_implications": {
+    "allowed": "只允许执行既有风险收缩和现金/短融承接类计划；新增权益进攻仓暂停。",
+    "forbidden": "不因隔夜芯片股反弹直接新增AI/半导体仓位。",
+    "handoff": "盘前执行检查继续核对action_plan和ResearchFirst缺口。"
+  },
+  "risks": [
+    "隔夜美股科技反弹可能带来高开低走风险。",
+    "估值报告更新缺口较多，个券级动作必须ResearchFirst。",
+    "组合权益仍高于目标上沿。"
+  ],
+  "watchlist": [
+    "核心指数20日线修复数量",
+    "Tushare moneyflow是否连续转正",
+    "机器人/AI代表ETF是否能延续修复",
+    "现金/短融桶是否回到55%-60%"
+  ],
+  "data_gaps": {
+    "northbound": "未接入北向日频口径",
+    "valuation_refresh": "估值更新检查显示多项缺口"
+  }
+}

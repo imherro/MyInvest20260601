@@ -55,11 +55,11 @@
   "allocation_map": {
     "basis": "latest_target_allocation_and_qmt_readonly_portfolio_snapshot",
     "target_allocation_file": "research/allocation/target_allocation_2026-06-08_225511.json",
-    "portfolio_snapshot_file": "research/portfolio/portfolio_snapshot_2026-06-08_225306.json",
+    "portfolio_snapshot_file": "research/portfolio/portfolio_snapshot_2026-06-09_094936.json",
     "target_equity_pct": 42.5,
     "target_cash_short_pct": 57.5,
-    "actual_equity_pct": 54.0964,
-    "actual_cash_short_pct": 45.9036,
+    "actual_equity_pct": 54.151,
+    "actual_cash_short_pct": 45.849,
     "bucket_model": "理想仓位由目标配置模块提供；真实持仓只作为覆盖层，不反向改变理想结构。",
     "ideal_segments": [
       {
@@ -100,86 +100,86 @@
     ],
     "actual_overlay": [
       {
-        "key": "cash_short",
-        "label": "现金/短融",
-        "color": "#5b6b7a",
-        "actual_pct": 45.9036,
-        "gap_pct": -11.5964
-      },
-      {
         "key": "core_base",
         "label": "宽基/核心底仓",
         "color": "#2f6fbd",
-        "actual_pct": 7.8184,
-        "gap_pct": -14.1816
+        "actual_pct": 7.8245,
+        "gap_pct": -14.1755
       },
       {
         "key": "attack_mainline",
         "label": "进攻主线仓",
         "color": "#8b5cf6",
-        "actual_pct": 9.6113,
-        "gap_pct": 3.1113
+        "actual_pct": 9.6055,
+        "gap_pct": 3.1055
       },
       {
         "key": "defense",
         "label": "防御仓",
         "color": "#0f8b6f",
-        "actual_pct": 18.5488,
-        "gap_pct": 4.5488
+        "actual_pct": 18.4646,
+        "gap_pct": 4.4646
       },
       {
         "key": "legacy_watch",
         "label": "其他/待清理",
         "color": "#9a6700",
-        "actual_pct": 18.1229,
-        "gap_pct": 18.1229
-      }
-    ],
-    "buckets": [
+        "actual_pct": 18.185,
+        "gap_pct": 18.185
+      },
       {
         "key": "cash_short",
         "label": "现金/短融",
         "color": "#5b6b7a",
-        "target_pct": 57.5,
-        "actual_pct": 45.9036,
-        "gap_pct": -11.5964,
-        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
-      },
+        "actual_pct": 45.849,
+        "gap_pct": -11.651
+      }
+    ],
+    "buckets": [
       {
         "key": "core_base",
         "label": "宽基/核心底仓",
         "color": "#2f6fbd",
         "target_pct": 22.0,
-        "actual_pct": 7.8184,
-        "gap_pct": -14.1816,
-        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
+        "actual_pct": 7.8245,
+        "gap_pct": -14.1755,
+        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
       },
       {
         "key": "attack_mainline",
         "label": "进攻主线仓",
         "color": "#8b5cf6",
         "target_pct": 6.5,
-        "actual_pct": 9.6113,
-        "gap_pct": 3.1113,
-        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
+        "actual_pct": 9.6055,
+        "gap_pct": 3.1055,
+        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
       },
       {
         "key": "defense",
         "label": "防御仓",
         "color": "#0f8b6f",
         "target_pct": 14.0,
-        "actual_pct": 18.5488,
-        "gap_pct": 4.5488,
-        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
+        "actual_pct": 18.4646,
+        "gap_pct": 4.4646,
+        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
       },
       {
         "key": "legacy_watch",
         "label": "其他/待清理",
         "color": "#9a6700",
         "target_pct": 0.0,
-        "actual_pct": 18.1229,
-        "gap_pct": 18.1229,
-        "note": "target_pct来自最新target_allocation；actual_pct来自QMT只读持仓快照。"
+        "actual_pct": 18.185,
+        "gap_pct": 18.185,
+        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
+      },
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "color": "#5b6b7a",
+        "target_pct": 57.5,
+        "actual_pct": 45.849,
+        "gap_pct": -11.651,
+        "note": "actual_pct由QMT只读持仓快照同步；不保存任何金额或数量。"
       }
     ],
     "quality": {
@@ -239,7 +239,7 @@
         "support": 108.5042,
         "right_confirm": 113.3512,
         "risk_zone_start": 112.5132,
-        "current_position_pct": 45.8933,
+        "current_position_pct": 45.8387,
         "target_position_range": "50%-55%",
         "valuation_visual": {
           "metric": "price",
@@ -552,7 +552,7 @@
         "support": 5.4276,
         "right_confirm": 8.2955,
         "risk_zone_start": 7.251,
-        "current_position_pct": 1.3133,
+        "current_position_pct": 1.3213,
         "target_position_range": "0%-15%",
         "valuation_visual": {
           "metric": "price",
@@ -902,7 +902,7 @@
         "support": 1.0,
         "right_confirm": 1.3014,
         "risk_zone_start": 1.2986,
-        "current_position_pct": 4.4883,
+        "current_position_pct": 4.4866,
         "target_position_range": "3%-6%",
         "valuation_visual": {
           "metric": "price",
@@ -1077,7 +1077,7 @@
         "support": 0.7348,
         "right_confirm": 1.7272,
         "risk_zone_start": 1.4592,
-        "current_position_pct": 0.0234,
+        "current_position_pct": 0.0238,
         "target_position_range": "0%-3%",
         "valuation_visual": {
           "metric": "price",
@@ -1252,7 +1252,7 @@
         "support": 1.155,
         "right_confirm": 2.3234,
         "risk_zone_start": 1.885,
-        "current_position_pct": 0.1703,
+        "current_position_pct": 0.1752,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -1427,7 +1427,7 @@
         "support": 0.9928,
         "right_confirm": 2.9208,
         "risk_zone_start": 2.2682,
-        "current_position_pct": 0.1643,
+        "current_position_pct": 0.1675,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -1602,7 +1602,7 @@
         "support": 1.0764,
         "right_confirm": 1.9852,
         "risk_zone_start": 1.7552,
-        "current_position_pct": 0.8573,
+        "current_position_pct": 0.8734,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -1777,7 +1777,7 @@
         "support": 3.015,
         "right_confirm": 3.2606,
         "risk_zone_start": 3.24,
-        "current_position_pct": 2.9656,
+        "current_position_pct": 2.9583,
         "target_position_range": "2%-5%",
         "valuation_visual": {
           "metric": "price",
@@ -1952,7 +1952,7 @@
         "support": 0.915,
         "right_confirm": 1.0377,
         "risk_zone_start": 0.9828,
-        "current_position_pct": 0.0039,
+        "current_position_pct": 0.0038,
         "target_position_range": "1%-3%",
         "valuation_visual": {
           "metric": "price",
@@ -2127,7 +2127,7 @@
         "support": 0.878,
         "right_confirm": 1.065,
         "risk_zone_start": 1.197,
-        "current_position_pct": 1.2486,
+        "current_position_pct": 1.2421,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -2302,7 +2302,7 @@
         "support": 0.8418,
         "right_confirm": 1.0123,
         "risk_zone_start": 1.134,
-        "current_position_pct": 4.3534,
+        "current_position_pct": 4.3206,
         "target_position_range": "0%-3%",
         "valuation_visual": {
           "metric": "price",
@@ -2477,7 +2477,7 @@
         "support": 0.5968,
         "right_confirm": 0.7946,
         "risk_zone_start": 0.8542,
-        "current_position_pct": 3.3442,
+        "current_position_pct": 3.3355,
         "target_position_range": "0%-4%",
         "valuation_visual": {
           "metric": "price",
@@ -2652,7 +2652,7 @@
         "support": 0.697,
         "right_confirm": 0.8108,
         "risk_zone_start": 0.868,
-        "current_position_pct": 3.9549,
+        "current_position_pct": 3.9275,
         "target_position_range": "0%-4%",
         "valuation_visual": {
           "metric": "price",
@@ -2827,7 +2827,7 @@
         "support": 0.6848,
         "right_confirm": 1.1996,
         "risk_zone_start": 1.261,
-        "current_position_pct": 1.2311,
+        "current_position_pct": 1.2158,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3002,7 +3002,7 @@
         "support": 0.9256,
         "right_confirm": 1.9754,
         "risk_zone_start": 1.7404,
-        "current_position_pct": 3.6486,
+        "current_position_pct": 3.7004,
         "target_position_range": "0%-3%",
         "valuation_visual": {
           "metric": "price",
@@ -3177,7 +3177,7 @@
         "support": 0.4868,
         "right_confirm": 1.0737,
         "risk_zone_start": 0.837,
-        "current_position_pct": 0.8044,
+        "current_position_pct": 0.8148,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3352,7 +3352,7 @@
         "support": 1.101,
         "right_confirm": 1.3188,
         "risk_zone_start": 1.333,
-        "current_position_pct": 2.5187,
+        "current_position_pct": 2.5312,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3527,7 +3527,7 @@
         "support": 0.557,
         "right_confirm": 0.768,
         "risk_zone_start": 0.701,
-        "current_position_pct": 2.204,
+        "current_position_pct": 2.1879,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3702,7 +3702,7 @@
         "support": 0.9574,
         "right_confirm": 1.2892,
         "risk_zone_start": 1.39,
-        "current_position_pct": 1.6397,
+        "current_position_pct": 1.6572,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -3877,7 +3877,7 @@
         "support": 0.7048,
         "right_confirm": 1.0416,
         "risk_zone_start": 0.983,
-        "current_position_pct": 2.5467,
+        "current_position_pct": 2.5261,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -4052,7 +4052,7 @@
         "support": 0.5,
         "right_confirm": 0.6314,
         "risk_zone_start": 0.7412,
-        "current_position_pct": 1.5942,
+        "current_position_pct": 1.6028,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -4760,7 +4760,7 @@
         "support": 25.0396,
         "right_confirm": 24.7183,
         "risk_zone_start": 41.9415,
-        "current_position_pct": 0.6367,
+        "current_position_pct": 0.6279,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -4939,7 +4939,7 @@
         "support": 34.7921,
         "right_confirm": 41.9418,
         "risk_zone_start": 54.9409,
-        "current_position_pct": 1.6634,
+        "current_position_pct": 1.639,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -5118,7 +5118,7 @@
         "support": 74.0742,
         "right_confirm": 92.4707,
         "risk_zone_start": 153.0918,
-        "current_position_pct": 1.2335,
+        "current_position_pct": 1.203,
         "target_position_range": "0%-2%",
         "valuation_visual": {
           "metric": "price",
@@ -5270,14 +5270,19 @@
       ]
     }
   ],
-  "last_portfolio_snapshot_sync": "2026-06-08_225306",
+  "last_portfolio_snapshot_sync": "2026-06-09_094936",
   "staleness": {
     "status": "degraded",
-    "checked_at": "2026-06-08_225511",
-    "mode": "fresh_rules_with_quality_warning",
-    "reason": "已同步最新目标配置；若QMT快照存在质量警告，则禁止用异常成本字段生成精确交易建议。",
+    "checked_at": "2026-06-09_094936",
+    "mode": "degraded_observation_only",
+    "reason": "QMT只同步真实仓位；若目标仓位或数据质量异常，不允许静默形成新持仓+旧目标的状态。",
     "findings": [
-      "最新QMT持仓快照存在数据质量警告，已用于比例偏离，但不允许用异常成本字段生成精确交易建议。"
+      {
+        "level": "WARN",
+        "path": "research/alerts/intraday_rules.json",
+        "reason": "latest QMT portfolio snapshot has data quality warnings/errors",
+        "dependency": "research/portfolio/portfolio_snapshot_2026-06-09_094936.json"
+      }
     ]
   },
   "generated_at": "2026-06-08_225511",
