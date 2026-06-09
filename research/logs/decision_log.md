@@ -2088,3 +2088,9 @@
 - JSON: `research/checks/premarket_check_2026-06-09_162003.json`
 
 2026-06-09 盘后复盘自动底稿：生成 post_market_review_2026-06-09_162342.md/json；读取最新 market/theme/action/portfolio/alerts，并运行估值更新检查；缺少执行记录时不判断已执行。
+
+## 2026-06-09_163552 ETF 估值口径修正：历史趋势/回撤改用复权净值可比序列，避免分红除权误判。
+- Scope: 当前持仓 ETF 批量重算 24 只，并同步 `research/alerts/intraday_rules.json`。
+- Basis: Tushare `fund_nav.adj_nav` 优先；盘中 QMT 实时价仅用于当前位置，实时回撤通过最近净值/单位净值比例换算到可比口径。
+- 515880.SH 通信ETF国泰：估值报告基准回撤约 -6.4%；盘中实时价 1.695 换算复权净值 5.085 后，实时前高回撤约 -0.91%，不再使用未复权交易价产生的 -49% 误判。
+- Boundary: 本次只修 ETF 复权净值口径和作战地图消费逻辑；个股前复权/后复权口径后续单独排期。

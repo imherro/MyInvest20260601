@@ -1,0 +1,257 @@
+{
+  "module": "valuation_report",
+  "version": "1.0",
+  "code": "159206.SZ",
+  "name": "卫星ETF永赢",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09_163552",
+  "basis_date": "20260608",
+  "asset_type": "theme_etf",
+  "group": "商业航天/卫星",
+  "role": "遗留/主题观察",
+  "confidence": "中低",
+  "security_stance": {
+    "label": "价格偏贵",
+    "basis": "仅基于ETF价格/净值历史位置，控制新增需结合市场门禁。",
+    "confidence": "中低",
+    "scope": "security_level_only",
+    "not_portfolio_action": true,
+    "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+    "semantic_scope": "price_position_only"
+  },
+  "one_line_conclusion": "卫星ETF永赢 当前处于价格偏贵区；ETF复权净值位置代理，最终动作需由ACTION_PLAN结合市场仓位和组合暴露决定。",
+  "valuation_visual": {
+    "metric": "price",
+    "current_value": 1.615,
+    "comparable_current_value": 1.6139,
+    "current_zone": "expensive",
+    "current_zone_label": "价格偏贵区",
+    "zones": [
+      {
+        "key": "undervalued_observe",
+        "label": "价格低位区",
+        "min": 0.8812,
+        "max": 0.9734,
+        "color": "#2f9e44"
+      },
+      {
+        "key": "reasonable_allocation",
+        "label": "价格合理区",
+        "min": 0.9734,
+        "max": 1.1746,
+        "color": "#74b816"
+      },
+      {
+        "key": "expensive",
+        "label": "价格偏贵区",
+        "min": 1.1746,
+        "max": 1.7815,
+        "color": "#f59f00"
+      },
+      {
+        "key": "crowded_risk",
+        "label": "价格拥挤区",
+        "min": 1.7815,
+        "max": 1.947,
+        "color": "#e03131"
+      }
+    ],
+    "basis": "ETF复权净值位置代理",
+    "semantic_scope": "price_position_only",
+    "premium_discount_pct": 0.07,
+    "price_series": {
+      "basis": "adj_nav",
+      "basis_label": "复权净值",
+      "comparable": true,
+      "display_confidence": "high",
+      "realtime_price_multiplier": 1.0,
+      "factor_date": "20260608",
+      "latest_unit_nav": 1.6139,
+      "latest_basis_value": 1.6139,
+      "latest_trade_date": "20260608",
+      "sample_days": 299,
+      "display_scale": "current_raw_price",
+      "note": "历史分位、趋势、回撤/反弹使用可比序列；估值带已折算回当前场内价格尺度，便于盘中实时价直接落图。"
+    }
+  },
+  "index_valuation": {
+    "available": false,
+    "reason": "theme index valuation not mapped"
+  },
+  "stock_valuation_metrics": [],
+  "reference_metrics": {
+    "price_date": "20260608",
+    "last_reference": 1.615,
+    "ma20": 1.7705,
+    "ma60": 1.7465,
+    "moneyflow_5d": null,
+    "moneyflow_20d": null,
+    "support": 0.9734,
+    "right_confirm": 1.7465,
+    "risk_zone_start": 1.7815,
+    "current_position_pct": 0.1018,
+    "target_position_range": "0%-1%",
+    "valuation_visual": {
+      "metric": "price",
+      "current_value": 1.615,
+      "comparable_current_value": 1.6139,
+      "current_zone": "expensive",
+      "current_zone_label": "价格偏贵区",
+      "zones": [
+        {
+          "key": "undervalued_observe",
+          "label": "价格低位区",
+          "min": 0.8812,
+          "max": 0.9734,
+          "color": "#2f9e44"
+        },
+        {
+          "key": "reasonable_allocation",
+          "label": "价格合理区",
+          "min": 0.9734,
+          "max": 1.1746,
+          "color": "#74b816"
+        },
+        {
+          "key": "expensive",
+          "label": "价格偏贵区",
+          "min": 1.1746,
+          "max": 1.7815,
+          "color": "#f59f00"
+        },
+        {
+          "key": "crowded_risk",
+          "label": "价格拥挤区",
+          "min": 1.7815,
+          "max": 1.947,
+          "color": "#e03131"
+        }
+      ],
+      "basis": "ETF复权净值位置代理",
+      "semantic_scope": "price_position_only",
+      "premium_discount_pct": 0.07,
+      "price_series": {
+        "basis": "adj_nav",
+        "basis_label": "复权净值",
+        "comparable": true,
+        "display_confidence": "high",
+        "realtime_price_multiplier": 1.0,
+        "factor_date": "20260608",
+        "latest_unit_nav": 1.6139,
+        "latest_basis_value": 1.6139,
+        "latest_trade_date": "20260608",
+        "sample_days": 299,
+        "display_scale": "current_raw_price",
+        "note": "历史分位、趋势、回撤/反弹使用可比序列；估值带已折算回当前场内价格尺度，便于盘中实时价直接落图。"
+      }
+    },
+    "trend_visual": {
+      "available": true,
+      "current": 1.6139,
+      "trends": [
+        {
+          "key": "long",
+          "label": "长期",
+          "state": "上行",
+          "color": "#dc2626",
+          "change_pct": 75.08,
+          "window_days": 250
+        },
+        {
+          "key": "mid",
+          "label": "中期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -11.35,
+          "window_days": 60
+        },
+        {
+          "key": "short",
+          "label": "短期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -20.39,
+          "window_days": 20
+        }
+      ],
+      "drawdown": {
+        "from_sample_high_pct": -26.65,
+        "sample_high": 2.2002,
+        "sample_high_date": "20260112",
+        "common_120d_drawdown_pct": -14.26,
+        "deep_120d_drawdown_pct": -20.74,
+        "max_120d_drawdown_pct": -28.83
+      },
+      "rebound": {
+        "from_sample_low_pct": 100.11,
+        "sample_low": 0.8065,
+        "sample_low_date": "20250407",
+        "common_120d_rebound_pct": 38.24,
+        "strong_120d_rebound_pct": 64.5,
+        "max_120d_rebound_pct": 119.93
+      },
+      "price_series": {
+        "basis": "adj_nav",
+        "basis_label": "复权净值",
+        "comparable": true,
+        "display_confidence": "high",
+        "realtime_price_multiplier": 1.0,
+        "factor_date": "20260608",
+        "latest_unit_nav": 1.6139,
+        "latest_basis_value": 1.6139,
+        "latest_trade_date": "20260608",
+        "sample_days": 299,
+        "display_scale": "current_raw_price",
+        "note": "历史分位、趋势、回撤/反弹使用可比序列；估值带已折算回当前场内价格尺度，便于盘中实时价直接落图。"
+      },
+      "display_confidence": "high"
+    },
+    "price_series": {
+      "basis": "adj_nav",
+      "basis_label": "复权净值",
+      "comparable": true,
+      "display_confidence": "high",
+      "realtime_price_multiplier": 1.0,
+      "factor_date": "20260608",
+      "latest_unit_nav": 1.6139,
+      "latest_basis_value": 1.6139,
+      "latest_trade_date": "20260608",
+      "sample_days": 299,
+      "display_scale": "current_raw_price",
+      "note": "历史分位、趋势、回撤/反弹使用可比序列；估值带已折算回当前场内价格尺度，便于盘中实时价直接落图。"
+    },
+    "risk_markers": {
+      "support": {
+        "label": "风控位",
+        "value": 0.9734,
+        "color": "#2563eb",
+        "shape": "triangle"
+      },
+      "right_confirm": {
+        "label": "右侧确认",
+        "value": 1.7465,
+        "color": "#06b6d4",
+        "shape": "diamond"
+      },
+      "risk_zone_start": {
+        "label": "风险区起点",
+        "value": 1.7815,
+        "color": "#dc2626",
+        "shape": "flag"
+      }
+    },
+    "allocation_bucket": "legacy_watch"
+  },
+  "data_gaps": [
+    "未取得可直接映射的跟踪指数长期PE/PB分位，本报告对主题ETF使用价格/净值位置代理。",
+    "历史趋势、前高回撤和前低反弹已使用 Tushare fund_nav.adj_nav（复权净值）作为可比序列。"
+  ],
+  "source": {
+    "tushare": [
+      "fund_daily",
+      "fund_nav"
+    ],
+    "history_sample_days": 299,
+    "comparable_sample_days": 299
+  }
+}

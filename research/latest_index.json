@@ -1,7 +1,7 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-09_162417",
+  "generated_at": "2026-06-09_163940",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
@@ -39,9 +39,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_154701",
+      "generated_at": "2026-06-09_163555",
       "basis_trade_date": null,
-      "sha256": "f4311d2a32d42b14b5c1cee3205e871442a83056e708c9accec2199a1cc1422f",
+      "sha256": "238633c54db4ac802ff0689b3c3a2a2e428ae8e7584818329eeaf1230ac46aac",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -381,12 +381,12 @@
     },
     "valuation_report": {
       "module": "valuation_report",
-      "code": "688333.SH",
-      "name": "西安铂力特",
-      "path": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-09_153822.json",
-      "generated_at": "2026-06-09_153822",
+      "code": "588200.SH",
+      "name": "科创芯片ETF嘉实",
+      "path": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
       "basis_trade_date": "20260608",
-      "sha256": "a7b10a6dc4ae38e2e746e9066a94415bf30fe7495768373563284043e370184e",
+      "sha256": "a70c1b1a97a3116b6d207d666df5e596a86da7db049ba8ea98d14033ea03dc85",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -776,9 +776,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_154701",
+      "generated_at": "2026-06-09_163555",
       "basis_trade_date": null,
-      "sha256": "f4311d2a32d42b14b5c1cee3205e871442a83056e708c9accec2199a1cc1422f",
+      "sha256": "238633c54db4ac802ff0689b3c3a2a2e428ae8e7584818329eeaf1230ac46aac",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2723,12 +2723,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "159201.SZ",
+      "name": "自由现金流ETF华夏",
+      "path": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "be6531852cb9b87092fca851232dfb14de08d61cb3e20cd2e153b7014d69c2a2",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159206.SZ",
       "name": "卫星ETF永赢",
       "path": "research/valuations/valuation_159206_SZ_卫星ETF永赢_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "370e67d6e504a78bea84f978728437649297c54d4f3ded57fc133f4214cdb03a",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159206.SZ",
+      "name": "卫星ETF永赢",
+      "path": "research/valuations/valuation_159206_SZ_卫星ETF永赢_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "460fb126f6ccd2fce16957e6fd59a07f04dd21814aa87b166be3319fd7342baf",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2783,6 +2813,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159301.SZ",
+      "name": "公用事业ETF华夏",
+      "path": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "69dfc8ea3af82b653d42aef2806ada5b44c5e726217b4c32707e982687340d99",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159326.SZ",
       "name": "电网设备ETF华夏",
       "path": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-05_102437.json",
@@ -2828,6 +2873,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159326.SZ",
+      "name": "电网设备ETF华夏",
+      "path": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "d9920e98a75941d624fb0f8466b30fdf68a576dfff7e8e243189b4cb2742b5a2",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159378.SZ",
       "name": "通用航空ETF永赢",
       "path": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-05_102437.json",
@@ -2864,6 +2924,21 @@
       "generated_at": "2026-06-09_153822",
       "basis_trade_date": "20260608",
       "sha256": "1708262eb5f46290c58d483dd7478648f00fa2a07cdb0eb3682ddd872be70183",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159378.SZ",
+      "name": "通用航空ETF永赢",
+      "path": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "fbd47813ab39d25c289fd575de3ee3694eaa9be07af922dad1496e8761127a62",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2963,12 +3038,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "159558.SZ",
+      "name": "半导体设备ETF易方达",
+      "path": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "c8ffded87b5d42afe657f352a9287bdc239ec8614546ea59a3b5a86c5cac1a1c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159667.SZ",
       "name": "工业母机ETF国泰",
       "path": "research/valuations/valuation_159667_SZ_工业母机ETF国泰_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "a66b9ca4b1aa7678acf751bb90d6cb3e7999f8141c32cacb8223cbf8df29bea4",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159667.SZ",
+      "name": "工业母机ETF国泰",
+      "path": "research/valuations/valuation_159667_SZ_工业母机ETF国泰_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "b5936a16515899e10537d038e131ff4950e341f5bb5ccf57e80e182f83550180",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3023,6 +3128,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159819.SZ",
+      "name": "人工智能ETF易方达",
+      "path": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "c48b93760419a3b8176d503be68d3e8bc5bfc5385762e03782ecfe3e153d8e3c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159842.SZ",
       "name": "券商ETF银华",
       "path": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-05_102437.json",
@@ -3068,6 +3188,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159842.SZ",
+      "name": "券商ETF银华",
+      "path": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "24c447f540f135fbb8bb90f3eda46f7da6efee9a8d3aab104d90d19d0dc62609",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159869.SZ",
       "name": "游戏ETF华夏",
       "path": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-05_102437.json",
@@ -3104,6 +3239,21 @@
       "generated_at": "2026-06-09_153822",
       "basis_trade_date": "20260608",
       "sha256": "3b5fd31fda0c132ba25b1cb35c2b4db122133623ddfcbe4b75a4efe71c72199c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159869.SZ",
+      "name": "游戏ETF华夏",
+      "path": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "a48ebea2f3ba9db596b9351356b8132a410adc4f52e3f061aac9b68bb7c01421",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3224,6 +3374,21 @@
       "generated_at": "2026-06-09_153822",
       "basis_trade_date": "20260608",
       "sha256": "9e6df1aff12bf6f56517f827fe83ab57d667ed8c062ad82b186f33ac29e856ec",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159992.SZ",
+      "name": "创新药ETF银华",
+      "path": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "083a52cabb1e57c591e40bfa8d7eaafe73e84c891c310cba8c499f3875786cd4",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3428,6 +3593,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "510500.SH",
+      "name": "中证500ETF南方",
+      "path": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "c5b3bb1232e9fc48ab552e62c862950eddfcba9f935f0a14a1270a8ac0622acc",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "510880.SH",
       "name": "红利ETF华泰柏瑞",
       "path": "research/valuations/valuation_510880_SH_红利ETF华泰柏瑞_2026-06-05_102437.json",
@@ -3503,6 +3683,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "511360.SH",
+      "name": "短融ETF海富通",
+      "path": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "bc9770a35e776868b09da712d19c00ba977dbc1ba90d38e4c7acd2095cf9179a",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "512070.SH",
       "name": "证券保险ETF易方达",
       "path": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-05_102437.json",
@@ -3548,6 +3743,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "512070.SH",
+      "name": "证券保险ETF易方达",
+      "path": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "edf18cc53ccf59ade380d8cda0e52e21f96fe3561567b5697367112e030d87cd",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "512400.SH",
       "name": "有色金属ETF南方",
       "path": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_112659.json",
@@ -3569,6 +3779,21 @@
       "generated_at": "2026-06-09_145910",
       "basis_trade_date": "20260608",
       "sha256": "9b941e488b68fe3d5d5072775970f8551e2e4073fccb4cab3aa58cdec1cce4ca",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "512400.SH",
+      "name": "有色金属ETF南方",
+      "path": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "2053fcf8c7969d18e4ded06eaa81a96403def6d55c8a24831e10fa9bd8263410",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3623,6 +3848,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "512710.SH",
+      "name": "军工龙头ETF富国",
+      "path": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "21124e99c83eb52525cd75ea0f16eacbb19fb25c0b4363be0f05eb742b3c4d8e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "512880.SH",
       "name": "证券ETF国泰",
       "path": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-05_102437.json",
@@ -3659,6 +3899,21 @@
       "generated_at": "2026-06-09_153822",
       "basis_trade_date": "20260608",
       "sha256": "9fe1bf9588ce7ed51162e9d49064cf2e8cfc75fe4d5d8c08faf4edab1da9bcfd",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "512880.SH",
+      "name": "证券ETF国泰",
+      "path": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "72bb951b906960db1afd4a35c51d0301476af940af5d8402fa111c4d4921bc70",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3743,6 +3998,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "513120.SH",
+      "name": "港股创新药ETF广发",
+      "path": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "796cfc42754cdf92507b4722b66da82b0b32ee31608dd774ea3421e16e87fd7c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "513180.SH",
       "name": "恒生科技ETF华夏",
       "path": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-05_102437.json",
@@ -3788,12 +4058,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "513180.SH",
+      "name": "恒生科技ETF华夏",
+      "path": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "4d129ef1607560e4b98e4ecac5d1e9f5b5808fd817581893f36c4a27fbce0ca1",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "515880.SH",
       "name": "通信ETF国泰",
       "path": "research/valuations/valuation_515880_SH_通信ETF国泰_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "a3561734c8a05b7b84fd1885f62bdd444e1495479539a795a0af1ba79102f3f5",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "515880.SH",
+      "name": "通信ETF国泰",
+      "path": "research/valuations/valuation_515880_SH_通信ETF国泰_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "9e344bc184c720d1246297d23f16848ad259a1495ece60599ee37d6570767be7",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3848,6 +4148,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "516150.SH",
+      "name": "稀土ETF嘉实",
+      "path": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "d1a5397423fb6c566b58297ef81fe811dd9c72b31444fd79473b4aa84905702d",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "562500.SH",
       "name": "机器人ETF华夏",
       "path": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-05_102437.json",
@@ -3893,6 +4208,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "562500.SH",
+      "name": "机器人ETF华夏",
+      "path": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "3d4de64ff661f5f8e0bf703ae2a5d56f72ba6fe5cd5ddc2c55c312b848d7f55e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "562800.SH",
       "name": "稀有金属ETF嘉实",
       "path": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-05_102437.json",
@@ -3929,6 +4259,21 @@
       "generated_at": "2026-06-09_153822",
       "basis_trade_date": "20260608",
       "sha256": "3dae1fa510e106b559e6f3e05b3d2ddb5120430750e86853e097e332c6d1cef2",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "562800.SH",
+      "name": "稀有金属ETF嘉实",
+      "path": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "e8c795e3b83751ab6d0da339f499c44a3086042dd8b239f37d521c050a289802",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -4019,6 +4364,21 @@
       "generated_at": "2026-06-09_153822",
       "basis_trade_date": "20260608",
       "sha256": "901f5ef8d2054e9a1cd384ad85d60d5fbe996a774fc731c51faca64b2bcda438",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "588200.SH",
+      "name": "科创芯片ETF嘉实",
+      "path": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-09_163552.json",
+      "generated_at": "2026-06-09_163552",
+      "basis_trade_date": "20260608",
+      "sha256": "a70c1b1a97a3116b6d207d666df5e596a86da7db049ba8ea98d14033ea03dc85",
       "quality": {
         "status": "legacy_unknown"
       },

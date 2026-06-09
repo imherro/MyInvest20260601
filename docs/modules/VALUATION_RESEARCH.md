@@ -32,6 +32,7 @@
 - 跟踪指数 PE/PB 分位。
 - ETF 历史价格/净值位置。
 - ETF 折溢价。
+- ETF 历史趋势、前高回撤和前低反弹必须优先使用 Tushare `fund_nav.adj_nav` 复权净值序列；缺失时依次回退 `accum_nav`、`unit_nav`，最后才允许使用交易价格代理，并必须标记低可信度。
 
 主题 ETF 优先使用：
 
@@ -39,6 +40,7 @@
 - ETF 历史价格/净值位置。
 - ETF 净值位置。
 - 数据不足时必须标记为“价格/净值位置代理”，不能写成已确认长期估值。
+- 发生分红、拆分或除权的 ETF，不得用未复权交易收盘价直接计算历史回撤/反弹，否则会把除权缺口误判成真实下跌。
 
 个股优先使用：
 
@@ -79,6 +81,24 @@ research/alerts/intraday_rules.json
   }
 }
 ```
+
+ETF 使用复权净值或其他可比序列时，必须同步写入序列口径，供盘中作战地图解释图示：
+
+```json
+{
+  "price_series": {
+    "basis": "adj_nav",
+    "basis_label": "复权净值",
+    "comparable": true,
+    "display_price_basis": "qmt_realtime_price",
+    "realtime_price_multiplier": 1.0,
+    "factor_date": "YYYYMMDD",
+    "note": "历史趋势和回撤用复权净值；盘中实时价按最近净值/单位净值比例换算成可比口径。"
+  }
+}
+```
+
+`valuation_visual.zones`、风控位、右侧确认位和风险区起点应落在盘中实时交易价格可直接比较的价格刻度上；`trend_visual` 的历史回撤/反弹可以保留在复权净值可比刻度上，但必须提供 `price_series` 说明。
 
 标的级估值状态字段：
 

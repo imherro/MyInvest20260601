@@ -345,6 +345,126 @@ def build_price_position_zones(close_series: pd.Series, current: float) -> tuple
     return zones, zone_key(current, q20, q50, q80)
 
 
+def scale_zones(zones: list[dict[str, Any]], factor: float) -> list[dict[str, Any]]:
+    scaled: list[dict[str, Any]] = []
+    for zone in zones:
+        item = dict(zone)
+        item["min"] = round(float(zone["min"]) * factor, 4)
+        item["max"] = round(float(zone["max"]) * factor, 4)
+        scaled.append(item)
+    return scaled
+
+
+def price_series_label(basis: str) -> str:
+    labels = {
+        "adj_nav": "复权净值",
+        "accum_nav": "累计净值",
+        "unit_nav": "单位净值",
+        "raw_close_proxy": "未复权收盘价代理",
+    }
+    return labels.get(basis, basis)
+
+
+def etf_comparable_price_series(daily: pd.DataFrame, nav: pd.DataFrame) -> dict[str, Any]:
+    daily_frame = daily[["trade_date", "close"]].copy().sort_values("trade_date")
+    daily_frame["close"] = pd.to_numeric(daily_frame["close"], errors="coerce")
+    daily_frame = daily_frame.dropna(subset=["close"]).reset_index(drop=True)
+    latest_daily = daily_frame.iloc[-1]
+    latest_raw = float(latest_daily["close"])
+    latest_trade_date = str(latest_daily["trade_date"])
+
+    if not nav.empty:
+        nav_frame = nav.copy().sort_values("nav_date")
+        nav_frame = nav_frame.drop_duplicates(subset=["nav_date"], keep="last")
+        nav_frame["trade_date"] = nav_frame["nav_date"].astype(str)
+        merged = daily_frame.merge(nav_frame, on="trade_date", how="left")
+        for column in ["adj_nav", "accum_nav", "unit_nav"]:
+            if column not in merged.columns:
+                continue
+            merged[column] = pd.to_numeric(merged[column], errors="coerce")
+            valid = merged.dropna(subset=[column]).reset_index(drop=True)
+            if len(valid) < 20:
+                continue
+            if "unit_nav" in valid.columns:
+                valid["unit_nav"] = pd.to_numeric(valid["unit_nav"], errors="coerce")
+            factor_row = valid.dropna(subset=[column, "unit_nav"]) if "unit_nav" in valid.columns else pd.DataFrame()
+            if not factor_row.empty and float(factor_row.iloc[-1]["unit_nav"]) > 0:
+                last_factor_row = factor_row.iloc[-1]
+                factor = float(last_factor_row[column]) / float(last_factor_row["unit_nav"])
+                factor_date = str(last_factor_row["trade_date"])
+                latest_unit_nav = float(last_factor_row["unit_nav"])
+                latest_basis_value = float(last_factor_row[column])
+            else:
+                last_factor_row = valid.iloc[-1]
+                factor = float(last_factor_row[column]) / latest_raw if latest_raw else 1.0
+                factor_date = str(last_factor_row["trade_date"])
+                latest_unit_nav = None
+                latest_basis_value = float(last_factor_row[column])
+            series = valid[column].reset_index(drop=True)
+            dates = valid["trade_date"].reset_index(drop=True)
+            current_comparable = latest_raw * factor
+            if str(dates.iloc[-1]) != latest_trade_date:
+                series = pd.concat([series, pd.Series([current_comparable])], ignore_index=True)
+                dates = pd.concat([dates, pd.Series([latest_trade_date])], ignore_index=True)
+            elif column in {"adj_nav", "accum_nav"}:
+                current_comparable = float(series.iloc[-1])
+            comparable = column in {"adj_nav", "accum_nav"}
+            return {
+                "series": series,
+                "dates": dates,
+                "current_comparable": float(current_comparable),
+                "current_raw": latest_raw,
+                "basis": column,
+                "basis_label": price_series_label(column),
+                "comparable": comparable,
+                "display_confidence": "high" if comparable else "low",
+                "realtime_price_multiplier": factor,
+                "display_to_comparable_factor": factor,
+                "comparable_to_display_factor": 1.0 / factor if factor else 1.0,
+                "factor_date": factor_date,
+                "latest_unit_nav": latest_unit_nav,
+                "latest_basis_value": latest_basis_value,
+                "latest_trade_date": latest_trade_date,
+                "sample_days": int(len(series)),
+            }
+
+    return {
+        "series": daily_frame["close"].reset_index(drop=True),
+        "dates": daily_frame["trade_date"].reset_index(drop=True),
+        "current_comparable": latest_raw,
+        "current_raw": latest_raw,
+        "basis": "raw_close_proxy",
+        "basis_label": price_series_label("raw_close_proxy"),
+        "comparable": False,
+        "display_confidence": "low",
+        "realtime_price_multiplier": 1.0,
+        "display_to_comparable_factor": 1.0,
+        "comparable_to_display_factor": 1.0,
+        "factor_date": latest_trade_date,
+        "latest_unit_nav": None,
+        "latest_basis_value": latest_raw,
+        "latest_trade_date": latest_trade_date,
+        "sample_days": int(len(daily_frame)),
+    }
+
+
+def price_series_meta(series_info: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "basis": series_info.get("basis"),
+        "basis_label": series_info.get("basis_label"),
+        "comparable": bool(series_info.get("comparable")),
+        "display_confidence": series_info.get("display_confidence"),
+        "realtime_price_multiplier": round(float(series_info.get("realtime_price_multiplier") or 1.0), 8),
+        "factor_date": series_info.get("factor_date"),
+        "latest_unit_nav": round(float(series_info["latest_unit_nav"]), 6) if series_info.get("latest_unit_nav") is not None else None,
+        "latest_basis_value": round(float(series_info.get("latest_basis_value") or 0.0), 6),
+        "latest_trade_date": series_info.get("latest_trade_date"),
+        "sample_days": series_info.get("sample_days"),
+        "display_scale": "current_raw_price",
+        "note": "历史分位、趋势、回撤/反弹使用可比序列；估值带已折算回当前场内价格尺度，便于盘中实时价直接落图。",
+    }
+
+
 def latest_portfolio_weights() -> dict[str, float]:
     latest = latest_for_module("portfolio_snapshot")
     path = ROOT / latest["path"] if latest else latest_file(PORTFOLIO_DIR, "portfolio_snapshot_*.json")
@@ -825,7 +945,10 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
     nav = fund_nav(pro, target.code, start, end)
     latest = daily.iloc[-1]
     current = float(latest["close"])
-    zones, current_zone = build_price_position_zones(daily["close"], current)
+    series_info = etf_comparable_price_series(daily, nav)
+    series_meta = price_series_meta(series_info)
+    comparable_zones, current_zone = build_price_position_zones(series_info["series"], series_info["current_comparable"])
+    zones = scale_zones(comparable_zones, float(series_info.get("comparable_to_display_factor") or 1.0))
     if target.asset_type == "cash_etf":
         current_zone = "reasonable_allocation"
         for zone in zones:
@@ -836,9 +959,12 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
     if price_proxy_only:
         for zone in zones:
             zone["label"] = PRICE_POSITION_LABELS.get(zone["key"], zone["label"])
-    ma20 = round(float(daily["close"].tail(20).mean()), 4)
-    ma60 = round(float(daily["close"].tail(60).mean()), 4) if len(daily) >= 60 else None
-    trend_visual = build_trend_visual(daily["close"], daily["trade_date"])
+    display_factor = float(series_info.get("comparable_to_display_factor") or 1.0)
+    ma20 = round(float(pd.to_numeric(series_info["series"], errors="coerce").tail(20).mean()) * display_factor, 4)
+    ma60 = round(float(pd.to_numeric(series_info["series"], errors="coerce").tail(60).mean()) * display_factor, 4) if len(series_info["series"]) >= 60 else None
+    trend_visual = build_trend_visual(series_info["series"], series_info["dates"])
+    trend_visual["price_series"] = series_meta
+    trend_visual["display_confidence"] = series_meta.get("display_confidence")
     nav_latest = None if nav.empty else finite(nav.iloc[-1].get("unit_nav"))
     premium_discount = round((current / nav_latest - 1) * 100, 2) if nav_latest else None
     code_plain = target.code.split(".")[0]
@@ -847,8 +973,16 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
         data_gaps.append("未取得可直接映射的跟踪指数长期PE/PB分位，本报告对主题ETF使用价格/净值位置代理。")
     if nav_latest is None:
         data_gaps.append("未取得最新基金单位净值，折溢价无法计算。")
+    if series_meta["comparable"]:
+        data_gaps.append(f"历史趋势、前高回撤和前低反弹已使用 Tushare fund_nav.{series_meta['basis']}（{series_meta['basis_label']}）作为可比序列。")
+    else:
+        data_gaps.append("未取得可靠复权净值/累计净值序列，历史回撤和反弹仅为未复权代理，不可作为长期前高前低判断。")
     confidence = "中高" if target.asset_type == "broad_etf" and index_val.get("available") else "中低"
-    basis = "跟踪指数估值 + ETF价格/净值位置" if index_val.get("available") else "ETF价格/净值位置代理"
+    basis = (
+        f"跟踪指数估值 + ETF{series_meta['basis_label']}位置"
+        if index_val.get("available")
+        else f"ETF{series_meta['basis_label']}位置代理"
+    )
     stance = security_stance(current_zone, confidence, price_proxy_only=price_proxy_only)
     one_line = f"{target.name} 当前处于{zones[[zone['key'] for zone in zones].index(current_zone)]['label']}；{basis}，最终动作需由ACTION_PLAN结合市场仓位和组合暴露决定。"
     if target.asset_type == "cash_etf":
@@ -880,12 +1014,14 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
         "valuation_visual": {
             "metric": "price",
             "current_value": round(current, 4),
+            "comparable_current_value": round(float(series_info["current_comparable"]), 4),
             "current_zone": current_zone,
             "current_zone_label": next((zone["label"] for zone in zones if zone["key"] == current_zone), ZONE_LABELS[current_zone]),
             "zones": zones,
             "basis": basis,
             "semantic_scope": "price_position_only" if price_proxy_only else "valuation",
             "premium_discount_pct": premium_discount,
+            "price_series": series_meta,
         },
         "index_valuation": index_val,
         "stock_valuation_metrics": [],
@@ -903,6 +1039,7 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
             "target_position_range": target.target_position_range,
             "valuation_visual": None,
             "trend_visual": trend_visual,
+            "price_series": series_meta,
             "risk_markers": {
                 "support": {"label": "风控位", "value": zones[0]["max"], "color": "#2563eb", "shape": "triangle"},
                 "right_confirm": {"label": "右侧确认", "value": ma60, "color": "#06b6d4", "shape": "diamond"},
@@ -914,6 +1051,7 @@ def make_report_for_etf(pro: Any, target: Target, start: str, end: str, timestam
         "source": {
             "tushare": ["fund_daily", "fund_nav", "index_dailybasic"] if target.benchmark else ["fund_daily", "fund_nav"],
             "history_sample_days": int(len(daily)),
+            "comparable_sample_days": int(series_meta.get("sample_days") or 0),
         },
     }
 
@@ -929,6 +1067,22 @@ def make_report_for_stock(pro: Any, target: Target, start: str, end: str, timest
     ma20 = round(float(df["close"].tail(20).mean()), 4)
     ma60 = round(float(df["close"].tail(60).mean()), 4) if len(df) >= 60 else None
     trend_visual = build_trend_visual(df["close"], df["trade_date"])
+    series_meta = {
+        "basis": "raw_close_proxy",
+        "basis_label": "未复权收盘价代理",
+        "comparable": False,
+        "display_confidence": "low",
+        "realtime_price_multiplier": 1.0,
+        "factor_date": str(df.iloc[-1]["trade_date"]),
+        "latest_unit_nav": None,
+        "latest_basis_value": round(current, 4),
+        "latest_trade_date": str(df.iloc[-1]["trade_date"]),
+        "sample_days": int(len(df)),
+        "display_scale": "current_raw_price",
+        "note": "当前个股历史序列仍为未复权价格代理；长期前高回撤、前低反弹需后续接入前复权/后复权口径后再作为强判断。",
+    }
+    trend_visual["price_series"] = series_meta
+    trend_visual["display_confidence"] = "low"
     mf5, mf20 = moneyflow_sums(pro, target.code, end)
     code_plain = target.code.split(".")[0]
     metrics = []
@@ -1057,6 +1211,7 @@ def make_report_from_history(target: Target, rows: list[dict[str, Any]], timesta
             "basis": basis,
             "semantic_scope": "price_position_only",
             "premium_discount_pct": None,
+            "price_series": series_meta,
         },
         "index_valuation": {"available": False, "reason": "QMT price history fallback; Tushare valuation metrics unavailable"},
         "stock_valuation_metrics": [],
@@ -1074,6 +1229,7 @@ def make_report_from_history(target: Target, rows: list[dict[str, Any]], timesta
             "target_position_range": target.target_position_range,
             "valuation_visual": None,
             "trend_visual": trend_visual,
+            "price_series": series_meta,
             "risk_markers": {
                 "support": {"label": "风控位", "value": zones[0]["max"], "color": "#2563eb", "shape": "triangle"},
                 "right_confirm": {"label": "右侧确认", "value": ma60, "color": "#06b6d4", "shape": "diamond"},

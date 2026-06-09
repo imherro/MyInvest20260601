@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import sys
 from datetime import datetime
@@ -190,6 +191,39 @@ def valuation_zone_snapshot(visual: dict[str, Any], value: Any) -> dict[str, Any
         "max": zone.get("max"),
         "color": zone.get("color"),
     }
+
+
+def realtime_trend_visual(trend_visual: dict[str, Any] | None, last: Any) -> dict[str, Any] | None:
+    if not trend_visual:
+        return trend_visual
+    current_raw = num(last)
+    if current_raw is None:
+        return trend_visual
+    visual = copy.deepcopy(trend_visual)
+    series = visual.get("price_series") or {}
+    multiplier = num(series.get("realtime_price_multiplier"))
+    if not series.get("comparable") or multiplier is None or multiplier <= 0:
+        return visual
+    current_comparable = current_raw * multiplier
+    visual["current"] = round(current_comparable, 4)
+    visual["realtime_overlay"] = {
+        "raw_last": round(current_raw, 4),
+        "comparable_last": round(current_comparable, 4),
+        "multiplier": round(multiplier, 8),
+        "basis_label": series.get("basis_label"),
+        "factor_date": series.get("factor_date"),
+    }
+    drawdown = visual.get("drawdown") or {}
+    rebound = visual.get("rebound") or {}
+    high = num(drawdown.get("sample_high"))
+    low = num(rebound.get("sample_low"))
+    if high and high > 0:
+        drawdown["from_sample_high_pct"] = round((current_comparable / high - 1) * 100, 2)
+    if low and low > 0:
+        rebound["from_sample_low_pct"] = round((current_comparable / low - 1) * 100, 2)
+    visual["drawdown"] = drawdown
+    visual["rebound"] = rebound
+    return visual
 
 
 def subject_bucket(subject: dict[str, Any]) -> str:
@@ -504,11 +538,15 @@ class ValuationMapBar(QWidget):
 
     def tooltip_text(self) -> str:
         zone = valuation_zone_for_value(self.visual, self.current_value)
+        series = self.visual.get("price_series") or {}
         parts = [
             f"当前位置：{zone.get('label', '-') if zone else '-'}",
             f"当前价格/净值：{fmt(self.current_value, 4)}",
             "黑色竖线：实时当前位置",
         ]
+        if series:
+            parts.append(f"历史比较口径：{series.get('basis_label') or series.get('basis') or '-'}")
+            parts.append(series.get("note") or "估值带已折算到当前场内价格尺度。")
         for key in ["support", "right_confirm", "risk_zone_start"]:
             marker = self.markers.get(key) or {}
             if marker.get("value") is not None:
@@ -647,7 +685,19 @@ class MoveMap(QWidget):
             return "回撤/反弹样本不足"
         dd = self.trend_visual.get("drawdown", {})
         rb = self.trend_visual.get("rebound", {})
-        return "\n".join(
+        series = self.trend_visual.get("price_series") or {}
+        overlay = self.trend_visual.get("realtime_overlay") or {}
+        lines = []
+        if series:
+            lines.append(f"历史口径：{series.get('basis_label') or series.get('basis') or '-'}")
+            if not series.get("comparable"):
+                lines.append("注意：当前为未复权代理，长期前高/前低不可直接作为强判断。")
+        if overlay:
+            lines.append(
+                f"盘中换算：场内价 {fmt(overlay.get('raw_last'), 4)} × {fmt(overlay.get('multiplier'), 4)} = "
+                f"{fmt(overlay.get('comparable_last'), 4)}（{overlay.get('basis_label') or '-'}）"
+            )
+        lines.extend(
             [
                 f"前高：{fmt(dd.get('sample_high'), 4)}（{dd.get('sample_high_date') or '-'}）",
                 f"从前高至今回撤：{fmt(dd.get('from_sample_high_pct'))}%",
@@ -656,6 +706,9 @@ class MoveMap(QWidget):
                 f"从前低至今涨幅：{fmt(rb.get('from_sample_low_pct'))}%",
                 f"常见120日反弹：{fmt(rb.get('common_120d_rebound_pct'))}%，强反弹参考：{fmt(rb.get('strong_120d_rebound_pct'))}%，极值：{fmt(rb.get('max_120d_rebound_pct'))}%",
             ]
+        )
+        return "\n".join(
+            lines
         )
 
     def paintEvent(self, event: Any) -> None:  # noqa: N802
@@ -947,6 +1000,7 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
         last = live.get("last")
         visual = ref.get("valuation_visual") or {}
         realtime_zone = valuation_zone_snapshot(visual, last)
+        trend_visual = realtime_trend_visual(ref.get("trend_visual"), last)
         report_zone_key = visual.get("current_zone")
         if num(last) is not None:
             received_codes.append(code)
@@ -969,7 +1023,7 @@ def build_snapshot_from_rules(rules: dict[str, Any], ticks: dict[str, dict[str, 
                 "price_date": ref.get("price_date"),
                 "source_profile": subject.get("source_profile"),
             },
-            "trend_visual": ref.get("trend_visual"),
+            "trend_visual": trend_visual,
             "risk_markers": ref.get("risk_markers"),
             "security_stance": subject.get("security_stance") or ref.get("security_stance"),
             "allocation_bucket": subject_bucket(subject),
@@ -1523,12 +1577,19 @@ class BattleMapWindow(QMainWindow):
         widget.setAlignment(Qt.AlignmentFlag.AlignCenter)
         widget.setStyleSheet(f"background:{color}; color:#ffffff; border-radius:6px; padding:4px 6px; font-weight:700;")
         report = quote.get("valuation_report_zone") or {}
+        series = (quote.get("valuation_visual") or {}).get("price_series") or {}
+        basis_line = (
+            f"历史比较口径：{series.get('basis_label') or series.get('basis') or '-'}；价格带已折算到场内价格尺度。"
+            if series
+            else "历史比较口径：未标注。"
+        )
         widget.setToolTip(
             "\n".join(
                 [
                     f"实时价格：{fmt(quote.get('last'), 4)}",
                     f"实时所在区间：{label}",
                     f"报告基准区间：{report.get('label') or '-'}，基准价 {fmt(report.get('value'), 4)}，基准日 {report.get('price_date') or '-'}",
+                    basis_line,
                     "实时区间由 QMT 当前价落入既有价格/估值带计算，不代表盘中重算估值报告。",
                     "实时区间与报告基准不一致，盘后应刷新估值规则。" if changed else "实时区间与报告基准一致。",
                 ]
