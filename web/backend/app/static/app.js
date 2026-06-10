@@ -107,6 +107,7 @@
       sortIndex: existing.sortIndex,
       sortType: existing.sortType || "text",
       sortDirection: existing.sortDirection || "asc",
+      filters: existing.filters || {},
       expanded: existing.expanded || new Set(),
     });
     renderTable(id);
@@ -115,6 +116,10 @@
   function filteredRows(state) {
     const query = (state.query || "").trim().toLowerCase();
     let rows = state.rows.filter((item) => !query || rowSearchText(item).includes(query));
+    Object.entries(state.filters || {}).forEach(([key, value]) => {
+      if (!value) return;
+      rows = rows.filter((item) => text(item.row?.[key], "").toLowerCase() === String(value).toLowerCase());
+    });
     if (state.sortIndex !== undefined) {
       rows = rows.slice().sort((left, right) => {
         const leftText = left.cells[state.sortIndex]?.value || "";
@@ -465,6 +470,41 @@
     );
   }
 
+  function renderThemes(data) {
+    const themes = data.themes || [];
+    const summary = data.summary || {};
+    setBind("theme_count", summary.theme_count ?? themes.length);
+    setBind("theme_confirmed_count", summary.confirmed_count ?? 0);
+    setBind("theme_watch_count", summary.watch_count ?? 0);
+    setBind("theme_research_first_count", summary.research_first_count ?? 0);
+    setBind("theme_stale_count", summary.stale_count ?? 0);
+    setBind("theme_conflict_count", summary.conflict_count ?? 0);
+    setRows(
+      "themesRows",
+      themes,
+      (row) => [
+        row.theme_name,
+        row.strategic_rating,
+        row.tactical_rating,
+        row.stage,
+        row.status,
+        row.basis_trade_date,
+        row.generated_at,
+        { value: (row.associated_etfs || []).length, className: "num" },
+        { value: (row.associated_stocks || []).length, className: "num" },
+        { value: (row.leaders || []).length, className: "num" },
+        { value: (row.conflicts || []).length, className: "num" },
+      ],
+      (row) => {
+        const etfs = (row.associated_etfs || []).map((item) => `${item.code || ""} ${item.name || ""}`.trim()).join("; ");
+        const stocks = (row.associated_stocks || []).map((item) => `${item.code || ""} ${item.name || ""}`.trim()).join("; ");
+        const leaders = (row.leaders || []).map((item) => `${item.type || ""} ${item.code || ""} ${item.route || ""}`.trim()).join("; ");
+        const conflicts = (row.conflicts || []).map((item) => `${item.type || ""}: ${item.detail || ""}`).join("; ");
+        return `data quality: ${row.data_quality_status || ""} | ETFs: ${etfs || "none"} | stocks: ${stocks || "none"} | leaders: ${leaders || "none"} | conflicts: ${conflicts || "none"}`;
+      },
+    );
+  }
+
   function renderPortfolio(data) {
     const portfolio = data.portfolio || {};
     setBind("portfolio_count", (portfolio.positions || []).length);
@@ -534,6 +574,7 @@
     "subjects-gap": renderSubjectGap,
     "research-first": renderResearchFirst,
     subjects: renderSubjectStatus,
+    themes: renderThemes,
     portfolio: renderPortfolio,
     "intraday-rules": renderIntradayRules,
     "system-checks": renderSystemChecks,
@@ -588,6 +629,21 @@
     });
   }
 
+  function setupFilters() {
+    document.querySelectorAll("[data-table-filter]").forEach((input) => {
+      input.addEventListener("change", () => {
+        const id = input.dataset.tableFilter;
+        const bodyId = id.replace("Table", "Rows");
+        const state = tableState.get(bodyId) || tableState.get(id);
+        if (!state) return;
+        state.filters = state.filters || {};
+        state.filters[input.dataset.filterKey] = input.value;
+        state.page = 1;
+        renderTable(bodyId);
+      });
+    });
+  }
+
   function updateSearchState(input) {
     const id = input.dataset.tableSearch;
     const bodyId = id.replace("Table", "Rows");
@@ -622,6 +678,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("[data-refresh]")?.addEventListener("click", refresh);
     setupSearch();
+    setupFilters();
     setupSort();
     refresh();
     window.setInterval(refresh, 60000);

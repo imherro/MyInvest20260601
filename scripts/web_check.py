@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add research dashboard landing page"
+COMMIT_MESSAGE = "feat(web): add theme research center"
 
 API_PATHS = [
     "/api/health",
@@ -33,6 +33,7 @@ API_PATHS = [
     "/api/subjects/status/511360.SH",
     "/api/subjects/freshness",
     "/api/subjects/gap",
+    "/api/themes/status",
     "/api/market-position/mapping",
     "/api/market-position/current",
     "/api/market-position/score/25",
@@ -64,6 +65,7 @@ PAGE_PATHS = [
     "/research-first",
     "/subjects",
     "/subjects/gap",
+    "/themes",
     "/portfolio",
     "/intraday-rules",
     "/decision-log",
@@ -75,6 +77,7 @@ INTERACTIVE_PAGE_CHECKS = {
     "/target-allocation": ["data-table-search", "data-sort", "targetRows"],
     "/subjects": ["data-table-search", "data-sort", "subjectsRows"],
     "/subjects/gap": ["data-table-search", "data-sort", "subjectGapRows"],
+    "/themes": ["data-table-search", "data-table-filter", "data-sort", "themesRows"],
     "/portfolio": ["data-table-search", "data-sort", "portfolioRows"],
     "/intraday-rules": ["data-table-search", "data-sort", "intradayRows", "disabledTriggerRows"],
     "/decision-log": ["data-table-search", "data-sort", "decisionRows"],
@@ -99,6 +102,8 @@ JS_CHECKS = [
     "function renderDashboardQuickLinks",
     "function renderSubjectStatus",
     "function renderSubjectGap",
+    "function renderThemes",
+    "function setupFilters",
     "detail-row",
     "expandable-row",
     "setInterval(refresh",
@@ -202,6 +207,16 @@ PHASE7D_FILES = [
     ROOT / "web" / "backend" / "app" / "services" / "dashboard.py",
     ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html",
     ROOT / "web" / "backend" / "tests" / "test_dashboard_current.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE7E_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "theme_status.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "themes.html",
+    ROOT / "web" / "backend" / "tests" / "test_theme_status.py",
+    ROOT / "web" / "docs" / "THEME_RESEARCH_CENTER.md",
     ROOT / "web" / "docs" / "API_SPEC.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
@@ -446,6 +461,7 @@ class WebCheck:
         self.check_phase7a_contract_files()
         self.check_phase7b_contract_files()
         self.check_phase7d_contract_files()
+        self.check_phase7e_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -761,6 +777,40 @@ class WebCheck:
             return
         self.add_result("phase7d_dashboard_files", "PASS", "dashboard service/API/page/tests/run script present")
 
+    def check_phase7e_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7E_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7e_theme_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7e_theme_files",
+                ", ".join(missing),
+                "Phase 7E theme status service/page/tests/docs are missing.",
+                "Add the theme status service, page, tests, and THEME_RESEARCH_CENTER.md, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7E_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "theme" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7E docs must describe theme center and read-only boundaries")
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "theme_status.py").read_text(encoding="utf-8", errors="replace")
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("theme service references latest_index.files")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7e_theme_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7e_theme_safety",
+                rel(path),
+                f"Phase 7E file failed safety scan: {exc}",
+                "Remove local paths, keep current-only module resolution, and document theme read-only boundaries.",
+            )
+            return
+        self.add_result("phase7e_theme_files", "PASS", "theme status service/API/page/tests/docs present")
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -868,6 +918,7 @@ class WebCheck:
         self.check_subject_status_api(client, ratio)
         self.check_subject_gap_api(client, ratio)
         self.check_dashboard_api(client, ratio)
+        self.check_theme_status_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
@@ -1053,6 +1104,52 @@ class WebCheck:
             self.add_result("dashboard_api", "FAIL", str(exc))
         else:
             self.add_result("dashboard_api", "PASS", "summary, quick links, and cash-equivalent gate safe")
+
+    def check_theme_status_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/themes/status")
+            if response.status_code != 200:
+                raise ValueError(f"theme status API returned {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            data = payload.get("data") or {}
+            if data.get("module") != "theme_research_status" or data.get("current_only") is not True:
+                raise ValueError("theme payload is not marked current-only")
+            for key in ["summary", "themes", "safety"]:
+                if key not in data:
+                    raise ValueError(f"theme payload missing {key}")
+            themes = data.get("themes") or []
+            summary = data.get("summary") or {}
+            if summary.get("theme_count") != len(themes):
+                raise ValueError("theme summary count does not match themes list")
+            for theme in themes:
+                if theme.get("status") in {"buy", "add", "reduce", "sell"}:
+                    raise ValueError(f"theme status leaked action conclusion: {theme.get('theme_name')}")
+                for row in [*(theme.get("associated_etfs") or []), *(theme.get("associated_stocks") or [])]:
+                    if row.get("gate_conclusion") in {"buy", "add", "reduce", "sell"}:
+                        raise ValueError(f"associated subject leaked action conclusion: {row.get('code')}")
+            if themes:
+                from urllib.parse import quote
+
+                detail = client.get("/api/themes/status/" + quote(str(themes[0].get("theme_name")), safe=""))
+                if detail.status_code != 200:
+                    raise ValueError(f"theme detail returned {detail.status_code}")
+                ratio.assert_safe(detail.json())
+                assert_safe_payload(detail.json())
+            missing = client.get("/api/themes/status/NO_SUCH_THEME")
+            if missing.status_code != 404:
+                raise ValueError(f"missing theme returned {missing.status_code}, expected 404")
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "theme_status_api",
+                "/api/themes/status",
+                f"Theme status API failed safety/current-state scan: {exc}",
+                "Fix ThemeStatusService or its route and rerun scripts/web_check.py.",
+            )
+            self.add_result("theme_status_api", "FAIL", str(exc))
+        else:
+            self.add_result("theme_status_api", "PASS", "theme summary, details, and neutral statuses safe")
 
     def check_export_json(self, client: Any, ratio: Any) -> None:
         response = client.get("/api/export/review_package?format=json")

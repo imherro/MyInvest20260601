@@ -22,6 +22,7 @@ from ..services.system_check import SystemCheckService
 from ..services.target_allocation_candidate_audit import TargetAllocationCandidateAuditService
 from ..services.target_allocation_export import TargetAllocationControlledExportService
 from ..services.target_allocation_generation import TargetAllocationGenerationService
+from ..services.theme_status import ThemeStatusService
 
 
 router = APIRouter()
@@ -106,6 +107,20 @@ def subject_freshness(session: Session = Depends(get_session)) -> dict[str, Any]
 @router.get("/subjects/gap")
 def subject_gap(session: Session = Depends(get_session)) -> dict[str, Any]:
     return respond(SubjectGapService(session).gap(), source={"path": "db.subjects"})
+
+
+@router.get("/themes/status")
+def theme_statuses(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(ThemeStatusService(session).status(), source={"path": "db.artifacts.theme_registry"})
+
+
+@router.get("/themes/status/{theme_name}")
+def theme_status(theme_name: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+    try:
+        data = ThemeStatusService(session).get_theme(theme_name)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="theme status not found") from exc
+    return respond({"theme": data}, source={"path": "db.artifacts.theme_registry"})
 
 
 @router.get("/market-position/mapping")

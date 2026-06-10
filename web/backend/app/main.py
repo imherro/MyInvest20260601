@@ -14,6 +14,7 @@ from .services.dashboard import DashboardService
 from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
+from .services.theme_status import ThemeStatusService
 
 
 app = FastAPI(title="MyInvest Web", version="0.2.0")
@@ -103,6 +104,22 @@ def subjects_gap_page(request: Request, session: Session = Depends(get_session))
             "/api/subjects/gap",
             rows=subject_gap["rows"],
             summary=subject_gap["summary"],
+        ),
+    )
+
+
+@app.get("/themes", response_class=HTMLResponse)
+def themes_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    themes = ThemeStatusService(session).status()
+    return templates.TemplateResponse(
+        request,
+        "themes.html",
+        page_context(
+            request,
+            "themes",
+            "/api/themes/status",
+            themes=themes["themes"],
+            summary=themes["summary"],
         ),
     )
 
