@@ -19,7 +19,7 @@ CANDIDATE_EXPORT_DIR = ROOT / "temp" / "candidate_exports"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "test(web): add candidate/official promotion mode shadow validation"
+COMMIT_MESSAGE = "feat(web): add candidate target allocation audit bundle"
 
 API_PATHS = [
     "/api/health",
@@ -37,6 +37,8 @@ API_PATHS = [
     "/api/target-allocation/shadow",
     "/api/target-allocation/shadow/compare",
     "/api/target-allocation/shadow/export?format=json",
+    "/api/target-allocation/candidate-audit",
+    "/api/target-allocation/candidate-audit?format=json",
     "/api/portfolio/current",
     "/api/intraday-rules/current",
     "/api/research-first/current",
@@ -129,6 +131,35 @@ PHASE5F_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
+PHASE5G_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "target_allocation_candidate_audit.py",
+    ROOT / "web" / "backend" / "tests" / "test_target_allocation_candidate_audit.py",
+    ROOT / "scripts" / "export_target_allocation_candidate_audit.py",
+    ROOT / "web" / "backend" / "app" / "routers" / "current.py",
+    ROOT / "web" / "docs" / "TARGET_ALLOCATION_PROMOTION_PLAN.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "GOLDEN_REFERENCE.md",
+    ROOT / "web" / "docs" / "TARGET_ALLOCATION_RULES.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+]
+
+PROTECTED_SIDE_EFFECT_FILES = [
+    ROOT / "research" / "latest_index.json",
+    ROOT / "research" / "alerts" / "intraday_rules.json",
+    ROOT / "research" / "logs" / "decision_log.md",
+    ROOT / "scripts" / "check_valuation_updates.py",
+    ROOT / "scripts" / "generate_premarket_check.py",
+]
+
+PROTECTED_GENERATED_DIRS = [
+    ROOT / "research" / "actions",
+    ROOT / "research" / "allocation",
+    ROOT / "research" / "checks",
+    ROOT / "research" / "market",
+    ROOT / "research" / "portfolio",
+]
+
 REQUIRED_EXPORT_MODULES = {
     "action_plan",
     "target_allocation",
@@ -159,6 +190,16 @@ CONTROLLED_EXPORT_ZIP_FILES = {
     "compare_result.json",
     "provenance.json",
     "system_checks.json",
+}
+
+CANDIDATE_AUDIT_ZIP_FILES = {
+    "manifest.json",
+    "candidate_target_allocation.json",
+    "compare_result.json",
+    "replay_summary.json",
+    "promotion_mode.json",
+    "safety_checks.json",
+    "provenance.json",
 }
 
 FORBIDDEN_KEY_RE = re.compile(
@@ -247,6 +288,36 @@ class WebCheck:
     def warn(self, check: str, file: str, reason: str, fix: str) -> None:
         self.warnings.append(Problem(check, file, reason, fix))
 
+    def side_effect_snapshot(self) -> dict[str, Any]:
+        files = {path: path.read_bytes() if path.exists() else None for path in PROTECTED_SIDE_EFFECT_FILES}
+        generated = {
+            directory: {item for item in directory.glob("*") if item.is_file()}
+            for directory in PROTECTED_GENERATED_DIRS
+            if directory.exists()
+        }
+        return {"files": files, "generated": generated}
+
+    def restore_side_effect_snapshot(self, snapshot: dict[str, Any]) -> None:
+        for path, content in snapshot.get("files", {}).items():
+            if content is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(content)
+        for directory, before in snapshot.get("generated", {}).items():
+            if not directory.exists():
+                continue
+            for item in directory.glob("*"):
+                if item.is_file() and item not in before and item.suffix.lower() in {".json", ".md"}:
+                    item.unlink(missing_ok=True)
+
+    def run_with_side_effect_guard(self, callback: Any) -> Any:
+        snapshot = self.side_effect_snapshot()
+        try:
+            return callback()
+        finally:
+            self.restore_side_effect_snapshot(snapshot)
+
     def run_command(self, name: str, args: list[str], expect_text: str | None = None) -> str:
         proc = subprocess.run(
             args,
@@ -299,6 +370,7 @@ class WebCheck:
         self.check_phase5d_contract_files()
         self.check_phase5e_contract_files()
         self.check_phase5f_contract_files()
+        self.check_phase5g_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -454,6 +526,37 @@ class WebCheck:
             return
         self.add_result("phase5f_promotion_simulation_files", "PASS", "candidate/official simulation tests present")
 
+    def check_phase5g_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE5G_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase5g_candidate_audit_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase5g_candidate_audit_files",
+                ", ".join(missing),
+                "Phase 5G candidate audit service/API/CLI/tests/docs are missing.",
+                "Add the candidate audit bundle files and rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE5G_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "candidate audit" not in lowered or "official" not in lowered:
+                        raise ValueError("Phase 5G docs must describe candidate audit and official blocking")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase5g_candidate_audit_safety", "FAIL", str(exc))
+            self.fail(
+                "phase5g_candidate_audit_safety",
+                rel(path),
+                f"Phase 5G file failed safety scan: {exc}",
+                "Remove local paths and document candidate audit plus official blocking behavior.",
+            )
+            return
+        self.add_result("phase5g_candidate_audit_files", "PASS", "candidate audit service/API/CLI/tests present")
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -468,7 +571,9 @@ class WebCheck:
             )
 
     def run_pytest(self) -> None:
-        self.run_command("pytest_web_backend", [sys.executable, "-m", "pytest", "web/backend/tests"])
+        self.run_with_side_effect_guard(
+            lambda: self.run_command("pytest_web_backend", [sys.executable, "-m", "pytest", "web/backend/tests"])
+        )
 
     def run_ratio_and_gate_checks(self, action_path: str) -> None:
         self.run_command(
@@ -483,16 +588,19 @@ class WebCheck:
         )
 
     def run_project_checks(self) -> None:
-        self.run_command(
-            "check_cross_file_allocation_consistency",
-            [sys.executable, "scripts/check_cross_file_allocation_consistency.py"],
-            "Allocation consistency: OK",
-        )
-        self.run_command(
-            "project_check_current_only",
-            [sys.executable, "scripts/project_check.py", "--current-only"],
-            "0 FAIL",
-        )
+        def run_checks() -> None:
+            self.run_command(
+                "check_cross_file_allocation_consistency",
+                [sys.executable, "scripts/check_cross_file_allocation_consistency.py"],
+                "Allocation consistency: OK",
+            )
+            self.run_command(
+                "project_check_current_only",
+                [sys.executable, "scripts/project_check.py", "--current-only"],
+                "0 FAIL",
+            )
+
+        self.run_with_side_effect_guard(run_checks)
 
     def latest_action_plan_path(self) -> str:
         try:
@@ -557,6 +665,7 @@ class WebCheck:
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
         self.check_promotion_simulation_cli_output(ratio)
+        self.check_candidate_audit_export(client, ratio)
 
     def check_api_is_read_only(self, client: Any) -> None:
         response = client.get("/openapi.json")
@@ -778,6 +887,109 @@ class WebCheck:
         else:
             self.add_result("promotion_simulation", "PASS", "candidate temp export safe and official blocked")
 
+    def check_candidate_audit_export(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/target-allocation/candidate-audit?format=json")
+            if response.status_code != 200:
+                raise ValueError(f"JSON API status {response.status_code}")
+            wrapper = response.json()
+            payload = wrapper.get("data")
+            self.assert_candidate_audit_payload_safe(payload, ratio)
+
+            zip_response = client.get("/api/target-allocation/candidate-audit?format=zip")
+            if zip_response.status_code != 200:
+                raise ValueError(f"ZIP API status {zip_response.status_code}")
+            with zipfile.ZipFile(io.BytesIO(zip_response.content)) as archive:
+                names = set(archive.namelist())
+                if names != CANDIDATE_AUDIT_ZIP_FILES:
+                    raise ValueError(f"candidate audit ZIP names mismatch: {sorted(names)}")
+                for name in names:
+                    item = json.loads(archive.read(name).decode("utf-8"))
+                    ratio.assert_safe(item)
+                    assert_safe_payload(item)
+                    assert_no_export_runtime_terms(item)
+
+            self.check_candidate_audit_cli_output(ratio)
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "candidate_audit_export",
+                "target-allocation candidate audit",
+                f"Candidate audit API/CLI safety scan failed: {exc}",
+                "Fix the candidate audit service/API/CLI and rerun scripts/web_check.py.",
+            )
+            self.add_result("candidate_audit_export", "FAIL", str(exc))
+        else:
+            self.add_result("candidate_audit_export", "PASS", "API and CLI JSON/ZIP safe")
+
+    def check_candidate_audit_cli_output(self, ratio: Any) -> None:
+        dry = self.run_command(
+            "candidate_audit_dry_run",
+            [sys.executable, "scripts/export_target_allocation_candidate_audit.py", "--dry-run"],
+        )
+        dry_summary = json.loads(dry)
+        ratio.assert_safe(dry_summary)
+        assert_safe_payload(dry_summary)
+        if dry_summary.get("output_path") is not None or dry_summary.get("matched") is not True:
+            raise ValueError(f"unexpected candidate audit dry-run summary: {dry_summary}")
+        if dry_summary.get("replay_fail_count") != 0 or dry_summary.get("official_allowed"):
+            raise ValueError(f"candidate audit dry-run failed safety gates: {dry_summary}")
+
+        for format_name in ["json", "zip"]:
+            output = self.run_command(
+                f"candidate_audit_{format_name}",
+                [sys.executable, "scripts/export_target_allocation_candidate_audit.py", "--format", format_name],
+            )
+            summary = json.loads(output)
+            ratio.assert_safe(summary)
+            assert_safe_payload(summary)
+            rel_path_text = str(summary.get("output_path") or "")
+            if not rel_path_text.startswith("temp/candidate_exports/"):
+                raise ValueError(f"candidate audit path outside temp/candidate_exports: {rel_path_text}")
+            if "candidate_audit" not in Path(rel_path_text).name:
+                raise ValueError(f"candidate audit filename missing candidate_audit: {rel_path_text}")
+            if summary.get("matched") is not True or summary.get("replay_fail_count") != 0 or summary.get("official_allowed"):
+                raise ValueError(f"candidate audit export failed safety gates: {summary}")
+            output_path = ROOT / rel_path_text
+            if not output_path.exists():
+                raise ValueError(f"candidate audit export file missing: {rel_path_text}")
+            if not is_forbidden_git_path(rel_path_text):
+                raise ValueError(f"candidate audit output is not covered by forbidden/ignored temp patterns: {rel_path_text}")
+            try:
+                if format_name == "json":
+                    payload = json.loads(output_path.read_text(encoding="utf-8"))
+                    self.assert_candidate_audit_payload_safe(payload, ratio)
+                else:
+                    with zipfile.ZipFile(output_path) as archive:
+                        names = set(archive.namelist())
+                        if names != CANDIDATE_AUDIT_ZIP_FILES:
+                            raise ValueError(f"candidate audit CLI ZIP names mismatch: {sorted(names)}")
+                        for name in names:
+                            payload = json.loads(archive.read(name).decode("utf-8"))
+                            ratio.assert_safe(payload)
+                            assert_safe_payload(payload)
+                            assert_no_export_runtime_terms(payload)
+            finally:
+                output_path.unlink(missing_ok=True)
+
+    @staticmethod
+    def assert_candidate_audit_payload_safe(payload: dict[str, Any] | None, ratio: Any) -> None:
+        if not payload:
+            raise ValueError("candidate audit payload is empty")
+        ratio.assert_safe(payload)
+        assert_safe_payload(payload)
+        assert_no_export_runtime_terms(payload)
+        compare = payload.get("compare") or {}
+        replay = payload.get("replay_summary") or {}
+        promotion = payload.get("promotion_mode") or {}
+        if compare.get("matched") is not True or compare.get("diffs"):
+            raise ValueError("candidate audit compare failed")
+        if compare.get("unsupported_fields"):
+            raise ValueError("candidate audit has unsupported fields")
+        if replay.get("failed") != 0:
+            raise ValueError("candidate audit replay summary has failures")
+        if promotion.get("official_allowed"):
+            raise ValueError("candidate audit official mode is allowed")
+
     def assert_export_sources_current(self, payload: dict[str, Any]) -> None:
         latest = json.loads(LATEST_INDEX.read_text(encoding="utf-8-sig"))
         modules = latest.get("modules", {})
@@ -854,6 +1066,7 @@ class WebCheck:
             ROOT / "scripts" / "ingest_current_state_to_web_db.py",
             ROOT / "scripts" / "export_target_allocation_shadow.py",
             ROOT / "scripts" / "simulate_target_allocation_promotion.py",
+            ROOT / "scripts" / "export_target_allocation_candidate_audit.py",
             ROOT / "web" / "scripts" / "ingest_current_state.py",
             *list((ROOT / "web" / "backend" / "app").rglob("*.py")),
         ]

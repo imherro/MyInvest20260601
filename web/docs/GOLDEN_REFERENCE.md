@@ -98,3 +98,5 @@ Phase 5D adds multi-scenario replay fixtures under `web/backend/tests/fixtures/t
 Phase 5E adds the controlled promotion plan and mode helper. It does not switch callers to service-generated output. Candidate and official modes remain blocked until a later audited phase.
 
 Phase 5F adds candidate/official promotion simulation. Candidate simulation builds explicit current inputs, calls `TargetAllocationGenerationService.generate_shadow_from_inputs(...)`, compares the candidate result with current shadow output, and writes only temporary files under `temp/candidate_exports/` when explicitly requested. Official simulation returns a blocked report and writes no files.
+
+Phase 5G packages the candidate audit bundle. The bundle must show `compare.matched = true`, empty `diffs`, empty `unsupported_fields`, `replay_summary.failed = 0`, `promotion_mode.official_allowed = false`, and ratio-only safety metadata before any JSON or ZIP export can be written.

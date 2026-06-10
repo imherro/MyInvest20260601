@@ -15,6 +15,7 @@ from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
 from ..services.system_check import SystemCheckService
+from ..services.target_allocation_candidate_audit import TargetAllocationCandidateAuditService
 from ..services.target_allocation_export import TargetAllocationControlledExportService
 from ..services.target_allocation_generation import TargetAllocationGenerationService
 
@@ -145,6 +146,23 @@ def target_allocation_shadow_export(
         content=content,
         media_type="application/zip",
         headers={"Content-Disposition": 'attachment; filename="target_allocation_shadow_export.zip"'},
+    )
+
+
+@router.get("/target-allocation/candidate-audit", response_model=None)
+def target_allocation_candidate_audit(
+    format: Literal["json", "zip"] = "json",
+    session: Session = Depends(get_session),
+) -> Any:
+    service = TargetAllocationCandidateAuditService(session)
+    payload = service.build_audit_payload()
+    if format == "json":
+        return respond(payload, source={"path": "db.TargetAllocationCandidateAuditService"})
+    content = service.build_zip_bytes(payload)
+    return Response(
+        content=content,
+        media_type="application/zip",
+        headers={"Content-Disposition": 'attachment; filename="target_allocation_candidate_audit.zip"'},
     )
 
 
