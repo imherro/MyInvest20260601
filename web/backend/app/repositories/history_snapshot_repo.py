@@ -17,7 +17,8 @@ from ..services.target_allocation_promotion import CANDIDATE_EXPORT_DIR
 
 
 HISTORY_EXPORT_DIR = ROOT / "temp" / "history_exports"
-HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
+HISTORY_RUNTIME_DIR = ROOT / "temp" / "web_runtime"
+HISTORY_DB_PATH = HISTORY_RUNTIME_DIR / "history_snapshot.sqlite"
 
 ZIP_FILES = {
     "manifest.json",
@@ -122,6 +123,7 @@ class HistorySnapshotRepository:
 
     @staticmethod
     def write_history_database(payload: dict[str, Any]) -> str:
+        HistorySnapshotRepository.assert_history_database_path()
         HISTORY_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
         with sqlite3.connect(HISTORY_DB_PATH) as connection:
             connection.execute("DROP TABLE IF EXISTS history_snapshot_metadata")
@@ -203,6 +205,17 @@ class HistorySnapshotRepository:
                 [(key, "OK" if value is True or value == "OK" else str(value)) for key, value in payload["safety"].items()],
             )
         return HISTORY_DB_PATH.relative_to(ROOT).as_posix()
+
+    @staticmethod
+    def assert_history_database_path(path: Path = HISTORY_DB_PATH) -> None:
+        runtime_root = HISTORY_RUNTIME_DIR.resolve()
+        resolved_path = path.resolve()
+        if not resolved_path.is_relative_to(runtime_root):
+            raise ValueError("history runtime database must stay under temp/web_runtime")
+        if path.name != "history_snapshot.sqlite":
+            raise ValueError("history runtime database filename must be history_snapshot.sqlite")
+        if path.suffix != ".sqlite":
+            raise ValueError("history runtime database must use .sqlite suffix")
 
     @staticmethod
     def _assert_temp_source(path: Path) -> None:
