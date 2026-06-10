@@ -16,10 +16,12 @@ ROOT = Path(__file__).resolve().parents[1]
 DB_PATH = ROOT / "temp" / "web_db" / "myinvest.sqlite"
 LATEST_INDEX = ROOT / "research" / "latest_index.json"
 CANDIDATE_EXPORT_DIR = ROOT / "temp" / "candidate_exports"
+HISTORY_EXPORT_DIR = ROOT / "temp" / "history_exports"
+HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add candidate target allocation audit bundle"
+COMMIT_MESSAGE = "feat(web): add history snapshot audit export"
 
 API_PATHS = [
     "/api/health",
@@ -39,6 +41,8 @@ API_PATHS = [
     "/api/target-allocation/shadow/export?format=json",
     "/api/target-allocation/candidate-audit",
     "/api/target-allocation/candidate-audit?format=json",
+    "/api/history/export",
+    "/api/history/export?format=json",
     "/api/portfolio/current",
     "/api/intraday-rules/current",
     "/api/research-first/current",
@@ -144,6 +148,17 @@ PHASE5G_FILES = [
     ROOT / "web" / "docs" / "API_SPEC.md",
 ]
 
+PHASE6_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "history_snapshot.py",
+    ROOT / "web" / "backend" / "tests" / "test_history_snapshot.py",
+    ROOT / "scripts" / "export_history_snapshot.py",
+    ROOT / "web" / "backend" / "app" / "routers" / "current.py",
+    ROOT / "web" / "docs" / "HISTORY_SNAPSHOT.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "GOLDEN_REFERENCE.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -200,6 +215,14 @@ CANDIDATE_AUDIT_ZIP_FILES = {
     "promotion_mode.json",
     "safety_checks.json",
     "provenance.json",
+}
+
+HISTORY_SNAPSHOT_ZIP_FILES = {
+    "manifest.json",
+    "history_snapshot.json",
+    "history_entries.json",
+    "live_current_summary.json",
+    "safety_checks.json",
 }
 
 FORBIDDEN_KEY_RE = re.compile(
@@ -371,6 +394,7 @@ class WebCheck:
         self.check_phase5e_contract_files()
         self.check_phase5f_contract_files()
         self.check_phase5g_contract_files()
+        self.check_phase6_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -557,6 +581,37 @@ class WebCheck:
             return
         self.add_result("phase5g_candidate_audit_files", "PASS", "candidate audit service/API/CLI/tests present")
 
+    def check_phase6_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE6_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase6_history_snapshot_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase6_history_snapshot_files",
+                ", ".join(missing),
+                "Phase 6 history snapshot service/API/CLI/tests/docs are missing.",
+                "Add the history snapshot files and rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE6_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "history snapshot" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 6 docs must describe history snapshot and read-only boundaries")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase6_history_snapshot_safety", "FAIL", str(exc))
+            self.fail(
+                "phase6_history_snapshot_safety",
+                rel(path),
+                f"Phase 6 file failed safety scan: {exc}",
+                "Remove local paths and document history snapshot read-only boundaries.",
+            )
+            return
+        self.add_result("phase6_history_snapshot_files", "PASS", "history snapshot service/API/CLI/tests present")
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -666,6 +721,7 @@ class WebCheck:
         self.check_controlled_shadow_export(client, ratio)
         self.check_promotion_simulation_cli_output(ratio)
         self.check_candidate_audit_export(client, ratio)
+        self.check_history_snapshot_export(client, ratio)
 
     def check_api_is_read_only(self, client: Any) -> None:
         response = client.get("/openapi.json")
@@ -990,6 +1046,141 @@ class WebCheck:
         if promotion.get("official_allowed"):
             raise ValueError("candidate audit official mode is allowed")
 
+    def check_history_snapshot_export(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/history/export?format=json")
+            if response.status_code != 200:
+                raise ValueError(f"JSON API status {response.status_code}")
+            wrapper = response.json()
+            payload = wrapper.get("data")
+            self.assert_history_snapshot_payload_safe(payload, ratio)
+
+            zip_response = client.get("/api/history/export?format=zip")
+            if zip_response.status_code != 200:
+                raise ValueError(f"ZIP API status {zip_response.status_code}")
+            with zipfile.ZipFile(io.BytesIO(zip_response.content)) as archive:
+                names = set(archive.namelist())
+                if names != HISTORY_SNAPSHOT_ZIP_FILES:
+                    raise ValueError(f"history snapshot ZIP names mismatch: {sorted(names)}")
+                for name in names:
+                    item = json.loads(archive.read(name).decode("utf-8"))
+                    ratio.assert_safe(item)
+                    assert_safe_payload(item)
+                    assert_no_export_runtime_terms(item)
+
+            self.check_history_snapshot_cli_output(ratio)
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "history_snapshot_export",
+                "history snapshot export",
+                f"History snapshot API/CLI safety scan failed: {exc}",
+                "Fix the history snapshot service/API/CLI and rerun scripts/web_check.py.",
+            )
+            self.add_result("history_snapshot_export", "FAIL", str(exc))
+        else:
+            self.add_result("history_snapshot_export", "PASS", "API and CLI JSON/ZIP safe")
+
+    def check_history_snapshot_cli_output(self, ratio: Any) -> None:
+        dry = self.run_command(
+            "history_snapshot_dry_run",
+            [sys.executable, "scripts/export_history_snapshot.py", "--dry-run"],
+        )
+        dry_summary = json.loads(dry)
+        ratio.assert_safe(dry_summary)
+        assert_safe_payload(dry_summary)
+        if dry_summary.get("output_path") is not None or dry_summary.get("database_written") is not False:
+            raise ValueError(f"unexpected history snapshot dry-run summary: {dry_summary}")
+        if dry_summary.get("shadow_matched") is not True or dry_summary.get("candidate_matched") is not True:
+            raise ValueError(f"history snapshot dry-run compare failed: {dry_summary}")
+        if dry_summary.get("replay_fail_count") != 0 or dry_summary.get("official_allowed"):
+            raise ValueError(f"history snapshot dry-run failed safety gates: {dry_summary}")
+
+        for format_name in ["json", "zip"]:
+            output = self.run_command(
+                f"history_snapshot_{format_name}",
+                [sys.executable, "scripts/export_history_snapshot.py", "--format", format_name],
+            )
+            summary = json.loads(output)
+            ratio.assert_safe(summary)
+            assert_safe_payload(summary)
+            rel_path_text = str(summary.get("output_path") or "")
+            if not rel_path_text.startswith("temp/history_exports/"):
+                raise ValueError(f"history snapshot path outside temp/history_exports: {rel_path_text}")
+            if "history_snapshot" not in Path(rel_path_text).name:
+                raise ValueError(f"history snapshot filename missing history_snapshot: {rel_path_text}")
+            if summary.get("shadow_matched") is not True or summary.get("candidate_matched") is not True:
+                raise ValueError(f"history snapshot export compare failed: {summary}")
+            if summary.get("replay_fail_count") != 0 or summary.get("official_allowed"):
+                raise ValueError(f"history snapshot export failed safety gates: {summary}")
+            if summary.get("database_written") is not True:
+                raise ValueError(f"history snapshot database was not written: {summary}")
+            output_path = ROOT / rel_path_text
+            if not output_path.exists():
+                raise ValueError(f"history snapshot export file missing: {rel_path_text}")
+            if not is_forbidden_git_path(rel_path_text):
+                raise ValueError(f"history snapshot output is not covered by forbidden/ignored temp patterns: {rel_path_text}")
+            try:
+                if format_name == "json":
+                    payload = json.loads(output_path.read_text(encoding="utf-8"))
+                    self.assert_history_snapshot_payload_safe(payload, ratio)
+                else:
+                    with zipfile.ZipFile(output_path) as archive:
+                        names = set(archive.namelist())
+                        if names != HISTORY_SNAPSHOT_ZIP_FILES:
+                            raise ValueError(f"history snapshot CLI ZIP names mismatch: {sorted(names)}")
+                        for name in names:
+                            payload = json.loads(archive.read(name).decode("utf-8"))
+                            ratio.assert_safe(payload)
+                            assert_safe_payload(payload)
+                            assert_no_export_runtime_terms(payload)
+                if not HISTORY_DB_PATH.exists():
+                    raise ValueError("history snapshot SQLite database missing")
+            finally:
+                output_path.unlink(missing_ok=True)
+                HISTORY_DB_PATH.unlink(missing_ok=True)
+
+    @staticmethod
+    def assert_history_snapshot_payload_safe(payload: dict[str, Any] | None, ratio: Any) -> None:
+        if not payload:
+            raise ValueError("history snapshot payload is empty")
+        ratio.assert_safe(payload)
+        assert_safe_payload(payload)
+        assert_no_export_runtime_terms(payload)
+        live = payload.get("live_current_summary") or {}
+        shadow = live.get("shadow_vs_reference") or {}
+        candidate = live.get("candidate_audit_compare") or {}
+        replay = live.get("replay_fixture_summary") or {}
+        promotion = live.get("promotion_mode") or {}
+        safety = payload.get("safety") or {}
+        if shadow.get("matched") is not True or shadow.get("diff_count") != 0:
+            raise ValueError("history snapshot shadow comparison failed")
+        if candidate.get("matched") is not True or candidate.get("diff_count") != 0:
+            raise ValueError("history snapshot candidate comparison failed")
+        if replay.get("failed") != 0:
+            raise ValueError("history snapshot replay summary has failures")
+        if promotion.get("official_allowed"):
+            raise ValueError("history snapshot official mode is allowed")
+        for key in [
+            "ratio_only",
+            "current_only",
+            "uses_latest_index_modules",
+            "shadow_vs_reference_matched",
+            "candidate_audit_matched",
+            "official_promotion_blocked",
+        ]:
+            if safety.get(key) is not True:
+                raise ValueError(f"history snapshot safety check failed: {key}")
+        for key in [
+            "writes_research_files",
+            "updates_latest_index",
+            "updates_current_modules",
+            "generates_action_plan",
+            "trading_feature",
+            "execution_feature",
+        ]:
+            if safety.get(key) is not False:
+                raise ValueError(f"history snapshot boundary failed: {key}")
+
     def assert_export_sources_current(self, payload: dict[str, Any]) -> None:
         latest = json.loads(LATEST_INDEX.read_text(encoding="utf-8-sig"))
         modules = latest.get("modules", {})
@@ -1067,6 +1258,7 @@ class WebCheck:
             ROOT / "scripts" / "export_target_allocation_shadow.py",
             ROOT / "scripts" / "simulate_target_allocation_promotion.py",
             ROOT / "scripts" / "export_target_allocation_candidate_audit.py",
+            ROOT / "scripts" / "export_history_snapshot.py",
             ROOT / "web" / "scripts" / "ingest_current_state.py",
             *list((ROOT / "web" / "backend" / "app").rglob("*.py")),
         ]

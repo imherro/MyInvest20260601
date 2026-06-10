@@ -24,6 +24,7 @@ The baseline covers:
 - controlled target-allocation shadow export JSON/ZIP vs shadow compare result
 - target-allocation shadow replay fixtures across risk-off, boundary, neutral, risk-on, max-score, overweight, underweight, and missing-bucket scenarios
 - target-allocation promotion mode helper default, allowed, and blocked modes
+- history snapshot live shadow compare, candidate audit compare, replay summary, promotion status, JSON/ZIP allowlist, and no-mutation checks
 - current action plan path
 - action plan `generated_at`
 - action count
@@ -80,6 +81,12 @@ Run the Phase 5E promotion-mode baseline directly:
 python -m pytest web/backend/tests/test_target_allocation_promotion_mode.py
 ```
 
+Run the Phase 6 history snapshot baseline directly:
+
+```bash
+python -m pytest web/backend/tests/test_history_snapshot.py
+```
+
 The test performs a fresh ingest through the shared test fixture, reads current JSON through `latest_index.modules`, then reads the same facts from `temp/web_db/myinvest.sqlite`.
 
 ## Migration Policy
@@ -100,3 +107,5 @@ Phase 5E adds the controlled promotion plan and mode helper. It does not switch 
 Phase 5F adds candidate/official promotion simulation. Candidate simulation builds explicit current inputs, calls `TargetAllocationGenerationService.generate_shadow_from_inputs(...)`, compares the candidate result with current shadow output, and writes only temporary files under `temp/candidate_exports/` when explicitly requested. Official simulation returns a blocked report and writes no files.
 
 Phase 5G packages the candidate audit bundle. The bundle must show `compare.matched = true`, empty `diffs`, empty `unsupported_fields`, `replay_summary.failed = 0`, `promotion_mode.official_allowed = false`, and ratio-only safety metadata before any JSON or ZIP export can be written.
+
+Phase 6 packages a read-only history snapshot for audit consolidation. The snapshot must show matched live shadow and candidate audit comparisons, zero replay failures, blocked official mode, strict JSON/ZIP allowlists, no current-state mutation, and ratio-only payloads without runtime paths before any export can be written.

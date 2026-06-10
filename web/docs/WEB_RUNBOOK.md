@@ -375,6 +375,54 @@ Full gate:
 python scripts/web_check.py
 ```
 
+## Phase 6 History Snapshot
+
+Phase 6 adds a read-only history snapshot for shadow replay, controlled export, candidate simulation, and candidate audit review artifacts. It consolidates previous temporary export results and a live current summary for audit. It is not an official target allocation or action plan generator.
+
+Direct tests:
+
+```bash
+python -m pytest web/backend/tests/test_history_snapshot.py
+```
+
+Dry run:
+
+```bash
+python scripts/export_history_snapshot.py --dry-run
+```
+
+JSON export:
+
+```bash
+python scripts/export_history_snapshot.py --format json
+```
+
+ZIP export:
+
+```bash
+python scripts/export_history_snapshot.py --format zip
+```
+
+History snapshot CLI exports write only to ignored temporary export folders and write the local history database only under ignored runtime storage. Exported JSON and ZIP payloads must not contain runtime paths.
+
+Read-only API:
+
+- `GET /api/history/export`
+- `GET /api/history/export?format=json`
+- `GET /api/history/export?format=zip`
+
+The ZIP contains only `manifest.json`, `history_snapshot.json`, `history_entries.json`, `live_current_summary.json`, and `safety_checks.json`.
+
+The history snapshot is blocked if shadow compare is not matched, candidate audit compare is not matched, replay failures are nonzero, official mode is allowed, forbidden fields are present, a runtime path appears in exported payloads, or a local absolute path is present.
+
+Phase 6 still does not write `research/latest_index.json`, `research/allocation`, `research/actions`, `current_modules`, generate official target allocation, generate action plans, or connect to trading/QMT write interfaces.
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
 ## API and Page Smoke Check
 
 ```bash
@@ -391,6 +439,7 @@ Then open:
 - `http://127.0.0.1:8000/api/target-allocation/shadow/compare`
 - `http://127.0.0.1:8000/api/target-allocation/shadow/export?format=json`
 - `http://127.0.0.1:8000/api/target-allocation/candidate-audit?format=json`
+- `http://127.0.0.1:8000/api/history/export?format=json`
 - `http://127.0.0.1:8000/api/modules/current`
 - `http://127.0.0.1:8000/api/export/review_package?format=json`
 

@@ -11,6 +11,7 @@ from ..db import get_session
 from ..services.allocation_consistency import AllocationConsistencyService
 from ..services.current_state import CurrentStateService
 from ..services.export_package import ReviewPackageExportService
+from ..services.history_snapshot import HistorySnapshotService
 from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
@@ -163,6 +164,29 @@ def target_allocation_candidate_audit(
         content=content,
         media_type="application/zip",
         headers={"Content-Disposition": 'attachment; filename="target_allocation_candidate_audit.zip"'},
+    )
+
+
+@router.get("/history/export", response_model=None)
+def history_snapshot_export(
+    format: Literal["json", "zip"] = "json",
+    session: Session = Depends(get_session),
+) -> Any:
+    service = HistorySnapshotService(session)
+    try:
+        payload = service.build_history_snapshot()
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail="history snapshot source scan failed") from exc
+    if format == "json":
+        return respond(payload, source={"path": "db.HistorySnapshotService"})
+    try:
+        content = service.build_zip_bytes(payload)
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail="history snapshot export failed") from exc
+    return Response(
+        content=content,
+        media_type="application/zip",
+        headers={"Content-Disposition": 'attachment; filename="history_snapshot.zip"'},
     )
 
 
