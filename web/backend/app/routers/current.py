@@ -14,6 +14,7 @@ from ..services.bucket_explorer import BucketExplorerService
 from ..services.current_state import CurrentStateService
 from ..services.dashboard import DashboardService
 from ..services.decision_timeline import DecisionTimelineService
+from ..services.environment_status import EnvironmentStatusService
 from ..services.export_package import ReviewPackageExportService
 from ..services.history_gap_dashboard import HistoryGapDashboardService
 from ..services.history_snapshot import HistorySnapshotService
@@ -51,6 +52,11 @@ def health() -> dict[str, Any]:
         "current_only": True,
         "database": "temp/web_db/myinvest.sqlite",
     }
+
+
+@router.get("/environment/status")
+def environment_status() -> dict[str, Any]:
+    return EnvironmentStatusService().status()
 
 
 @router.get("/latest-index")

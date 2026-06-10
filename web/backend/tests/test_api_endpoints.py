@@ -4,6 +4,7 @@ from __future__ import annotations
 def test_required_api_endpoints(client):
     paths = [
         "/api/health",
+        "/api/environment/status",
         "/api/dashboard/current",
         "/api/current",
         "/api/latest-index",
@@ -45,4 +46,7 @@ def test_required_api_endpoints(client):
         response = client.get(path)
         assert response.status_code == 200, path
         payload = response.json()
-        assert payload["ok"] is True
+        if path == "/api/environment/status":
+            assert payload["module"] == "environment_status"
+        else:
+            assert payload["ok"] is True
