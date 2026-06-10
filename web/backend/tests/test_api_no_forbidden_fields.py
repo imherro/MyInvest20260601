@@ -35,6 +35,7 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/user/preferences/default",
         "/api/dashboard/summary",
         "/api/dashboard/user_metrics/default",
+        "/api/workbench/integration",
         "/api/dashboard/current",
         "/api/current",
         "/api/latest-index",

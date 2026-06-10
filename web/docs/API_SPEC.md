@@ -22,6 +22,7 @@ Endpoints:
 - `GET /api/user/preferences/{user_id}`
 - `GET /api/dashboard/summary`
 - `GET /api/dashboard/user_metrics/{user_id}`
+- `GET /api/workbench/integration`
 - `GET /api/dashboard/current`
 - `GET /api/current`
 - `GET /api/latest-index`
@@ -107,6 +108,18 @@ Phase 10C extends the existing read-only dashboard with workbench analytics:
 The analytics repository uses `DatabaseService` for SQLite current-state reads and `HistorySnapshotRepository` for the guarded runtime history snapshot summary. It does not read `latest_index.files`, write research artifacts, generate target allocations, generate action plans, or connect to trading/QMT write interfaces.
 
 The existing `GET /api/dashboard/current` payload now includes `analytics_summary`, and `GET /dashboard` displays the workbench analytics section with a time-window selector.
+
+## Workbench Integration
+
+Phase 11 adds a read-only integration endpoint:
+
+- `GET /api/workbench/integration`
+
+The endpoint summarizes the Workbench module map across Settings, Preferences, Dashboard, and Research Centers. It returns safe local Web links, module statuses, selected time-window metadata, display options, gate statuses, and a compact current metrics summary.
+
+The service composes existing read-only services: `EnvironmentStatusService`, `UserPreferencesService`, and `WorkbenchAnalyticsService`. It does not read `latest_index.files`, write research artifacts, generate target allocations, generate action plans, or add trading/QMT write interfaces.
+
+The existing `GET /dashboard` page uses the same integration payload in its Workbench Modules section. `GET /preferences` links back to the integrated Workbench module surfaces.
 
 ## Research Dashboard
 

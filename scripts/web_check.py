@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add workbench analytics dashboard"
+COMMIT_MESSAGE = "feat(web): integrate workbench modules and optimize UX"
 
 API_PATHS = [
     "/api/health",
@@ -30,6 +30,7 @@ API_PATHS = [
     "/api/user/preferences/default",
     "/api/dashboard/summary",
     "/api/dashboard/user_metrics/default",
+    "/api/workbench/integration",
     "/api/dashboard/current",
     "/api/current",
     "/api/latest-index",
@@ -134,9 +135,12 @@ DASHBOARD_CHECKS = [
     'data-dashboard-section="market-position"',
     'data-dashboard-section="action-plan-summary"',
     'data-dashboard-section="allocation-summary"',
+    'data-dashboard-section="workbench-integration"',
     'data-dashboard-section="analytics"',
     'data-dashboard-section="subject-summaries"',
     'data-dashboard-section="quick-links"',
+    "workbenchIntegrationRows",
+    "workbenchModuleLinks",
     "dashboardAnalyticsRows",
     "data-dashboard-window",
     'data-status-card="system"',
@@ -150,6 +154,7 @@ JS_CHECKS = [
     "function renderEnvironment",
     "function renderUserPreferences",
     "function renderDashboardAnalytics",
+    "function renderWorkbenchIntegration",
     "function setupDashboardWindow",
     "function renderDashboardQuickLinks",
     "function renderSubjectStatus",
@@ -426,6 +431,16 @@ PHASE10C_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
+PHASE11_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "workbench_integration_service.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html",
+    ROOT / "web" / "backend" / "app" / "templates" / "preferences.html",
+    ROOT / "web" / "backend" / "tests" / "test_integration.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -682,6 +697,7 @@ class WebCheck:
         self.check_phase10a_contract_files()
         self.check_phase10b_contract_files()
         self.check_phase10c_contract_files()
+        self.check_phase11_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1840,6 +1856,63 @@ class WebCheck:
             "Workbench analytics service/API/dashboard/tests/docs present",
         )
 
+    def check_phase11_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE11_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase11_workbench_integration_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase11_workbench_integration_files",
+                ", ".join(missing),
+                "Phase 11 workbench integration files are missing.",
+                "Add the read-only integration service, dashboard/preference hooks, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "workbench_integration_service.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            lowered = service_text.lower()
+            if "latest_index.files" in lowered or '["files"]' in lowered or "['files']" in lowered:
+                raise ValueError("Workbench integration must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
+                if blocked in lowered:
+                    raise ValueError(f"Workbench integration contains blocked marker: {blocked.strip()}")
+            for marker in ["WorkbenchAnalyticsService", "UserPreferencesService", "EnvironmentStatusService"]:
+                if marker not in service_text:
+                    raise ValueError(f"Workbench integration missing service marker: {marker}")
+            dashboard_text = (ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "data-dashboard-section=\"workbench-integration\"",
+                "workbenchModuleLinks",
+                "workbenchIntegrationRows",
+            ]:
+                if marker not in dashboard_text:
+                    raise ValueError(f"dashboard template missing integration marker: {marker}")
+            preferences_text = (ROOT / "web" / "backend" / "app" / "templates" / "preferences.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "data-preferences-section=\"workbench-links\"" not in preferences_text:
+                raise ValueError("preferences template missing workbench links")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase11_workbench_integration_safety", "FAIL", str(exc))
+            self.fail(
+                "phase11_workbench_integration_safety",
+                "phase11 workbench integration files",
+                f"Phase 11 file failed safety scan: {exc}",
+                "Keep integration read-only, ratio-only, current-only, and GET-only.",
+            )
+            return
+        self.add_result(
+            "phase11_workbench_integration_files",
+            "PASS",
+            "Workbench integration service/API/page hooks/tests/docs present",
+        )
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -2226,6 +2299,18 @@ class WebCheck:
             missing_response = client.get("/api/dashboard/user_metrics/unknown_user")
             if missing_response.status_code != 404:
                 raise ValueError("dashboard user metrics unknown id did not return safe 404")
+            integration_response = client.get("/api/workbench/integration?time_window=7d")
+            if integration_response.status_code != 200:
+                raise ValueError(f"workbench integration API returned {integration_response.status_code}")
+            integration_payload = integration_response.json()
+            ratio.assert_safe(integration_payload)
+            assert_safe_payload(integration_payload)
+            integration_data = integration_payload.get("data") or {}
+            if integration_data.get("module") != "workbench_integration":
+                raise ValueError("workbench integration payload module mismatch")
+            labels = {item.get("label") for item in integration_data.get("modules") or []}
+            if not {"Settings", "Preferences", "Dashboard", "Research Centers"}.issubset(labels):
+                raise ValueError("workbench integration missing module links")
         except Exception as exc:  # noqa: BLE001
             self.fail(
                 "dashboard_api",
@@ -2235,7 +2320,7 @@ class WebCheck:
             )
             self.add_result("dashboard_api", "FAIL", str(exc))
         else:
-            self.add_result("dashboard_api", "PASS", "summary, analytics, quick links, and cash-equivalent gate safe")
+            self.add_result("dashboard_api", "PASS", "summary, analytics, integration, quick links, and cash-equivalent gate safe")
 
     def check_theme_status_api(self, client: Any, ratio: Any) -> None:
         try:

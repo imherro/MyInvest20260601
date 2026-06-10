@@ -31,6 +31,7 @@ from ..services.target_allocation_generation import TargetAllocationGenerationSe
 from ..services.theme_status import ThemeStatusService
 from ..services.user_preferences import UserPreferencesService
 from ..services.workbench_analytics import WorkbenchAnalyticsService
+from ..services.workbench_integration_service import WorkbenchIntegrationService
 
 
 router = APIRouter()
@@ -126,6 +127,14 @@ def dashboard_user_metrics(
     except LookupError as exc:
         raise HTTPException(status_code=404, detail="dashboard user metrics not found") from exc
     return respond(data, source={"path": "db.WorkbenchAnalyticsRepository"})
+
+
+@router.get("/workbench/integration")
+def workbench_integration(time_window: str = "current", session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        WorkbenchIntegrationService(session).overview(time_window=time_window),
+        source={"path": "db.WorkbenchIntegrationService"},
+    )
 
 
 @router.get("/modules/current")

@@ -9,6 +9,7 @@ def test_required_api_endpoints(client):
         "/api/user/preferences/default",
         "/api/dashboard/summary",
         "/api/dashboard/user_metrics/default",
+        "/api/workbench/integration",
         "/api/dashboard/current",
         "/api/current",
         "/api/latest-index",
