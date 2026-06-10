@@ -154,6 +154,19 @@ The script prints a suggested commit message and the files that belong in the co
 
 The same gate runs in GitHub Actions via `.github/workflows/web_check.yml` on push and pull request.
 
+## Source Review Package Builder
+
+The source review package builder is a local release and audit helper:
+
+```bash
+python scripts/build_review_package.py --fail-on-privacy
+python scripts/check_review_package_integrity.py temp/review_packages/<package>.zip
+```
+
+The default package is current-only and writes only under ignored `temp/review_packages/`. It includes project logic, scripts, templates, docs, registries, and safe current pointers. It excludes raw portfolio snapshots, raw stock or ETF profile files, and valuation reports because those evidence files can carry private account context or price fields.
+
+The privacy scan still blocks real local paths such as user-home paths and Windows user paths. Scanner implementation files may contain the regex text that defines those checks without self-failing the package build.
+
 ## Phase 9F Repository Read-Only Baseline
 
 Phase 9F establishes the Web repository read-only baseline. All current SQLite repository reads must go through `DatabaseService`; direct `session.execute(...)`, direct `read_text(...)`, and `latest_index.files` current resolution are blocked for repositories. `HistorySnapshotRepository` is the only documented exception because it owns the Phase 9E temp-only runtime DB write to `temp/web_runtime/history_snapshot.sqlite`.
