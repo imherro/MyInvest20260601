@@ -13,7 +13,11 @@ Pipeline:
 3. Run existing project checks.
 4. Load current action plan, target allocation, intraday rules, portfolio snapshot, market score, market-position mapping, bucket registry, liquidity gate registry, 511360 profile, 511360 valuation, and decision log headings.
 5. Sanitize all persisted fields.
-6. Rebuild `temp/web_db/myinvest_web.sqlite`.
+6. Rebuild `temp/web_db/myinvest.sqlite`.
 7. Verify every database row with `RatioOnlyService`.
 
 The pipeline never reads `latest_index.files` as current state.
+
+The Web review-package export also resolves source files through `current_modules` and does not use `latest_index.files` as current state.
+
+Phase 5C-3 controlled target-allocation shadow export reads the ingested current SQLite state and current module source paths. API export is in memory. CLI export writes only to `temp/web_exports/`. It does not write `research/allocation`, does not update `latest_index`, and does not update `current_modules`.

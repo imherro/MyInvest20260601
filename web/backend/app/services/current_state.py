@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from sqlalchemy.orm import Session
@@ -46,6 +47,28 @@ class CurrentStateService:
             ORDER BY id DESC
             LIMIT 1
             """
+        )
+
+    def market_position_mapping(self) -> list[dict[str, Any]]:
+        return self.repo.all(
+            """
+            SELECT score_min, score_max, equity_min_pct, equity_max_pct, cash_min_pct,
+                   cash_max_pct, label, is_active
+            FROM market_position_mappings
+            ORDER BY id
+            """
+        )
+
+    def current_artifact(self, module: str) -> dict[str, Any] | None:
+        return self.repo.one(
+            """
+            SELECT a.module, a.subject_code, a.artifact_type, a.path, a.generated_at,
+                   a.basis_trade_date, a.sha256, a.raw_json
+            FROM current_modules cm
+            JOIN artifacts a ON a.id = cm.artifact_id
+            WHERE cm.module = :module
+            """,
+            {"module": module},
         )
 
     def target_allocation(self) -> dict[str, Any] | None:
@@ -97,7 +120,7 @@ class CurrentStateService:
     def intraday_rules(self) -> dict[str, Any] | None:
         rules = self.repo.one(
             """
-            SELECT id, generated_at, basis_trade_date, status, stale_flag, degraded_flag, risk_mode
+            SELECT id, generated_at, basis_trade_date, status, stale_flag, degraded_flag, risk_mode, raw_json
             FROM intraday_rules
             ORDER BY id DESC
             LIMIT 1
@@ -114,7 +137,19 @@ class CurrentStateService:
             """,
             {"id": rules["id"]},
         )
+        raw = self._load_json(rules.pop("raw_json", None))
+        rules["disabled_triggers"] = raw.get("disabled_triggers", [])
         return rules
+
+    @staticmethod
+    def _load_json(value: str | None) -> dict[str, Any]:
+        if not value:
+            return {}
+        try:
+            data = json.loads(value)
+        except json.JSONDecodeError:
+            return {}
+        return data if isinstance(data, dict) else {}
 
     def action_plan(self) -> dict[str, Any] | None:
         plan = self.repo.one(

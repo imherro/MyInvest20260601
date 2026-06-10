@@ -1,49 +1,54 @@
 {% extends "base.html" %}
+{% block title %}Action Plan{% endblock %}
 {% block content %}
-  <h1>Action Plan</h1>
   {% if action_plan %}
     <div class="metric-grid">
-      <div class="metric"><span class="subtle">Status</span><strong>{{ action_plan.status or "n/a" }}</strong></div>
-      <div class="metric"><span class="subtle">Market</span><strong>{{ action_plan.market_state or "n/a" }}</strong></div>
-      <div class="metric"><span class="subtle">Generated</span><strong>{{ action_plan.generated_at or "n/a" }}</strong></div>
-      <div class="metric"><span class="subtle">Basis</span><strong>{{ action_plan.basis_trade_date or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Status</span><strong data-bind="plan_status">{{ action_plan.status or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Market</span><strong data-bind="plan_market">{{ action_plan.market_state or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Generated</span><strong data-bind="plan_generated">{{ action_plan.generated_at or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Basis</span><strong data-bind="plan_basis">{{ action_plan.basis_trade_date or "n/a" }}</strong></div>
     </div>
   {% endif %}
 
-  <h2>Items</h2>
+  <div class="table-tools">
+    <h2>Items</h2>
+    <input type="search" placeholder="Search action plan" data-table-search="actionTable">
+  </div>
   {% if action_plan and action_plan.actions %}
-    <table>
+    <table id="actionTable">
       <thead>
         <tr>
-          <th>Seq</th>
-          <th>Action</th>
+          <th data-sort="number">Seq</th>
+          <th data-sort="text">Action</th>
+          <th data-sort="text">Bucket</th>
           <th>Subject</th>
-          <th>Current</th>
-          <th>Change</th>
-          <th>Target</th>
+          <th class="num" data-sort="number">Current</th>
+          <th class="num" data-sort="number">Target Range</th>
+          <th class="num" data-sort="number">Suggested Change</th>
+          <th>Manual Confirmation</th>
           <th>Evidence</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="actionRows">
         {% for item in action_plan.actions %}
           <tr>
             <td>{{ item.sequence }}</td>
             <td>{{ item.action_type or "" }}</td>
+            <td>{{ item.bucket or "" }}</td>
             <td>{{ item.name or item.code or "" }}</td>
-            <td>{{ "%.2f"|format(item.current_position_pct) if item.current_position_pct is not none else "" }}%</td>
-            <td>
-              {% if item.suggested_change_min_pp is not none %}
-                {{ "%.2f"|format(item.suggested_change_min_pp) }}{% if item.suggested_change_max_pp != item.suggested_change_min_pp %} to {{ "%.2f"|format(item.suggested_change_max_pp) }}{% endif %} pp
-              {% endif %}
-            </td>
-            <td>
+            <td class="num">{{ "%.2f"|format(item.current_position_pct) if item.current_position_pct is not none else "" }}%</td>
+            <td class="num">
               {% if item.target_range_min_pct is not none %}
                 {{ "%.2f"|format(item.target_range_min_pct) }}%-{{ "%.2f"|format(item.target_range_max_pct) }}%
               {% endif %}
             </td>
-            <td>
-              {{ item.reason or "" }}
+            <td class="num">
+              {% if item.suggested_change_min_pp is not none %}
+                {{ "%.2f"|format(item.suggested_change_min_pp) }}{% if item.suggested_change_max_pp != item.suggested_change_min_pp %}-{{ "%.2f"|format(item.suggested_change_max_pp) }}{% endif %}pp
+              {% endif %}
             </td>
+            <td>{{ "yes" if item.requires_manual_confirmation else "no" }}</td>
+            <td>{{ item.reason or "" }}</td>
           </tr>
         {% endfor %}
       </tbody>

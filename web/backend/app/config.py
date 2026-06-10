@@ -8,12 +8,13 @@ WEB_ROOT = ROOT / "web"
 BACKEND_ROOT = WEB_ROOT / "backend"
 APP_ROOT = BACKEND_ROOT / "app"
 TEMPLATE_DIR = APP_ROOT / "templates"
+STATIC_DIR = APP_ROOT / "static"
 
 LATEST_INDEX_PATH = ROOT / "research" / "latest_index.json"
 DECISION_LOG_PATH = ROOT / "research" / "logs" / "decision_log.md"
 WEB_DB_DIR = ROOT / "temp" / "web_db"
 WEB_RUNTIME_DIR = ROOT / "temp" / "web_runtime"
-DB_PATH = WEB_DB_DIR / "myinvest_web.sqlite"
+DB_PATH = WEB_DB_DIR / "myinvest.sqlite"
 
 EXECUTABLE_ACTIONS = {"buy", "add", "reduce", "sell"}
 CURRENT_CONFIG_MODULES = {

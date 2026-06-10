@@ -7,10 +7,16 @@ This Web MVP is read-only. It reads current research state from `research/latest
 ## Initialize Database
 
 ```bash
-python scripts/ingest_current_state_to_web_db.py
+python scripts/ingest_current_state.py
 ```
 
-The database is written to `temp/web_db/myinvest_web.sqlite`. This path is ignored by Git.
+The database is written to `temp/web_db/myinvest.sqlite`. This path is ignored by Git. The ingest reads only `research/latest_index.json` `modules` pointers; it does not treat `latest_index.files` as current.
+
+The lower-level implementation remains available at:
+
+```bash
+python scripts/ingest_current_state_to_web_db.py
+```
 
 ## Start Backend
 
@@ -20,11 +26,274 @@ python -m uvicorn web.backend.app.main:app --host 127.0.0.1 --port 8000
 
 Open `http://127.0.0.1:8000/`.
 
+The Web UI is FastAPI + Jinja2 with a small static refresh script. There is no React build step in this phase.
+
 ## Run Tests
 
 ```bash
 pytest web/backend/tests
 ```
+
+## Phase 3 Milestone Check
+
+Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.
+
+Run the one-command gate before committing Web milestone changes:
+
+```bash
+python scripts/web_check.py
+```
+
+The check runs:
+
+- `python scripts/ingest_current_state.py`
+- `python -m pytest web/backend/tests`
+- `python scripts/check_ratio_only.py --path <latest_index.modules.action_plan.path>`
+- `python scripts/check_research_first_gate.py --path <latest_index.modules.action_plan.path>`
+- `python scripts/check_cross_file_allocation_consistency.py`
+- `python scripts/project_check.py --current-only`
+- API and export forbidden-field scans
+- export ZIP/JSON current-only and ratio-only scans
+- page interaction hook checks for refresh, search, sort, pagination, expandable rows, Dashboard status cards, and the frontend ratio-only sanitizer
+- Git scope checks for forbidden runtime or sensitive files
+
+Output statuses:
+
+- `PASS`: safe to prepare a commit.
+- `WARN`: command passed, but a non-blocking warning needs review.
+- `FAIL`: blocks commit; fix the listed file/reason and rerun the check.
+
+The script prints a suggested commit message and the files that belong in the commit. Do not commit `temp/`, SQLite/DB files, `runtime/`, caches, `node_modules/`, build/dist outputs, `.env`, ZIP, or log artifacts.
+
+The same gate runs in GitHub Actions via `.github/workflows/web_check.yml` on push and pull request.
+
+## Phase 5A Schema And Golden Baseline
+
+Phase 5A freezes the database schema contract and adds a golden current-state baseline for later service migration. It does not migrate target-allocation generation, action-plan generation, trading logic, order creation, execution handling, or QMT write interfaces.
+
+Core documents:
+
+- `web/docs/DATABASE_SCHEMA.md`
+- `web/docs/CURRENT_STATE_CONTRACT.md`
+- `web/docs/GOLDEN_REFERENCE.md`
+- `web/docs/SERVICE_LAYER_PLAN.md`
+
+Run all Phase 5A checks through the one-command gate:
+
+```bash
+python scripts/web_check.py
+```
+
+Run the golden reference test directly:
+
+```bash
+python -m pytest web/backend/tests/test_golden_current_state.py
+```
+
+Run schema and current-state contract tests directly:
+
+```bash
+python -m pytest web/backend/tests/test_database_schema_contract.py web/backend/tests/test_current_state_contract.py
+```
+
+Confirm DB and current JSON alignment by running:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_golden_current_state.py
+```
+
+The golden test dynamically resolves `latest_index.modules` and compares current JSON with SQLite fields. It does not read `latest_index.files` and does not hard-code action-plan timestamps.
+
+## Phase 5C-1 Market Position Baseline
+
+Phase 5C-1 adds `MarketPositionService` as a read-only baseline for `market_position_mapping` reads. It maps a market score to equity/cash percentage ranges from SQLite and keeps `scripts/project_utils.py::market_position_for_score` as the reference implementation.
+
+This phase does not generate target allocation, action plans, orders, fills, share counts, or cash-value instructions. `TargetAllocationGenerationService` remains the next step and should start in shadow mode only.
+
+Direct checks:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_market_position_service.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+Read-only API:
+
+- `GET /api/market-position/mapping`
+- `GET /api/market-position/current`
+- `GET /api/market-position/score/{score}`
+
+The endpoints return only scores, labels, percentage ranges, and `source = "db.market_position_mappings"`. They do not read `latest_index.files`.
+
+## Phase 5C-2 Target Allocation Shadow Mode
+
+Phase 5C-2 adds `TargetAllocationGenerationService` in shadow mode. The service computes an in-memory target allocation from current SQLite state, `MarketPositionService`, portfolio ratios, and bucket policy, then compares core fields with the current target allocation JSON.
+
+It does not:
+
+- write `research/allocation`
+- update `research/latest_index.json`
+- update `current_modules` or `artifacts`
+- replace `generate_target_allocation.py`
+- generate action plans
+- generate orders, fills, share counts, or cash-value instructions
+
+Direct checks:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_target_allocation_generation_shadow.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+Read-only API:
+
+- `GET /api/target-allocation/shadow`
+- `GET /api/target-allocation/shadow/compare`
+
+The compare endpoint returns `matched`, `diffs`, `compared_fields`, `unsupported_fields`, `source_shadow`, and `source_reference`. Core-field diffs block the milestone. Unsupported fields are allowed only when explicit and not used to hide core mismatches.
+
+## Phase 5C-3 Controlled Export
+
+Phase 5C-3 adds controlled export for shadow target allocation. API exports are in memory. CLI exports write only to `temp/web_exports/`, which is ignored by Git.
+
+It does not:
+
+- write `research/allocation`
+- update `research/latest_index.json`
+- update `current_modules` or `artifacts`
+- generate action plans
+- replace current target allocation
+- create trading or execution runtime files
+
+Direct checks:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_target_allocation_controlled_export.py
+```
+
+CLI:
+
+```bash
+python scripts/export_target_allocation_shadow.py --dry-run
+python scripts/export_target_allocation_shadow.py --format json
+python scripts/export_target_allocation_shadow.py --format zip
+```
+
+Read-only API:
+
+- `GET /api/target-allocation/shadow/export`
+- `GET /api/target-allocation/shadow/export?format=json`
+- `GET /api/target-allocation/shadow/export?format=zip`
+
+The ZIP contains only `manifest.json`, `shadow_target_allocation.json`, `compare_result.json`, `provenance.json`, and `system_checks.json`. If shadow compare has core diffs, controlled export fails instead of producing an audit artifact.
+
+## Phase 5D Shadow Replay Fixtures
+
+Phase 5D adds multi-scenario replay fixtures for `TargetAllocationGenerationService`. The fixtures live under:
+
+```text
+web/backend/tests/fixtures/target_allocation_scenarios/
+```
+
+They are not current state. Production Web APIs still read SQLite current state generated from `research/latest_index.json` `modules`.
+
+The replay covers:
+
+- risk-off current-like state
+- score boundary 30
+- score boundary 31
+- neutral mid-score state
+- risk-on high score
+- max score 100
+- legacy-watch overweight
+- attack-mainline overweight
+- cash-short underweight
+- missing bucket actual
+
+Direct checks:
+
+```bash
+python -m pytest web/backend/tests/test_target_allocation_shadow_replay.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+Replay fixtures must remain ratio-only and must not include local absolute paths, runtime paths, `.env`, SQLite files, ZIP/log artifacts, monetary amounts, share counts, account identifiers, order records, fill records, or QMT write behavior.
+
+Phase 5D still does not:
+
+- replace `scripts/generate_target_allocation.py`
+- replace `scripts/generate_action_plan.py`
+- write `research/allocation`
+- write `research/actions`
+- update `research/latest_index.json`
+- update `current_modules` or `artifacts`
+- generate action plans
+- create trading or execution runtime files
+
+## API and Page Smoke Check
+
+```bash
+python scripts/ingest_current_state.py
+python -m uvicorn web.backend.app.main:app --host 127.0.0.1 --port 8000
+```
+
+Then open:
+
+- `http://127.0.0.1:8000/`
+- `http://127.0.0.1:8000/docs`
+- `http://127.0.0.1:8000/api/current`
+- `http://127.0.0.1:8000/api/market-position/current`
+- `http://127.0.0.1:8000/api/target-allocation/shadow/compare`
+- `http://127.0.0.1:8000/api/target-allocation/shadow/export?format=json`
+- `http://127.0.0.1:8000/api/modules/current`
+- `http://127.0.0.1:8000/api/export/review_package?format=json`
+
+## Page Interactions
+
+- `Refresh` reloads the current page data from the matching `/api/.../current` endpoint.
+- Pages also refresh automatically every 60 seconds.
+- Table headers with sort markers can be clicked to sort.
+- Search boxes filter the current table; `Clear` resets the filter.
+- Tables page rows client-side; use `Prev` and `Next` below the table.
+- Click a table row to expand or collapse ratio-only detail text.
+- Dashboard shows bucket allocation gaps as a centered bar chart and highlights ResearchFirst and intraday status.
+
+Every frontend refresh performs a lightweight forbidden-field scan before rendering. Server responses are also checked by `RatioOnlyService`.
+
+## Export Current Review Package
+
+JSON snapshot:
+
+```bash
+curl "http://127.0.0.1:8000/api/export/review_package?format=json"
+```
+
+ZIP package:
+
+```bash
+curl -o myinvest_current_review_package.zip "http://127.0.0.1:8000/api/export/review_package"
+```
+
+The export is current-only and includes the current action plan, target allocation, intraday rules, portfolio ratio snapshot, market-position mapping, bucket registry, liquidity gate registry, decision log entries, and system checks. The export is generated in memory and does not write ZIP files into the repository.
 
 ## Validation
 
@@ -36,3 +305,5 @@ The ingest command runs:
 - `python scripts/project_check.py --current-only`
 
 Any failure blocks ingest.
+
+The System Checks page also displays the sanitizer summary and table counts from the SQLite read model.

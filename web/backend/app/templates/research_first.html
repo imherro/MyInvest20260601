@@ -1,25 +1,40 @@
 {% extends "base.html" %}
+{% block title %}ResearchFirst Gate{% endblock %}
 {% block content %}
-  <h1>ResearchFirst Gate</h1>
-  {% if items %}
-    <div class="stack">
+  <div class="metric-grid">
+    <div class="metric" data-status-card="research-first-page"><span class="subtle">Gate Status</span><strong data-bind="research_first_gate">n/a</strong></div>
+    <div class="metric"><span class="subtle">Active Blockers</span><strong data-bind="research_first_count">{{ items|length }}</strong></div>
+  </div>
+  <div class="table-tools">
+    <h2>Blocking Items</h2>
+    <input type="search" placeholder="Search ResearchFirst" data-table-search="researchFirstTable">
+  </div>
+  <table id="researchFirstTable">
+    <thead>
+      <tr>
+        <th data-sort="text">Code</th>
+        <th data-sort="text">Name</th>
+        <th>Missing Profile</th>
+        <th>Missing Valuation</th>
+        <th>Missing Liquidity</th>
+        <th>Missing Theme Binding</th>
+        <th>Allowed Conclusion</th>
+        <th>Blocking Reason</th>
+      </tr>
+    </thead>
+    <tbody id="researchFirstRows">
       {% for item in items %}
-        <article class="row-card">
-          <strong>{{ item.name or item.code or "Subject" }}</strong>
-          <div class="subtle">{{ item.allowed_conclusion or "research_first" }}</div>
-          <p>{{ item.blocking_reason or "" }}</p>
-          {% if item.missing_profile or item.missing_valuation or item.missing_liquidity or item.missing_theme_binding %}
-            <ul class="list">
-              {% if item.missing_profile %}<li>missing profile</li>{% endif %}
-              {% if item.missing_valuation %}<li>missing valuation</li>{% endif %}
-              {% if item.missing_liquidity %}<li>missing liquidity</li>{% endif %}
-              {% if item.missing_theme_binding %}<li>missing theme binding</li>{% endif %}
-            </ul>
-          {% endif %}
-        </article>
+        <tr>
+          <td>{{ item.code or "" }}</td>
+          <td>{{ item.name or "" }}</td>
+          <td>{{ "yes" if item.missing_profile else "no" }}</td>
+          <td>{{ "yes" if item.missing_valuation else "no" }}</td>
+          <td>{{ "yes" if item.missing_liquidity else "no" }}</td>
+          <td>{{ "yes" if item.missing_theme_binding else "no" }}</td>
+          <td>{{ item.allowed_conclusion or "research_first" }}</td>
+          <td>{{ item.blocking_reason or "" }}</td>
+        </tr>
       {% endfor %}
-    </div>
-  {% else %}
-    <div class="empty">No active ResearchFirst blockers.</div>
-  {% endif %}
+    </tbody>
+  </table>
 {% endblock %}

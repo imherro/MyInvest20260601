@@ -1,16 +1,18 @@
 {% extends "base.html" %}
+{% block title %}Decision Log{% endblock %}
 {% block content %}
-  <h1>Decision Log</h1>
-  {% if entries %}
-    <div class="stack">
+  <div class="table-tools">
+    <h2>Recent Entries</h2>
+    <input type="search" placeholder="Search decision log" data-table-search="decisionTable">
+  </div>
+  <table id="decisionTable">
+    <thead>
+      <tr><th data-sort="text">Time</th><th>Summary</th></tr>
+    </thead>
+    <tbody id="decisionRows">
       {% for item in entries %}
-        <article class="row-card">
-          <strong>{{ item.entry_time or "" }}</strong>
-          <div>{{ item.summary }}</div>
-        </article>
+        <tr><td>{{ item.entry_time or "" }}</td><td>{{ item.summary }}</td></tr>
       {% endfor %}
-    </div>
-  {% else %}
-    <div class="empty">No decision log entries loaded.</div>
-  {% endif %}
+    </tbody>
+  </table>
 {% endblock %}

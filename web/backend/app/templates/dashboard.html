@@ -1,37 +1,57 @@
 {% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
 {% block content %}
-  <h1>Dashboard</h1>
   <div class="metric-grid">
     <div class="metric">
-      <span class="subtle">Action Status</span>
-      <strong>{{ plan.status if plan else "n/a" }}</strong>
+      <span class="subtle">Action Plan Generated</span>
+      <strong data-bind="action_generated_at">{{ plan.generated_at if plan else "n/a" }}</strong>
     </div>
     <div class="metric">
-      <span class="subtle">Equity Ratio</span>
-      <strong>{{ "%.2f"|format(portfolio.equity_pct) if portfolio else "n/a" }}%</strong>
+      <span class="subtle">Market State</span>
+      <strong data-bind="market_state">{{ market.state if market else "n/a" }}</strong>
     </div>
     <div class="metric">
-      <span class="subtle">Cash/Short Ratio</span>
-      <strong>{{ "%.2f"|format(portfolio.cash_short_pct) if portfolio else "n/a" }}%</strong>
+      <span class="subtle">Market Position</span>
+      <strong><span data-bind="market_position_score">{{ "%.0f"|format(market_position.score) if market_position else "n/a" }}</span> / <span data-bind="market_position_label">{{ market_position.label if market_position else "n/a" }}</span></strong>
+      <span class="subtle" data-bind="market_position_source">{{ market_position.source if market_position else "n/a" }}</span>
     </div>
     <div class="metric">
-      <span class="subtle">System</span>
-      <strong>{{ checks.status }}</strong>
+      <span class="subtle">Equity Current / Target</span>
+      <strong><span data-bind="equity_current">{{ "%.2f"|format(portfolio.equity_pct) if portfolio else "n/a" }}%</span> / <span data-bind="equity_target">{{ "%.2f"|format(target.equity_min_pct) if target else "n/a" }}-{{ "%.2f"|format(target.equity_max_pct) if target else "n/a" }}%</span></strong>
+    </div>
+    <div class="metric">
+      <span class="subtle">Cash/Short Current / Target</span>
+      <strong><span data-bind="cash_current">{{ "%.2f"|format(portfolio.cash_short_pct) if portfolio else "n/a" }}%</span> / <span data-bind="cash_target">{{ "%.2f"|format(target.cash_min_pct) if target else "n/a" }}-{{ "%.2f"|format(target.cash_max_pct) if target else "n/a" }}%</span></strong>
+    </div>
+    <div class="metric" data-status-card="research-first">
+      <span class="subtle">ResearchFirst Gate</span>
+      <strong data-bind="research_first_status">{{ checks.research_first_gate.status }}</strong>
+    </div>
+    <div class="metric" data-status-card="intraday">
+      <span class="subtle">Intraday Rules</span>
+      <strong data-bind="intraday_status">{{ "n/a" }}</strong>
+    </div>
+    <div class="metric" data-status-card="project-check">
+      <span class="subtle">project_check</span>
+      <strong data-bind="project_check_status">{{ "n/a" }}</strong>
     </div>
   </div>
+
+  <h2>Bucket Gap</h2>
+  <div class="gap-chart" id="bucketGapChart" aria-label="Bucket allocation gap chart"></div>
 
   <h2>Current Modules</h2>
   <table>
     <thead>
       <tr>
-        <th>Module</th>
-        <th>Generated</th>
-        <th>Basis</th>
-        <th>Quality</th>
-        <th>Staleness</th>
+          <th data-sort="text">Module</th>
+          <th data-sort="text">Generated</th>
+          <th data-sort="text">Basis</th>
+          <th>Quality</th>
+          <th>Staleness</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="moduleRows">
       {% for item in modules %}
         <tr>
           <td>{{ item.module }}</td>
