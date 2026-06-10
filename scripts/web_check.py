@@ -18,7 +18,7 @@ LATEST_INDEX = ROOT / "research" / "latest_index.json"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "test(web): add target allocation shadow replay fixtures"
+COMMIT_MESSAGE = "docs(web): add target allocation promotion plan"
 
 API_PATHS = [
     "/api/health",
@@ -112,6 +112,12 @@ PHASE5D_FILES = [
 ]
 
 PHASE5D_FIXTURE_DIR = ROOT / "web" / "backend" / "tests" / "fixtures" / "target_allocation_scenarios"
+
+PHASE5E_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "target_allocation_mode.py",
+    ROOT / "web" / "backend" / "tests" / "test_target_allocation_promotion_mode.py",
+    ROOT / "web" / "docs" / "TARGET_ALLOCATION_PROMOTION_PLAN.md",
+]
 
 REQUIRED_EXPORT_MODULES = {
     "action_plan",
@@ -281,6 +287,7 @@ class WebCheck:
         self.check_phase5c2_contract_files()
         self.check_phase5c3_contract_files()
         self.check_phase5d_contract_files()
+        self.check_phase5e_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -375,6 +382,35 @@ class WebCheck:
             )
             return
         self.add_result("phase5d_replay_files", "PASS", f"{len(fixture_paths)} replay fixtures safe")
+
+    def check_phase5e_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE5E_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase5e_promotion_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase5e_promotion_files",
+                ", ".join(missing),
+                "Phase 5E promotion plan, mode helper, or tests are missing.",
+                "Add TARGET_ALLOCATION_PROMOTION_PLAN.md, target_allocation_mode.py, and its tests.",
+            )
+            return
+        try:
+            for path in PHASE5E_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md" and "official" not in text:
+                    raise ValueError("promotion plan does not describe official-mode blocking")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase5e_promotion_safety", "FAIL", str(exc))
+            self.fail(
+                "phase5e_promotion_safety",
+                rel(path),
+                f"Phase 5E file failed safety scan: {exc}",
+                "Remove runtime terms or add explicit candidate/official blocking rules.",
+            )
+            return
+        self.add_result("phase5e_promotion_files", "PASS", "promotion plan and blocked mode tests present")
 
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])

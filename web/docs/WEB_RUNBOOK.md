@@ -249,6 +249,44 @@ Phase 5D still does not:
 - generate action plans
 - create trading or execution runtime files
 
+## Phase 5E Promotion Plan
+
+Phase 5E adds the controlled promotion plan for `TargetAllocationGenerationService`. It is not a replacement phase.
+
+Direct checks:
+
+```bash
+python -m pytest web/backend/tests/test_target_allocation_promotion_mode.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+Mode helper:
+
+```text
+MYINVEST_TARGET_ALLOCATION_MODE
+```
+
+Phase 5E allows only:
+
+- `reference`
+- `shadow`
+- `controlled_export`
+
+Phase 5E blocks:
+
+- `candidate`
+- `official`
+- unknown values
+
+The default mode is `shadow`. The helper only reports allowed or blocked status. It does not change current API behavior, write `research/`, update `latest_index`, update `current_modules`, generate action plans, generate target-allocation artifacts, or connect to trading interfaces.
+
+Promotion design is documented in `web/docs/TARGET_ALLOCATION_PROMOTION_PLAN.md`. Any future candidate or official promotion must be reviewed as a separate phase.
+
 ## API and Page Smoke Check
 
 ```bash
