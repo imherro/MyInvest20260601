@@ -3,6 +3,7 @@ from __future__ import annotations
 import io
 import json
 import sqlite3
+import shutil
 import subprocess
 import sys
 import time
@@ -18,6 +19,8 @@ from web.backend.app.services.history_snapshot import (
     BLOCKED_VALUE_TERMS,
     HistorySnapshotService,
 )
+from web.backend.app.repositories import history_snapshot_repo as history_snapshot_repo_module
+from web.backend.app.repositories.history_snapshot_repo import HistorySnapshotRepository
 from web.backend.app.services.ratio_only import RatioOnlyService
 from web.backend.app.services.target_allocation_candidate_audit import TargetAllocationCandidateAuditService
 from web.backend.app.services.target_allocation_export import EXPORT_DIR, TargetAllocationControlledExportService
@@ -304,3 +307,44 @@ def test_history_snapshot_current_only_code_paths():
         assert "['files']" not in text
         assert "target_allocation_2026-" not in text
         assert "action_plan_2026-" not in text
+
+
+def test_history_snapshot_service_delegates_io_to_repository():
+    service_source = (ROOT / "web" / "backend" / "app" / "services" / "history_snapshot.py").read_text(encoding="utf-8")
+    repo_source = (ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py").read_text(
+        encoding="utf-8"
+    )
+
+    assert "HistorySnapshotRepository" in service_source
+    assert ".read_text(" not in service_source
+    assert "sqlite3" not in service_source
+    assert ".execute(" not in service_source
+    assert "latest_index.files" not in repo_source
+    assert ".read_text(" not in repo_source
+    assert "HistorySnapshotRepository" in repo_source
+
+
+def test_history_snapshot_repository_scans_temp_json_safely(monkeypatch):
+    controlled_dir = ROOT / "temp" / "phase9b3_history_controlled"
+    candidate_dir = ROOT / "temp" / "phase9b3_history_candidate"
+    for directory in [controlled_dir, candidate_dir]:
+        shutil.rmtree(directory, ignore_errors=True)
+        directory.mkdir(parents=True, exist_ok=True)
+    source = controlled_dir / "probe.json"
+    ignored = controlled_dir / "ignored.txt"
+    try:
+        source.write_text(json.dumps({"module": "controlled_export", "current_only": True}), encoding="utf-8")
+        ignored.write_text("ignored", encoding="utf-8")
+        monkeypatch.setattr(history_snapshot_repo_module, "CONTROLLED_EXPORT_DIR", controlled_dir)
+        monkeypatch.setattr(history_snapshot_repo_module, "CANDIDATE_EXPORT_DIR", candidate_dir)
+
+        repo = HistorySnapshotRepository("sentinel")
+        paths = repo.source_paths()
+        payload = repo.read_export_payload(source)
+
+        assert paths == [source]
+        assert payload["current_only"] is True
+        assert payload["module"] == "controlled_export"
+    finally:
+        shutil.rmtree(controlled_dir, ignore_errors=True)
+        shutil.rmtree(candidate_dir, ignore_errors=True)

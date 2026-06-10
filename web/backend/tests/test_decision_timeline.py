@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import json
 import re
+from pathlib import Path
 from typing import Any
+
+from web.backend.app.repositories import decision_timeline_repo as decision_timeline_repo_module
 
 
 FORBIDDEN_KEY_RE = re.compile(
@@ -13,6 +16,7 @@ FORBIDDEN_KEY_RE = re.compile(
 )
 LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:(?!//)[\\/]|\\\\|/Users/|/home/)")
 TIMESTAMP_RE = re.compile(r"20\d{2}[-_]?\d{2}[-_]?\d{2}[_-]\d{6}")
+ROOT = Path(__file__).resolve().parents[3]
 
 
 def walk(value: Any, path: str = "$") -> None:
@@ -113,10 +117,50 @@ def test_decision_timeline_openapi_is_read_only(client):
 
 
 def test_decision_timeline_current_only_and_no_hardcoded_timestamps():
-    source = open("web/backend/app/services/decision_timeline.py", encoding="utf-8").read()
+    source = (ROOT / "web" / "backend" / "app" / "services" / "decision_timeline.py").read_text(encoding="utf-8")
     assert "latest_index.files" not in source
     assert "[\"files\"]" not in source
     assert "['files']" not in source
+    assert ".read_text(" not in source
+    assert ".execute(" not in source
+    assert "current.repo" not in source
+    assert "DecisionTimelineRepository" in source
     assert "generate_action_plan.py" not in source
     assert "generate_target_allocation.py" not in source
     assert not TIMESTAMP_RE.search(source)
+
+
+def test_decision_timeline_repository_delegates_to_database_service(monkeypatch):
+    calls: list[str] = []
+
+    class FakeDatabaseService:
+        def __init__(self, session):
+            calls.append(f"init:{session}")
+
+        def fetch_all(self, sql, params=None):
+            calls.append(sql)
+            calls.append(str(params or {}))
+            return [{"id": 1, "entry_time": "2026-06-09", "entry_type": "note", "summary": "safe"}]
+
+    monkeypatch.setattr(decision_timeline_repo_module, "DatabaseService", FakeDatabaseService)
+
+    repo = decision_timeline_repo_module.DecisionTimelineRepository("sentinel")
+    rows = repo.recent_decision_log_entries(limit=3)
+
+    assert rows[0]["summary"] == "safe"
+    assert calls[0] == "init:sentinel"
+    assert "FROM decision_log_entries" in calls[1]
+    assert "'limit': 3" in calls[2]
+    for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
+        assert blocked not in calls[1].upper()
+
+
+def test_decision_timeline_repository_db_access_boundaries():
+    source = (ROOT / "web" / "backend" / "app" / "repositories" / "decision_timeline_repo.py").read_text(
+        encoding="utf-8"
+    )
+    assert "DatabaseService" in source
+    assert ".fetch_all(" in source
+    assert ".execute(" not in source
+    assert ".read_text(" not in source
+    assert "latest_index.files" not in source

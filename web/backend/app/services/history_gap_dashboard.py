@@ -5,6 +5,7 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
+from ..repositories.bucket_history_repo import BucketHistoryRepository
 from .current_state import CurrentStateService
 from .history_snapshot import HistorySnapshotService
 from .ratio_only import RatioOnlyService
@@ -18,12 +19,13 @@ class HistoryGapDashboardService:
     def __init__(self, session: Session):
         self.session = session
         self.current = CurrentStateService(session)
+        self.repo = BucketHistoryRepository(session)
 
     def summary(self) -> dict[str, Any]:
         history = HistorySnapshotService(self.session).build_history_snapshot()
         controlled = TargetAllocationControlledExportService(self.session).build_export_payload()
         candidate = TargetAllocationCandidateAuditService(self.session).build_audit_payload()
-        target = self.current.target_allocation() or {}
+        target = self.repo.current_target_allocation() or {}
         snapshots = self._snapshots(target, controlled, candidate)
         buckets = self._bucket_rows(snapshots, history)
         payload = {
@@ -45,11 +47,7 @@ class HistoryGapDashboardService:
                 "trading_feature": False,
                 "execution_feature": False,
             },
-            "source_modules": {
-                "target_allocation": self.current.source_for_module("target_allocation"),
-                "portfolio_snapshot": self.current.source_for_module("portfolio_snapshot"),
-                "market_score": self.current.source_for_module("market_score"),
-            },
+            "source_modules": self.repo.source_modules(["target_allocation", "portfolio_snapshot", "market_score"]),
         }
         sanitized = RatioOnlyService.sanitize(payload)
         RatioOnlyService.assert_safe(sanitized)

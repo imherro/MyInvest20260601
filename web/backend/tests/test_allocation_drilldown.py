@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any
 from urllib.parse import quote
+
+from web.backend.app.repositories import allocation_repo as allocation_repo_module
 
 
 FORBIDDEN_KEY_RE = re.compile(
@@ -13,6 +16,7 @@ FORBIDDEN_KEY_RE = re.compile(
 )
 LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:(?!//)[\\/]|\\\\|/Users/|/home/)")
 ACTION_STATUSES = {"buy", "add", "reduce", "sell"}
+ROOT = Path(__file__).resolve().parents[3]
 
 
 def walk(value: Any, path: str = "$"):
@@ -139,7 +143,63 @@ def test_drilldown_pages_hooks_and_safety(client):
 
 
 def test_allocation_drilldown_does_not_use_latest_index_files():
-    source = open("web/backend/app/services/allocation_drilldown.py", encoding="utf-8").read()
+    source = (ROOT / "web" / "backend" / "app" / "services" / "allocation_drilldown.py").read_text(encoding="utf-8")
     assert "latest_index.files" not in source
     assert "[\"files\"]" not in source
     assert "['files']" not in source
+    assert ".read_text(" not in source
+    assert ".execute(" not in source
+    assert "AllocationRepository" in source
+
+
+def test_allocation_repository_delegates_to_database_service(monkeypatch):
+    calls: list[tuple[str, str, dict[str, Any] | None]] = []
+
+    class FakeDatabaseService:
+        def __init__(self, session):
+            calls.append(("init", str(session), None))
+
+        def fetch_one(self, sql, params=None):
+            calls.append(("one", sql, params))
+            if "FROM target_allocations" in sql:
+                return {"id": 1, "generated_at": "2026-06-09", "basis_trade_date": "20260608"}
+            if "FROM portfolio_snapshots" in sql:
+                return {"id": 2, "generated_at": "2026-06-09", "basis_trade_date": "20260608"}
+            return None
+
+        def fetch_all(self, sql, params=None):
+            calls.append(("all", sql, params))
+            if "FROM bucket_allocations" in sql:
+                return [{"bucket": "cash_short", "actual_pct": 10.0, "target_pct": 10.0, "gap_pct": 0.0}]
+            if "FROM portfolio_positions" in sql:
+                return [{"code": "511360.SH", "name": "cash", "bucket": "cash_short", "position_pct": 10.0}]
+            return []
+
+        def source_for_module(self, module):
+            calls.append(("source", module, None))
+            return {"module": module, "path": f"research/{module}.json"}
+
+    monkeypatch.setattr(allocation_repo_module, "DatabaseService", FakeDatabaseService)
+
+    repo = allocation_repo_module.AllocationRepository("sentinel")
+    target = repo.target_allocation()
+    portfolio = repo.portfolio_snapshot()
+    sources = repo.source_modules(["target_allocation", "portfolio_snapshot"])
+
+    assert target and target["buckets"][0]["bucket"] == "cash_short"
+    assert portfolio and portfolio["positions"][0]["code"] == "511360.SH"
+    assert sources["target_allocation"]["path"] == "research/target_allocation.json"
+    sql_text = "\n".join(call[1] for call in calls if call[0] in {"one", "all"})
+    assert "latest_index.files" not in sql_text
+    for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
+        assert blocked not in sql_text.upper()
+
+
+def test_allocation_repository_db_access_boundaries():
+    source = (ROOT / "web" / "backend" / "app" / "repositories" / "allocation_repo.py").read_text(encoding="utf-8")
+    assert "DatabaseService" in source
+    assert ".fetch_one(" in source
+    assert ".fetch_all(" in source
+    assert ".execute(" not in source
+    assert ".read_text(" not in source
+    assert "latest_index.files" not in source

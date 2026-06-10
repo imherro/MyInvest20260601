@@ -5,6 +5,7 @@ from urllib.parse import quote
 
 from sqlalchemy.orm import Session
 
+from ..repositories.allocation_repo import AllocationRepository
 from .current_state import CurrentStateService
 from .market_position import MarketPositionService
 from .ratio_only import RatioOnlyService
@@ -19,6 +20,7 @@ class AllocationDrilldownService:
     def __init__(self, session: Session):
         self.session = session
         self.current = CurrentStateService(session)
+        self.repo = AllocationRepository(session)
 
     def buckets(self, bucket: str | None = None, detail: str = "summary") -> dict[str, Any]:
         context = self._context()
@@ -73,8 +75,8 @@ class AllocationDrilldownService:
         return RatioOnlyService.sanitize(payload)
 
     def _context(self) -> dict[str, Any]:
-        target = self.current.target_allocation() or {}
-        portfolio = self.current.portfolio() or {}
+        target = self.repo.target_allocation() or {}
+        portfolio = self.repo.portfolio_snapshot() or {}
         subject_gap = SubjectGapService(self.session).gap()
         subject_status = SubjectStatusService(self.session).list_statuses()
         target_buckets = target.get("buckets") or []
@@ -105,11 +107,7 @@ class AllocationDrilldownService:
             "theme_map": theme_map,
             "generated_at": generated_at,
             "basis_trade_date": basis_trade_date,
-            "source_modules": {
-                "target_allocation": self.current.source_for_module("target_allocation"),
-                "portfolio_snapshot": self.current.source_for_module("portfolio_snapshot"),
-                "market_score": self.current.source_for_module("market_score"),
-            },
+            "source_modules": self.repo.source_modules(["target_allocation", "portfolio_snapshot", "market_score"]),
         }
 
     def _bucket_row(self, row: dict[str, Any], context: dict[str, Any], *, detail: str) -> dict[str, Any]:

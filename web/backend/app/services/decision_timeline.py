@@ -4,6 +4,7 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
+from ..repositories.decision_timeline_repo import DecisionTimelineRepository
 from .current_state import CurrentStateService
 from .history_snapshot import HistorySnapshotService
 from .ratio_only import RatioOnlyService
@@ -15,6 +16,7 @@ class DecisionTimelineService:
     def __init__(self, session: Session):
         self.session = session
         self.current = CurrentStateService(session)
+        self.repo = DecisionTimelineRepository(session)
 
     def timeline(self) -> dict[str, Any]:
         action_plan = self.current.action_plan() or {}
@@ -53,14 +55,7 @@ class DecisionTimelineService:
         raise LookupError(event_id)
 
     def _decision_log_events(self) -> list[dict[str, Any]]:
-        rows = self.current.repo.all(
-            """
-            SELECT id, entry_time, entry_type, summary, reason, ratio_only_text
-            FROM decision_log_entries
-            ORDER BY id DESC
-            LIMIT 40
-            """
-        )
+        rows = self.repo.recent_decision_log_entries(limit=40)
         events = []
         for row in rows:
             entry_id = row.get("id")
