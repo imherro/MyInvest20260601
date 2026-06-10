@@ -1,6 +1,6 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. Phase 9 adds a read-only `DatabaseService` facade for current SQLite access and current-module artifact payload fallback. Phase 9B-1 routes `SubjectStatusRepository` DB reads through `DatabaseService` without changing the Subject Status API contract. Phase 9B-2 routes `SubjectGapRepository` DB reads through `DatabaseService` and locks Bucket, Theme, and Dashboard services away from direct file or SQL access. Phase 9B-3 adds read-only DB coverage repositories for allocation drilldown, bucket history, and decision timeline, and quarantines existing history snapshot temp/runtime IO behind `HistorySnapshotRepository`. Phase 9D routes the legacy `CurrentStateRepository` helper through `DatabaseService` while preserving `CurrentStateService` contracts. Phase 9E keeps the existing history snapshot runtime DB write as a guarded temp-only exception at `temp/web_runtime/history_snapshot.sqlite`. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. Phase 9 adds a read-only `DatabaseService` facade for current SQLite access and current-module artifact payload fallback. Phase 9B-1 routes `SubjectStatusRepository` DB reads through `DatabaseService` without changing the Subject Status API contract. Phase 9B-2 routes `SubjectGapRepository` DB reads through `DatabaseService` and locks Bucket, Theme, and Dashboard services away from direct file or SQL access. Phase 9B-3 adds read-only DB coverage repositories for allocation drilldown, bucket history, and decision timeline, and quarantines existing history snapshot temp/runtime IO behind `HistorySnapshotRepository`. Phase 9D routes the legacy `CurrentStateRepository` helper through `DatabaseService` while preserving `CurrentStateService` contracts. Phase 9E keeps the existing history snapshot runtime DB write as a guarded temp-only exception at `temp/web_runtime/history_snapshot.sqlite`. Phase 9F establishes the repository read-only baseline across all Web repositories and routes `MarketPositionRepository` through `DatabaseService`. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
@@ -13,6 +13,7 @@ These services are available in the Web layer and must remain read-only:
 - `ResearchFirstGateService`: validates ResearchFirst gate status.
 - `AllocationConsistencyService`: compares target allocation and intraday bucket rows.
 - `MarketPositionService`: reads active `market_position_mappings` from SQLite and maps a score to equity/cash percentage ranges.
+- `MarketPositionRepository`: reads market-position mappings and the current market score through `DatabaseService`.
 - `TargetAllocationGenerationService`: computes an in-memory shadow target allocation and compares core fields with the current reference JSON.
 - `TargetAllocationControlledExportService`: packages the shadow target allocation and compare result for in-memory API download or CLI export under `temp/web_exports/`.
 - `TargetAllocationPromotionSimulationService`: simulates candidate and official promotion paths without updating current research state.
@@ -75,10 +76,11 @@ Future service names are planning boundaries only. They do not authorize trading
 21. Consolidate allocation drilldown, bucket history, decision timeline, and history snapshot IO coverage behind repositories. Completed in Phase 9B-3.
 22. Route the legacy `CurrentStateRepository` helper through `DatabaseService` while keeping `CurrentStateService` outputs stable. Completed in Phase 9D.
 23. Guard and document the existing history snapshot runtime DB write as a temp-only exception under `temp/web_runtime/history_snapshot.sqlite`. Completed in Phase 9E.
-24. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
-25. At each step, extend golden tests to compare old-script output with new-service output.
-26. If any golden test differs, do not replace the old script.
-27. Keep old scripts as reference implementations until migration is stable.
+24. Enforce the repository read-only baseline across all Web repositories, with `HistorySnapshotRepository` as the only documented runtime DB exception. Completed in Phase 9F.
+25. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
+26. At each step, extend golden tests to compare old-script output with new-service output.
+27. If any golden test differs, do not replace the old script.
+28. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -409,6 +411,19 @@ Phase 9E keeps the Phase 6 runtime history database write as an explicit excepti
 - the runtime DB write is available only through explicit history snapshot export flows
 
 Phase 9E is a policy and guard phase. It does not make history snapshots current, does not change target allocation or action plan generation, and does not authorize trading or QMT write behavior.
+
+## Phase 9F Repository Read-Only Baseline
+
+Phase 9F establishes the Web repository read-only baseline:
+
+- every repository under `web/backend/app/repositories/` except `HistorySnapshotRepository` must delegate current SQLite reads to `DatabaseService`
+- repositories must avoid `session.execute(...)`, `executemany(...)`, direct `read_text(...)`, and `latest_index.files` current resolution
+- `MarketPositionRepository` reads `market_position_mappings` and `market_scores` through `DatabaseService.fetch_all(...)` and `DatabaseService.fetch_one(...)`
+- `HistorySnapshotRepository` remains the only repository with runtime SQLite writes, limited by the Phase 9E guard to `temp/web_runtime/history_snapshot.sqlite`
+- repository payloads must remain ratio-only through existing service sanitizers and must not expose local absolute paths
+- `web_check.py` must fail if a repository regresses to direct current SQLite execution or unsafe file reads
+
+Phase 9F is a baseline and audit-hardening phase. It does not alter target allocation generation, action plan generation, research artifacts, trading, order workflows, or QMT write behavior.
 
 ## Hard Service Boundaries
 
