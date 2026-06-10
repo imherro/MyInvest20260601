@@ -52,6 +52,7 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/target-allocation/candidate-audit?format=json",
         "/api/history/export",
         "/api/history/export?format=json",
+        "/api/history/gap-summary",
         "/api/research-first/current",
         "/api/portfolio/current",
         "/api/intraday-rules/current",

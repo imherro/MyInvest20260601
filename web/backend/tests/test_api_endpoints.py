@@ -26,6 +26,7 @@ def test_required_api_endpoints(client):
         "/api/target-allocation/candidate-audit?format=json",
         "/api/history/export",
         "/api/history/export?format=json",
+        "/api/history/gap-summary",
         "/api/portfolio/current",
         "/api/intraday-rules/current",
         "/api/research-first/current",
