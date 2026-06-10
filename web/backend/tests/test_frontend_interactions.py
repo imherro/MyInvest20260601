@@ -38,6 +38,13 @@ def test_dashboard_includes_gap_chart_and_status_cards(client):
     assert response.status_code == 200
     html = response.text
     assert "bucketGapChart" in html
+    assert "/api/dashboard/current" in html
+    assert "data-dashboard-section=\"system-status\"" in html
+    assert "data-dashboard-section=\"market-position\"" in html
+    assert "data-dashboard-section=\"action-plan-summary\"" in html
+    assert "data-dashboard-section=\"allocation-summary\"" in html
+    assert "data-dashboard-section=\"subject-summaries\"" in html
+    assert "dashboardQuickLinks" in html
     assert "data-status-card=\"research-first\"" in html
     assert "data-status-card=\"intraday\"" in html
 
@@ -50,6 +57,7 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderPagination" in script
     assert "function renderSubjectGap" in script
     assert "function renderSubjectGapChart" in script
+    assert "function renderDashboardQuickLinks" in script
     assert "mouseenter" in script
     assert "gapStatus" in script
     assert "function renderSubjectStatus" in script

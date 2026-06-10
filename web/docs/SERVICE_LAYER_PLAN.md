@@ -1,6 +1,6 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
@@ -18,6 +18,7 @@ These services are available in the Web layer and must remain read-only:
 - `HistorySnapshotService`: scans temporary shadow/candidate audit artifacts and packages a read-only history snapshot with live current safety summaries.
 - `SubjectGapService`: reads current subject, portfolio-position, target-allocation, and artifact freshness rows from SQLite for Web display.
 - `SubjectStatusService`: reads current subject, profile, valuation, liquidity, and ResearchFirst rows from SQLite and returns neutral gate status for Web display.
+- `DashboardService`: aggregates existing read-only services into the Research Dashboard API and page summary.
 - `target_allocation_mode`: reads `MYINVEST_TARGET_ALLOCATION_MODE` and reports whether the requested mode is allowed or blocked.
 - `ActionPlanService`: exposes action-plan read helpers.
 - `PortfolioService`: exposes portfolio ratio snapshot read helpers.
@@ -48,10 +49,11 @@ Future service names are planning boundaries only. They do not authorize trading
 8. Consolidate temporary shadow/candidate/controlled export audit artifacts into a history snapshot. Completed in Phase 6.
 9. Add a read-only subject status center before action-plan generation migration. Completed in Phase 7A.
 10. Add subject gap and freshness reads for Web visibility. Completed in Phase 7B.
-11. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
-12. At each step, extend golden tests to compare old-script output with new-service output.
-13. If any golden test differs, do not replace the old script.
-14. Keep old scripts as reference implementations until migration is stable.
+11. Add a research dashboard landing page that aggregates existing read-only service outputs. Completed in Phase 7D.
+12. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
+13. At each step, extend golden tests to compare old-script output with new-service output.
+14. If any golden test differs, do not replace the old script.
+15. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -181,6 +183,20 @@ Subject status is a visibility center. It is not a research generator, target-al
 - leave `research/latest_index.json`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions` unchanged
 
 Subject gap is a visibility center. It is not a target-allocation generator, action-plan generator, promotion mechanism, or execution adapter.
+
+## Phase 7D Dashboard Rules
+
+`DashboardService` must:
+
+- read current SQLite state produced from `research/latest_index.json` `modules`
+- call existing read-only services for system status, market position, action plan summary, allocation summary, subject status, and subject gap
+- return counts, statuses, timestamps, percentage ratios, percentage-point gaps, and local Web quick links only
+- keep `/api/dashboard/current`, `/`, and `/dashboard` read-only
+- pass every response through `RatioOnlyService`
+- keep `scripts/run_web.py` as a local Web starter with default host `0.0.0.0` and host override support
+- leave `research/latest_index.json`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions` unchanged
+
+The dashboard is a landing page and review helper. It is not a research generator, target-allocation generator, action-plan generator, promotion mechanism, or execution adapter.
 
 ## Hard Service Boundaries
 

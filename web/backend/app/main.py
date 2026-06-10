@@ -10,7 +10,7 @@ from .config import STATIC_DIR, TEMPLATE_DIR
 from .db import get_session
 from .routers.current import router as current_router
 from .services.current_state import CurrentStateService
-from .services.market_position import MarketPositionService
+from .services.dashboard import DashboardService
 from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
@@ -33,22 +33,17 @@ def service(session: Session) -> CurrentStateService:
 
 
 @app.get("/", response_class=HTMLResponse)
-def dashboard(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
-    current = service(session)
+@app.get("/dashboard", response_class=HTMLResponse)
+def dashboard_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    dashboard = DashboardService(session).current_dashboard()
     return templates.TemplateResponse(
         request,
         "dashboard.html",
         page_context(
             request,
             "dashboard",
-            "/api/current",
-            modules=current.current_modules(),
-            plan=current.action_plan(),
-            target=current.target_allocation(),
-            portfolio=current.portfolio(),
-            market=current.market_score(),
-            market_position=MarketPositionService(session).get_current_market_position(),
-            checks=SystemCheckService(session).current(),
+            "/api/dashboard/current",
+            dashboard=dashboard,
         ),
     )
 
