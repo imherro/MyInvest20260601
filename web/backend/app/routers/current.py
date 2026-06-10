@@ -10,6 +10,7 @@ from ..config import DB_PATH
 from ..db import get_session
 from ..services.allocation_consistency import AllocationConsistencyService
 from ..services.current_state import CurrentStateService
+from ..services.dashboard import DashboardService
 from ..services.export_package import ReviewPackageExportService
 from ..services.history_snapshot import HistorySnapshotService
 from ..services.market_position import MarketPositionService
@@ -68,6 +69,11 @@ def current(session: Session = Depends(get_session)) -> dict[str, Any]:
         },
         source={"path": "research/latest_index.json"},
     )
+
+
+@router.get("/dashboard/current")
+def dashboard_current(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DashboardService(session).current_dashboard(), source={"path": "db.DashboardService"})
 
 
 @router.get("/modules/current")

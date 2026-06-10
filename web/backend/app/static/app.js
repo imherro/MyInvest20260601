@@ -227,43 +227,61 @@
     });
   }
 
+  function renderDashboardQuickLinks(links) {
+    const container = document.getElementById("dashboardQuickLinks");
+    if (!container) return;
+    container.replaceChildren();
+    (links || []).forEach((item) => {
+      const link = document.createElement("a");
+      link.className = "button-link";
+      link.href = text(item.href, "#");
+      link.textContent = text(item.label, "");
+      container.appendChild(link);
+    });
+  }
+
   function renderDashboard(data) {
-    const plan = data.action_plan || {};
-    const market = data.market_score || {};
-    const marketPosition = data.market_position || {};
-    const portfolio = data.portfolio || {};
-    const target = data.target_allocation || {};
-    const intraday = data.intraday_rules || {};
-    const checks = data.system_check || {};
-    const projectCheck = (checks.checks || []).find((item) => item.check_name === "project_check_current_only") || {};
-    setBind("action_generated_at", plan.generated_at);
-    setBind("market_state", market.state);
-    setBind("market_position_score", marketPosition.score);
-    setBind("market_position_label", marketPosition.label);
-    setBind("market_position_source", marketPosition.source);
-    setBind("equity_current", pct(portfolio.equity_pct));
-    setBind("equity_target", range(target.equity_min_pct, target.equity_max_pct));
-    setBind("cash_current", pct(portfolio.cash_short_pct));
-    setBind("cash_target", range(target.cash_min_pct, target.cash_max_pct));
-    setBind("research_first_status", (checks.research_first_gate || {}).status);
-    setBind("intraday_status", `${text(intraday.status)} / stale ${yesNo(intraday.stale_flag)} / degraded ${yesNo(intraday.degraded_flag)}`);
-    setBind("project_check_status", projectCheck.status);
-    setStatusCard("research-first", (checks.research_first_gate || {}).status === "ok" ? "ok" : "fail");
-    setStatusCard("intraday", intraday.stale_flag || intraday.degraded_flag ? "warn" : "ok");
-    setStatusCard("project-check", projectCheck.status === "ok" ? "ok" : "fail");
-    renderGapChart((target || {}).buckets || []);
-    setRows(
-      "moduleRows",
-      ((data.latest_index || {}).modules || []),
-      (row) => [
-        row.module,
-        row.generated_at,
-        row.basis_trade_date,
-        row.sha256 ? row.sha256.slice(0, 8) : "",
-        "current",
-      ],
-      (row) => `source: ${row.path || ""} | sha256: ${row.sha256 || ""}`,
-    );
+    const system = data.system_status || {};
+    const market = data.market_position || {};
+    const action = data.action_plan_summary || {};
+    const allocation = data.allocation_summary || {};
+    const subjectStatus = data.subject_status_summary || {};
+    const subjectGap = data.subject_gap_summary || {};
+    const cashGate = subjectStatus.cash_equivalent_gate || {};
+    setBind("dashboard_system_status", system.status);
+    setBind("dashboard_project_check", system.project_check_status);
+    setBind("dashboard_research_first", system.research_first_gate_status);
+    setBind("dashboard_allocation_status", system.allocation_consistency_status);
+    setBind("dashboard_intraday_status", system.intraday_status);
+    setBind("dashboard_intraday_stale", yesNo(system.intraday_stale_flag));
+    setBind("dashboard_intraday_degraded", yesNo(system.intraday_degraded_flag));
+    setBind("dashboard_market_score", market.score);
+    setBind("dashboard_market_label", market.label);
+    setBind("dashboard_market_equity_target", range(market.equity_target_min_pct, market.equity_target_max_pct));
+    setBind("dashboard_market_cash_target", range(market.cash_target_min_pct, market.cash_target_max_pct));
+    setBind("dashboard_action_generated", action.generated_at);
+    setBind("dashboard_action_count", action.action_count);
+    setBind("dashboard_action_research_first", action.research_first_count);
+    setBind("dashboard_action_manual", action.manual_confirmation_required_count);
+    setBind("dashboard_equity_current", pct(allocation.equity_current_pct));
+    setBind("dashboard_equity_target", range(allocation.equity_target_min_pct, allocation.equity_target_max_pct));
+    setBind("dashboard_cash_current", pct(allocation.cash_short_current_pct));
+    setBind("dashboard_cash_target", range(allocation.cash_short_target_min_pct, allocation.cash_short_target_max_pct));
+    setBind("dashboard_subject_count", subjectStatus.subject_count);
+    setBind("dashboard_subject_pass", subjectStatus.pass_count);
+    setBind("dashboard_subject_research_first", subjectStatus.research_first_count);
+    setBind("dashboard_subject_blocked", subjectStatus.blocked_count);
+    setBind("dashboard_cash_gate", cashGate.research_first_status || cashGate.gate_conclusion);
+    setBind("dashboard_gap_green", subjectGap.green_count);
+    setBind("dashboard_gap_yellow", subjectGap.yellow_count);
+    setBind("dashboard_gap_red", subjectGap.red_count);
+    setBind("dashboard_gap_unknown", subjectGap.unknown_count);
+    setBind("dashboard_gap_stale", subjectGap.stale_count);
+    setStatusCard("system", system.status === "ok" ? "ok" : "fail");
+    setStatusCard("research-first", system.research_first_gate_status === "ok" ? "ok" : "fail");
+    setStatusCard("intraday", system.intraday_stale_flag || system.intraday_degraded_flag ? "warn" : "ok");
+    renderGapChart(allocation.bucket_gaps || []);
+    renderDashboardQuickLinks(data.quick_links || []);
   }
 
   function renderActionPlan(data) {

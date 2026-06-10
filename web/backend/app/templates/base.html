@@ -128,6 +128,12 @@
         gap: 10px;
         margin: 12px 0 22px;
       }
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 12px;
+        margin: 12px 0 22px;
+      }
       .metric,
       .row-card {
         background: var(--panel);
@@ -139,6 +145,28 @@
         display: block;
         margin-top: 6px;
         font-size: 22px;
+      }
+      .summary-line {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 7px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .summary-line:last-child { border-bottom: 0; }
+      .summary-line span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .summary-line strong {
+        text-align: right;
+        font-size: 15px;
+      }
+      .quick-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 8px;
       }
       .metric.ok { border-color: #81c7b4; background: #f1faf7; }
       .metric.warn { border-color: #e4b35e; background: #fff8e9; }

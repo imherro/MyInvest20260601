@@ -4,6 +4,7 @@ from __future__ import annotations
 def test_required_api_endpoints(client):
     paths = [
         "/api/health",
+        "/api/dashboard/current",
         "/api/current",
         "/api/latest-index",
         "/api/modules/current",

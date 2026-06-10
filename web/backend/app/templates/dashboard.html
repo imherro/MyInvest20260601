@@ -1,66 +1,90 @@
 {% extends "base.html" %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}Research Dashboard{% endblock %}
 {% block content %}
-  <div class="metric-grid">
-    <div class="metric">
-      <span class="subtle">Action Plan Generated</span>
-      <strong data-bind="action_generated_at">{{ plan.generated_at if plan else "n/a" }}</strong>
-    </div>
-    <div class="metric">
-      <span class="subtle">Market State</span>
-      <strong data-bind="market_state">{{ market.state if market else "n/a" }}</strong>
-    </div>
-    <div class="metric">
-      <span class="subtle">Market Position</span>
-      <strong><span data-bind="market_position_score">{{ "%.0f"|format(market_position.score) if market_position else "n/a" }}</span> / <span data-bind="market_position_label">{{ market_position.label if market_position else "n/a" }}</span></strong>
-      <span class="subtle" data-bind="market_position_source">{{ market_position.source if market_position else "n/a" }}</span>
-    </div>
-    <div class="metric">
-      <span class="subtle">Equity Current / Target</span>
-      <strong><span data-bind="equity_current">{{ "%.2f"|format(portfolio.equity_pct) if portfolio else "n/a" }}%</span> / <span data-bind="equity_target">{{ "%.2f"|format(target.equity_min_pct) if target else "n/a" }}-{{ "%.2f"|format(target.equity_max_pct) if target else "n/a" }}%</span></strong>
-    </div>
-    <div class="metric">
-      <span class="subtle">Cash/Short Current / Target</span>
-      <strong><span data-bind="cash_current">{{ "%.2f"|format(portfolio.cash_short_pct) if portfolio else "n/a" }}%</span> / <span data-bind="cash_target">{{ "%.2f"|format(target.cash_min_pct) if target else "n/a" }}-{{ "%.2f"|format(target.cash_max_pct) if target else "n/a" }}%</span></strong>
+  {% set d = dashboard or {} %}
+  {% set system = d.system_status or {} %}
+  {% set market = d.market_position or {} %}
+  {% set action = d.action_plan_summary or {} %}
+  {% set allocation = d.allocation_summary or {} %}
+  {% set subject_status = d.subject_status_summary or {} %}
+  {% set subject_gap = d.subject_gap_summary or {} %}
+  {% set cash_gate = subject_status.cash_equivalent_gate or {} %}
+
+  <section class="dashboard-grid" data-dashboard-section="system-status">
+    <div class="metric" data-status-card="system">
+      <span class="subtle">System Status</span>
+      <strong data-bind="dashboard_system_status">{{ system.status or "n/a" }}</strong>
+      <span class="subtle">project_check: <span data-bind="dashboard_project_check">{{ system.project_check_status or "n/a" }}</span></span>
     </div>
     <div class="metric" data-status-card="research-first">
       <span class="subtle">ResearchFirst Gate</span>
-      <strong data-bind="research_first_status">{{ checks.research_first_gate.status }}</strong>
+      <strong data-bind="dashboard_research_first">{{ system.research_first_gate_status or "n/a" }}</strong>
+      <span class="subtle">allocation: <span data-bind="dashboard_allocation_status">{{ system.allocation_consistency_status or "n/a" }}</span></span>
     </div>
     <div class="metric" data-status-card="intraday">
       <span class="subtle">Intraday Rules</span>
-      <strong data-bind="intraday_status">{{ "n/a" }}</strong>
+      <strong data-bind="dashboard_intraday_status">{{ system.intraday_status or "n/a" }}</strong>
+      <span class="subtle">stale <span data-bind="dashboard_intraday_stale">{{ "yes" if system.intraday_stale_flag else "no" }}</span> / degraded <span data-bind="dashboard_intraday_degraded">{{ "yes" if system.intraday_degraded_flag else "no" }}</span></span>
     </div>
-    <div class="metric" data-status-card="project-check">
-      <span class="subtle">project_check</span>
-      <strong data-bind="project_check_status">{{ "n/a" }}</strong>
+  </section>
+
+  <section class="dashboard-grid" data-dashboard-section="market-position">
+    <div class="row-card">
+      <h2>Market Position</h2>
+      <div class="summary-line"><span>Score</span><strong data-bind="dashboard_market_score">{{ market.score if market.score is not none else "n/a" }}</strong></div>
+      <div class="summary-line"><span>Label</span><strong data-bind="dashboard_market_label">{{ market.label or "n/a" }}</strong></div>
+      <div class="summary-line"><span>Equity Target</span><strong data-bind="dashboard_market_equity_target">{{ "%.2f"|format(market.equity_target_min_pct) if market.equity_target_min_pct is not none else "n/a" }}-{{ "%.2f"|format(market.equity_target_max_pct) if market.equity_target_max_pct is not none else "n/a" }}%</strong></div>
+      <div class="summary-line"><span>Cash Target</span><strong data-bind="dashboard_market_cash_target">{{ "%.2f"|format(market.cash_target_min_pct) if market.cash_target_min_pct is not none else "n/a" }}-{{ "%.2f"|format(market.cash_target_max_pct) if market.cash_target_max_pct is not none else "n/a" }}%</strong></div>
     </div>
-  </div>
 
-  <h2>Bucket Gap</h2>
-  <div class="gap-chart" id="bucketGapChart" aria-label="Bucket allocation gap chart"></div>
+    <div class="row-card" data-dashboard-section="action-plan-summary">
+      <h2>Action Plan Summary</h2>
+      <div class="summary-line"><span>Generated</span><strong data-bind="dashboard_action_generated">{{ action.generated_at or "n/a" }}</strong></div>
+      <div class="summary-line"><span>Actions</span><strong data-bind="dashboard_action_count">{{ action.action_count }}</strong></div>
+      <div class="summary-line"><span>ResearchFirst</span><strong data-bind="dashboard_action_research_first">{{ action.research_first_count }}</strong></div>
+      <div class="summary-line"><span>Manual Review</span><strong data-bind="dashboard_action_manual">{{ action.manual_confirmation_required_count }}</strong></div>
+    </div>
 
-  <h2>Current Modules</h2>
-  <table>
-    <thead>
-      <tr>
-          <th data-sort="text">Module</th>
-          <th data-sort="text">Generated</th>
-          <th data-sort="text">Basis</th>
-          <th>Quality</th>
-          <th>Staleness</th>
-      </tr>
-    </thead>
-    <tbody id="moduleRows">
-      {% for item in modules %}
-        <tr>
-          <td>{{ item.module }}</td>
-          <td>{{ item.generated_at or "" }}</td>
-          <td>{{ item.basis_trade_date or "" }}</td>
-          <td><span class="status">{{ item.sha256[:8] if item.sha256 else "n/a" }}</span></td>
-          <td><span class="status">{{ "current" }}</span></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <div class="row-card" data-dashboard-section="allocation-summary">
+      <h2>Allocation Summary</h2>
+      <div class="summary-line"><span>Equity Current</span><strong data-bind="dashboard_equity_current">{{ "%.2f"|format(allocation.equity_current_pct) if allocation.equity_current_pct is not none else "n/a" }}%</strong></div>
+      <div class="summary-line"><span>Equity Target</span><strong data-bind="dashboard_equity_target">{{ "%.2f"|format(allocation.equity_target_min_pct) if allocation.equity_target_min_pct is not none else "n/a" }}-{{ "%.2f"|format(allocation.equity_target_max_pct) if allocation.equity_target_max_pct is not none else "n/a" }}%</strong></div>
+      <div class="summary-line"><span>Cash Current</span><strong data-bind="dashboard_cash_current">{{ "%.2f"|format(allocation.cash_short_current_pct) if allocation.cash_short_current_pct is not none else "n/a" }}%</strong></div>
+      <div class="summary-line"><span>Cash Target</span><strong data-bind="dashboard_cash_target">{{ "%.2f"|format(allocation.cash_short_target_min_pct) if allocation.cash_short_target_min_pct is not none else "n/a" }}-{{ "%.2f"|format(allocation.cash_short_target_max_pct) if allocation.cash_short_target_max_pct is not none else "n/a" }}%</strong></div>
+    </div>
+  </section>
+
+  <section data-dashboard-section="bucket-gap">
+    <h2>Bucket Gap</h2>
+    <div class="gap-chart" id="bucketGapChart" data-dashboard-bucket-gap aria-label="Bucket allocation gap chart"></div>
+  </section>
+
+  <section class="dashboard-grid" data-dashboard-section="subject-summaries">
+    <div class="row-card">
+      <h2>Subject Research Status</h2>
+      <div class="summary-line"><span>Subjects</span><strong data-bind="dashboard_subject_count">{{ subject_status.subject_count }}</strong></div>
+      <div class="summary-line"><span>Pass</span><strong data-bind="dashboard_subject_pass">{{ subject_status.pass_count }}</strong></div>
+      <div class="summary-line"><span>ResearchFirst</span><strong data-bind="dashboard_subject_research_first">{{ subject_status.research_first_count }}</strong></div>
+      <div class="summary-line"><span>Blocked</span><strong data-bind="dashboard_subject_blocked">{{ subject_status.blocked_count }}</strong></div>
+      <div class="summary-line"><span>511360 Gate</span><strong data-bind="dashboard_cash_gate">{{ cash_gate.research_first_status or "n/a" }}</strong></div>
+    </div>
+
+    <div class="row-card">
+      <h2>Subject Gap Summary</h2>
+      <div class="summary-line"><span>Green</span><strong data-bind="dashboard_gap_green">{{ subject_gap.green_count }}</strong></div>
+      <div class="summary-line"><span>Yellow</span><strong data-bind="dashboard_gap_yellow">{{ subject_gap.yellow_count }}</strong></div>
+      <div class="summary-line"><span>Red</span><strong data-bind="dashboard_gap_red">{{ subject_gap.red_count }}</strong></div>
+      <div class="summary-line"><span>Unknown</span><strong data-bind="dashboard_gap_unknown">{{ subject_gap.unknown_count }}</strong></div>
+      <div class="summary-line"><span>Stale</span><strong data-bind="dashboard_gap_stale">{{ subject_gap.stale_count }}</strong></div>
+    </div>
+
+    <div class="row-card">
+      <h2>Quick Links</h2>
+      <div class="quick-links" id="dashboardQuickLinks" data-dashboard-section="quick-links">
+        {% for item in d.quick_links or [] %}
+          <a class="button-link" href="{{ item.href }}">{{ item.label }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
 {% endblock %}

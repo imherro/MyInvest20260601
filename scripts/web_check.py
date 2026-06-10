@@ -21,10 +21,11 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add data freshness and subject gap center"
+COMMIT_MESSAGE = "feat(web): add research dashboard landing page"
 
 API_PATHS = [
     "/api/health",
+    "/api/dashboard/current",
     "/api/current",
     "/api/latest-index",
     "/api/modules/current",
@@ -57,6 +58,7 @@ API_PATHS = [
 
 PAGE_PATHS = [
     "/",
+    "/dashboard",
     "/action-plan",
     "/target-allocation",
     "/research-first",
@@ -80,14 +82,21 @@ INTERACTIVE_PAGE_CHECKS = {
 
 DASHBOARD_CHECKS = [
     "bucketGapChart",
+    'data-dashboard-section="system-status"',
+    'data-dashboard-section="market-position"',
+    'data-dashboard-section="action-plan-summary"',
+    'data-dashboard-section="allocation-summary"',
+    'data-dashboard-section="subject-summaries"',
+    'data-dashboard-section="quick-links"',
+    'data-status-card="system"',
     'data-status-card="research-first"',
     'data-status-card="intraday"',
-    'data-status-card="project-check"',
 ]
 
 JS_CHECKS = [
     "function assertRatioOnly",
     "function renderPagination",
+    "function renderDashboardQuickLinks",
     "function renderSubjectStatus",
     "function renderSubjectGap",
     "detail-row",
@@ -183,6 +192,16 @@ PHASE7B_FILES = [
     ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py",
     ROOT / "web" / "backend" / "app" / "templates" / "subjects_gap.html",
     ROOT / "web" / "backend" / "tests" / "test_subject_gap.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE7D_FILES = [
+    ROOT / "scripts" / "run_web.py",
+    ROOT / "web" / "backend" / "app" / "services" / "dashboard.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html",
+    ROOT / "web" / "backend" / "tests" / "test_dashboard_current.py",
     ROOT / "web" / "docs" / "API_SPEC.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
@@ -426,6 +445,7 @@ class WebCheck:
         self.check_phase6_contract_files()
         self.check_phase7a_contract_files()
         self.check_phase7b_contract_files()
+        self.check_phase7d_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -433,6 +453,7 @@ class WebCheck:
         self.run_project_checks()
         self.check_api_and_export()
         self.check_frontend_interactions()
+        self.check_run_web_script()
         self.check_current_only_code_paths()
         self.print_summary()
         return 1 if self.failures else 0
@@ -705,6 +726,41 @@ class WebCheck:
             return
         self.add_result("phase7b_subject_gap_files", "PASS", "subject gap service/API/page/tests present")
 
+    def check_phase7d_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7D_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7d_dashboard_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7d_dashboard_files",
+                ", ".join(missing),
+                "Phase 7D dashboard service/API/page/tests/docs or run script are missing.",
+                "Add the dashboard service, template, tests, run_web.py, and docs, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7D_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "dashboard" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7D docs must describe dashboard and read-only boundaries")
+            run_web_text = (ROOT / "scripts" / "run_web.py").read_text(encoding="utf-8", errors="replace")
+            for marker in ['DEFAULT_HOST = "0.0.0.0"', "--host", "--port", "uvicorn.run"]:
+                if marker not in run_web_text:
+                    raise ValueError(f"run_web.py missing marker: {marker}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7d_dashboard_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7d_dashboard_safety",
+                rel(path),
+                f"Phase 7D file failed safety scan: {exc}",
+                "Remove local paths and document dashboard read-only boundaries.",
+            )
+            return
+        self.add_result("phase7d_dashboard_files", "PASS", "dashboard service/API/page/tests/run script present")
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -811,6 +867,7 @@ class WebCheck:
         self.check_api_is_read_only(client)
         self.check_subject_status_api(client, ratio)
         self.check_subject_gap_api(client, ratio)
+        self.check_dashboard_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
@@ -943,6 +1000,59 @@ class WebCheck:
             self.add_result("subject_status_api", "FAIL", str(exc))
         else:
             self.add_result("subject_status_api", "PASS", "current-only status list and 511360 gate safe")
+
+    def check_dashboard_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/dashboard/current")
+            if response.status_code != 200:
+                raise ValueError(f"dashboard API returned {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            data = payload.get("data") or {}
+            if data.get("module") != "dashboard_current" or data.get("current_only") is not True:
+                raise ValueError("dashboard payload is not marked current-only")
+            for key in [
+                "system_status",
+                "market_position",
+                "action_plan_summary",
+                "allocation_summary",
+                "subject_status_summary",
+                "subject_gap_summary",
+                "quick_links",
+            ]:
+                if key not in data:
+                    raise ValueError(f"dashboard missing {key}")
+            if not isinstance((data.get("allocation_summary") or {}).get("bucket_gaps"), list):
+                raise ValueError("dashboard allocation bucket_gaps is not a list")
+            cash_gate = (data.get("subject_status_summary") or {}).get("cash_equivalent_gate")
+            if cash_gate:
+                if cash_gate.get("code") != "511360.SH" or cash_gate.get("bucket") != "cash_short":
+                    raise ValueError("dashboard 511360 cash-equivalent gate is not normalized")
+                if cash_gate.get("gate_conclusion") in {"buy", "add", "reduce", "sell"}:
+                    raise ValueError("dashboard cash-equivalent gate leaked action conclusion")
+            links = data.get("quick_links") or []
+            expected = {"Action Plan", "Target Allocation", "Subject Status", "Subject Gap", "Portfolio", "Intraday Rules", "Decision Log", "History Snapshot"}
+            labels = {item.get("label") for item in links}
+            if not expected.issubset(labels):
+                raise ValueError(f"dashboard quick links missing labels: {sorted(expected - labels)}")
+            for item in links:
+                href = item.get("href")
+                if not href or not str(href).startswith("/"):
+                    raise ValueError(f"dashboard quick link is not repo-local: {item}")
+                link_response = client.get(href)
+                if link_response.status_code != 200:
+                    raise ValueError(f"dashboard quick link {href} returned {link_response.status_code}")
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "dashboard_api",
+                "/api/dashboard/current",
+                f"Dashboard API failed safety/current-state scan: {exc}",
+                "Fix DashboardService or its route and rerun scripts/web_check.py.",
+            )
+            self.add_result("dashboard_api", "FAIL", str(exc))
+        else:
+            self.add_result("dashboard_api", "PASS", "summary, quick links, and cash-equivalent gate safe")
 
     def check_export_json(self, client: Any, ratio: Any) -> None:
         response = client.get("/api/export/review_package?format=json")
@@ -1447,6 +1557,35 @@ class WebCheck:
                 )
         if not any(item.check in {"frontend_interactions", "dashboard_visuals", "frontend_js", "page_status", "page_safety"} for item in self.failures):
             self.add_result("frontend_interactions", "PASS", "tables, dashboard, sanitizer hooks")
+
+    def check_run_web_script(self) -> None:
+        try:
+            from scripts import run_web
+
+            if run_web.DEFAULT_HOST != "0.0.0.0":
+                raise ValueError(f"default host is {run_web.DEFAULT_HOST}")
+            if run_web.DEFAULT_PORT != 8000:
+                raise ValueError(f"default port is {run_web.DEFAULT_PORT}")
+            parser = run_web.build_parser()
+            defaults = parser.parse_args([])
+            if defaults.host != "0.0.0.0" or defaults.port != 8000:
+                raise ValueError("parser defaults do not match trusted-LAN startup contract")
+            override = parser.parse_args(["--host", "127.0.0.1", "--port", "8100", "--reload"])
+            if override.host != "127.0.0.1" or override.port != 8100 or override.reload is not True:
+                raise ValueError("host/port/reload overrides failed")
+            output = self.run_command("run_web_help", [sys.executable, "scripts/run_web.py", "--help"])
+            if "--host" not in output or "--port" not in output or "--reload" not in output:
+                raise ValueError("run_web.py --help does not show host/port/reload options")
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "run_web_script",
+                "scripts/run_web.py",
+                f"run_web.py failed startup contract check: {exc}",
+                "Set DEFAULT_HOST to 0.0.0.0, keep --host/--port/--reload overrides, and make --help runnable.",
+            )
+            self.add_result("run_web_script", "FAIL", str(exc))
+        else:
+            self.add_result("run_web_script", "PASS", "default host 0.0.0.0 and --help safe")
 
     def check_current_only_code_paths(self) -> None:
         files = [

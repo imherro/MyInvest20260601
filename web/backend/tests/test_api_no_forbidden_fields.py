@@ -27,6 +27,7 @@ def walk(value: Any, path: str = "$"):
 def test_current_apis_do_not_return_forbidden_fields(client):
     paths = [
         "/api/health",
+        "/api/dashboard/current",
         "/api/current",
         "/api/latest-index",
         "/api/modules/current",

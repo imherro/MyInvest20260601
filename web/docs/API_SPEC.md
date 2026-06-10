@@ -15,6 +15,7 @@ All endpoints are read-only and return:
 Endpoints:
 
 - `GET /api/health`
+- `GET /api/dashboard/current`
 - `GET /api/current`
 - `GET /api/latest-index`
 - `GET /api/modules/current`
@@ -43,6 +44,18 @@ Endpoints:
 All responses pass `RatioOnlyService` before returning. A sanitizer failure returns HTTP 500.
 
 OpenAPI docs are exposed by FastAPI at `GET /docs` while the local server is running.
+
+## Research Dashboard
+
+Phase 7D adds a read-only dashboard endpoint:
+
+- `GET /api/dashboard/current`
+
+The service aggregates existing SQLite current-state services into a research landing-page summary. It reads current state loaded from `latest_index.modules`; it does not read `latest_index.files`, write research artifacts, generate target allocations, generate action plans, or expose execution adapters.
+
+The response contains `system_status`, `market_position`, `action_plan_summary`, `allocation_summary`, `subject_status_summary`, `subject_gap_summary`, and `quick_links`. Fields are limited to status labels, counts, timestamps, percentage ratios, percentage-point gaps, and local Web links. The response passes `RatioOnlyService` before returning.
+
+The same dashboard data backs `GET /` and `GET /dashboard`.
 
 ## Subject Status
 

@@ -9,6 +9,7 @@ LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:(?!//)[\\/]|\\\\|/Users/|/home/)")
 def test_web_pages_render_without_local_absolute_paths(client):
     paths = [
         "/",
+        "/dashboard",
         "/action-plan",
         "/target-allocation",
         "/research-first",

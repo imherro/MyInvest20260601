@@ -21,22 +21,30 @@ python scripts/ingest_current_state_to_web_db.py
 ## Start Backend
 
 ```bash
-python -m uvicorn web.backend.app.main:app --host 127.0.0.1 --port 8000
+python scripts/run_web.py
 ```
 
-Open `http://127.0.0.1:8000/`.
+The default binds to `0.0.0.0` on port `8000` for trusted-LAN review. Open `http://127.0.0.1:8000/` locally, or open `http://<your-lan-ip>:8000/` from another trusted device on the same LAN.
 
-Optional trusted-LAN mode:
+Local-only override:
 
-For same-LAN read-only review from another trusted device, bind the server to all local interfaces and allow the port in the local firewall:
+```bash
+python scripts/run_web.py --host 127.0.0.1 --port 8000
+```
+
+Reload for local Web development:
+
+```bash
+python scripts/run_web.py --reload
+```
+
+The equivalent direct FastAPI command remains available:
 
 ```bash
 python -m uvicorn web.backend.app.main:app --host 0.0.0.0 --port 8000
 ```
 
-Then open `http://<your-lan-ip>:8000/` from the other device.
-
-This mode is optional. Keep the default startup on `127.0.0.1` unless LAN review is needed. Do not expose the Web UI to the public internet, untrusted networks, or public company networks. The Web app is read-only and ratio-only, but research context can still be sensitive. Never expose `.env`, tokens, runtime files, SQLite databases, or account information through LAN access.
+Use trusted-LAN mode only on networks you control. Do not expose the Web UI to the public internet, untrusted networks, or public company networks. The Web app is read-only and ratio-only, but research context can still be sensitive. Never expose `.env`, tokens, runtime files, SQLite databases, or account information through LAN access.
 
 The Web UI is FastAPI + Jinja2 with a small static refresh script. There is no React build step in this phase.
 
@@ -78,6 +86,39 @@ Output statuses:
 The script prints a suggested commit message and the files that belong in the commit. Do not commit `temp/`, SQLite/DB files, `runtime/`, caches, `node_modules/`, build/dist outputs, `.env`, ZIP, or log artifacts.
 
 The same gate runs in GitHub Actions via `.github/workflows/web_check.yml` on push and pull request.
+
+## Phase 7D Research Dashboard
+
+Phase 7D adds the read-only Research Dashboard Landing Page. It aggregates existing current-state services into one homepage; it does not generate target allocation, generate action plans, create research artifacts, or connect to execution adapters.
+
+Read-only API:
+
+- `GET /api/dashboard/current`
+
+Pages:
+
+- `GET /`
+- `GET /dashboard`
+
+Dashboard sections:
+
+- System Status: project check, ResearchFirst, allocation consistency, sensitive scan, and intraday stale/degraded state.
+- Market Position: score, label, equity target range, and cash target range.
+- Action Plan Summary: generated timestamp, action count, ResearchFirst count, and manual review count.
+- Allocation Summary: equity current/target and cash-short current/target ratios.
+- Bucket Gap: current bucket actual/target/gap chart.
+- Subject Research Status Summary: subject counts and 511360 cash-equivalent gate.
+- Subject Gap Summary: green/yellow/red/unknown/stale counts.
+- Quick Links: Action Plan, Target Allocation, Subject Status, Subject Gap, Portfolio, Intraday Rules, Decision Log, and History Snapshot.
+
+Validation:
+
+```bash
+python scripts/run_web.py --help
+python scripts/web_check.py
+```
+
+The dashboard remains current-only and ratio-only. It reads SQLite current state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not display or export sensitive business fields, local absolute paths, runtime files, database files, account context, trading records, or execution output.
 
 ## Phase 5A Schema And Golden Baseline
 
@@ -483,13 +524,15 @@ python scripts/web_check.py
 
 ```bash
 python scripts/ingest_current_state.py
-python -m uvicorn web.backend.app.main:app --host 127.0.0.1 --port 8000
+python scripts/run_web.py
 ```
 
 Then open:
 
 - `http://127.0.0.1:8000/`
+- `http://127.0.0.1:8000/dashboard`
 - `http://127.0.0.1:8000/docs`
+- `http://127.0.0.1:8000/api/dashboard/current`
 - `http://127.0.0.1:8000/api/current`
 - `http://127.0.0.1:8000/api/market-position/current`
 - `http://127.0.0.1:8000/api/target-allocation/shadow/compare`
@@ -540,6 +583,7 @@ The ingest command runs:
 - `python scripts/check_research_first_gate.py --path <latest_index.modules.action_plan.path>`
 - `python scripts/check_cross_file_allocation_consistency.py`
 - `python scripts/project_check.py --current-only`
+- `python scripts/run_web.py --help`
 
 Any failure blocks ingest.
 
