@@ -1,6 +1,6 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. Phase 9 adds a read-only `DatabaseService` facade for current SQLite access and current-module artifact payload fallback. Phase 9B-1 routes `SubjectStatusRepository` DB reads through `DatabaseService` without changing the Subject Status API contract. Phase 9B-2 routes `SubjectGapRepository` DB reads through `DatabaseService` and locks Bucket, Theme, and Dashboard services away from direct file or SQL access. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. Phase 9 adds a read-only `DatabaseService` facade for current SQLite access and current-module artifact payload fallback. Phase 9B-1 routes `SubjectStatusRepository` DB reads through `DatabaseService` without changing the Subject Status API contract. Phase 9B-2 routes `SubjectGapRepository` DB reads through `DatabaseService` and locks Bucket, Theme, and Dashboard services away from direct file or SQL access. Phase 9B-3 adds read-only DB coverage repositories for allocation drilldown, bucket history, and decision timeline, and quarantines existing history snapshot temp/runtime IO behind `HistorySnapshotRepository`. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
@@ -17,7 +17,9 @@ These services are available in the Web layer and must remain read-only:
 - `TargetAllocationPromotionSimulationService`: simulates candidate and official promotion paths without updating current research state.
 - `TargetAllocationCandidateAuditService`: packages candidate simulation, shadow comparison, replay summary, promotion mode status, provenance, and safety checks for audit.
 - `HistorySnapshotService`: scans temporary shadow/candidate audit artifacts and packages a read-only history snapshot with live current safety summaries.
+- `HistorySnapshotRepository`: isolates existing Phase 6 temp export scanning and ignored runtime history DB writes from `HistorySnapshotService`; it is not a current SQLite write path.
 - `HistoryGapDashboardService`: aggregates current allocation gaps, shadow/candidate audit snapshots, and history entry summaries for Web display.
+- `BucketHistoryRepository`: reads current target-allocation bucket rows and current module sources through `DatabaseService` for history gap displays.
 - `SubjectGapService`: reads current subject, portfolio-position, target-allocation, and artifact freshness rows from SQLite for Web display.
 - `SubjectGapRepository`: reads current subject gap/freshness rows through `DatabaseService.fetch_all(...)` for `SubjectGapService`.
 - `SubjectStatusService`: reads current subject, profile, valuation, liquidity, and ResearchFirst rows from SQLite through `SubjectStatusRepository` and `DatabaseService`, then returns neutral gate status for Web display.
@@ -25,7 +27,9 @@ These services are available in the Web layer and must remain read-only:
 - `ThemeStatusService`: reads current theme/leader/ETF/stock artifact payloads and returns neutral theme research status for Web display.
 - `BucketExplorerService`: joins current target-allocation buckets, portfolio positions, subject gate status, and subject freshness for Web allocation drilldown.
 - `AllocationDrilldownService`: aggregates current target-allocation, portfolio, subject gap, subject status, market-position, and theme summaries into bucket/subject drilldown views.
+- `AllocationRepository`: reads current target allocation, current portfolio snapshot, and current module sources through `DatabaseService` for allocation drilldown.
 - `DecisionTimelineService`: combines current action-plan metadata, target-allocation metadata, decision log entries, and history snapshot entries into a neutral review timeline.
+- `DecisionTimelineRepository`: reads recent decision log rows through `DatabaseService.fetch_all(...)` for the decision timeline.
 - `HistoricalMetricsService`: aggregates bucket gap trends, subject status, theme status, decision event types, and market-score context into read-only dashboard metrics.
 - `target_allocation_mode`: reads `MYINVEST_TARGET_ALLOCATION_MODE` and reports whether the requested mode is allowed or blocked.
 - `ActionPlanService`: exposes action-plan read helpers.
@@ -67,10 +71,11 @@ Future service names are planning boundaries only. They do not authorize trading
 18. Add a read-only database facade for current SQLite access, artifact payload fallback, and query safety. Completed in Phase 9.
 19. Consolidate Subject Status DB access through `DatabaseService` while preserving the existing API contract. Completed in Phase 9B-1.
 20. Consolidate Subject Gap DB access through `SubjectGapRepository` and `DatabaseService`, and lock Bucket, Theme, and Dashboard services away from direct file or SQL access. Completed in Phase 9B-2.
-21. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
-22. At each step, extend golden tests to compare old-script output with new-service output.
-23. If any golden test differs, do not replace the old script.
-24. Keep old scripts as reference implementations until migration is stable.
+21. Consolidate allocation drilldown, bucket history, decision timeline, and history snapshot IO coverage behind repositories. Completed in Phase 9B-3.
+22. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
+23. At each step, extend golden tests to compare old-script output with new-service output.
+24. If any golden test differs, do not replace the old script.
+25. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -358,6 +363,23 @@ Phase 9B-1 is an access-path consolidation only. It does not change subject rese
 - not generate action plans, target allocations, orders, fills, trading records, or QMT write calls
 
 `SubjectGapRepository` must use `DatabaseService.fetch_all(...)` for its SQL read and must not call `session.execute(...)` directly. Bucket, Theme, and Dashboard services remain aggregators over read-only services; Phase 9B-2 locks their boundaries with tests and `web_check.py` rather than changing their public behavior.
+
+## Phase 9B-3 Allocation/History/Timeline DB Coverage Rules
+
+`AllocationDrilldownService`, `HistoryGapDashboardService`, `DecisionTimelineService`, and `HistorySnapshotService` must:
+
+- preserve existing API and page response contracts
+- avoid direct file reads, direct current SQLite SQL execution, and `latest_index.files` current resolution in services
+- keep current SQLite reads behind repositories that use `DatabaseService.fetch_all(...)`, `DatabaseService.fetch_one(...)`, or `DatabaseService.source_for_module(...)`
+- keep allocation bucket actual/target/gap values aligned with current target allocation rows
+- keep decision timeline decision-log reads ratio-only and neutral
+- keep all API/page payloads ratio-only and free of local absolute paths
+- leave `research/latest_index.json`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions` unchanged
+- not generate action plans, target allocations, orders, fills, trading records, or QMT write calls
+
+`AllocationRepository`, `BucketHistoryRepository`, and `DecisionTimelineRepository` must use `DatabaseService` for current SQLite reads and must not call `session.execute(...)` directly. They must reject `latest_index.files` as a current resolver and must not contain write-like SQL.
+
+`HistorySnapshotRepository` is a quarantine boundary for the existing Phase 6 history snapshot implementation. It may scan ignored `temp/` export artifacts and write the optional ignored `temp/web_runtime/history_snapshot.sqlite` file only for explicit history snapshot export flows. That runtime file is not current Web SQLite state, is not a research artifact, and must never be committed. `HistorySnapshotService` remains a read-only API/page payload builder and delegates file/runtime IO details to `HistorySnapshotRepository`.
 
 ## Hard Service Boundaries
 
