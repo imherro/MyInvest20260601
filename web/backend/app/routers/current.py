@@ -13,6 +13,7 @@ from ..services.allocation_consistency import AllocationConsistencyService
 from ..services.bucket_explorer import BucketExplorerService
 from ..services.current_state import CurrentStateService
 from ..services.dashboard import DashboardService
+from ..services.decision_timeline import DecisionTimelineService
 from ..services.export_package import ReviewPackageExportService
 from ..services.history_gap_dashboard import HistoryGapDashboardService
 from ..services.history_snapshot import HistorySnapshotService
@@ -326,6 +327,20 @@ def system_check(session: Session = Depends(get_session)) -> dict[str, Any]:
 def decision_log(session: Session = Depends(get_session)) -> dict[str, Any]:
     service = CurrentStateService(session)
     return respond({"entries": service.decision_log_entries()}, source={"path": "research/logs/decision_log.md"})
+
+
+@router.get("/decision-timeline")
+def decision_timeline(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionTimelineService(session).timeline(), source={"path": "db.DecisionTimelineService"})
+
+
+@router.get("/decision-timeline/{event_id}")
+def decision_timeline_event(event_id: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+    try:
+        data = DecisionTimelineService(session).get_event(event_id)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="decision timeline event not found") from exc
+    return respond(data, source={"path": "db.DecisionTimelineService"})
 
 
 @router.get("/allocation-consistency/current")

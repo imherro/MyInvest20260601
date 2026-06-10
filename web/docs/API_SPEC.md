@@ -46,6 +46,8 @@ Endpoints:
 - `GET /api/intraday-rules/current`
 - `GET /api/system-check/current`
 - `GET /api/decision-log/current`
+- `GET /api/decision-timeline`
+- `GET /api/decision-timeline/{event_id}`
 - `GET /api/allocation-consistency/current`
 - `GET /api/export/review_package`
 
@@ -146,6 +148,21 @@ Bucket rows return `actual_pct`, `target_pct`, `gap_pct`, `gap_status`, subject 
 The endpoints do not read `latest_index.files`, write research artifacts, update `current_modules`, generate target allocations, generate action plans, or connect to execution adapters. Responses are ratio-only and pass `RatioOnlyService`.
 
 The pages `GET /buckets/drilldown` and `GET /subjects/drilldown` use the same APIs and support refresh, search, filters, sorting, pagination, charts/tooltips where applicable, and expandable details.
+
+## Decision Timeline
+
+Phase 7I adds read-only review timeline endpoints:
+
+- `GET /api/decision-timeline`
+- `GET /api/decision-timeline/{event_id}`
+
+The service reads current SQLite state produced from `research/latest_index.json` `modules` and existing read-only history snapshot summaries. It combines current action plan metadata, current target allocation metadata, recent decision log entries, and history snapshot entries into neutral review events.
+
+Returned fields include `event_id`, `event_type`, `timestamp`, `title`, `summary`, `status`, `basis_trade_date`, `details`, and relative `review_links`. Details are limited to ratio-only counts, statuses, percentages, percentage-point gaps, timestamps, and neutral review metadata.
+
+The endpoints do not read `latest_index.files`, write research artifacts, update `current_modules`, generate target allocations, generate action plans, or connect to execution adapters. Responses are ratio-only and pass `RatioOnlyService`.
+
+The page `GET /decision-timeline` uses the same API and supports refresh, search, event/status filters, sorting, pagination, timeline visualization, tooltips, and expandable details.
 
 ## Market Position
 

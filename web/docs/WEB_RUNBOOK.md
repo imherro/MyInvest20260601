@@ -251,6 +251,38 @@ Full gate:
 python scripts/web_check.py
 ```
 
+## Phase 7I Decision Timeline
+
+Phase 7I adds the read-only Decision Timeline / Review Timeline. It combines current action plan metadata, current target allocation metadata, recent decision log entries, and read-only history snapshot entries into a neutral review timeline. It does not generate target allocation, generate action plans, write research files, write temporary exports, or create trading instructions.
+
+Read-only APIs:
+
+- `GET /api/decision-timeline`
+- `GET /api/decision-timeline/{event_id}`
+
+Page:
+
+- `GET /decision-timeline`
+
+The API returns timeline summary counts and event rows with event id, event type, timestamp, status, summary, ratio-only details, and relative Web review links. Event rows are review context only and are not buy/add/reduce/sell instructions.
+
+The page supports refresh, search, event/status filters, sorting, pagination, expandable details, and a compact timeline visualization with tooltip text through the shared static JS. Every refresh still passes the frontend forbidden-field scan before rendering.
+
+Decision Timeline remains current-only and read-only. It reads SQLite current state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
+
+Direct tests:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_decision_timeline.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
 ## Phase 5A Schema And Golden Baseline
 
 Phase 5A freezes the database schema contract and adds a golden current-state baseline for later service migration. It does not migrate target-allocation generation, action-plan generation, trading logic, order creation, execution handling, or QMT write interfaces.

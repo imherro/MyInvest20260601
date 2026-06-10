@@ -61,6 +61,8 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/intraday-rules/current",
         "/api/system-check/current",
         "/api/decision-log/current",
+        "/api/decision-timeline",
+        "/api/decision-timeline/current-action-plan",
         "/api/allocation-consistency/current",
         "/api/export/review_package?format=json",
     ]

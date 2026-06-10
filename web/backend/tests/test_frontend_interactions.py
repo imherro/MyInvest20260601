@@ -10,6 +10,7 @@ def test_pages_include_refresh_export_and_interaction_hooks(client):
     assert "data-table-search=\"portfolioTable\"" in html
     assert "data-sort=\"number\"" in html
 
+
 def test_subject_gap_page_include_refresh_and_table_hooks(client):
     response = client.get("/subjects/gap")
     assert response.status_code == 200
@@ -102,6 +103,20 @@ def test_buckets_page_include_refresh_filter_and_table_hooks(client):
     assert "bucketSubjectRows" in html
 
 
+def test_decision_timeline_page_include_refresh_filter_and_table_hooks(client):
+    response = client.get("/decision-timeline")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "data-decision-timeline-chart" in html
+    assert "decisionTimelineChart" in html
+    assert "decisionTimelineTooltip" in html
+    assert "data-table-search=\"decisionTimelineTable\"" in html
+    assert "data-table-filter=\"decisionTimelineTable\"" in html
+    assert "data-sort=\"text\"" in html
+    assert "decisionTimelineRows" in html
+
+
 def test_dashboard_includes_gap_chart_and_status_cards(client):
     response = client.get("/")
     assert response.status_code == 200
@@ -134,6 +149,8 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderHistoryGapDashboard" in script
     assert "function renderHistoryGapChart" in script
     assert "function renderBuckets" in script
+    assert "function renderDecisionTimeline" in script
+    assert "function renderDecisionTimelineChart" in script
     assert "function setupFilters" in script
     assert "mouseenter" in script
     assert "gapStatus" in script

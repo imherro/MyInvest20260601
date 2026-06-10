@@ -35,6 +35,8 @@ def test_required_api_endpoints(client):
         "/api/research-first/current",
         "/api/system-check/current",
         "/api/decision-log/current",
+        "/api/decision-timeline",
+        "/api/decision-timeline/current-action-plan",
         "/api/export/review_package?format=json",
     ]
     for path in paths:
