@@ -21,10 +21,11 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "chore(web): phase 9F full repository read-only consolidation baseline"
+COMMIT_MESSAGE = "feat(web): add workbench environment center"
 
 API_PATHS = [
     "/api/health",
+    "/api/environment/status",
     "/api/dashboard/current",
     "/api/current",
     "/api/latest-index",
@@ -69,6 +70,8 @@ API_PATHS = [
 PAGE_PATHS = [
     "/",
     "/dashboard",
+    "/settings",
+    "/environment",
     "/action-plan",
     "/target-allocation",
     "/research-first",
@@ -88,6 +91,13 @@ PAGE_PATHS = [
 ]
 
 INTERACTIVE_PAGE_CHECKS = {
+    "/settings": [
+        'data-environment-section="git"',
+        'data-environment-section="safety"',
+        'data-status-card="env-readonly"',
+        'data-bind="env_branch"',
+        "environmentCheckRows",
+    ],
     "/action-plan": ["data-table-search", "data-sort", "actionRows"],
     "/target-allocation": ["data-table-search", "data-sort", "targetRows"],
     "/subjects": ["data-table-search", "data-sort", "subjectsRows"],
@@ -120,6 +130,7 @@ DASHBOARD_CHECKS = [
 JS_CHECKS = [
     "function assertRatioOnly",
     "function renderPagination",
+    "function renderEnvironment",
     "function renderDashboardQuickLinks",
     "function renderSubjectStatus",
     "function renderSubjectGap",
@@ -364,6 +375,16 @@ PHASE9F_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
+PHASE10A_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "environment_status.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "environment.html",
+    ROOT / "web" / "backend" / "tests" / "test_environment_status.py",
+    ROOT / "web" / "docs" / "ENVIRONMENT_CENTER.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -437,6 +458,7 @@ FORBIDDEN_KEY_RE = re.compile(
     r"current_price|qmt_timetag)($|_)",
     re.IGNORECASE,
 )
+ALLOWED_FORBIDDEN_KEY_PATHS = {"$.safety.no_order_generation"}
 LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:(?!//)[\\/]|\\\\|/Users/|/home/)")
 FORBIDDEN_TEXT_RE = re.compile(
     r"(total asset|market value|profit amount|trade amount|share count|available quantity|"
@@ -616,6 +638,7 @@ class WebCheck:
         self.check_phase9d_contract_files()
         self.check_phase9e_contract_files()
         self.check_phase9f_contract_files()
+        self.check_phase10a_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1609,6 +1632,56 @@ class WebCheck:
             "Repository read-only baseline is enforced",
         )
 
+    def check_phase10a_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE10A_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase10a_environment_center_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase10a_environment_center_files",
+                ", ".join(missing),
+                "Phase 10A environment center files are missing.",
+                "Add the read-only environment service, settings page, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "environment_status.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("EnvironmentStatusService must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant"]:
+                if blocked in service_text.lower():
+                    raise ValueError(f"EnvironmentStatusService contains blocked integration marker: {blocked}")
+            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "environment.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "read-only research workbench",
+                "not a trading system",
+                "does not connect to QMT write interfaces",
+                "does not generate orders",
+                "trusted networks only",
+                "environmentCheckRows",
+            ]:
+                if marker not in template_text:
+                    raise ValueError(f"environment template missing marker: {marker}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase10a_environment_center_safety", "FAIL", str(exc))
+            self.fail(
+                "phase10a_environment_center_safety",
+                "phase10a environment center files",
+                f"Phase 10A file failed safety scan: {exc}",
+                "Keep the environment center read-only and limited to sanitized status metadata.",
+            )
+            return
+        self.add_result(
+            "phase10a_environment_center_files",
+            "PASS",
+            "Workbench environment center service/page/tests/docs present",
+        )
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -1700,8 +1773,11 @@ class WebCheck:
                 continue
             try:
                 data = response.json()
-                ratio.assert_safe(data)
-                assert_safe_payload(data)
+                if path == "/api/environment/status":
+                    assert_environment_status_payload(data)
+                else:
+                    ratio.assert_safe(data)
+                    assert_safe_payload(data)
             except Exception as exc:  # noqa: BLE001
                 self.fail(
                     "api_ratio_only",
@@ -1713,6 +1789,7 @@ class WebCheck:
         self.add_result("api_forbidden_fields", api_status, f"{len(API_PATHS)} endpoints")
 
         self.check_api_is_read_only(client)
+        self.check_environment_status_api(client)
         self.check_subject_status_api(client, ratio)
         self.check_subject_gap_api(client, ratio)
         self.check_dashboard_api(client, ratio)
@@ -1752,6 +1829,40 @@ class WebCheck:
             self.add_result("openapi_read_only", "FAIL", "; ".join(mutating))
         else:
             self.add_result("openapi_read_only", "PASS", "No POST/PUT/PATCH/DELETE under /api")
+
+    def check_environment_status_api(self, client: Any) -> None:
+        try:
+            response = client.get("/api/environment/status")
+            if response.status_code != 200:
+                raise ValueError(f"Expected 200, got {response.status_code}")
+            payload = response.json()
+            assert_environment_status_payload(payload)
+            if payload.get("module") != "environment_status":
+                raise ValueError("module mismatch")
+            if payload.get("readonly") is not True or payload.get("current_only") is not True:
+                raise ValueError("top-level readonly/current-only flags are not true")
+            safety = payload.get("safety") or {}
+            for key in ["no_trading", "no_qmt_write", "no_order_generation", "research_first_gate_required"]:
+                if safety.get(key) is not True:
+                    raise ValueError(f"safety flag is not true: {key}")
+            if safety.get("research_current_mutation") is not False:
+                raise ValueError("research_current_mutation must be false")
+            web = payload.get("web") or {}
+            if web.get("default_host") != "0.0.0.0" or web.get("default_port") != 8000:
+                raise ValueError("default Web host/port changed")
+            paths = payload.get("paths") or {}
+            if paths.get("web_db_path") != "temp/web_db/myinvest.sqlite":
+                raise ValueError("web_db_path must be repo-relative temp/web_db/myinvest.sqlite")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("environment_status_api", "FAIL", str(exc))
+            self.fail(
+                "environment_status_api",
+                "/api/environment/status",
+                f"Environment status API failed safety check: {exc}",
+                "Return sanitized read-only metadata only, with repo-relative paths.",
+            )
+            return
+        self.add_result("environment_status_api", "PASS", "read-only workbench environment status safe")
 
     def check_subject_gap_api(self, client: Any, ratio: Any) -> None:
         try:
@@ -3066,13 +3177,23 @@ def assert_safe_payload(value: Any) -> None:
     assert_safe_keys(value)
 
 
+def assert_environment_status_payload(value: Any) -> None:
+    serialized = json.dumps(value, ensure_ascii=False, sort_keys=True)
+    if LOCAL_PATH_RE.search(serialized):
+        raise ValueError("environment status contains a local absolute path")
+    if re.search(r"(\.env|token|secret|password|api key)", serialized, re.IGNORECASE):
+        raise ValueError("environment status contains a secret-like term")
+    assert_safe_payload(value)
+
+
 def assert_safe_keys(value: Any, path: str = "$") -> None:
     if isinstance(value, dict):
         for key, item in value.items():
             key_text = str(key)
-            if FORBIDDEN_KEY_RE.search(key_text):
+            key_path = f"{path}.{key_text}"
+            if key_path not in ALLOWED_FORBIDDEN_KEY_PATHS and FORBIDDEN_KEY_RE.search(key_text):
                 raise ValueError(f"forbidden key {path}.{key_text}")
-            assert_safe_keys(item, f"{path}.{key_text}")
+            assert_safe_keys(item, key_path)
     elif isinstance(value, list):
         for idx, item in enumerate(value):
             assert_safe_keys(item, f"{path}[{idx}]")

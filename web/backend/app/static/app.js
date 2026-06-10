@@ -40,6 +40,10 @@
     return value ? "yes" : "no";
   }
 
+  function isAllowedSafetyKey(path, key) {
+    return key === "no_order_generation" && (path === "$.safety" || path === "$.data.safety");
+  }
+
   function assertRatioOnly(value, path = "$") {
     if (Array.isArray(value)) {
       value.forEach((item, index) => assertRatioOnly(item, `${path}[${index}]`));
@@ -47,7 +51,7 @@
     }
     if (value && typeof value === "object") {
       Object.entries(value).forEach(([key, item]) => {
-        if (forbiddenKeyRe.test(String(key))) {
+        if (forbiddenKeyRe.test(String(key)) && !isAllowedSafetyKey(path, key)) {
           throw new Error(`ratio-only blocked key ${path}.${key}`);
         }
         assertRatioOnly(item, `${path}.${key}`);
@@ -806,6 +810,44 @@
     ]);
   }
 
+  function renderEnvironment(data) {
+    const git = data.git || {};
+    const paths = data.paths || {};
+    const web = data.web || {};
+    const checks = data.checks || {};
+    setBind("env_readonly", data.readonly ? "read-only" : "check");
+    setBind("env_current_only", data.current_only ? "current-only" : "check");
+    setBind("env_ratio_only", data.ratio_only ? "ratio-only" : "check");
+    setBind("env_branch", git.branch || git.current_branch);
+    setBind("env_commit", text(git.commit || git.current_commit).slice(0, 12));
+    setBind("env_baseline", git.baseline_tag);
+    setBind("env_is_worktree", yesNo(git.is_worktree));
+    setBind("env_main_repo", git.main_repo_path);
+    setBind("env_dirty_status", git.dirty_status || (git.dirty ? "dirty" : "clean"));
+    setBind("env_project_root", paths.project_root);
+    setBind("env_temp_dir", paths.temp_dir);
+    setBind("env_web_db_path", paths.web_db_path);
+    setBind("env_web_runtime_dir", paths.web_runtime_dir);
+    setBind("env_web_exports_dir", paths.web_exports_dir);
+    setBind("env_candidate_exports_dir", paths.candidate_exports_dir);
+    setBind("env_history_exports_dir", paths.history_exports_dir);
+    setBind("env_default_host", web.default_host);
+    setBind("env_default_port", web.default_port);
+    setBind("env_phase10_port", web.phase10_recommended_port);
+    setBind("env_current_host", web.current_host);
+    setBind("env_current_port", web.current_port);
+    setBind("env_lan_mode", web.lan_mode_enabled ? "enabled" : "disabled");
+    setStatusCard("env-readonly", data.readonly ? "ok" : "fail");
+    setStatusCard("env-current-only", data.current_only ? "ok" : "fail");
+    setStatusCard("env-ratio-only", data.ratio_only ? "ok" : "fail");
+    setRows(
+      "environmentCheckRows",
+      Object.entries(checks).map(([name, status]) => ({ name, status })),
+      (row) => [row.name, row.status],
+      (row) => `check: ${row.name || ""} | status: ${row.status || ""}`,
+    );
+  }
+
   function renderDecisionLog(data) {
     setRows("decisionRows", data.entries || [], (row) => [row.entry_time, row.summary], (row) => row.ratio_only_text || row.summary || "");
   }
@@ -953,6 +995,7 @@
     portfolio: renderPortfolio,
     "intraday-rules": renderIntradayRules,
     "system-checks": renderSystemChecks,
+    environment: renderEnvironment,
     "decision-log": renderDecisionLog,
     "decision-timeline": renderDecisionTimeline,
     "historical-metrics": renderHistoricalMetrics,
@@ -968,7 +1011,8 @@
       if (!response.ok || payload.ok === false) {
         throw new Error(payload.detail || "API refresh failed");
       }
-      renderers[page](payload.data);
+      const data = Object.prototype.hasOwnProperty.call(payload, "data") ? payload.data : payload;
+      renderers[page](data);
       updateRefreshStatus(`updated ${new Date().toLocaleTimeString()}`);
     } catch (error) {
       updateRefreshStatus(error.message || "refresh failed", false);

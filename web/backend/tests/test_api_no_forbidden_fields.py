@@ -10,12 +10,15 @@ FORBIDDEN_KEY_RE = re.compile(
     re.IGNORECASE,
 )
 LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:(?!//)[\\/]|\\\\|/Users/|/home/)")
+ALLOWED_FORBIDDEN_KEY_PATHS = {"$.safety.no_order_generation"}
 
 
 def walk(value: Any, path: str = "$"):
     if isinstance(value, dict):
         for key, item in value.items():
-            assert not FORBIDDEN_KEY_RE.search(str(key)), f"forbidden key {path}.{key}"
+            key_path = f"{path}.{key}"
+            if key_path not in ALLOWED_FORBIDDEN_KEY_PATHS:
+                assert not FORBIDDEN_KEY_RE.search(str(key)), f"forbidden key {key_path}"
             walk(item, f"{path}.{key}")
     elif isinstance(value, list):
         for idx, item in enumerate(value):
@@ -27,6 +30,7 @@ def walk(value: Any, path: str = "$"):
 def test_current_apis_do_not_return_forbidden_fields(client):
     paths = [
         "/api/health",
+        "/api/environment/status",
         "/api/dashboard/current",
         "/api/current",
         "/api/latest-index",

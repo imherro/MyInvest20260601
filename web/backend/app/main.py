@@ -16,6 +16,7 @@ from .services.current_state import CurrentStateService
 from .services.bucket_explorer import BucketExplorerService
 from .services.dashboard import DashboardService
 from .services.decision_timeline import DecisionTimelineService
+from .services.environment_status import EnvironmentStatusService
 from .services.history_gap_dashboard import HistoryGapDashboardService
 from .services.historical_metrics import HistoricalMetricsService
 from .services.subject_gap import SubjectGapService
@@ -52,6 +53,21 @@ def dashboard_page(request: Request, session: Session = Depends(get_session)) ->
             "dashboard",
             "/api/dashboard/current",
             dashboard=dashboard,
+        ),
+    )
+
+
+@app.get("/settings", response_class=HTMLResponse)
+@app.get("/environment", response_class=HTMLResponse)
+def environment_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "environment.html",
+        page_context(
+            request,
+            "environment",
+            "/api/environment/status",
+            environment=EnvironmentStatusService().status(),
         ),
     )
 

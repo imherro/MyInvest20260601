@@ -11,6 +11,22 @@ def test_pages_include_refresh_export_and_interaction_hooks(client):
     assert "data-sort=\"number\"" in html
 
 
+def test_environment_page_include_refresh_and_status_hooks(client):
+    response = client.get("/settings")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "/api/environment/status" in html
+    assert "data-environment-section=\"git\"" in html
+    assert "data-environment-section=\"safety\"" in html
+    assert "data-status-card=\"env-readonly\"" in html
+    assert "data-bind=\"env_branch\"" in html
+    assert "environmentCheckRows" in html
+    script = client.get("/static/app.js").text
+    assert "function renderEnvironment" in script
+    assert "no_order_generation" in script
+
+
 def test_subject_gap_page_include_refresh_and_table_hooks(client):
     response = client.get("/subjects/gap")
     assert response.status_code == 200
@@ -156,6 +172,7 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderSubjectGap" in script
     assert "function renderSubjectGapChart" in script
     assert "function renderDashboardQuickLinks" in script
+    assert "function renderEnvironment" in script
     assert "function renderThemes" in script
     assert "function renderBucketDrilldown" in script
     assert "function renderBucketDrilldownChart" in script

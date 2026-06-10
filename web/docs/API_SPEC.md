@@ -12,9 +12,12 @@ All endpoints are read-only and return:
 }
 ```
 
+Exception: `GET /api/environment/status` returns its environment status object directly to match the Phase 10A workbench contract. It still has a dedicated read-only safety scan and must not expose sensitive fields.
+
 Endpoints:
 
 - `GET /api/health`
+- `GET /api/environment/status`
 - `GET /api/dashboard/current`
 - `GET /api/current`
 - `GET /api/latest-index`
@@ -56,6 +59,20 @@ Endpoints:
 All responses pass `RatioOnlyService` before returning. A sanitizer failure returns HTTP 500.
 
 OpenAPI docs are exposed by FastAPI at `GET /docs` while the local server is running.
+
+## Workbench Environment Center
+
+Phase 10A adds a read-only workbench environment endpoint:
+
+- `GET /api/environment/status`
+
+The endpoint returns sanitized Git, worktree, runtime path, Web server, safety-boundary, and latest known check-status metadata for the local Web workbench. It does not read `latest_index.files`, write research artifacts, mutate `research/current`, generate target allocations, generate action plans, or connect to trading/QMT write interfaces.
+
+All paths in the response are repo-relative strings such as `temp/web_db/myinvest.sqlite` or safe redacted labels. The response must not expose local absolute paths, `.env` content, tokens, secrets, passwords, API keys, account context, trade records, or execution output.
+
+The environment endpoint uses a dedicated environment safety scan because it includes the negative safety declaration `safety.no_order_generation=true`. That key is allowed only as a boolean safety-boundary statement and must not contain or expose order records.
+
+The same data backs `GET /settings` and `GET /environment`.
 
 ## Research Dashboard
 

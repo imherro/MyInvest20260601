@@ -48,6 +48,26 @@ Use trusted-LAN mode only on networks you control. Do not expose the Web UI to t
 
 The Web UI is FastAPI + Jinja2 with a small static refresh script. There is no React build step in this phase.
 
+## Phase 10A Workbench Environment Center
+
+Phase 10A adds a read-only settings page for the local workbench:
+
+- Page: `GET /settings`
+- Alias: `GET /environment`
+- API: `GET /api/environment/status`
+
+The page displays sanitized Git/worktree metadata, the baseline tag when available, repo-relative runtime paths, the Web host/port contract, read-only safety boundaries, and latest known check status. It does not read `latest_index.files`, mutate `research/current`, write `research/latest_index.json`, generate target allocations, generate action plans, or add trading/QMT write behavior.
+
+The environment API returns only repo-relative paths such as `temp/web_db/myinvest.sqlite` or safe redacted labels. It must not expose local absolute paths, `.env` content, tokens, secrets, passwords, API keys, account context, trade records, runtime files, or SQLite file contents.
+
+In the Phase 10 independent worktree, run the development server on port `8010` to avoid the original workspace service on port `8000`:
+
+```bash
+python scripts/run_web.py --port 8010
+```
+
+The default `scripts/run_web.py` host/port contract remains `0.0.0.0:8000` for the main Web runbook and regression tests.
+
 ## Run Tests
 
 ```bash

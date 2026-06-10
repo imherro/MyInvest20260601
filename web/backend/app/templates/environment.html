@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Workbench Settings{% endblock %}
+
+{% block content %}
+<section class="dashboard-grid" data-environment-section="summary">
+  <div class="metric ok" data-status-card="env-readonly">
+    <span>Mode</span>
+    <strong data-bind="env_readonly">{{ "read-only" if environment.readonly else "check" }}</strong>
+  </div>
+  <div class="metric ok" data-status-card="env-current-only">
+    <span>Current boundary</span>
+    <strong data-bind="env_current_only">{{ "current-only" if environment.current_only else "check" }}</strong>
+  </div>
+  <div class="metric ok" data-status-card="env-ratio-only">
+    <span>Privacy boundary</span>
+    <strong data-bind="env_ratio_only">{{ "ratio-only" if environment.ratio_only else "check" }}</strong>
+  </div>
+</section>
+
+<section class="dashboard-grid">
+  <div class="row-card" data-environment-section="git">
+    <h2>Git / Worktree</h2>
+    <div class="summary-line"><span>Branch</span><strong data-bind="env_branch">{{ environment.git.branch }}</strong></div>
+    <div class="summary-line"><span>Commit</span><strong data-bind="env_commit">{{ environment.git.commit[:12] }}</strong></div>
+    <div class="summary-line"><span>Baseline</span><strong data-bind="env_baseline">{{ environment.git.baseline_tag }}</strong></div>
+    <div class="summary-line"><span>Worktree</span><strong data-bind="env_is_worktree">{{ "yes" if environment.git.is_worktree else "no" }}</strong></div>
+    <div class="summary-line"><span>Main repo</span><strong data-bind="env_main_repo">{{ environment.git.main_repo_path }}</strong></div>
+    <div class="summary-line"><span>Status</span><strong data-bind="env_dirty_status">{{ environment.git.dirty_status }}</strong></div>
+  </div>
+
+  <div class="row-card" data-environment-section="paths">
+    <h2>Runtime Paths</h2>
+    <div class="summary-line"><span>Project root</span><strong data-bind="env_project_root">{{ environment.paths.project_root }}</strong></div>
+    <div class="summary-line"><span>Temp</span><strong data-bind="env_temp_dir">{{ environment.paths.temp_dir }}</strong></div>
+    <div class="summary-line"><span>Web DB</span><strong data-bind="env_web_db_path">{{ environment.paths.web_db_path }}</strong></div>
+    <div class="summary-line"><span>Runtime</span><strong data-bind="env_web_runtime_dir">{{ environment.paths.web_runtime_dir }}</strong></div>
+    <div class="summary-line"><span>Exports</span><strong data-bind="env_web_exports_dir">{{ environment.paths.web_exports_dir }}</strong></div>
+    <div class="summary-line"><span>Candidate exports</span><strong data-bind="env_candidate_exports_dir">{{ environment.paths.candidate_exports_dir }}</strong></div>
+    <div class="summary-line"><span>History exports</span><strong data-bind="env_history_exports_dir">{{ environment.paths.history_exports_dir }}</strong></div>
+  </div>
+
+  <div class="row-card" data-environment-section="web">
+    <h2>Web Server</h2>
+    <div class="summary-line"><span>Default host</span><strong data-bind="env_default_host">{{ environment.web.default_host }}</strong></div>
+    <div class="summary-line"><span>Default port</span><strong data-bind="env_default_port">{{ environment.web.default_port }}</strong></div>
+    <div class="summary-line"><span>Phase 10 port</span><strong data-bind="env_phase10_port">{{ environment.web.phase10_recommended_port }}</strong></div>
+    <div class="summary-line"><span>Current host</span><strong data-bind="env_current_host">{{ environment.web.current_host }}</strong></div>
+    <div class="summary-line"><span>Current port</span><strong data-bind="env_current_port">{{ environment.web.current_port }}</strong></div>
+    <div class="summary-line"><span>LAN mode</span><strong data-bind="env_lan_mode">{{ "enabled" if environment.web.lan_mode_enabled else "disabled" }}</strong></div>
+  </div>
+
+  <div class="row-card" data-environment-section="safety">
+    <h2>Safety Boundary</h2>
+    <ul class="list">
+      <li>This is a read-only research workbench.</li>
+      <li>It is not a trading system.</li>
+      <li>It does not connect to QMT write interfaces.</li>
+      <li>It does not generate orders.</li>
+      <li>It does not display money, share counts, or account identifiers.</li>
+      <li>LAN mode is for trusted networks only.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Check Status</h2>
+  <table data-page-size="12">
+    <thead>
+      <tr>
+        <th>Check</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="environmentCheckRows">
+      {% for name, status in environment.checks.items() %}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Quick Links</h2>
+  <div class="quick-links">
+    <a class="button-link" href="/">Dashboard</a>
+    <a class="button-link" href="/subjects">Subjects</a>
+    <a class="button-link" href="/subjects/gap">Subject Gap</a>
+    <a class="button-link" href="/themes">Themes</a>
+    <a class="button-link" href="/buckets">Buckets</a>
+    <a class="button-link" href="/decision-timeline">Decision Timeline</a>
+    <a class="button-link" href="/historical-metrics">Historical Metrics</a>
+  </div>
+</section>
+{% endblock %}
