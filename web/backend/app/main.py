@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from urllib.parse import quote
+
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -9,6 +11,7 @@ from sqlalchemy.orm import Session
 from .config import STATIC_DIR, TEMPLATE_DIR
 from .db import get_session
 from .routers.current import router as current_router
+from .services.allocation_drilldown import AllocationDrilldownService
 from .services.current_state import CurrentStateService
 from .services.bucket_explorer import BucketExplorerService
 from .services.dashboard import DashboardService
@@ -153,6 +156,42 @@ def buckets_page(request: Request, session: Session = Depends(get_session)) -> H
             "/api/buckets/status",
             buckets=buckets["buckets"],
             summary=buckets["summary"],
+        ),
+    )
+
+
+@app.get("/buckets/drilldown", response_class=HTMLResponse)
+def buckets_drilldown_page(request: Request, bucket: str | None = None, session: Session = Depends(get_session)) -> HTMLResponse:
+    drilldown = AllocationDrilldownService(session).buckets(bucket=bucket, detail="full")
+    api_path = "/api/buckets/drilldown?detail=full"
+    if bucket:
+        api_path += "&bucket=" + quote(bucket, safe="")
+    return templates.TemplateResponse(
+        request,
+        "buckets_drilldown.html",
+        page_context(
+            request,
+            "buckets-drilldown",
+            api_path,
+            drilldown=drilldown,
+        ),
+    )
+
+
+@app.get("/subjects/drilldown", response_class=HTMLResponse)
+def subjects_drilldown_page(request: Request, subject: str | None = None, session: Session = Depends(get_session)) -> HTMLResponse:
+    drilldown = AllocationDrilldownService(session).subjects(subject=subject, detail="full")
+    api_path = "/api/subjects/drilldown?detail=full"
+    if subject:
+        api_path += "&subject=" + quote(subject, safe="")
+    return templates.TemplateResponse(
+        request,
+        "subjects_drilldown.html",
+        page_context(
+            request,
+            "subjects-drilldown",
+            api_path,
+            drilldown=drilldown,
         ),
     )
 

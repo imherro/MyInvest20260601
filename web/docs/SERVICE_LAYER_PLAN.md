@@ -1,6 +1,6 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
@@ -22,6 +22,8 @@ These services are available in the Web layer and must remain read-only:
 - `DashboardService`: aggregates existing read-only services into the Research Dashboard API and page summary.
 - `ThemeStatusService`: reads current theme/leader/ETF/stock artifact payloads and returns neutral theme research status for Web display.
 - `BucketExplorerService`: joins current target-allocation buckets, portfolio positions, subject gate status, and subject freshness for Web allocation drilldown.
+- `HistoryGapDashboardService`: aggregates current allocation gaps, shadow/candidate audit snapshots, and history entry summaries for Web display.
+- `AllocationDrilldownService`: aggregates current target-allocation, portfolio, subject gap, subject status, market-position, and theme summaries into bucket/subject drilldown views.
 - `target_allocation_mode`: reads `MYINVEST_TARGET_ALLOCATION_MODE` and reports whether the requested mode is allowed or blocked.
 - `ActionPlanService`: exposes action-plan read helpers.
 - `PortfolioService`: exposes portfolio ratio snapshot read helpers.
@@ -56,10 +58,11 @@ Future service names are planning boundaries only. They do not authorize trading
 12. Add a theme research center that aggregates current theme registry state. Completed in Phase 7E.
 13. Add a bucket explorer that drills from allocation buckets into subject gate and freshness status. Completed in Phase 7F.
 14. Add a history gap dashboard for read-only allocation audit drilldown. Completed in Phase 7G.
-15. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
-16. At each step, extend golden tests to compare old-script output with new-service output.
-17. If any golden test differs, do not replace the old script.
-18. Keep old scripts as reference implementations until migration is stable.
+15. Add allocation drilldown APIs/pages that join bucket and subject current-state rows for Web review. Completed in Phase 7H.
+16. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
+17. At each step, extend golden tests to compare old-script output with new-service output.
+18. If any golden test differs, do not replace the old script.
+19. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -251,6 +254,21 @@ The bucket explorer is an allocation visibility page. It is not a target-allocat
 - leave `research/latest_index.json`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions` unchanged
 
 The history gap dashboard is an allocation audit visibility page. It is not a target-allocation generator, action-plan generator, promotion mechanism, trading page, export writer, or execution adapter.
+
+## Phase 7H Allocation Drilldown Rules
+
+`AllocationDrilldownService` must:
+
+- read current SQLite state produced from `research/latest_index.json` `modules`
+- join target-allocation bucket rows with portfolio-position, subject gap, subject status, market-position, and theme summary rows
+- return only ratio-only percentages, percentage-point gaps, timestamps, neutral status labels, and relative Web review links
+- keep bucket actual/target/gap values aligned with current target-allocation rows
+- keep subject gate conclusions neutral and block buy/add/reduce/sell conclusions from the drilldown API
+- keep `/api/buckets/drilldown`, `/api/subjects/drilldown`, `/buckets/drilldown`, and `/subjects/drilldown` read-only
+- pass every API response through `RatioOnlyService`
+- leave `research/latest_index.json`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions` unchanged
+
+Allocation drilldown is a visibility and review helper. It is not a target-allocation generator, action-plan generator, promotion mechanism, trading page, order workflow, or QMT write adapter.
 
 ## Hard Service Boundaries
 

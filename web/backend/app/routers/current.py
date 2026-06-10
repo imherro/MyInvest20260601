@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from ..config import DB_PATH
 from ..db import get_session
+from ..services.allocation_drilldown import AllocationDrilldownService
 from ..services.allocation_consistency import AllocationConsistencyService
 from ..services.bucket_explorer import BucketExplorerService
 from ..services.current_state import CurrentStateService
@@ -137,6 +138,32 @@ def bucket_status(bucket: str, session: Session = Depends(get_session)) -> dict[
     except LookupError as exc:
         raise HTTPException(status_code=404, detail="bucket status not found") from exc
     return respond({"bucket": data}, source={"path": "db.bucket_explorer"})
+
+
+@router.get("/buckets/drilldown")
+def bucket_drilldown(
+    bucket: str | None = None,
+    detail: Literal["summary", "full"] = "summary",
+    session: Session = Depends(get_session),
+) -> dict[str, Any]:
+    try:
+        data = AllocationDrilldownService(session).buckets(bucket=bucket, detail=detail)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="bucket drilldown not found") from exc
+    return respond(data, source={"path": "db.AllocationDrilldownService"})
+
+
+@router.get("/subjects/drilldown")
+def subject_drilldown(
+    subject: str | None = None,
+    detail: Literal["summary", "full"] = "summary",
+    session: Session = Depends(get_session),
+) -> dict[str, Any]:
+    try:
+        data = AllocationDrilldownService(session).subjects(subject=subject, detail=detail)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="subject drilldown not found") from exc
+    return respond(data, source={"path": "db.AllocationDrilldownService"})
 
 
 @router.get("/market-position/mapping")

@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add history gap dashboard"
+COMMIT_MESSAGE = "feat(web): add allocation drilldown and drill-through actions"
 
 API_PATHS = [
     "/api/health",
@@ -35,6 +35,9 @@ API_PATHS = [
     "/api/subjects/gap",
     "/api/themes/status",
     "/api/buckets/status",
+    "/api/buckets/drilldown?detail=full",
+    "/api/subjects/drilldown?detail=full",
+    "/api/subjects/drilldown?subject=511360.SH&detail=full",
     "/api/market-position/mapping",
     "/api/market-position/current",
     "/api/market-position/score/25",
@@ -70,6 +73,8 @@ PAGE_PATHS = [
     "/themes",
     "/history/gap-dashboard",
     "/buckets",
+    "/buckets/drilldown",
+    "/subjects/drilldown",
     "/portfolio",
     "/intraday-rules",
     "/decision-log",
@@ -84,6 +89,8 @@ INTERACTIVE_PAGE_CHECKS = {
     "/themes": ["data-table-search", "data-table-filter", "data-sort", "themesRows"],
     "/history/gap-dashboard": ["data-table-search", "data-table-filter", "data-sort", "historyGapRows", "historyEntryRows"],
     "/buckets": ["data-table-search", "data-table-filter", "data-sort", "bucketRows", "bucketSubjectRows"],
+    "/buckets/drilldown": ["data-table-search", "data-table-filter", "data-sort", "bucketDrilldownRows", "bucketDrilldownChart"],
+    "/subjects/drilldown": ["data-table-search", "data-table-filter", "data-sort", "subjectDrilldownRows"],
     "/portfolio": ["data-table-search", "data-sort", "portfolioRows"],
     "/intraday-rules": ["data-table-search", "data-sort", "intradayRows", "disabledTriggerRows"],
     "/decision-log": ["data-table-search", "data-sort", "decisionRows"],
@@ -112,6 +119,9 @@ JS_CHECKS = [
     "function renderHistoryGapDashboard",
     "function renderHistoryGapChart",
     "function renderBuckets",
+    "function renderBucketDrilldown",
+    "function renderBucketDrilldownChart",
+    "function renderSubjectDrilldown",
     "function setupFilters",
     "detail-row",
     "expandable-row",
@@ -231,6 +241,16 @@ PHASE7E_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
+PHASE7F_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "buckets.html",
+    ROOT / "web" / "backend" / "tests" / "test_bucket_explorer.py",
+    ROOT / "web" / "docs" / "BUCKET_EXPLORER.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
 PHASE7G_FILES = [
     ROOT / "web" / "backend" / "app" / "services" / "history_gap_dashboard.py",
     ROOT / "web" / "backend" / "app" / "templates" / "history_gap_dashboard.html",
@@ -241,11 +261,12 @@ PHASE7G_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
-PHASE7F_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "buckets.html",
-    ROOT / "web" / "backend" / "tests" / "test_bucket_explorer.py",
-    ROOT / "web" / "docs" / "BUCKET_EXPLORER.md",
+PHASE7H_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "allocation_drilldown.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "buckets_drilldown.html",
+    ROOT / "web" / "backend" / "app" / "templates" / "subjects_drilldown.html",
+    ROOT / "web" / "backend" / "tests" / "test_allocation_drilldown.py",
+    ROOT / "web" / "docs" / "ALLOCATION_DRILLDOWN.md",
     ROOT / "web" / "docs" / "API_SPEC.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
@@ -494,6 +515,7 @@ class WebCheck:
         self.check_phase7e_contract_files()
         self.check_phase7f_contract_files()
         self.check_phase7g_contract_files()
+        self.check_phase7h_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -918,6 +940,50 @@ class WebCheck:
             return
         self.add_result("phase7f_bucket_files", "PASS", "bucket explorer service/API/page/tests/docs present")
 
+    def check_phase7h_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7H_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7h_allocation_drilldown_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7h_allocation_drilldown_files",
+                ", ".join(missing),
+                "Phase 7H allocation drilldown service/pages/tests/docs are missing.",
+                "Add the allocation drilldown service, pages, tests, and ALLOCATION_DRILLDOWN.md, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7H_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "allocation drilldown" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7H docs must describe allocation drilldown and read-only boundaries")
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "allocation_drilldown.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("allocation drilldown service references latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "qmt_portfolio_snapshot", "qmt_export_history"]:
+                if blocked in service_text:
+                    raise ValueError(f"allocation drilldown service references blocked script/runtime: {blocked}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7h_allocation_drilldown_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7h_allocation_drilldown_safety",
+                rel(path),
+                f"Phase 7H file failed safety scan: {exc}",
+                "Remove local paths, keep current-only module resolution, and document allocation drilldown read-only boundaries.",
+            )
+            return
+        self.add_result(
+            "phase7h_allocation_drilldown_files",
+            "PASS",
+            "allocation drilldown service/API/pages/tests/docs present",
+        )
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -1028,6 +1094,7 @@ class WebCheck:
         self.check_theme_status_api(client, ratio)
         self.check_history_gap_api(client, ratio)
         self.check_bucket_status_api(client, ratio)
+        self.check_allocation_drilldown_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
@@ -1373,6 +1440,100 @@ class WebCheck:
             self.add_result("bucket_status_api", "FAIL", str(exc))
         else:
             self.add_result("bucket_status_api", "PASS", "bucket summary, details, and neutral statuses safe")
+
+    def check_allocation_drilldown_api(self, client: Any, ratio: Any) -> None:
+        try:
+            bucket_response = client.get("/api/buckets/drilldown?detail=full")
+            if bucket_response.status_code != 200:
+                raise ValueError(f"bucket drilldown API returned {bucket_response.status_code}")
+            bucket_payload = bucket_response.json()
+            ratio.assert_safe(bucket_payload)
+            assert_safe_payload(bucket_payload)
+            bucket_data = bucket_payload.get("data") or {}
+            if bucket_data.get("module") != "allocation_bucket_drilldown" or bucket_data.get("current_only") is not True:
+                raise ValueError("bucket drilldown payload is not marked current-only")
+            buckets = bucket_data.get("buckets") or []
+            if not buckets:
+                raise ValueError("bucket drilldown rows are empty")
+            if (bucket_data.get("summary") or {}).get("bucket_count") != len(buckets):
+                raise ValueError("bucket drilldown summary count does not match rows")
+            safety = bucket_data.get("safety") or {}
+            for key in ["ratio_only", "current_only", "read_only", "uses_latest_index_modules"]:
+                if safety.get(key) is not True:
+                    raise ValueError(f"bucket drilldown safety check failed: {key}")
+            for key in [
+                "uses_latest_index_files",
+                "generates_action_plan",
+                "generates_target_allocation",
+                "trading_feature",
+                "qmt_write_feature",
+            ]:
+                if safety.get(key) is not False:
+                    raise ValueError(f"bucket drilldown boundary check failed: {key}")
+
+            target_response = client.get("/api/target-allocation/current")
+            target = (((target_response.json() or {}).get("data") or {}).get("target_allocation") or {})
+            target_map = {row.get("bucket"): row for row in target.get("buckets", [])}
+            for row in buckets:
+                bucket = row.get("bucket")
+                if bucket not in target_map:
+                    raise ValueError(f"bucket drilldown bucket not in target allocation: {bucket}")
+                expected = target_map[bucket]
+                for key in ["actual_pct", "target_pct", "gap_pct"]:
+                    if row.get(key) != expected.get(key):
+                        raise ValueError(f"{bucket} {key} mismatch")
+                if row.get("gap_status") not in {"green", "yellow", "red", "unknown"}:
+                    raise ValueError(f"unexpected bucket gap status: {row.get('gap_status')}")
+
+            first_bucket = buckets[0].get("bucket")
+            detail_response = client.get(f"/api/buckets/drilldown?bucket={first_bucket}&detail=full")
+            if detail_response.status_code != 200:
+                raise ValueError(f"bucket detail returned {detail_response.status_code}")
+            ratio.assert_safe(detail_response.json())
+            assert_safe_payload(detail_response.json())
+
+            subject_response = client.get("/api/subjects/drilldown?detail=full")
+            if subject_response.status_code != 200:
+                raise ValueError(f"subject drilldown API returned {subject_response.status_code}")
+            subject_payload = subject_response.json()
+            ratio.assert_safe(subject_payload)
+            assert_safe_payload(subject_payload)
+            subject_data = subject_payload.get("data") or {}
+            if subject_data.get("module") != "allocation_subject_drilldown" or subject_data.get("current_only") is not True:
+                raise ValueError("subject drilldown payload is not marked current-only")
+            subjects = subject_data.get("subjects") or []
+            if not subjects:
+                raise ValueError("subject drilldown rows are empty")
+            if (subject_data.get("summary") or {}).get("subject_count") != len(subjects):
+                raise ValueError("subject drilldown summary count does not match rows")
+            for row in subjects:
+                if row.get("gate_conclusion") in {"buy", "add", "reduce", "sell"}:
+                    raise ValueError(f"subject drilldown leaked action conclusion: {row.get('code')}")
+            cash_response = client.get("/api/subjects/drilldown?subject=511360.SH&detail=full")
+            if cash_response.status_code != 200:
+                raise ValueError(f"511360 subject detail returned {cash_response.status_code}")
+            cash_payload = cash_response.json()
+            ratio.assert_safe(cash_payload)
+            assert_safe_payload(cash_payload)
+            cash_rows = ((cash_payload.get("data") or {}).get("subjects") or [])
+            if len(cash_rows) != 1 or cash_rows[0].get("bucket") != "cash_short":
+                raise ValueError("511360 subject drilldown is not cash_short")
+            missing_bucket = client.get("/api/buckets/drilldown?bucket=NO_SUCH_BUCKET")
+            missing_subject = client.get("/api/subjects/drilldown?subject=NO_SUCH_SUBJECT")
+            if missing_bucket.status_code != 404 or missing_subject.status_code != 404:
+                raise ValueError("missing drilldown lookup did not return 404")
+            ratio.assert_safe(missing_bucket.json())
+            ratio.assert_safe(missing_subject.json())
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "allocation_drilldown_api",
+                "/api/buckets/drilldown, /api/subjects/drilldown",
+                f"Allocation drilldown API failed safety/current-state scan: {exc}",
+                "Fix AllocationDrilldownService or its routes and rerun scripts/web_check.py.",
+            )
+            self.add_result("allocation_drilldown_api", "FAIL", str(exc))
+        else:
+            self.add_result("allocation_drilldown_api", "PASS", "bucket/subject drilldown rows safe and consistent")
 
     def check_export_json(self, client: Any, ratio: Any) -> None:
         response = client.get("/api/export/review_package?format=json")
