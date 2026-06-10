@@ -40,6 +40,18 @@ The ZIP allowlist is:
 - `live_current_summary.json`
 - `safety_checks.json`
 
+## Phase 9E Runtime DB Policy
+
+Phase 9E keeps the existing Phase 6 runtime history database write as an explicit temp-only exception. The only allowed runtime database path is:
+
+```text
+temp/web_runtime/history_snapshot.sqlite
+```
+
+This file is ignored by Git. It is not the current Web SQLite database, not current research state, and not a source for `latest_index.modules`. `HistorySnapshotRepository` guards the path before writing and rejects any path outside `temp/web_runtime/`, any filename other than `history_snapshot.sqlite`, and any non-`.sqlite` suffix.
+
+The runtime database may be written only by explicit history snapshot export flows. API payloads and ZIP/JSON exports must not include the runtime path, SQLite file contents, local absolute paths, or sensitive fields.
+
 ## Safety Contract
 
 The history snapshot must remain:

@@ -11,6 +11,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+import pytest
+
 from web.backend.app.db import SessionLocal
 from web.backend.app.services.history_snapshot import (
     HISTORY_DB_PATH,
@@ -348,3 +350,17 @@ def test_history_snapshot_repository_scans_temp_json_safely(monkeypatch):
     finally:
         shutil.rmtree(controlled_dir, ignore_errors=True)
         shutil.rmtree(candidate_dir, ignore_errors=True)
+
+
+def test_history_snapshot_runtime_db_policy_is_temp_runtime_only():
+    assert HISTORY_DB_PATH.relative_to(ROOT).as_posix() == "temp/web_runtime/history_snapshot.sqlite"
+    HistorySnapshotRepository.assert_history_database_path()
+
+    for unsafe_path in [
+        ROOT / "temp" / "web_db" / "myinvest.sqlite",
+        ROOT / "research" / "history_snapshot.sqlite",
+        ROOT / "temp" / "web_runtime" / "other.sqlite",
+        ROOT / "temp" / "web_runtime" / "history_snapshot.db",
+    ]:
+        with pytest.raises(ValueError):
+            HistorySnapshotRepository.assert_history_database_path(unsafe_path)

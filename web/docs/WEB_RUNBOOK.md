@@ -673,7 +673,7 @@ ZIP export:
 python scripts/export_history_snapshot.py --format zip
 ```
 
-History snapshot CLI exports write only to ignored temporary export folders and write the local history database only under ignored runtime storage. Exported JSON and ZIP payloads must not contain runtime paths.
+History snapshot CLI exports write only to ignored temporary export folders and write the local history database only under ignored runtime storage. Phase 9E keeps this as an explicit temp-only exception: the only allowed runtime database path is `temp/web_runtime/history_snapshot.sqlite`. It is not the current Web SQLite database, not current research state, not a source for `latest_index.modules`, and must never be committed. Exported JSON and ZIP payloads must not contain runtime paths.
 
 Read-only API:
 

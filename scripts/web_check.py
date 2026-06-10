@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "refactor(web): consolidate current state repository to DatabaseService"
+COMMIT_MESSAGE = "refactor(web): consolidate history snapshot runtime DB access Phase 9E"
 
 API_PATHS = [
     "/api/health",
@@ -348,6 +348,15 @@ PHASE9D_FILES = [
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
 ]
 
+PHASE9E_FILES = [
+    ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py",
+    ROOT / "web" / "backend" / "app" / "services" / "history_snapshot.py",
+    ROOT / "web" / "backend" / "tests" / "test_history_snapshot.py",
+    ROOT / "web" / "docs" / "HISTORY_SNAPSHOT.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -598,6 +607,7 @@ class WebCheck:
         self.check_phase9b2_contract_files()
         self.check_phase9b3_contract_files()
         self.check_phase9d_contract_files()
+        self.check_phase9e_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1463,6 +1473,70 @@ class WebCheck:
             "phase9d_current_state_repo_files",
             "PASS",
             "CurrentStateRepository delegates reads to DatabaseService",
+        )
+
+    def check_phase9e_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE9E_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase9e_history_snapshot_runtime_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase9e_history_snapshot_runtime_files",
+                ", ".join(missing),
+                "Phase 9E history snapshot runtime DB policy files are missing.",
+                "Update HistorySnapshotRepository tests/docs/web_check, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            repo = (ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "assert_history_database_path" not in repo:
+                raise ValueError("HistorySnapshotRepository must guard runtime DB path")
+            for marker in ['ROOT / "temp" / "web_runtime"', '"history_snapshot.sqlite"', "write_history_database"]:
+                if marker not in repo:
+                    raise ValueError(f"HistorySnapshotRepository missing runtime DB marker: {marker}")
+            for blocked in ["research/latest_index", "research/actions", "research/allocation", "temp/web_db/myinvest.sqlite"]:
+                if blocked in repo.replace(chr(92), "/"):
+                    raise ValueError(f"HistorySnapshotRepository references blocked current/research path: {blocked}")
+
+            service = (ROOT / "web" / "backend" / "app" / "services" / "history_snapshot.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "HistorySnapshotRepository" not in service:
+                raise ValueError("HistorySnapshotService must delegate runtime DB IO to HistorySnapshotRepository")
+            if ".execute(" in service or "sqlite3" in service:
+                raise ValueError("HistorySnapshotService must not execute runtime DB SQL directly")
+
+            tests = (ROOT / "web" / "backend" / "tests" / "test_history_snapshot.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "test_history_snapshot_runtime_db_policy_is_temp_runtime_only" not in tests:
+                raise ValueError("test_history_snapshot must cover runtime DB path policy")
+
+            for doc_path in [
+                ROOT / "web" / "docs" / "HISTORY_SNAPSHOT.md",
+                ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+                ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+            ]:
+                text = doc_path.read_text(encoding="utf-8", errors="replace").lower()
+                if "phase 9e" not in text or "temp/web_runtime/history_snapshot.sqlite" not in text:
+                    raise ValueError(f"{rel(doc_path)} must document Phase 9E runtime DB policy")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase9e_history_snapshot_runtime_safety", "FAIL", str(exc))
+            self.fail(
+                "phase9e_history_snapshot_runtime_safety",
+                "phase9e history snapshot files",
+                f"Phase 9E file failed safety scan: {exc}",
+                "Keep history snapshot runtime DB writes isolated under temp/web_runtime and document the exception.",
+            )
+            return
+        self.add_result(
+            "phase9e_history_snapshot_runtime_files",
+            "PASS",
+            "History snapshot runtime DB policy is documented and guarded",
         )
 
     def run_ingest(self) -> None:
