@@ -1,6 +1,61 @@
 {% extends "base.html" %}
 {% block title %}Data Freshness & Gap Center{% endblock %}
 {% block content %}
+  <style>
+    .subject-gap-visual {
+      margin: 12px 0 22px;
+    }
+    .subject-gap-chart {
+      display: grid;
+      gap: 10px;
+    }
+    .subject-gap-chart-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 180px) 1fr minmax(88px, auto);
+      gap: 10px;
+      align-items: center;
+    }
+    .subject-gap-track {
+      position: relative;
+      min-height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .subject-gap-actual {
+      position: absolute;
+      inset: 4px auto 4px 0;
+      min-width: 2px;
+      border-radius: 4px;
+      background: #0d7c66;
+    }
+    .subject-gap-actual.yellow {
+      background: #b7791f;
+    }
+    .subject-gap-actual.red {
+      background: #b83a3a;
+    }
+    .subject-gap-target {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #18212f;
+    }
+    .subject-gap-tooltip {
+      margin-top: 8px;
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 720px) {
+      .subject-gap-chart-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
   <div class="metric-grid">
     <div class="metric"><span class="subtle">Subjects</span><strong data-bind="subject_gap_count">{{ summary.subject_count }}</strong></div>
     <div class="metric warn"><span class="subtle">Stale</span><strong data-bind="subject_stale_count">{{ summary.stale_count }}</strong></div>
@@ -9,6 +64,12 @@
     <div class="metric fail"><span class="subtle">Red Gap</span><strong data-bind="subject_red_count">{{ summary.red_count }}</strong></div>
     <div class="metric"><span class="subtle">Unknown Gap</span><strong data-bind="subject_unknown_count">{{ summary.unknown_count }}</strong></div>
   </div>
+
+  <section class="subject-gap-visual" aria-label="Bucket gap visualization">
+    <h2>Bucket Gap Visualization</h2>
+    <div id="subjectGapChart" class="subject-gap-chart" data-gap-chart></div>
+    <div id="subjectGapTooltip" class="subject-gap-tooltip" role="tooltip" aria-live="polite">Hover a bucket bar for details.</div>
+  </section>
 
   <div class="table-tools">
     <h2>Subject Gap</h2>

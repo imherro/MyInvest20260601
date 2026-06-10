@@ -319,6 +319,7 @@
     setBind("subject_yellow_count", summary.yellow_count ?? 0);
     setBind("subject_red_count", summary.red_count ?? 0);
     setBind("subject_unknown_count", summary.unknown_count ?? 0);
+    renderSubjectGapChart(rows);
     setRows(
       "subjectGapRows",
       rows,
@@ -339,6 +340,51 @@
         return `basis: ${row.basis_trade_date || ""} | staleness: ${row.staleness_reason || ""} | subject type: ${row.subject_type || ""} | sources: ${sources || "none"}`;
       },
     );
+  }
+
+  function renderSubjectGapChart(rows) {
+    const chart = document.getElementById("subjectGapChart");
+    const tooltip = document.getElementById("subjectGapTooltip");
+    if (!chart) return;
+    chart.replaceChildren();
+    const buckets = new Map();
+    (rows || []).forEach((row) => {
+      if (!row.bucket || buckets.has(row.bucket)) return;
+      buckets.set(row.bucket, row);
+    });
+    Array.from(buckets.values()).forEach((row) => {
+      const actual = Math.max(0, Math.min(100, Number(row.actual_pct) || 0));
+      const target = Math.max(0, Math.min(100, Number(row.target_pct) || 0));
+      const status = ["green", "yellow", "red"].includes(row.gap_status) ? row.gap_status : "unknown";
+      const wrapper = document.createElement("div");
+      wrapper.className = "subject-gap-chart-row";
+      wrapper.dataset.gapStatus = status;
+      wrapper.dataset.tooltip = `bucket: ${row.bucket || ""} | actual: ${pct(row.actual_pct)} | target: ${pct(row.target_pct)} | gap: ${pp(row.gap_pct)} | stale: ${yesNo(row.staleness_flag)} | last update: ${row.last_update_timestamp || ""}`;
+
+      const label = document.createElement("div");
+      label.textContent = row.bucket || "";
+      const track = document.createElement("div");
+      track.className = "subject-gap-track";
+      track.tabIndex = 0;
+      track.title = wrapper.dataset.tooltip;
+      const actualBar = document.createElement("div");
+      actualBar.className = `subject-gap-actual ${status}`;
+      actualBar.style.width = `${actual}%`;
+      const targetMarker = document.createElement("div");
+      targetMarker.className = "subject-gap-target";
+      targetMarker.style.left = `${target}%`;
+      const gap = document.createElement("div");
+      gap.className = "num";
+      gap.textContent = pp(row.gap_pct);
+      track.append(actualBar, targetMarker);
+      wrapper.append(label, track, gap);
+      const showTooltip = () => {
+        if (tooltip) tooltip.textContent = wrapper.dataset.tooltip || "";
+      };
+      track.addEventListener("mouseenter", showTooltip);
+      track.addEventListener("focus", showTooltip);
+      chart.appendChild(wrapper);
+    });
   }
 
   function renderResearchFirst(data) {

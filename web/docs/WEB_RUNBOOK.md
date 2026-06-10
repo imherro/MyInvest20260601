@@ -449,6 +449,8 @@ The page supports refresh, automatic refresh, table search, sorting, pagination,
 
 Phase 7B remains current-only and read-only. It reads current SQLite state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
 
+Phase 7C adds a frontend-only bucket gap visualization to the same page. The chart is rendered from `/api/subjects/gap` JSON, color-codes bucket gap status, and shows actual percentage, target percentage, gap percentage points, staleness status, and last-update timestamp on hover. The API contract is unchanged.
+
 Full gate:
 
 ```bash
