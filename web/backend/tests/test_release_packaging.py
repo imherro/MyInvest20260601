@@ -54,6 +54,18 @@ def test_review_package_scan_blocks_privacy_json_keys(tmp_path: Path):
     assert privacy_warnings == ["research/portfolio/payload.json"]
 
 
+def test_review_package_scan_blocks_privacy_text_terms(tmp_path: Path):
+    (tmp_path / "artifact.md").write_text(
+        "\u8d26\u53f7 should not appear in public artifacts\n",
+        encoding="utf-8",
+    )
+
+    secret_hits, privacy_warnings = builder.scan_sensitive_content(tmp_path)
+
+    assert secret_hits == []
+    assert privacy_warnings == ["artifact.md"]
+
+
 def test_current_research_files_exclude_raw_sensitive_evidence():
     current_files = builder.current_research_files()
 

@@ -104,7 +104,10 @@ SECRET_CONTENT_RE = re.compile(
     r"authorization\s*:\s*bearer\s+\S+)",
     re.IGNORECASE,
 )
-PLACEHOLDER_SECRET_RE = re.compile(r"(你的|your|example|changeme|placeholder|可选)", re.IGNORECASE)
+PLACEHOLDER_SECRET_RE = re.compile(
+    "(\u4f60\u7684|your|example|changeme|placeholder|\u53ef\u9009)",
+    re.IGNORECASE,
+)
 LOCAL_ABSOLUTE_PATH_RE = re.compile(
     r"([A-Za-z]:[\\/](?:Users|Documents|ProgramData|Program Files|Windows)[^\"'\s,}]*|"
     r"/(?:Users|home)/[^\"'\s,}]*)",
@@ -134,7 +137,9 @@ PRIVACY_FIELD_NAMES = {
     "trade_amount",
 }
 PRIVACY_TEXT_RE = re.compile(
-    r"(账号|成本价|现价|参考盈亏|总资产|金额|市值|股数|可用数量|交易金额|盈亏金额)",
+    "(\u8d26\u53f7|\u6210\u672c\u4ef7|\u73b0\u4ef7|\u53c2\u8003\u76c8\u4e8f|"
+    "\u603b\u8d44\u4ea7|\u91d1\u989d|\u5e02\u503c|\u80a1\u6570|"
+    "\u53ef\u7528\u6570\u91cf|\u4ea4\u6613\u91d1\u989d|\u76c8\u4e8f\u91d1\u989d)",
     re.IGNORECASE,
 )
 PRIVACY_SCAN_TEXT_EXEMPT_PREFIXES = ("docs/", "scripts/", "templates/", "web/")
