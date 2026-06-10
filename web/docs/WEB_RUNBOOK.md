@@ -109,7 +109,7 @@ Dashboard sections:
 - Bucket Gap: current bucket actual/target/gap chart.
 - Subject Research Status Summary: subject counts and 511360 cash-equivalent gate.
 - Subject Gap Summary: green/yellow/red/unknown/stale counts.
-- Quick Links: Action Plan, Target Allocation, Subject Status, Subject Gap, Portfolio, Intraday Rules, Decision Log, and History Snapshot.
+- Quick Links: Action Plan, Target Allocation, Subject Status, Subject Gap, Themes, Portfolio, Intraday Rules, Decision Log, and History Snapshot.
 
 Validation:
 
@@ -119,6 +119,38 @@ python scripts/web_check.py
 ```
 
 The dashboard remains current-only and ratio-only. It reads SQLite current state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not display or export sensitive business fields, local absolute paths, runtime files, database files, account context, trading records, or execution output.
+
+## Phase 7E Theme Research Center
+
+Phase 7E adds the read-only Theme Research Center. It aggregates current theme registry, theme leader, ETF registry, stock registry, and subject gate data into a Web review page. It does not generate target allocation, generate action plans, write research files, or create trading instructions.
+
+Read-only API:
+
+- `GET /api/themes/status`
+- `GET /api/themes/status/{theme_name}`
+
+Page:
+
+- `GET /themes`
+
+The API returns `summary`, `themes`, associated ETF/stock gate summaries, leaders, conflicts, and safety flags. Theme states are neutral research states: `confirmed`, `watch`, `research_first`, `stale`, `conflict`, or `unknown`. Theme states are not buy/add/reduce/sell actions.
+
+The page supports refresh, search, status/rating/stage filters, sorting, pagination, and expandable details through the shared static JS. Every refresh still passes the frontend forbidden-field scan before rendering.
+
+Theme Center remains current-only and read-only. It reads current SQLite state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
+
+Direct tests:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_theme_status.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
 
 ## Phase 5A Schema And Golden Baseline
 
@@ -544,6 +576,8 @@ Then open:
 - `http://127.0.0.1:8000/api/subjects/freshness`
 - `http://127.0.0.1:8000/subjects`
 - `http://127.0.0.1:8000/api/subjects/status`
+- `http://127.0.0.1:8000/themes`
+- `http://127.0.0.1:8000/api/themes/status`
 - `http://127.0.0.1:8000/api/modules/current`
 - `http://127.0.0.1:8000/api/export/review_package?format=json`
 

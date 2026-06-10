@@ -15,6 +15,7 @@ def test_web_pages_render_without_local_absolute_paths(client):
         "/research-first",
         "/subjects",
         "/subjects/gap",
+        "/themes",
         "/portfolio",
         "/intraday-rules",
         "/decision-log",

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Theme Research Center{% endblock %}
+{% block content %}
+  <div class="metric-grid">
+    <div class="metric"><span class="subtle">Themes</span><strong data-bind="theme_count">{{ summary.theme_count }}</strong></div>
+    <div class="metric ok"><span class="subtle">Confirmed</span><strong data-bind="theme_confirmed_count">{{ summary.confirmed_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Watch</span><strong data-bind="theme_watch_count">{{ summary.watch_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">ResearchFirst</span><strong data-bind="theme_research_first_count">{{ summary.research_first_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Stale</span><strong data-bind="theme_stale_count">{{ summary.stale_count }}</strong></div>
+    <div class="metric fail"><span class="subtle">Conflict</span><strong data-bind="theme_conflict_count">{{ summary.conflict_count }}</strong></div>
+  </div>
+
+  <div class="table-tools">
+    <h2>Themes</h2>
+    <input type="search" placeholder="Search themes" data-table-search="themesTable">
+    <select data-table-filter="themesTable" data-filter-key="status" aria-label="Filter status">
+      <option value="">All status</option>
+      <option value="confirmed">confirmed</option>
+      <option value="watch">watch</option>
+      <option value="research_first">research_first</option>
+      <option value="stale">stale</option>
+      <option value="conflict">conflict</option>
+      <option value="unknown">unknown</option>
+    </select>
+    <select data-table-filter="themesTable" data-filter-key="tactical_rating" aria-label="Filter rating">
+      <option value="">All rating</option>
+      <option value="A">A</option>
+      <option value="A-">A-</option>
+      <option value="B+">B+</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+    </select>
+    <select data-table-filter="themesTable" data-filter-key="stage" aria-label="Filter stage">
+      <option value="">All stage</option>
+      <option value="confirmation">confirmation</option>
+      <option value="repair">repair</option>
+      <option value="decline">decline</option>
+      <option value="launch">launch</option>
+      <option value="germination">germination</option>
+      <option value="divergence">divergence</option>
+    </select>
+  </div>
+
+  {% if themes %}
+    <table id="themesTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Theme</th>
+          <th data-sort="text">Strategic</th>
+          <th data-sort="text">Tactical</th>
+          <th data-sort="text">Stage</th>
+          <th data-sort="text">Status</th>
+          <th data-sort="text">Basis</th>
+          <th data-sort="text">Generated</th>
+          <th class="num" data-sort="number">ETFs</th>
+          <th class="num" data-sort="number">Stocks</th>
+          <th class="num" data-sort="number">Leaders</th>
+          <th class="num" data-sort="number">Conflicts</th>
+        </tr>
+      </thead>
+      <tbody id="themesRows">
+        {% for item in themes %}
+          <tr>
+            <td>{{ item.theme_name }}</td>
+            <td>{{ item.strategic_rating or "" }}</td>
+            <td>{{ item.tactical_rating or "" }}</td>
+            <td>{{ item.stage or "" }}</td>
+            <td><span class="status {{ 'warn' if item.status != 'confirmed' else '' }}">{{ item.status }}</span></td>
+            <td>{{ item.basis_trade_date or "" }}</td>
+            <td>{{ item.generated_at or "" }}</td>
+            <td class="num">{{ item.associated_etfs|length }}</td>
+            <td class="num">{{ item.associated_stocks|length }}</td>
+            <td class="num">{{ item.leaders|length }}</td>
+            <td class="num">{{ item.conflicts|length }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No current theme registry data loaded.</div>
+  {% endif %}
+{% endblock %}

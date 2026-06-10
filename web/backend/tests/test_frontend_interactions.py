@@ -33,6 +33,20 @@ def test_subject_page_include_refresh_and_table_hooks(client):
     assert "subjectsRows" in html
 
 
+def test_themes_page_include_refresh_filter_and_table_hooks(client):
+    response = client.get("/themes")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "data-table-search=\"themesTable\"" in html
+    assert "data-table-filter=\"themesTable\"" in html
+    assert "data-filter-key=\"status\"" in html
+    assert "data-filter-key=\"tactical_rating\"" in html
+    assert "data-filter-key=\"stage\"" in html
+    assert "data-sort=\"text\"" in html
+    assert "themesRows" in html
+
+
 def test_dashboard_includes_gap_chart_and_status_cards(client):
     response = client.get("/")
     assert response.status_code == 200
@@ -58,6 +72,8 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderSubjectGap" in script
     assert "function renderSubjectGapChart" in script
     assert "function renderDashboardQuickLinks" in script
+    assert "function renderThemes" in script
+    assert "function setupFilters" in script
     assert "mouseenter" in script
     assert "gapStatus" in script
     assert "function renderSubjectStatus" in script

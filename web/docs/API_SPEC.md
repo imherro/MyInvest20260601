@@ -23,6 +23,8 @@ Endpoints:
 - `GET /api/subjects/status/{code}`
 - `GET /api/subjects/freshness`
 - `GET /api/subjects/gap`
+- `GET /api/themes/status`
+- `GET /api/themes/status/{theme_name}`
 - `GET /api/market-position/mapping`
 - `GET /api/market-position/current`
 - `GET /api/market-position/score/{score}`
@@ -93,6 +95,19 @@ Gap status is presentation-only:
 The endpoints are ratio-only and return percentages, timestamps, flags, status labels, and relative source metadata only.
 
 Phase 7C keeps the same API contract and adds only frontend visualization on `/subjects/gap`. The page renders a color-coded bucket gap chart from `/api/subjects/gap`; hover details use the same ratio-only fields already returned by the API.
+
+## Theme Research Center
+
+Phase 7E adds a read-only theme research status center:
+
+- `GET /api/themes/status`
+- `GET /api/themes/status/{theme_name}`
+
+The service reads current SQLite artifact payloads loaded from `latest_index.modules` for `theme_registry`, `theme_leaders`, `etf_registry`, and `stock_registry`. It does not read `latest_index.files`, write research artifacts, update `current_modules`, generate target allocations, or generate action plans.
+
+Returned fields include `summary`, `themes`, associated ETF/stock gate summaries, leaders, conflicts, data-quality status, and safety flags. Theme states are neutral research states: `confirmed`, `watch`, `research_first`, `stale`, `conflict`, or `unknown`. They must not become buy/add/reduce/sell actions.
+
+The page `GET /themes` uses the same API and supports refresh, search, status/rating/stage filters, sorting, pagination, and expandable details.
 
 ## Market Position
 

@@ -92,6 +92,7 @@ def test_dashboard_quick_links_resolve(client):
         "Target Allocation",
         "Subject Status",
         "Subject Gap",
+        "Themes",
         "Portfolio",
         "Intraday Rules",
         "Decision Log",
