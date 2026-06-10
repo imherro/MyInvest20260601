@@ -27,6 +27,7 @@ Endpoints:
 - `GET /api/target-allocation/shadow/compare`
 - `GET /api/target-allocation/shadow/export`
 - `GET /api/target-allocation/candidate-audit`
+- `GET /api/history/export`
 - `GET /api/research-first/current`
 - `GET /api/portfolio/current`
 - `GET /api/intraday-rules/current`
@@ -100,6 +101,26 @@ The ZIP contains only:
 - `provenance.json`
 
 The CLI companion writes only to `temp/candidate_exports/`, which is ignored by Git. The exported filename must include `candidate_audit`.
+
+## History Snapshot Export
+
+Phase 6 adds a read-only history snapshot export:
+
+- `GET /api/history/export`
+- `GET /api/history/export?format=json`
+- `GET /api/history/export?format=zip`
+
+The API is read-only and generates the snapshot in memory. It consolidates temporary shadow, candidate, and candidate-audit export summaries with a live current safety summary. It does not write `research/latest_index.json`, does not update `current_modules`, does not write `research/allocation` or `research/actions`, does not generate official target allocation, and does not generate action plans.
+
+The ZIP contains only:
+
+- `manifest.json`
+- `history_snapshot.json`
+- `history_entries.json`
+- `live_current_summary.json`
+- `safety_checks.json`
+
+The CLI companion writes only to ignored temporary export folders and keeps the local history database under ignored runtime storage. Exported JSON and ZIP payloads must not contain runtime paths.
 
 ## Review Package Export
 
