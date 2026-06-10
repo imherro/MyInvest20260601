@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add allocation drilldown and drill-through actions"
+COMMIT_MESSAGE = "feat(web): add decision timeline / review timeline page and API"
 
 API_PATHS = [
     "/api/health",
@@ -59,6 +59,8 @@ API_PATHS = [
     "/api/research-first/current",
     "/api/system-check/current",
     "/api/decision-log/current",
+    "/api/decision-timeline",
+    "/api/decision-timeline/current-action-plan",
     "/api/export/review_package?format=json",
 ]
 
@@ -78,6 +80,7 @@ PAGE_PATHS = [
     "/portfolio",
     "/intraday-rules",
     "/decision-log",
+    "/decision-timeline",
     "/system-checks",
 ]
 
@@ -94,6 +97,7 @@ INTERACTIVE_PAGE_CHECKS = {
     "/portfolio": ["data-table-search", "data-sort", "portfolioRows"],
     "/intraday-rules": ["data-table-search", "data-sort", "intradayRows", "disabledTriggerRows"],
     "/decision-log": ["data-table-search", "data-sort", "decisionRows"],
+    "/decision-timeline": ["data-table-search", "data-table-filter", "data-sort", "decisionTimelineRows", "decisionTimelineChart"],
 }
 
 DASHBOARD_CHECKS = [
@@ -122,6 +126,8 @@ JS_CHECKS = [
     "function renderBucketDrilldown",
     "function renderBucketDrilldownChart",
     "function renderSubjectDrilldown",
+    "function renderDecisionTimeline",
+    "function renderDecisionTimelineChart",
     "function setupFilters",
     "detail-row",
     "expandable-row",
@@ -267,6 +273,16 @@ PHASE7H_FILES = [
     ROOT / "web" / "backend" / "app" / "templates" / "subjects_drilldown.html",
     ROOT / "web" / "backend" / "tests" / "test_allocation_drilldown.py",
     ROOT / "web" / "docs" / "ALLOCATION_DRILLDOWN.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE7I_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "decision_timeline.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "decision_timeline.html",
+    ROOT / "web" / "backend" / "tests" / "test_decision_timeline.py",
+    ROOT / "web" / "docs" / "DECISION_TIMELINE.md",
     ROOT / "web" / "docs" / "API_SPEC.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
@@ -516,6 +532,7 @@ class WebCheck:
         self.check_phase7f_contract_files()
         self.check_phase7g_contract_files()
         self.check_phase7h_contract_files()
+        self.check_phase7i_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -984,6 +1001,50 @@ class WebCheck:
             "allocation drilldown service/API/pages/tests/docs present",
         )
 
+    def check_phase7i_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7I_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7i_decision_timeline_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7i_decision_timeline_files",
+                ", ".join(missing),
+                "Phase 7I decision timeline service/page/tests/docs are missing.",
+                "Add the decision timeline service, page, tests, and DECISION_TIMELINE.md, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7I_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "decision timeline" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7I docs must describe decision timeline and read-only boundaries")
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "decision_timeline.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("decision timeline service references latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "qmt_portfolio_snapshot", "qmt_export_history"]:
+                if blocked in service_text:
+                    raise ValueError(f"decision timeline service references blocked script/runtime: {blocked}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7i_decision_timeline_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7i_decision_timeline_safety",
+                rel(path),
+                f"Phase 7I file failed safety scan: {exc}",
+                "Remove local paths, keep current-only module resolution, and document decision timeline read-only boundaries.",
+            )
+            return
+        self.add_result(
+            "phase7i_decision_timeline_files",
+            "PASS",
+            "decision timeline service/API/page/tests/docs present",
+        )
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -1095,6 +1156,7 @@ class WebCheck:
         self.check_history_gap_api(client, ratio)
         self.check_bucket_status_api(client, ratio)
         self.check_allocation_drilldown_api(client, ratio)
+        self.check_decision_timeline_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
@@ -1534,6 +1596,67 @@ class WebCheck:
             self.add_result("allocation_drilldown_api", "FAIL", str(exc))
         else:
             self.add_result("allocation_drilldown_api", "PASS", "bucket/subject drilldown rows safe and consistent")
+
+    def check_decision_timeline_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/decision-timeline")
+            if response.status_code != 200:
+                raise ValueError(f"decision timeline API returned {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            data = payload.get("data") or {}
+            if data.get("module") != "decision_timeline" or data.get("current_only") is not True:
+                raise ValueError("decision timeline payload is not marked current-only")
+            for key in ["summary", "events", "source_modules", "safety"]:
+                if key not in data:
+                    raise ValueError(f"decision timeline payload missing {key}")
+            events = data.get("events") or []
+            if not events:
+                raise ValueError("decision timeline events are empty")
+            summary = data.get("summary") or {}
+            if summary.get("event_count") != len(events):
+                raise ValueError("decision timeline summary count does not match events")
+            event_types = {event.get("event_type") for event in events}
+            for required in ["action_plan", "target_allocation", "decision_log"]:
+                if required not in event_types:
+                    raise ValueError(f"decision timeline missing {required} event")
+            safety = data.get("safety") or {}
+            for key in ["ratio_only", "current_only", "read_only", "uses_latest_index_modules"]:
+                if safety.get(key) is not True:
+                    raise ValueError(f"decision timeline safety check failed: {key}")
+            for key in ["uses_latest_index_files", "generates_action_plan", "generates_target_allocation", "trading_feature", "qmt_write_feature"]:
+                if safety.get(key) is not False:
+                    raise ValueError(f"decision timeline boundary check failed: {key}")
+
+            action_plan = client.get("/api/action-plan/current").json().get("data", {}).get("action_plan") or {}
+            target = client.get("/api/target-allocation/current").json().get("data", {}).get("target_allocation") or {}
+            by_id = {event.get("event_id"): event for event in events}
+            if by_id.get("current-action-plan", {}).get("timestamp") != action_plan.get("generated_at"):
+                raise ValueError("decision timeline action-plan timestamp mismatch")
+            if by_id.get("current-target-allocation", {}).get("timestamp") != target.get("generated_at"):
+                raise ValueError("decision timeline target-allocation timestamp mismatch")
+
+            detail = client.get("/api/decision-timeline/current-action-plan")
+            if detail.status_code != 200:
+                raise ValueError(f"decision timeline detail returned {detail.status_code}")
+            ratio.assert_safe(detail.json())
+            assert_safe_payload(detail.json())
+            missing = client.get("/api/decision-timeline/NO_SUCH_EVENT")
+            if missing.status_code != 404:
+                raise ValueError(f"missing decision timeline event returned {missing.status_code}, expected 404")
+            ratio.assert_safe(missing.json())
+            assert_safe_payload(missing.json())
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "decision_timeline_api",
+                "/api/decision-timeline",
+                f"Decision timeline API failed safety/current-state scan: {exc}",
+                "Fix DecisionTimelineService or its routes and rerun scripts/web_check.py.",
+            )
+            self.add_result("decision_timeline_api", "FAIL", str(exc))
+        else:
+            self.add_result("decision_timeline_api", "PASS", "timeline events safe and current-state aligned")
 
     def check_export_json(self, client: Any, ratio: Any) -> None:
         response = client.get("/api/export/review_package?format=json")

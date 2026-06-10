@@ -156,5 +156,6 @@ class DashboardService:
             {"label": "Portfolio", "href": "/portfolio"},
             {"label": "Intraday Rules", "href": "/intraday-rules"},
             {"label": "Decision Log", "href": "/decision-log"},
+            {"label": "Decision Timeline", "href": "/decision-timeline"},
             {"label": "History Snapshot", "href": "/api/history/export?format=json"},
         ]

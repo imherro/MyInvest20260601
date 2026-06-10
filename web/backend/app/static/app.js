@@ -810,6 +810,65 @@
     setRows("decisionRows", data.entries || [], (row) => [row.entry_time, row.summary], (row) => row.ratio_only_text || row.summary || "");
   }
 
+  function renderDecisionTimeline(data) {
+    const events = data.events || [];
+    const summary = data.summary || {};
+    setBind("decision_timeline_count", summary.event_count ?? events.length);
+    setBind("decision_timeline_decision_logs", summary.decision_log_count ?? 0);
+    setBind("decision_timeline_history", summary.history_snapshot_count ?? 0);
+    setBind("decision_timeline_action_plans", summary.action_plan_count ?? 0);
+    setBind("decision_timeline_targets", summary.target_allocation_count ?? 0);
+    setBind("decision_timeline_generated", data.generated_at);
+    renderDecisionTimelineChart(events);
+    setRows(
+      "decisionTimelineRows",
+      events,
+      (row) => [
+        row.timestamp,
+        row.event_type,
+        row.status,
+        row.summary || row.title,
+        Object.keys(row.review_links || {}).join(", "),
+      ],
+      (row) => {
+        const details = Object.entries(row.details || {})
+          .filter(([, value]) => value !== null && value !== undefined && typeof value !== "object")
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(" | ");
+        const links = Object.values(row.review_links || {}).join(" | ");
+        return `title: ${row.title || ""} | basis: ${row.basis_trade_date || ""} | details: ${details || "none"} | links: ${links || "none"}`;
+      },
+    );
+  }
+
+  function renderDecisionTimelineChart(events) {
+    const chart = document.getElementById("decisionTimelineChart");
+    const tooltip = document.getElementById("decisionTimelineTooltip");
+    if (!chart) return;
+    chart.replaceChildren();
+    (events || []).slice(0, 30).forEach((row) => {
+      const wrapper = document.createElement("div");
+      const eventType = String(row.event_type || "unknown").replace(/[^a-z0-9_-]/gi, "");
+      wrapper.className = `timeline-chart-row ${eventType}`;
+      wrapper.tabIndex = 0;
+      wrapper.dataset.tooltip = `${row.timestamp || ""} | ${row.event_type || ""} | ${row.status || ""} | ${row.summary || row.title || ""}`;
+      wrapper.title = wrapper.dataset.tooltip;
+      const timestamp = document.createElement("div");
+      timestamp.textContent = row.timestamp || "";
+      const type = document.createElement("div");
+      type.textContent = row.event_type || "";
+      const summary = document.createElement("div");
+      summary.textContent = row.summary || row.title || "";
+      wrapper.append(timestamp, type, summary);
+      const showTooltip = () => {
+        if (tooltip) tooltip.textContent = wrapper.dataset.tooltip || "";
+      };
+      wrapper.addEventListener("mouseenter", showTooltip);
+      wrapper.addEventListener("focus", showTooltip);
+      chart.appendChild(wrapper);
+    });
+  }
+
   const renderers = {
     dashboard: renderDashboard,
     "action-plan": renderActionPlan,
@@ -826,6 +885,7 @@
     "intraday-rules": renderIntradayRules,
     "system-checks": renderSystemChecks,
     "decision-log": renderDecisionLog,
+    "decision-timeline": renderDecisionTimeline,
   };
 
   async function refresh() {

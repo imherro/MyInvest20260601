@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Decision Timeline{% endblock %}
+{% block content %}
+  {% set data = timeline or {} %}
+  {% set summary = data.summary or {} %}
+  {% set events = data.events or [] %}
+
+  <style>
+    .timeline-visual {
+      margin: 12px 0 22px;
+    }
+    .timeline-chart {
+      display: grid;
+      gap: 8px;
+    }
+    .timeline-chart-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 260px) minmax(120px, 170px) 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 6px;
+      background: var(--panel);
+    }
+    .timeline-chart-row.action_plan { border-left-color: var(--green); }
+    .timeline-chart-row.target_allocation { border-left-color: #b7791f; }
+    .timeline-chart-row.history_snapshot { border-left-color: #235ea8; }
+    .timeline-chart-row.decision_log { border-left-color: #6b7280; }
+    .timeline-tooltip {
+      margin-top: 8px;
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .timeline-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .timeline-links a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    @media (max-width: 720px) {
+      .timeline-chart-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <div class="metric-grid">
+    <div class="metric"><span class="subtle">Events</span><strong data-bind="decision_timeline_count">{{ summary.event_count }}</strong></div>
+    <div class="metric"><span class="subtle">Decision Logs</span><strong data-bind="decision_timeline_decision_logs">{{ summary.decision_log_count }}</strong></div>
+    <div class="metric"><span class="subtle">History Snapshots</span><strong data-bind="decision_timeline_history">{{ summary.history_snapshot_count }}</strong></div>
+    <div class="metric ok"><span class="subtle">Action Plans</span><strong data-bind="decision_timeline_action_plans">{{ summary.action_plan_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Target Allocations</span><strong data-bind="decision_timeline_targets">{{ summary.target_allocation_count }}</strong></div>
+    <div class="metric"><span class="subtle">Generated</span><strong data-bind="decision_timeline_generated">{{ data.generated_at or "n/a" }}</strong></div>
+  </div>
+
+  <section class="timeline-visual" aria-label="Decision timeline visualization">
+    <h2>Review Timeline</h2>
+    <div id="decisionTimelineChart" class="timeline-chart" data-decision-timeline-chart></div>
+    <div id="decisionTimelineTooltip" class="timeline-tooltip" role="tooltip" aria-live="polite">Hover a timeline event for details.</div>
+  </section>
+
+  <div class="table-tools">
+    <h2>Timeline Events</h2>
+    <input type="search" placeholder="Search timeline events" data-table-search="decisionTimelineTable">
+    <select data-table-filter="decisionTimelineTable" data-filter-key="event_type" aria-label="Filter event type">
+      <option value="">All event types</option>
+      <option value="action_plan">action_plan</option>
+      <option value="target_allocation">target_allocation</option>
+      <option value="decision_log">decision_log</option>
+      <option value="history_snapshot">history_snapshot</option>
+    </select>
+    <select data-table-filter="decisionTimelineTable" data-filter-key="status" aria-label="Filter status">
+      <option value="">All status</option>
+      {% for status in (summary.status_counts or {}).keys()|sort %}
+        <option value="{{ status }}">{{ status }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  {% if events %}
+    <table id="decisionTimelineTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Timestamp</th>
+          <th data-sort="text">Type</th>
+          <th data-sort="text">Status</th>
+          <th data-sort="text">Summary</th>
+          <th data-sort="text">Links</th>
+        </tr>
+      </thead>
+      <tbody id="decisionTimelineRows">
+        {% for event in events %}
+          <tr>
+            <td>{{ event.timestamp or "" }}</td>
+            <td>{{ event.event_type or "" }}</td>
+            <td><span class="status {{ 'warn' if event.status not in ['ok', 'current', 'matched', 'logged'] else '' }}">{{ event.status or "" }}</span></td>
+            <td>{{ event.summary or event.title or "" }}</td>
+            <td>
+              <span class="timeline-links">
+                {% for label, href in (event.review_links or {}).items() %}
+                  <a href="{{ href }}">{{ label }}</a>
+                {% endfor %}
+              </span>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No timeline events loaded.</div>
+  {% endif %}
+{% endblock %}

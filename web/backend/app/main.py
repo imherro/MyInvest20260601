@@ -15,6 +15,7 @@ from .services.allocation_drilldown import AllocationDrilldownService
 from .services.current_state import CurrentStateService
 from .services.bucket_explorer import BucketExplorerService
 from .services.dashboard import DashboardService
+from .services.decision_timeline import DecisionTimelineService
 from .services.history_gap_dashboard import HistoryGapDashboardService
 from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
@@ -220,6 +221,21 @@ def decision_log_page(request: Request, session: Session = Depends(get_session))
         request,
         "decision_log.html",
         page_context(request, "decision-log", "/api/decision-log/current", entries=service(session).decision_log_entries()),
+    )
+
+
+@app.get("/decision-timeline", response_class=HTMLResponse)
+def decision_timeline_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    timeline = DecisionTimelineService(session).timeline()
+    return templates.TemplateResponse(
+        request,
+        "decision_timeline.html",
+        page_context(
+            request,
+            "decision-timeline",
+            "/api/decision-timeline",
+            timeline=timeline,
+        ),
     )
 
 

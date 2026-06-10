@@ -97,6 +97,7 @@ def test_dashboard_quick_links_resolve(client):
         "Portfolio",
         "Intraday Rules",
         "Decision Log",
+        "Decision Timeline",
         "History Snapshot",
     }
     for item in links:
