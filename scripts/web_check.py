@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add read-only database service layer"
+COMMIT_MESSAGE = "refactor(web): consolidate subject status database access"
 
 API_PATHS = [
     "/api/health",
@@ -834,6 +834,26 @@ class WebCheck:
                     lowered = text.lower()
                     if "subject status" not in lowered or "read-only" not in lowered:
                         raise ValueError("Phase 7A docs must describe subject status and read-only boundaries")
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "subject_status.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "subject_status_repo.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for label, source in [("SubjectStatusService", service_text), ("SubjectStatusRepository", repo_text)]:
+                if ".read_text(" in source:
+                    raise ValueError(f"{label} reads files directly")
+                if "latest_index.files" in source or '["files"]' in source or "['files']" in source:
+                    raise ValueError(f"{label} references latest_index.files")
+            if "DatabaseService" not in repo_text or ".fetch_all(" not in repo_text:
+                raise ValueError("SubjectStatusRepository must delegate SQL reads to DatabaseService.fetch_all")
+            if ".execute(" in repo_text:
+                raise ValueError("SubjectStatusRepository bypasses DatabaseService with session.execute")
+            for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
+                if blocked in repo_text.upper():
+                    raise ValueError(f"SubjectStatusRepository contains blocked SQL verb: {blocked}")
         except Exception as exc:  # noqa: BLE001
             self.add_result("phase7a_subject_status_safety", "FAIL", str(exc))
             self.fail(
@@ -1407,6 +1427,12 @@ class WebCheck:
             for item in subjects:
                 if item.get("gate_conclusion") in {"buy", "add", "reduce", "sell"}:
                     raise ValueError(f"action conclusion leaked for {item.get('code')}")
+                for source_path in (item.get("source_paths") or {}).values():
+                    source_text = str(source_path)
+                    if LOCAL_PATH_RE.search(source_text):
+                        raise ValueError(f"local source path leaked for {item.get('code')}")
+                    if Path(source_text).is_absolute() or ".." in Path(source_text).parts:
+                        raise ValueError(f"unsafe source path leaked for {item.get('code')}: {source_text}")
                 if any(
                     [
                         item.get("missing_profile"),
@@ -1424,12 +1450,30 @@ class WebCheck:
                         raise ValueError(f"511360 {key} is not pass: {cash.get(key)}")
                 if cash.get("subject_type") != "cash_equivalent" or cash.get("bucket") != "cash_short":
                     raise ValueError("511360 is not displayed as cash_equivalent / cash_short")
+                if cash.get("research_first_status") != "pass" or cash.get("gate_conclusion") != "eligible_for_review":
+                    raise ValueError("511360 gate status is not eligible_for_review/pass")
+            else:
+                raise ValueError("511360 subject status is missing")
+
+            cash_detail_response = client.get("/api/subjects/status/511360.SH")
+            if cash_detail_response.status_code != 200:
+                raise ValueError(f"511360 detail returned {cash_detail_response.status_code}")
+            ratio.assert_safe(cash_detail_response.json())
+            assert_safe_payload(cash_detail_response.json())
 
             missing_response = client.get("/api/subjects/status/NO_SUCH_CODE")
             if missing_response.status_code != 404:
                 raise ValueError(f"missing subject returned {missing_response.status_code}, expected 404")
             ratio.assert_safe(missing_response.json())
             assert_safe_payload(missing_response.json())
+
+            page_response = client.get("/subjects")
+            if page_response.status_code != 200:
+                raise ValueError(f"subjects page returned {page_response.status_code}")
+            if LOCAL_PATH_RE.search(page_response.text):
+                raise ValueError("subjects page contains local absolute path")
+            if FORBIDDEN_TEXT_RE.search(page_response.text):
+                raise ValueError("subjects page contains forbidden text")
         except Exception as exc:  # noqa: BLE001
             self.fail(
                 "subject_status_api",

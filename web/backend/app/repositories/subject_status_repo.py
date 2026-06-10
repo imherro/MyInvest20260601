@@ -2,18 +2,18 @@ from __future__ import annotations
 
 from typing import Any
 
-from sqlalchemy import text
 from sqlalchemy.orm import Session
+
+from ..services.database import DatabaseService
 
 
 class SubjectStatusRepository:
     def __init__(self, session: Session):
-        self.session = session
+        self.db = DatabaseService(session)
 
     def list_subject_status_rows(self) -> list[dict[str, Any]]:
-        rows = self.session.execute(
-            text(
-                """
+        return self.db.fetch_all(
+            """
                 WITH latest_positions AS (
                     SELECT pp.subject_id, pp.bucket, pp.position_pct
                     FROM portfolio_positions pp
@@ -64,9 +64,7 @@ class SubjectStatusRepository:
                 LEFT JOIN research_first_items rfi ON rfi.subject_id = s.id
                 ORDER BY s.code
                 """
-            )
-        ).mappings()
-        return [dict(row) for row in rows]
+        )
 
     def get_subject_status_row(self, code: str) -> dict[str, Any] | None:
         for row in self.list_subject_status_rows():
