@@ -27,6 +27,24 @@ def test_environment_page_include_refresh_and_status_hooks(client):
     assert "no_order_generation" in script
 
 
+def test_preferences_page_include_refresh_and_table_hooks(client):
+    response = client.get("/preferences")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "/api/user/preferences" in html
+    assert "data-preferences-section=\"display\"" in html
+    assert "data-preferences-section=\"dashboard\"" in html
+    assert "data-preferences-section=\"safety\"" in html
+    assert "data-status-card=\"pref-readonly\"" in html
+    assert "data-bind=\"pref_refresh\"" in html
+    assert "preferenceRows" in html
+    assert "preferenceSourceRows" in html
+    script = client.get("/static/app.js").text
+    assert "function renderUserPreferences" in script
+    assert "preferences: renderUserPreferences" in script
+
+
 def test_subject_gap_page_include_refresh_and_table_hooks(client):
     response = client.get("/subjects/gap")
     assert response.status_code == 200

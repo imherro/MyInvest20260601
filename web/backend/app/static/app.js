@@ -848,6 +848,55 @@
     );
   }
 
+  function renderUserPreferences(data) {
+    const preferences = data.preferences || {};
+    const profile = preferences.profile || {};
+    const display = preferences.display || {};
+    const dashboard = preferences.dashboard || {};
+    const tables = preferences.tables || {};
+    const safety = preferences.safety || {};
+    const sources = preferences.sources || {};
+    setBind("pref_readonly", safety.read_only ? "read-only" : "check");
+    setBind("pref_ratio_only", safety.ratio_only ? "ratio-only" : "check");
+    setBind("pref_current_only", safety.current_only ? "current-only" : "check");
+    setBind("pref_user_id", preferences.user_id);
+    setBind("pref_scope", preferences.scope);
+    setBind("pref_label", profile.label);
+    setBind("pref_role", profile.role);
+    setBind("pref_editable", yesNo(profile.editable));
+    setBind("pref_language", display.language);
+    setBind("pref_theme", display.theme);
+    setBind("pref_density", display.density);
+    setBind("pref_number_format", display.number_format);
+    setBind("pref_basis_date", display.show_basis_date ? "visible" : "hidden");
+    setBind("pref_generated_at_visible", display.show_generated_at ? "visible" : "hidden");
+    setBind("pref_landing", dashboard.landing_page);
+    setBind("pref_refresh", dashboard.refresh_seconds);
+    setBind("pref_show_research_first", dashboard.show_research_first ? "visible" : "hidden");
+    setBind("pref_show_allocation_gap", dashboard.show_allocation_gap ? "visible" : "hidden");
+    setBind("pref_show_history_gap", dashboard.show_history_gap ? "visible" : "hidden");
+    setBind("pref_database_service", yesNo(safety.uses_database_service));
+    setBind("pref_trading_disabled", safety.trading_disabled ? "disabled" : "check");
+    setBind("pref_qmt_write", safety.qmt_write_disabled ? "disabled" : "check");
+    setBind("pref_research_write", safety.research_write_disabled ? "disabled" : "check");
+    setBind("pref_database_write", safety.database_write_disabled ? "disabled" : "check");
+    setStatusCard("pref-readonly", safety.read_only ? "ok" : "fail");
+    setStatusCard("pref-ratio-only", safety.ratio_only ? "ok" : "fail");
+    setStatusCard("pref-current-only", safety.current_only ? "ok" : "fail");
+    setRows(
+      "preferenceRows",
+      Object.entries(tables).map(([name, state]) => ({ name, state })),
+      (row) => [row.name, row.state],
+      (row) => `option: ${row.name || ""} | state: ${text(row.state, "")}`,
+    );
+    setRows(
+      "preferenceSourceRows",
+      Object.entries(sources).map(([name, value]) => ({ name, value })),
+      (row) => [row.name, row.value],
+      (row) => `field: ${row.name || ""} | value: ${text(row.value, "")}`,
+    );
+  }
+
   function renderDecisionLog(data) {
     setRows("decisionRows", data.entries || [], (row) => [row.entry_time, row.summary], (row) => row.ratio_only_text || row.summary || "");
   }
@@ -996,6 +1045,7 @@
     "intraday-rules": renderIntradayRules,
     "system-checks": renderSystemChecks,
     environment: renderEnvironment,
+    preferences: renderUserPreferences,
     "decision-log": renderDecisionLog,
     "decision-timeline": renderDecisionTimeline,
     "historical-metrics": renderHistoricalMetrics,

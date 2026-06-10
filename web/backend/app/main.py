@@ -23,6 +23,7 @@ from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
 from .services.theme_status import ThemeStatusService
+from .services.user_preferences import UserPreferencesService
 
 
 app = FastAPI(title="MyInvest Web", version="0.2.0")
@@ -68,6 +69,20 @@ def environment_page(request: Request) -> HTMLResponse:
             "environment",
             "/api/environment/status",
             environment=EnvironmentStatusService().status(),
+        ),
+    )
+
+
+@app.get("/preferences", response_class=HTMLResponse)
+def preferences_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "preferences.html",
+        page_context(
+            request,
+            "preferences",
+            "/api/user/preferences",
+            preferences=UserPreferencesService(session).preferences(),
         ),
     )
 

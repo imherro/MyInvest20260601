@@ -18,6 +18,8 @@ Endpoints:
 
 - `GET /api/health`
 - `GET /api/environment/status`
+- `GET /api/user/preferences`
+- `GET /api/user/preferences/{user_id}`
 - `GET /api/dashboard/current`
 - `GET /api/current`
 - `GET /api/latest-index`
@@ -73,6 +75,21 @@ All paths in the response are repo-relative strings such as `temp/web_db/myinves
 The environment endpoint uses a dedicated environment safety scan because it includes the negative safety declaration `safety.no_order_generation=true`. That key is allowed only as a boolean safety-boundary statement and must not contain or expose order records.
 
 The same data backs `GET /settings` and `GET /environment`.
+
+## Workbench User Preferences Center
+
+Phase 10B adds read-only workbench preference endpoints:
+
+- `GET /api/user/preferences`
+- `GET /api/user/preferences/{user_id}`
+
+The default endpoint returns the local workbench display profile, dashboard refresh interval, table options, safety flags, and current-module source metadata. Supported named ids such as `default` resolve to the same display-only profile. Unknown ids return a safe 404.
+
+The service reads only the SQLite current read model through `UserPreferencesRepository` and `DatabaseService`. It does not read `latest_index.files`, write research artifacts, mutate current modules, generate target allocations, generate action plans, or connect to trading/QMT write interfaces.
+
+Returned fields are limited to display settings, booleans, counts, timestamps, safe local Web links, and repo-relative source paths. The response passes the standard `RatioOnlyService` wrapper and must not expose local absolute paths, credentials, runtime files, SQLite file contents, or execution output.
+
+The same data backs `GET /preferences`.
 
 ## Research Dashboard
 
