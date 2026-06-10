@@ -28,6 +28,8 @@ API_PATHS = [
     "/api/current",
     "/api/latest-index",
     "/api/modules/current",
+    "/api/subjects/status",
+    "/api/subjects/status/511360.SH",
     "/api/subjects/freshness",
     "/api/subjects/gap",
     "/api/market-position/mapping",
@@ -58,6 +60,7 @@ PAGE_PATHS = [
     "/action-plan",
     "/target-allocation",
     "/research-first",
+    "/subjects",
     "/subjects/gap",
     "/portfolio",
     "/intraday-rules",
@@ -68,6 +71,7 @@ PAGE_PATHS = [
 INTERACTIVE_PAGE_CHECKS = {
     "/action-plan": ["data-table-search", "data-sort", "actionRows"],
     "/target-allocation": ["data-table-search", "data-sort", "targetRows"],
+    "/subjects": ["data-table-search", "data-sort", "subjectsRows"],
     "/subjects/gap": ["data-table-search", "data-sort", "subjectGapRows"],
     "/portfolio": ["data-table-search", "data-sort", "portfolioRows"],
     "/intraday-rules": ["data-table-search", "data-sort", "intradayRows", "disabledTriggerRows"],
@@ -84,6 +88,7 @@ DASHBOARD_CHECKS = [
 JS_CHECKS = [
     "function assertRatioOnly",
     "function renderPagination",
+    "function renderSubjectStatus",
     "function renderSubjectGap",
     "detail-row",
     "expandable-row",
@@ -161,6 +166,16 @@ PHASE6_FILES = [
     ROOT / "web" / "docs" / "HISTORY_SNAPSHOT.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "GOLDEN_REFERENCE.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE7A_FILES = [
+    ROOT / "web" / "backend" / "app" / "repositories" / "subject_status_repo.py",
+    ROOT / "web" / "backend" / "app" / "services" / "subject_status.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "subjects.html",
+    ROOT / "web" / "backend" / "tests" / "test_subject_status.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
@@ -409,6 +424,7 @@ class WebCheck:
         self.check_phase5f_contract_files()
         self.check_phase5g_contract_files()
         self.check_phase6_contract_files()
+        self.check_phase7a_contract_files()
         self.check_phase7b_contract_files()
         self.run_ingest()
         self.run_pytest()
@@ -627,6 +643,37 @@ class WebCheck:
             return
         self.add_result("phase6_history_snapshot_files", "PASS", "history snapshot service/API/CLI/tests present")
 
+    def check_phase7a_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7A_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7a_subject_status_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7a_subject_status_files",
+                ", ".join(missing),
+                "Phase 7A subject-status service/API/page/tests/docs are missing.",
+                "Add the subject status files and rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7A_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "subject status" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7A docs must describe subject status and read-only boundaries")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7a_subject_status_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7a_subject_status_safety",
+                rel(path),
+                f"Phase 7A file failed safety scan: {exc}",
+                "Remove local paths and document subject status read-only boundaries.",
+            )
+            return
+        self.add_result("phase7a_subject_status_files", "PASS", "subject status service/API/page/tests present")
+
     def check_phase7b_contract_files(self) -> None:
         missing = [rel(path) for path in PHASE7B_FILES if not path.exists()]
         if missing:
@@ -762,6 +809,7 @@ class WebCheck:
         self.add_result("api_forbidden_fields", api_status, f"{len(API_PATHS)} endpoints")
 
         self.check_api_is_read_only(client)
+        self.check_subject_status_api(client, ratio)
         self.check_subject_gap_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
@@ -844,6 +892,57 @@ class WebCheck:
             self.add_result("subject_gap_api", "FAIL", str(exc))
         else:
             self.add_result("subject_gap_api", "PASS", "freshness and bucket gap rows safe")
+
+    def check_subject_status_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/subjects/status")
+            if response.status_code != 200:
+                raise ValueError(f"status API returned {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            subjects = ((payload.get("data") or {}).get("subjects") or [])
+            summary = (payload.get("data") or {}).get("summary") or {}
+            if not subjects:
+                raise ValueError("subject status list is empty")
+            if summary.get("subject_count") != len(subjects):
+                raise ValueError("subject summary count does not match list length")
+            for item in subjects:
+                if item.get("gate_conclusion") in {"buy", "add", "reduce", "sell"}:
+                    raise ValueError(f"action conclusion leaked for {item.get('code')}")
+                if any(
+                    [
+                        item.get("missing_profile"),
+                        item.get("missing_valuation"),
+                        item.get("missing_liquidity"),
+                        item.get("missing_theme_binding"),
+                    ]
+                ) and item.get("research_first_status") not in {"research_first", "blocked"}:
+                    raise ValueError(f"ResearchFirst missing item not blocked: {item.get('code')}")
+
+            cash = next((item for item in subjects if item.get("code") == "511360.SH"), None)
+            if cash:
+                for key in ["profile_status", "valuation_status", "liquidity_status"]:
+                    if cash.get(key) != "pass":
+                        raise ValueError(f"511360 {key} is not pass: {cash.get(key)}")
+                if cash.get("subject_type") != "cash_equivalent" or cash.get("bucket") != "cash_short":
+                    raise ValueError("511360 is not displayed as cash_equivalent / cash_short")
+
+            missing_response = client.get("/api/subjects/status/NO_SUCH_CODE")
+            if missing_response.status_code != 404:
+                raise ValueError(f"missing subject returned {missing_response.status_code}, expected 404")
+            ratio.assert_safe(missing_response.json())
+            assert_safe_payload(missing_response.json())
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "subject_status_api",
+                "/api/subjects/status",
+                f"Subject status API failed safety/current-state scan: {exc}",
+                "Fix SubjectStatusService or its route and rerun scripts/web_check.py.",
+            )
+            self.add_result("subject_status_api", "FAIL", str(exc))
+        else:
+            self.add_result("subject_status_api", "PASS", "current-only status list and 511360 gate safe")
 
     def check_export_json(self, client: Any, ratio: Any) -> None:
         response = client.get("/api/export/review_package?format=json")

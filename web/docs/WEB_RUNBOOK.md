@@ -26,6 +26,18 @@ python -m uvicorn web.backend.app.main:app --host 127.0.0.1 --port 8000
 
 Open `http://127.0.0.1:8000/`.
 
+Optional trusted-LAN mode:
+
+For same-LAN read-only review from another trusted device, bind the server to all local interfaces and allow the port in the local firewall:
+
+```bash
+python -m uvicorn web.backend.app.main:app --host 0.0.0.0 --port 8000
+```
+
+Then open `http://<your-lan-ip>:8000/` from the other device.
+
+This mode is optional. Keep the default startup on `127.0.0.1` unless LAN review is needed. Do not expose the Web UI to the public internet, untrusted networks, or public company networks. The Web app is read-only and ratio-only, but research context can still be sensitive. Never expose `.env`, tokens, runtime files, SQLite databases, or account information through LAN access.
+
 The Web UI is FastAPI + Jinja2 with a small static refresh script. There is no React build step in this phase.
 
 ## Run Tests
@@ -427,21 +439,29 @@ python scripts/web_check.py
 
 Phase 7B adds a read-only Data Freshness & Gap Center. It displays subject-level freshness metadata and bucket-level allocation gap rows from the current SQLite read model. It is not a target-allocation generator and does not create action plans.
 
+## Phase 7A Subject Status Center
+
+Phase 7A adds the read-only Subject Research Status page and API. It is a Web display and audit helper only; it does not generate target allocation, action plans, orders, fills, execution instructions, or QMT write calls.
+
 Direct tests:
 
 ```bash
 python scripts/ingest_current_state.py
 python -m pytest web/backend/tests/test_subject_gap.py
+python -m pytest web/backend/tests/test_subject_status.py
 ```
 
 Read-only API:
 
 - `GET /api/subjects/freshness`
 - `GET /api/subjects/gap`
+- `GET /api/subjects/status`
+- `GET /api/subjects/status/{code}`
 
 Page:
 
 - `GET /subjects/gap`
+- `GET /subjects`
 
 The gap endpoint returns subject code/name/type, bucket, subject position percentage, bucket actual/target/gap percentages, freshness status, and relative source metadata. Bucket actual/target/gap values must match the current target-allocation bucket rows.
 
@@ -449,6 +469,7 @@ The page supports refresh, automatic refresh, table search, sorting, pagination,
 
 Phase 7B remains current-only and read-only. It reads current SQLite state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
 
+The API reads SQLite current-state rows loaded from `research/latest_index.json` `modules`, not `latest_index.files`. It returns neutral gate conclusions only: `eligible_for_review`, `research_first`, `watch`, `hold`, `no_action`, `unknown`, or `blocked`. It must not return buy/add/reduce/sell conclusions. Missing profile, valuation, liquidity, or theme binding keeps a subject in `research_first` or `blocked` status.
 Full gate:
 
 ```bash
@@ -475,6 +496,8 @@ Then open:
 - `http://127.0.0.1:8000/subjects/gap`
 - `http://127.0.0.1:8000/api/subjects/gap`
 - `http://127.0.0.1:8000/api/subjects/freshness`
+- `http://127.0.0.1:8000/subjects`
+- `http://127.0.0.1:8000/api/subjects/status`
 - `http://127.0.0.1:8000/api/modules/current`
 - `http://127.0.0.1:8000/api/export/review_package?format=json`
 

@@ -364,6 +364,43 @@
     );
   }
 
+  function renderSubjectStatus(data) {
+    const subjects = data.subjects || [];
+    const summary = data.summary || {};
+    setBind("subject_count", summary.subject_count ?? subjects.length);
+    setBind("subject_pass_count", summary.pass_count ?? 0);
+    setBind("subject_research_first_count", summary.research_first_count ?? 0);
+    setBind("subject_blocked_count", summary.blocked_count ?? 0);
+    setRows(
+      "subjectsRows",
+      subjects,
+      (row) => [
+        row.code,
+        row.name,
+        row.subject_type,
+        row.bucket,
+        row.profile_status,
+        row.valuation_status,
+        row.liquidity_status,
+        row.research_first_status,
+        row.gate_conclusion,
+        row.blocking_reason,
+      ],
+      (row) => {
+        const sources = Object.values(row.source_paths || {}).join(" | ");
+        const missing = [
+          row.missing_profile ? "profile" : "",
+          row.missing_valuation ? "valuation" : "",
+          row.missing_liquidity ? "liquidity" : "",
+          row.missing_theme_binding ? "theme_binding" : "",
+        ]
+          .filter(Boolean)
+          .join(", ");
+        return `generated: ${row.generated_at || ""} | basis: ${row.basis_trade_date || ""} | missing: ${missing || "none"} | sources: ${sources || "none"}`;
+      },
+    );
+  }
+
   function renderPortfolio(data) {
     const portfolio = data.portfolio || {};
     setBind("portfolio_count", (portfolio.positions || []).length);
@@ -432,6 +469,7 @@
     "target-allocation": renderTargetAllocation,
     "subjects-gap": renderSubjectGap,
     "research-first": renderResearchFirst,
+    subjects: renderSubjectStatus,
     portfolio: renderPortfolio,
     "intraday-rules": renderIntradayRules,
     "system-checks": renderSystemChecks,

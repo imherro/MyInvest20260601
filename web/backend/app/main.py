@@ -12,6 +12,7 @@ from .routers.current import router as current_router
 from .services.current_state import CurrentStateService
 from .services.market_position import MarketPositionService
 from .services.subject_gap import SubjectGapService
+from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
 
 
@@ -76,6 +77,22 @@ def research_first_page(request: Request, session: Session = Depends(get_session
         request,
         "research_first.html",
         page_context(request, "research-first", "/api/research-first/current", items=service(session).research_first_items()),
+    )
+
+
+@app.get("/subjects", response_class=HTMLResponse)
+def subjects_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    subject_status = SubjectStatusService(session).list_statuses()
+    return templates.TemplateResponse(
+        request,
+        "subjects.html",
+        page_context(
+            request,
+            "subjects",
+            "/api/subjects/status",
+            subjects=subject_status["subjects"],
+            summary=subject_status["summary"],
+        ),
     )
 
 

@@ -12,6 +12,7 @@ def test_web_pages_render_without_local_absolute_paths(client):
         "/action-plan",
         "/target-allocation",
         "/research-first",
+        "/subjects",
         "/subjects/gap",
         "/portfolio",
         "/intraday-rules",
