@@ -104,6 +104,17 @@ The integration layer maps Settings, Preferences, Dashboard, and Research Center
 
 The service composes existing read-only services and keeps OpenAPI GET-only. It does not persist UI events, write the Web database, write research files, generate action plans, generate target allocations, or add trading/QMT write behavior.
 
+## Phase 12 Workbench Audit Bundle
+
+Phase 12 adds a read-only audit bundle and preview page:
+
+- Page: `GET /audit`
+- API: `GET /api/audit/bundle`
+
+The bundle composes Dashboard analytics, Preferences, Historical Metrics, Workbench Integration, current-module source metadata, and guarded HistorySnapshot availability. The page supports a time-window selector, module selector, preview chart, section table, and JSON download link. The API and page remain current-only and ratio-only.
+
+The audit bundle does not write files, write runtime state, write the Web database, write research files, generate action plans, generate target allocations, or add trading/QMT write behavior. It is a review surface only.
+
 ## Run Tests
 
 ```bash

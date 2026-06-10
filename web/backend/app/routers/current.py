@@ -10,6 +10,7 @@ from ..config import DB_PATH
 from ..db import get_session
 from ..services.allocation_drilldown import AllocationDrilldownService
 from ..services.allocation_consistency import AllocationConsistencyService
+from ..services.audit_bundle_service import AuditBundleService
 from ..services.bucket_explorer import BucketExplorerService
 from ..services.current_state import CurrentStateService
 from ..services.dashboard import DashboardService
@@ -134,6 +135,18 @@ def workbench_integration(time_window: str = "current", session: Session = Depen
     return respond(
         WorkbenchIntegrationService(session).overview(time_window=time_window),
         source={"path": "db.WorkbenchIntegrationService"},
+    )
+
+
+@router.get("/audit/bundle")
+def audit_bundle(
+    time_window: str = "current",
+    module_filter: str = "all",
+    session: Session = Depends(get_session),
+) -> dict[str, Any]:
+    return respond(
+        AuditBundleService(session).bundle(time_window=time_window, module_filter=module_filter),
+        source={"path": "db.AuditBundleRepository"},
     )
 
 

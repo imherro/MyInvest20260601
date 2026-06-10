@@ -12,6 +12,7 @@ from .config import STATIC_DIR, TEMPLATE_DIR
 from .db import get_session
 from .routers.current import router as current_router
 from .services.allocation_drilldown import AllocationDrilldownService
+from .services.audit_bundle_service import AuditBundleService
 from .services.current_state import CurrentStateService
 from .services.bucket_explorer import BucketExplorerService
 from .services.dashboard import DashboardService
@@ -83,6 +84,20 @@ def preferences_page(request: Request, session: Session = Depends(get_session)) 
             "preferences",
             "/api/user/preferences",
             preferences=UserPreferencesService(session).preferences(),
+        ),
+    )
+
+
+@app.get("/audit", response_class=HTMLResponse)
+def audit_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "audit.html",
+        page_context(
+            request,
+            "audit",
+            "/api/audit/bundle",
+            audit_bundle=AuditBundleService(session).bundle(),
         ),
     )
 

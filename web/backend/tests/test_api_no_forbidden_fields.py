@@ -36,6 +36,8 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/dashboard/summary",
         "/api/dashboard/user_metrics/default",
         "/api/workbench/integration",
+        "/api/audit/bundle",
+        "/api/audit/bundle?time_window=7d&module_filter=dashboard",
         "/api/dashboard/current",
         "/api/current",
         "/api/latest-index",
