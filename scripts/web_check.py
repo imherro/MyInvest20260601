@@ -34,6 +34,7 @@ API_PATHS = [
     "/api/subjects/freshness",
     "/api/subjects/gap",
     "/api/themes/status",
+    "/api/buckets/status",
     "/api/buckets/drilldown?detail=full",
     "/api/subjects/drilldown?detail=full",
     "/api/subjects/drilldown?subject=511360.SH&detail=full",
@@ -52,6 +53,7 @@ API_PATHS = [
     "/api/target-allocation/candidate-audit?format=json",
     "/api/history/export",
     "/api/history/export?format=json",
+    "/api/history/gap-summary",
     "/api/portfolio/current",
     "/api/intraday-rules/current",
     "/api/research-first/current",
@@ -69,6 +71,8 @@ PAGE_PATHS = [
     "/subjects",
     "/subjects/gap",
     "/themes",
+    "/history/gap-dashboard",
+    "/buckets",
     "/buckets/drilldown",
     "/subjects/drilldown",
     "/portfolio",
@@ -83,6 +87,8 @@ INTERACTIVE_PAGE_CHECKS = {
     "/subjects": ["data-table-search", "data-sort", "subjectsRows"],
     "/subjects/gap": ["data-table-search", "data-sort", "subjectGapRows"],
     "/themes": ["data-table-search", "data-table-filter", "data-sort", "themesRows"],
+    "/history/gap-dashboard": ["data-table-search", "data-table-filter", "data-sort", "historyGapRows", "historyEntryRows"],
+    "/buckets": ["data-table-search", "data-table-filter", "data-sort", "bucketRows", "bucketSubjectRows"],
     "/buckets/drilldown": ["data-table-search", "data-table-filter", "data-sort", "bucketDrilldownRows", "bucketDrilldownChart"],
     "/subjects/drilldown": ["data-table-search", "data-table-filter", "data-sort", "subjectDrilldownRows"],
     "/portfolio": ["data-table-search", "data-sort", "portfolioRows"],
@@ -110,6 +116,9 @@ JS_CHECKS = [
     "function renderSubjectStatus",
     "function renderSubjectGap",
     "function renderThemes",
+    "function renderHistoryGapDashboard",
+    "function renderHistoryGapChart",
+    "function renderBuckets",
     "function renderBucketDrilldown",
     "function renderBucketDrilldownChart",
     "function renderSubjectDrilldown",
@@ -227,6 +236,26 @@ PHASE7E_FILES = [
     ROOT / "web" / "backend" / "app" / "templates" / "themes.html",
     ROOT / "web" / "backend" / "tests" / "test_theme_status.py",
     ROOT / "web" / "docs" / "THEME_RESEARCH_CENTER.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE7F_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "buckets.html",
+    ROOT / "web" / "backend" / "tests" / "test_bucket_explorer.py",
+    ROOT / "web" / "docs" / "BUCKET_EXPLORER.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE7G_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "history_gap_dashboard.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "history_gap_dashboard.html",
+    ROOT / "web" / "backend" / "tests" / "test_history_gap_dashboard.py",
+    ROOT / "web" / "docs" / "HISTORY_GAP_DASHBOARD.md",
     ROOT / "web" / "docs" / "API_SPEC.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
@@ -484,6 +513,8 @@ class WebCheck:
         self.check_phase7b_contract_files()
         self.check_phase7d_contract_files()
         self.check_phase7e_contract_files()
+        self.check_phase7f_contract_files()
+        self.check_phase7g_contract_files()
         self.check_phase7h_contract_files()
         self.run_ingest()
         self.run_pytest()
@@ -841,6 +872,74 @@ class WebCheck:
             return
         self.add_result("phase7e_theme_files", "PASS", "theme status service/API/page/tests/docs present")
 
+    def check_phase7g_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7G_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7g_history_gap_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7g_history_gap_files",
+                ", ".join(missing),
+                "Phase 7G history gap dashboard service/page/tests/docs are missing.",
+                "Add the history gap dashboard service, page, tests, and HISTORY_GAP_DASHBOARD.md, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7G_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "history gap" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7G docs must describe history gap dashboard and read-only boundaries")
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "history_gap_dashboard.py").read_text(encoding="utf-8", errors="replace")
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("history gap dashboard service references latest_index.files")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7g_history_gap_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7g_history_gap_safety",
+                rel(path),
+                f"Phase 7G file failed safety scan: {exc}",
+                "Remove local paths, keep current-only module resolution, and document history gap read-only boundaries.",
+            )
+            return
+        self.add_result("phase7g_history_gap_files", "PASS", "history gap dashboard service/API/page/tests/docs present")
+
+    def check_phase7f_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7F_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7f_bucket_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7f_bucket_files",
+                ", ".join(missing),
+                "Phase 7F bucket explorer service/page/tests/docs are missing.",
+                "Add the bucket explorer service, page, tests, and BUCKET_EXPLORER.md, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7F_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "bucket" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7F docs must describe bucket explorer and read-only boundaries")
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py").read_text(encoding="utf-8", errors="replace")
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("bucket service references latest_index.files")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7f_bucket_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7f_bucket_safety",
+                rel(path),
+                f"Phase 7F file failed safety scan: {exc}",
+                "Remove local paths, keep current-only module resolution, and document bucket read-only boundaries.",
+            )
+            return
+        self.add_result("phase7f_bucket_files", "PASS", "bucket explorer service/API/page/tests/docs present")
+
     def check_phase7h_contract_files(self) -> None:
         missing = [rel(path) for path in PHASE7H_FILES if not path.exists()]
         if missing:
@@ -993,6 +1092,8 @@ class WebCheck:
         self.check_subject_gap_api(client, ratio)
         self.check_dashboard_api(client, ratio)
         self.check_theme_status_api(client, ratio)
+        self.check_history_gap_api(client, ratio)
+        self.check_bucket_status_api(client, ratio)
         self.check_allocation_drilldown_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
@@ -1158,7 +1259,18 @@ class WebCheck:
                 if cash_gate.get("gate_conclusion") in {"buy", "add", "reduce", "sell"}:
                     raise ValueError("dashboard cash-equivalent gate leaked action conclusion")
             links = data.get("quick_links") or []
-            expected = {"Action Plan", "Target Allocation", "Subject Status", "Subject Gap", "Portfolio", "Intraday Rules", "Decision Log", "History Snapshot"}
+            expected = {
+                "Action Plan",
+                "Target Allocation",
+                "Subject Status",
+                "Subject Gap",
+                "Themes",
+                "Buckets",
+                "Portfolio",
+                "Intraday Rules",
+                "Decision Log",
+                "History Snapshot",
+            }
             labels = {item.get("label") for item in links}
             if not expected.issubset(labels):
                 raise ValueError(f"dashboard quick links missing labels: {sorted(expected - labels)}")
@@ -1226,6 +1338,109 @@ class WebCheck:
         else:
             self.add_result("theme_status_api", "PASS", "theme summary, details, and neutral statuses safe")
 
+    def check_history_gap_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/history/gap-summary")
+            if response.status_code != 200:
+                raise ValueError(f"history gap API returned {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            data = payload.get("data") or {}
+            if data.get("module") != "history_gap_dashboard" or data.get("current_only") is not True:
+                raise ValueError("history gap payload is not marked current-only")
+            for key in ["summary", "buckets", "history_entries", "safety"]:
+                if key not in data:
+                    raise ValueError(f"history gap payload missing {key}")
+            buckets = data.get("buckets") or []
+            summary = data.get("summary") or {}
+            if summary.get("bucket_count") != len(buckets):
+                raise ValueError("history gap summary count does not match buckets list")
+            target_response = client.get("/api/target-allocation/current")
+            target = (((target_response.json() or {}).get("data") or {}).get("target_allocation") or {})
+            current_buckets = {row.get("bucket"): row for row in target.get("buckets", [])}
+            for row in buckets:
+                if row.get("gap_status") not in {"green", "yellow", "red", "unknown"}:
+                    raise ValueError(f"unexpected history gap status for {row.get('bucket')}: {row.get('gap_status')}")
+                if row.get("alert_status") not in {"ok", "review", "attention", "unknown"}:
+                    raise ValueError(f"unexpected alert status for {row.get('bucket')}: {row.get('alert_status')}")
+                expected = current_buckets.get(row.get("bucket"))
+                if expected:
+                    for field in ["actual_pct", "target_pct", "gap_pct"]:
+                        if row.get(field) != expected.get(field):
+                            raise ValueError(f"{row.get('bucket')} {field} mismatch with current target allocation")
+            if buckets:
+                from urllib.parse import quote
+
+                detail = client.get("/api/history/gap-summary/" + quote(str(buckets[0].get("bucket")), safe=""))
+                if detail.status_code != 200:
+                    raise ValueError(f"history gap detail returned {detail.status_code}")
+                ratio.assert_safe(detail.json())
+                assert_safe_payload(detail.json())
+            missing = client.get("/api/history/gap-summary/NO_SUCH_BUCKET")
+            if missing.status_code != 404:
+                raise ValueError(f"missing history gap bucket returned {missing.status_code}, expected 404")
+            ratio.assert_safe(missing.json())
+            assert_safe_payload(missing.json())
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "history_gap_api",
+                "/api/history/gap-summary",
+                f"History gap dashboard API failed safety/current-state scan: {exc}",
+                "Fix HistoryGapDashboardService or its routes and rerun scripts/web_check.py.",
+            )
+            self.add_result("history_gap_api", "FAIL", str(exc))
+        else:
+            self.add_result("history_gap_api", "PASS", "history gap summary, details, and neutral alerts safe")
+
+    def check_bucket_status_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/buckets/status")
+            if response.status_code != 200:
+                raise ValueError(f"bucket status API returned {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            data = payload.get("data") or {}
+            if data.get("module") != "bucket_explorer" or data.get("current_only") is not True:
+                raise ValueError("bucket payload is not marked current-only")
+            for key in ["summary", "buckets", "safety", "source_modules"]:
+                if key not in data:
+                    raise ValueError(f"bucket payload missing {key}")
+            buckets = data.get("buckets") or []
+            summary = data.get("summary") or {}
+            if summary.get("bucket_count") != len(buckets):
+                raise ValueError("bucket summary count does not match bucket list")
+            for bucket in buckets:
+                if bucket.get("gap_status") in {"buy", "add", "reduce", "sell"}:
+                    raise ValueError(f"bucket gap status leaked action conclusion: {bucket.get('bucket')}")
+                for subject in bucket.get("subjects") or []:
+                    if subject.get("gate_conclusion") in {"buy", "add", "reduce", "sell"}:
+                        raise ValueError(f"subject gate leaked action conclusion: {subject.get('code')}")
+            if buckets:
+                from urllib.parse import quote
+
+                detail = client.get("/api/buckets/status/" + quote(str(buckets[0].get("bucket")), safe=""))
+                if detail.status_code != 200:
+                    raise ValueError(f"bucket detail returned {detail.status_code}")
+                ratio.assert_safe(detail.json())
+                assert_safe_payload(detail.json())
+            missing = client.get("/api/buckets/status/NO_SUCH_BUCKET")
+            if missing.status_code != 404:
+                raise ValueError(f"missing bucket returned {missing.status_code}, expected 404")
+            ratio.assert_safe(missing.json())
+            assert_safe_payload(missing.json())
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "bucket_status_api",
+                "/api/buckets/status",
+                f"Bucket Explorer API failed safety/current-state scan: {exc}",
+                "Fix BucketExplorerService or its route and rerun scripts/web_check.py.",
+            )
+            self.add_result("bucket_status_api", "FAIL", str(exc))
+        else:
+            self.add_result("bucket_status_api", "PASS", "bucket summary, details, and neutral statuses safe")
+
     def check_allocation_drilldown_api(self, client: Any, ratio: Any) -> None:
         try:
             bucket_response = client.get("/api/buckets/drilldown?detail=full")
@@ -1246,7 +1461,13 @@ class WebCheck:
             for key in ["ratio_only", "current_only", "read_only", "uses_latest_index_modules"]:
                 if safety.get(key) is not True:
                     raise ValueError(f"bucket drilldown safety check failed: {key}")
-            for key in ["uses_latest_index_files", "generates_action_plan", "generates_target_allocation", "trading_feature", "qmt_write_feature"]:
+            for key in [
+                "uses_latest_index_files",
+                "generates_action_plan",
+                "generates_target_allocation",
+                "trading_feature",
+                "qmt_write_feature",
+            ]:
                 if safety.get(key) is not False:
                     raise ValueError(f"bucket drilldown boundary check failed: {key}")
 

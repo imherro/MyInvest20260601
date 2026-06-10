@@ -410,6 +410,90 @@
     });
   }
 
+  function renderHistoryGapDashboard(data) {
+    const rows = data.buckets || [];
+    const summary = data.summary || {};
+    setBind("history_gap_bucket_count", summary.bucket_count ?? rows.length);
+    setBind("history_gap_green_count", summary.green_count ?? 0);
+    setBind("history_gap_yellow_count", summary.yellow_count ?? 0);
+    setBind("history_gap_red_count", summary.red_count ?? 0);
+    setBind("history_gap_alert_count", summary.alert_count ?? 0);
+    setBind("history_gap_source_count", summary.history_source_count ?? 0);
+    renderHistoryGapChart(rows);
+    setRows(
+      "historyGapRows",
+      rows,
+      (row) => [
+        row.bucket,
+        { value: pct(row.actual_pct), className: "num" },
+        { value: pct(row.target_pct), className: "num" },
+        { value: pp(row.gap_pct), className: "num" },
+        row.gap_status,
+        row.alert_status,
+        row.last_update_timestamp,
+        { value: row.history_point_count, className: "num" },
+      ],
+      (row) => {
+        const points = (row.timeline || [])
+          .map((item) => `${item.source_kind || ""}: ${pp(item.gap_pct)} ${item.status || ""}`.trim())
+          .join(" | ");
+        return `timeline: ${points || "none"} | source count: ${row.source_count ?? 0}`;
+      },
+    );
+    setRows(
+      "historyEntryRows",
+      data.history_entries || [],
+      (row) => [
+        row.source_id,
+        row.export_kind,
+        row.generated_at,
+        row.status,
+        yesNo(row.matched),
+        { value: row.diff_count, className: "num" },
+        { value: row.replay_failed, className: "num" },
+      ],
+      (row) =>
+        `format: ${row.source_format || ""} | unsupported fields: ${row.unsupported_field_count ?? 0} | official allowed: ${yesNo(row.official_allowed)}`,
+    );
+  }
+
+  function renderHistoryGapChart(rows) {
+    const chart = document.getElementById("historyGapChart");
+    const tooltip = document.getElementById("historyGapTooltip");
+    if (!chart) return;
+    chart.replaceChildren();
+    const maxGap = Math.max(1, ...((rows || []).map((row) => Math.abs(Number(row.gap_pct) || 0))));
+    (rows || []).forEach((row) => {
+      const gap = Number(row.gap_pct) || 0;
+      const status = ["green", "yellow", "red"].includes(row.gap_status) ? row.gap_status : "unknown";
+      const wrapper = document.createElement("div");
+      wrapper.className = "history-gap-chart-row";
+      wrapper.dataset.gapStatus = status;
+      wrapper.dataset.tooltip = `bucket: ${row.bucket || ""} | actual: ${pct(row.actual_pct)} | target: ${pct(row.target_pct)} | gap: ${pp(row.gap_pct)} | alert: ${row.alert_status || ""} | last update: ${row.last_update_timestamp || ""}`;
+
+      const label = document.createElement("div");
+      label.textContent = row.bucket || "";
+      const track = document.createElement("div");
+      track.className = "history-gap-track";
+      track.tabIndex = 0;
+      track.title = wrapper.dataset.tooltip;
+      const bar = document.createElement("div");
+      bar.className = `history-gap-bar ${status}`;
+      bar.style.width = `${Math.max(2, Math.min(100, (Math.abs(gap) / maxGap) * 100))}%`;
+      const value = document.createElement("div");
+      value.className = "num";
+      value.textContent = pp(row.gap_pct);
+      track.appendChild(bar);
+      wrapper.append(label, track, value);
+      const showTooltip = () => {
+        if (tooltip) tooltip.textContent = wrapper.dataset.tooltip || "";
+      };
+      track.addEventListener("mouseenter", showTooltip);
+      track.addEventListener("focus", showTooltip);
+      chart.appendChild(wrapper);
+    });
+  }
+
   function renderResearchFirst(data) {
     const gate = data.gate || {};
     const items = data.items || [];
@@ -501,6 +585,57 @@
         const leaders = (row.leaders || []).map((item) => `${item.type || ""} ${item.code || ""} ${item.route || ""}`.trim()).join("; ");
         const conflicts = (row.conflicts || []).map((item) => `${item.type || ""}: ${item.detail || ""}`).join("; ");
         return `data quality: ${row.data_quality_status || ""} | ETFs: ${etfs || "none"} | stocks: ${stocks || "none"} | leaders: ${leaders || "none"} | conflicts: ${conflicts || "none"}`;
+      },
+    );
+  }
+
+  function renderBuckets(data) {
+    const buckets = data.buckets || [];
+    const summary = data.summary || {};
+    setBind("bucket_count", summary.bucket_count ?? buckets.length);
+    setBind("bucket_overweight_count", summary.overweight_count ?? 0);
+    setBind("bucket_underweight_count", summary.underweight_count ?? 0);
+    setBind("bucket_research_first_count", summary.research_first_count ?? 0);
+    setBind("bucket_blocked_count", summary.blocked_count ?? 0);
+    setRows(
+      "bucketRows",
+      buckets,
+      (row) => [
+        row.bucket,
+        { value: pct(row.actual_pct), className: "num" },
+        { value: pct(row.target_pct), className: "num" },
+        { value: pp(row.gap_pct), className: "num" },
+        row.gap_status,
+        { value: row.subject_count, className: "num" },
+        { value: row.pass_count, className: "num" },
+        { value: row.research_first_count, className: "num" },
+        { value: row.stale_count, className: "num" },
+      ],
+      (row) => {
+        const notes = (row.risk_notes || []).join(" | ");
+        return `risk notes: ${notes || "none"} | blocked: ${row.blocked_count ?? 0}`;
+      },
+    );
+    const subjects = buckets.flatMap((bucket) => bucket.subjects || []);
+    setRows(
+      "bucketSubjectRows",
+      subjects,
+      (row) => [
+        row.code,
+        row.name,
+        row.subject_type,
+        row.bucket,
+        { value: pct(row.position_pct), className: "num" },
+        row.profile_status,
+        row.valuation_status,
+        row.liquidity_status,
+        row.research_first_status,
+        row.gate_conclusion,
+        row.blocking_reason,
+      ],
+      (row) => {
+        const sources = Object.values(row.source_paths || {}).join(" | ");
+        return `stale: ${yesNo(row.staleness_flag)} | sources: ${sources || "none"} | blocking: ${row.blocking_reason || "none"}`;
       },
     );
   }
@@ -680,9 +815,11 @@
     "action-plan": renderActionPlan,
     "target-allocation": renderTargetAllocation,
     "subjects-gap": renderSubjectGap,
+    "history-gap-dashboard": renderHistoryGapDashboard,
     "research-first": renderResearchFirst,
     subjects: renderSubjectStatus,
     themes: renderThemes,
+    buckets: renderBuckets,
     "buckets-drilldown": renderBucketDrilldown,
     "subjects-drilldown": renderSubjectDrilldown,
     portfolio: renderPortfolio,

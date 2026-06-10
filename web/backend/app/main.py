@@ -13,7 +13,9 @@ from .db import get_session
 from .routers.current import router as current_router
 from .services.allocation_drilldown import AllocationDrilldownService
 from .services.current_state import CurrentStateService
+from .services.bucket_explorer import BucketExplorerService
 from .services.dashboard import DashboardService
+from .services.history_gap_dashboard import HistoryGapDashboardService
 from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
@@ -123,6 +125,37 @@ def themes_page(request: Request, session: Session = Depends(get_session)) -> HT
             "/api/themes/status",
             themes=themes["themes"],
             summary=themes["summary"],
+        ),
+    )
+
+
+@app.get("/history/gap-dashboard", response_class=HTMLResponse)
+def history_gap_dashboard_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    dashboard = HistoryGapDashboardService(session).summary()
+    return templates.TemplateResponse(
+        request,
+        "history_gap_dashboard.html",
+        page_context(
+            request,
+            "history-gap-dashboard",
+            "/api/history/gap-summary",
+            dashboard=dashboard,
+        ),
+    )
+
+
+@app.get("/buckets", response_class=HTMLResponse)
+def buckets_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    buckets = BucketExplorerService(session).status()
+    return templates.TemplateResponse(
+        request,
+        "buckets.html",
+        page_context(
+            request,
+            "buckets",
+            "/api/buckets/status",
+            buckets=buckets["buckets"],
+            summary=buckets["summary"],
         ),
     )
 

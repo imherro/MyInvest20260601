@@ -16,6 +16,8 @@ def test_web_pages_render_without_local_absolute_paths(client):
         "/subjects",
         "/subjects/gap",
         "/themes",
+        "/history/gap-dashboard",
+        "/buckets",
         "/buckets/drilldown",
         "/subjects/drilldown",
         "/portfolio",
@@ -64,4 +66,18 @@ def test_allocation_drilldown_pages_have_visual_and_table_hooks(client):
     assert "data-table-filter=\"subjectDrilldownTable\"" in html
     assert "data-sort=\"number\"" in html
     assert "subjectDrilldownRows" in html
+    assert not LOCAL_PATH_RE.search(html)
+
+
+def test_history_gap_page_has_visual_and_refresh_hooks(client):
+    response = client.get("/history/gap-dashboard")
+    assert response.status_code == 200
+    html = response.text
+    assert "history-gap-chart-row" in html
+    assert "data-history-gap-chart" in html
+    assert "role=\"tooltip\"" in html
+    assert "data-refresh" in html
+    assert "data-table-search=\"historyGapTable\"" in html
+    assert "data-table-filter=\"historyGapTable\"" in html
+    assert "@media (max-width: 720px)" in html
     assert not LOCAL_PATH_RE.search(html)

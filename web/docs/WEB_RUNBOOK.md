@@ -109,7 +109,7 @@ Dashboard sections:
 - Bucket Gap: current bucket actual/target/gap chart.
 - Subject Research Status Summary: subject counts and 511360 cash-equivalent gate.
 - Subject Gap Summary: green/yellow/red/unknown/stale counts.
-- Quick Links: Action Plan, Target Allocation, Subject Status, Subject Gap, Themes, Portfolio, Intraday Rules, Decision Log, and History Snapshot.
+- Quick Links: Action Plan, Target Allocation, Subject Status, Subject Gap, Themes, Buckets, Portfolio, Intraday Rules, Decision Log, and History Snapshot.
 
 Validation:
 
@@ -144,6 +144,70 @@ Direct tests:
 ```bash
 python scripts/ingest_current_state.py
 python -m pytest web/backend/tests/test_theme_status.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+## Phase 7F Bucket Explorer
+
+Phase 7F adds the read-only Bucket Explorer. It drills from target-allocation buckets into current portfolio subjects, ResearchFirst gate status, and freshness status. It does not generate target allocation, generate action plans, write research files, or create trading instructions.
+
+Read-only API:
+
+- `GET /api/buckets/status`
+- `GET /api/buckets/status/{bucket}`
+
+Page:
+
+- `GET /buckets`
+
+The API returns `summary`, bucket rows, per-bucket actual/target/gap percentages, neutral gap status, risk notes, and per-subject gate status. Gap statuses are display states only: `near_target`, `overweight`, `underweight`, `zero_target_nonzero_actual`, or `unknown`.
+
+The page supports refresh, search, bucket/gate filters, sorting, pagination, and expandable details through the shared static JS. Every refresh still passes the frontend forbidden-field scan before rendering.
+
+Bucket Explorer remains current-only and read-only. It reads current SQLite state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
+
+Direct tests:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_bucket_explorer.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+## Phase 7G History Gap Dashboard
+
+Phase 7G adds the read-only History Gap Dashboard. It aggregates current target allocation, controlled shadow allocation, candidate audit allocation, and history entry summaries into a Web review page. It does not generate target allocation, generate action plans, write research files, write temporary exports, or create trading instructions.
+
+Read-only API:
+
+- `GET /api/history/gap-summary`
+- `GET /api/history/gap-summary/{bucket}`
+
+Page:
+
+- `GET /history/gap-dashboard`
+
+The API returns summary counts, bucket actual/target/gap percentages, neutral gap status, alert status, per-bucket timeline points, history entry summaries, and safety flags. Gap and alert status are display-only review states.
+
+The page supports refresh, search, gap-status filter, sorting, pagination, expandable details, and bucket gap evolution visualization with tooltip text through the shared static JS. Every refresh still passes the frontend forbidden-field scan before rendering.
+
+History Gap Dashboard remains current-only and read-only. It reads current SQLite state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
+
+Direct tests:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_history_gap_dashboard.py
 ```
 
 Full gate:

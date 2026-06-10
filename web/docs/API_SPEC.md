@@ -25,6 +25,8 @@ Endpoints:
 - `GET /api/subjects/gap`
 - `GET /api/themes/status`
 - `GET /api/themes/status/{theme_name}`
+- `GET /api/buckets/status`
+- `GET /api/buckets/status/{bucket}`
 - `GET /api/buckets/drilldown`
 - `GET /api/subjects/drilldown`
 - `GET /api/market-position/mapping`
@@ -37,6 +39,8 @@ Endpoints:
 - `GET /api/target-allocation/shadow/export`
 - `GET /api/target-allocation/candidate-audit`
 - `GET /api/history/export`
+- `GET /api/history/gap-summary`
+- `GET /api/history/gap-summary/{bucket}`
 - `GET /api/research-first/current`
 - `GET /api/portfolio/current`
 - `GET /api/intraday-rules/current`
@@ -110,6 +114,21 @@ The service reads current SQLite artifact payloads loaded from `latest_index.mod
 Returned fields include `summary`, `themes`, associated ETF/stock gate summaries, leaders, conflicts, data-quality status, and safety flags. Theme states are neutral research states: `confirmed`, `watch`, `research_first`, `stale`, `conflict`, or `unknown`. They must not become buy/add/reduce/sell actions.
 
 The page `GET /themes` uses the same API and supports refresh, search, status/rating/stage filters, sorting, pagination, and expandable details.
+
+## Bucket Explorer
+
+Phase 7F adds a read-only bucket allocation drilldown:
+
+- `GET /api/buckets/status`
+- `GET /api/buckets/status/{bucket}`
+
+The service reads current SQLite data loaded from `latest_index.modules` through existing current-state, subject-status, and subject-gap services. It does not read `latest_index.files`, write research artifacts, update current module pointers, generate target allocations, or generate action plans.
+
+Returned fields include `summary`, `buckets`, per-bucket actual/target/gap percentages, neutral `gap_status`, bucket risk notes, subject counts, and per-subject gate status. Subject rows include code, name, subject type, bucket, position percentage, profile/valuation/liquidity status, ResearchFirst status, neutral gate conclusion, blocking reason, staleness flag, and repo-relative source metadata.
+
+Gap status is presentation-only: `near_target`, `overweight`, `underweight`, `zero_target_nonzero_actual`, or `unknown`. A legacy watch bucket with nonzero actual and zero target is shown as `zero_target_nonzero_actual`, not as an action.
+
+The page `GET /buckets` uses the same API and supports refresh, search, bucket/gate filters, sorting, pagination, and expandable details.
 
 ## Allocation Drilldown
 
@@ -209,6 +228,19 @@ The ZIP contains only:
 - `safety_checks.json`
 
 The CLI companion writes only to ignored temporary export folders and keeps the local history database under ignored runtime storage. Exported JSON and ZIP payloads must not contain runtime paths.
+
+## History Gap Dashboard
+
+Phase 7G adds a read-only history gap dashboard:
+
+- `GET /api/history/gap-summary`
+- `GET /api/history/gap-summary/{bucket}`
+
+The API aggregates in-memory current target allocation, controlled shadow target allocation, candidate audit target allocation, and history snapshot entry summaries. It does not write temporary exports, write the history database, update `latest_index`, update `current_modules`, generate target allocations, or generate action plans.
+
+Returned fields include summary counts, bucket actual/target/gap percentages, neutral gap status, alert status, timeline points, history entry summaries, and safety flags. Gap and alert states are display-only review states.
+
+The page `GET /history/gap-dashboard` uses the same API and supports refresh, search, gap-status filtering, sorting, pagination, expandable details, and bucket gap evolution visualization.
 
 ## Review Package Export
 

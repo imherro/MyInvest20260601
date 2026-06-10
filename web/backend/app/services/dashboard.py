@@ -149,6 +149,8 @@ class DashboardService:
             {"label": "Subject Status", "href": "/subjects"},
             {"label": "Subject Gap", "href": "/subjects/gap"},
             {"label": "Themes", "href": "/themes"},
+            {"label": "Buckets", "href": "/buckets"},
+            {"label": "History Gap", "href": "/history/gap-dashboard"},
             {"label": "Bucket Drilldown", "href": "/buckets/drilldown"},
             {"label": "Subject Drilldown", "href": "/subjects/drilldown"},
             {"label": "Portfolio", "href": "/portfolio"},
