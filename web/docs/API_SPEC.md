@@ -25,6 +25,8 @@ Endpoints:
 - `GET /api/subjects/gap`
 - `GET /api/themes/status`
 - `GET /api/themes/status/{theme_name}`
+- `GET /api/buckets/drilldown`
+- `GET /api/subjects/drilldown`
 - `GET /api/market-position/mapping`
 - `GET /api/market-position/current`
 - `GET /api/market-position/score/{score}`
@@ -108,6 +110,23 @@ The service reads current SQLite artifact payloads loaded from `latest_index.mod
 Returned fields include `summary`, `themes`, associated ETF/stock gate summaries, leaders, conflicts, data-quality status, and safety flags. Theme states are neutral research states: `confirmed`, `watch`, `research_first`, `stale`, `conflict`, or `unknown`. They must not become buy/add/reduce/sell actions.
 
 The page `GET /themes` uses the same API and supports refresh, search, status/rating/stage filters, sorting, pagination, and expandable details.
+
+## Allocation Drilldown
+
+Phase 7H adds read-only allocation drilldown endpoints:
+
+- `GET /api/buckets/drilldown`
+- `GET /api/buckets/drilldown?bucket=<bucket>&detail=full`
+- `GET /api/subjects/drilldown`
+- `GET /api/subjects/drilldown?subject=<code>&detail=full`
+
+The service reads only current SQLite state produced from `research/latest_index.json` `modules`. It joins current target-allocation bucket rows, portfolio-position rows, subject gap/freshness rows, neutral ResearchFirst status, market position, and theme association summaries.
+
+Bucket rows return `actual_pct`, `target_pct`, `gap_pct`, `gap_status`, subject counts, neutral ResearchFirst counts, timestamps, and optional subject details. Subject rows return subject code/name/type, bucket, position percentage, bucket actual/target/gap percentages, neutral gate status, profile/valuation/liquidity status, theme count, timestamps, and relative Web review links.
+
+The endpoints do not read `latest_index.files`, write research artifacts, update `current_modules`, generate target allocations, generate action plans, or connect to execution adapters. Responses are ratio-only and pass `RatioOnlyService`.
+
+The pages `GET /buckets/drilldown` and `GET /subjects/drilldown` use the same APIs and support refresh, search, filters, sorting, pagination, charts/tooltips where applicable, and expandable details.
 
 ## Market Position
 

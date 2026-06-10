@@ -47,6 +47,28 @@ def test_themes_page_include_refresh_filter_and_table_hooks(client):
     assert "themesRows" in html
 
 
+def test_allocation_drilldown_pages_include_refresh_filter_and_table_hooks(client):
+    response = client.get("/buckets/drilldown")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "bucketDrilldownChart" in html
+    assert "bucketDrilldownTooltip" in html
+    assert "data-table-search=\"bucketDrilldownTable\"" in html
+    assert "data-table-filter=\"bucketDrilldownTable\"" in html
+    assert "data-sort=\"number\"" in html
+    assert "bucketDrilldownRows" in html
+
+    response = client.get("/subjects/drilldown")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "data-table-search=\"subjectDrilldownTable\"" in html
+    assert "data-table-filter=\"subjectDrilldownTable\"" in html
+    assert "data-sort=\"number\"" in html
+    assert "subjectDrilldownRows" in html
+
+
 def test_dashboard_includes_gap_chart_and_status_cards(client):
     response = client.get("/")
     assert response.status_code == 200
@@ -73,6 +95,9 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderSubjectGapChart" in script
     assert "function renderDashboardQuickLinks" in script
     assert "function renderThemes" in script
+    assert "function renderBucketDrilldown" in script
+    assert "function renderBucketDrilldownChart" in script
+    assert "function renderSubjectDrilldown" in script
     assert "function setupFilters" in script
     assert "mouseenter" in script
     assert "gapStatus" in script

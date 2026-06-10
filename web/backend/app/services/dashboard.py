@@ -149,6 +149,8 @@ class DashboardService:
             {"label": "Subject Status", "href": "/subjects"},
             {"label": "Subject Gap", "href": "/subjects/gap"},
             {"label": "Themes", "href": "/themes"},
+            {"label": "Bucket Drilldown", "href": "/buckets/drilldown"},
+            {"label": "Subject Drilldown", "href": "/subjects/drilldown"},
             {"label": "Portfolio", "href": "/portfolio"},
             {"label": "Intraday Rules", "href": "/intraday-rules"},
             {"label": "Decision Log", "href": "/decision-log"},

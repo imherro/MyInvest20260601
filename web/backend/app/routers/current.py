@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from ..config import DB_PATH
 from ..db import get_session
+from ..services.allocation_drilldown import AllocationDrilldownService
 from ..services.allocation_consistency import AllocationConsistencyService
 from ..services.current_state import CurrentStateService
 from ..services.dashboard import DashboardService
@@ -121,6 +122,32 @@ def theme_status(theme_name: str, session: Session = Depends(get_session)) -> di
     except LookupError as exc:
         raise HTTPException(status_code=404, detail="theme status not found") from exc
     return respond({"theme": data}, source={"path": "db.artifacts.theme_registry"})
+
+
+@router.get("/buckets/drilldown")
+def bucket_drilldown(
+    bucket: str | None = None,
+    detail: Literal["summary", "full"] = "summary",
+    session: Session = Depends(get_session),
+) -> dict[str, Any]:
+    try:
+        data = AllocationDrilldownService(session).buckets(bucket=bucket, detail=detail)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="bucket drilldown not found") from exc
+    return respond(data, source={"path": "db.AllocationDrilldownService"})
+
+
+@router.get("/subjects/drilldown")
+def subject_drilldown(
+    subject: str | None = None,
+    detail: Literal["summary", "full"] = "summary",
+    session: Session = Depends(get_session),
+) -> dict[str, Any]:
+    try:
+        data = AllocationDrilldownService(session).subjects(subject=subject, detail=detail)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="subject drilldown not found") from exc
+    return respond(data, source={"path": "db.AllocationDrilldownService"})
 
 
 @router.get("/market-position/mapping")

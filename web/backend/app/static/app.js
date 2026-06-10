@@ -505,6 +505,114 @@
     );
   }
 
+  function renderBucketDrilldown(data) {
+    const buckets = data.buckets || [];
+    const summary = data.summary || {};
+    setBind("bucket_drilldown_count", summary.bucket_count ?? buckets.length);
+    setBind("bucket_drilldown_subjects", summary.subject_count ?? 0);
+    setBind("bucket_drilldown_green", summary.green_count ?? 0);
+    setBind("bucket_drilldown_yellow", summary.yellow_count ?? 0);
+    setBind("bucket_drilldown_red", summary.red_count ?? 0);
+    setBind("bucket_drilldown_generated", data.generated_at);
+    renderBucketDrilldownChart(buckets);
+    setRows(
+      "bucketDrilldownRows",
+      buckets,
+      (row) => [
+        row.bucket,
+        { value: pct(row.actual_pct), className: "num" },
+        { value: pct(row.target_pct), className: "num" },
+        { value: pp(row.gap_pct), className: "num" },
+        row.gap_status,
+        { value: row.subject_count, className: "num" },
+        row.generated_at,
+      ],
+      (row) => {
+        const counts = Object.entries(row.research_first_counts || {})
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(", ");
+        const subjects = (row.subjects || [])
+          .slice(0, 6)
+          .map((item) => `${item.code || ""} ${item.name || ""}`.trim())
+          .join("; ");
+        const links = Object.values(row.review_links || {}).join(" | ");
+        return `basis: ${row.basis_trade_date || ""} | position total: ${pct(row.position_pct_total)} | gate counts: ${counts || "none"} | subjects: ${subjects || "none"} | links: ${links || "none"}`;
+      },
+    );
+  }
+
+  function renderBucketDrilldownChart(buckets) {
+    const chart = document.getElementById("bucketDrilldownChart");
+    const tooltip = document.getElementById("bucketDrilldownTooltip");
+    if (!chart) return;
+    chart.replaceChildren();
+    (buckets || []).forEach((row) => {
+      const actual = Math.max(0, Math.min(100, Number(row.actual_pct) || 0));
+      const target = Math.max(0, Math.min(100, Number(row.target_pct) || 0));
+      const status = ["green", "yellow", "red"].includes(row.gap_status) ? row.gap_status : "unknown";
+      const wrapper = document.createElement("div");
+      wrapper.className = "drilldown-chart-row";
+      wrapper.dataset.tooltip = `bucket: ${row.bucket || ""} | actual: ${pct(row.actual_pct)} | target: ${pct(row.target_pct)} | gap: ${pp(row.gap_pct)} | subjects: ${row.subject_count || 0}`;
+      const label = document.createElement("div");
+      label.textContent = row.bucket || "";
+      const track = document.createElement("div");
+      track.className = "drilldown-track";
+      track.tabIndex = 0;
+      track.title = wrapper.dataset.tooltip;
+      const actualBar = document.createElement("div");
+      actualBar.className = `drilldown-actual ${status}`;
+      actualBar.style.width = `${actual}%`;
+      const targetMarker = document.createElement("div");
+      targetMarker.className = "drilldown-target";
+      targetMarker.style.left = `${target}%`;
+      const gap = document.createElement("div");
+      gap.className = "num";
+      gap.textContent = pp(row.gap_pct);
+      track.append(actualBar, targetMarker);
+      wrapper.append(label, track, gap);
+      const showTooltip = () => {
+        if (tooltip) tooltip.textContent = wrapper.dataset.tooltip || "";
+      };
+      track.addEventListener("mouseenter", showTooltip);
+      track.addEventListener("focus", showTooltip);
+      chart.appendChild(wrapper);
+    });
+  }
+
+  function renderSubjectDrilldown(data) {
+    const subjects = data.subjects || [];
+    const summary = data.summary || {};
+    setBind("subject_drilldown_count", summary.subject_count ?? subjects.length);
+    setBind("subject_drilldown_pass", summary.pass_count ?? 0);
+    setBind("subject_drilldown_research_first", summary.research_first_count ?? 0);
+    setBind("subject_drilldown_blocked", summary.blocked_count ?? 0);
+    setBind("subject_drilldown_stale", summary.stale_count ?? 0);
+    setBind("subject_drilldown_generated", data.generated_at);
+    setRows(
+      "subjectDrilldownRows",
+      subjects,
+      (row) => [
+        row.code,
+        row.name,
+        row.bucket,
+        { value: pct(row.position_pct), className: "num" },
+        { value: pct(row.bucket_actual_pct), className: "num" },
+        { value: pct(row.bucket_target_pct), className: "num" },
+        { value: pp(row.bucket_gap_pct), className: "num" },
+        row.research_first_status,
+        row.gate_conclusion,
+        { value: row.theme_count, className: "num" },
+      ],
+      (row) => {
+        const themes = (row.themes || [])
+          .map((item) => `${item.theme_name || ""} ${item.status || ""} ${item.tactical_rating || ""}`.trim())
+          .join("; ");
+        const links = Object.values(row.review_links || {}).join(" | ");
+        return `profile: ${row.profile_status || ""} | valuation: ${row.valuation_status || ""} | liquidity: ${row.liquidity_status || ""} | gap status: ${row.gap_status || ""} | stale: ${yesNo(row.staleness_flag)} | updated: ${row.last_update_timestamp || ""} | themes: ${themes || "none"} | reason: ${row.blocking_reason || "none"} | links: ${links || "none"}`;
+      },
+    );
+  }
+
   function renderPortfolio(data) {
     const portfolio = data.portfolio || {};
     setBind("portfolio_count", (portfolio.positions || []).length);
@@ -575,6 +683,8 @@
     "research-first": renderResearchFirst,
     subjects: renderSubjectStatus,
     themes: renderThemes,
+    "buckets-drilldown": renderBucketDrilldown,
+    "subjects-drilldown": renderSubjectDrilldown,
     portfolio: renderPortfolio,
     "intraday-rules": renderIntradayRules,
     "system-checks": renderSystemChecks,

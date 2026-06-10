@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Subject Allocation Drilldown{% endblock %}
+{% block content %}
+  {% set data = drilldown or {} %}
+  {% set summary = data.summary or {} %}
+  {% set subjects = data.subjects or [] %}
+
+  <div class="metric-grid">
+    <div class="metric"><span class="subtle">Subjects</span><strong data-bind="subject_drilldown_count">{{ summary.subject_count }}</strong></div>
+    <div class="metric ok"><span class="subtle">Gate Pass</span><strong data-bind="subject_drilldown_pass">{{ summary.pass_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">ResearchFirst</span><strong data-bind="subject_drilldown_research_first">{{ summary.research_first_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Blocked</span><strong data-bind="subject_drilldown_blocked">{{ summary.blocked_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Stale</span><strong data-bind="subject_drilldown_stale">{{ summary.stale_count }}</strong></div>
+    <div class="metric"><span class="subtle">Generated</span><strong data-bind="subject_drilldown_generated">{{ data.generated_at or "n/a" }}</strong></div>
+  </div>
+
+  <div class="table-tools">
+    <h2>Subjects</h2>
+    <input type="search" placeholder="Search subject drilldown" data-table-search="subjectDrilldownTable">
+    <select data-table-filter="subjectDrilldownTable" data-filter-key="bucket" aria-label="Filter bucket">
+      <option value="">All buckets</option>
+      <option value="cash_short">cash_short</option>
+      <option value="core_base">core_base</option>
+      <option value="attack_mainline">attack_mainline</option>
+      <option value="defense">defense</option>
+      <option value="legacy_watch">legacy_watch</option>
+    </select>
+    <select data-table-filter="subjectDrilldownTable" data-filter-key="research_first_status" aria-label="Filter ResearchFirst">
+      <option value="">All ResearchFirst</option>
+      <option value="pass">pass</option>
+      <option value="research_first">research_first</option>
+      <option value="blocked">blocked</option>
+      <option value="unknown">unknown</option>
+    </select>
+  </div>
+  {% if subjects %}
+    <table id="subjectDrilldownTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Code</th>
+          <th data-sort="text">Name</th>
+          <th data-sort="text">Bucket</th>
+          <th class="num" data-sort="number">Position</th>
+          <th class="num" data-sort="number">Bucket Actual</th>
+          <th class="num" data-sort="number">Bucket Target</th>
+          <th class="num" data-sort="number">Bucket Gap</th>
+          <th data-sort="text">ResearchFirst</th>
+          <th data-sort="text">Gate</th>
+          <th class="num" data-sort="number">Themes</th>
+        </tr>
+      </thead>
+      <tbody id="subjectDrilldownRows">
+        {% for item in subjects %}
+          <tr>
+            <td>{{ item.code or "" }}</td>
+            <td>{{ item.name or "" }}</td>
+            <td>{{ item.bucket or "" }}</td>
+            <td class="num">{{ "%.2f"|format(item.position_pct) if item.position_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.bucket_actual_pct) if item.bucket_actual_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.bucket_target_pct) if item.bucket_target_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.bucket_gap_pct) if item.bucket_gap_pct is not none else "" }}pp</td>
+            <td><span class="status {{ 'warn' if item.research_first_status != 'pass' else '' }}">{{ item.research_first_status or "" }}</span></td>
+            <td>{{ item.gate_conclusion or "" }}</td>
+            <td class="num">{{ item.theme_count }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No subject drilldown data loaded.</div>
+  {% endif %}
+{% endblock %}

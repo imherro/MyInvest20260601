@@ -152,6 +152,41 @@ Full gate:
 python scripts/web_check.py
 ```
 
+## Phase 7H Allocation Drilldown
+
+Phase 7H adds read-only allocation drilldown pages for bucket and subject review. It joins current target allocation, portfolio positions, subject gap/freshness, neutral ResearchFirst gate status, market position, and theme association summaries. It does not generate target allocation, generate action plans, write research files, or create trading instructions.
+
+Read-only APIs:
+
+- `GET /api/buckets/drilldown`
+- `GET /api/buckets/drilldown?bucket=<bucket>&detail=full`
+- `GET /api/subjects/drilldown`
+- `GET /api/subjects/drilldown?subject=<code>&detail=full`
+
+Pages:
+
+- `GET /buckets/drilldown`
+- `GET /subjects/drilldown`
+
+The bucket page shows actual/target/gap percentages, gap status, subject counts, a bucket actual-vs-target chart, search, gap-status filter, sorting, pagination, and expandable details.
+
+The subject page shows subject position percentage, bucket actual/target/gap, ResearchFirst status, neutral gate conclusion, theme count, search, bucket/status filters, sorting, pagination, and expandable details.
+
+Allocation drilldown remains current-only and read-only. It reads SQLite current state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
+
+Direct tests:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_allocation_drilldown.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
 ## Phase 5A Schema And Golden Baseline
 
 Phase 5A freezes the database schema contract and adds a golden current-state baseline for later service migration. It does not migrate target-allocation generation, action-plan generation, trading logic, order creation, execution handling, or QMT write interfaces.
@@ -578,18 +613,24 @@ Then open:
 - `http://127.0.0.1:8000/api/subjects/status`
 - `http://127.0.0.1:8000/themes`
 - `http://127.0.0.1:8000/api/themes/status`
+- `http://127.0.0.1:8000/buckets/drilldown`
+- `http://127.0.0.1:8000/api/buckets/drilldown?detail=full`
+- `http://127.0.0.1:8000/subjects/drilldown`
+- `http://127.0.0.1:8000/api/subjects/drilldown?detail=full`
 - `http://127.0.0.1:8000/api/modules/current`
 - `http://127.0.0.1:8000/api/export/review_package?format=json`
 
 ## Page Interactions
 
-- `Refresh` reloads the current page data from the matching `/api/.../current` endpoint.
+- `Refresh` reloads the current page data from the matching read-only API endpoint.
 - Pages also refresh automatically every 60 seconds.
 - Table headers with sort markers can be clicked to sort.
 - Search boxes filter the current table; `Clear` resets the filter.
+- Filter menus narrow supported tables by status, bucket, rating, or stage.
 - Tables page rows client-side; use `Prev` and `Next` below the table.
 - Click a table row to expand or collapse ratio-only detail text.
 - Dashboard shows bucket allocation gaps as a centered bar chart and highlights ResearchFirst and intraday status.
+- Bucket Drilldown shows a hover/focus chart tooltip for actual vs target percentage.
 
 Every frontend refresh performs a lightweight forbidden-field scan before rendering. Server responses are also checked by `RatioOnlyService`.
 
