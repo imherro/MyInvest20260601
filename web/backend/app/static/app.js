@@ -310,6 +310,37 @@
     );
   }
 
+  function renderSubjectGap(data) {
+    const rows = data.rows || [];
+    const summary = data.summary || {};
+    setBind("subject_gap_count", summary.subject_count ?? rows.length);
+    setBind("subject_stale_count", summary.stale_count ?? 0);
+    setBind("subject_green_count", summary.green_count ?? 0);
+    setBind("subject_yellow_count", summary.yellow_count ?? 0);
+    setBind("subject_red_count", summary.red_count ?? 0);
+    setBind("subject_unknown_count", summary.unknown_count ?? 0);
+    setRows(
+      "subjectGapRows",
+      rows,
+      (row) => [
+        row.code,
+        row.name,
+        row.bucket,
+        { value: pct(row.position_pct), className: "num" },
+        { value: pct(row.actual_pct), className: "num" },
+        { value: pct(row.target_pct), className: "num" },
+        { value: pp(row.gap_pct), className: "num" },
+        row.gap_status,
+        yesNo(row.staleness_flag),
+        row.last_update_timestamp,
+      ],
+      (row) => {
+        const sources = Object.values(row.source_paths || {}).join(" | ");
+        return `basis: ${row.basis_trade_date || ""} | staleness: ${row.staleness_reason || ""} | subject type: ${row.subject_type || ""} | sources: ${sources || "none"}`;
+      },
+    );
+  }
+
   function renderResearchFirst(data) {
     const gate = data.gate || {};
     const items = data.items || [];
@@ -436,6 +467,7 @@
     dashboard: renderDashboard,
     "action-plan": renderActionPlan,
     "target-allocation": renderTargetAllocation,
+    "subjects-gap": renderSubjectGap,
     "research-first": renderResearchFirst,
     subjects: renderSubjectStatus,
     portfolio: renderPortfolio,

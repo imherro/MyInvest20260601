@@ -15,6 +15,7 @@ from ..services.history_snapshot import HistorySnapshotService
 from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
+from ..services.subject_gap import SubjectGapService
 from ..services.subject_status import SubjectStatusService
 from ..services.system_check import SystemCheckService
 from ..services.target_allocation_candidate_audit import TargetAllocationCandidateAuditService
@@ -89,6 +90,16 @@ def subject_status(code: str, session: Session = Depends(get_session)) -> dict[s
     except LookupError as exc:
         raise HTTPException(status_code=404, detail="subject status not found") from exc
     return respond({"subject": data}, source={"path": "db.subjects"})
+
+
+@router.get("/subjects/freshness")
+def subject_freshness(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(SubjectGapService(session).freshness(), source={"path": "db.subjects"})
+
+
+@router.get("/subjects/gap")
+def subject_gap(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(SubjectGapService(session).gap(), source={"path": "db.subjects"})
 
 
 @router.get("/market-position/mapping")

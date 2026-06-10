@@ -11,6 +11,7 @@ from .db import get_session
 from .routers.current import router as current_router
 from .services.current_state import CurrentStateService
 from .services.market_position import MarketPositionService
+from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
 
@@ -91,6 +92,22 @@ def subjects_page(request: Request, session: Session = Depends(get_session)) -> 
             "/api/subjects/status",
             subjects=subject_status["subjects"],
             summary=subject_status["summary"],
+        ),
+    )
+
+
+@app.get("/subjects/gap", response_class=HTMLResponse)
+def subjects_gap_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    subject_gap = SubjectGapService(session).gap()
+    return templates.TemplateResponse(
+        request,
+        "subjects_gap.html",
+        page_context(
+            request,
+            "subjects-gap",
+            "/api/subjects/gap",
+            rows=subject_gap["rows"],
+            summary=subject_gap["summary"],
         ),
     )
 
