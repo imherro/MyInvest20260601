@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import re
 import string
+from pathlib import Path
 from typing import Any
+
+import web.backend.app.repositories.subject_gap_repo as subject_gap_repo_module
 
 
 FORBIDDEN_KEY_RE = re.compile(
@@ -11,6 +14,7 @@ FORBIDDEN_KEY_RE = re.compile(
     re.IGNORECASE,
 )
 BACKSLASH = chr(92)
+ROOT = Path(__file__).resolve().parents[3]
 
 
 def has_local_path(value: str) -> bool:
@@ -91,6 +95,11 @@ def test_subject_gap_endpoint_contract_and_bucket_consistency(client):
             "source_paths",
         } <= set(row)
         assert row["gap_status"] in {"green", "yellow", "red", "unknown"}
+        for source_path in (row.get("source_paths") or {}).values():
+            path = Path(str(source_path))
+            assert not path.is_absolute()
+            assert ".." not in path.parts
+            assert not has_local_path(str(source_path))
         if row["bucket"] in bucket_map and row["actual_pct"] is not None:
             expected = bucket_map[row["bucket"]]
             assert row["actual_pct"] == expected["actual_pct"]
@@ -117,3 +126,70 @@ def test_subject_gap_page_hooks(client):
     assert "data-sort=\"number\"" in html
     assert "subjectGapRows" in html
     assert not has_local_path(html)
+
+
+def test_subject_gap_repository_delegates_to_database_service(monkeypatch):
+    calls: list[str] = []
+
+    class FakeDatabaseService:
+        def __init__(self, session):
+            calls.append(f"init:{session}")
+
+        def fetch_all(self, sql, params=None):
+            calls.append(sql)
+            return [
+                {
+                    "code": "511360.SH",
+                    "name": "短融ETF",
+                    "subject_type": "cash_equivalent",
+                    "bucket": "cash_short",
+                    "position_pct": 10.0,
+                    "actual_pct": 10.0,
+                    "target_pct": 10.0,
+                    "gap_pct": 0.0,
+                    "portfolio_generated_at": "2026-06-09",
+                    "portfolio_basis_trade_date": "20260608",
+                    "target_generated_at": "2026-06-09",
+                    "target_basis_trade_date": "20260608",
+                    "subject_generated_at": "2026-06-09",
+                    "subject_basis_trade_date": "20260608",
+                    "subject_source_path": "research/etfs/511360_profile.json",
+                }
+            ]
+
+    monkeypatch.setattr(subject_gap_repo_module, "DatabaseService", FakeDatabaseService)
+
+    repo = subject_gap_repo_module.SubjectGapRepository("sentinel")
+    rows = repo.list_subject_gap_rows()
+
+    assert rows[0]["code"] == "511360.SH"
+    assert calls[0] == "init:sentinel"
+    assert "WITH latest_snapshot" in calls[1]
+    assert "latest_index.files" not in calls[1]
+    assert "PRAGMA" not in calls[1].upper()
+    assert "INSERT" not in calls[1].upper()
+    assert "UPDATE" not in calls[1].upper()
+    assert "DELETE" not in calls[1].upper()
+
+
+def test_subject_gap_and_related_services_db_access_boundaries():
+    service_paths = [
+        ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py",
+        ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
+        ROOT / "web" / "backend" / "app" / "services" / "theme_status.py",
+        ROOT / "web" / "backend" / "app" / "services" / "dashboard.py",
+    ]
+    repo_source = (ROOT / "web" / "backend" / "app" / "repositories" / "subject_gap_repo.py").read_text(encoding="utf-8")
+
+    for path in service_paths:
+        source = path.read_text(encoding="utf-8")
+        assert ".read_text(" not in source
+        assert "latest_index.files" not in source
+        assert "[\"files\"]" not in source
+        assert "['files']" not in source
+        assert ".execute(" not in source
+
+    assert "SubjectGapRepository" in service_paths[0].read_text(encoding="utf-8")
+    assert "DatabaseService" in repo_source
+    assert ".fetch_all(" in repo_source
+    assert ".execute(" not in repo_source

@@ -117,6 +117,15 @@ def test_dashboard_openapi_is_read_only(client):
     assert mutating == []
 
 
+def test_dashboard_service_has_no_direct_file_or_sql_access():
+    source = open("web/backend/app/services/dashboard.py", encoding="utf-8").read()
+    assert ".read_text(" not in source
+    assert ".execute(" not in source
+    assert "latest_index.files" not in source
+    assert "[\"files\"]" not in source
+    assert "['files']" not in source
+
+
 def test_run_web_defaults_and_help():
     assert run_web.DEFAULT_HOST == "0.0.0.0"
     assert run_web.DEFAULT_PORT == 8000

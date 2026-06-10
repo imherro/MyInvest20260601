@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "refactor(web): consolidate subject status database access"
+COMMIT_MESSAGE = "refactor(web): consolidate db access for SubjectGap/Bucket/Theme/Dashboard"
 
 API_PATHS = [
     "/api/health",
@@ -312,6 +312,19 @@ PHASE9_FILES = [
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
 ]
 
+PHASE9B2_FILES = [
+    ROOT / "web" / "backend" / "app" / "repositories" / "subject_gap_repo.py",
+    ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py",
+    ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
+    ROOT / "web" / "backend" / "app" / "services" / "theme_status.py",
+    ROOT / "web" / "backend" / "app" / "services" / "dashboard.py",
+    ROOT / "web" / "backend" / "tests" / "test_subject_gap.py",
+    ROOT / "web" / "backend" / "tests" / "test_bucket_explorer.py",
+    ROOT / "web" / "backend" / "tests" / "test_theme_status.py",
+    ROOT / "web" / "backend" / "tests" / "test_dashboard_current.py",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -559,6 +572,7 @@ class WebCheck:
         self.check_phase7i_contract_files()
         self.check_phase8_contract_files()
         self.check_phase9_contract_files()
+        self.check_phase9b2_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1213,6 +1227,74 @@ class WebCheck:
             "phase9_database_service_files",
             "PASS",
             "database service layer/tests/docs present",
+        )
+
+    def check_phase9b2_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE9B2_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase9b2_db_access_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase9b2_db_access_files",
+                ", ".join(missing),
+                "Phase 9B-2 DB access consolidation files are missing.",
+                "Add SubjectGapRepository, service tests, and SERVICE_LAYER_PLAN updates, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            subject_gap_repo = (ROOT / "web" / "backend" / "app" / "repositories" / "subject_gap_repo.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "DatabaseService" not in subject_gap_repo or ".fetch_all(" not in subject_gap_repo:
+                raise ValueError("SubjectGapRepository must delegate SQL reads to DatabaseService.fetch_all")
+            if ".execute(" in subject_gap_repo:
+                raise ValueError("SubjectGapRepository bypasses DatabaseService")
+            services = [
+                ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py",
+                ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
+                ROOT / "web" / "backend" / "app" / "services" / "theme_status.py",
+                ROOT / "web" / "backend" / "app" / "services" / "dashboard.py",
+            ]
+            for path in [*services, ROOT / "web" / "backend" / "app" / "repositories" / "subject_gap_repo.py"]:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if ".read_text(" in text:
+                    raise ValueError(f"{rel(path)} reads files directly")
+                if "latest_index.files" in text or '["files"]' in text or "['files']" in text:
+                    raise ValueError(f"{rel(path)} references latest_index.files")
+                if LOCAL_PATH_RE.search(text):
+                    raise ValueError(f"{rel(path)} contains local absolute path")
+                if path.name == "subject_gap_repo.py":
+                    for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
+                        if re.search(rf"\b{blocked}\b", text, re.IGNORECASE):
+                            raise ValueError(f"{rel(path)} contains blocked SQL verb: {blocked}")
+            subject_gap_service = (ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "SubjectGapRepository" not in subject_gap_service or "CurrentStateRepository" in subject_gap_service:
+                raise ValueError("SubjectGapService must use SubjectGapRepository, not CurrentStateRepository")
+            theme_service = (ROOT / "web" / "backend" / "app" / "services" / "theme_status.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "current_artifact_payload" not in theme_service:
+                raise ValueError("ThemeStatusService must use current_artifact_payload fallback")
+            docs = (ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md").read_text(encoding="utf-8", errors="replace").lower()
+            if "phase 9b-2" not in docs or "subjectgaprepository" not in docs or "databaseservice" not in docs:
+                raise ValueError("SERVICE_LAYER_PLAN must document Phase 9B-2 DB access boundaries")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase9b2_db_access_safety", "FAIL", str(exc))
+            self.fail(
+                "phase9b2_db_access_safety",
+                "phase9b2 db access files",
+                f"Phase 9B-2 file failed safety scan: {exc}",
+                "Keep SubjectGap/Bucket/Theme/Dashboard DB access current-only, read-only, and free of file/latest_index.files/trading paths.",
+            )
+            return
+        self.add_result(
+            "phase9b2_db_access_files",
+            "PASS",
+            "subject gap/bucket/theme/dashboard DB access boundaries present",
         )
 
     def run_ingest(self) -> None:

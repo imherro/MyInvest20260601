@@ -1,6 +1,6 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. Phase 9 adds a read-only `DatabaseService` facade for current SQLite access and current-module artifact payload fallback. Phase 9B-1 routes `SubjectStatusRepository` DB reads through `DatabaseService` without changing the Subject Status API contract. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. Phase 9 adds a read-only `DatabaseService` facade for current SQLite access and current-module artifact payload fallback. Phase 9B-1 routes `SubjectStatusRepository` DB reads through `DatabaseService` without changing the Subject Status API contract. Phase 9B-2 routes `SubjectGapRepository` DB reads through `DatabaseService` and locks Bucket, Theme, and Dashboard services away from direct file or SQL access. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
@@ -19,6 +19,7 @@ These services are available in the Web layer and must remain read-only:
 - `HistorySnapshotService`: scans temporary shadow/candidate audit artifacts and packages a read-only history snapshot with live current safety summaries.
 - `HistoryGapDashboardService`: aggregates current allocation gaps, shadow/candidate audit snapshots, and history entry summaries for Web display.
 - `SubjectGapService`: reads current subject, portfolio-position, target-allocation, and artifact freshness rows from SQLite for Web display.
+- `SubjectGapRepository`: reads current subject gap/freshness rows through `DatabaseService.fetch_all(...)` for `SubjectGapService`.
 - `SubjectStatusService`: reads current subject, profile, valuation, liquidity, and ResearchFirst rows from SQLite through `SubjectStatusRepository` and `DatabaseService`, then returns neutral gate status for Web display.
 - `DashboardService`: aggregates existing read-only services into the Research Dashboard API and page summary.
 - `ThemeStatusService`: reads current theme/leader/ETF/stock artifact payloads and returns neutral theme research status for Web display.
@@ -65,10 +66,11 @@ Future service names are planning boundaries only. They do not authorize trading
 17. Add historical metrics dashboard analytics that aggregate current and read-only history summaries. Completed in Phase 8.
 18. Add a read-only database facade for current SQLite access, artifact payload fallback, and query safety. Completed in Phase 9.
 19. Consolidate Subject Status DB access through `DatabaseService` while preserving the existing API contract. Completed in Phase 9B-1.
-20. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
-21. At each step, extend golden tests to compare old-script output with new-service output.
-22. If any golden test differs, do not replace the old script.
-23. Keep old scripts as reference implementations until migration is stable.
+20. Consolidate Subject Gap DB access through `SubjectGapRepository` and `DatabaseService`, and lock Bucket, Theme, and Dashboard services away from direct file or SQL access. Completed in Phase 9B-2.
+21. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
+22. At each step, extend golden tests to compare old-script output with new-service output.
+23. If any golden test differs, do not replace the old script.
+24. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -340,6 +342,22 @@ Database service migration is an access-layer refactor only. It is not an ORM-ba
 - not generate action plans, target allocations, orders, fills, trading records, or QMT write calls
 
 Phase 9B-1 is an access-path consolidation only. It does not change subject research rules, ResearchFirst gate logic, target allocation generation, action plan generation, or Web page semantics.
+
+## Phase 9B-2 Subject Gap/Bucket/Theme/Dashboard DB Access Rules
+
+`SubjectGapService`, `BucketExplorerService`, `ThemeStatusService`, and `DashboardService` must:
+
+- preserve existing API and page response contracts
+- avoid direct file reads and avoid `latest_index.files` as a current resolver
+- avoid direct SQL execution in services
+- keep DB reads behind `DatabaseService`, `CurrentStateService`, or repositories that delegate to `DatabaseService`
+- keep current artifact fallback behind `CurrentStateService.current_artifact_payload(...)` or `DatabaseService.current_artifact_payload(...)`
+- keep all API/page payloads ratio-only and free of local absolute paths
+- keep 511360 cash-equivalent and ResearchFirst gate behavior unchanged
+- leave `research/latest_index.json`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions` unchanged
+- not generate action plans, target allocations, orders, fills, trading records, or QMT write calls
+
+`SubjectGapRepository` must use `DatabaseService.fetch_all(...)` for its SQL read and must not call `session.execute(...)` directly. Bucket, Theme, and Dashboard services remain aggregators over read-only services; Phase 9B-2 locks their boundaries with tests and `web_check.py` rather than changing their public behavior.
 
 ## Hard Service Boundaries
 
