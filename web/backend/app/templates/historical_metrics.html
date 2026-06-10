@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Historical Metrics{% endblock %}
+{% block content %}
+  {% set data = metrics or {} %}
+  {% set summary = data.summary or {} %}
+  {% set entities = data.entities or [] %}
+
+  <style>
+    .historical-chart {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 22px;
+    }
+    .historical-chart-row {
+      display: grid;
+      grid-template-columns: minmax(130px, 190px) 1fr minmax(80px, auto);
+      gap: 10px;
+      align-items: center;
+    }
+    .historical-track {
+      position: relative;
+      min-height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .historical-bar {
+      position: absolute;
+      inset: 4px auto 4px 0;
+      min-width: 2px;
+      border-radius: 4px;
+      background: var(--green);
+    }
+    .historical-bar.yellow { background: #b7791f; }
+    .historical-bar.red { background: #b83a3a; }
+    .historical-tooltip {
+      margin-top: 8px;
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 720px) {
+      .historical-chart-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <div class="metric-grid">
+    <div class="metric"><span class="subtle">Entities</span><strong data-bind="historical_entity_count">{{ summary.entity_count }}</strong></div>
+    <div class="metric"><span class="subtle">Buckets</span><strong data-bind="historical_bucket_count">{{ summary.bucket_count }}</strong></div>
+    <div class="metric"><span class="subtle">Subjects</span><strong data-bind="historical_subject_count">{{ summary.subject_count }}</strong></div>
+    <div class="metric"><span class="subtle">Themes</span><strong data-bind="historical_theme_count">{{ summary.theme_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Red Gaps</span><strong data-bind="historical_red_gap_count">{{ summary.red_gap_count }}</strong></div>
+    <div class="metric"><span class="subtle">Decision Events</span><strong data-bind="historical_decision_event_count">{{ summary.decision_event_count }}</strong></div>
+  </div>
+
+  <section aria-label="Historical metrics chart">
+    <h2>Bucket Gap Trend</h2>
+    <div id="historicalMetricsChart" class="historical-chart" data-historical-metrics-chart></div>
+    <div id="historicalMetricsTooltip" class="historical-tooltip" role="tooltip" aria-live="polite">Hover a bucket metric for details.</div>
+  </section>
+
+  <div class="table-tools">
+    <h2>Metrics</h2>
+    <input type="search" placeholder="Search historical metrics" data-table-search="historicalMetricTable">
+    <select data-table-filter="historicalMetricTable" data-filter-key="entity_type" aria-label="Filter entity type">
+      <option value="">All entity types</option>
+      <option value="bucket">bucket</option>
+      <option value="subject">subject</option>
+      <option value="theme">theme</option>
+      <option value="decision_type">decision_type</option>
+    </select>
+    <select data-table-filter="historicalMetricTable" data-filter-key="status" aria-label="Filter status">
+      <option value="">All status</option>
+      <option value="green">green</option>
+      <option value="yellow">yellow</option>
+      <option value="red">red</option>
+      <option value="research_first">research_first</option>
+      <option value="watch">watch</option>
+      <option value="logged">logged</option>
+      <option value="unknown">unknown</option>
+    </select>
+  </div>
+
+  {% if entities %}
+    <table id="historicalMetricTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Entity</th>
+          <th data-sort="text">Type</th>
+          <th data-sort="text">Status</th>
+          <th class="num" data-sort="number">Actual</th>
+          <th class="num" data-sort="number">Target</th>
+          <th class="num" data-sort="number">Gap</th>
+          <th data-sort="text">Trend</th>
+          <th class="num" data-sort="number">Points</th>
+          <th data-sort="text">Latest</th>
+        </tr>
+      </thead>
+      <tbody id="historicalMetricRows">
+        {% for item in entities %}
+          <tr>
+            <td>{{ item.label or item.entity_id }}</td>
+            <td>{{ item.entity_type or "" }}</td>
+            <td><span class="status {{ 'warn' if item.status not in ['green', 'pass', 'logged', 'matched'] else '' }}">{{ item.status or "" }}</span></td>
+            <td class="num">{{ "%.2f"|format(item.actual_pct) if item.actual_pct is defined and item.actual_pct is not none else "" }}{% if item.actual_pct is defined and item.actual_pct is not none %}%{% endif %}</td>
+            <td class="num">{{ "%.2f"|format(item.target_pct) if item.target_pct is defined and item.target_pct is not none else "" }}{% if item.target_pct is defined and item.target_pct is not none %}%{% endif %}</td>
+            <td class="num">{{ "%.2f"|format(item.gap_pct) if item.gap_pct is defined and item.gap_pct is not none else "" }}{% if item.gap_pct is defined and item.gap_pct is not none %}pp{% endif %}</td>
+            <td>{{ item.trend_indicator or "" }}</td>
+            <td class="num">{{ item.point_count or 0 }}</td>
+            <td>{{ item.latest_timestamp or "" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No historical metrics loaded.</div>
+  {% endif %}
+{% endblock %}

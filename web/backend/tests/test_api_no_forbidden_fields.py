@@ -63,6 +63,8 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/decision-log/current",
         "/api/decision-timeline",
         "/api/decision-timeline/current-action-plan",
+        "/api/historical-metrics",
+        "/api/historical-metrics/bucket-attack_mainline",
         "/api/allocation-consistency/current",
         "/api/export/review_package?format=json",
     ]

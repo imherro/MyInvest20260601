@@ -98,6 +98,7 @@ def test_dashboard_quick_links_resolve(client):
         "Intraday Rules",
         "Decision Log",
         "Decision Timeline",
+        "Historical Metrics",
         "History Snapshot",
     }
     for item in links:

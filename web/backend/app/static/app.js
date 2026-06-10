@@ -869,6 +869,75 @@
     });
   }
 
+  function updateHistoricalMetricsSummary(summary, rows) {
+    setBind("historical_entity_count", summary.entity_count ?? rows.length);
+    setBind("historical_bucket_count", summary.bucket_count ?? 0);
+    setBind("historical_subject_count", summary.subject_count ?? 0);
+    setBind("historical_theme_count", summary.theme_count ?? 0);
+    setBind("historical_red_gap_count", summary.red_gap_count ?? 0);
+    setBind("historical_decision_event_count", summary.decision_event_count ?? 0);
+  }
+
+  function renderHistoricalMetrics(data) {
+    const rows = data.entities || [];
+    const summary = data.summary || {};
+    updateHistoricalMetricsSummary(summary, rows);
+    renderHistoricalMetricsChart((data.aggregations || {}).buckets || []);
+    setRows(
+      "historicalMetricRows",
+      rows,
+      (row) => [
+        row.label || row.entity_id,
+        row.entity_type,
+        row.status,
+        { value: pct(row.actual_pct), className: "num" },
+        { value: pct(row.target_pct), className: "num" },
+        { value: pp(row.gap_pct), className: "num" },
+        row.trend_indicator,
+        { value: row.point_count, className: "num" },
+        row.latest_timestamp,
+      ],
+      (row) => {
+        const links = Object.values(row.review_links || {}).join(" | ");
+        return `id: ${row.entity_id || ""} | bucket: ${row.bucket || ""} | status: ${row.status || ""} | delta: ${pp(row.gap_delta_pp)} | links: ${links || "none"}`;
+      },
+    );
+  }
+
+  function renderHistoricalMetricsChart(buckets) {
+    const chart = document.getElementById("historicalMetricsChart");
+    const tooltip = document.getElementById("historicalMetricsTooltip");
+    if (!chart) return;
+    chart.replaceChildren();
+    const maxGap = Math.max(1, ...((buckets || []).map((row) => Math.abs(Number(row.gap_pct) || 0))));
+    (buckets || []).forEach((row) => {
+      const status = ["green", "yellow", "red"].includes(row.status) ? row.status : "unknown";
+      const wrapper = document.createElement("div");
+      wrapper.className = "historical-chart-row";
+      wrapper.dataset.tooltip = `bucket: ${row.bucket || row.label || ""} | actual: ${pct(row.actual_pct)} | target: ${pct(row.target_pct)} | gap: ${pp(row.gap_pct)} | trend: ${row.trend_indicator || ""} | source points: ${row.point_count || 0}`;
+      const label = document.createElement("div");
+      label.textContent = row.bucket || row.label || "";
+      const track = document.createElement("div");
+      track.className = "historical-track";
+      track.tabIndex = 0;
+      track.title = wrapper.dataset.tooltip;
+      const bar = document.createElement("div");
+      bar.className = `historical-bar ${status}`;
+      bar.style.width = `${Math.max(2, Math.min(100, (Math.abs(Number(row.gap_pct) || 0) / maxGap) * 100))}%`;
+      const gap = document.createElement("div");
+      gap.className = "num";
+      gap.textContent = pp(row.gap_pct);
+      track.appendChild(bar);
+      wrapper.append(label, track, gap);
+      const showTooltip = () => {
+        if (tooltip) tooltip.textContent = wrapper.dataset.tooltip || "";
+      };
+      track.addEventListener("mouseenter", showTooltip);
+      track.addEventListener("focus", showTooltip);
+      chart.appendChild(wrapper);
+    });
+  }
+
   const renderers = {
     dashboard: renderDashboard,
     "action-plan": renderActionPlan,
@@ -886,6 +955,7 @@
     "system-checks": renderSystemChecks,
     "decision-log": renderDecisionLog,
     "decision-timeline": renderDecisionTimeline,
+    "historical-metrics": renderHistoricalMetrics,
   };
 
   async function refresh() {

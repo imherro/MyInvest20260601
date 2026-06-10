@@ -117,6 +117,20 @@ def test_decision_timeline_page_include_refresh_filter_and_table_hooks(client):
     assert "decisionTimelineRows" in html
 
 
+def test_historical_metrics_page_include_refresh_filter_and_table_hooks(client):
+    response = client.get("/historical-metrics")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "data-historical-metrics-chart" in html
+    assert "historicalMetricsChart" in html
+    assert "historicalMetricsTooltip" in html
+    assert "data-table-search=\"historicalMetricTable\"" in html
+    assert "data-table-filter=\"historicalMetricTable\"" in html
+    assert "data-sort=\"number\"" in html
+    assert "historicalMetricRows" in html
+
+
 def test_dashboard_includes_gap_chart_and_status_cards(client):
     response = client.get("/")
     assert response.status_code == 200
@@ -151,6 +165,8 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderBuckets" in script
     assert "function renderDecisionTimeline" in script
     assert "function renderDecisionTimelineChart" in script
+    assert "function renderHistoricalMetricsChart" in script
+    assert "function updateHistoricalMetricsSummary" in script
     assert "function setupFilters" in script
     assert "mouseenter" in script
     assert "gapStatus" in script

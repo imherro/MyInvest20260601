@@ -17,6 +17,7 @@ from ..services.decision_timeline import DecisionTimelineService
 from ..services.export_package import ReviewPackageExportService
 from ..services.history_gap_dashboard import HistoryGapDashboardService
 from ..services.history_snapshot import HistorySnapshotService
+from ..services.historical_metrics import HistoricalMetricsService
 from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
@@ -341,6 +342,20 @@ def decision_timeline_event(event_id: str, session: Session = Depends(get_sessio
     except LookupError as exc:
         raise HTTPException(status_code=404, detail="decision timeline event not found") from exc
     return respond(data, source={"path": "db.DecisionTimelineService"})
+
+
+@router.get("/historical-metrics")
+def historical_metrics(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(HistoricalMetricsService(session).metrics(), source={"path": "db.HistoricalMetricsService"})
+
+
+@router.get("/historical-metrics/{entity_id}")
+def historical_metrics_entity(entity_id: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+    try:
+        data = HistoricalMetricsService(session).get_entity(entity_id)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="historical metrics entity not found") from exc
+    return respond(data, source={"path": "db.HistoricalMetricsService"})
 
 
 @router.get("/allocation-consistency/current")
