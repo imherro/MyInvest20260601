@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-import json
 from typing import Any
 
 from sqlalchemy.orm import Session
 
-from ..config import ROOT
 from .current_state import CurrentStateService
 from .ratio_only import RatioOnlyService
 from .subject_status import SubjectStatusService
@@ -52,41 +50,17 @@ class ThemeStatusService:
         raise LookupError(theme_name)
 
     def _module_payload(self, module: str) -> dict[str, Any]:
-        artifact = self.current.current_artifact(module)
-        if not artifact:
-            return {}
-        raw_json = artifact.get("raw_json")
-        metadata: dict[str, Any] = {}
-        if raw_json:
-            try:
-                loaded = json.loads(raw_json)
-            except json.JSONDecodeError:
-                loaded = {}
-            metadata = loaded if isinstance(loaded, dict) else {}
-            if self._has_module_payload(module, metadata):
-                return metadata
-        path = artifact.get("path") or metadata.get("path")
-        if not path:
-            return {}
-        source_path = (ROOT / str(path)).resolve()
-        if ROOT.resolve() not in source_path.parents:
-            return {}
-        try:
-            payload = json.loads(source_path.read_text(encoding="utf-8-sig"))
-        except (OSError, json.JSONDecodeError):
-            return {}
-        return payload if isinstance(payload, dict) else {}
+        return self.current.current_artifact_payload(module, self._expected_payload_key(module))
 
     @staticmethod
-    def _has_module_payload(module: str, payload: dict[str, Any]) -> bool:
+    def _expected_payload_key(module: str) -> str | None:
         expected_keys = {
             "theme_registry": "themes",
             "theme_leaders": "themes",
             "etf_registry": "etfs",
             "stock_registry": "stocks",
         }
-        key = expected_keys.get(module)
-        return bool(key and isinstance(payload.get(key), list))
+        return expected_keys.get(module)
 
     def _theme_row(
         self,

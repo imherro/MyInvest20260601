@@ -6,37 +6,22 @@ from typing import Any
 from sqlalchemy.orm import Session
 
 from ..repositories.current_state import CurrentStateRepository
+from .database import DatabaseService
 
 
 class CurrentStateService:
     def __init__(self, session: Session):
+        self.db = DatabaseService(session)
         self.repo = CurrentStateRepository(session)
 
     def current_modules(self) -> list[dict[str, Any]]:
-        return self.repo.all(
-            """
-            SELECT cm.module, a.path, a.generated_at, a.basis_trade_date, a.sha256, a.subject_code
-            FROM current_modules cm
-            JOIN artifacts a ON a.id = cm.artifact_id
-            ORDER BY cm.module
-            """
-        )
+        return self.db.current_modules()
 
     def source_for_module(self, module: str) -> dict[str, Any] | None:
-        return self.repo.one(
-            """
-            SELECT cm.module, a.path, a.generated_at, a.basis_trade_date, a.sha256
-            FROM current_modules cm
-            JOIN artifacts a ON a.id = cm.artifact_id
-            WHERE cm.module = :module
-            """,
-            {"module": module},
-        )
+        return self.db.source_for_module(module)
 
     def latest_index(self) -> dict[str, Any]:
-        modules = self.current_modules()
-        generated = [item["generated_at"] for item in modules if item.get("generated_at")]
-        return {"generated_at": max(generated) if generated else None, "modules": modules}
+        return self.db.latest_index()
 
     def market_score(self) -> dict[str, Any] | None:
         return self.repo.one(
@@ -60,16 +45,10 @@ class CurrentStateService:
         )
 
     def current_artifact(self, module: str) -> dict[str, Any] | None:
-        return self.repo.one(
-            """
-            SELECT a.module, a.subject_code, a.artifact_type, a.path, a.generated_at,
-                   a.basis_trade_date, a.sha256, a.raw_json
-            FROM current_modules cm
-            JOIN artifacts a ON a.id = cm.artifact_id
-            WHERE cm.module = :module
-            """,
-            {"module": module},
-        )
+        return self.db.current_artifact(module)
+
+    def current_artifact_payload(self, module: str, expected_key: str | None = None) -> dict[str, Any]:
+        return self.db.current_artifact_payload(module, expected_key)
 
     def target_allocation(self) -> dict[str, Any] | None:
         target = self.repo.one(
@@ -239,4 +218,4 @@ class CurrentStateService:
             "decision_log_entries",
             "system_check_results",
         ]
-        return {table: self.repo.count_table(table) for table in tables}
+        return {table: self.db.count_table(table) for table in tables}

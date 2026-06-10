@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "chore(web): reconcile hidden unicode warning checks"
+COMMIT_MESSAGE = "feat(web): add read-only database service layer"
 
 API_PATHS = [
     "/api/health",
@@ -304,6 +304,14 @@ PHASE8_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
+PHASE9_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "database.py",
+    ROOT / "web" / "backend" / "app" / "services" / "current_state.py",
+    ROOT / "web" / "backend" / "app" / "services" / "theme_status.py",
+    ROOT / "web" / "backend" / "tests" / "test_database_service.py",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -550,6 +558,7 @@ class WebCheck:
         self.check_phase7h_contract_files()
         self.check_phase7i_contract_files()
         self.check_phase8_contract_files()
+        self.check_phase9_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1134,6 +1143,56 @@ class WebCheck:
             "phase8_historical_metrics_files",
             "PASS",
             "historical metrics service/API/page/tests/docs present",
+        )
+
+    def check_phase9_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE9_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase9_database_service_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase9_database_service_files",
+                ", ".join(missing),
+                "Phase 9 database service layer files are missing.",
+                "Add DatabaseService, its tests, and SERVICE_LAYER_PLAN updates, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "database.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "class DatabaseService" not in service_text:
+                raise ValueError("DatabaseService class missing")
+            if "current_modules" not in service_text or "current_artifact_payload" not in service_text:
+                raise ValueError("DatabaseService must expose current module and payload readers")
+            if "READ_ONLY_SQL" not in service_text or "WRITE_SQL" not in service_text:
+                raise ValueError("DatabaseService must guard read-only SQL")
+            for blocked in ["latest_index.files", '["files"]', "['files']", "generate_action_plan", "generate_target_allocation"]:
+                if blocked in service_text:
+                    raise ValueError(f"DatabaseService references blocked resolver or generator: {blocked}")
+            for path in PHASE9_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                for blocked in ["qmt_portfolio_snapshot", "qmt_export_history", "place_order", "insert_order"]:
+                    if blocked in text:
+                        raise ValueError(f"Phase 9 file references blocked trading/runtime path: {blocked}")
+            docs = (ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md").read_text(encoding="utf-8", errors="replace").lower()
+            if "phase 9" not in docs or "databaseservice" not in docs or "read-only" not in docs:
+                raise ValueError("SERVICE_LAYER_PLAN must document Phase 9 DatabaseService read-only boundaries")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase9_database_service_safety", "FAIL", str(exc))
+            self.fail(
+                "phase9_database_service_safety",
+                "phase9 database service files",
+                f"Phase 9 file failed safety scan: {exc}",
+                "Keep DatabaseService current-only, read-only, ratio-only, and free of generator/trading/QMT write paths.",
+            )
+            return
+        self.add_result(
+            "phase9_database_service_files",
+            "PASS",
+            "database service layer/tests/docs present",
         )
 
     def run_ingest(self) -> None:

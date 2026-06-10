@@ -1,12 +1,13 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. Phase 9 adds a read-only `DatabaseService` facade for current SQLite access and current-module artifact payload fallback. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
 These services are available in the Web layer and must remain read-only:
 
 - `CurrentStateService`: reads current SQLite state and current module sources.
+- `DatabaseService`: centralizes read-only SQLite access, current module source lookup, current artifact payload fallback, and table counts.
 - `RatioOnlyService`: sanitizes and rejects unsafe keys, text, and local absolute paths.
 - `ResearchFirstGateService`: validates ResearchFirst gate status.
 - `AllocationConsistencyService`: compares target allocation and intraday bucket rows.
@@ -62,10 +63,11 @@ Future service names are planning boundaries only. They do not authorize trading
 15. Add allocation drilldown APIs/pages that join bucket and subject current-state rows for Web review. Completed in Phase 7H.
 16. Add a decision timeline that joins decision log, current action plan, current target allocation, and history snapshot review events. Completed in Phase 7I.
 17. Add historical metrics dashboard analytics that aggregate current and read-only history summaries. Completed in Phase 8.
-18. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
-19. At each step, extend golden tests to compare old-script output with new-service output.
-20. If any golden test differs, do not replace the old script.
-21. Keep old scripts as reference implementations until migration is stable.
+18. Add a read-only database facade for current SQLite access, artifact payload fallback, and query safety. Completed in Phase 9.
+19. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
+20. At each step, extend golden tests to compare old-script output with new-service output.
+21. If any golden test differs, do not replace the old script.
+22. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -304,6 +306,23 @@ Decision timeline is a review navigation page. It is not a target-allocation gen
 - not write temporary exports or the history database
 
 Historical metrics is a dashboard analytics page for review. It is not a target-allocation generator, action-plan generator, promotion mechanism, trading page, order workflow, export writer, or QMT write adapter.
+
+## Phase 9 Database Service Rules
+
+`DatabaseService` must:
+
+- centralize current SQLite read helpers used by Web services
+- allow only read-only `SELECT` or `WITH` SQL helpers and reject write-like SQL verbs
+- expose current module source lookup from the `current_modules` table joined to `artifacts`
+- expose current artifact payloads from database `raw_json` first, then from the repo-relative path referenced by the current module only when a full payload is required
+- reject absolute paths and parent-directory escapes during artifact payload fallback
+- avoid `latest_index.files` as a current resolver
+- keep `CurrentStateService` API shapes stable for existing Dashboard, Subjects, Subject Gap, Themes, Buckets, Allocation Drilldown, Decision Timeline, and Historical Metrics APIs
+- keep all Web API payloads ratio-only through existing service sanitizers
+- leave `research/latest_index.json`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions` unchanged
+- not write temporary exports, runtime files, SQLite files, or research artifacts
+
+Database service migration is an access-layer refactor only. It is not an ORM-backed replacement for `generate_target_allocation.py`, `generate_action_plan.py`, promotion to current state, trading, order workflow, or QMT write behavior.
 
 ## Hard Service Boundaries
 
