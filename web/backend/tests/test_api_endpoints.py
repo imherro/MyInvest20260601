@@ -7,6 +7,8 @@ def test_required_api_endpoints(client):
         "/api/current",
         "/api/latest-index",
         "/api/modules/current",
+        "/api/subjects/status",
+        "/api/subjects/status/511360.SH",
         "/api/subjects/freshness",
         "/api/subjects/gap",
         "/api/market-position/mapping",

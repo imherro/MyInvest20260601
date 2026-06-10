@@ -30,6 +30,8 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/current",
         "/api/latest-index",
         "/api/modules/current",
+        "/api/subjects/status",
+        "/api/subjects/status/511360.SH",
         "/api/subjects/freshness",
         "/api/subjects/gap",
         "/api/market-position/mapping",

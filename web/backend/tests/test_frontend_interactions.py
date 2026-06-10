@@ -10,7 +10,6 @@ def test_pages_include_refresh_export_and_interaction_hooks(client):
     assert "data-table-search=\"portfolioTable\"" in html
     assert "data-sort=\"number\"" in html
 
-
 def test_subject_gap_page_include_refresh_and_table_hooks(client):
     response = client.get("/subjects/gap")
     assert response.status_code == 200
@@ -22,6 +21,16 @@ def test_subject_gap_page_include_refresh_and_table_hooks(client):
     assert "data-table-search=\"subjectGapTable\"" in html
     assert "data-sort=\"number\"" in html
     assert "subjectGapRows" in html
+
+
+def test_subject_page_include_refresh_and_table_hooks(client):
+    response = client.get("/subjects")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "data-table-search=\"subjectsTable\"" in html
+    assert "data-sort=\"text\"" in html
+    assert "subjectsRows" in html
 
 
 def test_dashboard_includes_gap_chart_and_status_cards(client):
@@ -43,5 +52,6 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderSubjectGapChart" in script
     assert "mouseenter" in script
     assert "gapStatus" in script
+    assert "function renderSubjectStatus" in script
     assert "detail-row" in script
     assert "setInterval(refresh" in script
