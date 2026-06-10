@@ -15,6 +15,8 @@ def test_required_api_endpoints(client):
         "/api/target-allocation/shadow",
         "/api/target-allocation/shadow/compare",
         "/api/target-allocation/shadow/export?format=json",
+        "/api/target-allocation/candidate-audit",
+        "/api/target-allocation/candidate-audit?format=json",
         "/api/portfolio/current",
         "/api/intraday-rules/current",
         "/api/research-first/current",

@@ -331,6 +331,50 @@ python scripts/web_check.py
 
 `web_check.py` runs candidate dry-run, candidate temp export, payload safety scan, cleanup, and official blocked validation. It also keeps ratio-only, ResearchFirst, allocation consistency, project_check, API/export sensitive scans, and current-only code-path checks in the same gate.
 
+## Phase 5G Candidate Audit Bundle
+
+Phase 5G adds a candidate audit bundle. It is a review artifact only; it is not official target allocation and must not become current.
+
+Direct tests:
+
+```bash
+python -m pytest web/backend/tests/test_target_allocation_candidate_audit.py
+```
+
+Dry run:
+
+```bash
+python scripts/export_target_allocation_candidate_audit.py --dry-run
+```
+
+JSON export:
+
+```bash
+python scripts/export_target_allocation_candidate_audit.py --format json
+```
+
+ZIP export:
+
+```bash
+python scripts/export_target_allocation_candidate_audit.py --format zip
+```
+
+Candidate audit exports write only to `temp/candidate_exports/`, and filenames must include `candidate_audit`. The export is blocked if compare is not matched, unsupported fields are present, replay failures are nonzero, official mode is allowed, forbidden fields are present, or a local absolute path is present.
+
+Read-only API:
+
+- `GET /api/target-allocation/candidate-audit`
+- `GET /api/target-allocation/candidate-audit?format=json`
+- `GET /api/target-allocation/candidate-audit?format=zip`
+
+The API generates the bundle in memory and does not write files. Both API and CLI must leave `research/latest_index.json`, `current_modules`, `research/allocation`, and `research/actions` unchanged.
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
 ## API and Page Smoke Check
 
 ```bash
@@ -346,6 +390,7 @@ Then open:
 - `http://127.0.0.1:8000/api/market-position/current`
 - `http://127.0.0.1:8000/api/target-allocation/shadow/compare`
 - `http://127.0.0.1:8000/api/target-allocation/shadow/export?format=json`
+- `http://127.0.0.1:8000/api/target-allocation/candidate-audit?format=json`
 - `http://127.0.0.1:8000/api/modules/current`
 - `http://127.0.0.1:8000/api/export/review_package?format=json`
 

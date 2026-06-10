@@ -101,3 +101,5 @@ Future replacement of `scripts/generate_target_allocation.py` is allowed only af
 - no trading, QMT write, order, fill, share-count, or cash-amount behavior is introduced
 
 Phase 5F keeps `candidate` and `official` blocked as current-state modes. Candidate simulation may write only temporary files under `temp/candidate_exports/`; official simulation returns a blocked report and writes no files.
+
+Phase 5G packages candidate audit bundles from the same simulation path. A candidate audit bundle is valid only when candidate-vs-shadow and shadow-vs-reference comparisons match, unsupported fields are empty, replay failures are zero, and official promotion is blocked.

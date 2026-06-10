@@ -26,6 +26,7 @@ Endpoints:
 - `GET /api/target-allocation/shadow`
 - `GET /api/target-allocation/shadow/compare`
 - `GET /api/target-allocation/shadow/export`
+- `GET /api/target-allocation/candidate-audit`
 - `GET /api/research-first/current`
 - `GET /api/portfolio/current`
 - `GET /api/intraday-rules/current`
@@ -77,6 +78,28 @@ The API is read-only and generates the export in memory. It does not write `rese
 - `system_checks.json`
 
 The CLI companion writes only to `temp/web_exports/`, which is ignored by Git.
+
+## Target Allocation Candidate Audit
+
+Phase 5G adds a candidate audit bundle for target-allocation promotion review:
+
+- `GET /api/target-allocation/candidate-audit`
+- `GET /api/target-allocation/candidate-audit?format=json`
+- `GET /api/target-allocation/candidate-audit?format=zip`
+
+The API is read-only and generates the audit bundle in memory. It does not write `research/allocation`, does not update `latest_index`, does not update `current_modules`, does not generate action plans, and does not make candidate output official. Official promotion remains blocked.
+
+The ZIP contains only:
+
+- `manifest.json`
+- `candidate_target_allocation.json`
+- `compare_result.json`
+- `replay_summary.json`
+- `promotion_mode.json`
+- `safety_checks.json`
+- `provenance.json`
+
+The CLI companion writes only to `temp/candidate_exports/`, which is ignored by Git. The exported filename must include `candidate_audit`.
 
 ## Review Package Export
 

@@ -1,6 +1,6 @@
 # Target Allocation Promotion Plan
 
-Phase 5E defines a controlled promotion plan for `TargetAllocationGenerationService`. Phase 5F adds simulation checks for candidate and official modes. These phases do not replace `scripts/generate_target_allocation.py`.
+Phase 5E defines a controlled promotion plan for `TargetAllocationGenerationService`. Phase 5F adds simulation checks for candidate and official modes. Phase 5G adds a candidate audit bundle for promotion review. These phases do not replace `scripts/generate_target_allocation.py`.
 
 ## Current Status
 
@@ -13,6 +13,7 @@ The current Web service layer has:
 - controlled shadow export to `temp/web_exports/`
 - multi-scenario shadow replay fixtures
 - candidate promotion simulation export to `temp/candidate_exports/`
+- candidate audit bundle export to `temp/candidate_exports/`
 - official promotion blocked report
 - `scripts/web_check.py` and GitHub Actions validation
 
@@ -114,6 +115,26 @@ Official simulation:
 - writes no files
 - does not affect current state
 
+## Phase 5G Candidate Audit Bundle
+
+Phase 5G adds `TargetAllocationCandidateAuditService` and `scripts/export_target_allocation_candidate_audit.py`.
+
+Candidate audit bundle:
+
+- combines candidate simulation output
+- includes shadow-vs-reference comparison
+- includes candidate-vs-shadow comparison
+- includes replay fixture summary
+- includes promotion mode status
+- includes provenance and safety checks
+- writes only to `temp/candidate_exports/` when the CLI is used
+- uses filenames containing `candidate_audit`
+- stays ratio-only and current-only
+
+The candidate audit bundle is not official target allocation. It must not be copied to `research/allocation`, must not update `latest_index`, must not update `current_modules`, and must not generate action plans.
+
+Official promotion remains hard blocked. If official mode is ever reported as allowed, Phase 5G validation must fail.
+
 ## Safety Gates
 
 Any non-reference promotion path must pass:
@@ -126,6 +147,7 @@ Any non-reference promotion path must pass:
 - multi-scenario replay fixtures
 - controlled export scan
 - candidate simulation scan
+- candidate audit bundle scan
 - official blocked scan
 - no research mutation
 - no `latest_index` mutation
