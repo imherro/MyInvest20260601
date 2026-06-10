@@ -140,6 +140,8 @@ def test_bucket_openapi_is_read_only(client):
 
 def test_bucket_explorer_current_only_and_no_hardcoded_timestamps():
     source = open("web/backend/app/services/bucket_explorer.py", encoding="utf-8").read()
+    assert ".read_text(" not in source
+    assert ".execute(" not in source
     assert "latest_index.files" not in source
     assert "[\"files\"]" not in source
     assert "['files']" not in source
