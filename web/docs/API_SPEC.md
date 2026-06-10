@@ -18,6 +18,8 @@ Endpoints:
 - `GET /api/current`
 - `GET /api/latest-index`
 - `GET /api/modules/current`
+- `GET /api/subjects/status`
+- `GET /api/subjects/status/{code}`
 - `GET /api/market-position/mapping`
 - `GET /api/market-position/current`
 - `GET /api/market-position/score/{score}`
@@ -39,6 +41,19 @@ Endpoints:
 All responses pass `RatioOnlyService` before returning. A sanitizer failure returns HTTP 500.
 
 OpenAPI docs are exposed by FastAPI at `GET /docs` while the local server is running.
+
+## Subject Status
+
+Phase 7A adds a read-only subject research status center:
+
+- `GET /api/subjects/status`
+- `GET /api/subjects/status/{code}`
+
+The service reads SQLite current-state tables loaded from `latest_index.modules` and returns one row per current subject. It does not read `latest_index.files`, does not generate research artifacts, and does not create action-plan or target-allocation output.
+
+Returned fields include `code`, `name`, `subject_type`, `bucket`, `profile_status`, `valuation_status`, `liquidity_status`, `research_first_status`, `gate_conclusion`, `blocking_reason`, repo-relative `source_paths`, `generated_at`, and `basis_trade_date`.
+
+Gate conclusions are limited to neutral review states: `eligible_for_review`, `research_first`, `watch`, `hold`, `no_action`, `unknown`, and `blocked`. The endpoint must not return buy/add/reduce/sell conclusions. Missing profile, valuation, liquidity, or theme binding keeps the subject in `research_first` or `blocked` status. Short-duration cash-equivalent instruments such as 511360 are displayed as cash-equivalent / cash-short status after profile, valuation, and liquidity gates pass.
 
 ## Market Position
 

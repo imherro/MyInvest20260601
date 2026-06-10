@@ -15,6 +15,7 @@ from ..services.history_snapshot import HistorySnapshotService
 from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
+from ..services.subject_status import SubjectStatusService
 from ..services.system_check import SystemCheckService
 from ..services.target_allocation_candidate_audit import TargetAllocationCandidateAuditService
 from ..services.target_allocation_export import TargetAllocationControlledExportService
@@ -72,6 +73,22 @@ def current(session: Session = Depends(get_session)) -> dict[str, Any]:
 def current_modules(session: Session = Depends(get_session)) -> dict[str, Any]:
     service = CurrentStateService(session)
     return respond({"modules": service.current_modules()}, source={"path": "research/latest_index.json"})
+
+
+@router.get("/subjects/status")
+def subject_statuses(session: Session = Depends(get_session)) -> dict[str, Any]:
+    service = SubjectStatusService(session)
+    return respond(service.list_statuses(), source={"path": "db.subjects"})
+
+
+@router.get("/subjects/status/{code}")
+def subject_status(code: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+    service = SubjectStatusService(session)
+    try:
+        data = service.get_status(code)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="subject status not found") from exc
+    return respond({"subject": data}, source={"path": "db.subjects"})
 
 
 @router.get("/market-position/mapping")
