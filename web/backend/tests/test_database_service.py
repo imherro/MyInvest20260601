@@ -7,6 +7,7 @@ import pytest
 
 from web.backend.app.db import SessionLocal
 import web.backend.app.services.current_state as current_state_module
+import web.backend.app.repositories.current_state as current_state_repo_module
 from web.backend.app.services.current_state import CurrentStateService
 from web.backend.app.services.database import DatabaseService
 from web.backend.app.services.ratio_only import RatioOnlyService
@@ -126,6 +127,53 @@ def test_current_state_service_delegates_current_reads_to_database_service(monke
     assert ("current_artifact_payload", ("theme_registry", "themes")) in calls
     assert counts["current_modules"] == 1
     assert ("count_table", "current_modules") in calls
+
+
+def test_current_state_repository_delegates_to_database_service(monkeypatch):
+    calls: list[tuple[str, object | None]] = []
+
+    class FakeDatabaseService:
+        def __init__(self, session):
+            calls.append(("init", session))
+
+        def fetch_all(self, sql, params=None):
+            calls.append(("fetch_all", (sql, params)))
+            return [{"id": 1}]
+
+        def fetch_one(self, sql, params=None):
+            calls.append(("fetch_one", (sql, params)))
+            return {"id": 2}
+
+        def count_table(self, table):
+            calls.append(("count_table", table))
+            return 3
+
+    sentinel_session = object()
+    monkeypatch.setattr(current_state_repo_module, "DatabaseService", FakeDatabaseService)
+
+    repo = current_state_repo_module.CurrentStateRepository(sentinel_session)
+
+    assert repo.all("SELECT 1", {"p": 1}) == [{"id": 1}]
+    assert repo.one("SELECT 2") == {"id": 2}
+    assert repo.count_table("current_modules") == 3
+    assert calls == [
+        ("init", sentinel_session),
+        ("fetch_all", ("SELECT 1", {"p": 1})),
+        ("fetch_one", ("SELECT 2", None)),
+        ("count_table", "current_modules"),
+    ]
+
+
+def test_current_state_repository_has_no_direct_sql_execution():
+    source = (ROOT / "web" / "backend" / "app" / "repositories" / "current_state.py").read_text(encoding="utf-8")
+    assert "DatabaseService" in source
+    assert ".fetch_all(" in source
+    assert ".fetch_one(" in source
+    assert ".count_table(" in source
+    assert ".execute(" not in source
+    assert "session.execute" not in source
+    assert "sqlalchemy import text" not in source
+    assert "latest_index.files" not in source
 
 
 def test_database_service_fallback_rejects_absolute_and_parent_escape_paths():

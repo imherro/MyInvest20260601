@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "refactor(web): consolidate read-only db access coverage Phase 9B-3"
+COMMIT_MESSAGE = "refactor(web): consolidate current state repository to DatabaseService"
 
 API_PATHS = [
     "/api/health",
@@ -341,6 +341,13 @@ PHASE9B3_FILES = [
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
 ]
 
+PHASE9D_FILES = [
+    ROOT / "web" / "backend" / "app" / "repositories" / "current_state.py",
+    ROOT / "web" / "backend" / "app" / "services" / "current_state.py",
+    ROOT / "web" / "backend" / "tests" / "test_database_service.py",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -590,6 +597,7 @@ class WebCheck:
         self.check_phase9_contract_files()
         self.check_phase9b2_contract_files()
         self.check_phase9b3_contract_files()
+        self.check_phase9d_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1401,6 +1409,60 @@ class WebCheck:
             "phase9b3_db_access_files",
             "PASS",
             "allocation/history/timeline DB access coverage boundaries present",
+        )
+
+    def check_phase9d_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE9D_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase9d_current_state_repo_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase9d_current_state_repo_files",
+                ", ".join(missing),
+                "Phase 9D current-state repository consolidation files are missing.",
+                "Update CurrentStateRepository tests and SERVICE_LAYER_PLAN, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            repo_path = ROOT / "web" / "backend" / "app" / "repositories" / "current_state.py"
+            repo_text = repo_path.read_text(encoding="utf-8", errors="replace")
+            if "DatabaseService" not in repo_text:
+                raise ValueError("CurrentStateRepository must delegate to DatabaseService")
+            for marker in [".fetch_all(", ".fetch_one(", ".count_table("]:
+                if marker not in repo_text:
+                    raise ValueError(f"CurrentStateRepository missing {marker}")
+            for blocked in [".execute(", ".executemany(", "session.execute", "sqlalchemy import text"]:
+                if blocked in repo_text:
+                    raise ValueError(f"CurrentStateRepository still contains direct SQL execution marker: {blocked}")
+            if ".read_text(" in repo_text:
+                raise ValueError("CurrentStateRepository reads files directly")
+            if "latest_index.files" in repo_text or '["files"]' in repo_text or "['files']" in repo_text:
+                raise ValueError("CurrentStateRepository references latest_index.files")
+
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "current_state.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "CurrentStateRepository" not in service_text or "DatabaseService" not in service_text:
+                raise ValueError("CurrentStateService must preserve repository and DatabaseService access surfaces")
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("CurrentStateService references latest_index.files")
+
+            docs = (ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md").read_text(encoding="utf-8", errors="replace").lower()
+            if "phase 9d" not in docs or "currentstaterepository" not in docs or "databaseservice" not in docs:
+                raise ValueError("SERVICE_LAYER_PLAN must document Phase 9D CurrentStateRepository boundaries")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase9d_current_state_repo_safety", "FAIL", str(exc))
+            self.fail(
+                "phase9d_current_state_repo_safety",
+                "phase9d current-state files",
+                f"Phase 9D file failed safety scan: {exc}",
+                "Keep CurrentStateRepository current-only, DatabaseService-backed, and free of direct SQL/file/trading paths.",
+            )
+            return
+        self.add_result(
+            "phase9d_current_state_repo_files",
+            "PASS",
+            "CurrentStateRepository delegates reads to DatabaseService",
         )
 
     def run_ingest(self) -> None:
