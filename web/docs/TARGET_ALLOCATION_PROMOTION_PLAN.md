@@ -1,6 +1,6 @@
 # Target Allocation Promotion Plan
 
-Phase 5E defines a controlled promotion plan for `TargetAllocationGenerationService`. It is a plan and safety design only. It does not replace `scripts/generate_target_allocation.py`.
+Phase 5E defines a controlled promotion plan for `TargetAllocationGenerationService`. Phase 5F adds simulation checks for candidate and official modes. These phases do not replace `scripts/generate_target_allocation.py`.
 
 ## Current Status
 
@@ -12,6 +12,8 @@ The current Web service layer has:
 - `TargetAllocationGenerationService` shadow mode
 - controlled shadow export to `temp/web_exports/`
 - multi-scenario shadow replay fixtures
+- candidate promotion simulation export to `temp/candidate_exports/`
+- official promotion blocked report
 - `scripts/web_check.py` and GitHub Actions validation
 
 The old `scripts/generate_target_allocation.py` remains the reference implementation and the only official generator for current target-allocation artifacts.
@@ -42,14 +44,15 @@ The old `scripts/generate_target_allocation.py` remains the reference implementa
 
 ### Stage 3: Candidate Export
 
-Design only in this phase.
+Simulation only in Phase 5F.
 
-- Candidate exports would write only under `temp/candidate_exports/`.
+- Candidate simulation exports write only under `temp/candidate_exports/`.
 - Filenames must include `candidate`.
 - Candidate files must not enter `research/`.
 - Candidate files must not become current.
-- Candidate output must include compare results.
-- Candidate mode is blocked by the Phase 5E helper.
+- Candidate output must include a golden comparison with shadow mode.
+- Candidate mode is still blocked by the mode helper; the explicit simulation script is the only Phase 5F path that may write a temporary candidate file.
+- Candidate simulation must not update `latest_index`, `current_modules`, `research/allocation`, or `research/actions`.
 
 ### Stage 4: Official
 
@@ -60,7 +63,8 @@ Future only.
 - Requires current golden comparison, replay fixtures, controlled export scan, review package scan, and CI to pass.
 - Requires no ResearchFirst or ratio-only violation.
 - Requires no trading, QMT write, order, fill, share-count, or cash-amount behavior.
-- Official mode is blocked by the Phase 5E helper.
+- Official mode is blocked by the mode helper.
+- Phase 5F official simulation returns a blocked report and must not write any file.
 
 ## Feature Flag Design
 
@@ -70,13 +74,13 @@ Environment variable:
 MYINVEST_TARGET_ALLOCATION_MODE
 ```
 
-Allowed values in Phase 5E:
+Allowed values in Phase 5E and Phase 5F:
 
 - `reference`
 - `shadow`
 - `controlled_export`
 
-Blocked values in Phase 5E:
+Blocked values in Phase 5E and Phase 5F:
 
 - `candidate`
 - `official`
@@ -89,6 +93,27 @@ shadow
 
 Unknown values are blocked. The helper reports status only and does not alter production API behavior.
 
+## Phase 5F Simulation Checks
+
+Phase 5F adds `TargetAllocationPromotionSimulationService` and `scripts/simulate_target_allocation_promotion.py`.
+
+Candidate simulation:
+
+- reads the current SQLite state
+- converts the current state into explicit replay inputs
+- calls `TargetAllocationGenerationService.generate_shadow_from_inputs(...)`
+- writes only to `temp/candidate_exports/` when `--write` is passed
+- requires the filename to contain `candidate`
+- compares candidate output with current shadow output
+- keeps the payload ratio-only and free of local absolute paths
+
+Official simulation:
+
+- returns `status = blocked`
+- returns no output path
+- writes no files
+- does not affect current state
+
 ## Safety Gates
 
 Any non-reference promotion path must pass:
@@ -100,6 +125,8 @@ Any non-reference promotion path must pass:
 - current golden comparison
 - multi-scenario replay fixtures
 - controlled export scan
+- candidate simulation scan
+- official blocked scan
 - no research mutation
 - no `latest_index` mutation
 - no action-plan mutation
@@ -126,7 +153,7 @@ Before any future promotion beyond shadow:
 ## Rollback Plan
 
 - Return `MYINVEST_TARGET_ALLOCATION_MODE` to `reference` or `shadow`.
-- Delete temporary candidate exports, if any.
+- Delete temporary candidate exports from `temp/candidate_exports/`, if any.
 - Do not touch `research/`.
 - Do not touch `latest_index`.
 - Do not touch action-plan artifacts.
@@ -134,7 +161,7 @@ Before any future promotion beyond shadow:
 
 ## Explicit Non-Goals
 
-Phase 5E does not:
+Phase 5E and Phase 5F do not:
 
 - replace `scripts/generate_target_allocation.py`
 - modify `scripts/generate_target_allocation.py`

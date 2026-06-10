@@ -1,6 +1,6 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
@@ -13,6 +13,7 @@ These services are available in the Web layer and must remain read-only:
 - `MarketPositionService`: reads active `market_position_mappings` from SQLite and maps a score to equity/cash percentage ranges.
 - `TargetAllocationGenerationService`: computes an in-memory shadow target allocation and compares core fields with the current reference JSON.
 - `TargetAllocationControlledExportService`: packages the shadow target allocation and compare result for in-memory API download or CLI export under `temp/web_exports/`.
+- `TargetAllocationPromotionSimulationService`: simulates candidate and official promotion paths without updating current research state.
 - `target_allocation_mode`: reads `MYINVEST_TARGET_ALLOCATION_MODE` and reports whether the requested mode is allowed or blocked.
 - `ActionPlanService`: exposes action-plan read helpers.
 - `PortfolioService`: exposes portfolio ratio snapshot read helpers.
@@ -38,10 +39,11 @@ Future service names are planning boundaries only. They do not authorize trading
 3. Add controlled shadow export to `temp/web_exports/` only. Completed in Phase 5C-3.
 4. Harden target-allocation shadow mode with multi-scenario replay fixtures. Completed in Phase 5D.
 5. Document controlled target-allocation promotion stages and block candidate/official execution in code. Completed in Phase 5E.
-6. Migrate action plan generation.
-7. At each step, extend golden tests to compare old-script output with new-service output.
-8. If any golden test differs, do not replace the old script.
-9. Keep old scripts as reference implementations until migration is stable.
+6. Simulate candidate temp export and official blocking without current-state mutation. Completed in Phase 5F.
+7. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
+8. At each step, extend golden tests to compare old-script output with new-service output.
+9. If any golden test differs, do not replace the old script.
+10. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -94,7 +96,22 @@ The helper blocks:
 - `official`
 - unknown values
 
-Candidate export remains design-only. Official promotion remains future-only and requires a separate audit and explicit manual approval. The helper does not alter production API behavior and does not authorize writing `research/`, updating `latest_index`, or replacing old scripts.
+Candidate promotion remains non-current and simulation-only. Official promotion remains future-only and requires a separate audit and explicit manual approval. The helper does not alter production API behavior and does not authorize writing `research/`, updating `latest_index`, or replacing old scripts.
+
+## Phase 5F Promotion Simulation Rules
+
+`TargetAllocationPromotionSimulationService` must:
+
+- read current SQLite state and current module sources only
+- build candidate output by passing explicit current inputs into `TargetAllocationGenerationService.generate_shadow_from_inputs(...)`
+- write candidate simulation files only under `temp/candidate_exports/`
+- require candidate filenames to include `candidate`
+- compare candidate output with current shadow output
+- return an official blocked report instead of writing official output
+- leave `research/latest_index.json`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions` unchanged
+- keep all reports and temporary exports ratio-only
+
+`scripts/simulate_target_allocation_promotion.py` is a local verification helper only. It is not a Web API write path and does not authorize candidate or official current-state replacement.
 
 ## Hard Service Boundaries
 

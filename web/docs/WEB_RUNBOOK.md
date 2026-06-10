@@ -287,6 +287,50 @@ The default mode is `shadow`. The helper only reports allowed or blocked status.
 
 Promotion design is documented in `web/docs/TARGET_ALLOCATION_PROMOTION_PLAN.md`. Any future candidate or official promotion must be reviewed as a separate phase.
 
+## Phase 5F Promotion Simulation
+
+Phase 5F adds candidate and official promotion simulation checks. It still does not replace old research generators or current artifacts.
+
+Direct tests:
+
+```bash
+python -m pytest web/backend/tests/test_target_allocation_promotion_simulation.py
+```
+
+Candidate dry run:
+
+```bash
+python scripts/simulate_target_allocation_promotion.py --mode candidate
+```
+
+Candidate temporary export:
+
+```bash
+python scripts/simulate_target_allocation_promotion.py --mode candidate --write
+```
+
+The candidate export path must start with `temp/candidate_exports/`, and the filename must include `candidate`. Candidate files are temporary review artifacts only. They must not be copied into `research/allocation`, must not update `latest_index`, and must not update `current_modules`.
+
+Official blocked check:
+
+```bash
+python scripts/simulate_target_allocation_promotion.py --mode official
+```
+
+Expected official result:
+
+- `status` is `blocked`
+- `output_path` is `null`
+- no files are written
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
+`web_check.py` runs candidate dry-run, candidate temp export, payload safety scan, cleanup, and official blocked validation. It also keeps ratio-only, ResearchFirst, allocation consistency, project_check, API/export sensitive scans, and current-only code-path checks in the same gate.
+
 ## API and Page Smoke Check
 
 ```bash

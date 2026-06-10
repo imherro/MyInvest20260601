@@ -100,4 +100,4 @@ Future replacement of `scripts/generate_target_allocation.py` is allowed only af
 - no ResearchFirst or ratio-only violation exists
 - no trading, QMT write, order, fill, share-count, or cash-amount behavior is introduced
 
-Phase 5E keeps `candidate` and `official` blocked. It documents future stages but does not authorize current-state replacement.
+Phase 5F keeps `candidate` and `official` blocked as current-state modes. Candidate simulation may write only temporary files under `temp/candidate_exports/`; official simulation returns a blocked report and writes no files.
