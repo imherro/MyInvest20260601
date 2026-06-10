@@ -10,6 +10,7 @@ from .config import STATIC_DIR, TEMPLATE_DIR
 from .db import get_session
 from .routers.current import router as current_router
 from .services.current_state import CurrentStateService
+from .services.bucket_explorer import BucketExplorerService
 from .services.dashboard import DashboardService
 from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
@@ -120,6 +121,22 @@ def themes_page(request: Request, session: Session = Depends(get_session)) -> HT
             "/api/themes/status",
             themes=themes["themes"],
             summary=themes["summary"],
+        ),
+    )
+
+
+@app.get("/buckets", response_class=HTMLResponse)
+def buckets_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    buckets = BucketExplorerService(session).status()
+    return templates.TemplateResponse(
+        request,
+        "buckets.html",
+        page_context(
+            request,
+            "buckets",
+            "/api/buckets/status",
+            buckets=buckets["buckets"],
+            summary=buckets["summary"],
         ),
     )
 

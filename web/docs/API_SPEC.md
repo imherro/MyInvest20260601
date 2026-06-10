@@ -25,6 +25,8 @@ Endpoints:
 - `GET /api/subjects/gap`
 - `GET /api/themes/status`
 - `GET /api/themes/status/{theme_name}`
+- `GET /api/buckets/status`
+- `GET /api/buckets/status/{bucket}`
 - `GET /api/market-position/mapping`
 - `GET /api/market-position/current`
 - `GET /api/market-position/score/{score}`
@@ -108,6 +110,21 @@ The service reads current SQLite artifact payloads loaded from `latest_index.mod
 Returned fields include `summary`, `themes`, associated ETF/stock gate summaries, leaders, conflicts, data-quality status, and safety flags. Theme states are neutral research states: `confirmed`, `watch`, `research_first`, `stale`, `conflict`, or `unknown`. They must not become buy/add/reduce/sell actions.
 
 The page `GET /themes` uses the same API and supports refresh, search, status/rating/stage filters, sorting, pagination, and expandable details.
+
+## Bucket Explorer
+
+Phase 7F adds a read-only bucket allocation drilldown:
+
+- `GET /api/buckets/status`
+- `GET /api/buckets/status/{bucket}`
+
+The service reads current SQLite data loaded from `latest_index.modules` through existing current-state, subject-status, and subject-gap services. It does not read `latest_index.files`, write research artifacts, update current module pointers, generate target allocations, or generate action plans.
+
+Returned fields include `summary`, `buckets`, per-bucket actual/target/gap percentages, neutral `gap_status`, bucket risk notes, subject counts, and per-subject gate status. Subject rows include code, name, subject type, bucket, position percentage, profile/valuation/liquidity status, ResearchFirst status, neutral gate conclusion, blocking reason, staleness flag, and repo-relative source metadata.
+
+Gap status is presentation-only: `near_target`, `overweight`, `underweight`, `zero_target_nonzero_actual`, or `unknown`. A legacy watch bucket with nonzero actual and zero target is shown as `zero_target_nonzero_actual`, not as an action.
+
+The page `GET /buckets` uses the same API and supports refresh, search, bucket/gate filters, sorting, pagination, and expandable details.
 
 ## Market Position
 

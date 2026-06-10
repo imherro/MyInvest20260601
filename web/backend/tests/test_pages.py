@@ -16,6 +16,7 @@ def test_web_pages_render_without_local_absolute_paths(client):
         "/subjects",
         "/subjects/gap",
         "/themes",
+        "/buckets",
         "/portfolio",
         "/intraday-rules",
         "/decision-log",

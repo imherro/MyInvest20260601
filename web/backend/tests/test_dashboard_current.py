@@ -93,6 +93,7 @@ def test_dashboard_quick_links_resolve(client):
         "Subject Status",
         "Subject Gap",
         "Themes",
+        "Buckets",
         "Portfolio",
         "Intraday Rules",
         "Decision Log",

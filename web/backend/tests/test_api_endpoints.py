@@ -13,6 +13,7 @@ def test_required_api_endpoints(client):
         "/api/subjects/freshness",
         "/api/subjects/gap",
         "/api/themes/status",
+        "/api/buckets/status",
         "/api/market-position/mapping",
         "/api/market-position/current",
         "/api/market-position/score/25",

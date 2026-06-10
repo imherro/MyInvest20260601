@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Bucket Explorer{% endblock %}
+{% block content %}
+  <div class="metric-grid">
+    <div class="metric"><span class="subtle">Buckets</span><strong data-bind="bucket_count">{{ summary.bucket_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Overweight</span><strong data-bind="bucket_overweight_count">{{ summary.overweight_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Underweight</span><strong data-bind="bucket_underweight_count">{{ summary.underweight_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">ResearchFirst</span><strong data-bind="bucket_research_first_count">{{ summary.research_first_count }}</strong></div>
+    <div class="metric fail"><span class="subtle">Blocked</span><strong data-bind="bucket_blocked_count">{{ summary.blocked_count }}</strong></div>
+  </div>
+
+  <div class="page-actions">
+    <a class="button-link" href="/subjects">Subject Status</a>
+    <a class="button-link" href="/subjects/gap">Subject Gap</a>
+    <a class="button-link" href="/target-allocation">Target Allocation</a>
+    <a class="button-link" href="/action-plan">Action Plan</a>
+  </div>
+
+  <div class="table-tools">
+    <h2>Buckets</h2>
+    <input type="search" placeholder="Search buckets" data-table-search="bucketTable">
+    <select data-table-filter="bucketTable" data-filter-key="gap_status" aria-label="Filter gap status">
+      <option value="">All gap status</option>
+      <option value="overweight">overweight</option>
+      <option value="underweight">underweight</option>
+      <option value="near_target">near_target</option>
+      <option value="zero_target_nonzero_actual">zero_target_nonzero_actual</option>
+      <option value="unknown">unknown</option>
+    </select>
+  </div>
+  {% if buckets %}
+    <table id="bucketTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Bucket</th>
+          <th class="num" data-sort="number">Actual</th>
+          <th class="num" data-sort="number">Target</th>
+          <th class="num" data-sort="number">Gap</th>
+          <th data-sort="text">Gap Status</th>
+          <th class="num" data-sort="number">Subjects</th>
+          <th class="num" data-sort="number">Pass</th>
+          <th class="num" data-sort="number">ResearchFirst</th>
+          <th class="num" data-sort="number">Stale</th>
+        </tr>
+      </thead>
+      <tbody id="bucketRows">
+        {% for item in buckets %}
+          <tr>
+            <td>{{ item.bucket }}</td>
+            <td class="num">{{ "%.2f"|format(item.actual_pct) if item.actual_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.target_pct) if item.target_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.gap_pct) if item.gap_pct is not none else "" }}pp</td>
+            <td><span class="status {{ 'warn' if item.gap_status != 'near_target' else '' }}">{{ item.gap_status }}</span></td>
+            <td class="num">{{ item.subject_count }}</td>
+            <td class="num">{{ item.pass_count }}</td>
+            <td class="num">{{ item.research_first_count }}</td>
+            <td class="num">{{ item.stale_count }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No current bucket data loaded.</div>
+  {% endif %}
+
+  <div class="table-tools">
+    <h2>Bucket Subjects</h2>
+    <input type="search" placeholder="Search bucket subjects" data-table-search="bucketSubjectTable">
+    <select data-table-filter="bucketSubjectTable" data-filter-key="bucket" aria-label="Filter bucket">
+      <option value="">All buckets</option>
+      {% for item in buckets %}
+        <option value="{{ item.bucket }}">{{ item.bucket }}</option>
+      {% endfor %}
+    </select>
+    <select data-table-filter="bucketSubjectTable" data-filter-key="gate_conclusion" aria-label="Filter gate conclusion">
+      <option value="">All gates</option>
+      <option value="eligible_for_review">eligible_for_review</option>
+      <option value="research_first">research_first</option>
+      <option value="blocked">blocked</option>
+      <option value="watch">watch</option>
+      <option value="unknown">unknown</option>
+    </select>
+  </div>
+  {% set subjects = [] %}
+  {% for bucket in buckets %}
+    {% for subject in bucket.subjects %}
+      {% set _ = subjects.append(subject) %}
+    {% endfor %}
+  {% endfor %}
+  {% if subjects %}
+    <table id="bucketSubjectTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Code</th>
+          <th data-sort="text">Name</th>
+          <th data-sort="text">Type</th>
+          <th data-sort="text">Bucket</th>
+          <th class="num" data-sort="number">Position</th>
+          <th data-sort="text">Profile</th>
+          <th data-sort="text">Valuation</th>
+          <th data-sort="text">Liquidity</th>
+          <th data-sort="text">ResearchFirst</th>
+          <th data-sort="text">Gate</th>
+          <th data-sort="text">Blocking Reason</th>
+        </tr>
+      </thead>
+      <tbody id="bucketSubjectRows">
+        {% for item in subjects %}
+          <tr>
+            <td>{{ item.code or "" }}</td>
+            <td>{{ item.name or "" }}</td>
+            <td>{{ item.subject_type or "" }}</td>
+            <td>{{ item.bucket or "" }}</td>
+            <td class="num">{{ "%.2f"|format(item.position_pct) if item.position_pct is not none else "" }}%</td>
+            <td>{{ item.profile_status or "" }}</td>
+            <td>{{ item.valuation_status or "" }}</td>
+            <td>{{ item.liquidity_status or "" }}</td>
+            <td>{{ item.research_first_status or "" }}</td>
+            <td>{{ item.gate_conclusion or "" }}</td>
+            <td>{{ item.blocking_reason or "" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No current bucket subjects loaded.</div>
+  {% endif %}
+{% endblock %}
