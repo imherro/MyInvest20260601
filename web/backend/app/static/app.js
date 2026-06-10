@@ -269,6 +269,27 @@
     );
   }
 
+  function renderWorkbenchIntegration(integration) {
+    const modules = integration.modules || [];
+    const links = document.getElementById("workbenchModuleLinks");
+    if (links) {
+      links.replaceChildren();
+      modules.forEach((item) => {
+        const link = document.createElement("a");
+        link.className = "button-link";
+        link.href = text(item.href, "#");
+        link.textContent = text(item.label, "");
+        links.appendChild(link);
+      });
+    }
+    setRows(
+      "workbenchIntegrationRows",
+      modules,
+      (row) => [row.label, row.status, row.api_path],
+      (row) => `module: ${row.name || ""} | status: ${row.status || ""} | api: ${row.api_path || ""}`,
+    );
+  }
+
   function renderDashboard(data) {
     const system = data.system_status || {};
     const market = data.market_position || {};
@@ -311,6 +332,7 @@
     setStatusCard("intraday", system.intraday_stale_flag || system.intraday_degraded_flag ? "warn" : "ok");
     renderGapChart(allocation.bucket_gaps || []);
     renderDashboardAnalytics(data.analytics_summary || {});
+    renderWorkbenchIntegration(data.workbench_integration || {});
     renderDashboardQuickLinks(data.quick_links || []);
   }
 

@@ -11,6 +11,7 @@
   {% set analytics = d.analytics_summary or {} %}
   {% set analytics_metrics = analytics.metrics or {} %}
   {% set analytics_gates = analytics.gates or {} %}
+  {% set integration = d.workbench_integration or {} %}
   {% set cash_gate = subject_status.cash_equivalent_gate or {} %}
 
   <section class="dashboard-grid" data-dashboard-section="system-status">
@@ -60,6 +61,33 @@
   <section data-dashboard-section="bucket-gap">
     <h2>Bucket Gap</h2>
     <div class="gap-chart" id="bucketGapChart" data-dashboard-bucket-gap aria-label="Bucket allocation gap chart"></div>
+  </section>
+
+  <section data-dashboard-section="workbench-integration">
+    <h2>Workbench Modules</h2>
+    <div class="quick-links" id="workbenchModuleLinks">
+      {% for item in integration.modules or [] %}
+        <a class="button-link" href="{{ item.href }}">{{ item.label }}</a>
+      {% endfor %}
+    </div>
+    <table data-page-size="12">
+      <thead>
+        <tr>
+          <th>Module</th>
+          <th>Status</th>
+          <th>API</th>
+        </tr>
+      </thead>
+      <tbody id="workbenchIntegrationRows">
+        {% for item in integration.modules or [] %}
+        <tr>
+          <td>{{ item.label }}</td>
+          <td>{{ item.status }}</td>
+          <td>{{ item.api_path }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </section>
 
   <section data-dashboard-section="analytics">

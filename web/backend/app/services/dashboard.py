@@ -11,6 +11,7 @@ from .subject_gap import SubjectGapService
 from .subject_status import SubjectStatusService
 from .system_check import SystemCheckService
 from .workbench_analytics import WorkbenchAnalyticsService
+from .workbench_integration_service import WorkbenchIntegrationService
 
 
 class DashboardService:
@@ -41,6 +42,7 @@ class DashboardService:
             "subject_status_summary": self._subject_status_summary(subject_status),
             "subject_gap_summary": self._subject_gap_summary(subject_gap),
             "analytics_summary": WorkbenchAnalyticsService(self.session).summary(),
+            "workbench_integration": WorkbenchIntegrationService(self.session).overview(),
             "quick_links": self._quick_links(),
         }
         RatioOnlyService.assert_safe(payload)

@@ -92,6 +92,18 @@ The dashboard keeps the Phase 7D research overview and adds a Workbench Analytic
 
 Analytics data is read through `WorkbenchAnalyticsRepository`. Current-state data comes from `DatabaseService`; runtime history visibility is read through `HistorySnapshotRepository` only. The feature does not create persistent user event tracking, write the Web database, write research files, generate action plans, generate target allocations, or add trading/QMT write behavior.
 
+## Phase 11 Workbench Integration
+
+Phase 11 adds a read-only integration summary:
+
+- API: `GET /api/workbench/integration`
+- Dashboard section: `GET /dashboard`
+- Preference links: `GET /preferences`
+
+The integration layer maps Settings, Preferences, Dashboard, and Research Centers into one module summary with safe local Web links, gate statuses, display options, and current-only metrics. The dashboard renders this as the Workbench Modules section; the preferences page links back to the main Workbench surfaces.
+
+The service composes existing read-only services and keeps OpenAPI GET-only. It does not persist UI events, write the Web database, write research files, generate action plans, generate target allocations, or add trading/QMT write behavior.
+
 ## Run Tests
 
 ```bash
