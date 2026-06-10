@@ -16,6 +16,7 @@ def test_web_pages_render_without_local_absolute_paths(client):
         "/subjects",
         "/subjects/gap",
         "/themes",
+        "/history/gap-dashboard",
         "/portfolio",
         "/intraday-rules",
         "/decision-log",
@@ -36,5 +37,19 @@ def test_subject_gap_page_has_visual_and_refresh_hooks(client):
     assert "role=\"tooltip\"" in html
     assert "data-refresh" in html
     assert "data-table-search=\"subjectGapTable\"" in html
+    assert "@media (max-width: 720px)" in html
+    assert not LOCAL_PATH_RE.search(html)
+
+
+def test_history_gap_page_has_visual_and_refresh_hooks(client):
+    response = client.get("/history/gap-dashboard")
+    assert response.status_code == 200
+    html = response.text
+    assert "history-gap-chart-row" in html
+    assert "data-history-gap-chart" in html
+    assert "role=\"tooltip\"" in html
+    assert "data-refresh" in html
+    assert "data-table-search=\"historyGapTable\"" in html
+    assert "data-table-filter=\"historyGapTable\"" in html
     assert "@media (max-width: 720px)" in html
     assert not LOCAL_PATH_RE.search(html)

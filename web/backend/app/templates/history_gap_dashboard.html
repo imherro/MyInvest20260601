@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}History Gap Dashboard{% endblock %}
+{% block content %}
+  <style>
+    .history-gap-visual {
+      margin: 12px 0 22px;
+    }
+    .history-gap-chart {
+      display: grid;
+      gap: 10px;
+    }
+    .history-gap-chart-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 180px) 1fr minmax(88px, auto);
+      gap: 10px;
+      align-items: center;
+    }
+    .history-gap-track {
+      position: relative;
+      min-height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+    .history-gap-bar {
+      position: absolute;
+      inset: 4px auto 4px 0;
+      min-width: 2px;
+      border-radius: 4px;
+      background: #0d7c66;
+    }
+    .history-gap-bar.yellow {
+      background: #b7791f;
+    }
+    .history-gap-bar.red {
+      background: #b83a3a;
+    }
+    .history-gap-tooltip {
+      margin-top: 8px;
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 720px) {
+      .history-gap-chart-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  {% set summary = dashboard.summary %}
+  <div class="metric-grid">
+    <div class="metric"><span class="subtle">Buckets</span><strong data-bind="history_gap_bucket_count">{{ summary.bucket_count }}</strong></div>
+    <div class="metric ok"><span class="subtle">Green</span><strong data-bind="history_gap_green_count">{{ summary.green_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Yellow</span><strong data-bind="history_gap_yellow_count">{{ summary.yellow_count }}</strong></div>
+    <div class="metric fail"><span class="subtle">Red</span><strong data-bind="history_gap_red_count">{{ summary.red_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Alerts</span><strong data-bind="history_gap_alert_count">{{ summary.alert_count }}</strong></div>
+    <div class="metric"><span class="subtle">History Sources</span><strong data-bind="history_gap_source_count">{{ summary.history_source_count }}</strong></div>
+  </div>
+
+  <section class="history-gap-visual" aria-label="History gap visualization">
+    <h2>Bucket Gap Evolution</h2>
+    <div id="historyGapChart" class="history-gap-chart" data-history-gap-chart></div>
+    <div id="historyGapTooltip" class="history-gap-tooltip" role="tooltip" aria-live="polite">Hover a bucket bar for details.</div>
+  </section>
+
+  <div class="table-tools">
+    <h2>Bucket Gap Summary</h2>
+    <input type="search" placeholder="Search bucket gaps" data-table-search="historyGapTable">
+    <select data-table-filter="historyGapTable" data-filter-key="gap_status" aria-label="Filter gap status">
+      <option value="">All gap status</option>
+      <option value="green">green</option>
+      <option value="yellow">yellow</option>
+      <option value="red">red</option>
+      <option value="unknown">unknown</option>
+    </select>
+  </div>
+  {% if dashboard.buckets %}
+    <table id="historyGapTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Bucket</th>
+          <th class="num" data-sort="number">Actual</th>
+          <th class="num" data-sort="number">Target</th>
+          <th class="num" data-sort="number">Gap</th>
+          <th data-sort="text">Gap Status</th>
+          <th data-sort="text">Alert</th>
+          <th data-sort="text">Last Update</th>
+          <th class="num" data-sort="number">Timeline Points</th>
+        </tr>
+      </thead>
+      <tbody id="historyGapRows">
+        {% for item in dashboard.buckets %}
+          <tr>
+            <td>{{ item.bucket }}</td>
+            <td class="num">{{ "%.2f"|format(item.actual_pct) if item.actual_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.target_pct) if item.target_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.gap_pct) if item.gap_pct is not none else "" }}pp</td>
+            <td><span class="status {{ 'warn' if item.gap_status != 'green' else '' }}">{{ item.gap_status }}</span></td>
+            <td>{{ item.alert_status }}</td>
+            <td>{{ item.last_update_timestamp or "" }}</td>
+            <td class="num">{{ item.history_point_count }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No current history gap data loaded.</div>
+  {% endif %}
+
+  <div class="table-tools">
+    <h2>History Entries</h2>
+    <input type="search" placeholder="Search history entries" data-table-search="historyEntryTable">
+  </div>
+  {% if dashboard.history_entries %}
+    <table id="historyEntryTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Source</th>
+          <th data-sort="text">Kind</th>
+          <th data-sort="text">Generated</th>
+          <th data-sort="text">Status</th>
+          <th data-sort="text">Matched</th>
+          <th class="num" data-sort="number">Diffs</th>
+          <th class="num" data-sort="number">Replay Failed</th>
+        </tr>
+      </thead>
+      <tbody id="historyEntryRows">
+        {% for item in dashboard.history_entries %}
+          <tr>
+            <td>{{ item.source_id or "" }}</td>
+            <td>{{ item.export_kind or "" }}</td>
+            <td>{{ item.generated_at or "" }}</td>
+            <td>{{ item.status or "" }}</td>
+            <td>{{ "yes" if item.matched else "no" }}</td>
+            <td class="num">{{ item.diff_count }}</td>
+            <td class="num">{{ item.replay_failed if item.replay_failed is not none else "" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No temporary audit history entries loaded.</div>
+  {% endif %}
+{% endblock %}

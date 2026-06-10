@@ -152,6 +152,38 @@ Full gate:
 python scripts/web_check.py
 ```
 
+## Phase 7G History Gap Dashboard
+
+Phase 7G adds the read-only History Gap Dashboard. It aggregates current target allocation, controlled shadow allocation, candidate audit allocation, and history entry summaries into a Web review page. It does not generate target allocation, generate action plans, write research files, write temporary exports, or create trading instructions.
+
+Read-only API:
+
+- `GET /api/history/gap-summary`
+- `GET /api/history/gap-summary/{bucket}`
+
+Page:
+
+- `GET /history/gap-dashboard`
+
+The API returns summary counts, bucket actual/target/gap percentages, neutral gap status, alert status, per-bucket timeline points, history entry summaries, and safety flags. Gap and alert status are display-only review states.
+
+The page supports refresh, search, gap-status filter, sorting, pagination, expandable details, and bucket gap evolution visualization with tooltip text through the shared static JS. Every refresh still passes the frontend forbidden-field scan before rendering.
+
+History Gap Dashboard remains current-only and read-only. It reads current SQLite state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
+
+Direct tests:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_history_gap_dashboard.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
 ## Phase 5A Schema And Golden Baseline
 
 Phase 5A freezes the database schema contract and adds a golden current-state baseline for later service migration. It does not migrate target-allocation generation, action-plan generation, trading logic, order creation, execution handling, or QMT write interfaces.

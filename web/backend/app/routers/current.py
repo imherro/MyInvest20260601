@@ -12,6 +12,7 @@ from ..services.allocation_consistency import AllocationConsistencyService
 from ..services.current_state import CurrentStateService
 from ..services.dashboard import DashboardService
 from ..services.export_package import ReviewPackageExportService
+from ..services.history_gap_dashboard import HistoryGapDashboardService
 from ..services.history_snapshot import HistorySnapshotService
 from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
@@ -237,6 +238,20 @@ def history_snapshot_export(
         media_type="application/zip",
         headers={"Content-Disposition": 'attachment; filename="history_snapshot.zip"'},
     )
+
+
+@router.get("/history/gap-summary")
+def history_gap_summary(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(HistoryGapDashboardService(session).summary(), source={"path": "db.HistoryGapDashboardService"})
+
+
+@router.get("/history/gap-summary/{bucket}")
+def history_gap_bucket(bucket: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+    try:
+        data = HistoryGapDashboardService(session).get_bucket(bucket)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="history gap bucket not found") from exc
+    return respond({"bucket": data}, source={"path": "db.HistoryGapDashboardService"})
 
 
 @router.get("/research-first/current")

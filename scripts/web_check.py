@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add theme research center"
+COMMIT_MESSAGE = "feat(web): add history gap dashboard"
 
 API_PATHS = [
     "/api/health",
@@ -49,6 +49,7 @@ API_PATHS = [
     "/api/target-allocation/candidate-audit?format=json",
     "/api/history/export",
     "/api/history/export?format=json",
+    "/api/history/gap-summary",
     "/api/portfolio/current",
     "/api/intraday-rules/current",
     "/api/research-first/current",
@@ -66,6 +67,7 @@ PAGE_PATHS = [
     "/subjects",
     "/subjects/gap",
     "/themes",
+    "/history/gap-dashboard",
     "/portfolio",
     "/intraday-rules",
     "/decision-log",
@@ -78,6 +80,7 @@ INTERACTIVE_PAGE_CHECKS = {
     "/subjects": ["data-table-search", "data-sort", "subjectsRows"],
     "/subjects/gap": ["data-table-search", "data-sort", "subjectGapRows"],
     "/themes": ["data-table-search", "data-table-filter", "data-sort", "themesRows"],
+    "/history/gap-dashboard": ["data-table-search", "data-table-filter", "data-sort", "historyGapRows", "historyEntryRows"],
     "/portfolio": ["data-table-search", "data-sort", "portfolioRows"],
     "/intraday-rules": ["data-table-search", "data-sort", "intradayRows", "disabledTriggerRows"],
     "/decision-log": ["data-table-search", "data-sort", "decisionRows"],
@@ -103,6 +106,8 @@ JS_CHECKS = [
     "function renderSubjectStatus",
     "function renderSubjectGap",
     "function renderThemes",
+    "function renderHistoryGapDashboard",
+    "function renderHistoryGapChart",
     "function setupFilters",
     "detail-row",
     "expandable-row",
@@ -217,6 +222,16 @@ PHASE7E_FILES = [
     ROOT / "web" / "backend" / "app" / "templates" / "themes.html",
     ROOT / "web" / "backend" / "tests" / "test_theme_status.py",
     ROOT / "web" / "docs" / "THEME_RESEARCH_CENTER.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE7G_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "history_gap_dashboard.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "history_gap_dashboard.html",
+    ROOT / "web" / "backend" / "tests" / "test_history_gap_dashboard.py",
+    ROOT / "web" / "docs" / "HISTORY_GAP_DASHBOARD.md",
     ROOT / "web" / "docs" / "API_SPEC.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
@@ -463,6 +478,7 @@ class WebCheck:
         self.check_phase7b_contract_files()
         self.check_phase7d_contract_files()
         self.check_phase7e_contract_files()
+        self.check_phase7g_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -819,6 +835,40 @@ class WebCheck:
             return
         self.add_result("phase7e_theme_files", "PASS", "theme status service/API/page/tests/docs present")
 
+    def check_phase7g_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7G_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7g_history_gap_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7g_history_gap_files",
+                ", ".join(missing),
+                "Phase 7G history gap dashboard service/page/tests/docs are missing.",
+                "Add the history gap dashboard service, page, tests, and HISTORY_GAP_DASHBOARD.md, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7G_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "history gap" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7G docs must describe history gap dashboard and read-only boundaries")
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "history_gap_dashboard.py").read_text(encoding="utf-8", errors="replace")
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("history gap dashboard service references latest_index.files")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7g_history_gap_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7g_history_gap_safety",
+                rel(path),
+                f"Phase 7G file failed safety scan: {exc}",
+                "Remove local paths, keep current-only module resolution, and document history gap read-only boundaries.",
+            )
+            return
+        self.add_result("phase7g_history_gap_files", "PASS", "history gap dashboard service/API/page/tests/docs present")
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -927,6 +977,7 @@ class WebCheck:
         self.check_subject_gap_api(client, ratio)
         self.check_dashboard_api(client, ratio)
         self.check_theme_status_api(client, ratio)
+        self.check_history_gap_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
@@ -1158,6 +1209,61 @@ class WebCheck:
             self.add_result("theme_status_api", "FAIL", str(exc))
         else:
             self.add_result("theme_status_api", "PASS", "theme summary, details, and neutral statuses safe")
+
+    def check_history_gap_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/history/gap-summary")
+            if response.status_code != 200:
+                raise ValueError(f"history gap API returned {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            data = payload.get("data") or {}
+            if data.get("module") != "history_gap_dashboard" or data.get("current_only") is not True:
+                raise ValueError("history gap payload is not marked current-only")
+            for key in ["summary", "buckets", "history_entries", "safety"]:
+                if key not in data:
+                    raise ValueError(f"history gap payload missing {key}")
+            buckets = data.get("buckets") or []
+            summary = data.get("summary") or {}
+            if summary.get("bucket_count") != len(buckets):
+                raise ValueError("history gap summary count does not match buckets list")
+            target_response = client.get("/api/target-allocation/current")
+            target = (((target_response.json() or {}).get("data") or {}).get("target_allocation") or {})
+            current_buckets = {row.get("bucket"): row for row in target.get("buckets", [])}
+            for row in buckets:
+                if row.get("gap_status") not in {"green", "yellow", "red", "unknown"}:
+                    raise ValueError(f"unexpected history gap status for {row.get('bucket')}: {row.get('gap_status')}")
+                if row.get("alert_status") not in {"ok", "review", "attention", "unknown"}:
+                    raise ValueError(f"unexpected alert status for {row.get('bucket')}: {row.get('alert_status')}")
+                expected = current_buckets.get(row.get("bucket"))
+                if expected:
+                    for field in ["actual_pct", "target_pct", "gap_pct"]:
+                        if row.get(field) != expected.get(field):
+                            raise ValueError(f"{row.get('bucket')} {field} mismatch with current target allocation")
+            if buckets:
+                from urllib.parse import quote
+
+                detail = client.get("/api/history/gap-summary/" + quote(str(buckets[0].get("bucket")), safe=""))
+                if detail.status_code != 200:
+                    raise ValueError(f"history gap detail returned {detail.status_code}")
+                ratio.assert_safe(detail.json())
+                assert_safe_payload(detail.json())
+            missing = client.get("/api/history/gap-summary/NO_SUCH_BUCKET")
+            if missing.status_code != 404:
+                raise ValueError(f"missing history gap bucket returned {missing.status_code}, expected 404")
+            ratio.assert_safe(missing.json())
+            assert_safe_payload(missing.json())
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "history_gap_api",
+                "/api/history/gap-summary",
+                f"History gap dashboard API failed safety/current-state scan: {exc}",
+                "Fix HistoryGapDashboardService or its routes and rerun scripts/web_check.py.",
+            )
+            self.add_result("history_gap_api", "FAIL", str(exc))
+        else:
+            self.add_result("history_gap_api", "PASS", "history gap summary, details, and neutral alerts safe")
 
     def check_export_json(self, client: Any, ratio: Any) -> None:
         response = client.get("/api/export/review_package?format=json")
