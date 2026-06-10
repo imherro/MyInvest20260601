@@ -113,34 +113,33 @@
     <h2>History Entries</h2>
     <input type="search" placeholder="Search history entries" data-table-search="historyEntryTable">
   </div>
-  {% if dashboard.history_entries %}
-    <table id="historyEntryTable">
-      <thead>
+  <table id="historyEntryTable">
+    <thead>
+      <tr>
+        <th data-sort="text">Source</th>
+        <th data-sort="text">Kind</th>
+        <th data-sort="text">Generated</th>
+        <th data-sort="text">Status</th>
+        <th data-sort="text">Matched</th>
+        <th class="num" data-sort="number">Diffs</th>
+        <th class="num" data-sort="number">Replay Failed</th>
+      </tr>
+    </thead>
+    <tbody id="historyEntryRows">
+      {% for item in dashboard.history_entries %}
         <tr>
-          <th data-sort="text">Source</th>
-          <th data-sort="text">Kind</th>
-          <th data-sort="text">Generated</th>
-          <th data-sort="text">Status</th>
-          <th data-sort="text">Matched</th>
-          <th class="num" data-sort="number">Diffs</th>
-          <th class="num" data-sort="number">Replay Failed</th>
+          <td>{{ item.source_id or "" }}</td>
+          <td>{{ item.export_kind or "" }}</td>
+          <td>{{ item.generated_at or "" }}</td>
+          <td>{{ item.status or "" }}</td>
+          <td>{{ "yes" if item.matched else "no" }}</td>
+          <td class="num">{{ item.diff_count }}</td>
+          <td class="num">{{ item.replay_failed if item.replay_failed is not none else "" }}</td>
         </tr>
-      </thead>
-      <tbody id="historyEntryRows">
-        {% for item in dashboard.history_entries %}
-          <tr>
-            <td>{{ item.source_id or "" }}</td>
-            <td>{{ item.export_kind or "" }}</td>
-            <td>{{ item.generated_at or "" }}</td>
-            <td>{{ item.status or "" }}</td>
-            <td>{{ "yes" if item.matched else "no" }}</td>
-            <td class="num">{{ item.diff_count }}</td>
-            <td class="num">{{ item.replay_failed if item.replay_failed is not none else "" }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if not dashboard.history_entries %}
     <div class="empty">No temporary audit history entries loaded.</div>
   {% endif %}
 {% endblock %}
