@@ -20,6 +20,8 @@ Endpoints:
 - `GET /api/environment/status`
 - `GET /api/user/preferences`
 - `GET /api/user/preferences/{user_id}`
+- `GET /api/dashboard/summary`
+- `GET /api/dashboard/user_metrics/{user_id}`
 - `GET /api/dashboard/current`
 - `GET /api/current`
 - `GET /api/latest-index`
@@ -90,6 +92,21 @@ The service reads only the SQLite current read model through `UserPreferencesRep
 Returned fields are limited to display settings, booleans, counts, timestamps, safe local Web links, and repo-relative source paths. The response passes the standard `RatioOnlyService` wrapper and must not expose local absolute paths, credentials, runtime files, SQLite file contents, or execution output.
 
 The same data backs `GET /preferences`.
+
+## Workbench Analytics Dashboard
+
+Phase 10C extends the existing read-only dashboard with workbench analytics:
+
+- `GET /api/dashboard/summary`
+- `GET /api/dashboard/user_metrics/{user_id}`
+
+`/api/dashboard/summary` returns current-only workbench metrics, gate statuses, time-window metadata, and a read-only history snapshot summary when the guarded runtime history database exists. The `time_window` query parameter accepts `current`, `7d`, or `30d`; all modes remain current-only because no persistent user event store is introduced in this phase.
+
+`/api/dashboard/user_metrics/{user_id}` returns the same ratio-only metrics combined with the selected display preferences for supported local ids such as `default`. Unknown ids return a safe 404.
+
+The analytics repository uses `DatabaseService` for SQLite current-state reads and `HistorySnapshotRepository` for the guarded runtime history snapshot summary. It does not read `latest_index.files`, write research artifacts, generate target allocations, generate action plans, or connect to trading/QMT write interfaces.
+
+The existing `GET /api/dashboard/current` payload now includes `analytics_summary`, and `GET /dashboard` displays the workbench analytics section with a time-window selector.
 
 ## Research Dashboard
 

@@ -30,6 +30,7 @@ from ..services.target_allocation_export import TargetAllocationControlledExport
 from ..services.target_allocation_generation import TargetAllocationGenerationService
 from ..services.theme_status import ThemeStatusService
 from ..services.user_preferences import UserPreferencesService
+from ..services.workbench_analytics import WorkbenchAnalyticsService
 
 
 router = APIRouter()
@@ -104,6 +105,27 @@ def current(session: Session = Depends(get_session)) -> dict[str, Any]:
 @router.get("/dashboard/current")
 def dashboard_current(session: Session = Depends(get_session)) -> dict[str, Any]:
     return respond(DashboardService(session).current_dashboard(), source={"path": "db.DashboardService"})
+
+
+@router.get("/dashboard/summary")
+def dashboard_summary(time_window: str = "current", session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        WorkbenchAnalyticsService(session).summary(time_window=time_window),
+        source={"path": "db.WorkbenchAnalyticsRepository"},
+    )
+
+
+@router.get("/dashboard/user_metrics/{user_id}")
+def dashboard_user_metrics(
+    user_id: str,
+    time_window: str = "current",
+    session: Session = Depends(get_session),
+) -> dict[str, Any]:
+    try:
+        data = WorkbenchAnalyticsService(session).user_metrics(user_id=user_id, time_window=time_window)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="dashboard user metrics not found") from exc
+    return respond(data, source={"path": "db.WorkbenchAnalyticsRepository"})
 
 
 @router.get("/modules/current")

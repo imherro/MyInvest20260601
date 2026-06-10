@@ -207,6 +207,41 @@ class HistorySnapshotRepository:
         return HISTORY_DB_PATH.relative_to(ROOT).as_posix()
 
     @staticmethod
+    def runtime_summary() -> dict[str, Any]:
+        HistorySnapshotRepository.assert_history_database_path()
+        if not HISTORY_DB_PATH.exists():
+            return {
+                "available": False,
+                "history_entry_count": 0,
+                "matched_entry_count": 0,
+                "generated_at": None,
+            }
+        try:
+            with sqlite3.connect(HISTORY_DB_PATH) as connection:
+                connection.row_factory = sqlite3.Row
+                entry = connection.execute(
+                    """
+                    SELECT COUNT(*) AS history_entry_count,
+                           SUM(CASE WHEN matched = 1 THEN 1 ELSE 0 END) AS matched_entry_count,
+                           MAX(generated_at) AS generated_at
+                    FROM history_export_entries
+                    """
+                ).fetchone()
+        except sqlite3.Error:
+            return {
+                "available": False,
+                "history_entry_count": 0,
+                "matched_entry_count": 0,
+                "generated_at": None,
+            }
+        return {
+            "available": True,
+            "history_entry_count": int(entry["history_entry_count"] or 0),
+            "matched_entry_count": int(entry["matched_entry_count"] or 0),
+            "generated_at": entry["generated_at"],
+        }
+
+    @staticmethod
     def assert_history_database_path(path: Path = HISTORY_DB_PATH) -> None:
         runtime_root = HISTORY_RUNTIME_DIR.resolve()
         resolved_path = path.resolve()

@@ -80,6 +80,18 @@ The page shows the default workbench profile, display density, dashboard refresh
 
 The preference service reads the current SQLite read model only through `UserPreferencesRepository` and `DatabaseService`. Unknown user ids return a safe 404.
 
+## Phase 10C Workbench Analytics Dashboard
+
+Phase 10C extends the existing dashboard with read-only workbench analytics:
+
+- Page: `GET /dashboard`
+- Summary API: `GET /api/dashboard/summary`
+- User metrics API: `GET /api/dashboard/user_metrics/{user_id}`
+
+The dashboard keeps the Phase 7D research overview and adds a Workbench Analytics section. The section shows current module count, subject count, action count, ResearchFirst count, gap counts, history snapshot entry counts, and gate statuses. A time-window selector calls `/api/dashboard/summary?time_window=current|7d|30d`; all selections remain current-only in this phase.
+
+Analytics data is read through `WorkbenchAnalyticsRepository`. Current-state data comes from `DatabaseService`; runtime history visibility is read through `HistorySnapshotRepository` only. The feature does not create persistent user event tracking, write the Web database, write research files, generate action plans, generate target allocations, or add trading/QMT write behavior.
+
 ## Run Tests
 
 ```bash

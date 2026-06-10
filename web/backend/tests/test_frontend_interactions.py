@@ -175,7 +175,10 @@ def test_dashboard_includes_gap_chart_and_status_cards(client):
     assert "data-dashboard-section=\"market-position\"" in html
     assert "data-dashboard-section=\"action-plan-summary\"" in html
     assert "data-dashboard-section=\"allocation-summary\"" in html
+    assert "data-dashboard-section=\"analytics\"" in html
     assert "data-dashboard-section=\"subject-summaries\"" in html
+    assert "dashboardAnalyticsRows" in html
+    assert "data-dashboard-window" in html
     assert "dashboardQuickLinks" in html
     assert "data-status-card=\"research-first\"" in html
     assert "data-status-card=\"intraday\"" in html
@@ -190,6 +193,8 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderSubjectGap" in script
     assert "function renderSubjectGapChart" in script
     assert "function renderDashboardQuickLinks" in script
+    assert "function renderDashboardAnalytics" in script
+    assert "function setupDashboardWindow" in script
     assert "function renderEnvironment" in script
     assert "function renderThemes" in script
     assert "function renderBucketDrilldown" in script
