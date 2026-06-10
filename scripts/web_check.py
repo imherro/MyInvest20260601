@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add historical metrics dashboard analytics"
+COMMIT_MESSAGE = "chore(web): reconcile hidden unicode warning checks"
 
 API_PATHS = [
     "/api/health",
@@ -563,11 +563,41 @@ class WebCheck:
         return 1 if self.failures else 0
 
     def run_hidden_unicode_check(self) -> None:
-        self.run_command(
-            "check_hidden_unicode",
-            [sys.executable, "scripts/check_hidden_unicode.py"],
-            "Hidden Unicode check: OK",
+        args = [sys.executable, "scripts/check_hidden_unicode.py", "--json"]
+        proc = subprocess.run(
+            args,
+            cwd=ROOT,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
         )
+        output = proc.stdout or ""
+        try:
+            payload = json.loads(output)
+        except json.JSONDecodeError:
+            self.add_result("check_hidden_unicode", "FAIL", tail(output))
+            self.fail(
+                "check_hidden_unicode",
+                command_label(args),
+                "Hidden Unicode checker did not return valid JSON.",
+                "Run python scripts/check_hidden_unicode.py --json and fix the reported output.",
+            )
+            return
+        scanned = payload.get("scanned_file_count", 0)
+        finding_count = payload.get("finding_count", 0)
+        if proc.returncode != 0 or payload.get("status") != "OK" or finding_count:
+            detail = f"Hidden Unicode check: FAIL; scanned_file_count={scanned}; finding_count={finding_count}"
+            self.add_result("check_hidden_unicode", "FAIL", detail)
+            self.fail(
+                "check_hidden_unicode",
+                command_label(args),
+                "Hidden Unicode format controls were found.",
+                "Run python scripts/check_hidden_unicode.py to inspect path, line, column, codepoint, Unicode name, and preview; remove only hidden control characters.",
+            )
+            return
+        self.add_result("check_hidden_unicode", "PASS", f"Hidden Unicode check: OK; scanned_file_count={scanned}")
 
     def check_phase5a_contract_files(self) -> None:
         missing = [rel(path) for path in [*PHASE5A_TEST_FILES, *PHASE5A_DOC_FILES] if not path.exists()]

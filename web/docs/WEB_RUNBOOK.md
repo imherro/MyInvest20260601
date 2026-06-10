@@ -87,6 +87,28 @@ The script prints a suggested commit message and the files that belong in the co
 
 The same gate runs in GitHub Actions via `.github/workflows/web_check.yml` on push and pull request.
 
+## Hidden Unicode Warning Review
+
+If GitHub displays a hidden or bidirectional Unicode warning on a Web milestone PR, run the local scanner before changing files:
+
+```bash
+python scripts/check_hidden_unicode.py
+```
+
+To recheck only the files shown by GitHub or a PR diff:
+
+```bash
+python scripts/check_hidden_unicode.py --paths scripts/web_check.py web/backend/app/static/app.js web/docs/WEB_RUNBOOK.md
+```
+
+Machine-readable output is available for automation:
+
+```bash
+python scripts/check_hidden_unicode.py --json
+```
+
+The scanner reports `scanned_file_count`, path, line, column, codepoint, Unicode name, and a safe nearby preview when hidden format controls are found. Normal Chinese text in Markdown, templates, tests, or documentation is allowed. Remove only hidden or format-control characters such as bidi controls, direction marks, zero-width characters, or other Unicode `Cf` characters. Do not reformat unrelated business logic while clearing a warning.
+
 ## Phase 7D Research Dashboard
 
 Phase 7D adds the read-only Research Dashboard Landing Page. It aggregates existing current-state services into one homepage; it does not generate target allocation, generate action plans, create research artifacts, or connect to execution adapters.
