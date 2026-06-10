@@ -63,6 +63,23 @@ def test_themes_page_include_refresh_filter_and_table_hooks(client):
     assert "themesRows" in html
 
 
+def test_buckets_page_include_refresh_filter_and_table_hooks(client):
+    response = client.get("/buckets")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "data-table-search=\"bucketTable\"" in html
+    assert "data-table-search=\"bucketSubjectTable\"" in html
+    assert "data-table-filter=\"bucketTable\"" in html
+    assert "data-table-filter=\"bucketSubjectTable\"" in html
+    assert "data-filter-key=\"gap_status\"" in html
+    assert "data-filter-key=\"bucket\"" in html
+    assert "data-filter-key=\"gate_conclusion\"" in html
+    assert "data-sort=\"number\"" in html
+    assert "bucketRows" in html
+    assert "bucketSubjectRows" in html
+
+
 def test_dashboard_includes_gap_chart_and_status_cards(client):
     response = client.get("/")
     assert response.status_code == 200
@@ -91,6 +108,7 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderThemes" in script
     assert "function renderHistoryGapDashboard" in script
     assert "function renderHistoryGapChart" in script
+    assert "function renderBuckets" in script
     assert "function setupFilters" in script
     assert "mouseenter" in script
     assert "gapStatus" in script

@@ -36,6 +36,7 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/subjects/freshness",
         "/api/subjects/gap",
         "/api/themes/status",
+        "/api/buckets/status",
         "/api/market-position/mapping",
         "/api/market-position/current",
         "/api/market-position/score/25",
