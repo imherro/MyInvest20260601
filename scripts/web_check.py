@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add theme research center"
+COMMIT_MESSAGE = "feat(web): add bucket explorer"
 
 API_PATHS = [
     "/api/health",
@@ -34,6 +34,7 @@ API_PATHS = [
     "/api/subjects/freshness",
     "/api/subjects/gap",
     "/api/themes/status",
+    "/api/buckets/status",
     "/api/market-position/mapping",
     "/api/market-position/current",
     "/api/market-position/score/25",
@@ -66,6 +67,7 @@ PAGE_PATHS = [
     "/subjects",
     "/subjects/gap",
     "/themes",
+    "/buckets",
     "/portfolio",
     "/intraday-rules",
     "/decision-log",
@@ -78,6 +80,7 @@ INTERACTIVE_PAGE_CHECKS = {
     "/subjects": ["data-table-search", "data-sort", "subjectsRows"],
     "/subjects/gap": ["data-table-search", "data-sort", "subjectGapRows"],
     "/themes": ["data-table-search", "data-table-filter", "data-sort", "themesRows"],
+    "/buckets": ["data-table-search", "data-table-filter", "data-sort", "bucketRows", "bucketSubjectRows"],
     "/portfolio": ["data-table-search", "data-sort", "portfolioRows"],
     "/intraday-rules": ["data-table-search", "data-sort", "intradayRows", "disabledTriggerRows"],
     "/decision-log": ["data-table-search", "data-sort", "decisionRows"],
@@ -103,6 +106,7 @@ JS_CHECKS = [
     "function renderSubjectStatus",
     "function renderSubjectGap",
     "function renderThemes",
+    "function renderBuckets",
     "function setupFilters",
     "detail-row",
     "expandable-row",
@@ -217,6 +221,16 @@ PHASE7E_FILES = [
     ROOT / "web" / "backend" / "app" / "templates" / "themes.html",
     ROOT / "web" / "backend" / "tests" / "test_theme_status.py",
     ROOT / "web" / "docs" / "THEME_RESEARCH_CENTER.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE7F_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "buckets.html",
+    ROOT / "web" / "backend" / "tests" / "test_bucket_explorer.py",
+    ROOT / "web" / "docs" / "BUCKET_EXPLORER.md",
     ROOT / "web" / "docs" / "API_SPEC.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
@@ -463,6 +477,7 @@ class WebCheck:
         self.check_phase7b_contract_files()
         self.check_phase7d_contract_files()
         self.check_phase7e_contract_files()
+        self.check_phase7f_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -819,6 +834,40 @@ class WebCheck:
             return
         self.add_result("phase7e_theme_files", "PASS", "theme status service/API/page/tests/docs present")
 
+    def check_phase7f_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7F_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7f_bucket_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7f_bucket_files",
+                ", ".join(missing),
+                "Phase 7F bucket explorer service/page/tests/docs are missing.",
+                "Add the bucket explorer service, page, tests, and BUCKET_EXPLORER.md, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7F_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "bucket" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7F docs must describe bucket explorer and read-only boundaries")
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py").read_text(encoding="utf-8", errors="replace")
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("bucket service references latest_index.files")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7f_bucket_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7f_bucket_safety",
+                rel(path),
+                f"Phase 7F file failed safety scan: {exc}",
+                "Remove local paths, keep current-only module resolution, and document bucket read-only boundaries.",
+            )
+            return
+        self.add_result("phase7f_bucket_files", "PASS", "bucket explorer service/API/page/tests/docs present")
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -927,6 +976,7 @@ class WebCheck:
         self.check_subject_gap_api(client, ratio)
         self.check_dashboard_api(client, ratio)
         self.check_theme_status_api(client, ratio)
+        self.check_bucket_status_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
@@ -1091,7 +1141,18 @@ class WebCheck:
                 if cash_gate.get("gate_conclusion") in {"buy", "add", "reduce", "sell"}:
                     raise ValueError("dashboard cash-equivalent gate leaked action conclusion")
             links = data.get("quick_links") or []
-            expected = {"Action Plan", "Target Allocation", "Subject Status", "Subject Gap", "Portfolio", "Intraday Rules", "Decision Log", "History Snapshot"}
+            expected = {
+                "Action Plan",
+                "Target Allocation",
+                "Subject Status",
+                "Subject Gap",
+                "Themes",
+                "Buckets",
+                "Portfolio",
+                "Intraday Rules",
+                "Decision Log",
+                "History Snapshot",
+            }
             labels = {item.get("label") for item in links}
             if not expected.issubset(labels):
                 raise ValueError(f"dashboard quick links missing labels: {sorted(expected - labels)}")
@@ -1158,6 +1219,54 @@ class WebCheck:
             self.add_result("theme_status_api", "FAIL", str(exc))
         else:
             self.add_result("theme_status_api", "PASS", "theme summary, details, and neutral statuses safe")
+
+    def check_bucket_status_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/buckets/status")
+            if response.status_code != 200:
+                raise ValueError(f"bucket status API returned {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            data = payload.get("data") or {}
+            if data.get("module") != "bucket_explorer" or data.get("current_only") is not True:
+                raise ValueError("bucket payload is not marked current-only")
+            for key in ["summary", "buckets", "safety", "source_modules"]:
+                if key not in data:
+                    raise ValueError(f"bucket payload missing {key}")
+            buckets = data.get("buckets") or []
+            summary = data.get("summary") or {}
+            if summary.get("bucket_count") != len(buckets):
+                raise ValueError("bucket summary count does not match bucket list")
+            for bucket in buckets:
+                if bucket.get("gap_status") in {"buy", "add", "reduce", "sell"}:
+                    raise ValueError(f"bucket gap status leaked action conclusion: {bucket.get('bucket')}")
+                for subject in bucket.get("subjects") or []:
+                    if subject.get("gate_conclusion") in {"buy", "add", "reduce", "sell"}:
+                        raise ValueError(f"subject gate leaked action conclusion: {subject.get('code')}")
+            if buckets:
+                from urllib.parse import quote
+
+                detail = client.get("/api/buckets/status/" + quote(str(buckets[0].get("bucket")), safe=""))
+                if detail.status_code != 200:
+                    raise ValueError(f"bucket detail returned {detail.status_code}")
+                ratio.assert_safe(detail.json())
+                assert_safe_payload(detail.json())
+            missing = client.get("/api/buckets/status/NO_SUCH_BUCKET")
+            if missing.status_code != 404:
+                raise ValueError(f"missing bucket returned {missing.status_code}, expected 404")
+            ratio.assert_safe(missing.json())
+            assert_safe_payload(missing.json())
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "bucket_status_api",
+                "/api/buckets/status",
+                f"Bucket Explorer API failed safety/current-state scan: {exc}",
+                "Fix BucketExplorerService or its route and rerun scripts/web_check.py.",
+            )
+            self.add_result("bucket_status_api", "FAIL", str(exc))
+        else:
+            self.add_result("bucket_status_api", "PASS", "bucket summary, details, and neutral statuses safe")
 
     def check_export_json(self, client: Any, ratio: Any) -> None:
         response = client.get("/api/export/review_package?format=json")

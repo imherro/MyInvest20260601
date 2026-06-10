@@ -505,6 +505,57 @@
     );
   }
 
+  function renderBuckets(data) {
+    const buckets = data.buckets || [];
+    const summary = data.summary || {};
+    setBind("bucket_count", summary.bucket_count ?? buckets.length);
+    setBind("bucket_overweight_count", summary.overweight_count ?? 0);
+    setBind("bucket_underweight_count", summary.underweight_count ?? 0);
+    setBind("bucket_research_first_count", summary.research_first_count ?? 0);
+    setBind("bucket_blocked_count", summary.blocked_count ?? 0);
+    setRows(
+      "bucketRows",
+      buckets,
+      (row) => [
+        row.bucket,
+        { value: pct(row.actual_pct), className: "num" },
+        { value: pct(row.target_pct), className: "num" },
+        { value: pp(row.gap_pct), className: "num" },
+        row.gap_status,
+        { value: row.subject_count, className: "num" },
+        { value: row.pass_count, className: "num" },
+        { value: row.research_first_count, className: "num" },
+        { value: row.stale_count, className: "num" },
+      ],
+      (row) => {
+        const notes = (row.risk_notes || []).join(" | ");
+        return `risk notes: ${notes || "none"} | blocked: ${row.blocked_count ?? 0}`;
+      },
+    );
+    const subjects = buckets.flatMap((bucket) => bucket.subjects || []);
+    setRows(
+      "bucketSubjectRows",
+      subjects,
+      (row) => [
+        row.code,
+        row.name,
+        row.subject_type,
+        row.bucket,
+        { value: pct(row.position_pct), className: "num" },
+        row.profile_status,
+        row.valuation_status,
+        row.liquidity_status,
+        row.research_first_status,
+        row.gate_conclusion,
+        row.blocking_reason,
+      ],
+      (row) => {
+        const sources = Object.values(row.source_paths || {}).join(" | ");
+        return `stale: ${yesNo(row.staleness_flag)} | sources: ${sources || "none"} | blocking: ${row.blocking_reason || "none"}`;
+      },
+    );
+  }
+
   function renderPortfolio(data) {
     const portfolio = data.portfolio || {};
     setBind("portfolio_count", (portfolio.positions || []).length);
@@ -575,6 +626,7 @@
     "research-first": renderResearchFirst,
     subjects: renderSubjectStatus,
     themes: renderThemes,
+    buckets: renderBuckets,
     portfolio: renderPortfolio,
     "intraday-rules": renderIntradayRules,
     "system-checks": renderSystemChecks,
