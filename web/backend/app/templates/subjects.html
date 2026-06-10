@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Subject Research Status / 标的研究状态中心{% endblock %}
+{% block content %}
+  <div class="metric-grid">
+    <div class="metric"><span class="subtle">Subjects</span><strong data-bind="subject_count">{{ summary.subject_count }}</strong></div>
+    <div class="metric ok"><span class="subtle">Gate Pass</span><strong data-bind="subject_pass_count">{{ summary.pass_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">ResearchFirst</span><strong data-bind="subject_research_first_count">{{ summary.research_first_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Blocked</span><strong data-bind="subject_blocked_count">{{ summary.blocked_count }}</strong></div>
+  </div>
+
+  <div class="table-tools">
+    <h2>Subject Status</h2>
+    <input type="search" placeholder="Search subjects" data-table-search="subjectsTable">
+  </div>
+  {% if subjects %}
+    <table id="subjectsTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Code</th>
+          <th data-sort="text">Name</th>
+          <th data-sort="text">Type</th>
+          <th data-sort="text">Bucket</th>
+          <th data-sort="text">Profile</th>
+          <th data-sort="text">Valuation</th>
+          <th data-sort="text">Liquidity</th>
+          <th data-sort="text">ResearchFirst</th>
+          <th data-sort="text">Gate</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody id="subjectsRows">
+        {% for item in subjects %}
+          <tr>
+            <td>{{ item.code or "" }}</td>
+            <td>{{ item.name or "" }}</td>
+            <td>{{ item.subject_type or "" }}</td>
+            <td>{{ item.bucket or "" }}</td>
+            <td><span class="status {{ 'warn' if item.profile_status != 'pass' else '' }}">{{ item.profile_status or "" }}</span></td>
+            <td><span class="status {{ 'warn' if item.valuation_status != 'pass' else '' }}">{{ item.valuation_status or "" }}</span></td>
+            <td><span class="status {{ 'warn' if item.liquidity_status != 'pass' else '' }}">{{ item.liquidity_status or "" }}</span></td>
+            <td><span class="status {{ 'warn' if item.research_first_status != 'pass' else '' }}">{{ item.research_first_status or "" }}</span></td>
+            <td>{{ item.gate_conclusion or "" }}</td>
+            <td>{{ item.blocking_reason or "" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No subject status loaded.</div>
+  {% endif %}
+{% endblock %}
