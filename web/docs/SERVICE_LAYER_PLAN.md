@@ -1,6 +1,6 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
@@ -24,6 +24,7 @@ These services are available in the Web layer and must remain read-only:
 - `BucketExplorerService`: joins current target-allocation buckets, portfolio positions, subject gate status, and subject freshness for Web allocation drilldown.
 - `AllocationDrilldownService`: aggregates current target-allocation, portfolio, subject gap, subject status, market-position, and theme summaries into bucket/subject drilldown views.
 - `DecisionTimelineService`: combines current action-plan metadata, target-allocation metadata, decision log entries, and history snapshot entries into a neutral review timeline.
+- `HistoricalMetricsService`: aggregates bucket gap trends, subject status, theme status, decision event types, and market-score context into read-only dashboard metrics.
 - `target_allocation_mode`: reads `MYINVEST_TARGET_ALLOCATION_MODE` and reports whether the requested mode is allowed or blocked.
 - `ActionPlanService`: exposes action-plan read helpers.
 - `PortfolioService`: exposes portfolio ratio snapshot read helpers.
@@ -60,10 +61,11 @@ Future service names are planning boundaries only. They do not authorize trading
 14. Add a history gap dashboard for read-only allocation audit drilldown. Completed in Phase 7G.
 15. Add allocation drilldown APIs/pages that join bucket and subject current-state rows for Web review. Completed in Phase 7H.
 16. Add a decision timeline that joins decision log, current action plan, current target allocation, and history snapshot review events. Completed in Phase 7I.
-17. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
-18. At each step, extend golden tests to compare old-script output with new-service output.
-19. If any golden test differs, do not replace the old script.
-20. Keep old scripts as reference implementations until migration is stable.
+17. Add historical metrics dashboard analytics that aggregate current and read-only history summaries. Completed in Phase 8.
+18. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
+19. At each step, extend golden tests to compare old-script output with new-service output.
+20. If any golden test differs, do not replace the old script.
+21. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -286,6 +288,22 @@ Allocation drilldown is a visibility and review helper. It is not a target-alloc
 - not write temporary exports or the history database
 
 Decision timeline is a review navigation page. It is not a target-allocation generator, action-plan generator, promotion mechanism, trading page, order workflow, export writer, or QMT write adapter.
+
+## Phase 8 Historical Metrics Rules
+
+`HistoricalMetricsService` must:
+
+- read current SQLite state produced from `research/latest_index.json` `modules`
+- reuse existing read-only history gap, subject gap, subject status, theme status, decision timeline, and market-score services
+- return only ratio-only counts, percentages, percentage-point gaps, timestamps, neutral status labels, trend indicators, and relative Web review links
+- keep bucket actual/target/gap values aligned with the read-only history gap dashboard
+- keep `/api/historical-metrics`, `/api/historical-metrics/{entity_id}`, and `/historical-metrics` read-only
+- pass every API response through `RatioOnlyService`
+- avoid `latest_index.files` as a current resolver
+- leave `research/latest_index.json`, `current_modules`, `artifacts`, `research/allocation`, and `research/actions` unchanged
+- not write temporary exports or the history database
+
+Historical metrics is a dashboard analytics page for review. It is not a target-allocation generator, action-plan generator, promotion mechanism, trading page, order workflow, export writer, or QMT write adapter.
 
 ## Hard Service Boundaries
 

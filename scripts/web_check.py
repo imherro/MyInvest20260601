@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add decision timeline / review timeline page and API"
+COMMIT_MESSAGE = "feat(web): add historical metrics dashboard analytics"
 
 API_PATHS = [
     "/api/health",
@@ -61,6 +61,8 @@ API_PATHS = [
     "/api/decision-log/current",
     "/api/decision-timeline",
     "/api/decision-timeline/current-action-plan",
+    "/api/historical-metrics",
+    "/api/historical-metrics/bucket-attack_mainline",
     "/api/export/review_package?format=json",
 ]
 
@@ -81,6 +83,7 @@ PAGE_PATHS = [
     "/intraday-rules",
     "/decision-log",
     "/decision-timeline",
+    "/historical-metrics",
     "/system-checks",
 ]
 
@@ -98,6 +101,7 @@ INTERACTIVE_PAGE_CHECKS = {
     "/intraday-rules": ["data-table-search", "data-sort", "intradayRows", "disabledTriggerRows"],
     "/decision-log": ["data-table-search", "data-sort", "decisionRows"],
     "/decision-timeline": ["data-table-search", "data-table-filter", "data-sort", "decisionTimelineRows", "decisionTimelineChart"],
+    "/historical-metrics": ["data-table-search", "data-table-filter", "data-sort", "historicalMetricRows", "historicalMetricsChart"],
 }
 
 DASHBOARD_CHECKS = [
@@ -128,6 +132,8 @@ JS_CHECKS = [
     "function renderSubjectDrilldown",
     "function renderDecisionTimeline",
     "function renderDecisionTimelineChart",
+    "function renderHistoricalMetricsChart",
+    "function updateHistoricalMetricsSummary",
     "function setupFilters",
     "detail-row",
     "expandable-row",
@@ -283,6 +289,16 @@ PHASE7I_FILES = [
     ROOT / "web" / "backend" / "app" / "templates" / "decision_timeline.html",
     ROOT / "web" / "backend" / "tests" / "test_decision_timeline.py",
     ROOT / "web" / "docs" / "DECISION_TIMELINE.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE8_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "historical_metrics.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "historical_metrics.html",
+    ROOT / "web" / "backend" / "tests" / "test_historical_metrics.py",
+    ROOT / "web" / "docs" / "HISTORICAL_METRICS_DASHBOARD.md",
     ROOT / "web" / "docs" / "API_SPEC.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
@@ -533,6 +549,7 @@ class WebCheck:
         self.check_phase7g_contract_files()
         self.check_phase7h_contract_files()
         self.check_phase7i_contract_files()
+        self.check_phase8_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1045,6 +1062,50 @@ class WebCheck:
             "decision timeline service/API/page/tests/docs present",
         )
 
+    def check_phase8_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE8_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase8_historical_metrics_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase8_historical_metrics_files",
+                ", ".join(missing),
+                "Phase 8 historical metrics service/page/tests/docs are missing.",
+                "Add the historical metrics service, page, tests, and HISTORICAL_METRICS_DASHBOARD.md, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE8_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "historical metrics" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 8 docs must describe historical metrics and read-only boundaries")
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "historical_metrics.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("historical metrics service references latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "qmt_portfolio_snapshot", "qmt_export_history"]:
+                if blocked in service_text:
+                    raise ValueError(f"historical metrics service references blocked script/runtime: {blocked}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase8_historical_metrics_safety", "FAIL", str(exc))
+            self.fail(
+                "phase8_historical_metrics_safety",
+                rel(path),
+                f"Phase 8 file failed safety scan: {exc}",
+                "Remove local paths, keep current-only module resolution, and document historical metrics read-only boundaries.",
+            )
+            return
+        self.add_result(
+            "phase8_historical_metrics_files",
+            "PASS",
+            "historical metrics service/API/page/tests/docs present",
+        )
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -1157,6 +1218,7 @@ class WebCheck:
         self.check_bucket_status_api(client, ratio)
         self.check_allocation_drilldown_api(client, ratio)
         self.check_decision_timeline_api(client, ratio)
+        self.check_historical_metrics_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
@@ -1657,6 +1719,70 @@ class WebCheck:
             self.add_result("decision_timeline_api", "FAIL", str(exc))
         else:
             self.add_result("decision_timeline_api", "PASS", "timeline events safe and current-state aligned")
+
+    def check_historical_metrics_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/historical-metrics")
+            if response.status_code != 200:
+                raise ValueError(f"historical metrics API returned {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            data = payload.get("data") or {}
+            if data.get("module") != "historical_metrics" or data.get("current_only") is not True:
+                raise ValueError("historical metrics payload is not marked current-only")
+            for key in ["summary", "series", "aggregations", "entities", "source_modules", "safety"]:
+                if key not in data:
+                    raise ValueError(f"historical metrics payload missing {key}")
+            entities = data.get("entities") or []
+            if not entities:
+                raise ValueError("historical metrics entities are empty")
+            summary = data.get("summary") or {}
+            if summary.get("entity_count") != len(entities):
+                raise ValueError("historical metrics summary count does not match entities")
+            aggregations = data.get("aggregations") or {}
+            for required in ["buckets", "subjects", "themes", "decision_types"]:
+                if not aggregations.get(required):
+                    raise ValueError(f"historical metrics missing {required} aggregation")
+            safety = data.get("safety") or {}
+            for key in ["ratio_only", "current_only", "read_only", "uses_latest_index_modules"]:
+                if safety.get(key) is not True:
+                    raise ValueError(f"historical metrics safety check failed: {key}")
+            for key in ["uses_latest_index_files", "generates_action_plan", "generates_target_allocation", "trading_feature", "qmt_write_feature"]:
+                if safety.get(key) is not False:
+                    raise ValueError(f"historical metrics boundary check failed: {key}")
+
+            history = client.get("/api/history/gap-summary").json().get("data", {})
+            history_buckets = {row.get("bucket"): row for row in history.get("buckets") or []}
+            metric_buckets = {row.get("bucket"): row for row in aggregations.get("buckets") or []}
+            for bucket, expected in history_buckets.items():
+                actual = metric_buckets.get(bucket)
+                if not actual:
+                    raise ValueError(f"historical metrics missing bucket {bucket}")
+                for field in ["actual_pct", "target_pct", "gap_pct"]:
+                    if actual.get(field) != expected.get(field):
+                        raise ValueError(f"historical metrics {bucket} {field} mismatch")
+
+            detail = client.get("/api/historical-metrics/bucket-attack_mainline")
+            if detail.status_code != 200:
+                raise ValueError(f"historical metrics detail returned {detail.status_code}")
+            ratio.assert_safe(detail.json())
+            assert_safe_payload(detail.json())
+            missing = client.get("/api/historical-metrics/NO_SUCH_ENTITY")
+            if missing.status_code != 404:
+                raise ValueError(f"missing historical metrics entity returned {missing.status_code}, expected 404")
+            ratio.assert_safe(missing.json())
+            assert_safe_payload(missing.json())
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "historical_metrics_api",
+                "/api/historical-metrics",
+                f"Historical metrics API failed safety/current-state scan: {exc}",
+                "Fix HistoricalMetricsService or its routes and rerun scripts/web_check.py.",
+            )
+            self.add_result("historical_metrics_api", "FAIL", str(exc))
+        else:
+            self.add_result("historical_metrics_api", "PASS", "historical metrics entities safe and aligned")
 
     def check_export_json(self, client: Any, ratio: Any) -> None:
         response = client.get("/api/export/review_package?format=json")

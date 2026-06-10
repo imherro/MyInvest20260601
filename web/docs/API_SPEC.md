@@ -48,6 +48,8 @@ Endpoints:
 - `GET /api/decision-log/current`
 - `GET /api/decision-timeline`
 - `GET /api/decision-timeline/{event_id}`
+- `GET /api/historical-metrics`
+- `GET /api/historical-metrics/{entity_id}`
 - `GET /api/allocation-consistency/current`
 - `GET /api/export/review_package`
 
@@ -163,6 +165,21 @@ Returned fields include `event_id`, `event_type`, `timestamp`, `title`, `summary
 The endpoints do not read `latest_index.files`, write research artifacts, update `current_modules`, generate target allocations, generate action plans, or connect to execution adapters. Responses are ratio-only and pass `RatioOnlyService`.
 
 The page `GET /decision-timeline` uses the same API and supports refresh, search, event/status filters, sorting, pagination, timeline visualization, tooltips, and expandable details.
+
+## Historical Metrics
+
+Phase 8 adds read-only historical metrics endpoints:
+
+- `GET /api/historical-metrics`
+- `GET /api/historical-metrics/{entity_id}`
+
+The service reads current SQLite state and existing read-only history summaries derived from `latest_index.modules`. It aggregates bucket gap trends, subject current status, theme status, decision timeline event types, and current market-score context into ratio-only metrics for review.
+
+Returned fields include `summary`, `series`, `aggregations`, `entities`, `source_modules`, and `safety`. Entity rows use neutral fields such as `entity_id`, `entity_type`, `label`, `status`, ratio percentages, percentage-point gaps, timestamps, counts, trend indicators, and relative review links.
+
+The endpoints do not read `latest_index.files`, write research artifacts, update `current_modules`, generate target allocations, generate action plans, or connect to execution adapters. Responses are ratio-only and pass `RatioOnlyService`.
+
+The page `GET /historical-metrics` uses the same API and supports refresh, search, entity/status filters, sorting, pagination, bucket gap visualization, tooltips, and expandable details.
 
 ## Market Position
 

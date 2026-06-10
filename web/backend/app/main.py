@@ -17,6 +17,7 @@ from .services.bucket_explorer import BucketExplorerService
 from .services.dashboard import DashboardService
 from .services.decision_timeline import DecisionTimelineService
 from .services.history_gap_dashboard import HistoryGapDashboardService
+from .services.historical_metrics import HistoricalMetricsService
 from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
@@ -235,6 +236,21 @@ def decision_timeline_page(request: Request, session: Session = Depends(get_sess
             "decision-timeline",
             "/api/decision-timeline",
             timeline=timeline,
+        ),
+    )
+
+
+@app.get("/historical-metrics", response_class=HTMLResponse)
+def historical_metrics_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    metrics = HistoricalMetricsService(session).metrics()
+    return templates.TemplateResponse(
+        request,
+        "historical_metrics.html",
+        page_context(
+            request,
+            "historical-metrics",
+            "/api/historical-metrics",
+            metrics=metrics,
         ),
     )
 

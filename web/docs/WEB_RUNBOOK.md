@@ -283,6 +283,38 @@ Full gate:
 python scripts/web_check.py
 ```
 
+## Phase 8 Historical Metrics
+
+Phase 8 adds the read-only Historical Metrics dashboard. It aggregates bucket gap trends, current subject status, theme status, decision timeline event types, and market-score context into ratio-only metrics for review. It does not generate target allocation, generate action plans, write research files, write temporary exports, or create trading instructions.
+
+Read-only APIs:
+
+- `GET /api/historical-metrics`
+- `GET /api/historical-metrics/{entity_id}`
+
+Page:
+
+- `GET /historical-metrics`
+
+The API returns summary counts, bucket gap series, market-score series, bucket/subject/theme/decision-type aggregations, flattened entity rows, source modules, and safety flags. Metric rows are review context only and are not buy/add/reduce/sell instructions.
+
+The page supports refresh, search, entity/status filters, sorting, pagination, expandable details, and bucket gap visualization with tooltip text through the shared static JS. Every refresh still passes the frontend forbidden-field scan before rendering.
+
+Historical Metrics remains current-only and read-only. It reads SQLite current state produced from `research/latest_index.json` `modules` and existing read-only history summaries, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
+
+Direct tests:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_historical_metrics.py
+```
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
 ## Phase 5A Schema And Golden Baseline
 
 Phase 5A freezes the database schema contract and adds a golden current-state baseline for later service migration. It does not migrate target-allocation generation, action-plan generation, trading logic, order creation, execution handling, or QMT write interfaces.

@@ -24,6 +24,7 @@ def test_web_pages_render_without_local_absolute_paths(client):
         "/intraday-rules",
         "/decision-log",
         "/decision-timeline",
+        "/historical-metrics",
         "/system-checks",
     ]
     for path in paths:
@@ -94,5 +95,19 @@ def test_decision_timeline_page_has_visual_and_refresh_hooks(client):
     assert "data-refresh" in html
     assert "data-table-search=\"decisionTimelineTable\"" in html
     assert "data-table-filter=\"decisionTimelineTable\"" in html
+    assert "@media (max-width: 720px)" in html
+    assert not LOCAL_PATH_RE.search(html)
+
+
+def test_historical_metrics_page_has_visual_and_refresh_hooks(client):
+    response = client.get("/historical-metrics")
+    assert response.status_code == 200
+    html = response.text
+    assert "historical-chart-row" in html
+    assert "data-historical-metrics-chart" in html
+    assert "role=\"tooltip\"" in html
+    assert "data-refresh" in html
+    assert "data-table-search=\"historicalMetricTable\"" in html
+    assert "data-table-filter=\"historicalMetricTable\"" in html
     assert "@media (max-width: 720px)" in html
     assert not LOCAL_PATH_RE.search(html)
