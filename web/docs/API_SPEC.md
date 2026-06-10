@@ -79,6 +79,8 @@ Gap status is presentation-only:
 
 The endpoints are ratio-only and return percentages, timestamps, flags, status labels, and relative source metadata only.
 
+Phase 7C keeps the same API contract and adds only frontend visualization on `/subjects/gap`. The page renders a color-coded bucket gap chart from `/api/subjects/gap`; hover details use the same ratio-only fields already returned by the API.
+
 ## Market Position
 
 Phase 5C-1 adds read-only market-position endpoints backed by SQLite
