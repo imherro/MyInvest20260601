@@ -15,10 +15,11 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DB_PATH = ROOT / "temp" / "web_db" / "myinvest.sqlite"
 LATEST_INDEX = ROOT / "research" / "latest_index.json"
+CANDIDATE_EXPORT_DIR = ROOT / "temp" / "candidate_exports"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "docs(web): add target allocation promotion plan"
+COMMIT_MESSAGE = "test(web): add candidate/official promotion mode shadow validation"
 
 API_PATHS = [
     "/api/health",
@@ -117,6 +118,15 @@ PHASE5E_FILES = [
     ROOT / "web" / "backend" / "app" / "services" / "target_allocation_mode.py",
     ROOT / "web" / "backend" / "tests" / "test_target_allocation_promotion_mode.py",
     ROOT / "web" / "docs" / "TARGET_ALLOCATION_PROMOTION_PLAN.md",
+]
+
+PHASE5F_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "target_allocation_promotion.py",
+    ROOT / "web" / "backend" / "tests" / "test_target_allocation_promotion_simulation.py",
+    ROOT / "scripts" / "simulate_target_allocation_promotion.py",
+    ROOT / "web" / "docs" / "TARGET_ALLOCATION_PROMOTION_PLAN.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
 REQUIRED_EXPORT_MODULES = {
@@ -288,6 +298,7 @@ class WebCheck:
         self.check_phase5c3_contract_files()
         self.check_phase5d_contract_files()
         self.check_phase5e_contract_files()
+        self.check_phase5f_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -412,6 +423,37 @@ class WebCheck:
             return
         self.add_result("phase5e_promotion_files", "PASS", "promotion plan and blocked mode tests present")
 
+    def check_phase5f_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE5F_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase5f_promotion_simulation_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase5f_promotion_simulation_files",
+                ", ".join(missing),
+                "Phase 5F candidate/official promotion simulation files are missing.",
+                "Add the promotion simulation service, CLI, tests, and docs, then rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE5F_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "candidate" not in lowered or "official" not in lowered:
+                        raise ValueError("Phase 5F docs must describe candidate and official mode behavior")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase5f_promotion_simulation_safety", "FAIL", str(exc))
+            self.fail(
+                "phase5f_promotion_simulation_safety",
+                rel(path),
+                f"Phase 5F file failed safety scan: {exc}",
+                "Remove local paths and document candidate temp export plus official blocking behavior.",
+            )
+            return
+        self.add_result("phase5f_promotion_simulation_files", "PASS", "candidate/official simulation tests present")
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -514,6 +556,7 @@ class WebCheck:
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
+        self.check_promotion_simulation_cli_output(ratio)
 
     def check_api_is_read_only(self, client: Any) -> None:
         response = client.get("/openapi.json")
@@ -673,6 +716,68 @@ class WebCheck:
             finally:
                 output_path.unlink(missing_ok=True)
 
+    def check_promotion_simulation_cli_output(self, ratio: Any) -> None:
+        try:
+            dry = self.run_command(
+                "promotion_candidate_dry_run",
+                [sys.executable, "scripts/simulate_target_allocation_promotion.py", "--mode", "candidate"],
+            )
+            dry_summary = json.loads(dry)
+            ratio.assert_safe(dry_summary)
+            assert_safe_payload(dry_summary)
+            if dry_summary.get("output_path") is not None or dry_summary.get("matched") is not True:
+                raise ValueError(f"unexpected candidate dry-run summary: {dry_summary}")
+
+            written = self.run_command(
+                "promotion_candidate_write",
+                [sys.executable, "scripts/simulate_target_allocation_promotion.py", "--mode", "candidate", "--write"],
+            )
+            write_summary = json.loads(written)
+            ratio.assert_safe(write_summary)
+            assert_safe_payload(write_summary)
+            rel_path_text = str(write_summary.get("output_path") or "")
+            if not rel_path_text.startswith("temp/candidate_exports/"):
+                raise ValueError(f"candidate export path outside temp/candidate_exports: {rel_path_text}")
+            if "candidate" not in Path(rel_path_text).name:
+                raise ValueError(f"candidate export filename missing candidate: {rel_path_text}")
+            output_path = ROOT / rel_path_text
+            if not output_path.exists():
+                raise ValueError(f"candidate export file missing: {rel_path_text}")
+            if not is_forbidden_git_path(rel_path_text):
+                raise ValueError(f"candidate export output is not covered by forbidden/ignored temp patterns: {rel_path_text}")
+            try:
+                payload = json.loads(output_path.read_text(encoding="utf-8"))
+                ratio.assert_safe(payload)
+                assert_safe_payload(payload)
+                assert_no_export_runtime_terms(payload)
+                compare = payload.get("golden_compare") or {}
+                if compare.get("matched") is not True or compare.get("diffs"):
+                    raise ValueError("candidate golden compare failed")
+            finally:
+                output_path.unlink(missing_ok=True)
+
+            official = self.run_command(
+                "promotion_official_blocked",
+                [sys.executable, "scripts/simulate_target_allocation_promotion.py", "--mode", "official"],
+            )
+            official_summary = json.loads(official)
+            ratio.assert_safe(official_summary)
+            assert_safe_payload(official_summary)
+            if official_summary.get("status") != "blocked":
+                raise ValueError(f"official mode is not blocked: {official_summary}")
+            if official_summary.get("output_path") is not None:
+                raise ValueError(f"official mode produced output: {official_summary}")
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "promotion_simulation",
+                "target-allocation promotion simulation",
+                f"Candidate/official promotion simulation failed safety scan: {exc}",
+                "Fix the promotion simulation service/CLI so candidate writes only temp exports and official is blocked.",
+            )
+            self.add_result("promotion_simulation", "FAIL", str(exc))
+        else:
+            self.add_result("promotion_simulation", "PASS", "candidate temp export safe and official blocked")
+
     def assert_export_sources_current(self, payload: dict[str, Any]) -> None:
         latest = json.loads(LATEST_INDEX.read_text(encoding="utf-8-sig"))
         modules = latest.get("modules", {})
@@ -748,6 +853,7 @@ class WebCheck:
             ROOT / "scripts" / "ingest_current_state.py",
             ROOT / "scripts" / "ingest_current_state_to_web_db.py",
             ROOT / "scripts" / "export_target_allocation_shadow.py",
+            ROOT / "scripts" / "simulate_target_allocation_promotion.py",
             ROOT / "web" / "scripts" / "ingest_current_state.py",
             *list((ROOT / "web" / "backend" / "app").rglob("*.py")),
         ]

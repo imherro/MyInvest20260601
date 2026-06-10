@@ -96,3 +96,5 @@ Target allocation is now in Phase 5C-2 shadow mode. The shadow service may compu
 Phase 5D adds multi-scenario replay fixtures under `web/backend/tests/fixtures/target_allocation_scenarios/`. These fixtures are not current state, are never read by production APIs, and exist only to harden shadow migration coverage across representative score and bucket cases. Future replacement requires both current golden comparison and fixture replay to remain clean over multiple runs.
 
 Phase 5E adds the controlled promotion plan and mode helper. It does not switch callers to service-generated output. Candidate and official modes remain blocked until a later audited phase.
+
+Phase 5F adds candidate/official promotion simulation. Candidate simulation builds explicit current inputs, calls `TargetAllocationGenerationService.generate_shadow_from_inputs(...)`, compares the candidate result with current shadow output, and writes only temporary files under `temp/candidate_exports/` when explicitly requested. Official simulation returns a blocked report and writes no files.
