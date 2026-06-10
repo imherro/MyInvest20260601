@@ -448,6 +448,7 @@ class WebCheck:
 
     def run(self) -> int:
         self.check_git_scope()
+        self.run_hidden_unicode_check()
         self.check_no_research_logic_changes()
         self.check_phase5a_contract_files()
         self.check_phase5c_contract_files()
@@ -473,6 +474,13 @@ class WebCheck:
         self.check_current_only_code_paths()
         self.print_summary()
         return 1 if self.failures else 0
+
+    def run_hidden_unicode_check(self) -> None:
+        self.run_command(
+            "check_hidden_unicode",
+            [sys.executable, "scripts/check_hidden_unicode.py"],
+            "Hidden Unicode check: OK",
+        )
 
     def check_phase5a_contract_files(self) -> None:
         missing = [rel(path) for path in [*PHASE5A_TEST_FILES, *PHASE5A_DOC_FILES] if not path.exists()]
