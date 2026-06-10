@@ -87,6 +87,18 @@ The script prints a suggested commit message and the files that belong in the co
 
 The same gate runs in GitHub Actions via `.github/workflows/web_check.yml` on push and pull request.
 
+## Phase 9F Repository Read-Only Baseline
+
+Phase 9F establishes the Web repository read-only baseline. All current SQLite repository reads must go through `DatabaseService`; direct `session.execute(...)`, direct `read_text(...)`, and `latest_index.files` current resolution are blocked for repositories. `HistorySnapshotRepository` is the only documented exception because it owns the Phase 9E temp-only runtime DB write to `temp/web_runtime/history_snapshot.sqlite`.
+
+Validation:
+
+```bash
+python scripts/web_check.py
+```
+
+The gate scans `web/backend/app/repositories/*.py`, checks API/page forbidden fields, confirms OpenAPI remains read-only, and verifies ratio-only, ResearchFirst, allocation consistency, and `project_check.py --current-only`. Do not tag or merge a repository baseline if `phase9f_repository_baseline_files` is not `PASS`.
+
 ## Hidden Unicode Warning Review
 
 If GitHub displays a hidden or bidirectional Unicode warning on a Web milestone PR, run the local scanner before changing files:

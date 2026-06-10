@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "refactor(web): consolidate history snapshot runtime DB access Phase 9E"
+COMMIT_MESSAGE = "chore(web): phase 9F full repository read-only consolidation baseline"
 
 API_PATHS = [
     "/api/health",
@@ -357,6 +357,13 @@ PHASE9E_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
+PHASE9F_FILES = [
+    ROOT / "web" / "backend" / "app" / "repositories" / "market_position_repo.py",
+    ROOT / "web" / "backend" / "tests" / "test_market_position_service.py",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -608,6 +615,7 @@ class WebCheck:
         self.check_phase9b3_contract_files()
         self.check_phase9d_contract_files()
         self.check_phase9e_contract_files()
+        self.check_phase9f_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1537,6 +1545,68 @@ class WebCheck:
             "phase9e_history_snapshot_runtime_files",
             "PASS",
             "History snapshot runtime DB policy is documented and guarded",
+        )
+
+    def check_phase9f_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE9F_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase9f_repository_baseline_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase9f_repository_baseline_files",
+                ", ".join(missing),
+                "Phase 9F repository baseline files are missing.",
+                "Update repository tests/docs and rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            repo_dir = ROOT / "web" / "backend" / "app" / "repositories"
+            for path in sorted(repo_dir.glob("*.py")):
+                if path.name == "__init__.py":
+                    continue
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if "latest_index.files" in text or '["files"]' in text or "['files']" in text:
+                    raise ValueError(f"{rel(path)} references latest_index.files")
+                if ".read_text(" in text:
+                    raise ValueError(f"{rel(path)} reads files with read_text")
+                if path.name == "history_snapshot_repo.py":
+                    if "assert_history_database_path" not in text or "HISTORY_RUNTIME_DIR" not in text:
+                        raise ValueError("HistorySnapshotRepository must keep Phase 9E runtime DB guard")
+                    continue
+                if "DatabaseService" not in text:
+                    raise ValueError(f"{rel(path)} does not delegate to DatabaseService")
+                if ".execute(" in text or ".executemany(" in text or "session.execute" in text:
+                    raise ValueError(f"{rel(path)} contains direct SQL execution")
+                if not any(marker in text for marker in [".fetch_all(", ".fetch_one(", ".count_table(", ".source_for_module("]):
+                    raise ValueError(f"{rel(path)} does not use DatabaseService read helpers")
+                for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
+                    if re.search(rf"\b{blocked}\b", text, re.IGNORECASE):
+                        raise ValueError(f"{rel(path)} contains blocked SQL verb: {blocked}")
+
+            market_repo = (repo_dir / "market_position_repo.py").read_text(encoding="utf-8", errors="replace")
+            if ".fetch_all(" not in market_repo or ".fetch_one(" not in market_repo:
+                raise ValueError("MarketPositionRepository must use DatabaseService fetch helpers")
+
+            docs = [
+                ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+                ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+            ]
+            for doc_path in docs:
+                text = doc_path.read_text(encoding="utf-8", errors="replace").lower()
+                if "phase 9f" not in text or "repository read-only" not in text:
+                    raise ValueError(f"{rel(doc_path)} must document Phase 9F repository read-only baseline")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase9f_repository_baseline_safety", "FAIL", str(exc))
+            self.fail(
+                "phase9f_repository_baseline_safety",
+                "phase9f repository files",
+                f"Phase 9F file failed safety scan: {exc}",
+                "Keep repository reads DatabaseService-backed, with only the documented HistorySnapshot runtime DB exception.",
+            )
+            return
+        self.add_result(
+            "phase9f_repository_baseline_files",
+            "PASS",
+            "Repository read-only baseline is enforced",
         )
 
     def run_ingest(self) -> None:

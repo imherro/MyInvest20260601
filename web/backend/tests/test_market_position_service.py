@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from web.backend.app.repositories import market_position_repo as market_position_repo_module
 from web.backend.app.db import SessionLocal
 from web.backend.app.services.market_position import MarketPositionService
 from web.backend.app.services.ratio_only import RatioOnlyService
@@ -159,3 +160,46 @@ def test_market_position_service_does_not_read_latest_index_files():
     assert "latest_index.files" not in text
     assert '["files"]' not in text
     assert "['files']" not in text
+
+
+def test_market_position_repository_delegates_to_database_service(monkeypatch):
+    calls: list[tuple[str, str, dict[str, Any] | None]] = []
+
+    class FakeDatabaseService:
+        def __init__(self, session):
+            calls.append(("init", str(session), None))
+
+        def fetch_all(self, sql, params=None):
+            calls.append(("all", sql, params))
+            return [{"score_min": 0, "score_max": 30, "label": "weak"}]
+
+        def fetch_one(self, sql, params=None):
+            calls.append(("one", sql, params))
+            return {"score": 30, "state": "weak"}
+
+    monkeypatch.setattr(market_position_repo_module, "DatabaseService", FakeDatabaseService)
+
+    repo = market_position_repo_module.MarketPositionRepository("sentinel")
+    mappings = repo.active_mappings()
+    current = repo.current_market_score()
+
+    assert mappings[0]["label"] == "weak"
+    assert current["score"] == 30
+    assert calls[0] == ("init", "sentinel", None)
+    sql_text = "\n".join(call[1] for call in calls if call[0] in {"all", "one"})
+    assert "FROM market_position_mappings" in sql_text
+    assert "FROM market_scores" in sql_text
+    for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
+        assert blocked not in sql_text.upper()
+
+
+def test_market_position_repository_has_no_direct_sql_execution():
+    path = ROOT / "web" / "backend" / "app" / "repositories" / "market_position_repo.py"
+    text = path.read_text(encoding="utf-8")
+    assert "DatabaseService" in text
+    assert ".fetch_all(" in text
+    assert ".fetch_one(" in text
+    assert ".execute(" not in text
+    assert "session.execute" not in text
+    assert ".read_text(" not in text
+    assert "latest_index.files" not in text
