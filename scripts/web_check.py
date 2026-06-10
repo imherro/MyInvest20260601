@@ -21,11 +21,13 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add workbench environment center"
+COMMIT_MESSAGE = "feat(web): add user preferences center"
 
 API_PATHS = [
     "/api/health",
     "/api/environment/status",
+    "/api/user/preferences",
+    "/api/user/preferences/default",
     "/api/dashboard/current",
     "/api/current",
     "/api/latest-index",
@@ -72,6 +74,7 @@ PAGE_PATHS = [
     "/dashboard",
     "/settings",
     "/environment",
+    "/preferences",
     "/action-plan",
     "/target-allocation",
     "/research-first",
@@ -97,6 +100,15 @@ INTERACTIVE_PAGE_CHECKS = {
         'data-status-card="env-readonly"',
         'data-bind="env_branch"',
         "environmentCheckRows",
+    ],
+    "/preferences": [
+        'data-preferences-section="display"',
+        'data-preferences-section="dashboard"',
+        'data-preferences-section="safety"',
+        'data-status-card="pref-readonly"',
+        'data-bind="pref_refresh"',
+        "preferenceRows",
+        "preferenceSourceRows",
     ],
     "/action-plan": ["data-table-search", "data-sort", "actionRows"],
     "/target-allocation": ["data-table-search", "data-sort", "targetRows"],
@@ -131,6 +143,7 @@ JS_CHECKS = [
     "function assertRatioOnly",
     "function renderPagination",
     "function renderEnvironment",
+    "function renderUserPreferences",
     "function renderDashboardQuickLinks",
     "function renderSubjectStatus",
     "function renderSubjectGap",
@@ -380,6 +393,16 @@ PHASE10A_FILES = [
     ROOT / "web" / "backend" / "app" / "templates" / "environment.html",
     ROOT / "web" / "backend" / "tests" / "test_environment_status.py",
     ROOT / "web" / "docs" / "ENVIRONMENT_CENTER.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE10B_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "user_preferences.py",
+    ROOT / "web" / "backend" / "app" / "repositories" / "user_preferences_repo.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "preferences.html",
+    ROOT / "web" / "backend" / "tests" / "test_user_preferences.py",
     ROOT / "web" / "docs" / "API_SPEC.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
@@ -639,6 +662,7 @@ class WebCheck:
         self.check_phase9e_contract_files()
         self.check_phase9f_contract_files()
         self.check_phase10a_contract_files()
+        self.check_phase10b_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1680,6 +1704,63 @@ class WebCheck:
             "phase10a_environment_center_files",
             "PASS",
             "Workbench environment center service/page/tests/docs present",
+        )
+
+    def check_phase10b_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE10B_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase10b_user_preferences_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase10b_user_preferences_files",
+                ", ".join(missing),
+                "Phase 10B user preferences center files are missing.",
+                "Add the read-only preference service, repository, page, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "user_preferences.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "user_preferences_repo.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            combined = (service_text + "\n" + repo_text).lower()
+            if "latest_index.files" in combined or '["files"]' in combined or "['files']" in combined:
+                raise ValueError("User preferences must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
+                if blocked in combined:
+                    raise ValueError(f"User preferences contains blocked marker: {blocked.strip()}")
+            if "databaseservice" not in combined:
+                raise ValueError("UserPreferencesRepository must use DatabaseService")
+            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "preferences.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "Workbench Preferences",
+                "data-preferences-section=\"display\"",
+                "data-preferences-section=\"dashboard\"",
+                "data-preferences-section=\"safety\"",
+                "preferenceRows",
+                "preferenceSourceRows",
+            ]:
+                if marker not in template_text:
+                    raise ValueError(f"preferences template missing marker: {marker}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase10b_user_preferences_safety", "FAIL", str(exc))
+            self.fail(
+                "phase10b_user_preferences_safety",
+                "phase10b user preferences files",
+                f"Phase 10B file failed safety scan: {exc}",
+                "Keep preferences read-only, display-only, and routed through DatabaseService.",
+            )
+            return
+        self.add_result(
+            "phase10b_user_preferences_files",
+            "PASS",
+            "Workbench user preferences service/page/tests/docs present",
         )
 
     def run_ingest(self) -> None:

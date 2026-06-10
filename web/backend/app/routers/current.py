@@ -29,6 +29,7 @@ from ..services.target_allocation_candidate_audit import TargetAllocationCandida
 from ..services.target_allocation_export import TargetAllocationControlledExportService
 from ..services.target_allocation_generation import TargetAllocationGenerationService
 from ..services.theme_status import ThemeStatusService
+from ..services.user_preferences import UserPreferencesService
 
 
 router = APIRouter()
@@ -57,6 +58,23 @@ def health() -> dict[str, Any]:
 @router.get("/environment/status")
 def environment_status() -> dict[str, Any]:
     return EnvironmentStatusService().status()
+
+
+@router.get("/user/preferences")
+def user_preferences(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        {"preferences": UserPreferencesService(session).preferences()},
+        source={"path": "db.UserPreferencesRepository"},
+    )
+
+
+@router.get("/user/preferences/{user_id}")
+def user_preferences_for_user(user_id: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+    try:
+        data = UserPreferencesService(session).preferences(user_id)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="user preferences not found") from exc
+    return respond({"preferences": data}, source={"path": "db.UserPreferencesRepository"})
 
 
 @router.get("/latest-index")

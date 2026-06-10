@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Workbench Preferences{% endblock %}
+
+{% block content %}
+<section class="dashboard-grid" data-preferences-section="summary">
+  <div class="metric ok" data-status-card="pref-readonly">
+    <span>Mode</span>
+    <strong data-bind="pref_readonly">{{ "read-only" if preferences.safety.read_only else "check" }}</strong>
+  </div>
+  <div class="metric ok" data-status-card="pref-ratio-only">
+    <span>Display boundary</span>
+    <strong data-bind="pref_ratio_only">{{ "ratio-only" if preferences.safety.ratio_only else "check" }}</strong>
+  </div>
+  <div class="metric ok" data-status-card="pref-current-only">
+    <span>Current boundary</span>
+    <strong data-bind="pref_current_only">{{ "current-only" if preferences.safety.current_only else "check" }}</strong>
+  </div>
+</section>
+
+<section class="dashboard-grid">
+  <div class="row-card" data-preferences-section="profile">
+    <h2>Profile</h2>
+    <div class="summary-line"><span>User</span><strong data-bind="pref_user_id">{{ preferences.user_id }}</strong></div>
+    <div class="summary-line"><span>Scope</span><strong data-bind="pref_scope">{{ preferences.scope }}</strong></div>
+    <div class="summary-line"><span>Label</span><strong data-bind="pref_label">{{ preferences.profile.label }}</strong></div>
+    <div class="summary-line"><span>Role</span><strong data-bind="pref_role">{{ preferences.profile.role }}</strong></div>
+    <div class="summary-line"><span>Editable</span><strong data-bind="pref_editable">{{ "yes" if preferences.profile.editable else "no" }}</strong></div>
+  </div>
+
+  <div class="row-card" data-preferences-section="display">
+    <h2>Display</h2>
+    <div class="summary-line"><span>Language</span><strong data-bind="pref_language">{{ preferences.display.language }}</strong></div>
+    <div class="summary-line"><span>Theme</span><strong data-bind="pref_theme">{{ preferences.display.theme }}</strong></div>
+    <div class="summary-line"><span>Density</span><strong data-bind="pref_density">{{ preferences.display.density }}</strong></div>
+    <div class="summary-line"><span>Numbers</span><strong data-bind="pref_number_format">{{ preferences.display.number_format }}</strong></div>
+    <div class="summary-line"><span>Basis date</span><strong data-bind="pref_basis_date">{{ "visible" if preferences.display.show_basis_date else "hidden" }}</strong></div>
+    <div class="summary-line"><span>Generated at</span><strong data-bind="pref_generated_at_visible">{{ "visible" if preferences.display.show_generated_at else "hidden" }}</strong></div>
+  </div>
+
+  <div class="row-card" data-preferences-section="dashboard">
+    <h2>Dashboard</h2>
+    <div class="summary-line"><span>Landing</span><strong data-bind="pref_landing">{{ preferences.dashboard.landing_page }}</strong></div>
+    <div class="summary-line"><span>Refresh</span><strong data-bind="pref_refresh">{{ preferences.dashboard.refresh_seconds }}</strong></div>
+    <div class="summary-line"><span>ResearchFirst</span><strong data-bind="pref_show_research_first">{{ "visible" if preferences.dashboard.show_research_first else "hidden" }}</strong></div>
+    <div class="summary-line"><span>Allocation gap</span><strong data-bind="pref_show_allocation_gap">{{ "visible" if preferences.dashboard.show_allocation_gap else "hidden" }}</strong></div>
+    <div class="summary-line"><span>History gap</span><strong data-bind="pref_show_history_gap">{{ "visible" if preferences.dashboard.show_history_gap else "hidden" }}</strong></div>
+  </div>
+
+  <div class="row-card" data-preferences-section="safety">
+    <h2>Safety</h2>
+    <div class="summary-line"><span>Database service</span><strong data-bind="pref_database_service">{{ "yes" if preferences.safety.uses_database_service else "no" }}</strong></div>
+    <div class="summary-line"><span>Trading controls</span><strong data-bind="pref_trading_disabled">{{ "disabled" if preferences.safety.trading_disabled else "check" }}</strong></div>
+    <div class="summary-line"><span>QMT write</span><strong data-bind="pref_qmt_write">{{ "disabled" if preferences.safety.qmt_write_disabled else "check" }}</strong></div>
+    <div class="summary-line"><span>Research writes</span><strong data-bind="pref_research_write">{{ "disabled" if preferences.safety.research_write_disabled else "check" }}</strong></div>
+    <div class="summary-line"><span>DB writes</span><strong data-bind="pref_database_write">{{ "disabled" if preferences.safety.database_write_disabled else "check" }}</strong></div>
+  </div>
+</section>
+
+<section>
+  <h2>Table Options</h2>
+  <table data-page-size="12">
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>State</th>
+      </tr>
+    </thead>
+    <tbody id="preferenceRows">
+      {% for name, value in preferences.tables.items() %}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ value }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Source</h2>
+  <table data-page-size="12">
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody id="preferenceSourceRows">
+      {% for name, value in preferences.sources.items() %}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ value }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

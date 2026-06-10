@@ -68,6 +68,18 @@ python scripts/run_web.py --port 8010
 
 The default `scripts/run_web.py` host/port contract remains `0.0.0.0:8000` for the main Web runbook and regression tests.
 
+## Phase 10B Workbench User Preferences Center
+
+Phase 10B adds a read-only preference page for local display options:
+
+- Page: `GET /preferences`
+- API: `GET /api/user/preferences`
+- Named API: `GET /api/user/preferences/{user_id}`
+
+The page shows the default workbench profile, display density, dashboard refresh interval, table behavior, current-module source metadata, and safety flags. It is display-only: it does not create persistent user settings, write the Web database, write research files, generate action plans, generate target allocations, or add trading/QMT write behavior.
+
+The preference service reads the current SQLite read model only through `UserPreferencesRepository` and `DatabaseService`. Unknown user ids return a safe 404.
+
 ## Run Tests
 
 ```bash
