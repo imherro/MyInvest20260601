@@ -23,6 +23,7 @@ The baseline covers:
 - target-allocation shadow output vs current `latest_index.modules.target_allocation` JSON
 - controlled target-allocation shadow export JSON/ZIP vs shadow compare result
 - target-allocation shadow replay fixtures across risk-off, boundary, neutral, risk-on, max-score, overweight, underweight, and missing-bucket scenarios
+- target-allocation promotion mode helper default, allowed, and blocked modes
 - current action plan path
 - action plan `generated_at`
 - action count
@@ -73,6 +74,12 @@ Run the Phase 5D replay fixture baseline directly:
 python -m pytest web/backend/tests/test_target_allocation_shadow_replay.py
 ```
 
+Run the Phase 5E promotion-mode baseline directly:
+
+```bash
+python -m pytest web/backend/tests/test_target_allocation_promotion_mode.py
+```
+
 The test performs a fresh ingest through the shared test fixture, reads current JSON through `latest_index.modules`, then reads the same facts from `temp/web_db/myinvest.sqlite`.
 
 ## Migration Policy
@@ -87,3 +94,5 @@ When a future service replaces part of the old generation flow:
 Target allocation is now in Phase 5C-2 shadow mode. The shadow service may compute in-memory target allocation fields and compare them with the current reference, but it must not replace old outputs, update `latest_index`, or write files under `research/allocation`. Phase 5C-3 controlled export may write temporary JSON/ZIP files only under `temp/web_exports/`; these files are for human audit and migration comparison, not current-state replacement.
 
 Phase 5D adds multi-scenario replay fixtures under `web/backend/tests/fixtures/target_allocation_scenarios/`. These fixtures are not current state, are never read by production APIs, and exist only to harden shadow migration coverage across representative score and bucket cases. Future replacement requires both current golden comparison and fixture replay to remain clean over multiple runs.
+
+Phase 5E adds the controlled promotion plan and mode helper. It does not switch callers to service-generated output. Candidate and official modes remain blocked until a later audited phase.

@@ -96,5 +96,8 @@ Future replacement of `scripts/generate_target_allocation.py` is allowed only af
 - `scripts/web_check.py` passes with no FAIL
 - review package export remains ratio-only and current-only
 - controlled export has no core diffs
+- `MYINVEST_TARGET_ALLOCATION_MODE` promotion stage is explicitly reviewed
 - no ResearchFirst or ratio-only violation exists
 - no trading, QMT write, order, fill, share-count, or cash-amount behavior is introduced
+
+Phase 5E keeps `candidate` and `official` blocked. It documents future stages but does not authorize current-state replacement.

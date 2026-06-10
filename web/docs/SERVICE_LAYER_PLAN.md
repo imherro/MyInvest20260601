@@ -1,6 +1,6 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
@@ -13,6 +13,7 @@ These services are available in the Web layer and must remain read-only:
 - `MarketPositionService`: reads active `market_position_mappings` from SQLite and maps a score to equity/cash percentage ranges.
 - `TargetAllocationGenerationService`: computes an in-memory shadow target allocation and compares core fields with the current reference JSON.
 - `TargetAllocationControlledExportService`: packages the shadow target allocation and compare result for in-memory API download or CLI export under `temp/web_exports/`.
+- `target_allocation_mode`: reads `MYINVEST_TARGET_ALLOCATION_MODE` and reports whether the requested mode is allowed or blocked.
 - `ActionPlanService`: exposes action-plan read helpers.
 - `PortfolioService`: exposes portfolio ratio snapshot read helpers.
 - `SystemCheckService`: exposes current system-check summaries.
@@ -36,10 +37,11 @@ Future service names are planning boundaries only. They do not authorize trading
 2. Migrate target allocation calculations in shadow mode. Completed in Phase 5C-2 as in-memory compare-only output.
 3. Add controlled shadow export to `temp/web_exports/` only. Completed in Phase 5C-3.
 4. Harden target-allocation shadow mode with multi-scenario replay fixtures. Completed in Phase 5D.
-5. Migrate action plan generation.
-6. At each step, extend golden tests to compare old-script output with new-service output.
-7. If any golden test differs, do not replace the old script.
-8. Keep old scripts as reference implementations until migration is stable.
+5. Document controlled target-allocation promotion stages and block candidate/official execution in code. Completed in Phase 5E.
+6. Migrate action plan generation.
+7. At each step, extend golden tests to compare old-script output with new-service output.
+8. If any golden test differs, do not replace the old script.
+9. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -77,6 +79,22 @@ Replay fixtures under `web/backend/tests/fixtures/target_allocation_scenarios/` 
 - cover score boundaries, risk-off, neutral, risk-on, max-score, overweight, underweight, and missing-bucket scenarios
 
 `TargetAllocationGenerationService.generate_shadow_from_inputs(...)` exists for fixture replay and future migration validation. It does not change production API behavior, and it must not be used to treat fixtures as current state.
+
+## Phase 5E Promotion Rules
+
+`MYINVEST_TARGET_ALLOCATION_MODE` is a planning and safety flag. Phase 5E allows only:
+
+- `reference`
+- `shadow`
+- `controlled_export`
+
+The helper blocks:
+
+- `candidate`
+- `official`
+- unknown values
+
+Candidate export remains design-only. Official promotion remains future-only and requires a separate audit and explicit manual approval. The helper does not alter production API behavior and does not authorize writing `research/`, updating `latest_index`, or replacing old scripts.
 
 ## Hard Service Boundaries
 
