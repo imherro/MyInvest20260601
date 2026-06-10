@@ -53,6 +53,7 @@ def test_dashboard_api_current_summary(client):
         "allocation_summary",
         "subject_status_summary",
         "subject_gap_summary",
+        "analytics_summary",
         "quick_links",
     ]:
         assert key in data
@@ -77,8 +78,10 @@ def test_dashboard_pages_render_and_use_dashboard_api(client):
         assert "data-dashboard-section=\"market-position\"" in html
         assert "data-dashboard-section=\"action-plan-summary\"" in html
         assert "data-dashboard-section=\"allocation-summary\"" in html
+        assert "data-dashboard-section=\"analytics\"" in html
         assert "data-dashboard-section=\"subject-summaries\"" in html
         assert "data-dashboard-section=\"quick-links\"" in html
+        assert "dashboardAnalyticsRows" in html
         assert "bucketGapChart" in html
         assert not LOCAL_PATH_RE.search(html)
         assert not FORBIDDEN_TEXT_RE.search(html)

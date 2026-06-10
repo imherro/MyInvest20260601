@@ -33,6 +33,8 @@ def test_current_apis_do_not_return_forbidden_fields(client):
         "/api/environment/status",
         "/api/user/preferences",
         "/api/user/preferences/default",
+        "/api/dashboard/summary",
+        "/api/dashboard/user_metrics/default",
         "/api/dashboard/current",
         "/api/current",
         "/api/latest-index",

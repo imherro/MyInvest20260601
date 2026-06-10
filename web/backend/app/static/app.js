@@ -249,6 +249,26 @@
     });
   }
 
+  function renderDashboardAnalytics(analytics) {
+    const metrics = analytics.metrics || {};
+    const gates = analytics.gates || {};
+    const windowInfo = analytics.window || {};
+    setBind("dashboard_analytics_modules", metrics.current_module_count ?? 0);
+    setBind("dashboard_analytics_subjects", metrics.subject_count ?? 0);
+    setBind("dashboard_analytics_actions", metrics.action_count ?? 0);
+    setBind("dashboard_analytics_research_first", metrics.research_first_count ?? 0);
+    setBind("dashboard_analytics_large_gaps", metrics.large_gap_count ?? 0);
+    setBind("dashboard_analytics_history_entries", metrics.history_entry_count ?? 0);
+    const selector = document.querySelector("[data-dashboard-window]");
+    if (selector && windowInfo.selected) selector.value = windowInfo.selected;
+    setRows(
+      "dashboardAnalyticsRows",
+      Object.entries(gates).map(([name, status]) => ({ name, status })),
+      (row) => [row.name, row.status],
+      (row) => `gate: ${row.name || ""} | status: ${row.status || ""}`,
+    );
+  }
+
   function renderDashboard(data) {
     const system = data.system_status || {};
     const market = data.market_position || {};
@@ -290,6 +310,7 @@
     setStatusCard("research-first", system.research_first_gate_status === "ok" ? "ok" : "fail");
     setStatusCard("intraday", system.intraday_stale_flag || system.intraday_degraded_flag ? "warn" : "ok");
     renderGapChart(allocation.bucket_gaps || []);
+    renderDashboardAnalytics(data.analytics_summary || {});
     renderDashboardQuickLinks(data.quick_links || []);
   }
 
@@ -1146,11 +1167,34 @@
     });
   }
 
+  function setupDashboardWindow() {
+    const selector = document.querySelector("[data-dashboard-window]");
+    if (!selector) return;
+    selector.addEventListener("change", async () => {
+      try {
+        updateRefreshStatus("refreshing analytics...");
+        const response = await fetch(`/api/dashboard/summary?time_window=${encodeURIComponent(selector.value)}`, {
+          cache: "no-store",
+        });
+        const payload = await response.json();
+        assertRatioOnly(payload);
+        if (!response.ok || payload.ok === false) {
+          throw new Error(payload.detail || "Analytics refresh failed");
+        }
+        renderDashboardAnalytics(payload.data || {});
+        updateRefreshStatus(`updated ${new Date().toLocaleTimeString()}`);
+      } catch (error) {
+        updateRefreshStatus(error.message || "analytics refresh failed", false);
+      }
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("[data-refresh]")?.addEventListener("click", refresh);
     setupSearch();
     setupFilters();
     setupSort();
+    setupDashboardWindow();
     refresh();
     window.setInterval(refresh, 60000);
   });

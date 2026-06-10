@@ -10,6 +10,7 @@ from .ratio_only import RatioOnlyService
 from .subject_gap import SubjectGapService
 from .subject_status import SubjectStatusService
 from .system_check import SystemCheckService
+from .workbench_analytics import WorkbenchAnalyticsService
 
 
 class DashboardService:
@@ -39,6 +40,7 @@ class DashboardService:
             "allocation_summary": self._allocation_summary(portfolio, target_allocation),
             "subject_status_summary": self._subject_status_summary(subject_status),
             "subject_gap_summary": self._subject_gap_summary(subject_gap),
+            "analytics_summary": WorkbenchAnalyticsService(self.session).summary(),
             "quick_links": self._quick_links(),
         }
         RatioOnlyService.assert_safe(payload)

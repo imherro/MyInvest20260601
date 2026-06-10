@@ -21,13 +21,15 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add user preferences center"
+COMMIT_MESSAGE = "feat(web): add workbench analytics dashboard"
 
 API_PATHS = [
     "/api/health",
     "/api/environment/status",
     "/api/user/preferences",
     "/api/user/preferences/default",
+    "/api/dashboard/summary",
+    "/api/dashboard/user_metrics/default",
     "/api/dashboard/current",
     "/api/current",
     "/api/latest-index",
@@ -132,8 +134,11 @@ DASHBOARD_CHECKS = [
     'data-dashboard-section="market-position"',
     'data-dashboard-section="action-plan-summary"',
     'data-dashboard-section="allocation-summary"',
+    'data-dashboard-section="analytics"',
     'data-dashboard-section="subject-summaries"',
     'data-dashboard-section="quick-links"',
+    "dashboardAnalyticsRows",
+    "data-dashboard-window",
     'data-status-card="system"',
     'data-status-card="research-first"',
     'data-status-card="intraday"',
@@ -144,6 +149,8 @@ JS_CHECKS = [
     "function renderPagination",
     "function renderEnvironment",
     "function renderUserPreferences",
+    "function renderDashboardAnalytics",
+    "function setupDashboardWindow",
     "function renderDashboardQuickLinks",
     "function renderSubjectStatus",
     "function renderSubjectGap",
@@ -408,6 +415,17 @@ PHASE10B_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
+PHASE10C_FILES = [
+    ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py",
+    ROOT / "web" / "backend" / "app" / "repositories" / "workbench_analytics_repo.py",
+    ROOT / "web" / "backend" / "app" / "services" / "workbench_analytics.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html",
+    ROOT / "web" / "backend" / "tests" / "test_workbench_analytics_dashboard.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -663,6 +681,7 @@ class WebCheck:
         self.check_phase9f_contract_files()
         self.check_phase10a_contract_files()
         self.check_phase10b_contract_files()
+        self.check_phase10c_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1763,6 +1782,64 @@ class WebCheck:
             "Workbench user preferences service/page/tests/docs present",
         )
 
+    def check_phase10c_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE10C_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase10c_workbench_analytics_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase10c_workbench_analytics_files",
+                ", ".join(missing),
+                "Phase 10C workbench analytics dashboard files are missing.",
+                "Add the read-only analytics repository, service, dashboard hooks, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "workbench_analytics.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "workbench_analytics_repo.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            combined = (service_text + "\n" + repo_text).lower()
+            if "latest_index.files" in combined or '["files"]' in combined or "['files']" in combined:
+                raise ValueError("Workbench analytics must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
+                if blocked in combined:
+                    raise ValueError(f"Workbench analytics contains blocked marker: {blocked.strip()}")
+            if "databaseservice" not in combined:
+                raise ValueError("WorkbenchAnalyticsRepository must use DatabaseService")
+            if "historysnapshotrepository" not in combined:
+                raise ValueError("Workbench analytics must route runtime history through HistorySnapshotRepository")
+            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "data-dashboard-section=\"analytics\"",
+                "data-dashboard-window",
+                "dashboardAnalyticsRows",
+                "dashboard_analytics_modules",
+                "dashboard_analytics_history_entries",
+            ]:
+                if marker not in template_text:
+                    raise ValueError(f"dashboard template missing analytics marker: {marker}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase10c_workbench_analytics_safety", "FAIL", str(exc))
+            self.fail(
+                "phase10c_workbench_analytics_safety",
+                "phase10c workbench analytics files",
+                f"Phase 10C file failed safety scan: {exc}",
+                "Keep analytics read-only, ratio-only, and routed through DatabaseService / HistorySnapshotRepository.",
+            )
+            return
+        self.add_result(
+            "phase10c_workbench_analytics_files",
+            "PASS",
+            "Workbench analytics service/API/dashboard/tests/docs present",
+        )
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -2124,6 +2201,31 @@ class WebCheck:
                 link_response = client.get(href)
                 if link_response.status_code != 200:
                     raise ValueError(f"dashboard quick link {href} returned {link_response.status_code}")
+            summary_response = client.get("/api/dashboard/summary?time_window=7d")
+            if summary_response.status_code != 200:
+                raise ValueError(f"dashboard summary API returned {summary_response.status_code}")
+            summary_payload = summary_response.json()
+            ratio.assert_safe(summary_payload)
+            assert_safe_payload(summary_payload)
+            summary_data = summary_payload.get("data") or {}
+            if summary_data.get("module") != "workbench_analytics_dashboard":
+                raise ValueError("dashboard summary payload module mismatch")
+            if summary_data.get("window", {}).get("selected") != "7d":
+                raise ValueError("dashboard summary time window was not honored")
+            if (summary_data.get("metrics") or {}).get("current_module_count", 0) <= 0:
+                raise ValueError("dashboard summary current module count is empty")
+            user_response = client.get("/api/dashboard/user_metrics/default?time_window=30d")
+            if user_response.status_code != 200:
+                raise ValueError(f"dashboard user metrics API returned {user_response.status_code}")
+            user_payload = user_response.json()
+            ratio.assert_safe(user_payload)
+            assert_safe_payload(user_payload)
+            user_data = user_payload.get("data") or {}
+            if user_data.get("module") != "workbench_user_metrics" or user_data.get("user_id") != "default":
+                raise ValueError("dashboard user metrics payload mismatch")
+            missing_response = client.get("/api/dashboard/user_metrics/unknown_user")
+            if missing_response.status_code != 404:
+                raise ValueError("dashboard user metrics unknown id did not return safe 404")
         except Exception as exc:  # noqa: BLE001
             self.fail(
                 "dashboard_api",
@@ -2133,7 +2235,7 @@ class WebCheck:
             )
             self.add_result("dashboard_api", "FAIL", str(exc))
         else:
-            self.add_result("dashboard_api", "PASS", "summary, quick links, and cash-equivalent gate safe")
+            self.add_result("dashboard_api", "PASS", "summary, analytics, quick links, and cash-equivalent gate safe")
 
     def check_theme_status_api(self, client: Any, ratio: Any) -> None:
         try:
