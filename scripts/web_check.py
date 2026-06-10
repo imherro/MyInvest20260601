@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): integrate workbench modules and optimize UX"
+COMMIT_MESSAGE = "feat(web): add workbench audit bundle and visualization enhancements"
 
 API_PATHS = [
     "/api/health",
@@ -31,6 +31,8 @@ API_PATHS = [
     "/api/dashboard/summary",
     "/api/dashboard/user_metrics/default",
     "/api/workbench/integration",
+    "/api/audit/bundle",
+    "/api/audit/bundle?time_window=7d&module_filter=dashboard",
     "/api/dashboard/current",
     "/api/current",
     "/api/latest-index",
@@ -78,6 +80,7 @@ PAGE_PATHS = [
     "/settings",
     "/environment",
     "/preferences",
+    "/audit",
     "/action-plan",
     "/target-allocation",
     "/research-first",
@@ -112,6 +115,14 @@ INTERACTIVE_PAGE_CHECKS = {
         'data-bind="pref_refresh"',
         "preferenceRows",
         "preferenceSourceRows",
+    ],
+    "/audit": [
+        'data-audit-section="summary"',
+        "data-audit-window",
+        "data-audit-module",
+        "auditPreviewChart",
+        "auditBundleRows",
+        "/static/audit.js",
     ],
     "/action-plan": ["data-table-search", "data-sort", "actionRows"],
     "/target-allocation": ["data-table-search", "data-sort", "targetRows"],
@@ -441,6 +452,17 @@ PHASE11_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
+PHASE12_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "audit_bundle_service.py",
+    ROOT / "web" / "backend" / "app" / "repositories" / "audit_bundle_repo.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "audit.html",
+    ROOT / "web" / "backend" / "app" / "static" / "audit.js",
+    ROOT / "web" / "backend" / "tests" / "test_audit_bundle.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -698,6 +720,7 @@ class WebCheck:
         self.check_phase10b_contract_files()
         self.check_phase10c_contract_files()
         self.check_phase11_contract_files()
+        self.check_phase12_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1913,6 +1936,69 @@ class WebCheck:
             "Workbench integration service/API/page hooks/tests/docs present",
         )
 
+    def check_phase12_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE12_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase12_audit_bundle_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase12_audit_bundle_files",
+                ", ".join(missing),
+                "Phase 12 audit bundle files are missing.",
+                "Add the read-only audit bundle repository, service, page, script, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "audit_bundle_service.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "audit_bundle_repo.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            combined = (service_text + "\n" + repo_text).lower()
+            if "latest_index.files" in combined or '["files"]' in combined or "['files']" in combined:
+                raise ValueError("Audit bundle must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
+                if blocked in combined:
+                    raise ValueError(f"Audit bundle contains blocked marker: {blocked.strip()}")
+            if "databaseservice" not in combined or "historysnapshotrepository" not in combined:
+                raise ValueError("Audit bundle must route through DatabaseService / HistorySnapshotRepository")
+            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "audit.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "data-audit-section=\"summary\"",
+                "data-audit-window",
+                "data-audit-module",
+                "auditPreviewChart",
+                "auditBundleRows",
+            ]:
+                if marker not in template_text:
+                    raise ValueError(f"audit template missing marker: {marker}")
+            script_text = (ROOT / "web" / "backend" / "app" / "static" / "audit.js").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in ["function refreshAudit", "function renderChart", "assertSafe", "/api/audit/bundle"]:
+                if marker not in script_text:
+                    raise ValueError(f"audit script missing marker: {marker}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase12_audit_bundle_safety", "FAIL", str(exc))
+            self.fail(
+                "phase12_audit_bundle_safety",
+                "phase12 audit bundle files",
+                f"Phase 12 file failed safety scan: {exc}",
+                "Keep audit bundle read-only, ratio-only, current-only, and GET-only.",
+            )
+            return
+        self.add_result(
+            "phase12_audit_bundle_files",
+            "PASS",
+            "Workbench audit bundle service/API/page/script/tests/docs present",
+        )
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -2311,6 +2397,21 @@ class WebCheck:
             labels = {item.get("label") for item in integration_data.get("modules") or []}
             if not {"Settings", "Preferences", "Dashboard", "Research Centers"}.issubset(labels):
                 raise ValueError("workbench integration missing module links")
+            audit_response = client.get("/api/audit/bundle?time_window=7d&module_filter=dashboard")
+            if audit_response.status_code != 200:
+                raise ValueError(f"audit bundle API returned {audit_response.status_code}")
+            audit_payload = audit_response.json()
+            ratio.assert_safe(audit_payload)
+            assert_safe_payload(audit_payload)
+            audit_data = audit_payload.get("data") or {}
+            if audit_data.get("module") != "workbench_audit_bundle":
+                raise ValueError("audit bundle payload module mismatch")
+            if audit_data.get("window", {}).get("selected") != "7d":
+                raise ValueError("audit bundle time window was not honored")
+            if audit_data.get("module_filter", {}).get("selected") != "dashboard":
+                raise ValueError("audit bundle module filter was not honored")
+            if not audit_data.get("sections"):
+                raise ValueError("audit bundle sections are empty")
         except Exception as exc:  # noqa: BLE001
             self.fail(
                 "dashboard_api",
@@ -2320,7 +2421,7 @@ class WebCheck:
             )
             self.add_result("dashboard_api", "FAIL", str(exc))
         else:
-            self.add_result("dashboard_api", "PASS", "summary, analytics, integration, quick links, and cash-equivalent gate safe")
+            self.add_result("dashboard_api", "PASS", "summary, analytics, integration, audit bundle, quick links, and cash-equivalent gate safe")
 
     def check_theme_status_api(self, client: Any, ratio: Any) -> None:
         try:

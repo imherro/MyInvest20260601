@@ -23,6 +23,7 @@ Endpoints:
 - `GET /api/dashboard/summary`
 - `GET /api/dashboard/user_metrics/{user_id}`
 - `GET /api/workbench/integration`
+- `GET /api/audit/bundle`
 - `GET /api/dashboard/current`
 - `GET /api/current`
 - `GET /api/latest-index`
@@ -120,6 +121,21 @@ The endpoint summarizes the Workbench module map across Settings, Preferences, D
 The service composes existing read-only services: `EnvironmentStatusService`, `UserPreferencesService`, and `WorkbenchAnalyticsService`. It does not read `latest_index.files`, write research artifacts, generate target allocations, generate action plans, or add trading/QMT write interfaces.
 
 The existing `GET /dashboard` page uses the same integration payload in its Workbench Modules section. `GET /preferences` links back to the integrated Workbench module surfaces.
+
+## Workbench Audit Bundle
+
+Phase 12 adds a read-only audit bundle endpoint:
+
+- `GET /api/audit/bundle`
+
+The endpoint composes Dashboard analytics, Preferences, Historical Metrics, Workbench Integration, current-module source metadata, and guarded HistorySnapshot availability into a ratio-only review bundle. Query parameters:
+
+- `time_window`: `current`, `7d`, or `30d`; all modes remain current-only in this phase.
+- `module_filter`: `all`, `dashboard`, `preferences`, `historical_metrics`, or `integration`.
+
+The response is intended for JSON preview/download and Web audit review. It does not write files, update runtime state, read `latest_index.files`, generate target allocations, generate action plans, or add trading/QMT write interfaces.
+
+The same data backs `GET /audit`, which renders preview cards, a simple chart, module filtering, and a JSON download link.
 
 ## Research Dashboard
 

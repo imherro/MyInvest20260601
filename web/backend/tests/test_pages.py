@@ -13,6 +13,7 @@ def test_web_pages_render_without_local_absolute_paths(client):
         "/settings",
         "/environment",
         "/preferences",
+        "/audit",
         "/action-plan",
         "/target-allocation",
         "/research-first",
