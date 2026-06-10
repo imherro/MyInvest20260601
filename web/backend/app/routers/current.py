@@ -15,6 +15,7 @@ from ..services.history_snapshot import HistorySnapshotService
 from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
+from ..services.subject_gap import SubjectGapService
 from ..services.system_check import SystemCheckService
 from ..services.target_allocation_candidate_audit import TargetAllocationCandidateAuditService
 from ..services.target_allocation_export import TargetAllocationControlledExportService
@@ -72,6 +73,16 @@ def current(session: Session = Depends(get_session)) -> dict[str, Any]:
 def current_modules(session: Session = Depends(get_session)) -> dict[str, Any]:
     service = CurrentStateService(session)
     return respond({"modules": service.current_modules()}, source={"path": "research/latest_index.json"})
+
+
+@router.get("/subjects/freshness")
+def subject_freshness(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(SubjectGapService(session).freshness(), source={"path": "db.subjects"})
+
+
+@router.get("/subjects/gap")
+def subject_gap(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(SubjectGapService(session).gap(), source={"path": "db.subjects"})
 
 
 @router.get("/market-position/mapping")

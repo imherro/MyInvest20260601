@@ -423,6 +423,38 @@ Full gate:
 python scripts/web_check.py
 ```
 
+## Phase 7B Subject Gap And Freshness
+
+Phase 7B adds a read-only Data Freshness & Gap Center. It displays subject-level freshness metadata and bucket-level allocation gap rows from the current SQLite read model. It is not a target-allocation generator and does not create action plans.
+
+Direct tests:
+
+```bash
+python scripts/ingest_current_state.py
+python -m pytest web/backend/tests/test_subject_gap.py
+```
+
+Read-only API:
+
+- `GET /api/subjects/freshness`
+- `GET /api/subjects/gap`
+
+Page:
+
+- `GET /subjects/gap`
+
+The gap endpoint returns subject code/name/type, bucket, subject position percentage, bucket actual/target/gap percentages, freshness status, and relative source metadata. Bucket actual/target/gap values must match the current target-allocation bucket rows.
+
+The page supports refresh, automatic refresh, table search, sorting, pagination, and expandable details through the shared static JS. Every refresh still passes the frontend forbidden-field scan before rendering.
+
+Phase 7B remains current-only and read-only. It reads current SQLite state produced from `research/latest_index.json` `modules`, not `latest_index.files`. It does not write `research/latest_index.json`, `research/actions`, `research/allocation`, target-allocation artifacts, action-plan artifacts, trading records, or QMT write calls.
+
+Full gate:
+
+```bash
+python scripts/web_check.py
+```
+
 ## API and Page Smoke Check
 
 ```bash
@@ -440,6 +472,9 @@ Then open:
 - `http://127.0.0.1:8000/api/target-allocation/shadow/export?format=json`
 - `http://127.0.0.1:8000/api/target-allocation/candidate-audit?format=json`
 - `http://127.0.0.1:8000/api/history/export?format=json`
+- `http://127.0.0.1:8000/subjects/gap`
+- `http://127.0.0.1:8000/api/subjects/gap`
+- `http://127.0.0.1:8000/api/subjects/freshness`
 - `http://127.0.0.1:8000/api/modules/current`
 - `http://127.0.0.1:8000/api/export/review_package?format=json`
 

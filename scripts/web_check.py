@@ -21,13 +21,15 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add history snapshot audit export"
+COMMIT_MESSAGE = "feat(web): add data freshness and subject gap center"
 
 API_PATHS = [
     "/api/health",
     "/api/current",
     "/api/latest-index",
     "/api/modules/current",
+    "/api/subjects/freshness",
+    "/api/subjects/gap",
     "/api/market-position/mapping",
     "/api/market-position/current",
     "/api/market-position/score/25",
@@ -56,6 +58,7 @@ PAGE_PATHS = [
     "/action-plan",
     "/target-allocation",
     "/research-first",
+    "/subjects/gap",
     "/portfolio",
     "/intraday-rules",
     "/decision-log",
@@ -65,6 +68,7 @@ PAGE_PATHS = [
 INTERACTIVE_PAGE_CHECKS = {
     "/action-plan": ["data-table-search", "data-sort", "actionRows"],
     "/target-allocation": ["data-table-search", "data-sort", "targetRows"],
+    "/subjects/gap": ["data-table-search", "data-sort", "subjectGapRows"],
     "/portfolio": ["data-table-search", "data-sort", "portfolioRows"],
     "/intraday-rules": ["data-table-search", "data-sort", "intradayRows", "disabledTriggerRows"],
     "/decision-log": ["data-table-search", "data-sort", "decisionRows"],
@@ -80,6 +84,7 @@ DASHBOARD_CHECKS = [
 JS_CHECKS = [
     "function assertRatioOnly",
     "function renderPagination",
+    "function renderSubjectGap",
     "detail-row",
     "expandable-row",
     "setInterval(refresh",
@@ -156,6 +161,15 @@ PHASE6_FILES = [
     ROOT / "web" / "docs" / "HISTORY_SNAPSHOT.md",
     ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "GOLDEN_REFERENCE.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE7B_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "subjects_gap.html",
+    ROOT / "web" / "backend" / "tests" / "test_subject_gap.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
@@ -395,6 +409,7 @@ class WebCheck:
         self.check_phase5f_contract_files()
         self.check_phase5g_contract_files()
         self.check_phase6_contract_files()
+        self.check_phase7b_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -612,6 +627,37 @@ class WebCheck:
             return
         self.add_result("phase6_history_snapshot_files", "PASS", "history snapshot service/API/CLI/tests present")
 
+    def check_phase7b_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE7B_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase7b_subject_gap_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase7b_subject_gap_files",
+                ", ".join(missing),
+                "Phase 7B subject gap service/page/tests/docs are missing.",
+                "Add the subject gap files and rerun scripts/web_check.py.",
+            )
+            return
+        try:
+            for path in PHASE7B_FILES:
+                text = path.read_text(encoding="utf-8", errors="replace")
+                if LOCAL_PATH_RE.search(text):
+                    raise ValueError("local absolute path")
+                if path.suffix == ".md":
+                    lowered = text.lower()
+                    if "subject gap" not in lowered or "read-only" not in lowered:
+                        raise ValueError("Phase 7B docs must describe subject gap and read-only boundaries")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase7b_subject_gap_safety", "FAIL", str(exc))
+            self.fail(
+                "phase7b_subject_gap_safety",
+                rel(path),
+                f"Phase 7B file failed safety scan: {exc}",
+                "Remove local paths and document subject gap read-only boundaries.",
+            )
+            return
+        self.add_result("phase7b_subject_gap_files", "PASS", "subject gap service/API/page/tests present")
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -716,6 +762,7 @@ class WebCheck:
         self.add_result("api_forbidden_fields", api_status, f"{len(API_PATHS)} endpoints")
 
         self.check_api_is_read_only(client)
+        self.check_subject_gap_api(client, ratio)
         self.check_export_json(client, ratio)
         self.check_export_zip(client, ratio)
         self.check_controlled_shadow_export(client, ratio)
@@ -746,6 +793,57 @@ class WebCheck:
             self.add_result("openapi_read_only", "FAIL", "; ".join(mutating))
         else:
             self.add_result("openapi_read_only", "PASS", "No POST/PUT/PATCH/DELETE under /api")
+
+    def check_subject_gap_api(self, client: Any, ratio: Any) -> None:
+        try:
+            freshness_response = client.get("/api/subjects/freshness")
+            if freshness_response.status_code != 200:
+                raise ValueError(f"freshness API returned {freshness_response.status_code}")
+            freshness = freshness_response.json()
+            ratio.assert_safe(freshness)
+            assert_safe_payload(freshness)
+            freshness_rows = ((freshness.get("data") or {}).get("rows") or [])
+            if not freshness_rows:
+                raise ValueError("freshness rows are empty")
+            for row in freshness_rows:
+                if not isinstance(row.get("staleness_flag"), bool):
+                    raise ValueError(f"staleness_flag is not boolean for {row.get('code')}")
+
+            gap_response = client.get("/api/subjects/gap")
+            if gap_response.status_code != 200:
+                raise ValueError(f"gap API returned {gap_response.status_code}")
+            gap = gap_response.json()
+            ratio.assert_safe(gap)
+            assert_safe_payload(gap)
+            gap_rows = ((gap.get("data") or {}).get("rows") or [])
+            if not gap_rows:
+                raise ValueError("gap rows are empty")
+
+            target_response = client.get("/api/target-allocation/current")
+            target = (((target_response.json() or {}).get("data") or {}).get("target_allocation") or {})
+            bucket_map = {row.get("bucket"): row for row in target.get("buckets", [])}
+            for row in gap_rows:
+                if row.get("gap_status") not in {"green", "yellow", "red", "unknown"}:
+                    raise ValueError(f"unexpected gap status for {row.get('code')}: {row.get('gap_status')}")
+                bucket = row.get("bucket")
+                if bucket in bucket_map and row.get("actual_pct") is not None:
+                    expected = bucket_map[bucket]
+                    for key in ["actual_pct", "target_pct", "gap_pct"]:
+                        if row.get(key) != expected.get(key):
+                            raise ValueError(f"{bucket} {key} mismatch for {row.get('code')}")
+            cash = next((row for row in gap_rows if row.get("code") == "511360.SH"), None)
+            if cash and cash.get("bucket") != "cash_short":
+                raise ValueError("511360 gap row is not cash_short")
+        except Exception as exc:  # noqa: BLE001
+            self.fail(
+                "subject_gap_api",
+                "/api/subjects/gap",
+                f"Subject gap/freshness API failed safety/current-state scan: {exc}",
+                "Fix SubjectGapService or its routes and rerun scripts/web_check.py.",
+            )
+            self.add_result("subject_gap_api", "FAIL", str(exc))
+        else:
+            self.add_result("subject_gap_api", "PASS", "freshness and bucket gap rows safe")
 
     def check_export_json(self, client: Any, ratio: Any) -> None:
         response = client.get("/api/export/review_package?format=json")

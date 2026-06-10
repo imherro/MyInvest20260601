@@ -18,6 +18,8 @@ Endpoints:
 - `GET /api/current`
 - `GET /api/latest-index`
 - `GET /api/modules/current`
+- `GET /api/subjects/freshness`
+- `GET /api/subjects/gap`
 - `GET /api/market-position/mapping`
 - `GET /api/market-position/current`
 - `GET /api/market-position/score/{score}`
@@ -39,6 +41,28 @@ Endpoints:
 All responses pass `RatioOnlyService` before returning. A sanitizer failure returns HTTP 500.
 
 OpenAPI docs are exposed by FastAPI at `GET /docs` while the local server is running.
+
+## Subject Gap And Freshness
+
+Phase 7B adds a read-only subject gap and data freshness center:
+
+- `GET /api/subjects/freshness`
+- `GET /api/subjects/gap`
+
+Both endpoints read SQLite current-state tables loaded from `latest_index.modules`. They do not read `latest_index.files`, do not write research artifacts, and do not generate target allocation or action plans.
+
+`/api/subjects/freshness` returns each subject's `last_update_timestamp`, `basis_trade_date`, `staleness_flag`, `staleness_reason`, bucket, and repo-relative `source_paths`.
+
+`/api/subjects/gap` returns each subject's bucket-level `actual_pct`, `target_pct`, `gap_pct`, `gap_status`, subject `position_pct`, freshness fields, and current market-position summary. The bucket actual/target/gap values must match the current target-allocation bucket rows.
+
+Gap status is presentation-only:
+
+- `green`: bucket gap is within a tight threshold.
+- `yellow`: bucket gap needs review.
+- `red`: bucket gap is large enough to highlight.
+- `unknown`: no bucket gap row is available.
+
+The endpoints are ratio-only and return percentages, timestamps, flags, status labels, and relative source metadata only.
 
 ## Market Position
 

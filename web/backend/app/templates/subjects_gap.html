@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Data Freshness & Gap Center{% endblock %}
+{% block content %}
+  <div class="metric-grid">
+    <div class="metric"><span class="subtle">Subjects</span><strong data-bind="subject_gap_count">{{ summary.subject_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Stale</span><strong data-bind="subject_stale_count">{{ summary.stale_count }}</strong></div>
+    <div class="metric ok"><span class="subtle">Green Gap</span><strong data-bind="subject_green_count">{{ summary.green_count }}</strong></div>
+    <div class="metric warn"><span class="subtle">Yellow Gap</span><strong data-bind="subject_yellow_count">{{ summary.yellow_count }}</strong></div>
+    <div class="metric fail"><span class="subtle">Red Gap</span><strong data-bind="subject_red_count">{{ summary.red_count }}</strong></div>
+    <div class="metric"><span class="subtle">Unknown Gap</span><strong data-bind="subject_unknown_count">{{ summary.unknown_count }}</strong></div>
+  </div>
+
+  <div class="table-tools">
+    <h2>Subject Gap</h2>
+    <input type="search" placeholder="Search subject gap" data-table-search="subjectGapTable">
+  </div>
+  {% if rows %}
+    <table id="subjectGapTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Code</th>
+          <th data-sort="text">Name</th>
+          <th data-sort="text">Bucket</th>
+          <th class="num" data-sort="number">Position</th>
+          <th class="num" data-sort="number">Actual</th>
+          <th class="num" data-sort="number">Target</th>
+          <th class="num" data-sort="number">Gap</th>
+          <th data-sort="text">Gap Status</th>
+          <th data-sort="text">Stale</th>
+          <th data-sort="text">Last Update</th>
+        </tr>
+      </thead>
+      <tbody id="subjectGapRows">
+        {% for item in rows %}
+          <tr>
+            <td>{{ item.code or "" }}</td>
+            <td>{{ item.name or "" }}</td>
+            <td>{{ item.bucket or "" }}</td>
+            <td class="num">{{ "%.2f"|format(item.position_pct) if item.position_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.actual_pct) if item.actual_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.target_pct) if item.target_pct is not none else "" }}%</td>
+            <td class="num">{{ "%.2f"|format(item.gap_pct) if item.gap_pct is not none else "" }}pp</td>
+            <td><span class="status {{ 'warn' if item.gap_status != 'green' else '' }}">{{ item.gap_status or "" }}</span></td>
+            <td>{{ "yes" if item.staleness_flag else "no" }}</td>
+            <td>{{ item.last_update_timestamp or "" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="empty">No subject gap data loaded.</div>
+  {% endif %}
+{% endblock %}
