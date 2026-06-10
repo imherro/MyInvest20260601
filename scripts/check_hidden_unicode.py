@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import unicodedata
 from dataclasses import dataclass
@@ -77,13 +78,37 @@ class HiddenUnicodeFinding:
     column: int
     codepoint: str
     name: str
+    preview: str
 
     def format(self) -> str:
-        return f"{self.path.as_posix()}:{self.line}:{self.column}: {self.codepoint} {self.name}"
+        return (
+            f"{self.path.as_posix()}:{self.line}:{self.column}: "
+            f"{self.codepoint} {self.name} preview={self.preview}"
+        )
 
 
 def is_hidden_unicode(char: str) -> bool:
     return ord(char) in HIDDEN_CODEPOINTS or unicodedata.category(char) == "Cf"
+
+
+def safe_preview(line: str, column: int, radius: int = 24) -> str:
+    start = max(0, column - radius - 1)
+    end = min(len(line), column + radius)
+    chars: list[str] = []
+    for char in line[start:end].rstrip("\r\n"):
+        if is_hidden_unicode(char):
+            chars.append(f"<U+{ord(char):04X}>")
+        elif char == "\t":
+            chars.append("\\t")
+        elif char == "\r":
+            chars.append("\\r")
+        elif char == "\n":
+            chars.append("\\n")
+        elif unicodedata.category(char).startswith("C"):
+            chars.append(f"<U+{ord(char):04X}>")
+        else:
+            chars.append(char)
+    return "".join(chars)
 
 
 def scan_text(text: str, path: Path) -> list[HiddenUnicodeFinding]:
@@ -93,7 +118,16 @@ def scan_text(text: str, path: Path) -> list[HiddenUnicodeFinding]:
             if is_hidden_unicode(char):
                 codepoint = f"U+{ord(char):04X}"
                 name = unicodedata.name(char, "UNKNOWN")
-                findings.append(HiddenUnicodeFinding(path, line_no, column, codepoint, name))
+                findings.append(
+                    HiddenUnicodeFinding(
+                        path,
+                        line_no,
+                        column,
+                        codepoint,
+                        name,
+                        safe_preview(line, column),
+                    )
+                )
     return findings
 
 
@@ -125,38 +159,70 @@ def iter_scan_files(paths: list[Path]) -> list[Path]:
     return sorted(set(files))
 
 
+def display_path(path: Path) -> Path:
+    try:
+        return path.resolve().relative_to(ROOT)
+    except ValueError:
+        return path
+
+
+def finding_to_dict(finding: HiddenUnicodeFinding) -> dict[str, object]:
+    return {
+        "path": display_path(finding.path).as_posix(),
+        "line": finding.line,
+        "column": finding.column,
+        "codepoint": finding.codepoint,
+        "name": finding.name,
+        "preview": finding.preview,
+    }
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Scan source files for hidden Unicode format controls.")
-    parser.add_argument("paths", nargs="*", help="Optional files or directories to scan.")
+    parser.add_argument("positional_paths", nargs="*", help="Optional files or directories to scan.")
+    parser.add_argument("--paths", nargs="+", help="Explicit files or directories to scan.")
+    parser.add_argument("--json", action="store_true", help="Emit a machine-readable JSON summary.")
     return parser.parse_args(argv)
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(sys.argv[1:] if argv is None else argv)
-    roots = [Path(path).resolve() for path in args.paths] if args.paths else DEFAULT_SCAN_ROOTS
+    requested_paths = [*(args.paths or []), *args.positional_paths]
+    roots = [Path(path).resolve() for path in requested_paths] if requested_paths else DEFAULT_SCAN_ROOTS
     findings: list[HiddenUnicodeFinding] = []
-    for path in iter_scan_files(roots):
+    files = iter_scan_files(roots)
+    for path in files:
         findings.extend(scan_file(path))
+
+    summary = {
+        "status": "FAIL" if findings else "OK",
+        "scanned_file_count": len(files),
+        "finding_count": len(findings),
+        "findings": [finding_to_dict(finding) for finding in findings],
+    }
+
+    if args.json:
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 1 if findings else 0
 
     if findings:
         print("Hidden Unicode check: FAIL")
         for finding in findings:
-            try:
-                display_path = finding.path.resolve().relative_to(ROOT)
-            except ValueError:
-                display_path = finding.path
             print(
                 HiddenUnicodeFinding(
-                    display_path,
+                    display_path(finding.path),
                     finding.line,
                     finding.column,
                     finding.codepoint,
                     finding.name,
+                    finding.preview,
                 ).format()
             )
+        print(f"scanned_file_count={len(files)}")
         return 1
 
     print("Hidden Unicode check: OK")
+    print(f"scanned_file_count={len(files)}")
     return 0
 
 
