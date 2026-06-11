@@ -118,6 +118,42 @@ def check_privacy(conn: sqlite3.Connection, findings: list[DbFinding], strict: b
     if blocked:
         findings.append(DbFinding(level(strict), f"DB privacy scan blocked raw_json for {blocked} artifacts"))
 
+    missing_scan = scalar(
+        conn,
+        """
+        SELECT COUNT(*)
+        FROM artifacts a
+        LEFT JOIN privacy_scan_results p ON p.artifact_id = a.artifact_id
+        WHERE p.artifact_id IS NULL
+        """,
+    )
+    if missing_scan:
+        findings.append(DbFinding(level(strict), f"DB privacy scan coverage missing {missing_scan} artifacts"))
+
+
+def check_required_views(conn: sqlite3.Connection, findings: list[DbFinding], strict: bool) -> None:
+    required = {
+        "v_action_history",
+        "v_market_position_history",
+        "v_position_slot_history",
+        "v_valuation_history",
+        "v_valuation_zone_drift",
+    }
+    existing = {str(row["name"]) for row in conn.execute("SELECT name FROM sqlite_master WHERE type = 'view'")}
+    missing = sorted(required - existing)
+    if missing:
+        findings.append(DbFinding(level(strict), f"DB required views missing: {', '.join(missing)}"))
+
+
+def check_view_queryability(conn: sqlite3.Connection, findings: list[DbFinding], strict: bool) -> None:
+    rows = conn.execute("SELECT name FROM sqlite_master WHERE type = 'view' ORDER BY name").fetchall()
+    for row in rows:
+        view = str(row["name"])
+        try:
+            conn.execute(f"SELECT * FROM {view} LIMIT 1").fetchall()
+        except sqlite3.Error as exc:
+            findings.append(DbFinding(level(strict), f"DB view {view} is not queryable: {exc}"))
+
 
 def check_latest_consistency(conn: sqlite3.Connection, findings: list[DbFinding], strict: bool) -> None:
     latest_path = RESEARCH / "latest_index.json"
@@ -150,6 +186,8 @@ def run_db_checks(db_path: str | Path, *, strict: bool = False) -> list[DbFindin
         check_dependencies(conn, findings, strict)
         check_valuation_zones(conn, findings, strict)
         check_privacy(conn, findings, strict)
+        check_required_views(conn, findings, strict)
+        check_view_queryability(conn, findings, strict)
         check_latest_consistency(conn, findings, strict)
     finally:
         conn.close()

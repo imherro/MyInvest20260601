@@ -1180,6 +1180,15 @@ def make_report_from_history(target: Target, rows: list[dict[str, Any]], timesta
     ma20 = round(float(df["close"].tail(20).mean()), 4)
     ma60 = round(float(df["close"].tail(60).mean()), 4) if len(df) >= 60 else None
     trend_visual = build_trend_visual(df["close"], df["trade_date"])
+    series_meta = {
+        "basis": "qmt_history",
+        "basis_label": "QMT local price history",
+        "comparable": False,
+        "sample_days": int(len(df)),
+        "display_confidence": "medium" if len(df) >= 60 else "low",
+    }
+    trend_visual["price_series"] = series_meta
+    trend_visual["display_confidence"] = series_meta["display_confidence"]
     code_plain = target.code.split(".")[0]
     asset_label = "ETF" if target.asset_type.endswith("etf") else "个股"
     data_gaps = [

@@ -1,5 +1,38 @@
 # 日常运行手册
 
+## DB-first history runbook
+
+Use the history DB only as a derived local fact store. It does not replace the
+current `research/latest_index.json` flow.
+
+Rebuild a test DB:
+
+```bash
+python scripts/db_migrate.py --db temp/history_db/test_myinvest_history.sqlite3 --reset
+python scripts/db_ingest_research_artifacts.py --db temp/history_db/test_myinvest_history.sqlite3 --all
+python scripts/project_check.py --current-only --db temp/history_db/test_myinvest_history.sqlite3 --db-strict
+```
+
+Rebuild the Web history DB:
+
+```bash
+python scripts/db_migrate.py --db temp/history_db/myinvest_history.sqlite3 --reset
+python scripts/db_ingest_research_artifacts.py --db temp/history_db/myinvest_history.sqlite3 --all
+python scripts/run_web.py --host 127.0.0.1 --port 8011
+```
+
+History Web pages:
+
+- `/securities/{code}/valuation`
+- `/market/history`
+- `/positions/history`
+- `/actions/history`
+- `/history/quality`
+
+Do not commit `temp/history_db/`, `temp/web_db/`, `.env`, runtime/cache files,
+or SQLite files. Keep `temp/web_db/myinvest.sqlite` as the current-only Web
+cache.
+
 本文说明本项目每天、盘中、盘后和周末如何运行。目标是让任何一台电脑 clone 项目后，都能按固定顺序继续工作。
 
 ## 1. 每次开始前

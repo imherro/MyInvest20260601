@@ -1,5 +1,39 @@
 # 模块架构
 
+## DB-first history module
+
+The DB-first history module is a derived fact layer, not a trading module and
+not a replacement for timestamped research artifacts.
+
+Responsibilities:
+
+- migrate a local SQLite schema under `temp/history_db/`
+- ingest existing research JSON artifacts
+- normalize durable valuation, portfolio, target allocation, action, market,
+  theme, and security profile facts
+- provide read-only query CLIs and read-only Web history pages
+- support optional generator dual-write with `--db`
+
+Inputs:
+
+- `research/**/*.json`
+- generated JSON artifacts from supported generators when `--db` is passed
+
+Outputs:
+
+- SQLite rows under `temp/history_db/*.sqlite3`
+- read-only API responses from existing `web/backend`
+- query command output from `scripts/db_query_*_history.py`
+
+Boundaries:
+
+- no automatic trading
+- no QMT write operation
+- no order placement, cancellation, or modification
+- no DB files committed to Git
+- no amount, quantity, account, order, fill, deal, credential, or local absolute path in DB/Web output
+- security prices are allowed research facts and are not private by themselves
+
 本文定义本项目的模块边界。原则是：每个模块只解决一个层级的问题，研究结论先保存，后续建议必须引用已有结论。
 
 ## 总流程

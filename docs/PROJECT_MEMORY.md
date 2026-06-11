@@ -1,5 +1,15 @@
 # 项目记忆
 
+## 2026-06-11 DB-first history decision
+
+- The project now has an optional SQLite history fact store under `temp/history_db/`.
+- JSON/Markdown research artifacts remain the source of truth for current workflows.
+- The history DB is derived and rebuildable with `scripts/db_migrate.py` and `scripts/db_ingest_research_artifacts.py`.
+- The existing Web current cache remains `temp/web_db/myinvest.sqlite`; do not mix it with history DB storage.
+- Security prices are allowed research facts. Privacy-sensitive data is amount, quantity, account, order, fill, deal, credential, or local absolute path related.
+- History Web pages must stay inside the existing `web/backend` app and remain read-only.
+- Generator DB dual-write is opt-in via `--db`; default generator behavior remains unchanged.
+
 本文是本项目的长期记忆文件。每台电脑继续工作前都应先阅读本文。每次形成新的策略决议、流程规则、重要反思或错误教训，都应更新本文并提交。
 
 ## 1. 项目目标

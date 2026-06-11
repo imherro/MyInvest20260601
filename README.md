@@ -1,5 +1,42 @@
 # MyInvest20260601
 
+## DB-first history foundation
+
+The project now has an optional SQLite history database layer. It does not replace the
+current research JSON/Markdown workflow yet. It ingests existing research artifacts,
+normalizes durable facts into history tables, and exposes read-only Web pages from the
+existing `web/backend` app.
+
+See [docs/DB_FIRST_HISTORY.md](docs/DB_FIRST_HISTORY.md) for the full runbook.
+
+Core commands:
+
+```bash
+python scripts/db_migrate.py --db temp/history_db/test_myinvest_history.sqlite3 --reset
+python scripts/db_ingest_research_artifacts.py --db temp/history_db/test_myinvest_history.sqlite3 --all
+python scripts/project_check.py --current-only --db temp/history_db/test_myinvest_history.sqlite3 --db-strict
+```
+
+Optional generator dual-write:
+
+```bash
+python scripts/generate_valuation_reports.py --db temp/history_db/myinvest_history.sqlite3
+python scripts/qmt_portfolio_snapshot.py --db temp/history_db/myinvest_history.sqlite3
+python scripts/generate_target_allocation.py --db temp/history_db/myinvest_history.sqlite3
+python scripts/generate_action_plan.py --db temp/history_db/myinvest_history.sqlite3
+```
+
+Boundaries:
+
+- History DB files must stay under `temp/history_db/`.
+- `temp/web_db/myinvest.sqlite` remains the current-only Web cache.
+- Do not commit `.env`, `temp/`, runtime/cache files, logs outside research, or SQLite DB files.
+- Security prices are not privacy-sensitive by themselves.
+- Amounts, market values, quantities, share counts, account identifiers, orders, fills,
+  deals, and local absolute paths remain privacy-sensitive.
+- No automatic trading, QMT write, order placement, cancellation, or order modification
+  capability is part of this DB-first layer.
+
 这是一个用于辅助 A 股投资决策的 Codex 项目。项目目标不是让 AI 无脑荐股，而是把市场研究、主线判断、ETF/个股分析、仓位建议、操作建议和复盘沉淀成可审查、可追踪、可协同的工作流。
 
 ## 新电脑如何开始

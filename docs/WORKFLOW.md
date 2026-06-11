@@ -1,5 +1,28 @@
 # 协作规则
 
+## DB-first collaboration rule
+
+When DB-first history work is involved, start by reading
+`docs/DB_FIRST_HISTORY.md` in addition to the normal startup documents.
+
+Before committing DB-first changes:
+
+```bash
+python scripts/db_migrate.py --db temp/history_db/test_myinvest_history.sqlite3 --check
+python scripts/project_check.py --current-only
+python scripts/project_check.py --current-only --db temp/history_db/test_myinvest_history.sqlite3 --db-strict
+```
+
+If Web history code changed, also run:
+
+```bash
+python -m pytest web/backend/tests -q
+python scripts/web_check.py
+```
+
+Only commit code, migrations, docs, and tests. Never commit `.env`, `temp/`,
+runtime/cache directories, or SQLite database files.
+
 本文说明多台电脑协同使用本项目时的规则。目标是避免不同电脑上的 Codex 不知道项目进展，也避免重要策略决议散落在聊天记录里。
 
 ## 1. 每次开始工作前

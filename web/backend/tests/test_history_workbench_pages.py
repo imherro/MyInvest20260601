@@ -38,6 +38,7 @@ def test_history_workbench_apis_and_pages(client):
     assert quality.json()["data"]["summary"]["fail_count"] == 0
 
     for path, marker in [
+        ("/history", "History"),
         ("/market/history", "Market History"),
         ("/positions/history?bucket=defense", "Position History"),
         ("/actions/history?action_type=Reduce", "Action History"),
@@ -46,3 +47,8 @@ def test_history_workbench_apis_and_pages(client):
         page = client.get(path)
         assert page.status_code == 200
         assert marker in page.text
+
+    valuation = client.get("/securities/688333.SH/valuation")
+    assert valuation.status_code == 200
+    assert "/positions/history?code=688333.SH" in valuation.text
+    assert "/actions/history?code=688333.SH" in valuation.text

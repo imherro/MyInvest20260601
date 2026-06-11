@@ -333,6 +333,28 @@ def historical_metrics_page(request: Request, session: Session = Depends(get_ses
     )
 
 
+@app.get("/history", response_class=HTMLResponse)
+def history_workbench_page(request: Request) -> HTMLResponse:
+    service = HistoryWorkbenchService()
+    workbench = {
+        "quality": service.quality(),
+        "market": service.market_history(limit=5),
+        "positions": service.position_history(limit=10),
+        "actions": service.action_history(limit=10),
+    }
+    return templates.TemplateResponse(
+        request,
+        "history_workbench.html",
+        page_context(
+            request,
+            "history-workbench",
+            "/api/history/quality",
+            subtitle="Read-only history workspace from temp/history_db.",
+            workbench=workbench,
+        ),
+    )
+
+
 @app.get("/market/history", response_class=HTMLResponse)
 def market_history_page(request: Request, limit: int = 50) -> HTMLResponse:
     history = HistoryWorkbenchService().market_history(limit=limit)
