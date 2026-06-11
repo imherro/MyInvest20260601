@@ -137,6 +137,24 @@ The response is intended for JSON preview/download and Web audit review. It does
 
 The same data backs `GET /audit`, which renders preview cards, a simple chart, module filtering, and a JSON download link.
 
+## DB Schema Versioning Design
+
+Phase 14A adds `web/docs/DB_SCHEMA_VERSIONING_PLAN.md` as design material only.
+It does not add an endpoint, alter the OpenAPI path list, write SQLite, modify
+ingest, or change any response contract.
+
+A future Phase 14B may expose sanitized schema guard status through an existing
+local diagnostics surface such as `GET /api/environment/status`, or through a
+separately reviewed GET-only endpoint. Any future response must contain only
+safe operational metadata such as schema name, expected version, actual version,
+status, and a non-sensitive message.
+
+Future schema mismatch behavior must fail closed without automatic destructive
+migration, without request-time table creation, and without writing research
+artifacts. It must not expose local absolute paths, SQLite contents, account
+context, order records, fill records, credentials, runtime files, or cache
+contents.
+
 ## Research Dashboard
 
 Phase 7D adds a read-only dashboard endpoint:

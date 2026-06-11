@@ -155,6 +155,21 @@ Phase 14 work must start from `main` at or after
 Default Web boundaries remain read-only, ratio-only, current-only, and
 OpenAPI GET-only.
 
+## Phase 14A DB Schema Versioning Design
+
+Phase 14A adds only a design document:
+
+- `web/docs/DB_SCHEMA_VERSIONING_PLAN.md`
+
+The plan defines a future Web SQLite read-model schema versioning approach for
+`temp/web_db/myinvest.sqlite`. It does not implement migration behavior, write
+SQLite, change ingest, introduce Alembic, add an API, or modify Web UI
+behavior.
+
+The future guard should fail closed on missing or mismatched schema metadata,
+return only safe status text, avoid destructive migration, and keep the Web
+layer read-only, ratio-only, current-only, and OpenAPI GET-only.
+
 ## Phase 3 Milestone Check
 
 Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.
