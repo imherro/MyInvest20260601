@@ -1,0 +1,1 @@
+"""MyInvest shared application package."""

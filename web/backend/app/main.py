@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 from .config import STATIC_DIR, TEMPLATE_DIR
 from .db import get_session
 from .routers.current import router as current_router
+from .routers.history import router as history_router
 from .routers.operations import router as operations_router
 from .services.allocation_drilldown import AllocationDrilldownService
 from .services.audit_bundle_service import AuditBundleService
@@ -20,6 +21,7 @@ from .services.dashboard import DashboardService
 from .services.decision_timeline import DecisionTimelineService
 from .services.environment_status import EnvironmentStatusService
 from .services.history_gap_dashboard import HistoryGapDashboardService
+from .services.history_workbench import HistoryWorkbenchService
 from .services.historical_metrics import HistoricalMetricsService
 from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
@@ -27,11 +29,13 @@ from .services.system_check import SystemCheckService
 from .services.theme_status import ThemeStatusService
 from .services.tool_console import ToolConsoleService
 from .services.user_preferences import UserPreferencesService
+from .services.valuation_history import ValuationHistoryService
 from .services.workbench_readiness import WorkbenchReadinessService
 
 
 app = FastAPI(title="MyInvest Web", version="0.2.0")
 app.include_router(current_router, prefix="/api")
+app.include_router(history_router, prefix="/api")
 app.include_router(operations_router)
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
@@ -50,6 +54,11 @@ def page_context(request: Request, page: str, api_path: str, **extra):
 
 def service(session: Session) -> CurrentStateService:
     return CurrentStateService(session)
+
+
+def query_api_path(base: str, params: dict[str, object]) -> str:
+    clean = {key: value for key, value in params.items() if value not in (None, "")}
+    return base + ("?" + urlencode(clean) if clean else "")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -320,6 +329,91 @@ def historical_metrics_page(request: Request, session: Session = Depends(get_ses
             "historical-metrics",
             "/api/historical-metrics",
             metrics=metrics,
+        ),
+    )
+
+
+@app.get("/market/history", response_class=HTMLResponse)
+def market_history_page(request: Request, limit: int = 50) -> HTMLResponse:
+    history = HistoryWorkbenchService().market_history(limit=limit)
+    return templates.TemplateResponse(
+        request,
+        "market_history.html",
+        page_context(
+            request,
+            "market-history",
+            query_api_path("/api/market/history", {"limit": limit}),
+            subtitle="Read-only market history from temp/history_db.",
+            history=history,
+        ),
+    )
+
+
+@app.get("/positions/history", response_class=HTMLResponse)
+def position_history_page(request: Request, code: str | None = None, bucket: str | None = None, limit: int = 100) -> HTMLResponse:
+    history = HistoryWorkbenchService().position_history(code=code, bucket=bucket, limit=limit)
+    return templates.TemplateResponse(
+        request,
+        "position_history.html",
+        page_context(
+            request,
+            "position-history",
+            query_api_path("/api/positions/history", {"code": code, "bucket": bucket, "limit": limit}),
+            subtitle="Read-only position history from temp/history_db.",
+            history=history,
+        ),
+    )
+
+
+@app.get("/actions/history", response_class=HTMLResponse)
+def action_history_page(
+    request: Request,
+    code: str | None = None,
+    action_type: str | None = None,
+    limit: int = 100,
+) -> HTMLResponse:
+    history = HistoryWorkbenchService().action_history(code=code, action_type=action_type, limit=limit)
+    return templates.TemplateResponse(
+        request,
+        "action_history.html",
+        page_context(
+            request,
+            "action-history",
+            query_api_path("/api/actions/history", {"code": code, "action_type": action_type, "limit": limit}),
+            subtitle="Read-only action history from temp/history_db.",
+            history=history,
+        ),
+    )
+
+
+@app.get("/history/quality", response_class=HTMLResponse)
+def history_quality_page(request: Request) -> HTMLResponse:
+    quality = HistoryWorkbenchService().quality()
+    return templates.TemplateResponse(
+        request,
+        "history_quality.html",
+        page_context(
+            request,
+            "history-quality",
+            "/api/history/quality",
+            subtitle="History DB quality checks.",
+            quality=quality,
+        ),
+    )
+
+
+@app.get("/securities/{code}/valuation", response_class=HTMLResponse)
+def security_valuation_history_page(request: Request, code: str) -> HTMLResponse:
+    history = ValuationHistoryService().history(code)
+    return templates.TemplateResponse(
+        request,
+        "security_valuation_history.html",
+        page_context(
+            request,
+            "valuation-history",
+            f"/api/securities/{quote(code, safe='')}/valuation-history",
+            subtitle="Read-only valuation history from temp/history_db.",
+            history=history,
         ),
     )
 

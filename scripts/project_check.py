@@ -360,6 +360,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--current-only", action="store_true", help="Use current audit-package scope; ignore legacy intraday data_sources.")
+    parser.add_argument("--db", help="Optional MyInvest history DB path for Phase 1 DB checks.")
+    parser.add_argument("--db-strict", action="store_true", help="Make DB checks blocking failures.")
     args = parser.parse_args(argv)
     strict = args.strict
     findings: list[Finding] = []
@@ -378,6 +380,13 @@ def main(argv: list[str] | None = None) -> int:
     check_latest_action_ratio_only(findings)
     check_research_first_gate(findings)
     check_intraday_references(findings, strict, current_only=args.current_only)
+    if args.db:
+        if str(ROOT) not in sys.path:
+            sys.path.insert(0, str(ROOT))
+        from myinvest.db.checks import run_db_checks
+
+        for item in run_db_checks(args.db, strict=args.db_strict):
+            findings.append(Finding(item.level, item.message))
 
     failures = [item for item in findings if item.level == "FAIL"]
     warnings = [item for item in findings if item.level == "WARN"]

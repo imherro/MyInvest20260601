@@ -15,6 +15,7 @@ DECISION_LOG_PATH = ROOT / "research" / "logs" / "decision_log.md"
 WEB_DB_DIR = ROOT / "temp" / "web_db"
 WEB_RUNTIME_DIR = ROOT / "temp" / "web_runtime"
 DB_PATH = WEB_DB_DIR / "myinvest.sqlite"
+HISTORY_DB_PATH = ROOT / "temp" / "history_db" / "myinvest_history.sqlite3"
 
 EXECUTABLE_ACTIONS = {"buy", "add", "reduce", "sell"}
 CURRENT_CONFIG_MODULES = {

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Market History{% endblock %}
+
+{% block content %}
+<section class="metric-grid">
+  <div class="metric">
+    <span class="subtle">Rows</span>
+    <strong>{{ history.summary.count }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Latest</span>
+    <strong>{{ history.summary.latest_generated_at or "n/a" }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Market State</span>
+    <strong>{{ history.summary.latest_market_state or "n/a" }}</strong>
+  </div>
+</section>
+
+<table>
+  <thead>
+    <tr>
+      <th>generated_at</th>
+      <th>basis_trade_date</th>
+      <th>state</th>
+      <th class="num">score</th>
+      <th>equity range</th>
+      <th>bond/cash range</th>
+      <th>offensive bucket</th>
+      <th>artifact</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in history.rows %}
+    <tr>
+      <td>{{ row.generated_at }}</td>
+      <td>{{ row.basis_trade_date or "n/a" }}</td>
+      <td>{{ row.market_state or "n/a" }}</td>
+      <td class="num">{{ "%.2f"|format(row.market_position_score) if row.market_position_score is not none else "n/a" }}</td>
+      <td>{{ row.equity_range_low_pct }} - {{ row.equity_range_high_pct }}</td>
+      <td>{{ row.bond_cash_range_low_pct }} - {{ row.bond_cash_range_high_pct }}</td>
+      <td>{{ row.offensive_bucket_status or "n/a" }}</td>
+      <td>{{ row.artifact_path }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="8">No market history found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

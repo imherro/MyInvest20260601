@@ -7,6 +7,7 @@ import argparse
 import json
 import math
 import os
+import sys
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -19,10 +20,15 @@ try:
 except Exception:  # pragma: no cover - environment capability guard
     ts = None
 
-from project_utils import latest_for_module, load_latest_index, path_record
-
-
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS_DIR = ROOT / "scripts"
+for candidate in (ROOT, SCRIPTS_DIR):
+    if str(candidate) not in sys.path:
+        sys.path.insert(0, str(candidate))
+
+from project_utils import latest_for_module, load_latest_index, path_record  # noqa: E402
+
+
 OUTPUT_DIR = ROOT / "research" / "valuations"
 ALERT_RULES = ROOT / "research" / "alerts" / "intraday_rules.json"
 PORTFOLIO_DIR = ROOT / "research" / "portfolio"
@@ -1420,13 +1426,26 @@ def generate(codes: list[str] | None = None, history_json: Path | None = None) -
     return written
 
 
+def ingest_generated_reports(db_path: str | Path | None, written: list[tuple[dict[str, Any], Path, Path]]) -> dict[str, Any] | None:
+    if not db_path:
+        return None
+    from myinvest.db.ingest import ingest_artifacts
+
+    return ingest_artifacts(db_path, [json_path for _, _, json_path in written])
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--codes", nargs="+", help="Generate only the specified ts_codes/plain codes and merge them into intraday rules.")
     parser.add_argument("--history-json", type=Path, help="Use exported QMT daily history JSON instead of Tushare.")
+    parser.add_argument("--db", type=Path, help="Also ingest generated JSON artifacts into the history SQLite database.")
     args = parser.parse_args()
     written = generate(args.codes, args.history_json)
-    print(json.dumps({"created": [p.as_posix() for _, md, js in written for p in (md, js)], "updated": ALERT_RULES.as_posix()}, ensure_ascii=False, indent=2))
+    db_ingest = ingest_generated_reports(args.db, written)
+    result = {"created": [p.as_posix() for _, md, js in written for p in (md, js)], "updated": ALERT_RULES.as_posix()}
+    if db_ingest is not None:
+        result["db_ingest"] = db_ingest
+    print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 

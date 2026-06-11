@@ -10,6 +10,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+SCRIPT_ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS_DIR = SCRIPT_ROOT / "scripts"
+for candidate in (SCRIPT_ROOT, SCRIPTS_DIR):
+    if str(candidate) not in sys.path:
+        sys.path.insert(0, str(candidate))
+
 from project_utils import ROOT, abs_path, file_sha256, latest_for_module, load_latest_index, pct_range, read_json, rel_path, write_json
 
 
@@ -367,6 +373,14 @@ def write_plan(plan: dict[str, Any]) -> tuple[Path, Path]:
     return md_path, json_path
 
 
+def ingest_generated_action_plan(db_path: str | Path | None, json_path: Path) -> dict[str, Any] | None:
+    if not db_path:
+        return None
+    from myinvest.db.ingest import ingest_artifacts
+
+    return ingest_artifacts(db_path, [json_path])
+
+
 def append_decision_log(entry: str, md_path: Path, json_path: Path, deps: list[dict[str, Any]]) -> None:
     lines = [
         "",
@@ -385,13 +399,18 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--timestamp", default=datetime.now().strftime("%Y-%m-%d_%H%M%S"))
     parser.add_argument("--no-log", action="store_true", help="Do not append decision_log.md.")
+    parser.add_argument("--db", type=Path, help="Also ingest the generated JSON artifact into the history SQLite database.")
     args = parser.parse_args(argv)
     index = load_latest_index()
     plan = build_plan(index, args.timestamp)
     md_path, json_path = write_plan(plan)
+    db_ingest = ingest_generated_action_plan(args.db, json_path)
     if not args.no_log:
         append_decision_log(plan["decision_log_entry"], md_path, json_path, plan["dependencies"]["required"])
-    print(json.dumps({"created": [rel_path(md_path), rel_path(json_path)], "logged": not args.no_log}, ensure_ascii=False, indent=2))
+    result = {"created": [rel_path(md_path), rel_path(json_path)], "logged": not args.no_log}
+    if db_ingest is not None:
+        result["db_ingest"] = db_ingest
+    print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 

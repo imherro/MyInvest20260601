@@ -14,10 +14,15 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from project_utils import latest_for_module, read_json as read_project_json
-
-
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS_DIR = ROOT / "scripts"
+for candidate in (ROOT, SCRIPTS_DIR):
+    if str(candidate) not in sys.path:
+        sys.path.insert(0, str(candidate))
+
+from project_utils import latest_for_module, read_json as read_project_json  # noqa: E402
+
+
 PORTFOLIO_DIR = ROOT / "research" / "portfolio"
 ALERT_RULES = ROOT / "research" / "alerts" / "intraday_rules.json"
 DECISION_LOG = ROOT / "research" / "logs" / "decision_log.md"
@@ -729,6 +734,14 @@ def write_snapshot(snapshot: dict[str, Any], sync_rules: bool) -> tuple[Path, Pa
     return md_path, json_path, synced
 
 
+def ingest_generated_snapshot(db_path: str | Path | None, json_path: Path) -> dict[str, Any] | None:
+    if not db_path:
+        return None
+    from myinvest.db.ingest import ingest_artifacts
+
+    return ingest_artifacts(db_path, [json_path])
+
+
 def probe(args: argparse.Namespace) -> int:
     paths = discover_qmt_paths(args.qmt_site, args.userdata)
     trader, account, _xtdata, _xttype = qmt_connection(paths, args.account_id)
@@ -757,6 +770,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--probe", action="store_true", help="Check read-only connectivity without writing a snapshot.")
     parser.add_argument("--no-sync-rules", action="store_true", help="Do not sync research/alerts/intraday_rules.json.")
     parser.add_argument("--dry-run", action="store_true", help="Print sanitized snapshot JSON without writing files.")
+    parser.add_argument("--db", type=Path, help="Also ingest the generated JSON artifact into the history SQLite database.")
     args = parser.parse_args(argv)
 
     paths = discover_qmt_paths(args.qmt_site, args.userdata)
@@ -775,13 +789,17 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     md_path, json_path, synced = write_snapshot(snapshot, sync_rules=not args.no_sync_rules)
+    db_ingest = ingest_generated_snapshot(args.db, json_path)
+    result = {
+        "created": [rel_path(md_path), rel_path(json_path)],
+        "synced_intraday_rules": synced,
+        "privacy": "ratio-only; no amount, volume, cash amount, profit amount, or full account id saved",
+    }
+    if db_ingest is not None:
+        result["db_ingest"] = db_ingest
     print(
         json.dumps(
-            {
-                "created": [rel_path(md_path), rel_path(json_path)],
-                "synced_intraday_rules": synced,
-                "privacy": "ratio-only; no amount, volume, cash amount, profit amount, or full account id saved",
-            },
+            result,
             ensure_ascii=False,
             indent=2,
         )

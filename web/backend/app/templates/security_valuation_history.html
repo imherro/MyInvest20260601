@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Valuation History{% endblock %}
+
+{% block content %}
+<section class="metric-grid">
+  <div class="metric">
+    <span class="subtle">Code</span>
+    <strong>{{ history.code }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Rows</span>
+    <strong>{{ history.summary.count }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Latest</span>
+    <strong>{{ history.summary.latest_generated_at or "n/a" }}</strong>
+  </div>
+</section>
+
+<p class="subtle">估值区间是标的级研究状态，不是组合级买卖建议。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>generated_at</th>
+      <th>basis_date</th>
+      <th>current_value</th>
+      <th>zone</th>
+      <th>reasonable</th>
+      <th>crowded_min</th>
+      <th>vs_mid_pct</th>
+      <th>artifact</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in history.rows %}
+    <tr>
+      <td>{{ row.generated_at }}</td>
+      <td>{{ row.basis_date }}</td>
+      <td>{{ row.current_value }}</td>
+      <td>{{ row.current_zone_label }}</td>
+      <td>{{ row.reasonable_min }} - {{ row.reasonable_max }}</td>
+      <td>{{ row.crowded_min }}</td>
+      <td>{{ "%.2f"|format(row.current_vs_reasonable_mid_pct) if row.current_vs_reasonable_mid_pct is not none else "n/a" }}</td>
+      <td>{{ row.artifact_path }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="8">No valuation history found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

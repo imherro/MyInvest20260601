@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}History Quality{% endblock %}
+
+{% block content %}
+<section class="metric-grid">
+  <div class="metric {{ 'ok' if quality.summary.db_ready else 'warn' }}">
+    <span class="subtle">DB Ready</span>
+    <strong>{{ "yes" if quality.summary.db_ready else "no" }}</strong>
+  </div>
+  <div class="metric {{ 'ok' if quality.summary.migration_status == 'ok' else 'warn' }}">
+    <span class="subtle">Migration</span>
+    <strong>{{ quality.summary.migration_status }}</strong>
+  </div>
+  <div class="metric {{ 'ok' if quality.summary.fail_count == 0 else 'fail' }}">
+    <span class="subtle">FAIL</span>
+    <strong>{{ quality.summary.fail_count }}</strong>
+  </div>
+  <div class="metric {{ 'ok' if quality.summary.warn_count == 0 else 'warn' }}">
+    <span class="subtle">WARN</span>
+    <strong>{{ quality.summary.warn_count }}</strong>
+  </div>
+</section>
+
+<section class="metric-grid">
+  <div class="metric">
+    <span class="subtle">Tables</span>
+    <strong>{{ quality.summary.table_count }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Views</span>
+    <strong>{{ quality.summary.view_count }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Artifacts</span>
+    <strong>{{ quality.counts.artifacts or 0 }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Runs</span>
+    <strong>{{ quality.counts.research_runs or 0 }}</strong>
+  </div>
+</section>
+
+<table>
+  <thead>
+    <tr>
+      <th>level</th>
+      <th>message</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in quality.findings %}
+    <tr>
+      <td>{{ item.level }}</td>
+      <td>{{ item.message }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="2">No DB quality findings.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

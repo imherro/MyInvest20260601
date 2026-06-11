@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Position History{% endblock %}
+
+{% block content %}
+<section class="metric-grid">
+  <div class="metric">
+    <span class="subtle">Rows</span>
+    <strong>{{ history.summary.count }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Latest</span>
+    <strong>{{ history.summary.latest_generated_at or "n/a" }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Filter</span>
+    <strong>{{ history.filters.code or history.filters.bucket or "recent" }}</strong>
+  </div>
+</section>
+
+<form class="table-tools" method="get" action="/positions/history">
+  <input type="search" name="code" value="{{ history.filters.code or '' }}" placeholder="code">
+  <input type="search" name="bucket" value="{{ history.filters.bucket or '' }}" placeholder="bucket">
+  <button type="submit">Apply</button>
+  <a class="button-link" href="/positions/history">Reset</a>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>snapshot_at</th>
+      <th>code</th>
+      <th>name</th>
+      <th>slot</th>
+      <th>bucket</th>
+      <th>category</th>
+      <th class="num">weight pct</th>
+      <th class="num">day change pct</th>
+      <th>lifecycle</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in history.rows %}
+    <tr>
+      <td>{{ row.snapshot_at }}</td>
+      <td>{{ row.ts_code or row.slot_code }}</td>
+      <td>{{ row.name or "n/a" }}</td>
+      <td>{{ row.slot_code }}</td>
+      <td>{{ row.slot_bucket_key or row.snapshot_bucket_key }}</td>
+      <td>{{ row.category or "n/a" }}</td>
+      <td class="num">{{ "%.4f"|format(row.weight_pct) if row.weight_pct is not none else "n/a" }}</td>
+      <td class="num">{{ "%.4f"|format(row.day_change_pct) if row.day_change_pct is not none else "n/a" }}</td>
+      <td>{{ row.lifecycle_status or "n/a" }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="9">No position history found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

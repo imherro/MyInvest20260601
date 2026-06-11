@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Action History{% endblock %}
+
+{% block content %}
+<section class="metric-grid">
+  <div class="metric">
+    <span class="subtle">Rows</span>
+    <strong>{{ history.summary.count }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Latest</span>
+    <strong>{{ history.summary.latest_generated_at or "n/a" }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Filter</span>
+    <strong>{{ history.filters.code or history.filters.action_type or "all" }}</strong>
+  </div>
+</section>
+
+<form class="table-tools" method="get" action="/actions/history">
+  <input type="search" name="code" value="{{ history.filters.code or '' }}" placeholder="code">
+  <input type="search" name="action_type" value="{{ history.filters.action_type or '' }}" placeholder="action type">
+  <button type="submit">Apply</button>
+  <a class="button-link" href="/actions/history">Reset</a>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>generated_at</th>
+      <th>state</th>
+      <th>priority</th>
+      <th>action</th>
+      <th>subject</th>
+      <th>bucket</th>
+      <th>current</th>
+      <th>suggested change</th>
+      <th>target</th>
+      <th>manual</th>
+      <th>artifact</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in history.rows %}
+    <tr>
+      <td>{{ row.generated_at }}</td>
+      <td>{{ row.action_state }}</td>
+      <td>{{ row.priority }}</td>
+      <td>{{ row.action_type }}</td>
+      <td>{{ row.subject_code or row.bucket_key }} {{ row.subject_name or "" }}</td>
+      <td>{{ row.bucket_key or "n/a" }}</td>
+      <td>{{ row.current_position_text or "n/a" }}</td>
+      <td>{{ row.suggested_change_text or "n/a" }}</td>
+      <td>{{ row.target_position_text or "n/a" }}</td>
+      <td>{{ "yes" if row.needs_manual_confirmation else "no" }}</td>
+      <td>{{ row.artifact_path }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="11">No action history found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

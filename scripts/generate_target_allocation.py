@@ -10,6 +10,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+SCRIPT_ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS_DIR = SCRIPT_ROOT / "scripts"
+for candidate in (SCRIPT_ROOT, SCRIPTS_DIR):
+    if str(candidate) not in sys.path:
+        sys.path.insert(0, str(candidate))
+
 from project_utils import (
     ROOT,
     abs_path,
@@ -311,6 +317,14 @@ def write_report(data: dict[str, Any]) -> tuple[Path, Path]:
     return md_path, json_path
 
 
+def ingest_generated_target_allocation(db_path: str | Path | None, json_path: Path) -> dict[str, Any] | None:
+    if not db_path:
+        return None
+    from myinvest.db.ingest import ingest_artifacts
+
+    return ingest_artifacts(db_path, [json_path])
+
+
 def sync_intraday_rules(allocation: dict[str, Any], allocation_path: Path, index: dict[str, Any]) -> bool:
     if not ALERT_RULES.exists():
         return False
@@ -362,12 +376,17 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--timestamp", default=datetime.now().strftime("%Y-%m-%d_%H%M%S"))
     parser.add_argument("--sync-intraday-rules", action="store_true")
+    parser.add_argument("--db", type=Path, help="Also ingest the generated JSON artifact into the history SQLite database.")
     args = parser.parse_args(argv)
     index = build_latest_index()
     data = build_target_allocation(index, args.timestamp)
     md_path, json_path = write_report(data)
+    db_ingest = ingest_generated_target_allocation(args.db, json_path)
     synced = sync_intraday_rules(data, json_path, index) if args.sync_intraday_rules else False
-    print(json.dumps({"created": [rel_path(md_path), rel_path(json_path)], "synced_intraday_rules": synced}, ensure_ascii=False, indent=2))
+    result = {"created": [rel_path(md_path), rel_path(json_path)], "synced_intraday_rules": synced}
+    if db_ingest is not None:
+        result["db_ingest"] = db_ingest
+    print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 
