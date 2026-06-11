@@ -57,6 +57,22 @@ def test_market_position_prompt_is_manual_and_mentions_complete_trade_day():
     RatioOnlyService.assert_safe(result)
 
 
+def test_theme_research_prompt_covers_formal_refresh_workflow():
+    result = ToolConsoleService().run_tool("theme_research_prompt")
+
+    assert result["status"] == "prompt"
+    prompt = result["prompt"]
+    assert "docs/modules/THEME_RESEARCH.md" in prompt
+    assert "templates/theme_review_template.md" in prompt
+    assert "最新完整交易日" in prompt
+    assert "theme_review_YYYY-MM-DD_HHMMSS" in prompt
+    assert "research/themes/theme_registry.json" in prompt
+    assert "scripts/generate_theme_leaders.py" in prompt
+    assert "scripts/ingest_current_state.py" in prompt
+    assert "scripts/web_check.py" in prompt
+    RatioOnlyService.assert_safe(result)
+
+
 def test_tool_console_run_sanitizes_output():
     calls: list[list[str]] = []
     unsafe_text = f"OK {ROOT} total_asset account 1000万元"

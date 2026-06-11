@@ -213,8 +213,11 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     script = response.text
     assert "function assertRatioOnly" in script
     assert "function renderPagination" in script
+    assert "const DEFAULT_PAGE_SIZE = 100" in script
     assert "noPagination" in script
     assert "function removePagination" in script
+    assert "function statusTone" in script
+    assert "status-cell" in script
     assert "function renderSubjectGap" in script
     assert "function renderSubjectGapChart" in script
     assert "function renderDashboardQuickLinks" in script

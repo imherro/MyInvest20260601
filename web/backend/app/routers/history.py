@@ -27,7 +27,7 @@ def security_history(code: str) -> dict:
 
 
 @router.get("/market/history")
-def market_history(limit: int = 50) -> dict:
+def market_history(limit: int = 100) -> dict:
     return respond(
         HistoryWorkbenchService().market_history(limit=limit),
         source={"path": "temp/history_db/myinvest_history.sqlite3", "view": "v_market_position_history"},

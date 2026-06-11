@@ -52,7 +52,7 @@ class UserPreferencesService:
                 "show_system_checks": True,
             },
             "tables": {
-                "page_size": 12,
+                "page_size": 100,
                 "search_enabled": True,
                 "sort_enabled": True,
                 "filter_enabled": True,

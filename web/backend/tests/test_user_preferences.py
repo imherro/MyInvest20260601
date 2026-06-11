@@ -54,7 +54,7 @@ def test_default_user_preferences_api_returns_safe_payload(client):
     assert preferences["user_id"] == "default"
     assert preferences["display"]["number_format"] == "ratio_pp"
     assert preferences["dashboard"]["refresh_seconds"] == 60
-    assert preferences["tables"]["page_size"] == 12
+    assert preferences["tables"]["page_size"] == 100
     assert preferences["safety"]["read_only"] is True
     assert preferences["safety"]["ratio_only"] is True
     assert preferences["safety"]["current_only"] is True

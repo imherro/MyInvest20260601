@@ -9,6 +9,160 @@
   const localPathRe = /(?:[A-Za-z]:(?!\/\/)[\\/]|\\\\|\/Users\/|\/home\/)/;
   const forbiddenTextRe =
     /(total asset|market value|profit amount|trade amount|share count|available quantity|full account|order id|fill record|deal record)/i;
+  const DEFAULT_PAGE_SIZE = 100;
+  const statusToneClassNames = [
+    "status-cell",
+    "status-inline",
+    "status-tone-ok",
+    "status-tone-warn",
+    "status-tone-bad",
+    "status-tone-info",
+    "status-tone-neutral",
+  ];
+  const statusVariantClassNames = ["ok", "warn", "bad", "info", "neutral", "fail"];
+  const exactStatusTones = new Map([
+    ["ok", "ok"],
+    ["pass", "ok"],
+    ["passed", "ok"],
+    ["green", "ok"],
+    ["clean", "ok"],
+    ["current", "ok"],
+    ["matched", "ok"],
+    ["logged", "ok"],
+    ["confirmed", "ok"],
+    ["completed", "ok"],
+    ["available", "ok"],
+    ["active", "ok"],
+    ["ready", "ok"],
+    ["healthy", "ok"],
+    ["success", "ok"],
+    ["present", "ok"],
+    ["compatible", "ok"],
+    ["allowed", "ok"],
+    ["fresh", "ok"],
+    ["near_target", "ok"],
+    ["normal", "ok"],
+    ["safe", "ok"],
+    ["prompt copied", "ok"],
+    ["通过", "ok"],
+    ["正常", "ok"],
+    ["确认", "ok"],
+    ["已确认", "ok"],
+    ["已完成", "ok"],
+    ["可用", "ok"],
+    ["合格", "ok"],
+    ["watch", "warn"],
+    ["watch-only", "warn"],
+    ["warn", "warn"],
+    ["warning", "warn"],
+    ["yellow", "warn"],
+    ["degraded", "warn"],
+    ["review", "warn"],
+    ["pending", "warn"],
+    ["stale", "warn"],
+    ["attention", "warn"],
+    ["manual", "warn"],
+    ["running", "warn"],
+    ["paused", "warn"],
+    ["pause_new", "warn"],
+    ["reduce", "warn"],
+    ["trim", "warn"],
+    ["inactive", "warn"],
+    ["prompt", "warn"],
+    ["waiting", "warn"],
+    ["unknown", "neutral"],
+    ["n/a", "neutral"],
+    ["neutral", "neutral"],
+    ["hold", "neutral"],
+    ["maintain", "neutral"],
+    ["planned", "neutral"],
+    ["check", "neutral"],
+    ["germination", "info"],
+    ["launch", "info"],
+    ["confirmation", "info"],
+    ["info", "info"],
+    ["fail", "bad"],
+    ["failed", "bad"],
+    ["red", "bad"],
+    ["blocked", "bad"],
+    ["research_first", "bad"],
+    ["researchfirst", "bad"],
+    ["missing", "bad"],
+    ["mismatch", "bad"],
+    ["unavailable", "bad"],
+    ["dirty", "bad"],
+    ["error", "bad"],
+    ["invalid", "bad"],
+    ["forbidden", "bad"],
+    ["conflict", "bad"],
+    ["incompatible", "bad"],
+    ["copy failed", "bad"],
+    ["极弱", "bad"],
+    ["风险收缩", "bad"],
+  ]);
+  const badStatusFragments = [
+    "failed",
+    "blocked",
+    "research_first",
+    "researchfirst",
+    "missing",
+    "mismatch",
+    "unavailable",
+    "dirty",
+    "error",
+    "invalid",
+    "forbidden",
+    "conflict",
+    "incompatible",
+    "replay_failed",
+    "not_allowed",
+    "risk_off",
+    "risk contraction",
+    "extreme weakness",
+    "very weak",
+    "critical",
+    "decline",
+    "极弱",
+    "风险收缩",
+    "高位拥挤",
+    "拥挤",
+    "泡沫",
+  ];
+  const warnStatusFragments = [
+    "watch",
+    "warn",
+    "yellow",
+    "degraded",
+    "pending",
+    "stale",
+    "review",
+    "attention",
+    "manual",
+    "running",
+    "prompt",
+    "alert",
+    "overweight",
+    "underweight",
+    "above_target",
+    "below_target",
+    "off_target",
+    "partial",
+    "repair",
+    "divergence",
+    "cautious",
+    "risk",
+    "weak",
+    "pause",
+    "reduce",
+    "偏弱",
+    "弱势",
+    "收缩",
+    "偏贵",
+    "修复",
+    "观察",
+    "预警",
+  ];
+  const okStatusFragments = ["safe", "healthy", "success", "allowed", "reasonable", "低估", "合理", "强势", "较强"];
 
   function text(value, fallback = "n/a") {
     if (value === null || value === undefined || value === "") return fallback;
@@ -66,6 +220,7 @@
   function setBind(name, value) {
     document.querySelectorAll(`[data-bind="${name}"]`).forEach((node) => {
       node.textContent = text(value);
+      applyStatusTone(node, value, "status-inline");
     });
   }
 
@@ -81,6 +236,39 @@
       return { value: text(cell.value, ""), className: cell.className || "" };
     }
     return { value: text(cell, ""), className: "" };
+  }
+
+  function normalizedStatusValue(value) {
+    return text(value, "").trim().replace(/\s+/g, " ").toLowerCase();
+  }
+
+  function statusTone(value) {
+    const normalized = normalizedStatusValue(value);
+    if (!normalized || normalized.length > 64) return "";
+    if (/^[+-]?\d+(\.\d+)?(%|pp)?$/.test(normalized)) return "";
+    if (exactStatusTones.has(normalized)) return exactStatusTones.get(normalized);
+    if (badStatusFragments.some((fragment) => normalized.includes(fragment))) return "bad";
+    if (warnStatusFragments.some((fragment) => normalized.includes(fragment))) return "warn";
+    if (okStatusFragments.some((fragment) => normalized.includes(fragment))) return "ok";
+    return "";
+  }
+
+  function applyStatusTone(node, value, baseClass = "") {
+    if (!node?.classList) return "";
+    const tone = statusTone(value);
+    node.classList.remove(...statusToneClassNames);
+    if (node.classList.contains("status")) node.classList.remove(...statusVariantClassNames);
+    if (!tone) return "";
+    if (baseClass) node.classList.add(baseClass);
+    node.classList.add(`status-tone-${tone}`);
+    if (node.classList.contains("status")) node.classList.add(tone);
+    return tone;
+  }
+
+  function pageSizeFor(table, rows, noPagination) {
+    if (noPagination) return Math.max(1, (rows || []).length);
+    const configured = Number(table?.dataset.pageSize || DEFAULT_PAGE_SIZE);
+    return Number.isFinite(configured) && configured > 0 ? configured : DEFAULT_PAGE_SIZE;
   }
 
   function rowSearchText(item) {
@@ -108,7 +296,7 @@
         detail: detailFactory(row),
       })),
       page: 1,
-      pageSize: noPagination ? Math.max(1, (rows || []).length) : Number(table?.dataset.pageSize || 10),
+      pageSize: pageSizeFor(table, rows, noPagination),
       noPagination,
       query: existing.query || "",
       sortIndex: existing.sortIndex,
@@ -169,6 +357,7 @@
         const td = document.createElement("td");
         td.textContent = cell.value;
         if (cell.className) td.className = cell.className;
+        applyStatusTone(td, cell.value, "status-cell");
         tr.appendChild(td);
       });
       tbody.appendChild(tr);
@@ -224,6 +413,26 @@
     info.textContent = `Page ${state.page}/${totalPages} - ${totalRows} rows`;
     controls.append(prev, info, next);
   }
+
+  function decorateExistingStatusTone() {
+    document.querySelectorAll("td").forEach((cell) => {
+      applyStatusTone(cell, cell.textContent, "status-cell");
+    });
+    document.querySelectorAll(".status").forEach((node) => {
+      applyStatusTone(node, node.textContent);
+    });
+    document.querySelectorAll("[data-bind]").forEach((node) => {
+      if (!node.closest("td")) applyStatusTone(node, node.textContent, "status-inline");
+    });
+    document.querySelectorAll(".metric strong, .summary-line strong").forEach((node) => {
+      if (!node.hasAttribute("data-bind")) applyStatusTone(node, node.textContent, "status-inline");
+    });
+  }
+
+  window.MyInvestStatusTone = {
+    apply: applyStatusTone,
+    tone: statusTone,
+  };
 
   function renderGapChart(buckets) {
     const chart = document.getElementById("bucketGapChart");
@@ -1554,6 +1763,7 @@
     setupSort();
     setupDashboardWindow();
     setupToolFilters();
+    decorateExistingStatusTone();
     refresh();
     window.setInterval(refresh, 60000);
   });

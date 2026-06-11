@@ -474,13 +474,15 @@ TOOL_DEFINITIONS: tuple[ToolDefinition, ...] = (
         description="复制给 Codex 后按 MARKET_POSITION 模块更新市场评分；只有最新完整交易日可用时才会推进 Market Basis。",
         prompt=(
             "请按 docs/modules/MARKET_POSITION.md 和 templates/market_score_template.md 更新市场仓位模块。"
-            "读取 research/latest_index.json 的 modules 当前指针、research/config/market_position_mapping.json 和 docs/DATA_SOURCES.md，"
-            "优先使用本地结构化数据源。只使用最新完整交易日作为 basis_trade_date；如果今天完整行情不可用，"
+            "先读取 README.md、docs/DATA_SOURCES.md、docs/modules/MARKET_POSITION.md、templates/market_score_template.md、"
+            "research/latest_index.json 的 modules 当前指针和 research/config/market_position_mapping.json。检查本地 .env 是否有 TUSHARE_TOKEN，"
+            "不要输出 token；优先使用 Tushare 结构化数据，必要时用 QMT/BaoStock/yfinance/FRED 或官方网页补充并注明来源。"
+            "只使用最新完整交易日作为 basis_trade_date；如果今天完整行情不可用，"
             "不要强行写成今天，请说明当前可用的最新完整交易日和原因。输出 research/market/market_score_YYYY-MM-DD_HHMMSS.md/json，"
-            "并更新 research/latest_index.json 的 modules.market_score。市场评分、市场状态、权益和现金目标区间必须与 "
+            "并通过 python scripts/build_latest_index.py 重建 research/latest_index.json。市场评分、市场状态、权益和现金目标区间必须与 "
             "market_position_mapping 一致。保持 current-only、ratio-only 和 ResearchFirst 边界；不要修改 "
-            "generate_action_plan.py 或 generate_target_allocation.py，不生成执行指令。完成后运行 "
-            "python scripts/project_check.py --current-only，并告诉我下一步应生成 target allocation、action plan，然后刷新 Web 数据库。"
+            "generate_action_plan.py 或 generate_target_allocation.py，不生成执行指令。完成后运行 python scripts/ingest_current_state.py、"
+            "python scripts/project_check.py --current-only 和 python scripts/web_check.py，并告诉我下一步是否应生成 target allocation、action plan。"
         ),
     ),
     ToolDefinition(
@@ -492,17 +494,33 @@ TOOL_DEFINITIONS: tuple[ToolDefinition, ...] = (
         description="复制到 Codex 后生成盘前策略简报；该类研究需要外部信息和人工审阅。",
         prompt=(
             "请按 docs/DAILY_PROCESS.md 和 docs/modules/STRATEGY_BRIEFING.md 执行盘前策略简报。"
-            "读取 latest_index 当前市场仓位、主线、组合、操作建议和估值状态。只按比例分析。"
+            "读取 research/latest_index.json 的 modules 当前指针，只引用当前市场仓位、主线、组合、操作建议和估值状态。"
+            "优先使用 Tushare 和本地结构化数据补充最新完整交易日背景；外部新闻、政策或观点必须注明来源和日期。"
+            "只按比例分析，不生成自动交易内容，不写入 Web 数据库；如生成研究文件，完成后重建 latest_index、刷新 Web DB 并运行 project_check --current-only。"
         ),
     ),
     ToolDefinition(
         id="theme_research_prompt",
-        title="主线研究提示词",
+        title="正式主线重研提示词",
         category="Codex 研究",
         kind="prompt",
         impact="manual_prompt",
-        description="复制到 Codex 后按主线研究模块生成 timestamped 主线报告。",
-        prompt="请按 docs/modules/THEME_RESEARCH.md 更新主线研究，优先使用 Tushare 结构化数据，并写入 decision_log。",
+        description="复制到 Codex 后按 THEME_RESEARCH 正式重研主线，更新 theme_review、theme_registry、theme_leaders 和 Web 当前态。",
+        prompt=(
+            "请按 docs/modules/THEME_RESEARCH.md 和 templates/theme_review_template.md 正式重研 A 股主线。"
+            "先读取 README.md、docs/DATA_SOURCES.md、docs/FILE_NAMING.md、research/latest_index.json 的 modules 当前指针、"
+            "research/themes/theme_registry.json、最新 theme_review、最新 market_score、etf_registry、stock_registry、portfolio_snapshot 和 decision_log。"
+            "检查本地 .env 是否有 TUSHARE_TOKEN，不要输出 token；优先使用 Tushare 结构化数据，必要时用 QMT/BaoStock/yfinance/FRED、"
+            "交易所、指数公司、基金公司、政府/监管官网和主流财经来源补充，并写清来源和日期。"
+            "只使用最新完整交易日作为 basis_trade_date；如果今天完整行情不可用，不要强行写成今天，要说明当前可用的最新完整交易日和原因。"
+            "重研必须区分战略评级和当前 A 股交易评级，覆盖主线分数、周期阶段、变化类型、升级/降级/失效条件、数据缺口和对市场仓位/ETF/个股/操作建议模块的影响。"
+            "输出 timestamped research/themes/theme_review_YYYY-MM-DD_HHMMSS.md/json，并同步更新 research/themes/theme_registry.json 的 last_updated、"
+            "themes、data_basis、updated_at 和 last_review_file。保持 current-only、ratio-only、ResearchFirst 和 no automatic trading 边界；"
+            "不要生成单标的买卖或自动执行内容。完成后追加 research/logs/decision_log.md，然后依次运行："
+            "python scripts/build_latest_index.py；python scripts/generate_theme_leaders.py；python scripts/build_latest_index.py；"
+            "python scripts/ingest_current_state.py；python scripts/project_check.py --current-only；python scripts/web_check.py。"
+            "最后说明新 theme_review、theme_registry、theme_leaders、latest_index 和 Web Themes 页是否已更新。"
+        ),
     ),
     ToolDefinition(
         id="etf_research_prompt",
@@ -511,7 +529,15 @@ TOOL_DEFINITIONS: tuple[ToolDefinition, ...] = (
         kind="prompt",
         impact="manual_prompt",
         description="复制到 Codex 后为指定 ETF 生成 ResearchFirst 前置档案。",
-        prompt="请按 docs/modules/ETF_RESEARCH.md 为 <ETF代码> 生成 ETF 档案，优先使用 Tushare，并保持 ResearchFirst 边界。",
+        prompt=(
+            "请按 docs/modules/ETF_RESEARCH.md 为 <ETF代码> 生成或刷新 ETF ResearchFirst 前置档案。"
+            "先读取 docs/DATA_SOURCES.md、research/latest_index.json 的 modules 当前指针、最新 market_score、theme_registry、theme_review、"
+            "etf_registry、portfolio_snapshot 和 valuation 状态。检查本地 .env 是否有 TUSHARE_TOKEN，不要输出 token；优先使用 Tushare，"
+            "必要时用基金公司、指数公司、交易所、QMT/BaoStock/yfinance 补充并注明来源和日期。"
+            "输出 timestamped research/etfs/ 档案并更新 etf_registry；只写 profile、valuation、liquidity、duration/利率/信用/流动性风险等研究状态，"
+            "不生成单标的买卖或自动执行内容。完成后运行 python scripts/build_latest_index.py、python scripts/ingest_current_state.py、"
+            "python scripts/check_research_first_gate.py --path <latest action_plan path>、python scripts/project_check.py --current-only 和 python scripts/web_check.py。"
+        ),
     ),
     ToolDefinition(
         id="stock_research_prompt",
@@ -520,7 +546,16 @@ TOOL_DEFINITIONS: tuple[ToolDefinition, ...] = (
         kind="prompt",
         impact="manual_prompt",
         description="复制到 Codex 后为指定个股生成 profile、valuation、liquidity 前置研究。",
-        prompt="请按 docs/modules/STOCK_RESEARCH.md 为 <股票代码> 生成个股档案，必须覆盖 profile、valuation、liquidity。",
+        prompt=(
+            "请按 docs/modules/STOCK_RESEARCH.md 为 <股票代码> 生成或刷新个股 ResearchFirst 前置档案。"
+            "先读取 docs/DATA_SOURCES.md、research/latest_index.json 的 modules 当前指针、最新 market_score、theme_registry、theme_review、"
+            "stock_registry、portfolio_snapshot 和 valuation 状态。检查本地 .env 是否有 TUSHARE_TOKEN，不要输出 token；优先使用 Tushare，"
+            "必要时用交易所公告、公司公告、QMT/BaoStock/yfinance 和可靠公开来源补充，并注明来源和日期。"
+            "必须覆盖 profile、valuation、liquidity、主题绑定、主要风险、数据缺口和 ResearchFirst gate 结论；"
+            "不生成单标的买卖或自动执行内容。完成后更新 stock_registry，运行 python scripts/build_latest_index.py、"
+            "python scripts/ingest_current_state.py、python scripts/check_research_first_gate.py --path <latest action_plan path>、"
+            "python scripts/project_check.py --current-only 和 python scripts/web_check.py。"
+        ),
     ),
 )
 

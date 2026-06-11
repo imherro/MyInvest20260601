@@ -15,6 +15,8 @@
         --blue: #235ea8;
         --green: #0d7c66;
         --amber: #a35f00;
+        --red: #a12b2b;
+        --info: #275f9f;
       }
       * { box-sizing: border-box; }
       body {
@@ -175,18 +177,48 @@
       .metric.ok { border-color: #81c7b4; background: #f1faf7; }
       .metric.warn { border-color: #e4b35e; background: #fff8e9; }
       .metric.fail { border-color: #e29b9b; background: #fff1f1; }
-      .status {
+      .status,
+      .status-inline {
         display: inline-flex;
         align-items: center;
         min-height: 24px;
         padding: 2px 8px;
         border-radius: 999px;
-        background: #eef6f3;
-        color: var(--green);
+        background: #eef2f7;
+        color: #344052;
         font-size: 13px;
         font-weight: 600;
       }
+      .status-inline {
+        margin-top: 4px;
+        border: 1px solid transparent;
+      }
+      .status.ok,
+      .status-tone-ok {
+        background: #eef8f4;
+        color: var(--green);
+      }
       .status.warn {
+        background: #fff6e5;
+        color: var(--amber);
+      }
+      .status.bad,
+      .status.fail,
+      .status-tone-bad {
+        background: #fff1f1;
+        color: var(--red);
+      }
+      .status.info,
+      .status-tone-info {
+        background: #eef5ff;
+        color: var(--info);
+      }
+      .status.neutral,
+      .status-tone-neutral {
+        background: #eef2f7;
+        color: #344052;
+      }
+      .status-tone-warn {
         background: #fff6e5;
         color: var(--amber);
       }
@@ -218,6 +250,44 @@
         content: " \2195";
         color: var(--muted);
         font-weight: 400;
+      }
+      tbody tr:nth-child(odd):not(.detail-row):not(.tool-group-row):not(.tool-result-row) td {
+        background: #ffffff;
+      }
+      tbody tr:nth-child(even):not(.detail-row):not(.tool-group-row):not(.tool-result-row) td {
+        background: #f7fafc;
+      }
+      tbody tr.expandable-row:hover td {
+        background: #eef4fb;
+      }
+      td.status-cell {
+        border-left: 3px solid transparent;
+        font-weight: 650;
+      }
+      td.status-tone-ok {
+        background: #eef8f4 !important;
+        border-left-color: #6ab49f;
+        color: var(--green);
+      }
+      td.status-tone-warn {
+        background: #fff6e5 !important;
+        border-left-color: #dda64c;
+        color: var(--amber);
+      }
+      td.status-tone-bad {
+        background: #fff1f1 !important;
+        border-left-color: #d87878;
+        color: var(--red);
+      }
+      td.status-tone-info {
+        background: #eef5ff !important;
+        border-left-color: #82aee0;
+        color: var(--info);
+      }
+      td.status-tone-neutral {
+        background: #eef2f7 !important;
+        border-left-color: #bac4d2;
+        color: #344052;
       }
       tr:last-child td { border-bottom: 0; }
       .num { text-align: right; font-variant-numeric: tabular-nums; }
@@ -463,7 +533,7 @@
         table { display: block; overflow-x: auto; }
       }
     </style>
-    <script src="/static/app.js?v=portfolio-no-pagination-20260611" defer></script>
+    <script src="/static/app.js?v=page100-status-tones-v2-20260611" defer></script>
   </head>
   <body data-page="{{ page }}" data-api-path="{{ api_path }}">
     <header>

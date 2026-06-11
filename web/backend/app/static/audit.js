@@ -28,6 +28,7 @@
   function setBind(name, value) {
     document.querySelectorAll(`[data-bind="${name}"]`).forEach((node) => {
       node.textContent = text(value);
+      window.MyInvestStatusTone?.apply(node, value, "status-inline");
     });
   }
 
@@ -37,9 +38,10 @@
     tbody.replaceChildren();
     (rows || []).forEach((row) => {
       const tr = document.createElement("tr");
-      [row.label, row.status, row.api_path].forEach((value) => {
+      [row.label, row.status, row.api_path].forEach((value, index) => {
         const td = document.createElement("td");
         td.textContent = text(value, "");
+        if (index === 1) window.MyInvestStatusTone?.apply(td, value, "status-cell");
         tr.appendChild(td);
       });
       tbody.appendChild(tr);

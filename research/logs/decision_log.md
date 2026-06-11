@@ -2182,3 +2182,14 @@
   - `research/portfolio/portfolio_snapshot_2026-06-11_141600.json` generated_at=2026-06-11_141600 basis=2026-06-11
   - `research/allocation/target_allocation_2026-06-11_141652.json` generated_at=2026-06-11_141652 basis=20260610
   - `research/alerts/intraday_rules.json` generated_at=2026-06-11_141652 basis=None
+
+2026-06-11 盘后复盘自动底稿：生成 post_market_review_2026-06-11_222644.md/json；读取最新 market/theme/action/portfolio/alerts，并运行估值更新检查；缺少执行记录时不判断已执行。
+
+2026-06-11 盘后复盘自动底稿：生成 post_market_review_2026-06-11_222750.md/json；读取最新 market/theme/action/portfolio/alerts，并运行估值更新检查；缺少执行记录时不判断已执行。
+
+## 2026-06-11_231244 主线重研
+
+- basis_trade_date：20260611。Tushare daily rows 5511 and 7/7 main index rows available for 20260611; checked open dates <= 20260611.
+- 输出：research/themes/theme_review_2026-06-11_231244.md、research/themes/theme_review_2026-06-11_231244.json。
+- 结论：市场仓位仍偏防御，主线交易窗口只保留半导体为B档进攻候选；AI和机器人转为分歧观察，有色/储能仅作主题试错，其他方向等待重新确认。
+- 边界：仅更新主线研究和登记册，不生成单标的交易建议或自动执行内容。

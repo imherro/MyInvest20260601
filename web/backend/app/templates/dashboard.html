@@ -70,7 +70,7 @@
         <a class="button-link" href="{{ item.href }}">{{ item.label }}</a>
       {% endfor %}
     </div>
-    <table data-page-size="12">
+    <table data-page-size="100">
       <thead>
         <tr>
           <th>Module</th>
@@ -112,7 +112,7 @@
       <div class="metric"><span>Large Gaps</span><strong data-bind="dashboard_analytics_large_gaps">{{ analytics_metrics.large_gap_count or 0 }}</strong></div>
       <div class="metric"><span>History Entries</span><strong data-bind="dashboard_analytics_history_entries">{{ analytics_metrics.history_entry_count or 0 }}</strong></div>
     </div>
-    <table data-page-size="12">
+    <table data-page-size="100">
       <thead>
         <tr>
           <th>Gate</th>

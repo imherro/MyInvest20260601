@@ -44,6 +44,22 @@
     return "fail";
   }
 
+  function applyStatusTone(cell, value) {
+    window.MyInvestStatusTone?.apply(cell, value, "status-cell");
+  }
+
+  function applyBooleanTone(cell, value, positiveWhenTrue = true) {
+    cell.classList.remove(
+      "status-cell",
+      "status-tone-ok",
+      "status-tone-warn",
+      "status-tone-bad",
+      "status-tone-info",
+      "status-tone-neutral",
+    );
+    cell.classList.add("status-cell", value === positiveWhenTrue ? "status-tone-ok" : "status-tone-bad");
+  }
+
   function setStatusCard(name, state) {
     document.querySelectorAll(`[data-status-card="${name}"]`).forEach((node) => {
       node.classList.remove("ok", "warn", "fail");
@@ -91,9 +107,11 @@
           yesNo(check.web_smoke_compatible),
           (check.degraded_reasons || []).join(", ") || "none",
           source.api_path || source.service || source.provider || "readiness",
-        ].forEach((value) => {
+        ].forEach((value, index) => {
           const td = document.createElement("td");
           td.textContent = text(value, "");
+          if (index === 1) applyStatusTone(td, value);
+          if (index === 2) applyBooleanTone(td, check.web_smoke_compatible);
           tr.appendChild(td);
         });
         tbody.appendChild(tr);
@@ -120,6 +138,7 @@
       const valueCell = document.createElement("td");
       nameCell.textContent = name;
       valueCell.textContent = yesNo(value);
+      applyBooleanTone(valueCell, value);
       tr.append(nameCell, valueCell);
       tbody.appendChild(tr);
     });

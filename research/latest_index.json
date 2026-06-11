@@ -1,17 +1,17 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-11_141704",
+  "generated_at": "2026-06-11_231547",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
       "module": "action_plan",
       "code": null,
       "name": null,
-      "path": "research/actions/action_plan_2026-06-11_141647_latest_ratio_only.json",
-      "generated_at": "2026-06-11_141647",
+      "path": "research/actions/action_plan_2026-06-11_141734_latest_ratio_only.json",
+      "generated_at": "2026-06-11_141734",
       "basis_trade_date": "20260610",
-      "sha256": "a382425707e34e288fd8f68e6ddcd1058f2f55c92133faf331e9bf85424013e6",
+      "sha256": "64000d0bf929f9fe38ad9766ed4a3c1cd70e4804126e74bdf9d70dc37831d018",
       "quality": {
         "status": "ok"
       },
@@ -26,7 +26,7 @@
       "path": "research/alerts/intraday_alert_2026-06-11_104602.json",
       "generated_at": "2026-06-11_104602",
       "basis_trade_date": "2026-06-11",
-      "sha256": "c94e7b2b37a39176ca98bdaa0ee115adf5dc323981a89af7b4331abcf65f3553",
+      "sha256": "d7422b4c75f1252a8318c8578b76470d36f2b638ce54d59132b42ba6f5cf864f",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -71,7 +71,7 @@
       "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
       "generated_at": "2026-06-11_103833",
       "basis_trade_date": null,
-      "sha256": "bb546df54e52b1ecf4c87dc259a0261533faea5558026700e0d345be0c5544e6",
+      "sha256": "2feab2427279e550221e671d6f0ef01f454fcca36b10e74362c29db91d5c6df0",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -221,7 +221,7 @@
       "path": "research/market/market_score_2026-06-11_140751.json",
       "generated_at": "2026-06-11_140751",
       "basis_trade_date": "20260610",
-      "sha256": "8671dde4de2b569f6c6f9b747269a3bb9ecb8621056e7914bfbf043ba63a0a3d",
+      "sha256": "e286838bb073a59403aa4f53705450a70b1439f1793c4e2523d4d4de8a656dfc",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -293,10 +293,10 @@
       "module": "post_market_review",
       "code": null,
       "name": null,
-      "path": "research/reviews/post_market_review_2026-06-09_162342.json",
-      "generated_at": "2026-06-09_162342",
-      "basis_trade_date": "2026-06-09",
-      "sha256": "e62e2751a5f900fd357c39d95ebf922559bbf855b97f0687ed8fa4c9e5b402db",
+      "path": "research/reviews/post_market_review_2026-06-11_222750.json",
+      "generated_at": "2026-06-11_222750",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "25e8286f893615103593be3697285dbd91f12f219b4ec29567fd1faa6fc51f08",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -338,10 +338,10 @@
       "module": "theme_leaders",
       "code": null,
       "name": null,
-      "path": "research/theme_leaders/theme_leaders_2026-06-11_131545.json",
-      "generated_at": "2026-06-11_131545",
+      "path": "research/theme_leaders/theme_leaders_2026-06-11_231538.json",
+      "generated_at": "2026-06-11_231538",
       "basis_trade_date": null,
-      "sha256": "8d53e0ba58ec5a091ee3450c7b72d664aa73d4c5c6850d8ae7d76d0551f1ec29",
+      "sha256": "e2d980e30d81fdb40642a6478f727f1fcf65fa32b55f33f9b5006a91f8662268",
       "quality": {
         "status": "fresh"
       },
@@ -354,9 +354,9 @@
       "code": null,
       "name": null,
       "path": "research/themes/theme_registry.json",
-      "generated_at": "2026-06-08_102237",
+      "generated_at": "2026-06-11_231244",
       "basis_trade_date": null,
-      "sha256": "8528c79e0b7e62ae061f1d580942390dcc688bc46325297e233bfadd48f966a2",
+      "sha256": "4a18823a96240833408450c28c5f699a53748fde57efefe4cb987537a48f40cf",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -368,10 +368,10 @@
       "module": "theme_review",
       "code": null,
       "name": null,
-      "path": "research/themes/theme_review_2026-06-08_102237.json",
-      "generated_at": "2026-06-08_102237",
-      "basis_trade_date": "20260605",
-      "sha256": "f8cd26cd7055197e14437dde7e7719d14dd678681375065e02c6e0d6b40d458a",
+      "path": "research/themes/theme_review_2026-06-11_231244.json",
+      "generated_at": "2026-06-11_231244",
+      "basis_trade_date": "20260611",
+      "sha256": "80a63c66bce9e9d5376cd7b0d46fa89236faaa9b29e1d9a646cafc901bd99821",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -727,6 +727,21 @@
       }
     },
     {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-11_141734_latest_ratio_only.json",
+      "generated_at": "2026-06-11_141734",
+      "basis_trade_date": "20260610",
+      "sha256": "64000d0bf929f9fe38ad9766ed4a3c1cd70e4804126e74bdf9d70dc37831d018",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
       "module": "intraday_alerts",
       "code": null,
       "name": null,
@@ -808,7 +823,7 @@
       "path": "research/alerts/intraday_alert_2026-06-11_104602.json",
       "generated_at": "2026-06-11_104602",
       "basis_trade_date": "2026-06-11",
-      "sha256": "c94e7b2b37a39176ca98bdaa0ee115adf5dc323981a89af7b4331abcf65f3553",
+      "sha256": "d7422b4c75f1252a8318c8578b76470d36f2b638ce54d59132b42ba6f5cf864f",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1078,7 +1093,7 @@
       "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
       "generated_at": "2026-06-11_103833",
       "basis_trade_date": null,
-      "sha256": "bb546df54e52b1ecf4c87dc259a0261533faea5558026700e0d345be0c5544e6",
+      "sha256": "2feab2427279e550221e671d6f0ef01f454fcca36b10e74362c29db91d5c6df0",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2068,7 +2083,7 @@
       "path": "research/market/market_score_2026-06-11_140751.json",
       "generated_at": "2026-06-11_140751",
       "basis_trade_date": "20260610",
-      "sha256": "8671dde4de2b569f6c6f9b747269a3bb9ecb8621056e7914bfbf043ba63a0a3d",
+      "sha256": "e286838bb073a59403aa4f53705450a70b1439f1793c4e2523d4d4de8a656dfc",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2632,6 +2647,36 @@
       }
     },
     {
+      "module": "post_market_review",
+      "code": null,
+      "name": null,
+      "path": "research/reviews/post_market_review_2026-06-11_222644.json",
+      "generated_at": "2026-06-11_222644",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "1ac7e6cc8d2a540db741406a1e7a3817c1c239ed86061c2502346a5a865ec8c0",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "post_market_review",
+      "code": null,
+      "name": null,
+      "path": "research/reviews/post_market_review_2026-06-11_222750.json",
+      "generated_at": "2026-06-11_222750",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "25e8286f893615103593be3697285dbd91f12f219b4ec29567fd1faa6fc51f08",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "stock_profile",
       "code": "001280.SZ",
       "name": "中国铀业",
@@ -2992,13 +3037,28 @@
       }
     },
     {
+      "module": "theme_leaders",
+      "code": null,
+      "name": null,
+      "path": "research/theme_leaders/theme_leaders_2026-06-11_231538.json",
+      "generated_at": "2026-06-11_231538",
+      "basis_trade_date": null,
+      "sha256": "e2d980e30d81fdb40642a6478f727f1fcf65fa32b55f33f9b5006a91f8662268",
+      "quality": {
+        "status": "fresh"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "theme_registry",
       "code": null,
       "name": null,
       "path": "research/themes/theme_registry.json",
-      "generated_at": "2026-06-08_102237",
+      "generated_at": "2026-06-11_231244",
       "basis_trade_date": null,
-      "sha256": "8528c79e0b7e62ae061f1d580942390dcc688bc46325297e233bfadd48f966a2",
+      "sha256": "4a18823a96240833408450c28c5f699a53748fde57efefe4cb987537a48f40cf",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3044,6 +3104,21 @@
       "generated_at": "2026-06-08_102237",
       "basis_trade_date": "20260605",
       "sha256": "f8cd26cd7055197e14437dde7e7719d14dd678681375065e02c6e0d6b40d458a",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "theme_review",
+      "code": null,
+      "name": null,
+      "path": "research/themes/theme_review_2026-06-11_231244.json",
+      "generated_at": "2026-06-11_231244",
+      "basis_trade_date": "20260611",
+      "sha256": "80a63c66bce9e9d5376cd7b0d46fa89236faaa9b29e1d9a646cafc901bd99821",
       "quality": {
         "status": "legacy_unknown"
       },

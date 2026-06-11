@@ -25,7 +25,7 @@ class HistoryWorkbenchService:
             "summary": {"kind": kind, "count": 0, "db_ready": False, "latest_generated_at": None},
         }
 
-    def market_history(self, *, limit: int = 50) -> dict[str, Any]:
+    def market_history(self, *, limit: int = 100) -> dict[str, Any]:
         if not self.db_path.exists():
             return self._missing("market_history")
         rows = [self._without_narrative(row) for row in query_market_history(self.db_path, limit=limit)]

@@ -338,9 +338,9 @@ def history_workbench_page(request: Request) -> HTMLResponse:
     service = HistoryWorkbenchService()
     workbench = {
         "quality": service.quality(),
-        "market": service.market_history(limit=5),
-        "positions": service.position_history(limit=10),
-        "actions": service.action_history(limit=10),
+        "market": service.market_history(limit=100),
+        "positions": service.position_history(limit=100),
+        "actions": service.action_history(limit=100),
     }
     return templates.TemplateResponse(
         request,
@@ -356,7 +356,7 @@ def history_workbench_page(request: Request) -> HTMLResponse:
 
 
 @app.get("/market/history", response_class=HTMLResponse)
-def market_history_page(request: Request, limit: int = 50) -> HTMLResponse:
+def market_history_page(request: Request, limit: int = 100) -> HTMLResponse:
     history = HistoryWorkbenchService().market_history(limit=limit)
     return templates.TemplateResponse(
         request,
