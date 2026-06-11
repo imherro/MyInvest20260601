@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(historical-metrics): add read-only audit guard skeleton"
+COMMIT_MESSAGE = "feat(historical-metrics): add full read-only guard enforcement"
 
 API_PATHS = [
     "/api/health",
@@ -2270,13 +2270,43 @@ class WebCheck:
                 raise ValueError("table_counts is empty")
             if not isinstance(guard.get("source_modules"), dict) or not guard.get("source_modules"):
                 raise ValueError("source_modules is empty")
+            contract = guard.get("contract") or {}
+            if contract.get("contract_version") != "historical_metrics_guard_v1":
+                raise ValueError("contract version mismatch")
+            for key in [
+                "required_inputs",
+                "observed_inputs",
+                "missing_inputs",
+                "required_source_modules",
+                "observed_source_modules",
+                "missing_source_modules",
+                "expected_fingerprint",
+                "observed_fingerprint",
+                "fingerprint_match",
+            ]:
+                if key not in contract:
+                    raise ValueError(f"contract field missing: {key}")
+            if not contract.get("expected_fingerprint") or not contract.get("observed_fingerprint"):
+                raise ValueError("contract fingerprint is missing")
+            if contract.get("fingerprint_match") is not True:
+                raise ValueError("contract fingerprint mismatch for current DB")
+            if contract.get("missing_source_modules") != []:
+                raise ValueError("source modules should be complete for current DB")
+            if contract.get("missing_integration_payloads") != []:
+                raise ValueError("integration payloads should be complete for current DB")
             enforcement = guard.get("enforcement") or {}
-            if enforcement.get("mode") != "read_only_historical_metrics_guard":
+            if enforcement.get("mode") != "full_read_only_historical_metrics_guard":
                 raise ValueError("enforcement mode mismatch")
             if enforcement.get("fail_closed") is not False:
                 raise ValueError("fail_closed should be false for current DB")
+            if enforcement.get("read_model_usable") is not True:
+                raise ValueError("read model should be usable for current DB")
             if enforcement.get("web_smoke_compatible") is not True:
                 raise ValueError("guard is not Web-smoke compatible")
+            if enforcement.get("audit_bundle_compatible") is not True:
+                raise ValueError("guard is not audit-bundle compatible")
+            if enforcement.get("contract_match") is not True:
+                raise ValueError("enforcement contract_match should be true")
             safety = guard.get("safety") or {}
             for key in ["read_only", "ratio_only", "current_only", "research_first_neutral", "openapi_get_only"]:
                 if safety.get(key) is not True:

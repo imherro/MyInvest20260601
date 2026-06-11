@@ -367,6 +367,16 @@ Optional history snapshot availability may be read through the existing guarded
 `HistorySnapshotRepository.runtime_summary()` helper. Missing optional history
 snapshot state is `degraded`; missing required read-model inputs is `mismatch`.
 
+Phase 15C strengthens the same guard with a deterministic
+`historical_metrics_guard_v1` contract. The service computes an expected
+fingerprint from required table inputs, source modules, integration payloads,
+and safety flags, then compares it with an observed fingerprint built from
+read-only metadata. Missing required inputs, missing source modules, missing
+integration payloads, fingerprint mismatches, or diagnostics exceptions report
+fail-closed `mismatch` or `unavailable`. The repository remains a thin
+`DatabaseService` delegate and does not execute write SQL, create tables, write
+SQLite, repair data, or call ingest from request handling.
+
 ## Phase 9 Database Service Rules
 
 `DatabaseService` must:

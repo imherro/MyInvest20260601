@@ -267,6 +267,41 @@ python -m pytest web/backend/tests -q -W error
 python scripts/web_check.py
 ```
 
+## Phase 15C Historical Metrics Guard Enforcement
+
+Phase 15C keeps the same read-only diagnostics endpoint and strengthens the
+report:
+
+- deterministic `historical_metrics_guard_v1` contract
+- expected and observed SHA-256 fingerprints
+- required, observed, and missing read-model inputs
+- required, observed, and missing current-module sources
+- required, observed, and missing integration payload readiness
+- enforcement fields for `fail_closed`, `read_model_usable`,
+  `web_smoke_compatible`, and `audit_bundle_compatible`
+
+Expected interpretation:
+
+- `ok`: required inputs, source modules, integration payloads, and contract
+  fingerprint match; optional history snapshot is available.
+- `degraded`: required inputs and contract fingerprint match, but optional
+  history snapshot state is unavailable.
+- `mismatch`: a required table, current-module source, integration payload, or
+  contract fingerprint is missing or inconsistent.
+- `unavailable`: diagnostics metadata could not be read safely.
+
+The guard is reporting only. It does not create or alter SQLite objects, run
+ingest, repair the read model, write research artifacts, or change dashboard,
+audit bundle, preference, schema diagnostics, or Historical Metrics behavior.
+
+Validation:
+
+```bash
+python -m pytest web/backend/tests/test_historical_metrics_guard.py -q
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+```
+
 Validation:
 
 ```bash
