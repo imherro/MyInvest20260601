@@ -68,6 +68,30 @@ All responses pass `RatioOnlyService` before returning. A sanitizer failure retu
 
 OpenAPI docs are exposed by FastAPI at `GET /docs` while the local server is running.
 
+## Phase 16A Workbench Readiness API Draft
+
+Phase 16A is design-only. The following GET-only endpoints are candidates for a
+future implementation and are not active routes in Phase 16A:
+
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
+- `GET /readiness`
+
+The future readiness API should compose existing safe diagnostics only:
+
+- environment status
+- schema guard diagnostics
+- Historical Metrics guard diagnostics
+- dashboard summary
+- audit bundle readiness
+- current validation summary metadata already present in the read-only system
+
+Allowed response fields are status labels, counts, timestamps, boolean safety
+flags, repo-relative source metadata, and local Web links. The API must not run
+validation commands from Web, write SQLite, write files, rebuild ingest,
+generate target allocations, generate action plans, expose local absolute
+paths, expose credentials, or add POST/PUT/PATCH/DELETE methods.
+
 ## Workbench Environment Center
 
 Phase 10A adds a read-only workbench environment endpoint:

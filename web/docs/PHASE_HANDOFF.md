@@ -5,7 +5,7 @@ This handoff file is the durable cross-session starting point for new Codex sess
 ## Current Baseline
 
 - Project: MyInvest
-- Current stable tag: `web-workbench-phase10-12-v0.4.2`
+- Current stable tag: `web-workbench-phase10-12-v0.4.5`
 - Previous read-only repository baseline tag: `web-db-repository-readonly-baseline-v0.3.0`
 - Stable baseline meaning:
   - Web + DB repository read-only baseline.
@@ -18,23 +18,28 @@ This handoff file is the durable cross-session starting point for new Codex sess
   - Phase 10-12 Workbench release is merged and tagged.
   - Phase 13A release packaging hygiene is merged and tagged.
   - Phase 13B CI/test warning hygiene is merged and tagged.
+  - Phase 14 schema diagnostics guard is merged and tagged.
+  - Phase 15 Historical Metrics diagnostics guard is merged and tagged.
 - Current worktree:
   - Phase 10 worktree: local sibling worktree, not the stable production worktree.
 - Stable web port: `8000`
 - Phase 10 development port: `8010`
 - Stable web service and Phase 10 development service must use separate `temp/`, SQLite, and runtime directories.
 
-## Release Snapshot v0.4.2
+## Release Snapshot v0.4.5
 
-- Stable commit: `cf0e42cac05ce78f7e108bf41425399514d17e92`
-- Stable tag: `web-workbench-phase10-12-v0.4.2`
+- Stable commit: `107be68b638159e289e638e1c0c3bb0c3a45a8a3`
+- Stable tag: `web-workbench-phase10-12-v0.4.5`
 - Release tags:
   - `web-workbench-phase10-12-v0.4.0`: Phase 10-12 Workbench release.
   - `web-workbench-phase10-12-v0.4.1`: Phase 13A review package privacy scan hygiene.
   - `web-workbench-phase10-12-v0.4.2`: Phase 13B CI/test warning hygiene.
+  - `web-workbench-phase10-12-v0.4.3`: Phase 14C schema guard full read-only enforcement.
+  - `web-workbench-phase10-12-v0.4.4`: Phase 15B Historical Metrics guard skeleton.
+  - `web-workbench-phase10-12-v0.4.5`: Phase 15C Historical Metrics guard full read-only enforcement.
 - PR status:
-  - PR #24 through PR #30 are merged.
-  - Phase 13B merge commit is `cf0e42cac05ce78f7e108bf41425399514d17e92`.
+  - PR #24 through PR #37 are merged.
+  - Phase 15C merge commit is `107be68b638159e289e638e1c0c3bb0c3a45a8a3`.
 - Current validation baseline:
   - `python scripts/check_hidden_unicode.py`: PASS.
   - `python scripts/ingest_current_state.py`: PASS.
@@ -47,10 +52,10 @@ This handoff file is the durable cross-session starting point for new Codex sess
   - `python scripts/project_check.py --current-only`: PASS.
   - Strict source review package build: PASS with `privacy_warnings=0`.
 - Next phase entry:
-  - Phase 14 must start from `main` at or after `web-workbench-phase10-12-v0.4.2`.
+  - Phase 16A must start from `main` at or after `web-workbench-phase10-12-v0.4.5`.
   - New sessions must read `AGENTS.md`, this file, `web/docs/WEB_RUNBOOK.md`, `web/docs/SERVICE_LAYER_PLAN.md`, and `web/docs/API_SPEC.md`.
   - Default boundaries remain read-only, ratio-only, current-only, and OpenAPI GET-only.
-  - Do not start from the older `web-db-repository-readonly-baseline-v0.3.0` tag for Phase 14 work unless explicitly asked to inspect historical state.
+  - Phase 16A is design-only. Do not modify Python business code, SQLite, ingest, research artifacts, or Web/API implementations.
 
 ## Hard Boundaries
 
@@ -145,6 +150,20 @@ This handoff file is the durable cross-session starting point for new Codex sess
 - Starlette/httpx `TestClient` deprecation handling is narrow and documented.
 - SQLite/file resource cleanup is explicit in warning-sensitive tests.
 - Stable tag: `web-workbench-phase10-12-v0.4.2`
+
+### Phase 14
+
+- Web SQLite schema guard design, skeleton, and full read-only enforcement reporting are complete.
+- `GET /api/diagnostics/schema` remains GET-only and reports safe schema metadata.
+- Stable tag: `web-workbench-phase10-12-v0.4.3`
+
+### Phase 15
+
+- Historical Metrics audit integration design, guard skeleton, and full read-only enforcement reporting are complete.
+- `GET /api/diagnostics/historical-metrics` remains GET-only and reports safe contract, fingerprint, and enforcement metadata.
+- Stable tags:
+  - `web-workbench-phase10-12-v0.4.4`: Phase 15B guard skeleton.
+  - `web-workbench-phase10-12-v0.4.5`: Phase 15C full enforcement.
 
 ## Current Architecture Summary
 
@@ -301,6 +320,29 @@ Goal:
 
 - `ActionPlanGenerationService` official replacement is not planned until target allocation official promotion is separately audited.
 - No direct trading or order generation.
+
+## Phase 16 Roadmap
+
+### Phase 16A - Workbench Readiness Design
+
+Goal:
+
+- Design a read-only Workbench Readiness layer that summarizes existing safe diagnostics without adding runtime behavior.
+- Candidate future surfaces are documentation-only in Phase 16A:
+  - `GET /api/readiness/summary`
+  - `GET /api/readiness/checks`
+  - `GET /readiness`
+- The readiness layer should aggregate only existing safe signals from environment status, schema diagnostics, Historical Metrics diagnostics, dashboard summary, audit bundle readiness, and current validation summaries.
+- Phase 16A must not add services, repositories, routers, templates, static JavaScript, database tables, ingest changes, or research artifacts.
+- Any future implementation must remain read-only, ratio-only, current-only, ResearchFirst-neutral, and OpenAPI GET-only.
+
+Acceptance draft:
+
+- Documentation changes only.
+- `python scripts/check_hidden_unicode.py`
+- `python -m pytest web/backend/tests -q -W error`
+- `python scripts/web_check.py`
+- `python scripts/project_check.py --current-only`
 
 ## Standard Acceptance Commands
 
