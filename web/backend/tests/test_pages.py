@@ -26,11 +26,22 @@ def test_web_pages_render_without_local_absolute_paths(client):
         "/decision-timeline",
         "/historical-metrics",
         "/system-checks",
+        "/tools",
     ]
     for path in paths:
         response = client.get(path)
         assert response.status_code == 200, path
         assert not LOCAL_PATH_RE.search(response.text)
+
+
+def test_action_plan_page_distinguishes_plan_and_market_basis(client):
+    response = client.get("/action-plan")
+    assert response.status_code == 200
+    html = response.text
+    assert "Plan Basis" in html
+    assert "Market Basis" in html
+    assert 'data-bind="plan_market_score"' in html
+    assert "n/a" not in re.sub(r"<table.*?</table>", "", html, flags=re.S)
 
 
 def test_subject_gap_page_has_visual_and_refresh_hooks(client):

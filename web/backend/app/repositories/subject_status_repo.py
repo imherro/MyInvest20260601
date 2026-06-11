@@ -46,6 +46,7 @@ class SubjectStatusRepository:
                     lg.generated_at AS liquidity_generated_at,
                     lpa.path AS liquidity_profile_source_path,
                     lva.path AS liquidity_valuation_source_path,
+                    rfi.id AS research_first_item_id,
                     rfi.missing_profile,
                     rfi.missing_valuation,
                     rfi.missing_liquidity,

@@ -48,6 +48,47 @@ Use trusted-LAN mode only on networks you control. Do not expose the Web UI to t
 
 The Web UI is FastAPI + Jinja2 with a small static refresh script. There is no React build step in this phase.
 
+## Local Tools Page
+
+The Web app also provides a local operator page:
+
+```text
+http://127.0.0.1:8000/tools
+```
+
+The page lists the existing MyInvest scripts and workflow prompts. Script buttons call only a fixed server-side whitelist under `/ops`; the browser never sends arbitrary command text. The page reports each run as `PASS`, `FAIL`, or `PROMPT`, with sanitized stdout/stderr for local review.
+
+Tools are grouped and sorted for day-to-day use:
+
+- `日常使用`: ordered roughly by workflow sequence, from QMT ratio snapshot, Web DB refresh, valuation check, premarket check, intraday check, post-market review, to weekly review.
+- `组合与研究维护`: action plan, target allocation, latest index, staleness, ResearchFirst backlog, valuation reports, theme leaders, and snapshot repair.
+- `QMT 只读`: QMT connectivity checks that do not create orders.
+- `导出与审计`: review packages and controlled current-only exports under ignored `temp/`.
+- `开发验收`: project checks, ratio-only, ResearchFirst, allocation consistency, hidden Unicode, and full `web_check.py`.
+- `Codex 研究提示`: copyable prompts for workflows that still need a research conversation.
+
+Each tool row includes `When to use`, which explains the intended timing and workflow boundary before you press `Run` or copy a prompt.
+
+Tool coverage includes:
+
+- Web database refresh and Web milestone checks.
+- ratio-only, ResearchFirst, allocation consistency, staleness, valuation, and hidden-Unicode checks.
+- premarket check, action-plan generation, target-allocation generation, post-market review, and weekly review scripts.
+- QMT read-only probes, QMT ratio snapshot refresh, and one-shot intraday rule checks.
+- current ResearchFirst backlog, P2 position review, theme leader, valuation report, and portfolio snapshot quality helpers.
+- current-only review/export packages under ignored `temp/`.
+- Codex prompt cards for workflows that still require a research conversation, such as strategy briefing, theme research, ETF research, and stock research.
+
+Safety boundaries:
+
+- `/api/*` remains read-only and has no POST/PUT/PATCH/DELETE methods.
+- Mutating local tool runs are exposed only under `/ops/*`.
+- Tool execution is whitelist-only by tool id; no shell command input is accepted from the browser.
+- QMT tools are read-only and still require the local QMT terminal to be open and logged in.
+- No automatic trading, order, execution, or QMT write interface is added.
+- Command output is sanitized before it is returned to the browser. Local absolute paths and sensitive ratio-only terms are redacted.
+- Use trusted-LAN mode only on networks you control. Anyone who can access the local Web UI can press local tool buttons.
+
 ## Run Tests
 
 ```bash

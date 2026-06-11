@@ -5,8 +5,10 @@
     <div class="metric-grid">
       <div class="metric"><span class="subtle">Status</span><strong data-bind="plan_status">{{ action_plan.status or "n/a" }}</strong></div>
       <div class="metric"><span class="subtle">Market</span><strong data-bind="plan_market">{{ action_plan.market_state or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Market Score</span><strong data-bind="plan_market_score">{{ action_plan.market_score if action_plan.market_score is not none else "n/a" }}</strong></div>
       <div class="metric"><span class="subtle">Generated</span><strong data-bind="plan_generated">{{ action_plan.generated_at or "n/a" }}</strong></div>
-      <div class="metric"><span class="subtle">Basis</span><strong data-bind="plan_basis">{{ action_plan.basis_trade_date or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Plan Basis</span><strong data-bind="plan_basis">{{ action_plan.basis_trade_date or "n/a" }}</strong></div>
+      <div class="metric"><span class="subtle">Market Basis</span><strong data-bind="plan_market_basis">{{ action_plan.market_basis_trade_date or "n/a" }}</strong></div>
     </div>
   {% endif %}
 

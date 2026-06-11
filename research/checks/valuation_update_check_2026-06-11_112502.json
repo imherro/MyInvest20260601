@@ -1,0 +1,14 @@
+{
+  "module": "valuation_update_check",
+  "version": "ratio_only_v2",
+  "generated_at": "2026-06-11_112502",
+  "basis_date": "20260610",
+  "scope": "latest_portfolio_and_intraday_rules",
+  "stale_days": 1,
+  "status": "ok",
+  "blocking_for_new_actions": false,
+  "update_required_count": 0,
+  "items": [],
+  "summary": "估值报告无缺失或应更新项。",
+  "boundary": "Valuation refresh check only; no buy/sell/add/reduce instruction."
+}

@@ -46,3 +46,12 @@ def test_required_api_endpoints(client):
         assert response.status_code == 200, path
         payload = response.json()
         assert payload["ok"] is True
+
+
+def test_action_plan_api_enriches_market_state_from_current_market_score(client):
+    response = client.get("/api/action-plan/current")
+    assert response.status_code == 200
+    plan = response.json()["data"]["action_plan"]
+    assert plan["market_state"]
+    assert plan["market_score"] is not None
+    assert plan["market_basis_trade_date"]

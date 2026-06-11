@@ -141,6 +141,12 @@ class CurrentStateService:
         )
         if not plan:
             return None
+        market = self.market_score() or {}
+        if not plan.get("market_state"):
+            plan["market_state"] = market.get("state")
+        plan["market_score"] = market.get("score")
+        plan["market_basis_trade_date"] = market.get("basis_trade_date")
+        plan["market_generated_at"] = market.get("generated_at")
         plan["actions"] = self.repo.all(
             """
             SELECT ai.sequence, ai.action_type, ai.bucket, ai.current_position_pct,

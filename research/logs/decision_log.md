@@ -2094,3 +2094,91 @@
 - Basis: Tushare `fund_nav.adj_nav` 优先；盘中 QMT 实时价仅用于当前位置，实时回撤通过最近净值/单位净值比例换算到可比口径。
 - 515880.SH 通信ETF国泰：估值报告基准回撤约 -6.4%；盘中实时价 1.695 换算复权净值 5.085 后，实时前高回撤约 -0.91%，不再使用未复权交易价产生的 -49% 误判。
 - Boundary: 本次只修 ETF 复权净值口径和作战地图消费逻辑；个股前复权/后复权口径后续单独排期。
+
+2026-06-11_103227 premarket_check: status=risk_reduce_only; valuation_updates=7; ratio-only; no single-security operation instruction.
+- Markdown: `research/checks/premarket_check_2026-06-11_103227.md`
+- JSON: `research/checks/premarket_check_2026-06-11_103227.json`
+
+2026-06-11_103833 strategy_briefing: status=risk_reduce_or_watch_only; market=30%-40% equity target; portfolio equity about 43.52%; valuation_update_needed=33; Tushare supplement basis=20260610; ratio-only; no new single-security action.
+- Markdown: research/briefings/strategy_briefing_2026-06-11_103833.md
+- JSON: research/briefings/strategy_briefing_2026-06-11_103833.json
+- Sources: Tushare 20260610 supplement; Sina Finance; Securities Times; AP.
+- Boundary: ratio-only; STRATEGY_BRIEFING only; no new single-security action.
+
+2026-06-11_104602 intraday_alerts: status=triggered_review_only; triggers=18; risk=11; watch=7; near=1; valuation_updates=34; quote_coverage=35/35; no new trading condition.
+- Markdown: research/alerts/intraday_alert_2026-06-11_104602.md
+- JSON: research/alerts/intraday_alert_2026-06-11_104602.json
+- Valuation check: research/checks/valuation_update_check_2026-06-11_104416.json
+- Boundary: fixed triggers only; valuation quality-only; no new trading condition.
+
+2026-06-11 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-11_111526.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+2026-06-11 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-11_111554.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+2026-06-11 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-11_112436.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+2026-06-11_112608 premarket_check: status=risk_reduce_only; valuation_updates=0; ratio-only; no single-security operation instruction.
+- Markdown: `research/checks/premarket_check_2026-06-11_112608.md`
+- JSON: `research/checks/premarket_check_2026-06-11_112608.json`
+
+2026-06-11_131344 premarket_check: status=risk_reduce_only; valuation_updates=0; ratio-only; no single-security operation instruction.
+- Markdown: `research/checks/premarket_check_2026-06-11_131344.md`
+- JSON: `research/checks/premarket_check_2026-06-11_131344.json`
+
+## 2026-06-11 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约43.04%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-11_131420_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-11_131420_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-09_100448.json` generated_at=2026-06-09_100448 basis=20260608
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-11_112436.json` generated_at=2026-06-11_112436 basis=2026-06-11
+  - `research/allocation/target_allocation_2026-06-11_112436.json` generated_at=2026-06-11_112436 basis=20260608
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-11_112436 basis=None
+
+## 2026-06-11_131515 current holding research quality audit: P0=0, P1=0, P2=7, OK=28.
+- Markdown: `research/portfolio/research_quality_audit_2026-06-11_131515.md`
+- JSON: `research/portfolio/research_quality_audit_2026-06-11_131515.json`
+- Basis snapshot: `research/portfolio/portfolio_snapshot_2026-06-11_112436.json`
+- Boundary: current holdings only; ratio-only; no single-security operation instruction.
+
+## 2026-06-11_131520 ResearchFirst current-holdings filter: active=0, completed_current=0, skipped_not_current=0.
+- Markdown: `research/portfolio/research_backlog_2026-06-11_131520.md`
+- JSON: `research/portfolio/research_backlog_2026-06-11_131520.json`
+- Basis snapshot: `research/portfolio/portfolio_snapshot_2026-06-11_112436.json`
+- Conclusion: non-current holdings are excluded from active ResearchFirst work unless re-added to holdings/watchlist.
+
+## 2026-06-11_131526 P2 large position review: 6 items.
+- Markdown: `research/portfolio/portfolio_cleanup_2026-06-11_131526.md`
+- JSON: `research/portfolio/portfolio_cleanup_2026-06-11_131526.json`
+- Basis audit: `research/portfolio/research_quality_audit_2026-06-09_160248.json`
+- Boundary: ratio-only review; no single-security operation instruction.
+
+2026-06-11 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-11_131601.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+2026-06-11_140751 market_score: basis=20260610; opportunity=31; crowding_penalty=6; market_position_score=25; state=极弱/风险收缩; equity=30%-40%; bond_cash=60%-70%; offensive=pause_new; latest complete day used; no execution instruction.
+- Markdown: research/market/market_score_2026-06-11_140751.md
+- JSON: research/market/market_score_2026-06-11_140751.json
+- Mapping: research/config/market_position_mapping.json
+- Boundary: current-only; ratio-only; ResearchFirst; no execution instruction.
+
+2026-06-11 QMT只读持仓快照：生成 portfolio_snapshot_2026-06-11_141600.md/json；只保存仓位比例、成本价、现价、当日涨跌幅和参考盈亏比例，不保存市值、现金金额、盈亏金额、股数、可用数量或账号全号；同步 intraday_rules 实际仓位覆盖层。
+
+## 2026-06-11 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约43.02%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-11_141647_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-11_141647_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-11_140751.json` generated_at=2026-06-11_140751 basis=20260610
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-11_141600.json` generated_at=2026-06-11_141600 basis=2026-06-11
+  - `research/allocation/target_allocation_2026-06-11_141600.json` generated_at=2026-06-11_141600 basis=20260610
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-11_141600 basis=None
+
+## 2026-06-11 操作建议刷新：按最新target_allocation读取权益30%-40%、现金/短融60%-70%；当前权益约43.02%，仅允许比例级风险收缩和ResearchFirst门禁。
+- Markdown: `research/actions/action_plan_2026-06-11_141734_latest_ratio_only.md`
+- JSON: `research/actions/action_plan_2026-06-11_141734_latest_ratio_only.json`
+- Dependencies:
+  - `research/market/market_score_2026-06-11_140751.json` generated_at=2026-06-11_140751 basis=20260610
+  - `research/themes/theme_review_2026-06-08_102237.json` generated_at=2026-06-08_102237 basis=20260605
+  - `research/portfolio/portfolio_snapshot_2026-06-11_141600.json` generated_at=2026-06-11_141600 basis=2026-06-11
+  - `research/allocation/target_allocation_2026-06-11_141652.json` generated_at=2026-06-11_141652 basis=20260610
+  - `research/alerts/intraday_rules.json` generated_at=2026-06-11_141652 basis=None

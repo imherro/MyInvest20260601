@@ -94,6 +94,8 @@
     const tbody = document.getElementById(id);
     if (!tbody) return;
     const existing = tableState.get(id) || {};
+    const table = tbody.closest("table");
+    const noPagination = table?.dataset.noPagination === "true";
     tableState.set(id, {
       rows: (rows || []).map((row, index) => ({
         key: `${id}-${index}`,
@@ -102,7 +104,8 @@
         detail: detailFactory(row),
       })),
       page: 1,
-      pageSize: Number(tbody.closest("table")?.dataset.pageSize || 10),
+      pageSize: noPagination ? Math.max(1, (rows || []).length) : Number(table?.dataset.pageSize || 10),
+      noPagination,
       query: existing.query || "",
       sortIndex: existing.sortIndex,
       sortType: existing.sortType || "text",
@@ -134,6 +137,10 @@
     return rows;
   }
 
+  function removePagination(id) {
+    document.querySelector(`[data-pagination-for="${id}"]`)?.remove();
+  }
+
   function renderTable(id) {
     const tbody = document.getElementById(id);
     const state = tableState.get(id);
@@ -143,7 +150,7 @@
     const totalPages = Math.max(1, Math.ceil(rows.length / state.pageSize));
     state.page = Math.min(Math.max(1, state.page), totalPages);
     const start = (state.page - 1) * state.pageSize;
-    const visibleRows = rows.slice(start, start + state.pageSize);
+    const visibleRows = state.noPagination ? rows : rows.slice(start, start + state.pageSize);
     tbody.replaceChildren();
     visibleRows.forEach((item) => {
       const tr = document.createElement("tr");
@@ -166,11 +173,19 @@
         detailRow.className = "detail-row";
         const detailCell = document.createElement("td");
         detailCell.colSpan = Math.max(1, item.cells.length);
-        detailCell.textContent = item.detail || "No additional details.";
+        if (item.detail && typeof item.detail === "object" && item.detail.nodeType) {
+          detailCell.appendChild(item.detail.cloneNode(true));
+        } else {
+          detailCell.textContent = item.detail || "No additional details.";
+        }
         detailRow.appendChild(detailCell);
         tbody.appendChild(detailRow);
       }
     });
+    if (state.noPagination) {
+      removePagination(id);
+      return;
+    }
     renderPagination(table, id, rows.length, totalPages);
   }
 
@@ -293,8 +308,10 @@
     const plan = data.action_plan || {};
     setBind("plan_status", plan.status);
     setBind("plan_market", plan.market_state);
+    setBind("plan_market_score", plan.market_score);
     setBind("plan_generated", plan.generated_at);
     setBind("plan_basis", plan.basis_trade_date);
+    setBind("plan_market_basis", plan.market_basis_trade_date);
     setRows(
       "actionRows",
       plan.actions || [],
@@ -574,19 +591,121 @@
         row.status,
         row.basis_trade_date,
         row.generated_at,
-        { value: (row.associated_etfs || []).length, className: "num" },
-        { value: (row.associated_stocks || []).length, className: "num" },
-        { value: (row.leaders || []).length, className: "num" },
-        { value: (row.conflicts || []).length, className: "num" },
+        themeCoverage(row),
       ],
-      (row) => {
-        const etfs = (row.associated_etfs || []).map((item) => `${item.code || ""} ${item.name || ""}`.trim()).join("; ");
-        const stocks = (row.associated_stocks || []).map((item) => `${item.code || ""} ${item.name || ""}`.trim()).join("; ");
-        const leaders = (row.leaders || []).map((item) => `${item.type || ""} ${item.code || ""} ${item.route || ""}`.trim()).join("; ");
-        const conflicts = (row.conflicts || []).map((item) => `${item.type || ""}: ${item.detail || ""}`).join("; ");
-        return `data quality: ${row.data_quality_status || ""} | ETFs: ${etfs || "none"} | stocks: ${stocks || "none"} | leaders: ${leaders || "none"} | conflicts: ${conflicts || "none"}`;
-      },
+      createThemeDetails,
     );
+  }
+
+  function themeCoverage(row) {
+    return [
+      `ETF ${(row.associated_etfs || []).length}`,
+      `Stock ${(row.associated_stocks || []).length}`,
+      `Routes ${(row.leaders || []).length}`,
+      `Conflict ${(row.conflicts || []).length}`,
+    ].join(" / ");
+  }
+
+  function createThemeDetails(row) {
+    const panel = document.createElement("div");
+    panel.className = "theme-detail-panel";
+    const meta = document.createElement("div");
+    meta.className = "theme-detail-meta";
+    meta.textContent = `data quality: ${row.data_quality_status || "unknown"} | status: ${row.status || "unknown"} | stage: ${row.stage || "unknown"}`;
+    panel.appendChild(meta);
+    appendThemeDetailSection(panel, "ETFs", row.associated_etfs || [], themeSubjectLine);
+    appendThemeDetailSection(panel, "Stocks", row.associated_stocks || [], themeSubjectLine);
+    appendThemeDetailSection(panel, "Leaders / Routes", row.leaders || [], themeLeaderLine);
+    appendThemeDetailSection(panel, "Conflicts", row.conflicts || [], themeConflictLine);
+    return panel;
+  }
+
+  function appendThemeDetailSection(panel, title, items, formatter) {
+    const section = document.createElement("div");
+    section.className = "theme-detail-section";
+    const heading = document.createElement("div");
+    heading.className = "theme-detail-heading";
+    heading.textContent = `${title} (${items.length})`;
+    const list = document.createElement("div");
+    list.className = "theme-detail-list";
+    if (!items.length) {
+      const empty = document.createElement("div");
+      empty.className = "theme-detail-empty";
+      empty.textContent = "none";
+      list.appendChild(empty);
+    } else {
+      items.forEach((item) => {
+        const itemRow = document.createElement("div");
+        itemRow.className = "theme-detail-item";
+        const content = formatter(item);
+        if (content && typeof content === "object" && content.nodeType) itemRow.appendChild(content);
+        else itemRow.textContent = content;
+        list.appendChild(itemRow);
+      });
+    }
+    section.append(heading, list);
+    panel.appendChild(section);
+  }
+
+  function themeSubjectLine(item) {
+    const identity = [item.code, item.name].filter(Boolean).join(" ");
+    return themeDetailLine(identity || "unknown", [
+      ["profile", themeGateLabel(item.profile_status)],
+      ["valuation", themeGateLabel(item.valuation_status)],
+      ["liquidity", themeGateLabel(item.liquidity_status)],
+      ["action", themeActionLabel(item.gate_conclusion)],
+    ]);
+  }
+
+  function themeGateLabel(value) {
+    const status = String(value || "unknown").toLowerCase();
+    if (["pass", "present", "ok", "completed"].includes(status)) return "ok";
+    if (["missing", "unknown", "blocked", "research_first"].includes(status)) return status;
+    return status || "unknown";
+  }
+
+  function themeActionLabel(value) {
+    const status = String(value || "unknown").toLowerCase();
+    if (status === "watch") return "watch-only";
+    if (status === "research_first") return "ResearchFirst";
+    return status || "unknown";
+  }
+
+  function themeLeaderLine(item) {
+    const identity = [item.type, item.code, item.name].filter(Boolean).join(" ");
+    return themeDetailLine(identity || "unknown", [["route", item.route || "unknown"]]);
+  }
+
+  function themeConflictLine(item) {
+    return themeDetailLine(item.type || "conflict", [["detail", item.detail || "unknown"]]);
+  }
+
+  function themeDetailLine(identity, badges) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "theme-detail-line";
+    const identityNode = document.createElement("strong");
+    identityNode.className = "theme-detail-identity";
+    identityNode.textContent = identity;
+    wrapper.appendChild(identityNode);
+    (badges || []).forEach(([label, value]) => wrapper.appendChild(themeStateBadge(label, value)));
+    return wrapper;
+  }
+
+  function themeStateBadge(label, value) {
+    const badge = document.createElement("span");
+    const status = String(value || "unknown");
+    badge.className = `state-badge ${themeStateClass(status)}`;
+    badge.textContent = `${label} ${status}`;
+    return badge;
+  }
+
+  function themeStateClass(value) {
+    const status = String(value || "unknown").toLowerCase();
+    if (["ok", "pass", "present", "completed", "fresh", "allowed"].includes(status)) return "ok";
+    if (status.includes("missing") || status.includes("unknown") || status.includes("blocked") || status.includes("not")) return "bad";
+    if (status.includes("researchfirst") || status.includes("research_first")) return "bad";
+    if (status.includes("watch")) return "warn";
+    return "neutral";
   }
 
   function renderBuckets(data) {
@@ -938,6 +1057,211 @@
     });
   }
 
+  const toolState = {
+    tools: [],
+    groups: [],
+    query: "",
+    group: "",
+  };
+
+  function statusText(value) {
+    if (value === "passed") return "PASS";
+    if (value === "failed") return "FAIL";
+    if (value === "prompt") return "PROMPT";
+    if (value === "running") return "RUNNING";
+    return text(value, "waiting");
+  }
+
+  function renderTools(data) {
+    const summary = data.summary || {};
+    toolState.tools = data.tools || [];
+    toolState.groups = data.groups || [];
+    setBind("tool_count", summary.tool_count);
+    renderToolCategoryFilter();
+    renderToolRows();
+  }
+
+  function renderToolCategoryFilter() {
+    const filter = document.querySelector("[data-tool-filter]");
+    if (!filter || filter.dataset.loaded === "true") return;
+    (toolState.groups || []).forEach((group) => {
+      const option = document.createElement("option");
+      option.value = group;
+      option.textContent = group;
+      filter.appendChild(option);
+    });
+    filter.dataset.loaded = "true";
+  }
+
+  function filteredTools() {
+    const query = (toolState.query || "").trim().toLowerCase();
+    return (toolState.tools || []).slice().sort((left, right) => {
+      const leftGroup = (toolState.groups || []).indexOf(left.group);
+      const rightGroup = (toolState.groups || []).indexOf(right.group);
+      const groupDiff = (leftGroup < 0 ? 999 : leftGroup) - (rightGroup < 0 ? 999 : rightGroup);
+      if (groupDiff !== 0) return groupDiff;
+      return (Number(left.sequence) || 999) - (Number(right.sequence) || 999);
+    }).filter((tool) => {
+      if (toolState.group && tool.group !== toolState.group) return false;
+      if (!query) return true;
+      return [tool.title, tool.group, tool.category, tool.when_to_use, tool.impact, tool.description, tool.command_display]
+        .map((item) => text(item, "").toLowerCase())
+        .join(" ")
+        .includes(query);
+    });
+  }
+
+  function renderToolRows() {
+    const tbody = document.getElementById("toolRows");
+    if (!tbody) return;
+    tbody.replaceChildren();
+    let currentGroup = "";
+    filteredTools().forEach((tool) => {
+      if (tool.group !== currentGroup) {
+        currentGroup = tool.group || "";
+        const groupRow = document.createElement("tr");
+        groupRow.className = "tool-group-row";
+        const groupCell = document.createElement("td");
+        groupCell.colSpan = 8;
+        groupCell.textContent = currentGroup || "Other";
+        groupRow.appendChild(groupCell);
+        tbody.appendChild(groupRow);
+      }
+      const tr = document.createElement("tr");
+      tr.dataset.toolRow = tool.id || "";
+      const title = document.createElement("td");
+      title.textContent = tool.title || tool.id;
+      const group = document.createElement("td");
+      group.textContent = tool.group || "";
+      const category = document.createElement("td");
+      category.textContent = tool.category || "";
+      const whenToUse = document.createElement("td");
+      whenToUse.textContent = tool.when_to_use || "";
+      const impact = document.createElement("td");
+      impact.className = "tool-impact";
+      impact.textContent = tool.impact || "";
+      const description = document.createElement("td");
+      description.textContent = tool.description || "";
+      const command = document.createElement("td");
+      command.textContent = tool.command_display || (tool.kind === "prompt" ? "Codex prompt" : "");
+      const action = document.createElement("td");
+      action.className = "tool-actions";
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = tool.kind === "prompt" ? "Copy Prompt" : "Run";
+      button.addEventListener("click", () => {
+        if (tool.kind === "prompt") copyToolPrompt(tool, button);
+        else runTool(tool, button);
+      });
+      action.appendChild(button);
+      tr.append(title, group, category, whenToUse, impact, description, command, action);
+      tbody.appendChild(tr);
+      const resultRow = document.createElement("tr");
+      resultRow.className = "tool-result-row";
+      resultRow.dataset.toolOutputRow = tool.id || "";
+      resultRow.hidden = true;
+      const resultCell = document.createElement("td");
+      resultCell.colSpan = 8;
+      const resultLabel = document.createElement("div");
+      resultLabel.className = "tool-result-label";
+      resultLabel.textContent = "Run log";
+      const resultOutput = document.createElement("pre");
+      resultOutput.className = "tool-output tool-output-inline";
+      resultCell.append(resultLabel, resultOutput);
+      resultRow.appendChild(resultCell);
+      tbody.appendChild(resultRow);
+    });
+  }
+
+  async function copyToolPrompt(tool, button) {
+    const prompt = tool.prompt || "";
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(prompt);
+      } else {
+        const area = document.createElement("textarea");
+        area.value = prompt;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+      }
+      setBind("tool_selected", tool.title || tool.id);
+      setBind("tool_status", "PROMPT COPIED");
+      setBind("tool_last_run", new Date().toLocaleTimeString());
+      showToolOutput(prompt, button);
+    } catch (error) {
+      setBind("tool_selected", tool.title || tool.id);
+      setBind("tool_status", "COPY FAILED");
+      showToolOutput(error.message || "Copy failed", button);
+    }
+  }
+
+  async function runTool(tool, button) {
+    setBind("tool_selected", tool.title || tool.id);
+    setBind("tool_status", "RUNNING");
+    setBind("tool_last_run", new Date().toLocaleTimeString());
+    showToolOutput(`Running ${tool.title || tool.id}...`, button);
+    button.disabled = true;
+    try {
+      const response = await fetch(`/ops/run/${encodeURIComponent(tool.id)}`, {
+        method: "POST",
+        cache: "no-store",
+      });
+      const payload = await response.json();
+      assertRatioOnly(payload);
+      if (!response.ok || payload.ok === false) {
+        throw new Error(payload.detail || "Tool run failed");
+      }
+      const result = payload.data || {};
+      setBind("tool_status", statusText(result.status));
+      setBind("tool_last_run", new Date().toLocaleTimeString());
+      showToolOutput(formatToolResult(result), button);
+    } catch (error) {
+      setBind("tool_status", "FAIL");
+      showToolOutput(error.message || "Tool run failed", button);
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  function formatToolResult(result) {
+    const lines = [];
+    lines.push(`status: ${statusText(result.status)}`);
+    if (result.message) lines.push(`message: ${result.message}`);
+    (result.steps || []).forEach((step) => {
+      lines.push("");
+      lines.push(`[${statusText(step.status)}] ${step.name || "step"} (${step.duration_seconds || 0}s)`);
+      lines.push(`exit: ${step.exit_code === null || step.exit_code === undefined ? "n/a" : step.exit_code}`);
+      if (step.stdout) {
+        lines.push("stdout:");
+        lines.push(step.stdout);
+      }
+      if (step.stderr) {
+        lines.push("stderr:");
+        lines.push(step.stderr);
+      }
+    });
+    if (result.prompt) {
+      lines.push("");
+      lines.push(result.prompt);
+    }
+    return lines.join("\n");
+  }
+
+  function showToolOutput(value, button) {
+    const row = button?.closest("tr");
+    const outputRow = row?.nextElementSibling?.classList?.contains("tool-result-row")
+      ? row.nextElementSibling
+      : null;
+    const output = outputRow?.querySelector(".tool-output") || document.getElementById("toolOutput");
+    if (!output) return;
+    if (outputRow) outputRow.hidden = false;
+    else output.hidden = false;
+    output.textContent = value || "";
+    if (outputRow) outputRow.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+
   const renderers = {
     dashboard: renderDashboard,
     "action-plan": renderActionPlan,
@@ -956,6 +1280,7 @@
     "decision-log": renderDecisionLog,
     "decision-timeline": renderDecisionTimeline,
     "historical-metrics": renderHistoricalMetrics,
+    tools: renderTools,
   };
 
   async function refresh() {
@@ -1052,11 +1377,23 @@
     });
   }
 
+  function setupToolFilters() {
+    document.querySelector("[data-tool-search]")?.addEventListener("input", (event) => {
+      toolState.query = event.target.value || "";
+      renderToolRows();
+    });
+    document.querySelector("[data-tool-filter]")?.addEventListener("change", (event) => {
+      toolState.group = event.target.value || "";
+      renderToolRows();
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("[data-refresh]")?.addEventListener("click", refresh);
     setupSearch();
     setupFilters();
     setupSort();
+    setupToolFilters();
     refresh();
     window.setInterval(refresh, 60000);
   });

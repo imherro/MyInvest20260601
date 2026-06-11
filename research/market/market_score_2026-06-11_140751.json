@@ -1,0 +1,338 @@
+{
+  "module": "MARKET_POSITION",
+  "version": "v1.2",
+  "date": "2026-06-11",
+  "session": "intraday_research_update",
+  "generated_at": "2026-06-11_140751",
+  "basis_trade_date": "20260610",
+  "basis_note": "只使用最新完整交易日。2026-06-11运行时尚非完整收盘日，因此本次basis_trade_date使用20260610。",
+  "current_only_boundary": "读取research/latest_index.json的modules当前指针；本次只更新MARKET_POSITION，不生成执行指令。",
+  "ratio_only_policy": "研究产物只保留比例、分数、区间、状态和相对变化。",
+  "research_first_boundary": "单标的动作仍由档案、估值和流动性门禁决定；本模块不绕过ResearchFirst。",
+  "read_files": {
+    "latest_index": "research/latest_index.json",
+    "market_position_mapping": "research/config/market_position_mapping.json",
+    "data_sources": "docs/DATA_SOURCES.md",
+    "template": "templates/market_score_template.md",
+    "module_doc": "docs/modules/MARKET_POSITION.md",
+    "previous_market_score": "research/market/market_score_2026-06-09_100448.json"
+  },
+  "data_sources": [
+    "Tushare trade_cal",
+    "Tushare index_daily",
+    "Tushare daily",
+    "Tushare moneyflow",
+    "Tushare limit_list_d",
+    "Tushare index_dailybasic",
+    "theme_registry.json"
+  ],
+  "summary": {
+    "market_state": "极弱/风险收缩",
+    "opportunity_score": 31,
+    "crowding_penalty": 6,
+    "market_position_score": 25,
+    "equity_allocation_range": "30%-40%",
+    "bond_cash_allocation_range": "60%-70%",
+    "offensive_bucket_status": "pause_new",
+    "one_line_conclusion": "以20260610最新完整交易日看，7个主要指数均低于20日线，全A上涨占比约28.23%，流动性相对20日均值约0.868倍，资金流代理为负；市场仓位分数维持25，按映射表对应极弱/风险收缩。"
+  },
+  "market_observations": {
+    "latest_complete_trade_date": "20260610",
+    "basis_reason": "20260611 is current trading day and not a complete post-close daily dataset at run time; use prior open day.",
+    "index_rows": [
+      {
+        "code": "000001.SH",
+        "pct_chg": -0.42,
+        "close": 3993.2258,
+        "above_ma20": false,
+        "above_ma60": false,
+        "dist_ma20_pct": -2.35,
+        "dist_ma60_pct": -1.43,
+        "name": "上证指数"
+      },
+      {
+        "code": "000300.SH",
+        "pct_chg": -1.11,
+        "close": 4748.5932,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -2.3,
+        "dist_ma60_pct": 0.29,
+        "name": "沪深300"
+      },
+      {
+        "code": "000905.SH",
+        "pct_chg": -1.37,
+        "close": 8063.8637,
+        "above_ma20": false,
+        "above_ma60": false,
+        "dist_ma20_pct": -4.36,
+        "dist_ma60_pct": -1.73,
+        "name": "中证500"
+      },
+      {
+        "code": "000852.SH",
+        "pct_chg": -1.44,
+        "close": 8198.7232,
+        "above_ma20": false,
+        "above_ma60": false,
+        "dist_ma20_pct": -3.89,
+        "dist_ma60_pct": -0.71,
+        "name": "中证1000"
+      },
+      {
+        "code": "399001.SZ",
+        "pct_chg": -2.06,
+        "close": 14954.1008,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -3.64,
+        "dist_ma60_pct": 0.88,
+        "name": "深证成指"
+      },
+      {
+        "code": "399006.SZ",
+        "pct_chg": -2.7,
+        "close": 3854.7935,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -2.99,
+        "dist_ma60_pct": 5.42,
+        "name": "创业板指"
+      },
+      {
+        "code": "000688.SH",
+        "pct_chg": -0.65,
+        "close": 1652.2241,
+        "above_ma20": false,
+        "above_ma60": true,
+        "dist_ma20_pct": -5.23,
+        "dist_ma60_pct": 8.15,
+        "name": "科创50"
+      }
+    ],
+    "index_trend_summary": {
+      "major_index_count": 7,
+      "above_ma20_count": 0,
+      "above_ma60_count": 4
+    },
+    "daily_breadth": {
+      "total_count": 5512,
+      "advance_ratio_pct": 28.23,
+      "median_pct_chg": -1.47
+    },
+    "liquidity": {
+      "relative_to_20d_average": 0.868,
+      "interpretation": "低于20日均值，风险偏好不足"
+    },
+    "moneyflow_proxy": {
+      "net_direction": "negative",
+      "available": true
+    },
+    "limit_structure": {},
+    "valuation_proxy": [
+      {
+        "code": "000300.SH",
+        "sample_days": 588,
+        "latest_trade_date": "20260610",
+        "pe_percentile": 77.6,
+        "pb_percentile": 68.7
+      },
+      {
+        "code": "000905.SH",
+        "sample_days": 588,
+        "latest_trade_date": "20260610",
+        "pe_percentile": 86.4,
+        "pb_percentile": 85.5
+      },
+      {
+        "code": "000852.SH",
+        "available": false
+      },
+      {
+        "code": "399006.SZ",
+        "sample_days": 588,
+        "latest_trade_date": "20260610",
+        "pe_percentile": 86.7,
+        "pb_percentile": 95.9
+      },
+      {
+        "code": "000688.SH",
+        "available": false
+      }
+    ],
+    "theme_summary": {
+      "trade_a_count": 0,
+      "trade_b_count": 2,
+      "strategic_a_count": 2,
+      "trade_a": [],
+      "trade_b": [
+        "AI",
+        "机器人"
+      ],
+      "strategic_a": [
+        "AI",
+        "半导体"
+      ]
+    }
+  },
+  "scores": {
+    "index_trend": {
+      "weight": 20,
+      "score": 3,
+      "evidence": "0/7个主要指数站上20日线，4/7个站上60日线。"
+    },
+    "market_breadth": {
+      "weight": 15,
+      "score": 3,
+      "evidence": "全A上涨占比约28.23%，中位表现-1.47%。"
+    },
+    "volume_liquidity": {
+      "weight": 10,
+      "score": 4,
+      "evidence": "流动性相对20日均值约0.868倍，低于均值。"
+    },
+    "fund_flow_risk_appetite": {
+      "weight": 15,
+      "score": 2,
+      "evidence": "Tushare资金流代理方向为负，风险偏好未恢复。"
+    },
+    "theme_strength": {
+      "weight": 15,
+      "score": 8,
+      "evidence": "沿用theme_registry：交易A主线0个，交易B主线2个；盘中不临时重写主题评级。"
+    },
+    "valuation_odds": {
+      "weight": 15,
+      "score": 4,
+      "evidence": "主要指数1年多维估值分位偏高或存在缺口：沪深300 PE分位77.6%、PB分位68.7%；中证500 PE分位86.4%、PB分位85.5%；中证1000缺口；创业板指 PE分位86.7%、PB分位95.9%；科创50缺口。"
+    },
+    "macro_policy": {
+      "weight": 10,
+      "score": 7,
+      "evidence": "政策环境偏托底，但未替代指数、宽度、资金和主线确认。"
+    },
+    "opportunity_score": {
+      "weight": 100,
+      "score": 31,
+      "evidence": "分项合计。"
+    },
+    "crowding_penalty": {
+      "weight": -20,
+      "score": 6,
+      "evidence": "部分成长和资源方向估值/价格拥挤仍需扣分，但市场整体不是高景气追涨阶段。"
+    },
+    "market_position_score": {
+      "weight": 100,
+      "score": 25,
+      "evidence": "31 - 6 = 25。"
+    }
+  },
+  "allocation_mapping": {
+    "mapping_file": "research/config/market_position_mapping.json",
+    "matched_range": {
+      "score_min": 0,
+      "score_max": 30
+    },
+    "market_state": "极弱/风险收缩",
+    "equity_allocation_range": "30%-40%",
+    "bond_cash_allocation_range": "60%-70%",
+    "offensive_bucket_status": "pause_new",
+    "consistency_check": "pass"
+  },
+  "hard_constraints": [
+    {
+      "constraint": "市场广度低于45%",
+      "triggered": true,
+      "impact": "权益上限不得上调。"
+    },
+    {
+      "constraint": "指数趋势分低于10",
+      "triggered": true,
+      "impact": "权益上限不得上调。"
+    },
+    {
+      "constraint": "无交易A主线",
+      "triggered": true,
+      "impact": "进攻仓维持pause_new。"
+    },
+    {
+      "constraint": "估值赔率不支持提高风险偏好",
+      "triggered": true,
+      "impact": "不因单日反弹提高仓位区间。"
+    }
+  ],
+  "stock_bucket_guidance": {
+    "core_base": {
+      "status": "keep_low_and_verify",
+      "suggested_range_within_equity": "以目标配置模块复核",
+      "note": "宽基底仓不因单日反弹上调。"
+    },
+    "attack_mainline": {
+      "status": "pause_new",
+      "suggested_range_within_equity": "低配或等待确认",
+      "note": "AI和机器人仍只保留验证，半导体交易评级未恢复。"
+    },
+    "defense": {
+      "status": "keep",
+      "suggested_range_within_equity": "按目标配置模块约束",
+      "note": "防御方向相对占优但不追高。"
+    },
+    "theme": {
+      "status": "pause_or_cleanup",
+      "suggested_range_within_equity": "不高于既有边界",
+      "note": "低确定性主题继续受限。"
+    }
+  },
+  "trigger_based_adjustments": [
+    {
+      "trigger_condition": "至少3个主要指数重新站上20日线，且全A上涨占比连续改善至45%以上",
+      "allocation_review": "复核是否从30%-40%上调到40%-45%",
+      "reverse_condition": "指数再度跌回20日线或宽度回落。"
+    },
+    {
+      "trigger_condition": "theme_registry确认交易A主线，且代表ETF趋势修复",
+      "allocation_review": "复核进攻仓是否从pause_new转为verify_only/selective",
+      "reverse_condition": "主线回到分歧或市场仓位分数仍低于31。"
+    },
+    {
+      "trigger_condition": "资金流代理连续转正且流动性相对20日均值回到1倍以上",
+      "allocation_review": "复核风险偏好是否由负转中性",
+      "reverse_condition": "资金流代理再次转负。"
+    },
+    {
+      "trigger_condition": "主要指数继续低于20日线且全A上涨占比低于30%",
+      "allocation_review": "维持30%-40%权益区间，优先保留现金/短久期缓冲",
+      "reverse_condition": "指数与宽度同步修复。"
+    }
+  ],
+  "operation_implications": {
+    "allowed": "仅输出组合层市场仓位边界，供target_allocation和action_plan读取。",
+    "forbidden": "不生成执行指令，不修改generate_action_plan.py或generate_target_allocation.py，不改写主线评级。",
+    "handoff": "下一步应生成target allocation、action plan，然后刷新Web数据库。"
+  },
+  "risks": [
+    "指数仍未修复20日线，反弹持续性不足。",
+    "全A宽度低于45%，赚钱效应不足。",
+    "资金流代理为负，风险偏好未确认。",
+    "部分指数估值分位偏高，估值赔率不支持上调风险。"
+  ],
+  "data_gaps": {
+    "northbound_or_external_flow": "本次未接入该口径，不能据此确认外部资金偏好。",
+    "etf_flow": "本次未取得可直接验证的ETF流量口径。",
+    "margin_financing": "本次未接入融资融券口径。",
+    "long_term_valuation": "部分指数长期估值口径缺口仍需补齐。",
+    "policy_macro": "本次未新增网页或宏观序列，仅沿用政策环境中性偏托底判断。"
+  },
+  "previous_comparison": {
+    "previous_file": "research/market/market_score_2026-06-09_100448.json",
+    "previous_basis_trade_date": "20260608",
+    "previous_market_position_score": 25,
+    "previous_equity_allocation_range": "30%-40%",
+    "current_market_position_score": 25,
+    "current_equity_allocation_range": "30%-40%",
+    "change_type": "维持",
+    "reason": "20260610相较上一基准日跌幅收窄，但指数趋势、市场宽度、资金流和估值赔率仍不足以进入31分以上区间。"
+  },
+  "decision_log_entry": "2026-06-11_140751 market_score: basis=20260610; opportunity=31; crowding_penalty=6; market_position_score=25; state=极弱/风险收缩; equity=30%-40%; bond_cash=60%-70%; offensive=pause_new; latest complete day used; no execution instruction."
+}

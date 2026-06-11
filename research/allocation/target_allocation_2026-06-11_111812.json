@@ -1,0 +1,251 @@
+{
+  "module": "target_allocation",
+  "version": "2.1",
+  "date": "2026-06-11",
+  "generated_at": "2026-06-11_111812",
+  "basis_trade_date": "20260608",
+  "session": "from_latest_inputs",
+  "privacy_policy": "ratio_only_no_monetary_values_no_unit_counts",
+  "dependencies": {
+    "required": [
+      {
+        "module": "market_score",
+        "path": "research/market/market_score_2026-06-09_100448.json",
+        "generated_at": "2026-06-09_100448",
+        "basis_trade_date": "20260608",
+        "sha256": "81120794d927db64d32053739d064c8ba42533d05a6929103cecb5674a5c77ef"
+      },
+      {
+        "module": "theme_review",
+        "path": "research/themes/theme_review_2026-06-08_102237.json",
+        "generated_at": "2026-06-08_102237",
+        "basis_trade_date": "20260605",
+        "sha256": "f8cd26cd7055197e14437dde7e7719d14dd678681375065e02c6e0d6b40d458a"
+      },
+      {
+        "module": "portfolio_snapshot",
+        "path": "research/portfolio/portfolio_snapshot_2026-06-11_111554.json",
+        "generated_at": "2026-06-11_111554",
+        "basis_trade_date": "2026-06-11",
+        "sha256": "edd3c43d365469f9c3e285fc2d40d4be106893a5f19a40bab9ec97445a822c77"
+      },
+      {
+        "module": "market_position_mapping",
+        "path": "research/config/market_position_mapping.json",
+        "generated_at": "2026-06-09_000000",
+        "basis_trade_date": null,
+        "sha256": "cb47f9270453a0c3957418694201c0e36a7acb628b695716d991b81107ff3f93"
+      },
+      {
+        "module": "bucket_registry",
+        "path": "research/config/bucket_registry.json",
+        "generated_at": "2026-06-08_000000",
+        "basis_trade_date": null,
+        "sha256": "abcd504611da1817ccaae375d35cdd0fdff36468a91f461ff844f2448373731d"
+      }
+    ],
+    "policy": "Invalid if any required upstream file is replaced by a newer file."
+  },
+  "data_sources": [
+    "research/market/market_score_2026-06-09_100448.json",
+    "research/themes/theme_review_2026-06-08_102237.json",
+    "research/portfolio/portfolio_snapshot_2026-06-11_111554.json",
+    "research/config/market_position_mapping.json",
+    "research/config/bucket_registry.json"
+  ],
+  "summary": {
+    "market_state": "极弱/风险收缩",
+    "market_position_score": 25,
+    "recommended_equity_center": "35%",
+    "recommended_equity_range": "30%-40%",
+    "recommended_bond_cash_center": "65%",
+    "recommended_bond_cash_range": "60%-70%",
+    "offensive_bucket_status": "pause_new",
+    "one_line_conclusion": "Market score 25 maps to equity 30%-40% and cash/short-duration 60%-70%; actual equity is about 43.03%, so downstream action plans may only reduce risk unless upstream gates improve."
+  },
+  "target_allocation": {
+    "groups": [
+      {
+        "group": "现金/短融",
+        "target_center_pct": 65.0,
+        "target_range": "see ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "Risk-off anchor from market-position mapping."
+      },
+      {
+        "group": "宽基底仓",
+        "target_center_pct": 19.95,
+        "target_range": "see ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "Keep core equity exposure, but do not add while total equity is above target."
+      },
+      {
+        "group": "进攻主线仓",
+        "target_center_pct": 4.9,
+        "target_range": "see ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "Pause new offensive exposure until market and theme gates recover."
+      },
+      {
+        "group": "防御仓",
+        "target_center_pct": 10.15,
+        "target_range": "see ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "Defensive equity remains equity exposure and cannot replace cash/short-duration anchors."
+      },
+      {
+        "group": "其他/待清理",
+        "target_center_pct": 0.0,
+        "target_range": "see ideal_allocation_map",
+        "role": "target_bucket",
+        "principle": "No ideal target; this bucket is a deviation cleanup candidate."
+      }
+    ],
+    "total_target_pct_sum": 100.0
+  },
+  "ideal_allocation_map": {
+    "basis": "market_position_mapping_and_latest_theme_context",
+    "target_equity_pct": 35.0,
+    "target_cash_short_pct": 65.0,
+    "segments": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "target_pct": 65.0,
+        "color": "#5b6b7a",
+        "basis": "Risk-off anchor from market-position mapping."
+      },
+      {
+        "key": "core_base",
+        "label": "宽基底仓",
+        "target_pct": 19.95,
+        "color": "#2f6fbd",
+        "basis": "Keep core equity exposure, but do not add while total equity is above target."
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "target_pct": 4.9,
+        "color": "#8b5cf6",
+        "basis": "Pause new offensive exposure until market and theme gates recover."
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "target_pct": 10.15,
+        "color": "#0f8b6f",
+        "basis": "Defensive equity remains equity exposure and cannot replace cash/short-duration anchors."
+      },
+      {
+        "key": "legacy_watch",
+        "label": "其他/待清理",
+        "target_pct": 0.0,
+        "color": "#9a6700",
+        "basis": "No ideal target; this bucket is a deviation cleanup candidate."
+      }
+    ]
+  },
+  "actual_allocation_overlay": {
+    "source": "research/portfolio/portfolio_snapshot_2026-06-11_111554.json",
+    "actual_equity_pct": 43.0349,
+    "actual_cash_short_pct": 57.0321,
+    "buckets": [
+      {
+        "key": "cash_short",
+        "label": "现金/短融",
+        "color": "#5b6b7a",
+        "target_pct": 65.0,
+        "actual_pct": 57.0321,
+        "gap_pct": -7.9679
+      },
+      {
+        "key": "core_base",
+        "label": "宽基底仓",
+        "color": "#2f6fbd",
+        "target_pct": 19.95,
+        "actual_pct": 1.3295,
+        "gap_pct": -18.6205
+      },
+      {
+        "key": "attack_mainline",
+        "label": "进攻主线仓",
+        "color": "#8b5cf6",
+        "target_pct": 4.9,
+        "actual_pct": 11.9407,
+        "gap_pct": 7.0407
+      },
+      {
+        "key": "defense",
+        "label": "防御仓",
+        "color": "#0f8b6f",
+        "target_pct": 10.15,
+        "actual_pct": 17.6089,
+        "gap_pct": 7.4589
+      },
+      {
+        "key": "legacy_watch",
+        "label": "其他/待清理",
+        "color": "#9a6700",
+        "target_pct": 0.0,
+        "actual_pct": 12.1558,
+        "gap_pct": 12.1558
+      }
+    ],
+    "quality": {
+      "status": "ok",
+      "warnings": []
+    }
+  },
+  "transition_targets": [
+    {
+      "key": "cash_short",
+      "label": "现金/短融",
+      "actual_pct": 57.0321,
+      "target_pct": 65.0,
+      "gap_pct": -7.9679,
+      "priority": "P0"
+    },
+    {
+      "key": "core_base",
+      "label": "宽基底仓",
+      "actual_pct": 1.3295,
+      "target_pct": 19.95,
+      "gap_pct": -18.6205,
+      "priority": "Observe"
+    },
+    {
+      "key": "attack_mainline",
+      "label": "进攻主线仓",
+      "actual_pct": 11.9407,
+      "target_pct": 4.9,
+      "gap_pct": 7.0407,
+      "priority": "P1"
+    },
+    {
+      "key": "defense",
+      "label": "防御仓",
+      "actual_pct": 17.6089,
+      "target_pct": 10.15,
+      "gap_pct": 7.4589,
+      "priority": "P1"
+    },
+    {
+      "key": "legacy_watch",
+      "label": "其他/待清理",
+      "actual_pct": 12.1558,
+      "target_pct": 0.0,
+      "gap_pct": 12.1558,
+      "priority": "P0"
+    }
+  ],
+  "quality": {
+    "status": "ok",
+    "warnings": []
+  },
+  "constraints": [
+    "This module does not generate buy/sell instructions.",
+    "Core underweight does not justify adding while total equity is above target.",
+    "Offensive add actions are blocked when offensive_bucket_status is pause_new."
+  ],
+  "decision_log_entry": "2026-06-11 目标仓位刷新：市场分数25按统一配置映射到权益30%-40%、现金/短融60%-70%；真实权益约43.03%，交由ACTION_PLAN处理风险收缩。"
+}

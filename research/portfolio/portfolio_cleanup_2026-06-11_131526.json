@@ -1,0 +1,100 @@
+{
+  "module": "portfolio_cleanup_review",
+  "version": "p2_large_position_review_ratio_only_v1",
+  "generated_at": "2026-06-11_131526",
+  "basis_research_quality_audit": "research/portfolio/research_quality_audit_2026-06-09_160248.json",
+  "basis_action_plan": "research/actions/action_plan_2026-06-11_131420_latest_ratio_only.json",
+  "basis_target_allocation": "research/allocation/target_allocation_2026-06-11_131429.json",
+  "privacy_policy": "ratio_only_no_monetary_values_no_unit_counts",
+  "summary": {
+    "p2_count": 6,
+    "one_line_conclusion": "P2 items have passed ResearchFirst blocking checks but require large-position role review before any single-security decision."
+  },
+  "items": [
+    {
+      "code": "511360.SH",
+      "name": "短融ETF海富通",
+      "type": "ETF",
+      "weight_pct": 56.3926,
+      "allocation_bucket": "cash_short",
+      "category": "bond_cash",
+      "theme": "不适用",
+      "valuation_source": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-09_153822.json",
+      "profile_source": "research/etfs/511360.SH_短融ETF海富通_2026-06-02_095258.json",
+      "review_status": "cash_short_anchor_review",
+      "review_focus": "现金/短融承接工具，重点复核是否仍匹配目标现金短融比例、流动性和久期边界。",
+      "operation_boundary": "Review only; no single-security buy/sell/add/reduce instruction."
+    },
+    {
+      "code": "159201.SZ",
+      "name": "自由现金流ETF华夏",
+      "type": "ETF",
+      "weight_pct": 4.4709,
+      "allocation_bucket": "defense",
+      "category": "defensive",
+      "theme": "自由现金流 / 质量因子 / 核心防御",
+      "valuation_source": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-09_153822.json",
+      "profile_source": "research/etfs/159201.SZ_自由现金流ETF华夏_2026-06-09_160233.json",
+      "review_status": "defensive_or_quality_review",
+      "review_focus": "防御权益仓，重点复核是否被误当作现金，以及是否挤占目标权益仓空间。",
+      "operation_boundary": "Review only; no single-security buy/sell/add/reduce instruction."
+    },
+    {
+      "code": "159992.SZ",
+      "name": "创新药ETF银华",
+      "type": "ETF",
+      "weight_pct": 3.9753,
+      "allocation_bucket": "defense",
+      "category": "medicine",
+      "theme": "创新药/医药",
+      "valuation_source": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-09_153822.json",
+      "profile_source": "research/etfs/159992.SZ_创新药ETF银华_2026-06-02_100213.json",
+      "review_status": "industry_concentration_review",
+      "review_focus": "防御权益仓，重点复核是否被误当作现金，以及是否挤占目标权益仓空间。",
+      "operation_boundary": "Review only; no single-security buy/sell/add/reduce instruction."
+    },
+    {
+      "code": "512070.SH",
+      "name": "证券保险ETF易方达",
+      "type": "ETF",
+      "weight_pct": 3.3463,
+      "allocation_bucket": "defense",
+      "category": "financial",
+      "theme": "金融证券/非银金融",
+      "valuation_source": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-09_153822.json",
+      "profile_source": "research/etfs/512070.SH_证券保险ETF易方达_2026-06-02_100814.json",
+      "review_status": "industry_concentration_review",
+      "review_focus": "防御权益仓，重点复核是否被误当作现金，以及是否挤占目标权益仓空间。",
+      "operation_boundary": "Review only; no single-security buy/sell/add/reduce instruction."
+    },
+    {
+      "code": "516150.SH",
+      "name": "稀土ETF嘉实",
+      "type": "ETF",
+      "weight_pct": 2.5126,
+      "allocation_bucket": "legacy_watch",
+      "category": "resources",
+      "theme": "有色",
+      "valuation_source": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-09_153822.json",
+      "profile_source": "research/etfs/516150.SH_稀土ETF嘉实_2026-06-02_000715.json",
+      "review_status": "legacy_position_review",
+      "review_focus": "遗留观察仓，重点复核是否仍有保留理由，不能自动转为新增配置。",
+      "operation_boundary": "Review only; no single-security buy/sell/add/reduce instruction."
+    },
+    {
+      "code": "002920.SZ",
+      "name": "德赛西威",
+      "type": "stock",
+      "weight_pct": 2.3285,
+      "allocation_bucket": "attack_mainline",
+      "category": "auto",
+      "theme": "无人驾驶/智能汽车",
+      "valuation_source": "research/valuations/valuation_002920_SZ_德赛西威_2026-06-09_112659.json",
+      "profile_source": "research/stocks/002920_德赛西威_2026-06-02_103125.json",
+      "review_status": "theme_concentration_review",
+      "review_focus": "进攻或主题权益仓，重点复核是否仍有主线/估值/趋势支持。",
+      "operation_boundary": "Review only; no single-security buy/sell/add/reduce instruction."
+    }
+  ],
+  "boundary": "This review is ratio-only and does not generate buy, sell, add, or reduce instructions."
+}

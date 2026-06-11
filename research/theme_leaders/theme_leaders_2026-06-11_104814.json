@@ -1,0 +1,4385 @@
+{
+  "module": "theme_leaders",
+  "version": "1.0",
+  "generated_at": "2026-06-11_104814",
+  "basis": {
+    "theme_registry": "research/themes/theme_registry.json",
+    "theme_registry_version": "2026-06-08_theme_research",
+    "theme_registry_last_updated": "2026-06-08_102237",
+    "etf_registry": "research/etfs/etf_registry.json",
+    "stock_registry": "research/stocks/stock_registry.json",
+    "valuation_dir": "research/valuations"
+  },
+  "selection_policy": {
+    "confirmed_tactical_ratings": [
+      "A",
+      "A-",
+      "B",
+      "B+"
+    ],
+    "exclude_stages": [
+      "decline"
+    ],
+    "candidate_source": "theme_registry.related_etfs + theme_registry.representative_stocks",
+    "operation_boundary": "候选池不是可买清单；操作建议必须另行读取市场仓位、组合约束、档案、估值和盘中规则。"
+  },
+  "summary": {
+    "themes_total": 13,
+    "themes_confirmed": 2,
+    "ready_for_review": 3,
+    "research_first": 13,
+    "watch_only": 68
+  },
+  "themes": [
+    {
+      "name": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "status": "active",
+      "score": 62.9,
+      "confirmed": true,
+      "confirmation_reason": "theme tactical rating confirmed"
+    },
+    {
+      "name": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "status": "active",
+      "score": 58.1,
+      "confirmed": false,
+      "confirmation_reason": "tactical_rating=C not in ['A', 'A-', 'B', 'B+']"
+    },
+    {
+      "name": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "status": "active",
+      "score": 48.0,
+      "confirmed": false,
+      "confirmation_reason": "stage=decline"
+    },
+    {
+      "name": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "status": "active",
+      "score": 62.9,
+      "confirmed": false,
+      "confirmation_reason": "tactical_rating=C not in ['A', 'A-', 'B', 'B+']"
+    },
+    {
+      "name": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "status": "active",
+      "score": 49.5,
+      "confirmed": false,
+      "confirmation_reason": "stage=decline"
+    },
+    {
+      "name": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "status": "active",
+      "score": 46.8,
+      "confirmed": false,
+      "confirmation_reason": "stage=decline"
+    },
+    {
+      "name": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "status": "active",
+      "score": 37.7,
+      "confirmed": false,
+      "confirmation_reason": "stage=decline"
+    },
+    {
+      "name": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "status": "active",
+      "score": 53.2,
+      "confirmed": false,
+      "confirmation_reason": "tactical_rating=C not in ['A', 'A-', 'B', 'B+']"
+    },
+    {
+      "name": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "status": "active",
+      "score": 69.3,
+      "confirmed": true,
+      "confirmation_reason": "theme tactical rating confirmed"
+    },
+    {
+      "name": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "status": "active",
+      "score": 44.0,
+      "confirmed": false,
+      "confirmation_reason": "stage=decline"
+    },
+    {
+      "name": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "status": "active",
+      "score": 49.6,
+      "confirmed": false,
+      "confirmation_reason": "stage=decline"
+    },
+    {
+      "name": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "status": "watch",
+      "score": 46.4,
+      "confirmed": false,
+      "confirmation_reason": "status=watch"
+    },
+    {
+      "name": "低空经济",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "status": null,
+      "score": 54.6,
+      "confirmed": false,
+      "confirmation_reason": "status=unknown"
+    }
+  ],
+  "ready_for_review": [
+    {
+      "type": "etf",
+      "code": "159819.SZ",
+      "name": "人工智能ETF易方达",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ready_for_review",
+      "reason": "主线已确认，档案和估值均存在，可进入盘前/盘中/操作建议复核。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159819.SZ_人工智能ETF易方达_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159819.SZ_人工智能ETF易方达_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "515880.SH",
+      "name": "通信ETF国泰",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ready_for_review",
+      "reason": "主线已确认，档案和估值均存在，可进入盘前/盘中/操作建议复核。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/515880.SH_通信ETF国泰_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/515880.SH_通信ETF国泰_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_515880_SH_通信ETF国泰_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "562500.SH",
+      "name": "机器人ETF华夏",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ready_for_review",
+      "reason": "主线已确认，档案和估值均存在，可进入盘前/盘中/操作建议复核。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/562500.SH_机器人ETF华夏_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/562500.SH_机器人ETF华夏_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    }
+  ],
+  "research_first": [
+    {
+      "type": "etf",
+      "code": "588790.SH",
+      "name": "588790.SH",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "512930.SH",
+      "name": "512930.SH",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688256.SH",
+      "name": "寒武纪",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688041.SH",
+      "name": "海光信息",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601138.SH",
+      "name": "工业富联",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "301236.SZ",
+      "name": "软通动力",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "603533.SH",
+      "name": "掌阅科技",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "000681.SZ",
+      "name": "视觉中国",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159770.SZ",
+      "name": "159770.SZ",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002896.SZ",
+      "name": "中大力德",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300718.SZ",
+      "name": "长盛轴承",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688322.SH",
+      "name": "奥比中光",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": null,
+      "name": "优必选",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.code_unresolved",
+      "reason": "代表股票名称未解析到唯一A股代码，需先确认代码。",
+      "resolution_source": "unresolved",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    }
+  ],
+  "watch_only": [
+    {
+      "type": "etf",
+      "code": "588200.SH",
+      "name": "科创芯片ETF嘉实",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/588200.SH_科创芯片ETF嘉实_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/588200.SH_科创芯片ETF嘉实_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159558.SZ",
+      "name": "半导体设备ETF易方达",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159558.SZ_半导体设备ETF易方达_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159558.SZ_半导体设备ETF易方达_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "512760.SH",
+      "name": "512760.SH",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159995.SZ",
+      "name": "159995.SZ",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688012.SH",
+      "name": "中微公司",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002371.SZ",
+      "name": "北方华创",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688256.SH",
+      "name": "寒武纪",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688041.SH",
+      "name": "海光信息",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": null,
+      "name": "华虹公司",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "unresolved",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002463.SZ",
+      "name": "沪电股份",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159326.SZ",
+      "name": "电网设备ETF华夏",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "516160.SH",
+      "name": "516160.SH",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "561700.SH",
+      "name": "561700.SH",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300750.SZ",
+      "name": "宁德时代",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300001.SZ",
+      "name": "特锐德",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600312.SH",
+      "name": "平高电气",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600089.SH",
+      "name": "特变电工",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600875.SH",
+      "name": "东方电气",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159667.SZ",
+      "name": "工业母机ETF国泰",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159667.SZ_工业母机ETF国泰_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159667.SZ_工业母机ETF国泰_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159667_SZ_工业母机ETF国泰_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "516320.SH",
+      "name": "516320.SH",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688025.SH",
+      "name": "杰普特",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688531.SH",
+      "name": "日联科技",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002353.SZ",
+      "name": "杰瑞股份",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300593.SZ",
+      "name": "新雷能",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "510880.SH",
+      "name": "红利ETF华泰柏瑞",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/510880.SH_红利ETF华泰柏瑞_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/510880.SH_红利ETF华泰柏瑞_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_510880_SH_红利ETF华泰柏瑞_2026-06-05_103909.json",
+        "generated_at": "2026-06-05_103909",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159301.SZ",
+      "name": "公用事业ETF华夏",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159301.SZ_公用事业ETF华夏_2026-06-09_160233.md",
+        "last_profile_json": "research/etfs/159301.SZ_公用事业ETF华夏_2026-06-09_160233.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "561560.SH",
+      "name": "561560.SH",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601088.SH",
+      "name": "中国神华",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601898.SH",
+      "name": "中煤能源",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601857.SH",
+      "name": "中国石油",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600938.SH",
+      "name": "中国海油",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "516150.SH",
+      "name": "稀土ETF嘉实",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/516150.SH_稀土ETF嘉实_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/516150.SH_稀土ETF嘉实_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "562800.SH",
+      "name": "稀有金属ETF嘉实",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/562800.SH_稀有金属ETF嘉实_2026-06-02_220936.md",
+        "last_profile_json": "research/etfs/562800.SH_稀有金属ETF嘉实_2026-06-02_220936.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "512400.SH",
+      "name": "有色金属ETF南方",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.md",
+        "last_profile_json": "research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159652.SZ",
+      "name": "159652.SZ",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601600.SH",
+      "name": "中国铝业",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601899.SH",
+      "name": "紫金矿业",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "603993.SH",
+      "name": "洛阳钼业",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600111.SH",
+      "name": "北方稀土",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159755.SZ",
+      "name": "电池ETF广发",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159755.SZ_电池ETF广发_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159755.SZ_电池ETF广发_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "561910.SH",
+      "name": "561910.SH",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300750.SZ",
+      "name": "宁德时代",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300014.SZ",
+      "name": "亿纬锂能",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002850.SZ",
+      "name": "科达利",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "603799.SH",
+      "name": "华友钴业",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159326.SZ",
+      "name": "电网设备ETF华夏",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159755.SZ",
+      "name": "电池ETF广发",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159755.SZ_电池ETF广发_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159755.SZ_电池ETF广发_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300750.SZ",
+      "name": "宁德时代",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300274.SZ",
+      "name": "阳光电源",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688411.SH",
+      "name": "海博思创",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300001.SZ",
+      "name": "特锐德",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159206.SZ",
+      "name": "卫星ETF永赢",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159206_SZ_卫星ETF永赢_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "512710.SH",
+      "name": "军工龙头ETF富国",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/512710.SH_军工龙头ETF富国_2026-06-02_194731.md",
+        "last_profile_json": "research/etfs/512710.SH_军工龙头ETF富国_2026-06-02_194731.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600118.SH",
+      "name": "中国卫星",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600879.SH",
+      "name": "航天电子",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002389.SZ",
+      "name": "航天彩虹",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "516020.SH",
+      "name": "516020.SH",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159870.SZ",
+      "name": "159870.SZ",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600309.SH",
+      "name": "万华化学",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600426.SH",
+      "name": "华鲁恒升",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002648.SZ",
+      "name": "卫星化学",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159872.SZ",
+      "name": "159872.SZ",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "515250.SH",
+      "name": "515250.SH",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002920.SZ",
+      "name": "德赛西威",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "stock_registry",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/stocks/002920_德赛西威_2026-06-02_103125.md",
+        "last_profile_json": "research/stocks/002920_德赛西威_2026-06-02_103125.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_002920_SZ_德赛西威_2026-06-09_112659.json",
+        "generated_at": "2026-06-09_112659",
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002906.SZ",
+      "name": "华阳集团",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688326.SH",
+      "name": "经纬恒润",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159378.SZ",
+      "name": "通用航空ETF永赢",
+      "theme": "低空经济",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=unknown",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159378.SZ_通用航空ETF永赢_2026-06-02_183206.md",
+        "last_profile_json": "research/etfs/159378.SZ_通用航空ETF永赢_2026-06-02_183206.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159206.SZ",
+      "name": "卫星ETF永赢",
+      "theme": "低空经济",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=unknown",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159206_SZ_卫星ETF永赢_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    }
+  ],
+  "all_candidates": [
+    {
+      "type": "etf",
+      "code": "159819.SZ",
+      "name": "人工智能ETF易方达",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ready_for_review",
+      "reason": "主线已确认，档案和估值均存在，可进入盘前/盘中/操作建议复核。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159819.SZ_人工智能ETF易方达_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159819.SZ_人工智能ETF易方达_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "515880.SH",
+      "name": "通信ETF国泰",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ready_for_review",
+      "reason": "主线已确认，档案和估值均存在，可进入盘前/盘中/操作建议复核。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/515880.SH_通信ETF国泰_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/515880.SH_通信ETF国泰_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_515880_SH_通信ETF国泰_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "588790.SH",
+      "name": "588790.SH",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "512930.SH",
+      "name": "512930.SH",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688256.SH",
+      "name": "寒武纪",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688041.SH",
+      "name": "海光信息",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601138.SH",
+      "name": "工业富联",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "301236.SZ",
+      "name": "软通动力",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "603533.SH",
+      "name": "掌阅科技",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "000681.SZ",
+      "name": "视觉中国",
+      "theme": "AI",
+      "strategic_rating": "A",
+      "tactical_rating": "B",
+      "stage": "repair",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "588200.SH",
+      "name": "科创芯片ETF嘉实",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/588200.SH_科创芯片ETF嘉实_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/588200.SH_科创芯片ETF嘉实_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159558.SZ",
+      "name": "半导体设备ETF易方达",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159558.SZ_半导体设备ETF易方达_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159558.SZ_半导体设备ETF易方达_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "512760.SH",
+      "name": "512760.SH",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159995.SZ",
+      "name": "159995.SZ",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688012.SH",
+      "name": "中微公司",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002371.SZ",
+      "name": "北方华创",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688256.SH",
+      "name": "寒武纪",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688041.SH",
+      "name": "海光信息",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": null,
+      "name": "华虹公司",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "unresolved",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002463.SZ",
+      "name": "沪电股份",
+      "theme": "半导体",
+      "strategic_rating": "A",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159326.SZ",
+      "name": "电网设备ETF华夏",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "516160.SH",
+      "name": "516160.SH",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "561700.SH",
+      "name": "561700.SH",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300750.SZ",
+      "name": "宁德时代",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300001.SZ",
+      "name": "特锐德",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600312.SH",
+      "name": "平高电气",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600089.SH",
+      "name": "特变电工",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600875.SH",
+      "name": "东方电气",
+      "theme": "电力设备",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159667.SZ",
+      "name": "工业母机ETF国泰",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159667.SZ_工业母机ETF国泰_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159667.SZ_工业母机ETF国泰_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159667_SZ_工业母机ETF国泰_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "516320.SH",
+      "name": "516320.SH",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688025.SH",
+      "name": "杰普特",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688531.SH",
+      "name": "日联科技",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002353.SZ",
+      "name": "杰瑞股份",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300593.SZ",
+      "name": "新雷能",
+      "theme": "高端装备",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "510880.SH",
+      "name": "红利ETF华泰柏瑞",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/510880.SH_红利ETF华泰柏瑞_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/510880.SH_红利ETF华泰柏瑞_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_510880_SH_红利ETF华泰柏瑞_2026-06-05_103909.json",
+        "generated_at": "2026-06-05_103909",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159301.SZ",
+      "name": "公用事业ETF华夏",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159301.SZ_公用事业ETF华夏_2026-06-09_160233.md",
+        "last_profile_json": "research/etfs/159301.SZ_公用事业ETF华夏_2026-06-09_160233.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "561560.SH",
+      "name": "561560.SH",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601088.SH",
+      "name": "中国神华",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601898.SH",
+      "name": "中煤能源",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601857.SH",
+      "name": "中国石油",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600938.SH",
+      "name": "中国海油",
+      "theme": "能源",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "516150.SH",
+      "name": "稀土ETF嘉实",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/516150.SH_稀土ETF嘉实_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/516150.SH_稀土ETF嘉实_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "562800.SH",
+      "name": "稀有金属ETF嘉实",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/562800.SH_稀有金属ETF嘉实_2026-06-02_220936.md",
+        "last_profile_json": "research/etfs/562800.SH_稀有金属ETF嘉实_2026-06-02_220936.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "512400.SH",
+      "name": "有色金属ETF南方",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.md",
+        "last_profile_json": "research/etfs/512400.SH_有色金属ETF南方_2026-06-09_150409.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159652.SZ",
+      "name": "159652.SZ",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601600.SH",
+      "name": "中国铝业",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "601899.SH",
+      "name": "紫金矿业",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "603993.SH",
+      "name": "洛阳钼业",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600111.SH",
+      "name": "北方稀土",
+      "theme": "有色",
+      "strategic_rating": "B",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159755.SZ",
+      "name": "电池ETF广发",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159755.SZ_电池ETF广发_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159755.SZ_电池ETF广发_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "561910.SH",
+      "name": "561910.SH",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300750.SZ",
+      "name": "宁德时代",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300014.SZ",
+      "name": "亿纬锂能",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002850.SZ",
+      "name": "科达利",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "603799.SH",
+      "name": "华友钴业",
+      "theme": "电池",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159326.SZ",
+      "name": "电网设备ETF华夏",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159326.SZ_电网设备ETF华夏_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159755.SZ",
+      "name": "电池ETF广发",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159755.SZ_电池ETF广发_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159755.SZ_电池ETF广发_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300750.SZ",
+      "name": "宁德时代",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300274.SZ",
+      "name": "阳光电源",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688411.SH",
+      "name": "海博思创",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300001.SZ",
+      "name": "特锐德",
+      "theme": "储能",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：tactical_rating=C not in ['A', 'A-', 'B', 'B+']",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "562500.SH",
+      "name": "机器人ETF华夏",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ready_for_review",
+      "reason": "主线已确认，档案和估值均存在，可进入盘前/盘中/操作建议复核。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/562500.SH_机器人ETF华夏_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/562500.SH_机器人ETF华夏_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159770.SZ",
+      "name": "159770.SZ",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002896.SZ",
+      "name": "中大力德",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "300718.SZ",
+      "name": "长盛轴承",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688322.SH",
+      "name": "奥比中光",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.profile_missing",
+      "reason": "缺少ETF/个股档案，不能进入操作建议。",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": null,
+      "name": "优必选",
+      "theme": "机器人",
+      "strategic_rating": "B",
+      "tactical_rating": "B",
+      "stage": "confirmation",
+      "theme_confirmed": true,
+      "route": "ResearchFirst.code_unresolved",
+      "reason": "代表股票名称未解析到唯一A股代码，需先确认代码。",
+      "resolution_source": "unresolved",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159206.SZ",
+      "name": "卫星ETF永赢",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159206_SZ_卫星ETF永赢_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "512710.SH",
+      "name": "军工龙头ETF富国",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/512710.SH_军工龙头ETF富国_2026-06-02_194731.md",
+        "last_profile_json": "research/etfs/512710.SH_军工龙头ETF富国_2026-06-02_194731.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600118.SH",
+      "name": "中国卫星",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600879.SH",
+      "name": "航天电子",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002389.SZ",
+      "name": "航天彩虹",
+      "theme": "商业航天",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "516020.SH",
+      "name": "516020.SH",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159870.SZ",
+      "name": "159870.SZ",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600309.SH",
+      "name": "万华化学",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "600426.SH",
+      "name": "华鲁恒升",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002648.SZ",
+      "name": "卫星化学",
+      "theme": "化工",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：stage=decline",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159872.SZ",
+      "name": "159872.SZ",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "515250.SH",
+      "name": "515250.SH",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002920.SZ",
+      "name": "德赛西威",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "stock_registry",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/stocks/002920_德赛西威_2026-06-02_103125.md",
+        "last_profile_json": "research/stocks/002920_德赛西威_2026-06-02_103125.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_002920_SZ_德赛西威_2026-06-09_112659.json",
+        "generated_at": "2026-06-09_112659",
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "002906.SZ",
+      "name": "华阳集团",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "stock",
+      "code": "688326.SH",
+      "name": "经纬恒润",
+      "theme": "无人驾驶",
+      "strategic_rating": "C",
+      "tactical_rating": "D",
+      "stage": "decline",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=watch",
+      "resolution_source": "Tushare.stock_basic",
+      "profile": {
+        "status": "missing",
+        "registry_status": null,
+        "last_profile_file": null,
+        "last_profile_json": null
+      },
+      "valuation": {
+        "status": "missing",
+        "latest_file": null,
+        "generated_at": null,
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159378.SZ",
+      "name": "通用航空ETF永赢",
+      "theme": "低空经济",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=unknown",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159378.SZ_通用航空ETF永赢_2026-06-02_183206.md",
+        "last_profile_json": "research/etfs/159378.SZ_通用航空ETF永赢_2026-06-02_183206.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    },
+    {
+      "type": "etf",
+      "code": "159206.SZ",
+      "name": "卫星ETF永赢",
+      "theme": "低空经济",
+      "strategic_rating": "B",
+      "tactical_rating": "C",
+      "stage": "repair",
+      "theme_confirmed": false,
+      "route": "watch_only.theme_not_confirmed",
+      "reason": "所属主线未达到确认门槛：status=unknown",
+      "resolution_source": "theme_registry.related_etfs",
+      "profile": {
+        "status": "present",
+        "registry_status": "profile_generated",
+        "last_profile_file": "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.md",
+        "last_profile_json": "research/etfs/159206.SZ_卫星ETF永赢_2026-06-02_000715.json"
+      },
+      "valuation": {
+        "status": "present",
+        "latest_file": "research/valuations/valuation_159206_SZ_卫星ETF永赢_2026-06-09_163552.json",
+        "generated_at": "2026-06-09_163552",
+        "zone": null
+      }
+    }
+  ],
+  "data_sources": [
+    "theme_registry.related_etfs",
+    "theme_registry.representative_stocks",
+    "etf_registry profile status",
+    "stock_registry profile status",
+    "research/valuations latest files",
+    "Tushare.stock_basic for stock name-code resolution"
+  ],
+  "quality": {
+    "status": "fresh",
+    "warnings": []
+  }
+}

@@ -1,0 +1,457 @@
+{
+  "module": "staleness_check",
+  "version": "1.0",
+  "generated_at": "2026-06-11_131500",
+  "summary": {
+    "status": "stale",
+    "errors": 0,
+    "stale": 7,
+    "warnings": 0
+  },
+  "latest_modules": {
+    "action_plan": {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-11_131420_latest_ratio_only.json",
+      "generated_at": "2026-06-11_131420",
+      "basis_trade_date": "20260608",
+      "sha256": "f3b5efe0d80f0ee8449b7efc4bec2cd326980d806197bc225cd878600ae5666c",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    "intraday_alerts": {
+      "module": "intraday_alerts",
+      "code": null,
+      "name": null,
+      "path": "research/alerts/intraday_alert_2026-06-11_104602.json",
+      "generated_at": "2026-06-11_104602",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "c94e7b2b37a39176ca98bdaa0ee115adf5dc323981a89af7b4331abcf65f3553",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "intraday_rules": {
+      "module": "intraday_rules",
+      "code": null,
+      "name": null,
+      "path": "research/alerts/intraday_rules.json",
+      "generated_at": "2026-06-11_131429",
+      "basis_trade_date": null,
+      "sha256": "4c615aa7f48d477e93516ba45862817cabeb1cf5fe077678472e40afc557f573",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    "target_allocation": {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-11_131429.json",
+      "generated_at": "2026-06-11_131429",
+      "basis_trade_date": "20260608",
+      "sha256": "d93be5308da51bd40ba5902bca04ce283b1137b3ae17faeb34305b1362d5246a",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "STRATEGY_BRIEFING": {
+      "module": "STRATEGY_BRIEFING",
+      "code": null,
+      "name": null,
+      "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
+      "generated_at": "2026-06-11_103833",
+      "basis_trade_date": null,
+      "sha256": "bb546df54e52b1ecf4c87dc259a0261533faea5558026700e0d345be0c5544e6",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "premarket_check": {
+      "module": "premarket_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/premarket_check_2026-06-11_131344.json",
+      "generated_at": "2026-06-11_131344",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "7ab6366f042379ed3b67cc64d9d92fc5b90422c745ec610ba8192cef46808d18",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "staleness_check": {
+      "module": "staleness_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/staleness_check_2026-06-09_152542.json",
+      "generated_at": "2026-06-09_152542",
+      "basis_trade_date": null,
+      "sha256": "b52dca43c3d28e3470a5d796c765ca336d199710edc5f381f126f61ece908239",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "valuation_update_check": {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-11_131332.json",
+      "generated_at": "2026-06-11_131332",
+      "basis_trade_date": "20260610",
+      "sha256": "d01a239e5c8dc81f9008834c0f268a3dbdcf8e37b76df0f3e6ad71d79b3aff37",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "bucket_registry": {
+      "module": "bucket_registry",
+      "code": null,
+      "name": null,
+      "path": "research/config/bucket_registry.json",
+      "generated_at": "2026-06-08_000000",
+      "basis_trade_date": null,
+      "sha256": "abcd504611da1817ccaae375d35cdd0fdff36468a91f461ff844f2448373731d",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "intraday_watchlist": {
+      "module": "intraday_watchlist",
+      "code": null,
+      "name": null,
+      "path": "research/config/intraday_watchlist.json",
+      "generated_at": null,
+      "basis_trade_date": null,
+      "sha256": "701d912f0413093304fd2bd1d565ec73c336c1b746d896b8ebd6d9e882a311bb",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "liquidity_gate_registry": {
+      "module": "liquidity_gate_registry",
+      "code": null,
+      "name": null,
+      "path": "research/config/liquidity_gate_registry.json",
+      "generated_at": "2026-06-09_141800",
+      "basis_trade_date": null,
+      "sha256": "9e06e96afdc279f3e8fbea065bd976e42be4b6ece7b9d7d87796421c7b41ed75",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "market_position_mapping": {
+      "module": "market_position_mapping",
+      "code": null,
+      "name": null,
+      "path": "research/config/market_position_mapping.json",
+      "generated_at": "2026-06-09_000000",
+      "basis_trade_date": null,
+      "sha256": "cb47f9270453a0c3957418694201c0e36a7acb628b695716d991b81107ff3f93",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "etf_profile": {
+      "module": "etf_profile",
+      "code": "159301.SZ",
+      "name": "公用事业ETF华夏",
+      "path": "research/etfs/159301.SZ_公用事业ETF华夏_2026-06-09_160233.json",
+      "generated_at": "2026-06-09_160233",
+      "basis_trade_date": "20260608",
+      "sha256": "6ef617d2b031259601f594e587ef8785261f5ae3b6b023e6b8ed360cfcaa2c99",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "etf_registry": {
+      "module": "etf_registry",
+      "code": null,
+      "name": null,
+      "path": "research/etfs/etf_registry.json",
+      "generated_at": "2026-06-09_160233",
+      "basis_trade_date": null,
+      "sha256": "31a40bbe79306d0b4be17717ace30dfbf09ac91148ff2f054fbf4e8afc4ae635",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "market_score": {
+      "module": "market_score",
+      "code": null,
+      "name": null,
+      "path": "research/market/market_score_2026-06-09_100448.json",
+      "generated_at": "2026-06-09_100448",
+      "basis_trade_date": "20260608",
+      "sha256": "81120794d927db64d32053739d064c8ba42533d05a6929103cecb5674a5c77ef",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "portfolio_cleanup_review": {
+      "module": "portfolio_cleanup_review",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_cleanup_2026-06-09_160500.json",
+      "generated_at": "2026-06-09_160500",
+      "basis_trade_date": null,
+      "sha256": "78334ef582bc8aa7f2381d07141b01b19ace39e8ff62f104f8f1a5e23adaf78c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "portfolio_snapshot": {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-11_112436.json",
+      "generated_at": "2026-06-11_112436",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "9f5ac4fb4b1c519f5a0329c77bde68edc7623770645ad97df51eeb8889320835",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "research_backlog": {
+      "module": "research_backlog",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/research_backlog_2026-06-09_151312.json",
+      "generated_at": "2026-06-09_151312",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "91e2a1da8edc8e7883956a9f4db24ef7c2dd46ef15f9ea6d6e17301ca17c038d",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "research_quality_audit": {
+      "module": "research_quality_audit",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/research_quality_audit_2026-06-09_160248.json",
+      "generated_at": "2026-06-09_160248",
+      "basis_trade_date": null,
+      "sha256": "665b87ccdeaadea164cacf1bb64fbf55a87e533b730712adcd369655f7f9242d",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "post_market_review": {
+      "module": "post_market_review",
+      "code": null,
+      "name": null,
+      "path": "research/reviews/post_market_review_2026-06-09_162342.json",
+      "generated_at": "2026-06-09_162342",
+      "basis_trade_date": "2026-06-09",
+      "sha256": "e62e2751a5f900fd357c39d95ebf922559bbf855b97f0687ed8fa4c9e5b402db",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "stock_profile": {
+      "module": "stock_profile",
+      "code": "601318.SH",
+      "name": "中国平安",
+      "path": "research/stocks/601318_中国平安_v2_2026-06-04_133534.json",
+      "generated_at": "2026-06-04_133534",
+      "basis_trade_date": "2026-06-04",
+      "sha256": "bfd32456ce303a66b1dd3d976c42d00b406ca4d1fee31c0020b60d69d1276e82",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "stock_registry": {
+      "module": "stock_registry",
+      "code": null,
+      "name": null,
+      "path": "research/stocks/stock_registry.json",
+      "generated_at": "2026-06-09",
+      "basis_trade_date": null,
+      "sha256": "ba5f9b1144ba24d8c9c52ba6d1ba38d998de93562398e1a1a7f381e4337ef1a7",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "theme_leaders": {
+      "module": "theme_leaders",
+      "code": null,
+      "name": null,
+      "path": "research/theme_leaders/theme_leaders_2026-06-11_105943.json",
+      "generated_at": "2026-06-11_105943",
+      "basis_trade_date": null,
+      "sha256": "4c89ad1fdd17cc1308bf64f9dd74d52b2531257c5c25924b801aad2dd039bf2d",
+      "quality": {
+        "status": "fresh"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "theme_registry": {
+      "module": "theme_registry",
+      "code": null,
+      "name": null,
+      "path": "research/themes/theme_registry.json",
+      "generated_at": "2026-06-08_102237",
+      "basis_trade_date": null,
+      "sha256": "8528c79e0b7e62ae061f1d580942390dcc688bc46325297e233bfadd48f966a2",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "theme_review": {
+      "module": "theme_review",
+      "code": null,
+      "name": null,
+      "path": "research/themes/theme_review_2026-06-08_102237.json",
+      "generated_at": "2026-06-08_102237",
+      "basis_trade_date": "20260605",
+      "sha256": "f8cd26cd7055197e14437dde7e7719d14dd678681375065e02c6e0d6b40d458a",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    "valuation_report": {
+      "module": "valuation_report",
+      "code": "688439.SH",
+      "name": "振华风光",
+      "path": "research/valuations/valuation_688439_SH_振华风光_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "67ab1ff8f4625173c0a9fa532b5b6660ad3f42fd84e64363bc09eb3ee72b9373",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    }
+  },
+  "findings": [
+    {
+      "level": "STALE",
+      "path": "research/actions/action_plan_2026-06-11_131420_latest_ratio_only.json",
+      "dependency": "research/alerts/intraday_rules.json",
+      "reason": "dependency generated later than downstream file"
+    },
+    {
+      "level": "STALE",
+      "path": "research/actions/action_plan_2026-06-11_131420_latest_ratio_only.json",
+      "dependency": "research/allocation/target_allocation_2026-06-11_112436.json",
+      "dependency_module": "target_allocation",
+      "latest_path": "research/allocation/target_allocation_2026-06-11_131429.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
+      "dependency": "research/actions/action_plan_2026-06-09_160249_latest_ratio_only.json",
+      "dependency_module": "action_plan",
+      "latest_path": "research/actions/action_plan_2026-06-11_131420_latest_ratio_only.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
+      "dependency": "research/checks/premarket_check_2026-06-09_162003.json",
+      "dependency_module": "premarket_check",
+      "latest_path": "research/checks/premarket_check_2026-06-11_131344.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
+      "dependency": "research/checks/valuation_update_check_2026-06-11_103636.json",
+      "dependency_module": "valuation_update_check",
+      "latest_path": "research/checks/valuation_update_check_2026-06-11_131332.json",
+      "reason": "dependency is not latest for its module"
+    },
+    {
+      "level": "STALE",
+      "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
+      "dependency": "research/latest_index.json",
+      "reason": "dependency generated later than downstream file"
+    },
+    {
+      "level": "STALE",
+      "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
+      "dependency": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+      "dependency_module": "portfolio_snapshot",
+      "latest_path": "research/portfolio/portfolio_snapshot_2026-06-11_112436.json",
+      "reason": "dependency is not latest for its module"
+    }
+  ]
+}

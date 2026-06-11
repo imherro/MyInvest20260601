@@ -9,6 +9,7 @@ def test_pages_include_refresh_export_and_interaction_hooks(client):
     assert "/api/export/review_package" in html
     assert "data-table-search=\"portfolioTable\"" in html
     assert "data-sort=\"number\"" in html
+    assert "data-no-pagination=\"true\"" in html
 
 
 def test_subject_gap_page_include_refresh_and_table_hooks(client):
@@ -153,6 +154,8 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     script = response.text
     assert "function assertRatioOnly" in script
     assert "function renderPagination" in script
+    assert "noPagination" in script
+    assert "function removePagination" in script
     assert "function renderSubjectGap" in script
     assert "function renderSubjectGapChart" in script
     assert "function renderDashboardQuickLinks" in script

@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 from .config import STATIC_DIR, TEMPLATE_DIR
 from .db import get_session
 from .routers.current import router as current_router
+from .routers.operations import router as operations_router
 from .services.allocation_drilldown import AllocationDrilldownService
 from .services.current_state import CurrentStateService
 from .services.bucket_explorer import BucketExplorerService
@@ -22,16 +23,23 @@ from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
 from .services.theme_status import ThemeStatusService
+from .services.tool_console import ToolConsoleService
 
 
 app = FastAPI(title="MyInvest Web", version="0.2.0")
 app.include_router(current_router, prefix="/api")
+app.include_router(operations_router)
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 
 
 def page_context(request: Request, page: str, api_path: str, **extra):
-    context = {"request": request, "page": page, "api_path": api_path}
+    context = {
+        "request": request,
+        "page": page,
+        "api_path": api_path,
+        "subtitle": "Read-only current state from latest_index.modules.",
+    }
     context.update(extra)
     return context
 
@@ -251,6 +259,21 @@ def historical_metrics_page(request: Request, session: Session = Depends(get_ses
             "historical-metrics",
             "/api/historical-metrics",
             metrics=metrics,
+        ),
+    )
+
+
+@app.get("/tools", response_class=HTMLResponse)
+def tools_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "tools.html",
+        page_context(
+            request,
+            "tools",
+            "/ops/tools",
+            subtitle="Local whitelisted tools. Script buttons run only fixed repo commands.",
+            tools=ToolConsoleService().list_tools(),
         ),
     )
 

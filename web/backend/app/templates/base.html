@@ -270,6 +270,95 @@
         color: var(--muted);
         font-size: 13px;
       }
+      .coverage-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        margin: 2px 4px 2px 0;
+        padding: 2px 7px;
+        border: 1px solid #d4dce8;
+        border-radius: 999px;
+        background: #f7fafc;
+        color: #344052;
+        font-size: 12px;
+        font-weight: 650;
+        white-space: nowrap;
+      }
+      .theme-detail-panel {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        color: var(--ink);
+      }
+      .theme-detail-meta {
+        grid-column: 1 / -1;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .theme-detail-section {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        overflow: hidden;
+      }
+      .theme-detail-heading {
+        padding: 8px 10px;
+        background: #edf2f8;
+        color: #344052;
+        font-weight: 700;
+      }
+      .theme-detail-list {
+        display: grid;
+        gap: 0;
+      }
+      .theme-detail-item,
+      .theme-detail-empty {
+        padding: 8px 10px;
+        border-top: 1px solid var(--line);
+        line-height: 1.45;
+        word-break: break-word;
+      }
+      .theme-detail-line {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .theme-detail-identity {
+        margin-right: 4px;
+        color: var(--ink);
+      }
+      .state-badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 22px;
+        padding: 2px 7px;
+        border-radius: 999px;
+        border: 1px solid #d6dde8;
+        background: #f4f7fb;
+        color: #344052;
+        font-size: 12px;
+        font-weight: 650;
+        white-space: nowrap;
+      }
+      .state-badge.ok {
+        border-color: #8ac8b7;
+        background: #edf9f5;
+        color: #0d6b58;
+      }
+      .state-badge.bad {
+        border-color: #e7aaaa;
+        background: #fff1f1;
+        color: #9f2727;
+      }
+      .state-badge.warn {
+        border-color: #e5bd75;
+        background: #fff8e9;
+        color: #8a5200;
+      }
+      .theme-detail-empty {
+        color: var(--muted);
+      }
       tr.expandable-row {
         cursor: pointer;
       }
@@ -305,6 +394,68 @@
         border-radius: 8px;
         color: var(--muted);
       }
+      .tool-runner {
+        display: grid;
+        gap: 10px;
+        margin: 12px 0 18px;
+      }
+      .tool-output {
+        margin: 0;
+        max-height: 340px;
+        overflow: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+        background: #111827;
+        color: #f8fafc;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+      .tool-output[hidden] {
+        display: none;
+      }
+      .tool-result-row td {
+        background: #f7fafc;
+        border-top: 0;
+        padding-top: 0;
+      }
+      .tool-result-row[hidden] {
+        display: none;
+      }
+      .tool-result-label {
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 700;
+        margin: 8px 0 6px;
+        text-transform: uppercase;
+      }
+      .tool-output-inline {
+        margin: 0 0 8px;
+        max-height: 340px;
+        overflow: auto;
+      }
+      .tool-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .tool-actions button {
+        min-width: 96px;
+      }
+      .tool-actions button:disabled {
+        cursor: default;
+        opacity: 0.55;
+      }
+      .tool-impact {
+        white-space: nowrap;
+      }
+      .tool-group-row td {
+        background: #dfe8f3;
+        color: #263244;
+        font-weight: 750;
+        letter-spacing: 0;
+      }
       @media (max-width: 720px) {
         .bar { align-items: flex-start; flex-direction: column; }
         .page-top { align-items: flex-start; flex-direction: column; }
@@ -312,7 +463,7 @@
         table { display: block; overflow-x: auto; }
       }
     </style>
-    <script src="/static/app.js" defer></script>
+    <script src="/static/app.js?v=portfolio-no-pagination-20260611" defer></script>
   </head>
   <body data-page="{{ page }}" data-api-path="{{ api_path }}">
     <header>
@@ -336,6 +487,7 @@
           <a class="{{ 'active' if page == 'decision-timeline' else '' }}" href="/decision-timeline">Decision Timeline</a>
           <a class="{{ 'active' if page == 'historical-metrics' else '' }}" href="/historical-metrics">Historical Metrics</a>
           <a class="{{ 'active' if page == 'system-checks' else '' }}" href="/system-checks">System Checks</a>
+          <a class="{{ 'active' if page == 'tools' else '' }}" href="/tools">Tools</a>
         </nav>
       </div>
     </header>
@@ -343,7 +495,7 @@
       <div class="page-top">
         <div>
           <h1>{% block title %}{% endblock %}</h1>
-          <div class="subtle">Read-only current state from latest_index.modules.</div>
+          <div class="subtle">{{ subtitle }}</div>
         </div>
         <div class="page-actions">
           <button type="button" data-refresh>Refresh</button>

@@ -1,0 +1,241 @@
+{
+  "module": "STRATEGY_BRIEFING",
+  "version": "ratio_only_v1",
+  "generated_at": "2026-06-11_103833",
+  "report_date": "2026-06-11",
+  "session": "premarket",
+  "conclusion_type": "risk_reduce_or_watch_only",
+  "ratio_only_policy": "仅使用比例、百分比、目标区间、状态和相对变化描述。",
+  "read_files": [
+    "README.md",
+    "docs/PROJECT_MEMORY.md",
+    "docs/DAILY_PROCESS.md",
+    "docs/DATA_SOURCES.md",
+    "docs/FILE_NAMING.md",
+    "research/latest_index.json",
+    "research/logs/decision_log.md",
+    "research/market/market_score_2026-06-09_100448.json",
+    "research/themes/theme_review_2026-06-08_102237.json",
+    "research/themes/theme_registry.json",
+    "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
+    "research/actions/action_plan_2026-06-09_160249_latest_ratio_only.json",
+    "research/checks/valuation_update_check_2026-06-11_103636.json",
+    "research/checks/premarket_check_2026-06-09_162003.json"
+  ],
+  "sources": [
+    {
+      "name": "Tushare",
+      "date": "2026-06-10",
+      "url": null,
+      "note": "A股日线与市场广度补充"
+    },
+    {
+      "name": "新浪财经四大证券报摘要",
+      "date": "2026-06-11",
+      "url": "https://finance.sina.com.cn/stock/y/2026-06-11/doc-iniaysky2368626.shtml",
+      "note": "政策与产业事件"
+    },
+    {
+      "name": "证券时报成长赛道盘整",
+      "date": "2026-06-11",
+      "url": "https://www.stcn.com/article/detail/3954866.html",
+      "note": "6月10日A股风格变化"
+    },
+    {
+      "name": "证券时报美股与外盘风险",
+      "date": "2026-06-11",
+      "url": "https://www.stcn.com/article/detail/3954880.html",
+      "note": "外盘科技与地缘风险"
+    },
+    {
+      "name": "AP美股收盘",
+      "date": "2026-06-10",
+      "url": "https://apnews.com/article/f200bcea8e8c66c07539651474569506",
+      "note": "美股主要指数与AI链调整"
+    },
+    {
+      "name": "新浪财经操盘必读",
+      "date": "2026-06-11",
+      "url": "https://finance.sina.com.cn/stock/cpbd/2026-06-11/doc-iniaysky2380690.shtml",
+      "note": "宏观、政策、地缘事件"
+    }
+  ],
+  "current_state": {
+    "market_state": "弱势震荡，风险收缩优先",
+    "market_basis": "20260608",
+    "market_score": 25,
+    "equity_target": "30%-40%",
+    "bond_cash_target": "60%-70%",
+    "offensive_bucket_status": "pause_new",
+    "portfolio_equity_pct": 43.5174,
+    "portfolio_bond_cash_pct": 56.4826,
+    "action_state": "actionable",
+    "action_strength": "Normal",
+    "valuation_status": "update_needed",
+    "valuation_update_required_count": 33,
+    "conclusion_type": "risk_reduce_or_watch_only"
+  },
+  "data_supplement": {
+    "source": "Tushare pro.daily/pro.index_daily",
+    "basis_trade_date": "20260610",
+    "indices_pct_chg": [
+      {
+        "name": "上证综指",
+        "pct_chg": -0.42
+      },
+      {
+        "name": "沪深300",
+        "pct_chg": -1.11
+      },
+      {
+        "name": "中证500",
+        "pct_chg": -1.37
+      },
+      {
+        "name": "中证1000",
+        "pct_chg": -1.44
+      },
+      {
+        "name": "创业板指",
+        "pct_chg": -2.7
+      },
+      {
+        "name": "科创50",
+        "pct_chg": -0.65
+      }
+    ],
+    "all_a_advance_ratio_pct": 28.23,
+    "all_a_median_pct_chg": -1.47,
+    "usage_boundary": "事实补充，不替代market_score结论"
+  },
+  "major_news": [
+    {
+      "type": "macro",
+      "title": "外盘风险偏好转弱",
+      "impact": "美股主要指数在2026-06-10同步回落，AI相关资产承压，地缘风险抬升。对A股影响偏向压制高估值成长板块的开盘风险偏好。",
+      "sources": [
+        "AP美股收盘",
+        "证券时报美股与外盘风险"
+      ]
+    },
+    {
+      "type": "macro",
+      "title": "美国通胀和地缘事件仍是扰动项",
+      "impact": "美国5月CPI同比4.2%，叠加美伊局势与油价扰动，外部利率和风险资产波动约束仍在。",
+      "sources": [
+        "新浪财经操盘必读"
+      ]
+    },
+    {
+      "type": "policy",
+      "title": "稳增长政策预期延续",
+      "impact": "发改委召开经济形势专家座谈会，强调政策工具储备和经济运行研判。对A股是托底背景，不足以单独打开进攻仓。",
+      "sources": [
+        "新浪财经操盘必读"
+      ]
+    },
+    {
+      "type": "industry",
+      "title": "AI与信息通信融合创新推进",
+      "impact": "工信部相关实施意见强化AI应用和信息通信融合方向，利好AI应用、通信、算力链长期叙事；但当前主线评级仍以既有登记册为准。",
+      "sources": [
+        "新浪财经四大证券报摘要"
+      ]
+    },
+    {
+      "type": "market",
+      "title": "A股6月10日高低切换明显",
+      "impact": "科技成长集中调整，低估值和防御属性方向相对占优，市场广度不足。该事实与系统已有风险收缩结论一致。",
+      "sources": [
+        "Tushare",
+        "证券时报成长赛道盘整"
+      ]
+    }
+  ],
+  "strategy_essentials": [
+    "今日定性为风险收缩或观察优先，不打开进攻仓。",
+    "系统当前权益目标区间为30%-40%，组合权益比例约43.52%，高于目标上沿；操作边界沿用既有ACTION_PLAN的比例级风险收缩和现金/短久期恢复。",
+    "Tushare补充显示2026-06-10主要宽基普遍回落，全A上涨占比约28.23%，中位表现为负；该事实不支持临时上调市场仓位。",
+    "估值质量检查为update_needed，更新需求33项；该状态只约束新增单标的动作，不构成新的交易触发条件。",
+    "主线不临时重写：机器人为B/B确认，AI为A/B修复，半导体为A/C修复，高端装备和储能为B/C修复；科技政策利好只做跟踪，不直接升档。"
+  ],
+  "market_analysis": {
+    "market_position": "latest_index当前市场仓位仍指向20260608基准的弱势震荡/风险收缩结论，权益目标30%-40%，现金/短久期目标60%-70%，进攻仓状态pause_new。",
+    "latest_fact": "20260610补充数据继续显示宽基回落和市场广度偏弱，与风险收缩结论同向。",
+    "portfolio": "组合快照显示权益比例约43.52%，现金/短久期比例约56.48%，权益仍高于目标上沿。",
+    "action_plan": "既有操作建议状态为actionable、强度Normal；方向是比例级风险收缩和现金/短久期恢复，不产生新的单标的动作。",
+    "valuation": "估值状态update_needed，更新需求33项；新增单标的动作前应先刷新或确认估值，盘前简报只记录质量风险。"
+  },
+  "key_directions": [
+    {
+      "direction": "低估值/防御/现金流稳定方向",
+      "stance": "相对占优但不追高",
+      "reason": "6月10日市场高低切换明显，系统目标仍要求先把权益比例压回区间。"
+    },
+    {
+      "direction": "机器人",
+      "stance": "观察验证",
+      "reason": "登记册为B/B确认，是当前较强副线，但市场门禁未打开。"
+    },
+    {
+      "direction": "AI应用与AI+ICT",
+      "stance": "政策跟踪",
+      "reason": "政策催化增强长期叙事，登记册为A/B修复；需等待市场和主线条件共同确认。"
+    },
+    {
+      "direction": "半导体/AI硬件",
+      "stance": "谨慎观察",
+      "reason": "登记册为A/C修复，外盘科技调整和A股成长回撤使短线波动风险上升。"
+    },
+    {
+      "direction": "服务消费/铁路旅游",
+      "stance": "只记录事件",
+      "reason": "政策和季节性催化存在，但未固化为当前主线，需另行研究后再纳入。"
+    }
+  ],
+  "core_views": [
+    "今天不是提高风险偏好的窗口，核心任务是确认既有比例边界是否仍需执行。",
+    "政策利好可以增强观察清单，但不能替代市场仓位、主线评级、档案和估值门禁。",
+    "外盘科技调整会压制A股高估值成长开盘情绪，若盘中修复也只按既有触发条件观察。",
+    "组合权益比例仍高于系统目标上沿，优先级高于新增主题。"
+  ],
+  "watch_conditions": [
+    "宽基指数能否止跌并修复市场广度。",
+    "AI、机器人、半导体是否由单点反弹扩散为板块内多数修复。",
+    "低估值防御方向是否继续承接资金，还是仅为短线避险。",
+    "估值更新需求是否完成，特别是持仓和盘中规则覆盖标的。",
+    "盘中提醒只检查已定义触发条件，不新增条件。"
+  ],
+  "forbidden_today": [
+    "不绕过ACTION_PLAN生成新的交易动作。",
+    "不因单日新闻临时改写主线等级。",
+    "不把估值过期状态转换成交易触发条件。",
+    "不新增未建档标的。",
+    "仅保留比例和状态信息。"
+  ],
+  "risk_warnings": [
+    "外部地缘和油价扰动可能放大高估值成长波动。",
+    "科技成长若继续调整，机器人、AI、半导体的修复阶段可能延后。",
+    "估值质量检查未恢复ok前，新增单标的动作应视为受限。",
+    "latest_index中的市场仓位和主线研究基准日早于最新交易日，本简报仅做事实补充，不替代正式更新。"
+  ],
+  "handoff": [
+    {
+      "module": "PREMARKET_CHECK",
+      "task": "如需要执行层输出，应读取本简报和既有ACTION_PLAN生成盘前执行检查。"
+    },
+    {
+      "module": "MARKET_POSITION",
+      "task": "若今日盘中宽基、广度、主线与风险偏好发生显著变化，再单独更新市场仓位。"
+    },
+    {
+      "module": "THEME_RESEARCH",
+      "task": "若AI+ICT或机器人出现连续扩散，再单独复核主线评级。"
+    },
+    {
+      "module": "VALUATION",
+      "task": "先确认是否刷新估值报告；刷新后再用于新增单标的动作判断。"
+    }
+  ],
+  "decision_log_entry": "2026-06-11_103833 strategy_briefing: status=risk_reduce_or_watch_only; market=30%-40% equity target; portfolio equity about 43.52%; valuation_update_needed=33; Tushare supplement basis=20260610; ratio-only; no new single-security action."
+}

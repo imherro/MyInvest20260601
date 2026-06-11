@@ -1,17 +1,17 @@
 {
   "module": "latest_index",
   "version": "1.0",
-  "generated_at": "2026-06-09_163940",
+  "generated_at": "2026-06-11_141704",
   "selection_rule": "latest by generated_at, then basis_trade_date/date, then path; never by filesystem mtime",
   "modules": {
     "action_plan": {
       "module": "action_plan",
       "code": null,
       "name": null,
-      "path": "research/actions/action_plan_2026-06-09_160249_latest_ratio_only.json",
-      "generated_at": "2026-06-09_160249",
-      "basis_trade_date": "20260608",
-      "sha256": "461d0d5d503acf61302362381f1b2f09e8dcb8131dd4fa7ef8b5cb6cd853f366",
+      "path": "research/actions/action_plan_2026-06-11_141647_latest_ratio_only.json",
+      "generated_at": "2026-06-11_141647",
+      "basis_trade_date": "20260610",
+      "sha256": "a382425707e34e288fd8f68e6ddcd1058f2f55c92133faf331e9bf85424013e6",
       "quality": {
         "status": "ok"
       },
@@ -23,15 +23,15 @@
       "module": "intraday_alerts",
       "code": null,
       "name": null,
-      "path": "research/alerts/intraday_alert_2026-06-09_133432.json",
-      "generated_at": "2026-06-09_133432",
-      "basis_trade_date": "2026-06-09",
-      "sha256": "4f6ed22c394c507ff3cfc4f9c4a1e583ab32a16a8b24cb8348f85d8ab8428d8e",
+      "path": "research/alerts/intraday_alert_2026-06-11_104602.json",
+      "generated_at": "2026-06-11_104602",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "c94e7b2b37a39176ca98bdaa0ee115adf5dc323981a89af7b4331abcf65f3553",
       "quality": {
         "status": "legacy_unknown"
       },
       "staleness": {
-        "status": "degraded"
+        "status": "legacy_unknown"
       }
     },
     "intraday_rules": {
@@ -39,9 +39,9 @@
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_163555",
+      "generated_at": "2026-06-11_141652",
       "basis_trade_date": null,
-      "sha256": "238633c54db4ac802ff0689b3c3a2a2e428ae8e7584818329eeaf1230ac46aac",
+      "sha256": "f303a7adf521e77cfbcc6c5210867da6f154068b72b3abee7ed223f5acb94c07",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -53,10 +53,10 @@
       "module": "target_allocation",
       "code": null,
       "name": null,
-      "path": "research/allocation/target_allocation_2026-06-09_150300.json",
-      "generated_at": "2026-06-09_150300",
-      "basis_trade_date": "20260608",
-      "sha256": "0dbbe6c38577d2c227c8408c9a888802c3906c3d874c26c3626137c457416775",
+      "path": "research/allocation/target_allocation_2026-06-11_141652.json",
+      "generated_at": "2026-06-11_141652",
+      "basis_trade_date": "20260610",
+      "sha256": "d0322906aae265bd5b0deb5acb771cc593a011c1f18cd75ea0b9fc05d6df9316",
       "quality": {
         "status": "ok"
       },
@@ -68,10 +68,10 @@
       "module": "STRATEGY_BRIEFING",
       "code": null,
       "name": null,
-      "path": "research/briefings/strategy_briefing_2026-06-09_100605.json",
-      "generated_at": "2026-06-09_100605",
-      "basis_trade_date": "2026-06-09",
-      "sha256": "265c72814bf78efd9993226e39aa6b16ec3a38fe783ce4ebb5e4a329c039ea40",
+      "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
+      "generated_at": "2026-06-11_103833",
+      "basis_trade_date": null,
+      "sha256": "bb546df54e52b1ecf4c87dc259a0261533faea5558026700e0d345be0c5544e6",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -83,10 +83,10 @@
       "module": "premarket_check",
       "code": null,
       "name": null,
-      "path": "research/checks/premarket_check_2026-06-09_162003.json",
-      "generated_at": "2026-06-09_162003",
-      "basis_trade_date": "2026-06-09",
-      "sha256": "6f68479cc5b88feec1b259a3dd92822cc9aa82ad95b4cf3f279cb1778d51f1e7",
+      "path": "research/checks/premarket_check_2026-06-11_131344.json",
+      "generated_at": "2026-06-11_131344",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "7ab6366f042379ed3b67cc64d9d92fc5b90422c745ec610ba8192cef46808d18",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -98,10 +98,10 @@
       "module": "staleness_check",
       "code": null,
       "name": null,
-      "path": "research/checks/staleness_check_2026-06-09_152542.json",
-      "generated_at": "2026-06-09_152542",
+      "path": "research/checks/staleness_check_2026-06-11_131500.json",
+      "generated_at": "2026-06-11_131500",
       "basis_trade_date": null,
-      "sha256": "b52dca43c3d28e3470a5d796c765ca336d199710edc5f381f126f61ece908239",
+      "sha256": "e0896bf7ac9075ef012a8938a2f3a9d9a74e84d481de1b6c6fe50eb1962110cb",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -113,10 +113,10 @@
       "module": "valuation_update_check",
       "code": null,
       "name": null,
-      "path": "research/checks/valuation_update_check_2026-06-09_161954.json",
-      "generated_at": "2026-06-09_161954",
-      "basis_trade_date": "20260609",
-      "sha256": "28b40fdd1bccac50ea23cfb56e728a99ed6373889980cb26ec57dafade0baaab",
+      "path": "research/checks/valuation_update_check_2026-06-11_141614.json",
+      "generated_at": "2026-06-11_141614",
+      "basis_trade_date": "20260610",
+      "sha256": "83ade54f52e350247acc378f0439222aa7c43d682837baac1f25bcc0e322648e",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -218,10 +218,10 @@
       "module": "market_score",
       "code": null,
       "name": null,
-      "path": "research/market/market_score_2026-06-09_100448.json",
-      "generated_at": "2026-06-09_100448",
-      "basis_trade_date": "20260608",
-      "sha256": "81120794d927db64d32053739d064c8ba42533d05a6929103cecb5674a5c77ef",
+      "path": "research/market/market_score_2026-06-11_140751.json",
+      "generated_at": "2026-06-11_140751",
+      "basis_trade_date": "20260610",
+      "sha256": "8671dde4de2b569f6c6f9b747269a3bb9ecb8621056e7914bfbf043ba63a0a3d",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -233,10 +233,10 @@
       "module": "portfolio_cleanup_review",
       "code": null,
       "name": null,
-      "path": "research/portfolio/portfolio_cleanup_2026-06-09_160500.json",
-      "generated_at": "2026-06-09_160500",
+      "path": "research/portfolio/portfolio_cleanup_2026-06-11_131526.json",
+      "generated_at": "2026-06-11_131526",
       "basis_trade_date": null,
-      "sha256": "78334ef582bc8aa7f2381d07141b01b19ace39e8ff62f104f8f1a5e23adaf78c",
+      "sha256": "7e713f9acc72b4c08dd94b941de34513fbcf53b8027a77c2233a5d1ed3495fa3",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -248,10 +248,10 @@
       "module": "portfolio_snapshot",
       "code": null,
       "name": null,
-      "path": "research/portfolio/portfolio_snapshot_2026-06-09_143440.json",
-      "generated_at": "2026-06-09_143440",
-      "basis_trade_date": "2026-06-09",
-      "sha256": "fa080e8c470e11f1127550661eb46fb4ee1af8cce185c9af4865edb0a3cbc566",
+      "path": "research/portfolio/portfolio_snapshot_2026-06-11_141600.json",
+      "generated_at": "2026-06-11_141600",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "5a765a8157a57cb01ad8b8454bc4c99090249dd1462a98e4618f2fa125bcd4b7",
       "quality": {
         "status": "ok"
       },
@@ -263,10 +263,10 @@
       "module": "research_backlog",
       "code": null,
       "name": null,
-      "path": "research/portfolio/research_backlog_2026-06-09_151312.json",
-      "generated_at": "2026-06-09_151312",
-      "basis_trade_date": "2026-06-09",
-      "sha256": "91e2a1da8edc8e7883956a9f4db24ef7c2dd46ef15f9ea6d6e17301ca17c038d",
+      "path": "research/portfolio/research_backlog_2026-06-11_131520.json",
+      "generated_at": "2026-06-11_131520",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "87814a7c85a3f1d1b702c42dc7d5505a04ff3c3a9766abdcce4ed0a83e7c279e",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -278,10 +278,10 @@
       "module": "research_quality_audit",
       "code": null,
       "name": null,
-      "path": "research/portfolio/research_quality_audit_2026-06-09_160248.json",
-      "generated_at": "2026-06-09_160248",
+      "path": "research/portfolio/research_quality_audit_2026-06-11_131515.json",
+      "generated_at": "2026-06-11_131515",
       "basis_trade_date": null,
-      "sha256": "665b87ccdeaadea164cacf1bb64fbf55a87e533b730712adcd369655f7f9242d",
+      "sha256": "d579665c3c975d6e02648ad7a8358dd1fc1b304a6f4ba8a911fdda85de50cbc2",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -338,10 +338,10 @@
       "module": "theme_leaders",
       "code": null,
       "name": null,
-      "path": "research/theme_leaders/theme_leaders_2026-06-09_140848.json",
-      "generated_at": "2026-06-09_140848",
+      "path": "research/theme_leaders/theme_leaders_2026-06-11_131545.json",
+      "generated_at": "2026-06-11_131545",
       "basis_trade_date": null,
-      "sha256": "60a775f6c849311119c90da67290cc757bbe7c962d0a6ce4f6f4c7dc282944b4",
+      "sha256": "8d53e0ba58ec5a091ee3450c7b72d664aa73d4c5c6850d8ae7d76d0551f1ec29",
       "quality": {
         "status": "fresh"
       },
@@ -381,12 +381,12 @@
     },
     "valuation_report": {
       "module": "valuation_report",
-      "code": "588200.SH",
-      "name": "科创芯片ETF嘉实",
-      "path": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-09_163552.json",
-      "generated_at": "2026-06-09_163552",
-      "basis_trade_date": "20260608",
-      "sha256": "a70c1b1a97a3116b6d207d666df5e596a86da7db049ba8ea98d14033ea03dc85",
+      "code": "688439.SH",
+      "name": "振华风光",
+      "path": "research/valuations/valuation_688439_SH_振华风光_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "67ab1ff8f4625173c0a9fa532b5b6660ad3f42fd84e64363bc09eb3ee72b9373",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -697,6 +697,36 @@
       }
     },
     {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-11_131420_latest_ratio_only.json",
+      "generated_at": "2026-06-11_131420",
+      "basis_trade_date": "20260608",
+      "sha256": "f3b5efe0d80f0ee8449b7efc4bec2cd326980d806197bc225cd878600ae5666c",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
+      "module": "action_plan",
+      "code": null,
+      "name": null,
+      "path": "research/actions/action_plan_2026-06-11_141647_latest_ratio_only.json",
+      "generated_at": "2026-06-11_141647",
+      "basis_trade_date": "20260610",
+      "sha256": "a382425707e34e288fd8f68e6ddcd1058f2f55c92133faf331e9bf85424013e6",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "fresh"
+      }
+    },
+    {
       "module": "intraday_alerts",
       "code": null,
       "name": null,
@@ -772,13 +802,28 @@
       }
     },
     {
+      "module": "intraday_alerts",
+      "code": null,
+      "name": null,
+      "path": "research/alerts/intraday_alert_2026-06-11_104602.json",
+      "generated_at": "2026-06-11_104602",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "c94e7b2b37a39176ca98bdaa0ee115adf5dc323981a89af7b4331abcf65f3553",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "intraday_rules",
       "code": null,
       "name": null,
       "path": "research/alerts/intraday_rules.json",
-      "generated_at": "2026-06-09_163555",
+      "generated_at": "2026-06-11_141652",
       "basis_trade_date": null,
-      "sha256": "238633c54db4ac802ff0689b3c3a2a2e428ae8e7584818329eeaf1230ac46aac",
+      "sha256": "f303a7adf521e77cfbcc6c5210867da6f154068b72b3abee7ed223f5acb94c07",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -922,6 +967,96 @@
       }
     },
     {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-11_111812.json",
+      "generated_at": "2026-06-11_111812",
+      "basis_trade_date": "20260608",
+      "sha256": "0ffae49193b235fe35f6ccd8d568e512d273c92262b0151faab802f42ff08bb1",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-11_112436.json",
+      "generated_at": "2026-06-11_112436",
+      "basis_trade_date": "20260608",
+      "sha256": "4574f48c3f5361f6a2e01062a96bb16fcd1bf180e14aabd0346c3a3fdc53d3ca",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-11_131429.json",
+      "generated_at": "2026-06-11_131429",
+      "basis_trade_date": "20260608",
+      "sha256": "d93be5308da51bd40ba5902bca04ce283b1137b3ae17faeb34305b1362d5246a",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-11_131601.json",
+      "generated_at": "2026-06-11_131601",
+      "basis_trade_date": "20260608",
+      "sha256": "863844539bfaa991b418dfaff1b92e6c640cf5db3fd89e0d0d86baebbf816775",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-11_141600.json",
+      "generated_at": "2026-06-11_141600",
+      "basis_trade_date": "20260610",
+      "sha256": "348c325fa2491ac32bdd119285b2bfcde07db5726801ed4c72e263e80290f670",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "target_allocation",
+      "code": null,
+      "name": null,
+      "path": "research/allocation/target_allocation_2026-06-11_141652.json",
+      "generated_at": "2026-06-11_141652",
+      "basis_trade_date": "20260610",
+      "sha256": "d0322906aae265bd5b0deb5acb771cc593a011c1f18cd75ea0b9fc05d6df9316",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "STRATEGY_BRIEFING",
       "code": null,
       "name": null,
@@ -929,6 +1064,21 @@
       "generated_at": "2026-06-09_100605",
       "basis_trade_date": "2026-06-09",
       "sha256": "265c72814bf78efd9993226e39aa6b16ec3a38fe783ce4ebb5e4a329c039ea40",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "STRATEGY_BRIEFING",
+      "code": null,
+      "name": null,
+      "path": "research/briefings/strategy_briefing_2026-06-11_103833.json",
+      "generated_at": "2026-06-11_103833",
+      "basis_trade_date": null,
+      "sha256": "bb546df54e52b1ecf4c87dc259a0261533faea5558026700e0d345be0c5544e6",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1004,6 +1154,51 @@
       "generated_at": "2026-06-09_162003",
       "basis_trade_date": "2026-06-09",
       "sha256": "6f68479cc5b88feec1b259a3dd92822cc9aa82ad95b4cf3f279cb1778d51f1e7",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "premarket_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/premarket_check_2026-06-11_103227.json",
+      "generated_at": "2026-06-11_103227",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "90f993b9869c86710d33d93d15d8ca8c96ad5a455602e343cd55e1460fb526fb",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "premarket_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/premarket_check_2026-06-11_112608.json",
+      "generated_at": "2026-06-11_112608",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "497b69569a8bdcae4b81039aca5140f21a182efc8de2f68882235079b5f13cbc",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "premarket_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/premarket_check_2026-06-11_131344.json",
+      "generated_at": "2026-06-11_131344",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "7ab6366f042379ed3b67cc64d9d92fc5b90422c745ec610ba8192cef46808d18",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1117,6 +1312,21 @@
       }
     },
     {
+      "module": "staleness_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/staleness_check_2026-06-11_131500.json",
+      "generated_at": "2026-06-11_131500",
+      "basis_trade_date": null,
+      "sha256": "e0896bf7ac9075ef012a8938a2f3a9d9a74e84d481de1b6c6fe50eb1962110cb",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "valuation_update_check",
       "code": null,
       "name": null,
@@ -1124,6 +1334,126 @@
       "generated_at": "2026-06-09_161954",
       "basis_trade_date": "20260609",
       "sha256": "28b40fdd1bccac50ea23cfb56e728a99ed6373889980cb26ec57dafade0baaab",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-11_103226.json",
+      "generated_at": "2026-06-11_103226",
+      "basis_trade_date": "20260610",
+      "sha256": "5ea4363b822eda4c99597ac1edb953f9d869dbc86f5af63db0c3fe044a2b0289",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-11_103636.json",
+      "generated_at": "2026-06-11_103636",
+      "basis_trade_date": "20260610",
+      "sha256": "031f89f9027f531ebae590fd43b54c4856419df3142de775fe1bf24464682dde",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-11_104259.json",
+      "generated_at": "2026-06-11_104259",
+      "basis_trade_date": "20260610",
+      "sha256": "071e42617e15019400344b386d5967cc4a61e71e973748104576ec48c4616734",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-11_104416.json",
+      "generated_at": "2026-06-11_104416",
+      "basis_trade_date": "20260610",
+      "sha256": "ce6f5fba224ab2ffab368a89eb51a6f85f8dffc30a03e1bc2eaf5a878dafb534",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-11_112502.json",
+      "generated_at": "2026-06-11_112502",
+      "basis_trade_date": "20260610",
+      "sha256": "9760e1448b8d949184617d3120766c0c6333119ecc5972614d326eeb958bb773",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-11_112559.json",
+      "generated_at": "2026-06-11_112559",
+      "basis_trade_date": "20260610",
+      "sha256": "411962e14fdf2d1a454c029f769538758535e0965c6bba6336564f1d380a8f96",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-11_131332.json",
+      "generated_at": "2026-06-11_131332",
+      "basis_trade_date": "20260610",
+      "sha256": "d01a239e5c8dc81f9008834c0f268a3dbdcf8e37b76df0f3e6ad71d79b3aff37",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_update_check",
+      "code": null,
+      "name": null,
+      "path": "research/checks/valuation_update_check_2026-06-11_141614.json",
+      "generated_at": "2026-06-11_141614",
+      "basis_trade_date": "20260610",
+      "sha256": "83ade54f52e350247acc378f0439222aa7c43d682837baac1f25bcc0e322648e",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1732,6 +2062,21 @@
       }
     },
     {
+      "module": "market_score",
+      "code": null,
+      "name": null,
+      "path": "research/market/market_score_2026-06-11_140751.json",
+      "generated_at": "2026-06-11_140751",
+      "basis_trade_date": "20260610",
+      "sha256": "8671dde4de2b569f6c6f9b747269a3bb9ecb8621056e7914bfbf043ba63a0a3d",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "portfolio_cleanup_review",
       "code": null,
       "name": null,
@@ -1754,6 +2099,21 @@
       "generated_at": "2026-06-09_160500",
       "basis_trade_date": null,
       "sha256": "78334ef582bc8aa7f2381d07141b01b19ace39e8ff62f104f8f1a5e23adaf78c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_cleanup_review",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_cleanup_2026-06-11_131526.json",
+      "generated_at": "2026-06-11_131526",
+      "basis_trade_date": null,
+      "sha256": "7e713f9acc72b4c08dd94b941de34513fbcf53b8027a77c2233a5d1ed3495fa3",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -1942,6 +2302,81 @@
       }
     },
     {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-11_111526.json",
+      "generated_at": "2026-06-11_111526",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "7ff542ce730113ae417237caaadabb5144d80aaca7ccbb4f3470a22d19e77562",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-11_111554.json",
+      "generated_at": "2026-06-11_111554",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "edd3c43d365469f9c3e285fc2d40d4be106893a5f19a40bab9ec97445a822c77",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-11_112436.json",
+      "generated_at": "2026-06-11_112436",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "9f5ac4fb4b1c519f5a0329c77bde68edc7623770645ad97df51eeb8889320835",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-11_131601.json",
+      "generated_at": "2026-06-11_131601",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "b1a489a5580ca166b599748784349b68746353513b11b8a74aa986aea64fbae9",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "portfolio_snapshot",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/portfolio_snapshot_2026-06-11_141600.json",
+      "generated_at": "2026-06-11_141600",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "5a765a8157a57cb01ad8b8454bc4c99090249dd1462a98e4618f2fa125bcd4b7",
+      "quality": {
+        "status": "ok"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "research_backlog",
       "code": null,
       "name": null,
@@ -2077,6 +2512,21 @@
       }
     },
     {
+      "module": "research_backlog",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/research_backlog_2026-06-11_131520.json",
+      "generated_at": "2026-06-11_131520",
+      "basis_trade_date": "2026-06-11",
+      "sha256": "87814a7c85a3f1d1b702c42dc7d5505a04ff3c3a9766abdcce4ed0a83e7c279e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "research_quality_audit",
       "code": null,
       "name": null,
@@ -2114,6 +2564,21 @@
       "generated_at": "2026-06-09_160248",
       "basis_trade_date": null,
       "sha256": "665b87ccdeaadea164cacf1bb64fbf55a87e533b730712adcd369655f7f9242d",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "research_quality_audit",
+      "code": null,
+      "name": null,
+      "path": "research/portfolio/research_quality_audit_2026-06-11_131515.json",
+      "generated_at": "2026-06-11_131515",
+      "basis_trade_date": null,
+      "sha256": "d579665c3c975d6e02648ad7a8358dd1fc1b304a6f4ba8a911fdda85de50cbc2",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2452,6 +2917,81 @@
       }
     },
     {
+      "module": "theme_leaders",
+      "code": null,
+      "name": null,
+      "path": "research/theme_leaders/theme_leaders_2026-06-11_104804.json",
+      "generated_at": "2026-06-11_104804",
+      "basis_trade_date": null,
+      "sha256": "9b177101e51ef34d716e2da531343b41eb1cdbbb16a4199467cc67c3f0a190ae",
+      "quality": {
+        "status": "fresh"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "theme_leaders",
+      "code": null,
+      "name": null,
+      "path": "research/theme_leaders/theme_leaders_2026-06-11_104814.json",
+      "generated_at": "2026-06-11_104814",
+      "basis_trade_date": null,
+      "sha256": "6a4cdbbc45f79399020e5fb3b44dc6785c41dbfa99e167d2660eb5e884113c72",
+      "quality": {
+        "status": "fresh"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "theme_leaders",
+      "code": null,
+      "name": null,
+      "path": "research/theme_leaders/theme_leaders_2026-06-11_105943.json",
+      "generated_at": "2026-06-11_105943",
+      "basis_trade_date": null,
+      "sha256": "4c89ad1fdd17cc1308bf64f9dd74d52b2531257c5c25924b801aad2dd039bf2d",
+      "quality": {
+        "status": "fresh"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "theme_leaders",
+      "code": null,
+      "name": null,
+      "path": "research/theme_leaders/theme_leaders_2026-06-11_131534.json",
+      "generated_at": "2026-06-11_131534",
+      "basis_trade_date": null,
+      "sha256": "9abd554baea34fb11d1f70e0dba330f3c297b1bbd3b614867e5cedcf0eac4265",
+      "quality": {
+        "status": "fresh"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "theme_leaders",
+      "code": null,
+      "name": null,
+      "path": "research/theme_leaders/theme_leaders_2026-06-11_131545.json",
+      "generated_at": "2026-06-11_131545",
+      "basis_trade_date": null,
+      "sha256": "8d53e0ba58ec5a091ee3450c7b72d664aa73d4c5c6850d8ae7d76d0551f1ec29",
+      "quality": {
+        "status": "fresh"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
       "module": "theme_registry",
       "code": null,
       "name": null,
@@ -2588,12 +3128,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "001280.SZ",
+      "name": "中国铀业",
+      "path": "research/valuations/valuation_001280_SZ_中国铀业_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "f659559fc0e33fb6b4e8bab1aba8d81acd7ca83e434b0cc029e85907c1500b86",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "002041.SZ",
       "name": "登海种业",
       "path": "research/valuations/valuation_002041_SZ_登海种业_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "a18c19659a9dac8c3b3e96e0d67e6bff2c0638bab28c171d26db1df11a4af42e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "002041.SZ",
+      "name": "登海种业",
+      "path": "research/valuations/valuation_002041_SZ_登海种业_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "c534995bf79d7297178e71f797a34a014ca25fed4930e8ae34486d48d624ecd3",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2633,12 +3203,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "002241.SZ",
+      "name": "歌尔股份",
+      "path": "research/valuations/valuation_002241_SZ_歌尔股份_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "98ee5537c05ee6992d774dd945c8d575b54ffcaefb217a863ff75fea595f3d85",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "002258.SZ",
       "name": "利尔化学",
       "path": "research/valuations/valuation_002258_SZ_利尔化学_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "46189813d2f6b7f2301e6877056088dde2ce02e4e2b04957cf3daba9c3c4d5d7",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "002258.SZ",
+      "name": "利尔化学",
+      "path": "research/valuations/valuation_002258_SZ_利尔化学_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "f73a77ac3c74f6e10b6c43e00a259e3158af05d2dded0e7e358d732167f0dd7a",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2663,12 +3263,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "002352.SZ",
+      "name": "顺丰控股",
+      "path": "research/valuations/valuation_002352_SZ_顺丰控股_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "234a4ea49dcb189044f3efa4061206715f6d9c4d56f58cb0a2eb05c7c3dcc7e1",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "002920.SZ",
       "name": "德赛西威",
       "path": "research/valuations/valuation_002920_SZ_德赛西威_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "9fd204e0cfdb176ad649e0493fa28dfe904dd5fc82e0f83fedd0971d505bda72",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "002920.SZ",
+      "name": "德赛西威",
+      "path": "research/valuations/valuation_002920_SZ_德赛西威_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "84f84aa9b0a7afd80a06ecc0e2b6c4c0ed7594f9e6ac96c0f0978ca76ce6228a",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2738,6 +3368,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159201.SZ",
+      "name": "自由现金流ETF华夏",
+      "path": "research/valuations/valuation_159201_SZ_自由现金流ETF华夏_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "5488b58e5e1ebdce8bc3fffbc162438769fcd8aad9cbc2e0c484b551c2dd7e53",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159206.SZ",
       "name": "卫星ETF永赢",
       "path": "research/valuations/valuation_159206_SZ_卫星ETF永赢_2026-06-09_112659.json",
@@ -2759,6 +3404,21 @@
       "generated_at": "2026-06-09_163552",
       "basis_trade_date": "20260608",
       "sha256": "460fb126f6ccd2fce16957e6fd59a07f04dd21814aa87b166be3319fd7342baf",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159206.SZ",
+      "name": "卫星ETF永赢",
+      "path": "research/valuations/valuation_159206_SZ_卫星ETF永赢_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "a92804e8a5ca1359a22d233fc5658ed44dd2525a5e041bb656f8690fad7622da",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -2828,6 +3488,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159301.SZ",
+      "name": "公用事业ETF华夏",
+      "path": "research/valuations/valuation_159301_SZ_公用事业ETF华夏_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "89fc0c1565a934cfea5916501f9258c9d22d6e7073968c8810e5dae8f1194b7e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159326.SZ",
       "name": "电网设备ETF华夏",
       "path": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-05_102437.json",
@@ -2888,6 +3563,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159326.SZ",
+      "name": "电网设备ETF华夏",
+      "path": "research/valuations/valuation_159326_SZ_电网设备ETF华夏_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "cd2a5e641e921b0889ca2d2582cb83a36e0a0f287219b28f90c435894ad9fa4c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159378.SZ",
       "name": "通用航空ETF永赢",
       "path": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-05_102437.json",
@@ -2939,6 +3629,21 @@
       "generated_at": "2026-06-09_163552",
       "basis_trade_date": "20260608",
       "sha256": "fbd47813ab39d25c289fd575de3ee3694eaa9be07af922dad1496e8761127a62",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159378.SZ",
+      "name": "通用航空ETF永赢",
+      "path": "research/valuations/valuation_159378_SZ_通用航空ETF永赢_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "11059cde125306147090a9970ebf46468f65f667e7728f39aa2a8a16d1b768b7",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3053,6 +3758,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159558.SZ",
+      "name": "半导体设备ETF易方达",
+      "path": "research/valuations/valuation_159558_SZ_半导体设备ETF易方达_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "75a561006fd614a08251b8505d57cee33fe258ca345c4122a51a6805cfcfcfa5",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159667.SZ",
       "name": "工业母机ETF国泰",
       "path": "research/valuations/valuation_159667_SZ_工业母机ETF国泰_2026-06-09_112659.json",
@@ -3074,6 +3794,21 @@
       "generated_at": "2026-06-09_163552",
       "basis_trade_date": "20260608",
       "sha256": "b5936a16515899e10537d038e131ff4950e341f5bb5ccf57e80e182f83550180",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159667.SZ",
+      "name": "工业母机ETF国泰",
+      "path": "research/valuations/valuation_159667_SZ_工业母机ETF国泰_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "88a78b47c459adba042f9eb7a6b62d5f54070222095b435f48f568079e720b6c",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3143,6 +3878,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159819.SZ",
+      "name": "人工智能ETF易方达",
+      "path": "research/valuations/valuation_159819_SZ_人工智能ETF易方达_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "531afe00799dea16bb5ae08456fed4921148446e7313f940a708bb2d7d9cd9da",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159842.SZ",
       "name": "券商ETF银华",
       "path": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-05_102437.json",
@@ -3203,6 +3953,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159842.SZ",
+      "name": "券商ETF银华",
+      "path": "research/valuations/valuation_159842_SZ_券商ETF银华_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "c3b78baefe0e14b3c5e6b24abc5c69fb080cbf385525d3742dc9201e29af7366",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159869.SZ",
       "name": "游戏ETF华夏",
       "path": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-05_102437.json",
@@ -3254,6 +4019,21 @@
       "generated_at": "2026-06-09_163552",
       "basis_trade_date": "20260608",
       "sha256": "a48ebea2f3ba9db596b9351356b8132a410adc4f52e3f061aac9b68bb7c01421",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "159869.SZ",
+      "name": "游戏ETF华夏",
+      "path": "research/valuations/valuation_159869_SZ_游戏ETF华夏_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "176a5fba78297ee870bc31ce0d54d7313ebd046d90a5da9efe202b33111a481d",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3338,6 +4118,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159915.SZ",
+      "name": "创业板ETF易方达",
+      "path": "research/valuations/valuation_159915_SZ_创业板ETF易方达_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "d70792bec36abd3b971f35c5fa9adcacd00d5371e58bf6838007ce1abef90e10",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "159992.SZ",
       "name": "创新药ETF银华",
       "path": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-05_102437.json",
@@ -3398,6 +4193,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "159992.SZ",
+      "name": "创新药ETF银华",
+      "path": "research/valuations/valuation_159992_SZ_创新药ETF银华_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "7a783544136dc838a5cb5a670697f285590bbd259fd7fce81d8c242da6854713",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "300627.SZ",
       "name": "华测导航",
       "path": "research/valuations/valuation_300627_SZ_华测导航_2026-06-09_112659.json",
@@ -3413,12 +4223,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "300627.SZ",
+      "name": "华测导航",
+      "path": "research/valuations/valuation_300627_SZ_华测导航_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "db2d2994ed46a0b66b102cce99ab0f78c7523a656a38dd719f03e1bf8d1d1ad2",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "300760.SZ",
       "name": "迈瑞医疗",
       "path": "research/valuations/valuation_300760_SZ_迈瑞医疗_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "e4f33a5e29e5229886e95028e61a6d9d11a934b292e536f36fb8937f6a84b6a6",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "300760.SZ",
+      "name": "迈瑞医疗",
+      "path": "research/valuations/valuation_300760_SZ_迈瑞医疗_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "2e79aeeee681660d47c5a1c12556fd1f2802d0c2ea398700e4c702902ac4df45",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3494,6 +4334,21 @@
       "generated_at": "2026-06-05_103909",
       "basis_trade_date": "20260604",
       "sha256": "622fd4c4d79f799c514756e7fd2a1914429092129dec257512ce3c232a07eea4",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "510300.SH",
+      "name": "沪深300ETF华泰柏瑞",
+      "path": "research/valuations/valuation_510300_SH_沪深300ETF华泰柏瑞_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "9ce268b46e12123561073feaed09f338d4b04dbcb509d1b4898ba793aefee79e",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3608,6 +4463,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "510500.SH",
+      "name": "中证500ETF南方",
+      "path": "research/valuations/valuation_510500_SH_中证500ETF南方_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "5904256da83d8501c9dd0c1ffac2a79def67910169e7bc6bb7111c0ea045a24e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "510880.SH",
       "name": "红利ETF华泰柏瑞",
       "path": "research/valuations/valuation_510880_SH_红利ETF华泰柏瑞_2026-06-05_102437.json",
@@ -3629,6 +4499,21 @@
       "generated_at": "2026-06-05_103909",
       "basis_trade_date": "20260604",
       "sha256": "074b77c0b869466d20d53281c4e551edd5e9c451ddd398fe61265a68b5b9d38f",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "510880.SH",
+      "name": "红利ETF华泰柏瑞",
+      "path": "research/valuations/valuation_510880_SH_红利ETF华泰柏瑞_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "241599a962eedb745ec830fe5e76702a05f1d388351730e95a797dc27566d3b1",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3698,6 +4583,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "511360.SH",
+      "name": "短融ETF海富通",
+      "path": "research/valuations/valuation_511360_SH_短融ETF海富通_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "0a255ac2d8083368a71fba08d7d45b24a0f4f1dac03e6d3638d458a2db3e9584",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "512070.SH",
       "name": "证券保险ETF易方达",
       "path": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-05_102437.json",
@@ -3758,6 +4658,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "512070.SH",
+      "name": "证券保险ETF易方达",
+      "path": "research/valuations/valuation_512070_SH_证券保险ETF易方达_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "5323a65d2561b752872b215ac4585f6d5998263bece14a9829199ccc4379ee2c",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "512400.SH",
       "name": "有色金属ETF南方",
       "path": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-09_112659.json",
@@ -3794,6 +4709,21 @@
       "generated_at": "2026-06-09_163552",
       "basis_trade_date": "20260608",
       "sha256": "2053fcf8c7969d18e4ded06eaa81a96403def6d55c8a24831e10fa9bd8263410",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "512400.SH",
+      "name": "有色金属ETF南方",
+      "path": "research/valuations/valuation_512400_SH_有色金属ETF南方_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "103321b21afc57efa385f29742ecee45c4ac4a178700f5afacd3cf5da0512b6b",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -3863,6 +4793,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "512710.SH",
+      "name": "军工龙头ETF富国",
+      "path": "research/valuations/valuation_512710_SH_军工龙头ETF富国_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "06e20fcaf98d69bf214f24beb99d78ac3445b9b95cba2904249601fdbb3ada92",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "512880.SH",
       "name": "证券ETF国泰",
       "path": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-05_102437.json",
@@ -3923,6 +4868,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "512880.SH",
+      "name": "证券ETF国泰",
+      "path": "research/valuations/valuation_512880_SH_证券ETF国泰_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "ebaac9666a90f84f0689fcab59d309a75e3310aedfbf1dc25ab933d13a7ce452",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "513050.SH",
       "name": "中概互联网ETF易方达",
       "path": "research/valuations/valuation_513050_SH_中概互联网ETF易方达_2026-06-05_102437.json",
@@ -3944,6 +4904,21 @@
       "generated_at": "2026-06-05_103909",
       "basis_trade_date": "20260604",
       "sha256": "e276a5715ac8d23a3291eced8c5628d8b47a96868f4cf4219edfa5c1188a41a2",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "513050.SH",
+      "name": "中概互联网ETF易方达",
+      "path": "research/valuations/valuation_513050_SH_中概互联网ETF易方达_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "55ae11b50a3b096c4b8b93b8a3e1ff4cfbd8b5b01a8b435167d9eb1a2c0fce07",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -4013,6 +4988,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "513120.SH",
+      "name": "港股创新药ETF广发",
+      "path": "research/valuations/valuation_513120_SH_港股创新药ETF广发_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "b5879151a1206201baf12c195d96afa96a38d641f38d7d7d20595742dea472f6",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "513180.SH",
       "name": "恒生科技ETF华夏",
       "path": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-05_102437.json",
@@ -4073,6 +5063,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "513180.SH",
+      "name": "恒生科技ETF华夏",
+      "path": "research/valuations/valuation_513180_SH_恒生科技ETF华夏_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "59bb7d3c8bfccd08937620721aec1e8f42533cafead7163287a50a592594ab46",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "515880.SH",
       "name": "通信ETF国泰",
       "path": "research/valuations/valuation_515880_SH_通信ETF国泰_2026-06-09_112659.json",
@@ -4094,6 +5099,21 @@
       "generated_at": "2026-06-09_163552",
       "basis_trade_date": "20260608",
       "sha256": "9e344bc184c720d1246297d23f16848ad259a1495ece60599ee37d6570767be7",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "515880.SH",
+      "name": "通信ETF国泰",
+      "path": "research/valuations/valuation_515880_SH_通信ETF国泰_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "8f45e25c3c4894eb3cd2a00708d7cdac25a855229556a3eb5ad05b56a8ce56e9",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -4163,6 +5183,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "516150.SH",
+      "name": "稀土ETF嘉实",
+      "path": "research/valuations/valuation_516150_SH_稀土ETF嘉实_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "31602b8b0bada3b0a6a97638d967d5311b41f532cca02c93f40479cd706ee9eb",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "562500.SH",
       "name": "机器人ETF华夏",
       "path": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-05_102437.json",
@@ -4223,6 +5258,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "562500.SH",
+      "name": "机器人ETF华夏",
+      "path": "research/valuations/valuation_562500_SH_机器人ETF华夏_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "87b3ac80d61c1c9be8f4aafaa3ba45e973cbb765671463be3c35a1df68767614",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "562800.SH",
       "name": "稀有金属ETF嘉实",
       "path": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-05_102437.json",
@@ -4274,6 +5324,21 @@
       "generated_at": "2026-06-09_163552",
       "basis_trade_date": "20260608",
       "sha256": "e8c795e3b83751ab6d0da339f499c44a3086042dd8b239f37d521c050a289802",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "562800.SH",
+      "name": "稀有金属ETF嘉实",
+      "path": "research/valuations/valuation_562800_SH_稀有金属ETF嘉实_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "68715a03d70527907a8f48551523c790d6635d59ed67f4d5660f8fda9876d822",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -4388,6 +5453,21 @@
     },
     {
       "module": "valuation_report",
+      "code": "588200.SH",
+      "name": "科创芯片ETF嘉实",
+      "path": "research/valuations/valuation_588200_SH_科创芯片ETF嘉实_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "428d15a5329d5ff00d8e9a21a73032be4a450b5a451f9e3020abbc5b6de8ca8b",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "601318.SH",
       "name": "中国平安",
       "path": "research/valuations/valuation_601318_SH_中国平安_2026-06-04_150218.json",
@@ -4463,12 +5543,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "601318.SH",
+      "name": "中国平安",
+      "path": "research/valuations/valuation_601318_SH_中国平安_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "f5f4df7f0acd0ee6226dc597a4dbae3451a5f06a7af96573ebe7f07c382c07a5",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "603087.SH",
       "name": "甘李药业",
       "path": "research/valuations/valuation_603087_SH_甘李药业_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "a43408309c2ac0d7b952becf552edf20476268d8bade2ce0a97a14521feb2dce",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "603087.SH",
+      "name": "甘李药业",
+      "path": "research/valuations/valuation_603087_SH_甘李药业_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "073c77aac3e35de17fabcf6c558681c25a7c499baa5c340f447dc358bb2db8af",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -4523,12 +5633,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "603596.SH",
+      "name": "伯特利",
+      "path": "research/valuations/valuation_603596_SH_伯特利_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "7c7dbdfcef6b0958ea78064a97a3cdbf2e8246c552252f367d20ea311e3c8344",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "603903.SH",
       "name": "中持股份",
       "path": "research/valuations/valuation_603903_SH_中持股份_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "28a5f396cd2aa23da72a64e6033f2f5ced571ba21d65339c73fb37c8f2bef58e",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "603903.SH",
+      "name": "中持股份",
+      "path": "research/valuations/valuation_603903_SH_中持股份_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "56eec0cb729f2207e7e5f4b17676cd2b5c139762b7bf123b167559450ef77783",
       "quality": {
         "status": "legacy_unknown"
       },
@@ -4583,12 +5723,42 @@
     },
     {
       "module": "valuation_report",
+      "code": "688333.SH",
+      "name": "西安铂力特",
+      "path": "research/valuations/valuation_688333_SH_西安铂力特_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "21d279067f7504e81b7d455fb0a69a7085d616adc1245e484d30a1c99e904fe7",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
       "code": "688439.SH",
       "name": "振华风光",
       "path": "research/valuations/valuation_688439_SH_振华风光_2026-06-09_112659.json",
       "generated_at": "2026-06-09_112659",
       "basis_trade_date": "20260609",
       "sha256": "b145cfa84ef762ba124ea36a87f6f793bbef76b5f33559aa8210a1fec12c30df",
+      "quality": {
+        "status": "legacy_unknown"
+      },
+      "staleness": {
+        "status": "legacy_unknown"
+      }
+    },
+    {
+      "module": "valuation_report",
+      "code": "688439.SH",
+      "name": "振华风光",
+      "path": "research/valuations/valuation_688439_SH_振华风光_2026-06-11_111238.json",
+      "generated_at": "2026-06-11_111238",
+      "basis_trade_date": "20260610",
+      "sha256": "67ab1ff8f4625173c0a9fa532b5b6660ad3f42fd84e64363bc09eb3ee72b9373",
       "quality": {
         "status": "legacy_unknown"
       },

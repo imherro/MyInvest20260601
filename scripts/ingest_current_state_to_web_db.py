@@ -186,6 +186,14 @@ def add_artifact(session: Session, ref: dict[str, Any], artifact_type: str, is_c
     return artifact
 
 
+def get_or_add_artifact(session: Session, ref: dict[str, Any], artifact_type: str, is_current: bool, raw: dict[str, Any]) -> Artifact:
+    path = rel_path(ref.get("path"))
+    existing = session.execute(select(Artifact).where(Artifact.path == path)).scalar_one_or_none()
+    if existing is not None:
+        return existing
+    return add_artifact(session, ref, artifact_type, is_current, raw)
+
+
 def upsert_subject(cache: dict[str, Subject], session: Session, code: Any, name: Any, subject_type: Any, bucket: Any, status: Any = None) -> Subject:
     code_text = str(code or "").strip()
     name_text = RatioOnlyService.sanitize_text(str(name or "").strip()) or None
@@ -223,6 +231,14 @@ def upsert_subject(cache: dict[str, Subject], session: Session, code: Any, name:
     return subject
 
 
+def has_profile(session: Session, subject_id: int) -> bool:
+    return session.execute(select(Profile.id).where(Profile.subject_id == subject_id).limit(1)).first() is not None
+
+
+def has_valuation(session: Session, subject_id: int) -> bool:
+    return session.execute(select(Valuation.id).where(Valuation.subject_id == subject_id).limit(1)).first() is not None
+
+
 def find_511360_registry(etf_registry: dict[str, Any]) -> dict[str, Any]:
     for row in etf_registry.get("etfs") or []:
         if plain_code(row.get("code")) == "511360":
@@ -242,7 +258,8 @@ def import_current_modules(session: Session, index: dict[str, Any], imported_at:
             "quality": (ref.get("quality") or {}).get("status"),
             "staleness": (ref.get("staleness") or {}).get("status"),
         }
-        artifact = add_artifact(session, ref, module, True, raw)
+        artifact = get_or_add_artifact(session, ref, module, True, raw)
+        artifact.is_current = True
         artifacts[module] = artifact
         session.add(CurrentModule(module=module, artifact_id=artifact.id, updated_at=imported_at))
     return artifacts
@@ -425,15 +442,23 @@ def import_intraday_rules(session: Session, data: dict[str, Any], action_plan: d
     return rules
 
 
-def import_action_plan(session: Session, data: dict[str, Any], subjects: dict[str, Subject]) -> ActionPlan:
+def import_action_plan(
+    session: Session,
+    data: dict[str, Any],
+    subjects: dict[str, Subject],
+    market_score: MarketScore | None = None,
+) -> ActionPlan:
     summary = data.get("summary") or {}
     preconditions = data.get("preconditions") or {}
     market = preconditions.get("market_position") or {}
+    market_state = market.get("state") or market.get("market_state")
+    if not market_state and market_score is not None:
+        market_state = market_score.state
     plan = ActionPlan(
         generated_at=data.get("generated_at"),
         basis_trade_date=data.get("basis_trade_date"),
         privacy_policy="ratio-only action plan persisted",
-        market_state=RatioOnlyService.sanitize_text(str(market.get("state") or market.get("market_state") or "")) or None,
+        market_state=RatioOnlyService.sanitize_text(str(market_state or "")) or None,
         status=str(summary.get("action_state") or summary.get("recommendation_strength") or "unknown"),
         raw_json=safe_json(
             {
@@ -578,6 +603,101 @@ def import_511360_gates(
     )
 
 
+def import_research_quality_audit(session: Session, index: dict[str, Any], subjects: dict[str, Subject]) -> None:
+    ref = (index.get("modules") or {}).get("research_quality_audit")
+    if not isinstance(ref, dict) or not ref.get("path"):
+        return
+    data = read_json(resolve_repo_path(ref["path"]))
+    generated_at = data.get("generated_at") or ref.get("generated_at")
+    for item in data.get("items") or []:
+        code = item.get("code")
+        subject = upsert_subject(
+            subjects,
+            session,
+            code,
+            item.get("name"),
+            item.get("type"),
+            item.get("allocation_bucket") or item.get("category"),
+            "eligible_for_review" if not item.get("issues") else "research_first",
+        )
+        profile_source = item.get("profile_source")
+        if profile_source and item.get("profile_status") in {"ok", "pass", "profile_generated"} and not has_profile(session, subject.id):
+            profile_path = resolve_repo_path(profile_source)
+            profile_ref = {
+                "module": "etf_profile" if str(item.get("type") or "").upper() == "ETF" else "stock_profile",
+                "code": code,
+                "path": rel_path(profile_path),
+                "generated_at": None,
+                "basis_trade_date": None,
+                "sha256": None,
+            }
+            try:
+                profile_data = read_json(profile_path)
+                profile_ref["generated_at"] = profile_data.get("generated_at")
+                profile_ref["basis_trade_date"] = profile_data.get("basis_trade_date") or profile_data.get("basis_date") or profile_data.get("date")
+            except Exception:  # noqa: BLE001 - source existence was already checked.
+                pass
+            artifact = get_or_add_artifact(
+                session,
+                profile_ref,
+                "quality_audit_profile",
+                False,
+                {"code": code, "status": item.get("profile_status"), "path": rel_path(profile_path)},
+            )
+            session.add(
+                Profile(
+                    subject_id=subject.id,
+                    status=item.get("profile_status"),
+                    source_artifact_id=artifact.id,
+                    generated_at=profile_ref["generated_at"] or generated_at,
+                    basis_date=profile_ref["basis_trade_date"],
+                    raw_json=safe_json({"code": code, "status": item.get("profile_status"), "path": rel_path(profile_path)}),
+                )
+            )
+
+        valuation_source = item.get("valuation_source")
+        if valuation_source and item.get("valuation_status") in {"ok", "pass", "generated"} and not has_valuation(session, subject.id):
+            valuation_path = resolve_repo_path(valuation_source)
+            valuation_ref = {
+                "module": "valuation_report",
+                "code": code,
+                "path": rel_path(valuation_path),
+                "generated_at": generated_at,
+                "basis_trade_date": item.get("valuation_basis"),
+                "sha256": None,
+            }
+            try:
+                valuation_data = read_json(valuation_path)
+                valuation_ref["generated_at"] = valuation_data.get("generated_at") or valuation_ref["generated_at"]
+                valuation_ref["basis_trade_date"] = (
+                    valuation_data.get("basis_date")
+                    or valuation_data.get("basis_trade_date")
+                    or valuation_data.get("date")
+                    or valuation_ref["basis_trade_date"]
+                )
+            except Exception:  # noqa: BLE001 - source existence was already checked.
+                pass
+            artifact = get_or_add_artifact(
+                session,
+                valuation_ref,
+                "quality_audit_valuation",
+                False,
+                {"code": code, "valuation_status": item.get("valuation_status"), "path": rel_path(valuation_path)},
+            )
+            session.add(
+                Valuation(
+                    subject_id=subject.id,
+                    valuation_status=item.get("valuation_status"),
+                    valuation_source_artifact_id=artifact.id,
+                    generated_at=valuation_ref["generated_at"],
+                    basis_date=valuation_ref["basis_trade_date"],
+                    raw_json=safe_json(
+                        {"code": code, "valuation_status": item.get("valuation_status"), "path": rel_path(valuation_path)}
+                    ),
+                )
+            )
+
+
 def import_decision_log(session: Session, related_action_plan_id: int | None) -> None:
     if not DECISION_LOG_PATH.exists():
         return
@@ -639,8 +759,9 @@ def ingest() -> dict[str, int]:
         import_portfolio(session, data["portfolio_snapshot"], subjects)
         import_target_allocation(session, data["target_allocation"], market_score)
         import_intraday_rules(session, data["intraday_rules"], data["action_plan"])
-        action_plan = import_action_plan(session, data["action_plan"], subjects)
+        action_plan = import_action_plan(session, data["action_plan"], subjects, market_score)
         import_511360_gates(session, index, data["etf_registry"], data["liquidity_gate_registry"], subjects)
+        import_research_quality_audit(session, index, subjects)
         import_decision_log(session, action_plan.id)
         import_system_checks(session, checks, generated_at)
         verify_database(session)

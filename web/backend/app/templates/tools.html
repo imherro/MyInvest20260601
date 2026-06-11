@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Tools{% endblock %}
+
+{% block content %}
+<div class="metric-grid">
+  <div class="metric">
+    <span class="subtle">Tools</span>
+    <strong data-bind="tool_count">{{ tools.summary.tool_count if tools is defined else "n/a" }}</strong>
+  </div>
+  <div class="metric ok">
+    <span class="subtle">Whitelist</span>
+    <strong>on</strong>
+  </div>
+  <div class="metric warn">
+    <span class="subtle">Trading</span>
+    <strong>off</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Web DB</span>
+    <strong>manual refresh</strong>
+  </div>
+</div>
+
+<section class="tool-runner" aria-label="Tool execution status">
+  <div class="row-card">
+    <div class="summary-line">
+      <span>Selected tool</span>
+      <strong data-bind="tool_selected">none</strong>
+    </div>
+    <div class="summary-line">
+      <span>Status</span>
+      <strong data-bind="tool_status">waiting</strong>
+    </div>
+    <div class="summary-line">
+      <span>Last run</span>
+      <strong data-bind="tool_last_run">n/a</strong>
+    </div>
+  </div>
+</section>
+
+<div class="table-tools">
+  <input type="search" placeholder="Search tools" aria-label="Search tools" data-tool-search>
+  <select aria-label="Filter tools" data-tool-filter data-loaded="true">
+    <option value="">All groups</option>
+    {% for group in tools.groups %}
+    <option value="{{ group }}">{{ group }}</option>
+    {% endfor %}
+  </select>
+</div>
+
+<table id="toolTable" data-page-size="14">
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Group</th>
+      <th>Category</th>
+      <th>When to use</th>
+      <th>Impact</th>
+      <th>Description</th>
+      <th>Command</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="toolRows">
+    {% set ns = namespace(group="") %}
+    {% for tool in tools.tools %}
+    {% if tool.group != ns.group %}
+    {% set ns.group = tool.group %}
+    <tr class="tool-group-row">
+      <td colspan="8">{{ tool.group }}</td>
+    </tr>
+    {% endif %}
+    <tr data-tool-row="{{ tool.id }}">
+      <td>{{ tool.title }}</td>
+      <td>{{ tool.group }}</td>
+      <td>{{ tool.category }}</td>
+      <td>{{ tool.when_to_use }}</td>
+      <td class="tool-impact">{{ tool.impact }}</td>
+      <td>{{ tool.description }}</td>
+      <td>{{ tool.command_display or ("Codex prompt" if tool.kind == "prompt" else "") }}</td>
+      <td class="tool-actions">
+        <button type="button" disabled>{{ "Copy Prompt" if tool.kind == "prompt" else "Run" }}</button>
+      </td>
+    </tr>
+    <tr class="tool-result-row" data-tool-output-row="{{ tool.id }}" hidden>
+      <td colspan="8">
+        <div class="tool-result-label">Run log</div>
+        <pre class="tool-output tool-output-inline"></pre>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

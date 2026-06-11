@@ -51,14 +51,15 @@ class SubjectStatusService:
         missing_profile = profile_status != "pass"
         missing_valuation = valuation_status != "pass"
         missing_liquidity = liquidity_status != "pass"
+        has_research_first_item = row.get("research_first_item_id") is not None
 
-        if row.get("missing_profile") is not None:
+        if has_research_first_item and row.get("missing_profile") is not None:
             missing_profile = bool(row.get("missing_profile"))
-        if row.get("missing_valuation") is not None:
+        if has_research_first_item and row.get("missing_valuation") is not None:
             missing_valuation = bool(row.get("missing_valuation"))
-        if row.get("missing_liquidity") is not None:
+        if has_research_first_item and row.get("missing_liquidity") is not None:
             missing_liquidity = bool(row.get("missing_liquidity"))
-        missing_theme_binding = bool(row.get("missing_theme_binding") or False)
+        missing_theme_binding = bool(row.get("missing_theme_binding") or False) if has_research_first_item else False
 
         research_first_status = self._research_first_status(
             missing_profile=missing_profile,
@@ -66,11 +67,13 @@ class SubjectStatusService:
             missing_liquidity=missing_liquidity,
             missing_theme_binding=missing_theme_binding,
             blocking_reason=row.get("blocking_reason"),
+            has_research_first_item=has_research_first_item,
         )
         gate_conclusion = self._gate_conclusion(
             row.get("allowed_conclusion"),
             research_first_status=research_first_status,
             subject_status=row.get("subject_status"),
+            has_research_first_item=has_research_first_item,
         )
 
         payload = {
@@ -83,7 +86,8 @@ class SubjectStatusService:
             "liquidity_status": liquidity_status,
             "research_first_status": research_first_status,
             "gate_conclusion": gate_conclusion,
-            "blocking_reason": row.get("blocking_reason") or self._blocking_reason(
+            "blocking_reason": self._display_blocking_reason(
+                row.get("blocking_reason"),
                 missing_profile=missing_profile,
                 missing_valuation=missing_valuation,
                 missing_liquidity=missing_liquidity,
@@ -138,6 +142,7 @@ class SubjectStatusService:
         missing_liquidity: bool,
         missing_theme_binding: bool,
         blocking_reason: Any,
+        has_research_first_item: bool,
     ) -> str:
         if blocking_reason:
             return "blocked"
@@ -146,7 +151,13 @@ class SubjectStatusService:
         return "pass"
 
     @staticmethod
-    def _gate_conclusion(allowed_conclusion: Any, *, research_first_status: str, subject_status: Any) -> str:
+    def _gate_conclusion(
+        allowed_conclusion: Any,
+        *,
+        research_first_status: str,
+        subject_status: Any,
+        has_research_first_item: bool,
+    ) -> str:
         candidate = str(allowed_conclusion or "").strip().lower()
         if candidate in ACTION_CONCLUSIONS:
             return "blocked"
@@ -154,10 +165,33 @@ class SubjectStatusService:
             return candidate
         if research_first_status in {"blocked", "research_first"}:
             return research_first_status
+        if not has_research_first_item:
+            subject_candidate = str(subject_status or "").strip().lower()
+            if subject_candidate in ALLOWED_GATE_CONCLUSIONS:
+                return subject_candidate
+            return "eligible_for_review"
         subject_candidate = str(subject_status or "").strip().lower()
         if subject_candidate in ALLOWED_GATE_CONCLUSIONS:
             return subject_candidate
         return "eligible_for_review" if research_first_status == "pass" else "unknown"
+
+    @staticmethod
+    def _display_blocking_reason(
+        blocking_reason: Any,
+        *,
+        missing_profile: bool,
+        missing_valuation: bool,
+        missing_liquidity: bool,
+        missing_theme_binding: bool,
+    ) -> str:
+        if blocking_reason:
+            return str(blocking_reason)
+        return SubjectStatusService._blocking_reason(
+            missing_profile=missing_profile,
+            missing_valuation=missing_valuation,
+            missing_liquidity=missing_liquidity,
+            missing_theme_binding=missing_theme_binding,
+        )
 
     @staticmethod
     def _blocking_reason(

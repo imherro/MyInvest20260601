@@ -53,10 +53,7 @@
           <th data-sort="text">Status</th>
           <th data-sort="text">Basis</th>
           <th data-sort="text">Generated</th>
-          <th class="num" data-sort="number">ETFs</th>
-          <th class="num" data-sort="number">Stocks</th>
-          <th class="num" data-sort="number">Leaders</th>
-          <th class="num" data-sort="number">Conflicts</th>
+          <th data-sort="text">Coverage</th>
         </tr>
       </thead>
       <tbody id="themesRows">
@@ -69,10 +66,12 @@
             <td><span class="status {{ 'warn' if item.status != 'confirmed' else '' }}">{{ item.status }}</span></td>
             <td>{{ item.basis_trade_date or "" }}</td>
             <td>{{ item.generated_at or "" }}</td>
-            <td class="num">{{ item.associated_etfs|length }}</td>
-            <td class="num">{{ item.associated_stocks|length }}</td>
-            <td class="num">{{ item.leaders|length }}</td>
-            <td class="num">{{ item.conflicts|length }}</td>
+            <td>
+              <span class="coverage-pill">ETF {{ item.associated_etfs|length }}</span>
+              <span class="coverage-pill">Stock {{ item.associated_stocks|length }}</span>
+              <span class="coverage-pill">Routes {{ item.leaders|length }}</span>
+              <span class="coverage-pill">Conflict {{ item.conflicts|length }}</span>
+            </td>
           </tr>
         {% endfor %}
       </tbody>

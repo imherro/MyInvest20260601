@@ -1,0 +1,20 @@
+{
+  "module": "portfolio_research_backlog",
+  "version": "current_holdings_filtered_v1",
+  "generated_at": "2026-06-11_131520",
+  "basis_trade_date": "2026-06-11",
+  "basis_portfolio_snapshot": "research/portfolio/portfolio_snapshot_2026-06-11_112436.json",
+  "previous_backlog": "research/portfolio/research_backlog_2026-06-09_151312.json",
+  "boundary": "Research queue only; no buy/sell/reduce/add instruction.",
+  "privacy_policy": "ratio_only_no_monetary_values_no_unit_counts",
+  "summary": {
+    "active_research_items": 0,
+    "completed_current_holdings": 0,
+    "skipped_not_current_holdings": 0,
+    "note": "Filtered by latest portfolio snapshot; non-current holdings are removed from active ResearchFirst work."
+  },
+  "items": [],
+  "completed_current_holdings": [],
+  "skipped_not_current_holdings": [],
+  "decision_log_entry": "2026-06-11_131520 ResearchFirst current-holdings filter: active=0, completed_current=0, skipped_not_current=0."
+}

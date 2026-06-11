@@ -146,6 +146,17 @@ def test_liquidity_gate_registry_maps_to_liquidity_gates(web_db):
     assert bool(row["liquidity_risk_disclosed"]) == bool(gate["liquidity_risk_disclosed"])
 
 
+def test_research_quality_audit_imports_current_profile_and_valuation_status(web_db):
+    source = read_current_module("research_quality_audit")
+    expected_profile_count = sum(1 for item in source.get("items") or [] if item.get("profile_status") == "ok")
+    expected_valuation_count = sum(1 for item in source.get("items") or [] if item.get("valuation_status") == "ok")
+    with connect(web_db) as conn:
+        profile_count = conn.execute("SELECT COUNT(*) AS count FROM profiles").fetchone()["count"]
+        valuation_count = conn.execute("SELECT COUNT(*) AS count FROM valuations").fetchone()["count"]
+    assert profile_count >= expected_profile_count
+    assert valuation_count >= expected_valuation_count
+
+
 def test_decision_log_maps_to_recent_entries(web_db):
     with connect(web_db) as conn:
         count = conn.execute("SELECT COUNT(*) AS count FROM decision_log_entries").fetchone()["count"]

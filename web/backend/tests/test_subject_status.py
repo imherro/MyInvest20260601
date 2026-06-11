@@ -146,20 +146,26 @@ def test_subject_status_source_paths_are_repo_relative(client):
             assert not has_local_path(str(source_path))
 
 
-def test_subject_status_research_first_items_are_neutral(client):
+def test_subject_status_missing_coverage_blocks_actions_but_not_action_plan_queue(client):
     response = client.get("/api/subjects/status")
     assert response.status_code == 200
-    subjects = response.json()["data"]["subjects"]
+    data = response.json()["data"]
+    subjects = data["subjects"]
 
-    blocked = [
+    missing_coverage = [
         item
         for item in subjects
         if item["missing_profile"] or item["missing_valuation"] or item["missing_liquidity"] or item["missing_theme_binding"]
     ]
-    assert blocked
-    for item in blocked:
+    assert missing_coverage
+    assert data["summary"]["research_first_count"] + data["summary"]["blocked_count"] == len(missing_coverage)
+    for item in missing_coverage:
         assert item["research_first_status"] in {"research_first", "blocked"}
         assert item["gate_conclusion"] in {"research_first", "blocked"}
+
+    research_first_response = client.get("/api/research-first/current")
+    assert research_first_response.status_code == 200
+    assert research_first_response.json()["data"]["items"] == []
 
 
 def test_subject_status_missing_code_is_safe_404(client):

@@ -1,0 +1,299 @@
+﻿{
+  "module": "intraday_alerts",
+  "version": "ratio_only_v1",
+  "generated_at": "2026-06-11_104602",
+  "date": "2026-06-11",
+  "status": "triggered_review_only",
+  "source_plan": {
+    "premarket_check": "research/checks/premarket_check_2026-06-11_103227.json",
+    "intraday_rules": "research/alerts/intraday_rules.json",
+    "intraday_snapshot": "temp/runtime/alerts/intraday_once_2026-06-11_104401.json",
+    "valuation_update_check": "research/checks/valuation_update_check_2026-06-11_104416.json"
+  },
+  "preconditions": {
+    "premarket_plan_present": true,
+    "source_profile_coverage": "42/42",
+    "active_quote_coverage": "35/35",
+    "missing_quote_count": 0,
+    "staleness_status": "fresh",
+    "missing_preconditions": []
+  },
+  "quote_source": "qmt_dashboard",
+  "quote_latest_timetag": "20260611 10:30:17",
+  "monitor_scope": {
+    "source_subject_count": 42,
+    "active_subject_count": 35,
+    "hidden_subject_count": 7,
+    "mode": "holdings_plus_explicit_watchlist"
+  },
+  "summary": {
+    "highest_priority": "high",
+    "triggered_count": 18,
+    "risk_trigger_count": 11,
+    "watch_trigger_count": 7,
+    "near_trigger_count": 1,
+    "valuation_status": "update_needed",
+    "valuation_update_required_count": 34,
+    "intraday_zone_cross_count": 2,
+    "conclusion": "仅触发复核/等待提醒；不新增交易条件，不输出自动执行动作。"
+  },
+  "risk_triggers": [
+    {
+      "code": "516150.SH",
+      "name": "稀土ETF嘉实",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 2.5126
+    },
+    {
+      "code": "512400.SH",
+      "name": "有色金属ETF南方",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 1.5492
+    },
+    {
+      "code": "510500.SH",
+      "name": "中证500ETF南方",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入拥挤/风险区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 1.345
+    },
+    {
+      "code": "562500.SH",
+      "name": "机器人ETF华夏",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 1.2815
+    },
+    {
+      "code": "159326.SZ",
+      "name": "电网设备ETF华夏",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 0.8853
+    },
+    {
+      "code": "562800.SH",
+      "name": "稀有金属ETF嘉实",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 0.8379
+    },
+    {
+      "code": "159558.SZ",
+      "name": "半导体设备ETF易方达",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 0.1837
+    },
+    {
+      "code": "588200.SH",
+      "name": "科创芯片ETF嘉实",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 0.1726
+    },
+    {
+      "code": "515880.SH",
+      "name": "通信ETF国泰",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 0.1257
+    },
+    {
+      "code": "159819.SZ",
+      "name": "人工智能ETF易方达",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 0.0241
+    },
+    {
+      "code": "159301.SZ",
+      "name": "公用事业ETF华夏",
+      "type": "ETF",
+      "priority": "high",
+      "alert_type": "risk_trigger",
+      "trigger_condition": "进入价格拥挤区，触发拥挤/高位风险复核",
+      "suggested_action": "review",
+      "needs_manual_confirmation": true,
+      "boundary": "风险提醒不等于卖出；必须由ACTION_PLAN结合持仓、趋势和市场门禁处理。",
+      "review_point": "复核是否需要控制新增、减小暴露或等待盘后复盘。",
+      "position_weight_pct": 0.0039
+    }
+  ],
+  "watch_triggers": [
+    {
+      "code": "002920.SZ",
+      "name": "德赛西威",
+      "type": "stock",
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
+      "suggested_action": "wait",
+      "needs_manual_confirmation": true,
+      "boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+      "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。",
+      "position_weight_pct": 2.3285
+    },
+    {
+      "code": "002352.SZ",
+      "name": "顺丰控股",
+      "type": "stock",
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
+      "suggested_action": "wait",
+      "needs_manual_confirmation": true,
+      "boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+      "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。",
+      "position_weight_pct": 1.9856
+    },
+    {
+      "code": "603596.SH",
+      "name": "伯特利",
+      "type": "stock",
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "trigger_condition": "进入低估观察区，只触发估值观察复核",
+      "suggested_action": "wait",
+      "needs_manual_confirmation": true,
+      "boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+      "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。",
+      "position_weight_pct": 1.5967
+    },
+    {
+      "code": "688439.SH",
+      "name": "振华风光",
+      "type": "stock",
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
+      "suggested_action": "wait",
+      "needs_manual_confirmation": true,
+      "boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+      "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。",
+      "position_weight_pct": 1.1191
+    },
+    {
+      "code": "002041.SZ",
+      "name": "登海种业",
+      "type": "stock",
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
+      "suggested_action": "wait",
+      "needs_manual_confirmation": true,
+      "boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+      "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。",
+      "position_weight_pct": 0.589
+    },
+    {
+      "code": "300760.SZ",
+      "name": "迈瑞医疗",
+      "type": "stock",
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
+      "suggested_action": "wait",
+      "needs_manual_confirmation": true,
+      "boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+      "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。",
+      "position_weight_pct": 0.3532
+    },
+    {
+      "code": "159667.SZ",
+      "name": "工业母机ETF国泰",
+      "type": "ETF",
+      "priority": "medium",
+      "alert_type": "watch_trigger",
+      "trigger_condition": "进入价格低位区，只触发价格位置观察复核",
+      "suggested_action": "wait",
+      "needs_manual_confirmation": true,
+      "boundary": "观察不等于买入；必须由ACTION_PLAN结合市场仓位、趋势和组合暴露复核。",
+      "review_point": "复核价格/估值口径、趋势、资金流和最新组合偏离。",
+      "position_weight_pct": 0.0302
+    }
+  ],
+  "near_triggers": [
+    {
+      "subject": "688333.SH 西安铂力特",
+      "near_condition": "进入低估观察区，只触发估值观察复核",
+      "watch_point": "last <= 74.0414; current=74.11"
+    }
+  ],
+  "valuation_quality_prompt": {
+    "status": "update_needed",
+    "update_required_count": 34,
+    "summary": "发现 34 个估值报告缺失、过期或盘中跨区项；新增单标的动作前应先确认是否刷新估值报告。",
+    "intraday_overlay_summary": "盘中发现 2 个标的实时价格/净值跨估值区间，新增风险动作前需要先复核估值。",
+    "boundary": "仅作为数据质量提示；不新增交易条件。"
+  },
+  "forbidden": [
+    "不临时重写市场仓位或主线评级。",
+    "不新增盘中触发条件。",
+    "不把估值更新提示转成交易条件。",
+    "仅保留比例、状态和触发结果。"
+  ],
+  "decision_log_entry": "2026-06-11_104602 intraday_alerts: status=triggered_review_only; triggers=18; risk=11; watch=7; near=1; valuation_updates=34; quote_coverage=35/35; no new trading condition."
+}

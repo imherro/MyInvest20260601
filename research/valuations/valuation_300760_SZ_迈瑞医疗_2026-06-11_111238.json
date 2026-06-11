@@ -1,0 +1,241 @@
+{
+  "module": "valuation_report",
+  "version": "1.0",
+  "code": "300760.SZ",
+  "name": "迈瑞医疗",
+  "date": "2026-06-11",
+  "generated_at": "2026-06-11_111238",
+  "basis_date": "20260610",
+  "asset_type": "stock",
+  "group": "医疗器械",
+  "role": "防御/观察仓",
+  "confidence": "中",
+  "security_stance": {
+    "label": "低估",
+    "basis": "估值进入低估区，但仍需趋势、资金和基本面复核。",
+    "confidence": "中",
+    "scope": "security_level_only",
+    "not_portfolio_action": true,
+    "boundary": "估值状态不等于组合级买卖动作；最终动作仍由ACTION_PLAN结合市场仓位、真实持仓和组合暴露决定。",
+    "semantic_scope": "valuation"
+  },
+  "one_line_conclusion": "迈瑞医疗 当前处于低估观察区；估值区间来自PE/PB/PS历史分位映射价格区间，不是组合级买卖指令。",
+  "valuation_visual": {
+    "metric": "price",
+    "current_value": 143.5,
+    "current_zone": "undervalued_observe",
+    "current_zone_label": "低估观察区",
+    "zones": [
+      {
+        "key": "undervalued_observe",
+        "label": "低估观察区",
+        "min": 143.5,
+        "max": 185.7643,
+        "color": "#2f9e44"
+      },
+      {
+        "key": "reasonable_allocation",
+        "label": "合理配置区",
+        "min": 185.7643,
+        "max": 221.2691,
+        "color": "#74b816"
+      },
+      {
+        "key": "expensive",
+        "label": "偏贵区",
+        "min": 221.2691,
+        "max": 258.1333,
+        "color": "#f59f00"
+      },
+      {
+        "key": "crowded_risk",
+        "label": "拥挤/风险区",
+        "min": 258.1333,
+        "max": 294.8916,
+        "color": "#e03131"
+      }
+    ],
+    "basis": "PE/PB/PS历史分位映射价格区间",
+    "evidence": [
+      "pe_ttm current=22.20, percentile=3.65%",
+      "ps_ttm current=5.21, percentile=0.54%",
+      "pb current=4.55, percentile=0.54%"
+    ]
+  },
+  "index_valuation": {
+    "available": false,
+    "reason": "stock valuation uses daily_basic metrics"
+  },
+  "stock_valuation_metrics": [
+    {
+      "metric": "pe_ttm",
+      "value": 22.2009,
+      "percentile": 3.65,
+      "date": "20260610"
+    },
+    {
+      "metric": "pb",
+      "value": 4.5524,
+      "percentile": 0.54,
+      "date": "20260610"
+    },
+    {
+      "metric": "ps_ttm",
+      "value": 5.2096,
+      "percentile": 0.54,
+      "date": "20260610"
+    },
+    {
+      "metric": "dv_ttm",
+      "value": 2.9408,
+      "percentile": 59.73,
+      "date": "20260610"
+    }
+  ],
+  "reference_metrics": {
+    "price_date": "20260610",
+    "last_reference": 143.5,
+    "ma20": 151.105,
+    "ma60": 160.4785,
+    "moneyflow_5d": -8045.0,
+    "moneyflow_20d": -134534.67,
+    "support": 185.7643,
+    "right_confirm": 160.4785,
+    "risk_zone_start": 258.1333,
+    "current_position_pct": 0.3532,
+    "target_position_range": "0%-1%",
+    "valuation_visual": {
+      "metric": "price",
+      "current_value": 143.5,
+      "current_zone": "undervalued_observe",
+      "current_zone_label": "低估观察区",
+      "zones": [
+        {
+          "key": "undervalued_observe",
+          "label": "低估观察区",
+          "min": 143.5,
+          "max": 185.7643,
+          "color": "#2f9e44"
+        },
+        {
+          "key": "reasonable_allocation",
+          "label": "合理配置区",
+          "min": 185.7643,
+          "max": 221.2691,
+          "color": "#74b816"
+        },
+        {
+          "key": "expensive",
+          "label": "偏贵区",
+          "min": 221.2691,
+          "max": 258.1333,
+          "color": "#f59f00"
+        },
+        {
+          "key": "crowded_risk",
+          "label": "拥挤/风险区",
+          "min": 258.1333,
+          "max": 294.8916,
+          "color": "#e03131"
+        }
+      ],
+      "basis": "PE/PB/PS历史分位映射价格区间",
+      "evidence": [
+        "pe_ttm current=22.20, percentile=3.65%",
+        "ps_ttm current=5.21, percentile=0.54%",
+        "pb current=4.55, percentile=0.54%"
+      ]
+    },
+    "trend_visual": {
+      "available": true,
+      "current": 143.5,
+      "trends": [
+        {
+          "key": "long",
+          "label": "长期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -36.98,
+          "window_days": 250
+        },
+        {
+          "key": "mid",
+          "label": "中期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -19.46,
+          "window_days": 60
+        },
+        {
+          "key": "short",
+          "label": "短期",
+          "state": "下行",
+          "color": "#16a34a",
+          "change_pct": -13.52,
+          "window_days": 20
+        }
+      ],
+      "drawdown": {
+        "from_sample_high_pct": -55.78,
+        "sample_high": 324.5,
+        "sample_high_date": "20241008",
+        "common_120d_drawdown_pct": -21.57,
+        "deep_120d_drawdown_pct": -26.63,
+        "max_120d_drawdown_pct": -36.45
+      },
+      "rebound": {
+        "from_sample_low_pct": 0.82,
+        "sample_low": 142.33,
+        "sample_low_date": "20260609",
+        "common_120d_rebound_pct": 6.82,
+        "strong_120d_rebound_pct": 13.16,
+        "max_120d_rebound_pct": 45.95
+      },
+      "price_series": {
+        "basis": "raw_close_proxy",
+        "basis_label": "未复权收盘价代理",
+        "comparable": false,
+        "display_confidence": "low",
+        "realtime_price_multiplier": 1.0,
+        "factor_date": "20260610",
+        "latest_unit_nav": null,
+        "latest_basis_value": 143.5,
+        "latest_trade_date": "20260610",
+        "sample_days": 740,
+        "display_scale": "current_raw_price",
+        "note": "当前个股历史序列仍为未复权价格代理；长期前高回撤、前低反弹需后续接入前复权/后复权口径后再作为强判断。"
+      },
+      "display_confidence": "low"
+    },
+    "risk_markers": {
+      "support": {
+        "label": "风控位",
+        "value": 185.7643,
+        "color": "#2563eb",
+        "shape": "triangle"
+      },
+      "right_confirm": {
+        "label": "右侧确认",
+        "value": 160.4785,
+        "color": "#06b6d4",
+        "shape": "diamond"
+      },
+      "risk_zone_start": {
+        "label": "风险区起点",
+        "value": 258.1333,
+        "color": "#dc2626",
+        "shape": "flag"
+      }
+    },
+    "allocation_bucket": "defense"
+  },
+  "data_gaps": [],
+  "source": {
+    "tushare": [
+      "daily",
+      "daily_basic",
+      "moneyflow"
+    ],
+    "history_sample_days": 740
+  }
+}
