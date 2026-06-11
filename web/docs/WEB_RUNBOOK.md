@@ -204,6 +204,32 @@ python -m pytest web/backend/tests/test_schema_guard.py -q
 python scripts/web_check.py
 ```
 
+## Phase 14C Schema Guard Enforcement
+
+Phase 14C keeps `GET /api/diagnostics/schema` and strengthens its report:
+
+- deterministic required-schema fingerprint
+- observed fingerprint from existing `schema_version` or `schema_metadata`
+- required table/column counts
+- `schema_fingerprint_match`
+- `enforcement.fail_closed`
+- `enforcement.web_smoke_compatible`
+- `enforcement.read_model_usable`
+
+The current database still has no version table, so the expected local status is
+`degraded` with `missing_version_table`, `read_model_usable=true`, and
+`web_smoke_compatible=true`. If required tables or columns are missing, or if an
+existing version/fingerprint does not match, the guard reports `mismatch` and
+`fail_closed=true` without writing SQLite or changing Web routes.
+
+Validation:
+
+```bash
+python -m pytest web/backend/tests/test_schema_guard.py -q
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+```
+
 ## Phase 3 Milestone Check
 
 Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.

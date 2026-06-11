@@ -490,6 +490,29 @@ Phase 14B must not modify ingest, research artifacts, action-plan generation,
 target-allocation generation, trading/QMT behavior, runtime DB writes, or
 package boundaries.
 
+## Phase 14C Schema Guard Enforcement Rules
+
+Phase 14C keeps the same files and endpoint but strengthens the guard:
+
+- `SchemaGuardService` computes the deterministic required-schema fingerprint
+  from its table/column contract.
+- Existing `schema_version` rows must match schema name, schema version, and
+  schema fingerprint before the guard returns `ok`.
+- Existing `schema_metadata` rows may be used only as read-only metadata and
+  must also match name, version, and fingerprint.
+- Missing version metadata with an otherwise intact current read model remains
+  `degraded` and Web-smoke compatible.
+- Missing required tables/columns, version mismatches, fingerprint mismatches,
+  and introspection failures report `enforcement.fail_closed=true`.
+- The diagnostics endpoint still returns HTTP 200 with sanitized operational
+  metadata so existing Web smoke checks can inspect the failure safely.
+- General DB reads stay behind `DatabaseService`; no service may open raw SQLite
+  connections for schema checks.
+
+Phase 14C remains read-only reporting. It must not modify ingest, write
+metadata, create tables, run migrations, add mutating APIs, or change research
+generation behavior.
+
 ## Hard Service Boundaries
 
 Services must not:

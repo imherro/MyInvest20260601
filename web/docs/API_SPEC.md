@@ -141,7 +141,8 @@ The same data backs `GET /audit`, which renders preview cards, a simple chart, m
 ## DB Schema Guard Diagnostics
 
 Phase 14A adds `web/docs/DB_SCHEMA_VERSIONING_PLAN.md` as design material.
-Phase 14B adds one read-only diagnostics endpoint:
+Phase 14B adds one read-only diagnostics endpoint. Phase 14C extends the same
+endpoint with full read-only enforcement reporting:
 
 - `GET /api/diagnostics/schema`
 
@@ -153,22 +154,29 @@ alters, drops, migrates, or seeds tables from the request path.
 
 Response data is wrapped in the standard API envelope under
 `data.schema_guard`. Safe fields include `status`, `ok`,
-`expected_schema_name`, `expected_schema_version`, observed schema name/version,
-version source, version-table presence, required table/column presence, missing
-table/column names, `checked_at`, diagnostics warning codes, and read-only
-safety flags.
+`expected_schema_name`, `expected_schema_version`,
+`expected_schema_fingerprint`, observed schema name/version/fingerprint,
+fingerprint match status, version source, version-table presence, required
+table/column presence, missing table/column names, schema-contract counts,
+read-only enforcement status, `checked_at`, diagnostics warning codes, and
+read-only safety flags.
 
 Status values:
 
 - `ok`: required read-model tables and columns exist and existing version
-  metadata matches `web_read_model_v1`.
+  metadata matches `web_read_model_v1` and the required table/column
+  fingerprint.
 - `degraded`: required read-model tables and columns exist, but no
   `schema_version` or usable metadata exists yet.
-- `mismatch`: required structure or existing version metadata does not match.
+- `mismatch`: required structure, version metadata, or schema fingerprint does
+  not match.
 - `unavailable`: metadata introspection could not complete.
 
-The current Phase 14B database has no version table, so the endpoint returns
+The current Phase 14C database has no version table, so the endpoint returns
 `degraded` with `missing_version_table` while keeping Web smoke checks green.
+Phase 14C keeps that degraded state Web-smoke compatible, but any required
+table/column gap, existing version mismatch, fingerprint mismatch, or
+introspection failure is reported through `enforcement.fail_closed=true`.
 The endpoint must not expose local absolute paths, SQLite row contents,
 credentials, runtime files, cache contents, or trading/execution records.
 

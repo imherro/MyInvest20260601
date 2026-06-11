@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import json
 from datetime import datetime, timezone
 from typing import Any, Protocol
 
@@ -33,6 +35,21 @@ REQUIRED_SCHEMA: dict[str, set[str]] = {
     "decision_log_entries": {"id", "entry_time", "entry_type", "summary", "ratio_only_text"},
     "system_check_results": {"id", "check_name", "status", "message", "generated_at"},
 }
+
+
+def _schema_fingerprint(schema: dict[str, set[str]]) -> str:
+    canonical = json.dumps(
+        {table: sorted(columns) for table, columns in sorted(schema.items())},
+        ensure_ascii=True,
+        separators=(",", ":"),
+        sort_keys=True,
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+EXPECTED_SCHEMA_FINGERPRINT = _schema_fingerprint(REQUIRED_SCHEMA)
+EXPECTED_REQUIRED_TABLE_COUNT = len(REQUIRED_SCHEMA)
+EXPECTED_REQUIRED_COLUMN_COUNT = sum(len(columns) for columns in REQUIRED_SCHEMA.values())
 
 
 class SchemaGuardRepositoryProtocol(Protocol):
@@ -90,6 +107,7 @@ class SchemaGuardService:
         schema_metadata_table_present = "schema_metadata" in tables
         observed_name: str | None = None
         observed_version: str | None = None
+        observed_fingerprint: str | None = None
         version_source: str | None = None
         warnings: list[str] = []
 
@@ -102,16 +120,20 @@ class SchemaGuardService:
             version_record = self.repository.schema_version_record() or {}
             observed_name = self._safe_string(version_record.get("schema_name"))
             observed_version = self._safe_string(version_record.get("schema_version"))
+            observed_fingerprint = self._safe_string(version_record.get("schema_fingerprint"))
             version_source = "schema_version"
             version_columns = optional_columns.get("schema_version", set())
             required_version_columns = {"id", "schema_name", "schema_version", "schema_fingerprint", "created_at", "source"}
             if required_version_columns - version_columns:
                 missing_columns["schema_version"] = sorted(required_version_columns - version_columns)
                 warnings.append("schema_version_column_missing")
+            if not version_record:
+                warnings.append("schema_version_record_missing")
         elif schema_metadata_table_present:
             metadata = self.repository.schema_metadata()
             observed_name = self._safe_string(metadata.get("schema_name"))
             observed_version = self._safe_string(metadata.get("schema_version"))
+            observed_fingerprint = self._safe_string(metadata.get("schema_fingerprint"))
             version_source = "schema_metadata"
             metadata_columns = optional_columns.get("schema_metadata", set())
             if not {"key", "value"}.issubset(metadata_columns):
@@ -120,9 +142,21 @@ class SchemaGuardService:
         else:
             warnings.append("missing_version_table")
 
+        schema_fingerprint_match = (
+            observed_fingerprint == EXPECTED_SCHEMA_FINGERPRINT if observed_fingerprint is not None else None
+        )
+
         if missing_tables or missing_columns:
             status = "mismatch"
             ok = False
+        elif version_source and observed_version is None:
+            status = "mismatch"
+            ok = False
+            warnings.append(f"{version_source}_version_missing")
+        elif version_source and observed_fingerprint is None:
+            status = "mismatch"
+            ok = False
+            warnings.append("schema_fingerprint_missing")
         elif observed_version is None:
             status = "degraded"
             ok = True
@@ -130,9 +164,16 @@ class SchemaGuardService:
             status = "mismatch"
             ok = False
             warnings.append("schema_version_mismatch")
+        elif schema_fingerprint_match is False:
+            status = "mismatch"
+            ok = False
+            warnings.append("schema_fingerprint_mismatch")
         else:
             status = "ok"
             ok = True
+
+        read_model_usable = not missing_tables and not missing_columns
+        missing_column_count = sum(len(columns) for columns in missing_columns.values())
 
         return self._base_payload(
             checked_at=checked_at,
@@ -140,11 +181,16 @@ class SchemaGuardService:
             ok=ok,
             observed_schema_name=observed_name,
             observed_schema_version=observed_version,
+            observed_schema_fingerprint=observed_fingerprint,
+            schema_fingerprint_match=schema_fingerprint_match,
             version_source=version_source,
             schema_version_table_present=schema_version_table_present,
             schema_metadata_table_present=schema_metadata_table_present,
             required_tables_present=not missing_tables,
             required_columns_present=not missing_columns,
+            observed_required_table_count=EXPECTED_REQUIRED_TABLE_COUNT - len(missing_tables),
+            missing_required_column_count=missing_column_count,
+            read_model_usable=read_model_usable,
             missing_required_tables=missing_tables,
             missing_required_columns=missing_columns,
             diagnostics_warnings=sorted(set(warnings)),
@@ -175,15 +221,21 @@ class SchemaGuardService:
         ok: bool,
         observed_schema_name: str | None = None,
         observed_schema_version: str | None = None,
+        observed_schema_fingerprint: str | None = None,
+        schema_fingerprint_match: bool | None = None,
         version_source: str | None = None,
         schema_version_table_present: bool = False,
         schema_metadata_table_present: bool = False,
         required_tables_present: bool = False,
         required_columns_present: bool = False,
+        observed_required_table_count: int = 0,
+        missing_required_column_count: int = 0,
+        read_model_usable: bool = False,
         missing_required_tables: list[str] | None = None,
         missing_required_columns: dict[str, list[str]] | None = None,
         diagnostics_warnings: list[str] | None = None,
     ) -> dict[str, Any]:
+        fail_closed = status in {"mismatch", "unavailable"}
         return {
             "module": "schema_guard",
             "current_only": True,
@@ -192,8 +244,11 @@ class SchemaGuardService:
             "status": status,
             "expected_schema_name": EXPECTED_SCHEMA_NAME,
             "expected_schema_version": EXPECTED_SCHEMA_VERSION,
+            "expected_schema_fingerprint": EXPECTED_SCHEMA_FINGERPRINT,
             "observed_schema_name": observed_schema_name,
             "observed_schema_version": observed_schema_version,
+            "observed_schema_fingerprint": observed_schema_fingerprint,
+            "schema_fingerprint_match": schema_fingerprint_match,
             "version_source": version_source,
             "schema_version_table_present": schema_version_table_present,
             "schema_metadata_table_present": schema_metadata_table_present,
@@ -201,6 +256,20 @@ class SchemaGuardService:
             "required_columns_present": required_columns_present,
             "missing_required_tables": missing_required_tables or [],
             "missing_required_columns": missing_required_columns or {},
+            "schema_contract": {
+                "required_table_count": EXPECTED_REQUIRED_TABLE_COUNT,
+                "observed_required_table_count": observed_required_table_count,
+                "missing_required_table_count": len(missing_required_tables or []),
+                "required_column_count": EXPECTED_REQUIRED_COLUMN_COUNT,
+                "missing_required_column_count": missing_required_column_count,
+            },
+            "enforcement": {
+                "mode": "read_only_schema_guard",
+                "status": status,
+                "fail_closed": fail_closed,
+                "web_smoke_compatible": status in {"ok", "degraded"},
+                "read_model_usable": read_model_usable,
+            },
             "checked_at": checked_at,
             "diagnostics_warnings": diagnostics_warnings or [],
             "safety": {

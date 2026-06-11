@@ -6,7 +6,8 @@ from typing import Any
 from web.backend.app.db import SessionLocal
 from web.backend.app.routers.current import respond
 from web.backend.app.services.ratio_only import RatioOnlyService
-from web.backend.app.services.schema_guard import EXPECTED_SCHEMA_NAME, EXPECTED_SCHEMA_VERSION, REQUIRED_SCHEMA
+from web.backend.app.services.schema_guard import EXPECTED_SCHEMA_FINGERPRINT, EXPECTED_SCHEMA_NAME
+from web.backend.app.services.schema_guard import EXPECTED_SCHEMA_VERSION, REQUIRED_SCHEMA
 from web.backend.app.services.schema_guard import SchemaGuardService
 
 
@@ -55,6 +56,14 @@ def test_schema_guard_current_db_missing_version_table_is_degraded(web_db):
     assert payload["required_columns_present"] is True
     assert payload["missing_required_tables"] == []
     assert payload["missing_required_columns"] == {}
+    assert payload["expected_schema_fingerprint"] == EXPECTED_SCHEMA_FINGERPRINT
+    assert payload["observed_schema_fingerprint"] is None
+    assert payload["schema_fingerprint_match"] is None
+    assert payload["schema_contract"]["missing_required_table_count"] == 0
+    assert payload["schema_contract"]["missing_required_column_count"] == 0
+    assert payload["enforcement"]["fail_closed"] is False
+    assert payload["enforcement"]["read_model_usable"] is True
+    assert payload["enforcement"]["web_smoke_compatible"] is True
     assert "missing_version_table" in payload["diagnostics_warnings"]
     RatioOnlyService.assert_safe(payload)
 
@@ -68,6 +77,8 @@ def test_schema_guard_missing_required_table_is_mismatch():
     assert payload["ok"] is False
     assert payload["required_tables_present"] is False
     assert payload["missing_required_tables"] == ["subjects"]
+    assert payload["enforcement"]["fail_closed"] is True
+    assert payload["enforcement"]["read_model_usable"] is False
 
 
 def test_schema_guard_missing_required_column_is_mismatch():
@@ -81,6 +92,8 @@ def test_schema_guard_missing_required_column_is_mismatch():
     assert payload["ok"] is False
     assert payload["required_columns_present"] is False
     assert payload["missing_required_columns"] == {"current_modules": ["updated_at"]}
+    assert payload["schema_contract"]["missing_required_column_count"] == 1
+    assert payload["enforcement"]["fail_closed"] is True
 
 
 def test_schema_guard_version_match_is_ok():
@@ -92,7 +105,7 @@ def test_schema_guard_version_match_is_ok():
         version_record={
             "schema_name": EXPECTED_SCHEMA_NAME,
             "schema_version": EXPECTED_SCHEMA_VERSION,
-            "schema_fingerprint": "test-fingerprint",
+            "schema_fingerprint": EXPECTED_SCHEMA_FINGERPRINT,
             "created_at": "2026-06-11T00:00:00Z",
             "source": "web/docs/DATABASE_SCHEMA.md",
         },
@@ -104,7 +117,10 @@ def test_schema_guard_version_match_is_ok():
     assert payload["ok"] is True
     assert payload["observed_schema_name"] == EXPECTED_SCHEMA_NAME
     assert payload["observed_schema_version"] == EXPECTED_SCHEMA_VERSION
+    assert payload["observed_schema_fingerprint"] == EXPECTED_SCHEMA_FINGERPRINT
+    assert payload["schema_fingerprint_match"] is True
     assert payload["version_source"] == "schema_version"
+    assert payload["enforcement"]["fail_closed"] is False
     assert payload["diagnostics_warnings"] == []
     RatioOnlyService.assert_safe(payload)
 
@@ -118,7 +134,7 @@ def test_schema_guard_version_mismatch_is_mismatch():
         version_record={
             "schema_name": EXPECTED_SCHEMA_NAME,
             "schema_version": "web_read_model_future",
-            "schema_fingerprint": "test-fingerprint",
+            "schema_fingerprint": EXPECTED_SCHEMA_FINGERPRINT,
             "created_at": "2026-06-11T00:00:00Z",
             "source": "web/docs/DATABASE_SCHEMA.md",
         },
@@ -132,6 +148,30 @@ def test_schema_guard_version_mismatch_is_mismatch():
     assert "schema_version_mismatch" in payload["diagnostics_warnings"]
 
 
+def test_schema_guard_fingerprint_mismatch_is_mismatch():
+    columns = {table: set(cols) for table, cols in REQUIRED_SCHEMA.items()}
+    columns["schema_version"] = {"id", "schema_name", "schema_version", "schema_fingerprint", "created_at", "source"}
+    repository = FakeSchemaGuardRepository(
+        tables=set(REQUIRED_SCHEMA) | {"schema_version"},
+        columns=columns,
+        version_record={
+            "schema_name": EXPECTED_SCHEMA_NAME,
+            "schema_version": EXPECTED_SCHEMA_VERSION,
+            "schema_fingerprint": "not-the-current-contract",
+            "created_at": "2026-06-11T00:00:00Z",
+            "source": "web/docs/DATABASE_SCHEMA.md",
+        },
+    )
+
+    payload = SchemaGuardService(session=None, repository=repository).status()  # type: ignore[arg-type]
+
+    assert payload["status"] == "mismatch"
+    assert payload["ok"] is False
+    assert payload["schema_fingerprint_match"] is False
+    assert "schema_fingerprint_mismatch" in payload["diagnostics_warnings"]
+    assert payload["enforcement"]["fail_closed"] is True
+
+
 def test_schema_guard_metadata_fallback_reads_only_safe_values():
     columns = {table: set(cols) for table, cols in REQUIRED_SCHEMA.items()}
     columns["schema_metadata"] = {"key", "value", "updated_at"}
@@ -141,6 +181,7 @@ def test_schema_guard_metadata_fallback_reads_only_safe_values():
         metadata={
             "schema_name": EXPECTED_SCHEMA_NAME,
             "schema_version": EXPECTED_SCHEMA_VERSION,
+            "schema_fingerprint": EXPECTED_SCHEMA_FINGERPRINT,
         },
     )
 
@@ -148,6 +189,7 @@ def test_schema_guard_metadata_fallback_reads_only_safe_values():
 
     assert payload["status"] == "ok"
     assert payload["schema_metadata_table_present"] is True
+    assert payload["schema_fingerprint_match"] is True
     assert payload["version_source"] == "schema_metadata"
 
 
@@ -159,6 +201,8 @@ def test_schema_guard_unavailable_status_is_safe():
     assert payload["status"] == "unavailable"
     assert payload["ok"] is False
     assert payload["diagnostics_warnings"] == ["schema_introspection_unavailable"]
+    assert payload["enforcement"]["fail_closed"] is True
+    assert payload["enforcement"]["web_smoke_compatible"] is False
     RatioOnlyService.assert_safe(payload)
 
 
@@ -171,6 +215,9 @@ def test_schema_guard_api_get_is_safe(client):
     guard = payload["data"]["schema_guard"]
     assert guard["status"] in {"ok", "degraded", "mismatch", "unavailable"}
     assert guard["expected_schema_version"] == EXPECTED_SCHEMA_VERSION
+    assert guard["expected_schema_fingerprint"] == EXPECTED_SCHEMA_FINGERPRINT
+    assert guard["schema_contract"]["required_table_count"] == len(REQUIRED_SCHEMA)
+    assert guard["enforcement"]["mode"] == "read_only_schema_guard"
     RatioOnlyService.assert_safe(payload)
 
 

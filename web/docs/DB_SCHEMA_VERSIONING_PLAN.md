@@ -182,11 +182,56 @@ Current Phase 14B behavior:
 - if required tables or columns are missing, return `mismatch`
 - if introspection fails, return `unavailable`
 
+## Phase 14C Read-Only Enforcement Reporting
+
+Phase 14C extends the Phase 14B skeleton with full read-only enforcement
+reporting. It still does not write SQLite, create metadata rows, modify ingest,
+or introduce migration tooling.
+
+Additional checks:
+
+- compute a deterministic SHA-256 fingerprint from the required read-model
+  table/column contract
+- expose `expected_schema_fingerprint`
+- read `schema_fingerprint` from `schema_version` or `schema_metadata` when
+  those tables already exist
+- require name, version, and fingerprint to match before returning `ok`
+- return `mismatch` when required tables/columns, schema name, schema version,
+  or schema fingerprint do not match
+- return `degraded` only for the current safe missing-version-metadata state
+  where required tables and columns are present
+- return `unavailable` when read-only introspection cannot complete
+
+Additional safe report fields:
+
+```text
+"schema_fingerprint_match": bool | null
+"schema_contract": {
+  "required_table_count": int,
+  "observed_required_table_count": int,
+  "missing_required_table_count": int,
+  "required_column_count": int,
+  "missing_required_column_count": int
+}
+"enforcement": {
+  "mode": "read_only_schema_guard",
+  "status": "ok" | "degraded" | "mismatch" | "unavailable",
+  "fail_closed": bool,
+  "web_smoke_compatible": bool,
+  "read_model_usable": bool
+}
+```
+
+The current no-version-table database remains `degraded` with
+`web_smoke_compatible=true` and `fail_closed=false`. A structural mismatch,
+version mismatch, fingerprint mismatch, or introspection failure reports
+`fail_closed=true` while still returning a sanitized diagnostics payload.
+
 ## Schema Mismatch Safety Behavior
 
 When schema metadata is mismatched, the guard should fail closed. Missing
 version metadata is currently a controlled `degraded` state because the Phase
-14A/14B database has not yet written version metadata.
+14A/14B/14C database has not yet written version metadata.
 
 Required behavior:
 
