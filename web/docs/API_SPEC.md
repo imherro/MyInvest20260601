@@ -20,6 +20,8 @@ Endpoints:
 - `GET /api/environment/status`
 - `GET /api/diagnostics/schema`
 - `GET /api/diagnostics/historical-metrics`
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
 - `GET /api/user/preferences`
 - `GET /api/user/preferences/{user_id}`
 - `GET /api/dashboard/summary`
@@ -68,29 +70,45 @@ All responses pass `RatioOnlyService` before returning. A sanitizer failure retu
 
 OpenAPI docs are exposed by FastAPI at `GET /docs` while the local server is running.
 
-## Phase 16A Workbench Readiness API Draft
+## Workbench Readiness API
 
-Phase 16A is design-only. The following GET-only endpoints are candidates for a
-future implementation and are not active routes in Phase 16A:
+Phase 16B implements a read-only Workbench Readiness API skeleton:
 
 - `GET /api/readiness/summary`
 - `GET /api/readiness/checks`
-- `GET /readiness`
 
-The future readiness API should compose existing safe diagnostics only:
+The readiness API composes existing safe diagnostics and safe operational
+metadata only:
 
-- environment status
+- environment/settings metadata
 - schema guard diagnostics
 - Historical Metrics guard diagnostics
 - dashboard summary
 - audit bundle readiness
 - current validation summary metadata already present in the read-only system
 
-Allowed response fields are status labels, counts, timestamps, boolean safety
-flags, repo-relative source metadata, and local Web links. The API must not run
-validation commands from Web, write SQLite, write files, rebuild ingest,
-generate target allocations, generate action plans, expose local absolute
-paths, expose credentials, or add POST/PUT/PATCH/DELETE methods.
+Responses use the standard API envelope. The `data` object contains:
+
+- `status`: `ok`, `degraded`, `mismatch`, or `unavailable`
+- `checked_at`
+- `checks`
+- `summary`
+- `safety`
+- `degraded_reasons`
+- `fail_closed`
+- `web_smoke_compatible`
+
+`GET /api/readiness/summary` returns compact check summaries. `GET
+/api/readiness/checks` returns the same readiness status with detailed check
+metadata. Both endpoints are GET-only and pass through the standard
+`RatioOnlyService` response wrapper.
+
+The readiness API does not run validation commands from Web, write SQLite,
+write files, rebuild ingest, generate target allocations, generate action
+plans, expose local absolute paths, expose credentials, or add
+POST/PUT/PATCH/DELETE methods. It returns only safe status labels, counts,
+timestamps, boolean safety flags, repo-relative metadata, and local Web links.
+The `/readiness` page remains unimplemented and is reserved for a later phase.
 
 ## Workbench Environment Center
 

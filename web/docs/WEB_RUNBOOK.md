@@ -344,6 +344,40 @@ python scripts/web_check.py
 python scripts/project_check.py --current-only
 ```
 
+## Phase 16B Workbench Readiness API Skeleton
+
+Phase 16B adds an API-only Workbench Readiness skeleton:
+
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
+
+The endpoints aggregate existing safe operational metadata from
+environment/settings metadata, schema diagnostics, Historical Metrics
+diagnostics, dashboard summary, audit bundle availability, and current
+validation summary metadata. They do not add a `/readiness` page, do not run
+validation commands from Web, do not write files, do not write SQLite, do not
+rebuild ingest, and do not generate research artifacts.
+
+Readiness status values:
+
+- `ok`: all checks are available and compatible.
+- `degraded`: one or more non-mutating signals are missing or optional context
+  is unavailable, while Web smoke remains compatible.
+- `mismatch`: a required safety or read-model signal failed closed.
+- `unavailable`: readiness metadata could not be read safely.
+
+Expected local smoke behavior is `ok` or `degraded` with
+`web_smoke_compatible=true` and `fail_closed=false`. `mismatch`,
+`unavailable`, `fail_closed=true`, or `web_smoke_compatible=false` blocks the
+Web gate.
+
+Direct smoke:
+
+```bash
+python -m pytest web/backend/tests/test_workbench_readiness.py -q
+python scripts/web_check.py
+```
+
 ## Phase 3 Milestone Check
 
 Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.

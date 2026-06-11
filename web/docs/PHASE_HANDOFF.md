@@ -20,6 +20,8 @@ This handoff file is the durable cross-session starting point for new Codex sess
   - Phase 13B CI/test warning hygiene is merged and tagged.
   - Phase 14 schema diagnostics guard is merged and tagged.
   - Phase 15 Historical Metrics diagnostics guard is merged and tagged.
+  - Phase 16A Workbench Readiness design is merged on `main`.
+  - Phase 16B Workbench Readiness API skeleton adds only read-only API endpoints.
 - Current worktree:
   - Phase 10 worktree: local sibling worktree, not the stable production worktree.
 - Stable web port: `8000`
@@ -38,8 +40,9 @@ This handoff file is the durable cross-session starting point for new Codex sess
   - `web-workbench-phase10-12-v0.4.4`: Phase 15B Historical Metrics guard skeleton.
   - `web-workbench-phase10-12-v0.4.5`: Phase 15C Historical Metrics guard full read-only enforcement.
 - PR status:
-  - PR #24 through PR #37 are merged.
+  - PR #24 through PR #38 are merged.
   - Phase 15C merge commit is `107be68b638159e289e638e1c0c3bb0c3a45a8a3`.
+  - Phase 16A merge commit is `3163609b218f0f0ade9e498f994b908513952151`.
 - Current validation baseline:
   - `python scripts/check_hidden_unicode.py`: PASS.
   - `python scripts/ingest_current_state.py`: PASS.
@@ -52,10 +55,10 @@ This handoff file is the durable cross-session starting point for new Codex sess
   - `python scripts/project_check.py --current-only`: PASS.
   - Strict source review package build: PASS with `privacy_warnings=0`.
 - Next phase entry:
-  - Phase 16A must start from `main` at or after `web-workbench-phase10-12-v0.4.5`.
+  - Phase 16B must start from `main` after the Phase 16A Workbench Readiness design merge.
   - New sessions must read `AGENTS.md`, this file, `web/docs/WEB_RUNBOOK.md`, `web/docs/SERVICE_LAYER_PLAN.md`, and `web/docs/API_SPEC.md`.
   - Default boundaries remain read-only, ratio-only, current-only, and OpenAPI GET-only.
-  - Phase 16A is design-only. Do not modify Python business code, SQLite, ingest, research artifacts, or Web/API implementations.
+  - Phase 16B is API-only. Do not add a `/readiness` page, write SQLite, run validation commands from Web, change ingest, or modify research artifacts.
 
 ## Hard Boundaries
 
@@ -164,6 +167,18 @@ This handoff file is the durable cross-session starting point for new Codex sess
 - Stable tags:
   - `web-workbench-phase10-12-v0.4.4`: Phase 15B guard skeleton.
   - `web-workbench-phase10-12-v0.4.5`: Phase 15C full enforcement.
+
+### Phase 16
+
+- Phase 16A Workbench Readiness design is complete and merged.
+- Phase 16B adds an API-only Workbench Readiness skeleton:
+  - `GET /api/readiness/summary`
+  - `GET /api/readiness/checks`
+- Phase 16B does not add a `/readiness` page, repository, database table,
+  ingest change, template, static JavaScript, runtime writer, or research
+  artifact.
+- Phase 16B readiness responses are read-only, ratio-only, current-only,
+  ResearchFirst-neutral, and GET-only.
 
 ## Current Architecture Summary
 
@@ -343,6 +358,39 @@ Acceptance draft:
 - `python -m pytest web/backend/tests -q -W error`
 - `python scripts/web_check.py`
 - `python scripts/project_check.py --current-only`
+
+### Phase 16B - Workbench Readiness API Skeleton
+
+Goal:
+
+- Add `WorkbenchReadinessService`.
+- Add `GET /api/readiness/summary`.
+- Add `GET /api/readiness/checks`.
+- Aggregate safe readiness metadata from environment/settings metadata, schema
+  diagnostics, Historical Metrics diagnostics, dashboard summary, audit bundle
+  availability, and current validation summary metadata.
+- Do not add `/readiness`; that page remains a later Phase 16C candidate.
+- Do not run validation commands from Web request handling.
+- Do not write files, write SQLite, rebuild ingest, generate research
+  artifacts, generate target allocations, generate action plans, or connect to
+  trading/QMT write behavior.
+
+Acceptance draft:
+
+- `python scripts/check_hidden_unicode.py`
+- `python scripts/ingest_current_state.py`
+- `python -m pytest web/backend/tests -q`
+- `python -m pytest web/backend/tests -q -W error`
+- `python scripts/web_check.py`
+- `python scripts/run_web.py --help`
+- ratio-only, ResearchFirst, allocation consistency, and current-only project
+  checks using the dynamically resolved current action-plan path.
+- strict review package build and integrity check.
+
+Next phase candidate:
+
+- Phase 16C may add the `/readiness` page only after Phase 16B API skeleton is
+  merged and validated.
 
 ## Standard Acceptance Commands
 

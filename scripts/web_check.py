@@ -21,13 +21,15 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(historical-metrics): add full read-only guard enforcement"
+COMMIT_MESSAGE = "feat(web): add workbench readiness API skeleton"
 
 API_PATHS = [
     "/api/health",
     "/api/environment/status",
     "/api/diagnostics/schema",
     "/api/diagnostics/historical-metrics",
+    "/api/readiness/summary",
+    "/api/readiness/checks",
     "/api/user/preferences",
     "/api/user/preferences/default",
     "/api/dashboard/summary",
@@ -2111,6 +2113,7 @@ class WebCheck:
         self.check_environment_status_api(client)
         self.check_schema_guard_api(client, ratio)
         self.check_historical_metrics_guard_api(client, ratio)
+        self.check_workbench_readiness_api(client, ratio)
         self.check_subject_status_api(client, ratio)
         self.check_subject_gap_api(client, ratio)
         self.check_dashboard_api(client, ratio)
@@ -2323,6 +2326,74 @@ class WebCheck:
             )
             return
         self.add_result("historical_metrics_guard_api", "PASS", "read-only Historical Metrics guard diagnostics safe")
+
+    def check_workbench_readiness_api(self, client: Any, ratio: Any) -> None:
+        try:
+            for path in ["/api/readiness/summary", "/api/readiness/checks"]:
+                response = client.get(path)
+                if response.status_code != 200:
+                    raise ValueError(f"{path} expected 200, got {response.status_code}")
+                payload = response.json()
+                ratio.assert_safe(payload)
+                assert_safe_payload(payload)
+                readiness = payload.get("data") or {}
+                if readiness.get("module") != "workbench_readiness":
+                    raise ValueError(f"{path} module mismatch")
+                if readiness.get("status") not in {"ok", "degraded", "mismatch", "unavailable"}:
+                    raise ValueError(f"{path} unsupported status: {readiness.get('status')}")
+                if readiness.get("status") in {"mismatch", "unavailable"}:
+                    raise ValueError(f"{path} reported blocking status: {readiness.get('status')}")
+                if readiness.get("fail_closed") is not False:
+                    raise ValueError(f"{path} fail_closed should be false for current DB")
+                if readiness.get("web_smoke_compatible") is not True:
+                    raise ValueError(f"{path} is not Web-smoke compatible")
+                if not isinstance(readiness.get("checks"), list) or not readiness.get("checks"):
+                    raise ValueError(f"{path} checks are missing")
+                if not isinstance(readiness.get("summary"), dict) or not readiness.get("summary"):
+                    raise ValueError(f"{path} summary is missing")
+                safety = readiness.get("safety") or {}
+                for key in [
+                    "read_only",
+                    "ratio_only",
+                    "current_only",
+                    "research_first",
+                    "get_only",
+                    "no_validation_commands",
+                    "no_file_writes",
+                    "no_sqlite_writes",
+                ]:
+                    if safety.get(key) is not True:
+                        raise ValueError(f"{path} safety flag is not true: {key}")
+                if safety.get("uses_latest_index_files") is not False:
+                    raise ValueError(f"{path} latest_index.files safety flag must be false")
+                names = {str(check.get("name")) for check in readiness.get("checks") or []}
+                required = {
+                    "environment_settings",
+                    "schema_diagnostics",
+                    "historical_metrics_diagnostics",
+                    "dashboard_summary",
+                    "audit_bundle_availability",
+                    "current_validation_summary",
+                }
+                if not required.issubset(names):
+                    raise ValueError(f"{path} missing readiness checks: {sorted(required - names)}")
+                for check in readiness.get("checks") or []:
+                    if check.get("status") not in {"ok", "degraded", "mismatch", "unavailable"}:
+                        raise ValueError(f"{path} unsupported check status: {check.get('name')}")
+                    if check.get("fail_closed") is True:
+                        raise ValueError(f"{path} check failed closed: {check.get('name')}")
+                    if check.get("web_smoke_compatible") is not True:
+                        raise ValueError(f"{path} check is not Web-smoke compatible: {check.get('name')}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("workbench_readiness_api", "FAIL", str(exc))
+            self.fail(
+                "workbench_readiness_api",
+                "/api/readiness/summary",
+                f"Workbench readiness API failed safety check: {exc}",
+                "Return sanitized read-only readiness metadata only.",
+            )
+            return
+        self.add_result("workbench_readiness_api", "PASS", "read-only Workbench readiness APIs safe")
 
     def check_subject_gap_api(self, client: Any, ratio: Any) -> None:
         try:

@@ -35,6 +35,7 @@ from ..services.theme_status import ThemeStatusService
 from ..services.user_preferences import UserPreferencesService
 from ..services.workbench_analytics import WorkbenchAnalyticsService
 from ..services.workbench_integration_service import WorkbenchIntegrationService
+from ..services.workbench_readiness import WorkbenchReadinessService
 
 
 router = APIRouter()
@@ -78,6 +79,22 @@ def historical_metrics_diagnostics(session: Session = Depends(get_session)) -> d
     return respond(
         {"historical_metrics_guard": HistoricalMetricsGuardService(session).status()},
         source={"path": "db.HistoricalMetricsGuardRepository"},
+    )
+
+
+@router.get("/readiness/summary")
+def readiness_summary(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        WorkbenchReadinessService(session).summary(),
+        source={"path": "db.WorkbenchReadinessService"},
+    )
+
+
+@router.get("/readiness/checks")
+def readiness_checks(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        WorkbenchReadinessService(session).checks(),
+        source={"path": "db.WorkbenchReadinessService"},
     )
 
 
