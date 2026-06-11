@@ -230,6 +230,29 @@ python -m pytest web/backend/tests -q -W error
 python scripts/web_check.py
 ```
 
+## Phase 15A Historical Metrics Audit Design
+
+Phase 15A is documentation only. It adds:
+
+- `web/docs/HISTORICAL_METRICS_PLAN.md`
+
+The plan describes how a future Phase 15B should audit Historical Metrics and
+its Audit Bundle integration without changing current Web behavior. It covers
+current architecture, data sources, audit integration points, safe diagnostics,
+fail-closed behavior, and acceptance commands.
+
+No Python code, SQLite schema, ingest flow, API endpoint, template, static JS,
+research artifact, release package, or tag changes are part of Phase 15A.
+
+Validation:
+
+```bash
+python scripts/check_hidden_unicode.py
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+python scripts/project_check.py --current-only
+```
+
 ## Phase 3 Milestone Check
 
 Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.
