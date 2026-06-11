@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Workbench Readiness{% endblock %}
+
+{% block content %}
+{% set r = readiness or {} %}
+{% set summary = r.summary or {} %}
+{% set safety = r.safety or {} %}
+{% set status_class = "ok" if r.status == "ok" else ("warn" if r.status == "degraded" else "fail") %}
+
+<section class="dashboard-grid" data-readiness-section="summary">
+  <div class="metric {{ status_class }}" data-status-card="readiness-status">
+    <span>Status</span>
+    <strong data-bind="readiness_status">{{ r.status or "unknown" }}</strong>
+  </div>
+  <div class="metric ok" data-status-card="readiness-checks">
+    <span>Checks</span>
+    <strong data-bind="readiness_check_count">{{ summary.check_count or 0 }}</strong>
+  </div>
+  <div class="metric {{ 'ok' if r.web_smoke_compatible else 'fail' }}" data-status-card="readiness-smoke">
+    <span>Web Smoke</span>
+    <strong data-bind="readiness_web_smoke">{{ "compatible" if r.web_smoke_compatible else "blocked" }}</strong>
+  </div>
+  <div class="metric {{ 'fail' if r.fail_closed else 'ok' }}" data-status-card="readiness-fail-closed">
+    <span>Fail Closed</span>
+    <strong data-bind="readiness_fail_closed">{{ "yes" if r.fail_closed else "no" }}</strong>
+  </div>
+</section>
+
+<section data-readiness-section="controls" data-readiness-summary-api="/api/readiness/summary" data-readiness-checks-api="/api/readiness/checks">
+  <div class="table-tools">
+    <button type="button" data-readiness-view="summary">Summary</button>
+    <button type="button" data-readiness-view="checks">Checks</button>
+    <span class="subtle">Last checked: <span data-bind="readiness_checked_at">{{ r.checked_at or "n/a" }}</span></span>
+  </div>
+</section>
+
+<section data-readiness-section="signals">
+  <h2>Readiness Checks</h2>
+  <div class="table-tools">
+    <input type="search" placeholder="Search checks" data-table-search="readinessCheckTable">
+  </div>
+  <table id="readinessCheckTable" data-page-size="12">
+    <thead>
+      <tr>
+        <th data-sort="text">Check</th>
+        <th data-sort="text">Status</th>
+        <th data-sort="text">Web Smoke</th>
+        <th data-sort="text">Reason</th>
+        <th data-sort="text">Source</th>
+      </tr>
+    </thead>
+    <tbody id="readinessCheckRows">
+      {% for check in r.checks or [] %}
+      <tr>
+        <td>{{ check.label or check.name }}</td>
+        <td>{{ check.status }}</td>
+        <td>{{ "yes" if check.web_smoke_compatible else "no" }}</td>
+        <td>{{ check.degraded_reasons|join(", ") if check.degraded_reasons else "none" }}</td>
+        <td>{{ check.source.api_path or check.source.service or check.source.provider or "readiness" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="dashboard-grid" data-readiness-section="safety">
+  <div class="row-card">
+    <h2>Safety Boundary</h2>
+    <table data-page-size="12">
+      <thead>
+        <tr>
+          <th>Boundary</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="readinessSafetyRows">
+        <tr><td>read_only</td><td>{{ "yes" if safety.read_only else "no" }}</td></tr>
+        <tr><td>ratio_only</td><td>{{ "yes" if safety.ratio_only else "no" }}</td></tr>
+        <tr><td>current_only</td><td>{{ "yes" if safety.current_only else "no" }}</td></tr>
+        <tr><td>research_first</td><td>{{ "yes" if safety.research_first else "no" }}</td></tr>
+        <tr><td>get_only</td><td>{{ "yes" if safety.get_only else "no" }}</td></tr>
+        <tr><td>no_validation_execution</td><td>{{ "yes" if safety.no_validation_commands else "no" }}</td></tr>
+        <tr><td>no_file_writes</td><td>{{ "yes" if safety.no_file_writes else "no" }}</td></tr>
+        <tr><td>no_sqlite_writes</td><td>{{ "yes" if safety.no_sqlite_writes else "no" }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row-card">
+    <h2>Degraded Reasons</h2>
+    <ul class="list" id="readinessReasonRows">
+      {% for reason in r.degraded_reasons or [] %}
+      <li>{{ reason }}</li>
+      {% else %}
+      <li>none</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<script src="/static/readiness.js" defer></script>
+{% endblock %}

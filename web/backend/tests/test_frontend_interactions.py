@@ -165,6 +165,24 @@ def test_historical_metrics_page_include_refresh_filter_and_table_hooks(client):
     assert "historicalMetricRows" in html
 
 
+def test_readiness_page_include_refresh_switch_and_table_hooks(client):
+    response = client.get("/readiness")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "/api/readiness/summary" in html
+    assert "/api/readiness/checks" in html
+    assert "data-readiness-view=\"summary\"" in html
+    assert "data-readiness-view=\"checks\"" in html
+    assert "data-table-search=\"readinessCheckTable\"" in html
+    assert "readinessCheckRows" in html
+    assert "readinessSafetyRows" in html
+    script = client.get("/static/readiness.js").text
+    assert "function refreshReadiness" in script
+    assert "function renderReadiness" in script
+    assert "function assertSafe" in script
+
+
 def test_dashboard_includes_gap_chart_and_status_cards(client):
     response = client.get("/")
     assert response.status_code == 200

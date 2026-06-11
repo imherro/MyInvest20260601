@@ -378,6 +378,33 @@ python -m pytest web/backend/tests/test_workbench_readiness.py -q
 python scripts/web_check.py
 ```
 
+## Phase 16C Workbench Readiness Page
+
+Phase 16C adds the read-only page:
+
+- `GET /readiness`
+
+The page renders the Phase 16B readiness summary and checks APIs. It supports
+frontend switching between summary and checks and refreshes by calling only:
+
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
+
+The page is a display surface only. It does not run validation commands from
+Web, write files, write SQLite, rebuild ingest, generate research artifacts,
+generate target allocations, generate action plans, or add mutating APIs.
+
+Smoke checks:
+
+```bash
+python -m pytest web/backend/tests/test_workbench_readiness_page.py -q
+python scripts/web_check.py
+```
+
+Failure interpretation is the same as the API skeleton: `ok` and `degraded`
+are Web-smoke compatible when `fail_closed=false`; `mismatch`, `unavailable`,
+or `fail_closed=true` blocks the gate.
+
 ## Phase 3 Milestone Check
 
 Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.

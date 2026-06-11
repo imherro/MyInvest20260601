@@ -108,7 +108,15 @@ write files, rebuild ingest, generate target allocations, generate action
 plans, expose local absolute paths, expose credentials, or add
 POST/PUT/PATCH/DELETE methods. It returns only safe status labels, counts,
 timestamps, boolean safety flags, repo-relative metadata, and local Web links.
-The `/readiness` page remains unimplemented and is reserved for a later phase.
+
+Phase 16C adds the read-only page:
+
+- `GET /readiness`
+
+The page renders the Phase 16B readiness summary/checks payloads, supports
+frontend switching between summary and checks, and refreshes by calling only
+the two GET readiness APIs. It does not run validation commands, write files,
+write SQLite, rebuild ingest, or add mutating API methods.
 
 ## Workbench Environment Center
 
