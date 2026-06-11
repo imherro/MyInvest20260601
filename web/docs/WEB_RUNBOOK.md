@@ -244,6 +244,29 @@ fail-closed behavior, and acceptance commands.
 No Python code, SQLite schema, ingest flow, API endpoint, template, static JS,
 research artifact, release package, or tag changes are part of Phase 15A.
 
+## Phase 15B Historical Metrics Guard Skeleton
+
+Phase 15B adds a read-only Historical Metrics guard skeleton:
+
+- `GET /api/diagnostics/historical-metrics`
+- `HistoricalMetricsGuardService`
+- `HistoricalMetricsGuardRepository`
+
+The guard checks required read-model table counts and required current-module
+sources for Historical Metrics. It reports optional history snapshot absence as
+`degraded`, missing required inputs as `mismatch`, and read exceptions as
+`unavailable`. The endpoint returns sanitized operational metadata only and does
+not change existing Historical Metrics, Audit Bundle, ingest, SQLite schema, or
+research generation behavior.
+
+Validation:
+
+```bash
+python -m pytest web/backend/tests/test_historical_metrics_guard.py -q
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+```
+
 Validation:
 
 ```bash

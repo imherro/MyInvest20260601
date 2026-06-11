@@ -3,7 +3,8 @@
 ## Scope
 
 Phase 15A is design-only. It documents the next Historical Metrics and Audit
-Integration step before implementation.
+Integration step before implementation. Phase 15B implements the first
+read-only guard skeleton described here.
 
 This phase does not:
 
@@ -81,12 +82,18 @@ audit/reporting layer that answers:
 
 This should be a reporting layer, not a data-generation layer.
 
-## Proposed Phase 15B Service Boundary
+## Phase 15B Service Boundary
 
-Recommended service:
+Phase 15B adds:
+
+- `HistoricalMetricsGuardRepository`
+- `HistoricalMetricsGuardService`
+- `GET /api/diagnostics/historical-metrics`
+
+The service returns:
 
 ```text
-HistoricalMetricsAuditService.status() -> {
+HistoricalMetricsGuardService.status() -> {
   "module": "historical_metrics_audit",
   "status": "ok" | "degraded" | "mismatch" | "unavailable",
   "current_only": true,
@@ -111,9 +118,9 @@ Recommended repository behavior:
   provides a sanitized source payload
 - do not read `latest_index.files`
 
-## Proposed Diagnostics Endpoint
+## Diagnostics Endpoint
 
-If Phase 15B exposes Web status, use a GET-only diagnostics endpoint:
+Phase 15B exposes Web status through a GET-only diagnostics endpoint:
 
 ```text
 GET /api/diagnostics/historical-metrics
@@ -130,6 +137,13 @@ The endpoint should return only safe operational metadata:
 
 It must not return row-level SQLite contents, local absolute paths, credentials,
 runtime paths, or trading/execution records.
+
+Current Phase 15B behavior:
+
+- required table and current-module source metadata are read only
+- optional history snapshot absence returns `degraded`, not failed
+- missing required table/source metadata returns `mismatch`
+- repository/service exceptions return `unavailable`
 
 ## Audit Bundle Integration
 
