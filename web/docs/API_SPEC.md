@@ -307,7 +307,8 @@ The page `GET /historical-metrics` uses the same API and supports refresh, searc
 
 Phase 15A documents Historical Metrics audit integration in
 `web/docs/HISTORICAL_METRICS_PLAN.md`. Phase 15B adds a GET-only diagnostics
-endpoint:
+endpoint. Phase 15C extends the same endpoint with full read-only enforcement
+reporting:
 
 - `GET /api/diagnostics/historical-metrics`
 
@@ -318,6 +319,25 @@ diagnostics warnings, enforcement status, and safety flags. It does not return
 row-level SQLite contents, write files, write SQLite, read `latest_index.files`,
 generate target allocations, generate action plans, or connect to execution
 adapters.
+
+Phase 15C fields include:
+
+- `contract.contract_version`
+- `contract.required_inputs`, `contract.observed_inputs`, and
+  `contract.missing_inputs`
+- `contract.required_source_modules`, `contract.observed_source_modules`, and
+  `contract.missing_source_modules`
+- `contract.expected_fingerprint`, `contract.observed_fingerprint`, and
+  `contract.fingerprint_match`
+- `enforcement.mode = full_read_only_historical_metrics_guard`
+- `enforcement.fail_closed`
+- `enforcement.read_model_usable`
+- `enforcement.web_smoke_compatible`
+- `enforcement.audit_bundle_compatible`
+
+`mismatch` or `unavailable` means the guard failed closed with sanitized
+metadata only. `degraded` means optional history snapshot state is unavailable
+while the required current read model and contract remain usable.
 
 ## Market Position
 

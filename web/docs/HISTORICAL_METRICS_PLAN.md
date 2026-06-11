@@ -4,7 +4,8 @@
 
 Phase 15A is design-only. It documents the next Historical Metrics and Audit
 Integration step before implementation. Phase 15B implements the first
-read-only guard skeleton described here.
+read-only guard skeleton described here. Phase 15C extends that skeleton with
+full read-only enforcement and reporting.
 
 This phase does not:
 
@@ -145,6 +146,22 @@ Current Phase 15B behavior:
 - missing required table/source metadata returns `mismatch`
 - repository/service exceptions return `unavailable`
 
+Current Phase 15C behavior:
+
+- the guard exposes a deterministic `historical_metrics_guard_v1` contract
+- the contract reports required inputs, observed inputs, missing inputs,
+  required source modules, observed source modules, missing source modules, and
+  required integration payload readiness
+- `expected_fingerprint` is computed from the stable required contract and
+  `observed_fingerprint` is computed from observed safe metadata
+- `fingerprint_match=false`, missing required input, missing required source
+  module, or diagnostics failure reports fail-closed `mismatch` or
+  `unavailable`
+- optional history snapshot absence remains `degraded` when all required
+  read-model inputs and source modules are present
+- enforcement reports `read_model_usable`, `web_smoke_compatible`, and
+  `audit_bundle_compatible` without writing SQLite or repairing data
+
 ## Audit Bundle Integration
 
 Phase 15B may add the Historical Metrics audit status into the existing audit
@@ -181,6 +198,11 @@ Historical Metrics audit status should classify failures without mutating state:
 Fail-closed behavior means reporting `mismatch` or `unavailable` with safe
 warning codes. It must not run repair commands, rebuild SQLite from the request
 path, create files, or write research artifacts.
+
+Phase 15C treats the contract fingerprint as the final read-only consistency
+check for the diagnostics payload. A fingerprint mismatch is reported as
+`mismatch` with `enforcement.fail_closed=true`; it does not trigger migration,
+ingest, SQLite writes, or research artifact regeneration.
 
 ## Safety Boundaries
 
