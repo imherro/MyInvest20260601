@@ -5,6 +5,7 @@ def test_required_api_endpoints(client):
     paths = [
         "/api/health",
         "/api/environment/status",
+        "/api/diagnostics/schema",
         "/api/user/preferences",
         "/api/user/preferences/default",
         "/api/dashboard/summary",

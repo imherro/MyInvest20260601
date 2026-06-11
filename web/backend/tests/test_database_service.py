@@ -55,6 +55,21 @@ def test_database_service_rejects_write_sql(web_db):
                 database.fetch_all(sql)
 
 
+def test_database_service_table_info_is_explicit_read_only_helper(web_db):
+    with SessionLocal() as session:
+        database = DatabaseService(session)
+        columns = {row["name"] for row in database.table_info("current_modules")}
+
+    assert {"module", "artifact_id", "updated_at"}.issubset(columns)
+
+
+def test_database_service_table_info_rejects_unsafe_identifier(web_db):
+    with SessionLocal() as session:
+        database = DatabaseService(session)
+        with pytest.raises(ValueError, match="unsupported table identifier"):
+            database.table_info("current_modules; DROP TABLE current_modules")
+
+
 def test_current_state_service_exposes_database_payload_fallback(web_db):
     with SessionLocal() as session:
         payload = CurrentStateService(session).current_artifact_payload("etf_registry", expected_key="etfs")

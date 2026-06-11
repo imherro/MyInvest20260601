@@ -126,47 +126,67 @@ requires coordinated changes to ingest, test setup, `web_check.py`, and
 `DatabaseService` guard behavior. Combining that with design would make the
 review boundary too broad.
 
-Phase 14A therefore creates only durable documentation. Phase 14B may implement
-the read-only guard after this plan is reviewed.
+Phase 14A therefore creates only durable documentation. Phase 14B implements the
+read-only guard skeleton without changing ingest, migrations, or SQLite write
+behavior.
 
 ## Phase 14B Read-Only Guard Interface
 
-A later Phase 14B implementation should add an internal read-only guard with a
-small result object. The names below are suggested, not implemented in Phase
-14A:
+Phase 14B adds a narrow guard service and repository:
+
+- `web/backend/app/services/schema_guard.py`
+- `web/backend/app/repositories/schema_guard_repo.py`
+- `GET /api/diagnostics/schema`
+
+The guard returns a small status object under the normal API envelope:
 
 ```text
-DatabaseService.schema_status() -> {
+data.schema_guard -> {
   "ok": bool,
-  "status": "match" | "missing" | "mismatch" | "unavailable",
+  "status": "ok" | "degraded" | "mismatch" | "unavailable",
   "expected_schema_name": "web_sqlite_read_model",
   "expected_schema_version": "web_read_model_v1",
-  "actual_schema_name": string | null,
-  "actual_schema_version": string | null,
-  "message": string
+  "observed_schema_name": string | null,
+  "observed_schema_version": string | null,
+  "schema_version_table_present": bool,
+  "required_tables_present": bool,
+  "missing_required_tables": string[],
+  "checked_at": string,
+  "diagnostics_warnings": string[]
 }
 ```
 
 Guard requirements:
 
-- read schema metadata using a read-only `SELECT`
-- use `DatabaseService` or a repository that delegates to `DatabaseService`
+- read schema metadata using read-only `SELECT` and safe table-info
+  introspection
+- use `SchemaGuardRepository`, which delegates to `DatabaseService`
 - return only safe status strings and version identifiers
 - expose no local absolute paths, SQLite contents, credentials, account context,
   order records, or runtime data
 - integrate with `scripts/web_check.py`
-- optionally surface a sanitized status in existing local diagnostics such as
-  `GET /api/environment/status`
-- keep OpenAPI GET-only if a Web status surface is later added
+- keep OpenAPI GET-only through `GET /api/diagnostics/schema`
 
-Phase 14B must not auto-create, alter, drop, or migrate tables from the read
-path. Any write needed to seed schema metadata must belong to the ingest path
-and must be reviewed separately from read-time guard behavior if the scope grows.
+Phase 14B does not auto-create, alter, drop, or migrate tables from the read
+path. Any future write needed to seed schema metadata belongs to the ingest path
+and must be reviewed separately from read-time guard behavior.
+
+Current Phase 14B behavior:
+
+- if required read-model tables and columns exist but no version table exists,
+  return `degraded` with `missing_version_table`
+- if the future `schema_version` table exists, read row `id = 1` if possible
+  and compare `schema_name` and `schema_version`
+- if only the future `schema_metadata` table exists, read allowed metadata keys
+  and compare safe schema name/version strings
+- if required tables or columns are missing, return `mismatch`
+- if introspection fails, return `unavailable`
 
 ## Schema Mismatch Safety Behavior
 
-When schema metadata is missing or mismatched, the future guard should fail
-closed.
+When schema metadata is mismatched, the guard should fail closed. Missing
+version metadata is currently a controlled `degraded` state because the Phase
+14A/14B database has not yet written version metadata.
 
 Required behavior:
 

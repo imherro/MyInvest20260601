@@ -17,6 +17,7 @@ WRITE_SQL = re.compile(
     r"\b(ALTER|ATTACH|CREATE|DELETE|DETACH|DROP|INSERT|PRAGMA|REINDEX|REPLACE|UPDATE|VACUUM)\b",
     re.IGNORECASE,
 )
+SQL_IDENTIFIER = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 ALLOWED_COUNT_TABLES = {
     "artifacts",
@@ -67,6 +68,11 @@ class DatabaseService:
         if table not in ALLOWED_COUNT_TABLES:
             raise ValueError(f"unsupported table: {table}")
         return int(self.session.execute(text(f"SELECT COUNT(*) FROM {table}")).scalar_one())
+
+    def table_info(self, table: str) -> list[dict[str, Any]]:
+        if not SQL_IDENTIFIER.fullmatch(table):
+            raise ValueError(f"unsupported table identifier: {table}")
+        return [dict(row) for row in self.session.execute(text(f'PRAGMA table_info("{table}")')).mappings().all()]
 
     def current_modules(self) -> list[dict[str, Any]]:
         statement = (

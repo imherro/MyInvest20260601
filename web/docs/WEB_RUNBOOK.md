@@ -170,6 +170,40 @@ The future guard should fail closed on missing or mismatched schema metadata,
 return only safe status text, avoid destructive migration, and keep the Web
 layer read-only, ratio-only, current-only, and OpenAPI GET-only.
 
+## Phase 14B Read-Only Schema Guard
+
+Phase 14B adds a read-only schema guard skeleton for the local Web SQLite read
+model:
+
+- `GET /api/diagnostics/schema`
+- `SchemaGuardService`
+- `SchemaGuardRepository`
+- `DatabaseService.table_info(...)`
+
+The guard checks the current read-model table and column contract and reads
+`schema_version` or `schema_metadata` only when those tables already exist. It
+does not create, alter, drop, migrate, seed, or write SQLite objects. It does
+not change ingest, research outputs, current module pointers, action-plan
+generation, target-allocation generation, trading/QMT behavior, or review
+package boundaries.
+
+Expected schema version remains:
+
+```text
+web_read_model_v1
+```
+
+Current databases that do not yet have a version table return `degraded` with
+`missing_version_table`. This is safe operational metadata and does not break
+Web smoke checks.
+
+Validation:
+
+```bash
+python -m pytest web/backend/tests/test_schema_guard.py -q
+python scripts/web_check.py
+```
+
 ## Phase 3 Milestone Check
 
 Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.

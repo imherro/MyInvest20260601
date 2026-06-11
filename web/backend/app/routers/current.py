@@ -23,6 +23,7 @@ from ..services.historical_metrics import HistoricalMetricsService
 from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
+from ..services.schema_guard import SchemaGuardService
 from ..services.subject_gap import SubjectGapService
 from ..services.subject_status import SubjectStatusService
 from ..services.system_check import SystemCheckService
@@ -61,6 +62,14 @@ def health() -> dict[str, Any]:
 @router.get("/environment/status")
 def environment_status() -> dict[str, Any]:
     return EnvironmentStatusService().status()
+
+
+@router.get("/diagnostics/schema")
+def schema_diagnostics(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        {"schema_guard": SchemaGuardService(session).status()},
+        source={"path": "db.SchemaGuardRepository"},
+    )
 
 
 @router.get("/user/preferences")
