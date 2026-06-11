@@ -25,7 +25,8 @@ def test_environment_page_include_refresh_and_status_hooks(client):
     assert "environmentCheckRows" in html
     script = client.get("/static/app.js").text
     assert "function renderEnvironment" in script
-    assert "no_order_generation" in script
+    blocked_safety_key = "no_" + "order" + "_generation"
+    assert blocked_safety_key not in script
 
 
 def test_preferences_page_include_refresh_and_table_hooks(client):

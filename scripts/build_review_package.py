@@ -149,6 +149,7 @@ PRIVACY_SCAN_TEXT_EXEMPT_FILES = {
 }
 SCANNER_IMPLEMENTATION_FILES = {
     "scripts/build_review_package.py",
+    "scripts/web_release_check.py",
     "scripts/web_check.py",
 }
 
@@ -164,6 +165,8 @@ REQUIRED_PACKAGE_FILES = [
     "scripts/project_check.py",
     "scripts/build_latest_index.py",
     "scripts/build_review_package.py",
+    "scripts/web_check.py",
+    "scripts/web_release_check.py",
     "research/logs/decision_log.md",
     "research/latest_index.json",
     "research/config/bucket_registry.json",

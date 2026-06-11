@@ -64,14 +64,14 @@ Tools are grouped and sorted for day-to-day use:
 - `组合与研究维护`: action plan, target allocation, latest index, staleness, ResearchFirst backlog, valuation reports, theme leaders, and snapshot repair.
 - `QMT 只读`: QMT connectivity checks that do not create orders.
 - `导出与审计`: review packages and controlled current-only exports under ignored `temp/`.
-- `开发验收`: project checks, ratio-only, ResearchFirst, allocation consistency, hidden Unicode, and full `web_check.py`.
+- `开发验收`: project checks, ratio-only, ResearchFirst, allocation consistency, hidden Unicode, Web smoke and Web release checks.
 - `Codex 研究提示`: copyable prompts for workflows that still need a research conversation.
 
 Each tool row includes `When to use`, which explains the intended timing and workflow boundary before you press `Run` or copy a prompt.
 
 Tool coverage includes:
 
-- Web database refresh and Web milestone checks.
+- Web database refresh, daily Web smoke checks, and release checks.
 - ratio-only, ResearchFirst, allocation consistency, staleness, valuation, and hidden-Unicode checks.
 - premarket check, action-plan generation, target-allocation generation, post-market review, and weekly review scripts.
 - QMT read-only probes, QMT ratio snapshot refresh, and one-shot intraday rule checks.
@@ -107,7 +107,7 @@ The test configuration isolates only the known external Starlette/httpx `TestCli
 compatibility warning. Other warnings still fail under `-W error`. Tests and
 runtime-history helpers must explicitly close SQLite connections and file handles.
 
-GitHub Actions runs the same strict warning check before `scripts/web_check.py`.
+GitHub Actions runs the same strict warning check before the daily Web smoke check.
 The workflow uses current Node-runtime-backed major versions for
 `actions/checkout` and `actions/setup-python`.
 
@@ -305,7 +305,7 @@ Phase 16A validation draft:
 ```bash
 python scripts/check_hidden_unicode.py
 python -m pytest web/backend/tests -q -W error
-python scripts/web_check.py
+python scripts/web_release_check.py
 python scripts/project_check.py --current-only
 ```
 
@@ -314,7 +314,7 @@ Validation:
 ```bash
 python scripts/check_hidden_unicode.py
 python -m pytest web/backend/tests -q -W error
-python scripts/web_check.py
+python scripts/web_release_check.py
 python scripts/project_check.py --current-only
 ```
 
@@ -379,28 +379,35 @@ Failure interpretation is the same as the API skeleton: `ok` and `degraded`
 are Web-smoke compatible when `fail_closed=false`; `mismatch`, `unavailable`,
 or `fail_closed=true` blocks the gate.
 
-## Phase 3 Milestone Check
+## Web Check Modes
 
-Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.
+The Web checks are split by purpose. The daily command stays small; release checks remain available when their extra scope is needed.
 
-Run the one-command gate before committing Web milestone changes:
+Daily Web smoke check:
 
 ```bash
 python scripts/web_check.py
 ```
 
-The check runs:
+This check runs:
 
 - `python scripts/ingest_current_state.py`
-- `python -m pytest web/backend/tests`
 - `python scripts/check_ratio_only.py --path <latest_index.modules.action_plan.path>`
 - `python scripts/check_research_first_gate.py --path <latest_index.modules.action_plan.path>`
 - `python scripts/check_cross_file_allocation_consistency.py`
 - `python scripts/project_check.py --current-only`
-- API and export forbidden-field scans
-- export ZIP/JSON current-only and ratio-only scans
-- page interaction hook checks for refresh, search, sort, pagination, expandable rows, Dashboard status cards, and the frontend ratio-only sanitizer
-- Git scope checks for forbidden runtime or sensitive files
+- API forbidden-field and local-path scans for non-export endpoints
+- page status and local-path scans
+- current-only code-path checks
+- `run_web.py` startup contract checks
+
+Release check:
+
+```bash
+python scripts/web_release_check.py
+```
+
+This adds `pytest`, hidden Unicode, protected research logic, Git forbidden-file scope, full API/export scans, controlled export checks, candidate audit, history snapshot export, and frontend interaction marker checks.
 
 Output statuses:
 
@@ -408,9 +415,9 @@ Output statuses:
 - `WARN`: command passed, but a non-blocking warning needs review.
 - `FAIL`: blocks commit; fix the listed file/reason and rerun the check.
 
-The script prints a suggested commit message and the files that belong in the commit. Do not commit `temp/`, SQLite/DB files, `runtime/`, caches, `node_modules/`, build/dist outputs, `.env`, ZIP, or log artifacts.
+The release script prints a suggested commit message and the files that belong in the commit. Do not commit `temp/`, SQLite/DB files, `runtime/`, caches, `node_modules/`, build/dist outputs, `.env`, ZIP, or log artifacts.
 
-The same gate runs in GitHub Actions via `.github/workflows/web_check.yml` on push and pull request.
+GitHub Actions runs Web tests with warnings as errors and then the daily Web smoke check via `.github/workflows/web_check.yml` on push and pull request.
 
 ## Source Review Package Builder
 
@@ -432,14 +439,14 @@ Phase 9F establishes the Web repository read-only baseline. All current SQLite r
 Validation:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 The gate scans `web/backend/app/repositories/*.py`, checks API/page forbidden fields, confirms OpenAPI remains read-only, and verifies ratio-only, ResearchFirst, allocation consistency, and `project_check.py --current-only`. Do not tag or merge a repository baseline if `phase9f_repository_baseline_files` is not `PASS`.
 
 ## Hidden Unicode Warning Review
 
-If GitHub displays a hidden or bidirectional Unicode warning on a Web milestone PR, run the local scanner before changing files:
+If GitHub displays a hidden or bidirectional Unicode warning on a Web PR, run the local scanner before changing files:
 
 ```bash
 python scripts/check_hidden_unicode.py
@@ -521,7 +528,7 @@ python -m pytest web/backend/tests/test_theme_status.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 ## Phase 7F Bucket Explorer
@@ -553,7 +560,7 @@ python -m pytest web/backend/tests/test_bucket_explorer.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 ## Phase 7G History Gap Dashboard
@@ -585,7 +592,7 @@ python -m pytest web/backend/tests/test_history_gap_dashboard.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 ## Phase 7H Allocation Drilldown
@@ -620,7 +627,7 @@ python -m pytest web/backend/tests/test_allocation_drilldown.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 ## Phase 7I Decision Timeline
@@ -652,7 +659,7 @@ python -m pytest web/backend/tests/test_decision_timeline.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 ## Phase 8 Historical Metrics
@@ -684,7 +691,7 @@ python -m pytest web/backend/tests/test_historical_metrics.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 ## Phase 5A Schema And Golden Baseline
@@ -698,10 +705,10 @@ Core documents:
 - `web/docs/GOLDEN_REFERENCE.md`
 - `web/docs/SERVICE_LAYER_PLAN.md`
 
-Run all Phase 5A checks through the one-command gate:
+Run the current release gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 Run the golden reference test directly:
@@ -741,7 +748,7 @@ python -m pytest web/backend/tests/test_market_position_service.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 Read-only API:
@@ -775,7 +782,7 @@ python -m pytest web/backend/tests/test_target_allocation_generation_shadow.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 Read-only API:
@@ -783,7 +790,7 @@ Read-only API:
 - `GET /api/target-allocation/shadow`
 - `GET /api/target-allocation/shadow/compare`
 
-The compare endpoint returns `matched`, `diffs`, `compared_fields`, `unsupported_fields`, `source_shadow`, and `source_reference`. Core-field diffs block the milestone. Unsupported fields are allowed only when explicit and not used to hide core mismatches.
+The compare endpoint returns `matched`, `diffs`, `compared_fields`, `unsupported_fields`, `source_shadow`, and `source_reference`. Core-field diffs block the release gate. Unsupported fields are allowed only when explicit and not used to hide core mismatches.
 
 ## Phase 5C-3 Controlled Export
 
@@ -853,7 +860,7 @@ python -m pytest web/backend/tests/test_target_allocation_shadow_replay.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 Replay fixtures must remain ratio-only and must not include local absolute paths, runtime paths, `.env`, SQLite files, ZIP/log artifacts, monetary amounts, share counts, account identifiers, order records, fill records, or QMT write behavior.
@@ -882,7 +889,7 @@ python -m pytest web/backend/tests/test_target_allocation_promotion_mode.py
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 Mode helper:
@@ -946,10 +953,10 @@ Expected official result:
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
-`web_check.py` runs candidate dry-run, candidate temp export, payload safety scan, cleanup, and official blocked validation. It also keeps ratio-only, ResearchFirst, allocation consistency, project_check, API/export sensitive scans, and current-only code-path checks in the same gate.
+`web_release_check.py` runs candidate dry-run, candidate temp export, payload safety scan, cleanup, and official blocked validation. It also keeps ratio-only, ResearchFirst, allocation consistency, project_check, API/export sensitive scans, and current-only code-path checks in the same gate.
 
 ## Phase 5G Candidate Audit Bundle
 
@@ -992,7 +999,7 @@ The API generates the bundle in memory and does not write files. Both API and CL
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 ## Phase 6 History Snapshot
@@ -1040,7 +1047,7 @@ Phase 6 still does not write `research/latest_index.json`, `research/allocation`
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 ## Phase 7B Subject Gap And Freshness
@@ -1084,7 +1091,7 @@ The API reads SQLite current-state rows loaded from `research/latest_index.json`
 Full gate:
 
 ```bash
-python scripts/web_check.py
+python scripts/web_release_check.py
 ```
 
 ## API and Page Smoke Check

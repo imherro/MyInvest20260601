@@ -151,7 +151,7 @@ def test_research_quality_audit_imports_current_profile_and_valuation_status(web
     source = read_current_module("research_quality_audit")
     expected_profile_count = sum(1 for item in source.get("items") or [] if item.get("profile_status") == "ok")
     expected_valuation_count = sum(1 for item in source.get("items") or [] if item.get("valuation_status") == "ok")
-    with connect(web_db) as conn:
+    with closing(connect(web_db)) as conn:
         profile_count = conn.execute("SELECT COUNT(*) AS count FROM profiles").fetchone()["count"]
         valuation_count = conn.execute("SELECT COUNT(*) AS count FROM valuations").fetchone()["count"]
     assert profile_count >= expected_profile_count

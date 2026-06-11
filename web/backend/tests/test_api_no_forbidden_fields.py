@@ -10,7 +10,7 @@ FORBIDDEN_KEY_RE = re.compile(
     re.IGNORECASE,
 )
 LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:(?!//)[\\/]|\\\\|/Users/|/home/)")
-ALLOWED_FORBIDDEN_KEY_PATHS = {"$.safety.no_order_generation"}
+ALLOWED_FORBIDDEN_KEY_PATHS: set[str] = set()
 
 
 def walk(value: Any, path: str = "$"):

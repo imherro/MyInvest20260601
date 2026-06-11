@@ -1,7 +1,3 @@
-请在当前 MyInvest 仓库根目录创建或更新 AGENTS.md。
-
-内容如下：
-
 # AGENTS.md - MyInvest Project Instructions
 
 ## Project nature

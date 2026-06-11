@@ -128,7 +128,7 @@ The endpoint returns sanitized Git, worktree, runtime path, Web server, safety-b
 
 All paths in the response are repo-relative strings such as `temp/web_db/myinvest.sqlite` or safe redacted labels. The response must not expose local absolute paths, `.env` content, tokens, secrets, passwords, API keys, account context, trade records, or execution output.
 
-The environment endpoint uses a dedicated environment safety scan because it includes the negative safety declaration `safety.no_order_generation=true`. That key is allowed only as a boolean safety-boundary statement and must not contain or expose order records.
+The environment endpoint uses the same forbidden-field scan as other APIs. Safety declarations use neutral field names such as `safety.no_execution_generation=true`, so the response does not need a forbidden-key exception.
 
 The same data backs `GET /settings` and `GET /environment`.
 

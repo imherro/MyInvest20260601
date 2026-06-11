@@ -41,7 +41,7 @@
   }
 
   function isAllowedSafetyKey(path, key) {
-    return key === "no_order_generation" && (path === "$.safety" || path === "$.data.safety");
+    return false;
   }
 
   function assertRatioOnly(value, path = "$") {

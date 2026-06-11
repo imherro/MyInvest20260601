@@ -49,7 +49,7 @@ class EnvironmentStatusService:
                 "read_only": True,
                 "no_trading": True,
                 "no_qmt_write": True,
-                "no_order_generation": True,
+                "no_execution_generation": True,
                 "ratio_only": True,
                 "current_only": True,
                 "research_first_gate_required": True,

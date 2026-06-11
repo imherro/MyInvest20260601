@@ -17,7 +17,7 @@ FORBIDDEN_KEY_RE = re.compile(
     r"available_qty|available_quantity|trade_amount|account|full_account|order|fill|deal)($|_)",
     re.IGNORECASE,
 )
-ALLOWED_ENVIRONMENT_KEYS = {"$.safety.no_order_generation"}
+ALLOWED_ENVIRONMENT_KEYS: set[str] = set()
 
 
 def walk(value: Any, path: str = "$"):
@@ -50,7 +50,9 @@ def assert_environment_payload_safe(payload: dict[str, Any]) -> None:
 def test_environment_status_api_returns_safe_readonly_status(client):
     response = client.get("/api/environment/status")
     assert response.status_code == 200
-    payload = response.json()
+    response_payload = response.json()
+    assert response_payload["ok"] is True
+    payload = response_payload["data"]
     assert payload["module"] == "environment_status"
     assert payload["readonly"] is True
     assert payload["read_only"] is True
@@ -58,7 +60,7 @@ def test_environment_status_api_returns_safe_readonly_status(client):
     assert payload["ratio_only"] is True
     assert payload["safety"]["no_trading"] is True
     assert payload["safety"]["no_qmt_write"] is True
-    assert payload["safety"]["no_order_generation"] is True
+    assert payload["safety"]["no_execution_generation"] is True
     assert payload["safety"]["research_current_mutation"] is False
     assert payload["paths"]["web_db_path"] == "temp/web_db/myinvest.sqlite"
     assert payload["web"]["default_host"] == "0.0.0.0"

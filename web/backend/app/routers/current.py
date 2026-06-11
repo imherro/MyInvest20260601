@@ -63,7 +63,10 @@ def health() -> dict[str, Any]:
 
 @router.get("/environment/status")
 def environment_status() -> dict[str, Any]:
-    return EnvironmentStatusService().status()
+    return respond(
+        EnvironmentStatusService().status(),
+        source={"provider": "EnvironmentStatusService"},
+    )
 
 
 @router.get("/diagnostics/schema")

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import fnmatch
 import io
 import json
@@ -22,6 +23,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 COMMIT_MESSAGE = "feat(web): add workbench readiness page"
+CHECK_MODES = {"smoke", "release"}
 
 API_PATHS = [
     "/api/health",
@@ -76,6 +78,16 @@ API_PATHS = [
     "/api/historical-metrics",
     "/api/historical-metrics/bucket-attack_mainline",
     "/api/export/review_package?format=json",
+]
+
+API_SMOKE_EXCLUDED_PREFIXES = (
+    "/api/export/",
+    "/api/history/export",
+    "/api/target-allocation/candidate-audit",
+    "/api/target-allocation/shadow",
+)
+API_SMOKE_PATHS = [
+    path for path in API_PATHS if not path.startswith(API_SMOKE_EXCLUDED_PREFIXES)
 ]
 
 PAGE_PATHS = [
@@ -204,281 +216,6 @@ JS_CHECKS = [
     "fetch(apiPath",
 ]
 
-PHASE5A_TEST_FILES = [
-    ROOT / "web" / "backend" / "tests" / "test_database_schema_contract.py",
-    ROOT / "web" / "backend" / "tests" / "test_current_state_contract.py",
-    ROOT / "web" / "backend" / "tests" / "test_golden_current_state.py",
-]
-
-PHASE5A_DOC_FILES = [
-    ROOT / "web" / "docs" / "DATABASE_SCHEMA.md",
-    ROOT / "web" / "docs" / "CURRENT_STATE_CONTRACT.md",
-    ROOT / "web" / "docs" / "GOLDEN_REFERENCE.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-]
-
-PHASE5C_TEST_FILES = [
-    ROOT / "web" / "backend" / "tests" / "test_market_position_service.py",
-]
-
-PHASE5C2_TEST_FILES = [
-    ROOT / "web" / "backend" / "tests" / "test_target_allocation_generation_shadow.py",
-]
-
-PHASE5C3_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "target_allocation_export.py",
-    ROOT / "web" / "backend" / "tests" / "test_target_allocation_controlled_export.py",
-    ROOT / "scripts" / "export_target_allocation_shadow.py",
-]
-
-PHASE5D_FILES = [
-    ROOT / "web" / "backend" / "tests" / "test_target_allocation_shadow_replay.py",
-    ROOT / "web" / "docs" / "TARGET_ALLOCATION_RULES.md",
-]
-
-PHASE5D_FIXTURE_DIR = ROOT / "web" / "backend" / "tests" / "fixtures" / "target_allocation_scenarios"
-
-PHASE5E_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "target_allocation_mode.py",
-    ROOT / "web" / "backend" / "tests" / "test_target_allocation_promotion_mode.py",
-    ROOT / "web" / "docs" / "TARGET_ALLOCATION_PROMOTION_PLAN.md",
-]
-
-PHASE5F_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "target_allocation_promotion.py",
-    ROOT / "web" / "backend" / "tests" / "test_target_allocation_promotion_simulation.py",
-    ROOT / "scripts" / "simulate_target_allocation_promotion.py",
-    ROOT / "web" / "docs" / "TARGET_ALLOCATION_PROMOTION_PLAN.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE5G_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "target_allocation_candidate_audit.py",
-    ROOT / "web" / "backend" / "tests" / "test_target_allocation_candidate_audit.py",
-    ROOT / "scripts" / "export_target_allocation_candidate_audit.py",
-    ROOT / "web" / "backend" / "app" / "routers" / "current.py",
-    ROOT / "web" / "docs" / "TARGET_ALLOCATION_PROMOTION_PLAN.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "GOLDEN_REFERENCE.md",
-    ROOT / "web" / "docs" / "TARGET_ALLOCATION_RULES.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-]
-
-PHASE6_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "history_snapshot.py",
-    ROOT / "web" / "backend" / "tests" / "test_history_snapshot.py",
-    ROOT / "scripts" / "export_history_snapshot.py",
-    ROOT / "web" / "backend" / "app" / "routers" / "current.py",
-    ROOT / "web" / "docs" / "HISTORY_SNAPSHOT.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "GOLDEN_REFERENCE.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE7A_FILES = [
-    ROOT / "web" / "backend" / "app" / "repositories" / "subject_status_repo.py",
-    ROOT / "web" / "backend" / "app" / "services" / "subject_status.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "subjects.html",
-    ROOT / "web" / "backend" / "tests" / "test_subject_status.py",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE7B_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "subjects_gap.html",
-    ROOT / "web" / "backend" / "tests" / "test_subject_gap.py",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE7D_FILES = [
-    ROOT / "scripts" / "run_web.py",
-    ROOT / "web" / "backend" / "app" / "services" / "dashboard.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html",
-    ROOT / "web" / "backend" / "tests" / "test_dashboard_current.py",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE7E_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "theme_status.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "themes.html",
-    ROOT / "web" / "backend" / "tests" / "test_theme_status.py",
-    ROOT / "web" / "docs" / "THEME_RESEARCH_CENTER.md",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE7F_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "buckets.html",
-    ROOT / "web" / "backend" / "tests" / "test_bucket_explorer.py",
-    ROOT / "web" / "docs" / "BUCKET_EXPLORER.md",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE7G_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "history_gap_dashboard.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "history_gap_dashboard.html",
-    ROOT / "web" / "backend" / "tests" / "test_history_gap_dashboard.py",
-    ROOT / "web" / "docs" / "HISTORY_GAP_DASHBOARD.md",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE7H_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "allocation_drilldown.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "buckets_drilldown.html",
-    ROOT / "web" / "backend" / "app" / "templates" / "subjects_drilldown.html",
-    ROOT / "web" / "backend" / "tests" / "test_allocation_drilldown.py",
-    ROOT / "web" / "docs" / "ALLOCATION_DRILLDOWN.md",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE7I_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "decision_timeline.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "decision_timeline.html",
-    ROOT / "web" / "backend" / "tests" / "test_decision_timeline.py",
-    ROOT / "web" / "docs" / "DECISION_TIMELINE.md",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE8_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "historical_metrics.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "historical_metrics.html",
-    ROOT / "web" / "backend" / "tests" / "test_historical_metrics.py",
-    ROOT / "web" / "docs" / "HISTORICAL_METRICS_DASHBOARD.md",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE9_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "database.py",
-    ROOT / "web" / "backend" / "app" / "services" / "current_state.py",
-    ROOT / "web" / "backend" / "app" / "services" / "theme_status.py",
-    ROOT / "web" / "backend" / "tests" / "test_database_service.py",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-]
-
-PHASE9B2_FILES = [
-    ROOT / "web" / "backend" / "app" / "repositories" / "subject_gap_repo.py",
-    ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py",
-    ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
-    ROOT / "web" / "backend" / "app" / "services" / "theme_status.py",
-    ROOT / "web" / "backend" / "app" / "services" / "dashboard.py",
-    ROOT / "web" / "backend" / "tests" / "test_subject_gap.py",
-    ROOT / "web" / "backend" / "tests" / "test_bucket_explorer.py",
-    ROOT / "web" / "backend" / "tests" / "test_theme_status.py",
-    ROOT / "web" / "backend" / "tests" / "test_dashboard_current.py",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-]
-
-PHASE9B3_FILES = [
-    ROOT / "web" / "backend" / "app" / "repositories" / "allocation_repo.py",
-    ROOT / "web" / "backend" / "app" / "repositories" / "bucket_history_repo.py",
-    ROOT / "web" / "backend" / "app" / "repositories" / "decision_timeline_repo.py",
-    ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py",
-    ROOT / "web" / "backend" / "app" / "services" / "allocation_drilldown.py",
-    ROOT / "web" / "backend" / "app" / "services" / "decision_timeline.py",
-    ROOT / "web" / "backend" / "app" / "services" / "history_gap_dashboard.py",
-    ROOT / "web" / "backend" / "app" / "services" / "history_snapshot.py",
-    ROOT / "web" / "backend" / "tests" / "test_allocation_drilldown.py",
-    ROOT / "web" / "backend" / "tests" / "test_decision_timeline.py",
-    ROOT / "web" / "backend" / "tests" / "test_history_gap_dashboard.py",
-    ROOT / "web" / "backend" / "tests" / "test_history_snapshot.py",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-]
-
-PHASE9D_FILES = [
-    ROOT / "web" / "backend" / "app" / "repositories" / "current_state.py",
-    ROOT / "web" / "backend" / "app" / "services" / "current_state.py",
-    ROOT / "web" / "backend" / "tests" / "test_database_service.py",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-]
-
-PHASE9E_FILES = [
-    ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py",
-    ROOT / "web" / "backend" / "app" / "services" / "history_snapshot.py",
-    ROOT / "web" / "backend" / "tests" / "test_history_snapshot.py",
-    ROOT / "web" / "docs" / "HISTORY_SNAPSHOT.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE9F_FILES = [
-    ROOT / "web" / "backend" / "app" / "repositories" / "market_position_repo.py",
-    ROOT / "web" / "backend" / "tests" / "test_market_position_service.py",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE10A_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "environment_status.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "environment.html",
-    ROOT / "web" / "backend" / "tests" / "test_environment_status.py",
-    ROOT / "web" / "docs" / "ENVIRONMENT_CENTER.md",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE10B_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "user_preferences.py",
-    ROOT / "web" / "backend" / "app" / "repositories" / "user_preferences_repo.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "preferences.html",
-    ROOT / "web" / "backend" / "tests" / "test_user_preferences.py",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE10C_FILES = [
-    ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py",
-    ROOT / "web" / "backend" / "app" / "repositories" / "workbench_analytics_repo.py",
-    ROOT / "web" / "backend" / "app" / "services" / "workbench_analytics.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html",
-    ROOT / "web" / "backend" / "tests" / "test_workbench_analytics_dashboard.py",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE11_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "workbench_integration_service.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html",
-    ROOT / "web" / "backend" / "app" / "templates" / "preferences.html",
-    ROOT / "web" / "backend" / "tests" / "test_integration.py",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
-PHASE12_FILES = [
-    ROOT / "web" / "backend" / "app" / "services" / "audit_bundle_service.py",
-    ROOT / "web" / "backend" / "app" / "repositories" / "audit_bundle_repo.py",
-    ROOT / "web" / "backend" / "app" / "templates" / "audit.html",
-    ROOT / "web" / "backend" / "app" / "static" / "audit.js",
-    ROOT / "web" / "backend" / "tests" / "test_audit_bundle.py",
-    ROOT / "web" / "docs" / "API_SPEC.md",
-    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-]
-
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -552,7 +289,7 @@ FORBIDDEN_KEY_RE = re.compile(
     r"current_price|qmt_timetag)($|_)",
     re.IGNORECASE,
 )
-ALLOWED_FORBIDDEN_KEY_PATHS = {"$.safety.no_order_generation"}
+ALLOWED_FORBIDDEN_KEY_PATHS: set[str] = set()
 LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:(?!//)[\\/]|\\\\|/Users/|/home/)")
 FORBIDDEN_TEXT_RE = re.compile(
     r"(total asset|market value|profit amount|trade amount|share count|available quantity|"
@@ -618,7 +355,10 @@ class CheckResult:
 
 
 class WebCheck:
-    def __init__(self) -> None:
+    def __init__(self, mode: str = "smoke") -> None:
+        if mode not in CHECK_MODES:
+            raise ValueError(f"Unsupported Web check mode: {mode}")
+        self.mode = mode
         self.failures: list[Problem] = []
         self.warnings: list[Problem] = []
         self.results: list[CheckResult] = []
@@ -705,38 +445,27 @@ class WebCheck:
         return output
 
     def run(self) -> int:
+        if self.mode == "smoke":
+            self.run_smoke()
+        elif self.mode == "release":
+            self.run_release()
+        self.print_summary()
+        return 1 if self.failures else 0
+
+    def run_smoke(self) -> None:
+        self.run_ingest()
+        action_path = self.latest_action_plan_path()
+        self.run_ratio_and_gate_checks(action_path)
+        self.run_project_checks()
+        self.check_api_smoke()
+        self.check_frontend_smoke()
+        self.check_run_web_script()
+        self.check_current_only_code_paths()
+
+    def run_release(self) -> None:
         self.check_git_scope()
         self.run_hidden_unicode_check()
         self.check_no_research_logic_changes()
-        self.check_phase5a_contract_files()
-        self.check_phase5c_contract_files()
-        self.check_phase5c2_contract_files()
-        self.check_phase5c3_contract_files()
-        self.check_phase5d_contract_files()
-        self.check_phase5e_contract_files()
-        self.check_phase5f_contract_files()
-        self.check_phase5g_contract_files()
-        self.check_phase6_contract_files()
-        self.check_phase7a_contract_files()
-        self.check_phase7b_contract_files()
-        self.check_phase7d_contract_files()
-        self.check_phase7e_contract_files()
-        self.check_phase7f_contract_files()
-        self.check_phase7g_contract_files()
-        self.check_phase7h_contract_files()
-        self.check_phase7i_contract_files()
-        self.check_phase8_contract_files()
-        self.check_phase9_contract_files()
-        self.check_phase9b2_contract_files()
-        self.check_phase9b3_contract_files()
-        self.check_phase9d_contract_files()
-        self.check_phase9e_contract_files()
-        self.check_phase9f_contract_files()
-        self.check_phase10a_contract_files()
-        self.check_phase10b_contract_files()
-        self.check_phase10c_contract_files()
-        self.check_phase11_contract_files()
-        self.check_phase12_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -746,8 +475,6 @@ class WebCheck:
         self.check_frontend_interactions()
         self.check_run_web_script()
         self.check_current_only_code_paths()
-        self.print_summary()
-        return 1 if self.failures else 0
 
     def run_hidden_unicode_check(self) -> None:
         args = [sys.executable, "scripts/check_hidden_unicode.py", "--json"]
@@ -785,1235 +512,6 @@ class WebCheck:
             )
             return
         self.add_result("check_hidden_unicode", "PASS", f"Hidden Unicode check: OK; scanned_file_count={scanned}")
-
-    def check_phase5a_contract_files(self) -> None:
-        missing = [rel(path) for path in [*PHASE5A_TEST_FILES, *PHASE5A_DOC_FILES] if not path.exists()]
-        if missing:
-            self.add_result("phase5a_contract_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase5a_contract_files",
-                ", ".join(missing),
-                "Phase 5A schema/current-state/golden contract files are missing.",
-                "Add the missing docs/tests, then rerun scripts/web_check.py.",
-            )
-        else:
-            self.add_result("phase5a_contract_files", "PASS", "schema, current-state, golden docs/tests present")
-
-    def check_phase5c_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE5C_TEST_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase5c_market_position_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase5c_market_position_files",
-                ", ".join(missing),
-                "Phase 5C-1 market-position golden/API tests are missing.",
-                "Add the MarketPositionService test file, then rerun scripts/web_check.py.",
-            )
-        else:
-            self.add_result("phase5c_market_position_files", "PASS", "market-position service tests present")
-
-    def check_phase5c2_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE5C2_TEST_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase5c2_shadow_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase5c2_shadow_files",
-                ", ".join(missing),
-                "Phase 5C-2 target-allocation shadow tests are missing.",
-                "Add the shadow-generation test file, then rerun scripts/web_check.py.",
-            )
-        else:
-            self.add_result("phase5c2_shadow_files", "PASS", "target-allocation shadow tests present")
-
-    def check_phase5c3_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE5C3_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase5c3_controlled_export_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase5c3_controlled_export_files",
-                ", ".join(missing),
-                "Phase 5C-3 controlled export service/script/tests are missing.",
-                "Add the controlled export files, then rerun scripts/web_check.py.",
-            )
-        else:
-            self.add_result("phase5c3_controlled_export_files", "PASS", "controlled export service/script/tests present")
-
-    def check_phase5d_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE5D_FILES if not path.exists()]
-        if not PHASE5D_FIXTURE_DIR.exists():
-            missing.append(rel(PHASE5D_FIXTURE_DIR))
-        fixture_paths = sorted(PHASE5D_FIXTURE_DIR.glob("*.json")) if PHASE5D_FIXTURE_DIR.exists() else []
-        if len(fixture_paths) < 10:
-            missing.append(f"{rel(PHASE5D_FIXTURE_DIR)}/*.json >= 10")
-        if missing:
-            self.add_result("phase5d_replay_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase5d_replay_files",
-                ", ".join(missing),
-                "Phase 5D replay fixtures, tests, or target-allocation rules doc are missing.",
-                "Add replay fixtures, test_target_allocation_shadow_replay.py, and TARGET_ALLOCATION_RULES.md.",
-            )
-            return
-        try:
-            for path in fixture_paths:
-                payload = json.loads(path.read_text(encoding="utf-8"))
-                assert_safe_payload(payload)
-                assert_no_export_runtime_terms(payload)
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase5d_fixture_safety", "FAIL", str(exc))
-            self.fail(
-                "phase5d_fixture_safety",
-                rel(path),
-                f"Fixture failed ratio-only/current-only safety scan: {exc}",
-                "Remove forbidden fields, local paths, runtime terms, or invalid JSON from replay fixtures.",
-            )
-            return
-        self.add_result("phase5d_replay_files", "PASS", f"{len(fixture_paths)} replay fixtures safe")
-
-    def check_phase5e_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE5E_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase5e_promotion_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase5e_promotion_files",
-                ", ".join(missing),
-                "Phase 5E promotion plan, mode helper, or tests are missing.",
-                "Add TARGET_ALLOCATION_PROMOTION_PLAN.md, target_allocation_mode.py, and its tests.",
-            )
-            return
-        try:
-            for path in PHASE5E_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md" and "official" not in text:
-                    raise ValueError("promotion plan does not describe official-mode blocking")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase5e_promotion_safety", "FAIL", str(exc))
-            self.fail(
-                "phase5e_promotion_safety",
-                rel(path),
-                f"Phase 5E file failed safety scan: {exc}",
-                "Remove runtime terms or add explicit candidate/official blocking rules.",
-            )
-            return
-        self.add_result("phase5e_promotion_files", "PASS", "promotion plan and blocked mode tests present")
-
-    def check_phase5f_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE5F_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase5f_promotion_simulation_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase5f_promotion_simulation_files",
-                ", ".join(missing),
-                "Phase 5F candidate/official promotion simulation files are missing.",
-                "Add the promotion simulation service, CLI, tests, and docs, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE5F_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "candidate" not in lowered or "official" not in lowered:
-                        raise ValueError("Phase 5F docs must describe candidate and official mode behavior")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase5f_promotion_simulation_safety", "FAIL", str(exc))
-            self.fail(
-                "phase5f_promotion_simulation_safety",
-                rel(path),
-                f"Phase 5F file failed safety scan: {exc}",
-                "Remove local paths and document candidate temp export plus official blocking behavior.",
-            )
-            return
-        self.add_result("phase5f_promotion_simulation_files", "PASS", "candidate/official simulation tests present")
-
-    def check_phase5g_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE5G_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase5g_candidate_audit_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase5g_candidate_audit_files",
-                ", ".join(missing),
-                "Phase 5G candidate audit service/API/CLI/tests/docs are missing.",
-                "Add the candidate audit bundle files and rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE5G_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "candidate audit" not in lowered or "official" not in lowered:
-                        raise ValueError("Phase 5G docs must describe candidate audit and official blocking")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase5g_candidate_audit_safety", "FAIL", str(exc))
-            self.fail(
-                "phase5g_candidate_audit_safety",
-                rel(path),
-                f"Phase 5G file failed safety scan: {exc}",
-                "Remove local paths and document candidate audit plus official blocking behavior.",
-            )
-            return
-        self.add_result("phase5g_candidate_audit_files", "PASS", "candidate audit service/API/CLI/tests present")
-
-    def check_phase6_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE6_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase6_history_snapshot_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase6_history_snapshot_files",
-                ", ".join(missing),
-                "Phase 6 history snapshot service/API/CLI/tests/docs are missing.",
-                "Add the history snapshot files and rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE6_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "history snapshot" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 6 docs must describe history snapshot and read-only boundaries")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase6_history_snapshot_safety", "FAIL", str(exc))
-            self.fail(
-                "phase6_history_snapshot_safety",
-                rel(path),
-                f"Phase 6 file failed safety scan: {exc}",
-                "Remove local paths and document history snapshot read-only boundaries.",
-            )
-            return
-        self.add_result("phase6_history_snapshot_files", "PASS", "history snapshot service/API/CLI/tests present")
-
-    def check_phase7a_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE7A_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase7a_subject_status_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase7a_subject_status_files",
-                ", ".join(missing),
-                "Phase 7A subject-status service/API/page/tests/docs are missing.",
-                "Add the subject status files and rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE7A_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "subject status" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 7A docs must describe subject status and read-only boundaries")
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "subject_status.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "subject_status_repo.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            for label, source in [("SubjectStatusService", service_text), ("SubjectStatusRepository", repo_text)]:
-                if ".read_text(" in source:
-                    raise ValueError(f"{label} reads files directly")
-                if "latest_index.files" in source or '["files"]' in source or "['files']" in source:
-                    raise ValueError(f"{label} references latest_index.files")
-            if "DatabaseService" not in repo_text or ".fetch_all(" not in repo_text:
-                raise ValueError("SubjectStatusRepository must delegate SQL reads to DatabaseService.fetch_all")
-            if ".execute(" in repo_text:
-                raise ValueError("SubjectStatusRepository bypasses DatabaseService with session.execute")
-            for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
-                if blocked in repo_text.upper():
-                    raise ValueError(f"SubjectStatusRepository contains blocked SQL verb: {blocked}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase7a_subject_status_safety", "FAIL", str(exc))
-            self.fail(
-                "phase7a_subject_status_safety",
-                rel(path),
-                f"Phase 7A file failed safety scan: {exc}",
-                "Remove local paths and document subject status read-only boundaries.",
-            )
-            return
-        self.add_result("phase7a_subject_status_files", "PASS", "subject status service/API/page/tests present")
-
-    def check_phase7b_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE7B_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase7b_subject_gap_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase7b_subject_gap_files",
-                ", ".join(missing),
-                "Phase 7B subject gap service/page/tests/docs are missing.",
-                "Add the subject gap files and rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE7B_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "subject gap" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 7B docs must describe subject gap and read-only boundaries")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase7b_subject_gap_safety", "FAIL", str(exc))
-            self.fail(
-                "phase7b_subject_gap_safety",
-                rel(path),
-                f"Phase 7B file failed safety scan: {exc}",
-                "Remove local paths and document subject gap read-only boundaries.",
-            )
-            return
-        self.add_result("phase7b_subject_gap_files", "PASS", "subject gap service/API/page/tests present")
-
-    def check_phase7d_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE7D_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase7d_dashboard_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase7d_dashboard_files",
-                ", ".join(missing),
-                "Phase 7D dashboard service/API/page/tests/docs or run script are missing.",
-                "Add the dashboard service, template, tests, run_web.py, and docs, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE7D_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "dashboard" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 7D docs must describe dashboard and read-only boundaries")
-            run_web_text = (ROOT / "scripts" / "run_web.py").read_text(encoding="utf-8", errors="replace")
-            for marker in ['DEFAULT_HOST = "0.0.0.0"', "--host", "--port", "uvicorn.run"]:
-                if marker not in run_web_text:
-                    raise ValueError(f"run_web.py missing marker: {marker}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase7d_dashboard_safety", "FAIL", str(exc))
-            self.fail(
-                "phase7d_dashboard_safety",
-                rel(path),
-                f"Phase 7D file failed safety scan: {exc}",
-                "Remove local paths and document dashboard read-only boundaries.",
-            )
-            return
-        self.add_result("phase7d_dashboard_files", "PASS", "dashboard service/API/page/tests/run script present")
-
-    def check_phase7e_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE7E_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase7e_theme_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase7e_theme_files",
-                ", ".join(missing),
-                "Phase 7E theme status service/page/tests/docs are missing.",
-                "Add the theme status service, page, tests, and THEME_RESEARCH_CENTER.md, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE7E_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "theme" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 7E docs must describe theme center and read-only boundaries")
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "theme_status.py").read_text(encoding="utf-8", errors="replace")
-            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
-                raise ValueError("theme service references latest_index.files")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase7e_theme_safety", "FAIL", str(exc))
-            self.fail(
-                "phase7e_theme_safety",
-                rel(path),
-                f"Phase 7E file failed safety scan: {exc}",
-                "Remove local paths, keep current-only module resolution, and document theme read-only boundaries.",
-            )
-            return
-        self.add_result("phase7e_theme_files", "PASS", "theme status service/API/page/tests/docs present")
-
-    def check_phase7g_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE7G_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase7g_history_gap_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase7g_history_gap_files",
-                ", ".join(missing),
-                "Phase 7G history gap dashboard service/page/tests/docs are missing.",
-                "Add the history gap dashboard service, page, tests, and HISTORY_GAP_DASHBOARD.md, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE7G_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "history gap" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 7G docs must describe history gap dashboard and read-only boundaries")
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "history_gap_dashboard.py").read_text(encoding="utf-8", errors="replace")
-            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
-                raise ValueError("history gap dashboard service references latest_index.files")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase7g_history_gap_safety", "FAIL", str(exc))
-            self.fail(
-                "phase7g_history_gap_safety",
-                rel(path),
-                f"Phase 7G file failed safety scan: {exc}",
-                "Remove local paths, keep current-only module resolution, and document history gap read-only boundaries.",
-            )
-            return
-        self.add_result("phase7g_history_gap_files", "PASS", "history gap dashboard service/API/page/tests/docs present")
-
-    def check_phase7f_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE7F_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase7f_bucket_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase7f_bucket_files",
-                ", ".join(missing),
-                "Phase 7F bucket explorer service/page/tests/docs are missing.",
-                "Add the bucket explorer service, page, tests, and BUCKET_EXPLORER.md, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE7F_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "bucket" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 7F docs must describe bucket explorer and read-only boundaries")
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py").read_text(encoding="utf-8", errors="replace")
-            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
-                raise ValueError("bucket service references latest_index.files")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase7f_bucket_safety", "FAIL", str(exc))
-            self.fail(
-                "phase7f_bucket_safety",
-                rel(path),
-                f"Phase 7F file failed safety scan: {exc}",
-                "Remove local paths, keep current-only module resolution, and document bucket read-only boundaries.",
-            )
-            return
-        self.add_result("phase7f_bucket_files", "PASS", "bucket explorer service/API/page/tests/docs present")
-
-    def check_phase7h_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE7H_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase7h_allocation_drilldown_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase7h_allocation_drilldown_files",
-                ", ".join(missing),
-                "Phase 7H allocation drilldown service/pages/tests/docs are missing.",
-                "Add the allocation drilldown service, pages, tests, and ALLOCATION_DRILLDOWN.md, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE7H_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "allocation drilldown" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 7H docs must describe allocation drilldown and read-only boundaries")
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "allocation_drilldown.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
-                raise ValueError("allocation drilldown service references latest_index.files")
-            for blocked in ["generate_action_plan", "generate_target_allocation", "qmt_portfolio_snapshot", "qmt_export_history"]:
-                if blocked in service_text:
-                    raise ValueError(f"allocation drilldown service references blocked script/runtime: {blocked}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase7h_allocation_drilldown_safety", "FAIL", str(exc))
-            self.fail(
-                "phase7h_allocation_drilldown_safety",
-                rel(path),
-                f"Phase 7H file failed safety scan: {exc}",
-                "Remove local paths, keep current-only module resolution, and document allocation drilldown read-only boundaries.",
-            )
-            return
-        self.add_result(
-            "phase7h_allocation_drilldown_files",
-            "PASS",
-            "allocation drilldown service/API/pages/tests/docs present",
-        )
-
-    def check_phase7i_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE7I_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase7i_decision_timeline_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase7i_decision_timeline_files",
-                ", ".join(missing),
-                "Phase 7I decision timeline service/page/tests/docs are missing.",
-                "Add the decision timeline service, page, tests, and DECISION_TIMELINE.md, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE7I_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "decision timeline" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 7I docs must describe decision timeline and read-only boundaries")
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "decision_timeline.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
-                raise ValueError("decision timeline service references latest_index.files")
-            for blocked in ["generate_action_plan", "generate_target_allocation", "qmt_portfolio_snapshot", "qmt_export_history"]:
-                if blocked in service_text:
-                    raise ValueError(f"decision timeline service references blocked script/runtime: {blocked}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase7i_decision_timeline_safety", "FAIL", str(exc))
-            self.fail(
-                "phase7i_decision_timeline_safety",
-                rel(path),
-                f"Phase 7I file failed safety scan: {exc}",
-                "Remove local paths, keep current-only module resolution, and document decision timeline read-only boundaries.",
-            )
-            return
-        self.add_result(
-            "phase7i_decision_timeline_files",
-            "PASS",
-            "decision timeline service/API/page/tests/docs present",
-        )
-
-    def check_phase8_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE8_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase8_historical_metrics_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase8_historical_metrics_files",
-                ", ".join(missing),
-                "Phase 8 historical metrics service/page/tests/docs are missing.",
-                "Add the historical metrics service, page, tests, and HISTORICAL_METRICS_DASHBOARD.md, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            for path in PHASE8_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                if path.suffix == ".md":
-                    lowered = text.lower()
-                    if "historical metrics" not in lowered or "read-only" not in lowered:
-                        raise ValueError("Phase 8 docs must describe historical metrics and read-only boundaries")
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "historical_metrics.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
-                raise ValueError("historical metrics service references latest_index.files")
-            for blocked in ["generate_action_plan", "generate_target_allocation", "qmt_portfolio_snapshot", "qmt_export_history"]:
-                if blocked in service_text:
-                    raise ValueError(f"historical metrics service references blocked script/runtime: {blocked}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase8_historical_metrics_safety", "FAIL", str(exc))
-            self.fail(
-                "phase8_historical_metrics_safety",
-                rel(path),
-                f"Phase 8 file failed safety scan: {exc}",
-                "Remove local paths, keep current-only module resolution, and document historical metrics read-only boundaries.",
-            )
-            return
-        self.add_result(
-            "phase8_historical_metrics_files",
-            "PASS",
-            "historical metrics service/API/page/tests/docs present",
-        )
-
-    def check_phase9_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE9_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase9_database_service_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase9_database_service_files",
-                ", ".join(missing),
-                "Phase 9 database service layer files are missing.",
-                "Add DatabaseService, its tests, and SERVICE_LAYER_PLAN updates, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "database.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "class DatabaseService" not in service_text:
-                raise ValueError("DatabaseService class missing")
-            if "current_modules" not in service_text or "current_artifact_payload" not in service_text:
-                raise ValueError("DatabaseService must expose current module and payload readers")
-            if "READ_ONLY_SQL" not in service_text or "WRITE_SQL" not in service_text:
-                raise ValueError("DatabaseService must guard read-only SQL")
-            for blocked in ["latest_index.files", '["files"]', "['files']", "generate_action_plan", "generate_target_allocation"]:
-                if blocked in service_text:
-                    raise ValueError(f"DatabaseService references blocked resolver or generator: {blocked}")
-            for path in PHASE9_FILES:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "tests" not in path.parts and LOCAL_PATH_RE.search(text):
-                    raise ValueError("local absolute path")
-                for blocked in ["qmt_portfolio_snapshot", "qmt_export_history", "place_order", "insert_order"]:
-                    if blocked in text:
-                        raise ValueError(f"Phase 9 file references blocked trading/runtime path: {blocked}")
-            docs = (ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md").read_text(encoding="utf-8", errors="replace").lower()
-            if "phase 9" not in docs or "databaseservice" not in docs or "read-only" not in docs:
-                raise ValueError("SERVICE_LAYER_PLAN must document Phase 9 DatabaseService read-only boundaries")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase9_database_service_safety", "FAIL", str(exc))
-            self.fail(
-                "phase9_database_service_safety",
-                "phase9 database service files",
-                f"Phase 9 file failed safety scan: {exc}",
-                "Keep DatabaseService current-only, read-only, ratio-only, and free of generator/trading/QMT write paths.",
-            )
-            return
-        self.add_result(
-            "phase9_database_service_files",
-            "PASS",
-            "database service layer/tests/docs present",
-        )
-
-    def check_phase9b2_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE9B2_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase9b2_db_access_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase9b2_db_access_files",
-                ", ".join(missing),
-                "Phase 9B-2 DB access consolidation files are missing.",
-                "Add SubjectGapRepository, service tests, and SERVICE_LAYER_PLAN updates, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            subject_gap_repo = (ROOT / "web" / "backend" / "app" / "repositories" / "subject_gap_repo.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "DatabaseService" not in subject_gap_repo or ".fetch_all(" not in subject_gap_repo:
-                raise ValueError("SubjectGapRepository must delegate SQL reads to DatabaseService.fetch_all")
-            if ".execute(" in subject_gap_repo:
-                raise ValueError("SubjectGapRepository bypasses DatabaseService")
-            services = [
-                ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py",
-                ROOT / "web" / "backend" / "app" / "services" / "bucket_explorer.py",
-                ROOT / "web" / "backend" / "app" / "services" / "theme_status.py",
-                ROOT / "web" / "backend" / "app" / "services" / "dashboard.py",
-            ]
-            for path in [*services, ROOT / "web" / "backend" / "app" / "repositories" / "subject_gap_repo.py"]:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if ".read_text(" in text:
-                    raise ValueError(f"{rel(path)} reads files directly")
-                if "latest_index.files" in text or '["files"]' in text or "['files']" in text:
-                    raise ValueError(f"{rel(path)} references latest_index.files")
-                if LOCAL_PATH_RE.search(text):
-                    raise ValueError(f"{rel(path)} contains local absolute path")
-                if path.name == "subject_gap_repo.py":
-                    for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
-                        if re.search(rf"\b{blocked}\b", text, re.IGNORECASE):
-                            raise ValueError(f"{rel(path)} contains blocked SQL verb: {blocked}")
-            subject_gap_service = (ROOT / "web" / "backend" / "app" / "services" / "subject_gap.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "SubjectGapRepository" not in subject_gap_service or "CurrentStateRepository" in subject_gap_service:
-                raise ValueError("SubjectGapService must use SubjectGapRepository, not CurrentStateRepository")
-            theme_service = (ROOT / "web" / "backend" / "app" / "services" / "theme_status.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "current_artifact_payload" not in theme_service:
-                raise ValueError("ThemeStatusService must use current_artifact_payload fallback")
-            docs = (ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md").read_text(encoding="utf-8", errors="replace").lower()
-            if "phase 9b-2" not in docs or "subjectgaprepository" not in docs or "databaseservice" not in docs:
-                raise ValueError("SERVICE_LAYER_PLAN must document Phase 9B-2 DB access boundaries")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase9b2_db_access_safety", "FAIL", str(exc))
-            self.fail(
-                "phase9b2_db_access_safety",
-                "phase9b2 db access files",
-                f"Phase 9B-2 file failed safety scan: {exc}",
-                "Keep SubjectGap/Bucket/Theme/Dashboard DB access current-only, read-only, and free of file/latest_index.files/trading paths.",
-            )
-            return
-        self.add_result(
-            "phase9b2_db_access_files",
-            "PASS",
-            "subject gap/bucket/theme/dashboard DB access boundaries present",
-        )
-
-    def check_phase9b3_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE9B3_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase9b3_db_access_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase9b3_db_access_files",
-                ", ".join(missing),
-                "Phase 9B-3 DB access coverage files are missing.",
-                "Add repository wrappers, service tests, and SERVICE_LAYER_PLAN updates, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            current_read_repos = [
-                ROOT / "web" / "backend" / "app" / "repositories" / "allocation_repo.py",
-                ROOT / "web" / "backend" / "app" / "repositories" / "bucket_history_repo.py",
-                ROOT / "web" / "backend" / "app" / "repositories" / "decision_timeline_repo.py",
-            ]
-            for path in current_read_repos:
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "DatabaseService" not in text or (".fetch_all(" not in text and ".fetch_one(" not in text):
-                    raise ValueError(f"{rel(path)} must delegate current DB reads to DatabaseService")
-                if ".execute(" in text or ".read_text(" in text:
-                    raise ValueError(f"{rel(path)} bypasses DatabaseService or reads files directly")
-                if "latest_index.files" in text or '["files"]' in text or "['files']" in text:
-                    raise ValueError(f"{rel(path)} references latest_index.files")
-                if LOCAL_PATH_RE.search(text):
-                    raise ValueError(f"{rel(path)} contains local absolute path")
-                for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
-                    if re.search(rf"\b{blocked}\b", text, re.IGNORECASE):
-                        raise ValueError(f"{rel(path)} contains blocked SQL verb: {blocked}")
-
-            history_repo = (ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "class HistorySnapshotRepository" not in history_repo:
-                raise ValueError("HistorySnapshotRepository class missing")
-            if ".read_text(" in history_repo:
-                raise ValueError("HistorySnapshotRepository must avoid direct read_text calls")
-            if "latest_index.files" in history_repo or '["files"]' in history_repo or "['files']" in history_repo:
-                raise ValueError("HistorySnapshotRepository references latest_index.files")
-            if "HISTORY_DB_PATH" not in history_repo or "write_history_database" not in history_repo:
-                raise ValueError("HistorySnapshotRepository must quarantine existing temp/runtime history DB IO")
-
-            service_expectations = {
-                "allocation_drilldown.py": "AllocationRepository",
-                "decision_timeline.py": "DecisionTimelineRepository",
-                "history_gap_dashboard.py": "BucketHistoryRepository",
-                "history_snapshot.py": "HistorySnapshotRepository",
-            }
-            for filename, marker in service_expectations.items():
-                path = ROOT / "web" / "backend" / "app" / "services" / filename
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if marker not in text:
-                    raise ValueError(f"{rel(path)} must delegate to {marker}")
-                if ".read_text(" in text or ".execute(" in text:
-                    raise ValueError(f"{rel(path)} has direct file or SQL access")
-                if filename == "history_snapshot.py" and "sqlite3" in text:
-                    raise ValueError("HistorySnapshotService must quarantine runtime DB IO in HistorySnapshotRepository")
-                if "latest_index.files" in text or '["files"]' in text or "['files']" in text:
-                    raise ValueError(f"{rel(path)} references latest_index.files")
-                if LOCAL_PATH_RE.search(text):
-                    raise ValueError(f"{rel(path)} contains local absolute path")
-
-            docs = (ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md").read_text(encoding="utf-8", errors="replace").lower()
-            for marker in [
-                "phase 9b-3",
-                "allocationrepository",
-                "buckethistoryrepository",
-                "decisiontimelinerepository",
-                "historysnapshotrepository",
-            ]:
-                if marker not in docs:
-                    raise ValueError(f"SERVICE_LAYER_PLAN missing {marker}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase9b3_db_access_safety", "FAIL", str(exc))
-            self.fail(
-                "phase9b3_db_access_safety",
-                "phase9b3 db access files",
-                f"Phase 9B-3 file failed safety scan: {exc}",
-                "Keep remaining DB access current-only, read-only, and free of direct file/current resolver/trading paths.",
-            )
-            return
-        self.add_result(
-            "phase9b3_db_access_files",
-            "PASS",
-            "allocation/history/timeline DB access coverage boundaries present",
-        )
-
-    def check_phase9d_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE9D_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase9d_current_state_repo_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase9d_current_state_repo_files",
-                ", ".join(missing),
-                "Phase 9D current-state repository consolidation files are missing.",
-                "Update CurrentStateRepository tests and SERVICE_LAYER_PLAN, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            repo_path = ROOT / "web" / "backend" / "app" / "repositories" / "current_state.py"
-            repo_text = repo_path.read_text(encoding="utf-8", errors="replace")
-            if "DatabaseService" not in repo_text:
-                raise ValueError("CurrentStateRepository must delegate to DatabaseService")
-            for marker in [".fetch_all(", ".fetch_one(", ".count_table("]:
-                if marker not in repo_text:
-                    raise ValueError(f"CurrentStateRepository missing {marker}")
-            for blocked in [".execute(", ".executemany(", "session.execute", "sqlalchemy import text"]:
-                if blocked in repo_text:
-                    raise ValueError(f"CurrentStateRepository still contains direct SQL execution marker: {blocked}")
-            if ".read_text(" in repo_text:
-                raise ValueError("CurrentStateRepository reads files directly")
-            if "latest_index.files" in repo_text or '["files"]' in repo_text or "['files']" in repo_text:
-                raise ValueError("CurrentStateRepository references latest_index.files")
-
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "current_state.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "CurrentStateRepository" not in service_text or "DatabaseService" not in service_text:
-                raise ValueError("CurrentStateService must preserve repository and DatabaseService access surfaces")
-            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
-                raise ValueError("CurrentStateService references latest_index.files")
-
-            docs = (ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md").read_text(encoding="utf-8", errors="replace").lower()
-            if "phase 9d" not in docs or "currentstaterepository" not in docs or "databaseservice" not in docs:
-                raise ValueError("SERVICE_LAYER_PLAN must document Phase 9D CurrentStateRepository boundaries")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase9d_current_state_repo_safety", "FAIL", str(exc))
-            self.fail(
-                "phase9d_current_state_repo_safety",
-                "phase9d current-state files",
-                f"Phase 9D file failed safety scan: {exc}",
-                "Keep CurrentStateRepository current-only, DatabaseService-backed, and free of direct SQL/file/trading paths.",
-            )
-            return
-        self.add_result(
-            "phase9d_current_state_repo_files",
-            "PASS",
-            "CurrentStateRepository delegates reads to DatabaseService",
-        )
-
-    def check_phase9e_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE9E_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase9e_history_snapshot_runtime_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase9e_history_snapshot_runtime_files",
-                ", ".join(missing),
-                "Phase 9E history snapshot runtime DB policy files are missing.",
-                "Update HistorySnapshotRepository tests/docs/web_check, then rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            repo = (ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "assert_history_database_path" not in repo:
-                raise ValueError("HistorySnapshotRepository must guard runtime DB path")
-            for marker in ['ROOT / "temp" / "web_runtime"', '"history_snapshot.sqlite"', "write_history_database"]:
-                if marker not in repo:
-                    raise ValueError(f"HistorySnapshotRepository missing runtime DB marker: {marker}")
-            for blocked in ["research/latest_index", "research/actions", "research/allocation", "temp/web_db/myinvest.sqlite"]:
-                if blocked in repo.replace(chr(92), "/"):
-                    raise ValueError(f"HistorySnapshotRepository references blocked current/research path: {blocked}")
-
-            service = (ROOT / "web" / "backend" / "app" / "services" / "history_snapshot.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "HistorySnapshotRepository" not in service:
-                raise ValueError("HistorySnapshotService must delegate runtime DB IO to HistorySnapshotRepository")
-            if ".execute(" in service or "sqlite3" in service:
-                raise ValueError("HistorySnapshotService must not execute runtime DB SQL directly")
-
-            tests = (ROOT / "web" / "backend" / "tests" / "test_history_snapshot.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "test_history_snapshot_runtime_db_policy_is_temp_runtime_only" not in tests:
-                raise ValueError("test_history_snapshot must cover runtime DB path policy")
-
-            for doc_path in [
-                ROOT / "web" / "docs" / "HISTORY_SNAPSHOT.md",
-                ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-                ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-            ]:
-                text = doc_path.read_text(encoding="utf-8", errors="replace").lower()
-                if "phase 9e" not in text or "temp/web_runtime/history_snapshot.sqlite" not in text:
-                    raise ValueError(f"{rel(doc_path)} must document Phase 9E runtime DB policy")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase9e_history_snapshot_runtime_safety", "FAIL", str(exc))
-            self.fail(
-                "phase9e_history_snapshot_runtime_safety",
-                "phase9e history snapshot files",
-                f"Phase 9E file failed safety scan: {exc}",
-                "Keep history snapshot runtime DB writes isolated under temp/web_runtime and document the exception.",
-            )
-            return
-        self.add_result(
-            "phase9e_history_snapshot_runtime_files",
-            "PASS",
-            "History snapshot runtime DB policy is documented and guarded",
-        )
-
-    def check_phase9f_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE9F_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase9f_repository_baseline_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase9f_repository_baseline_files",
-                ", ".join(missing),
-                "Phase 9F repository baseline files are missing.",
-                "Update repository tests/docs and rerun scripts/web_check.py.",
-            )
-            return
-        try:
-            repo_dir = ROOT / "web" / "backend" / "app" / "repositories"
-            for path in sorted(repo_dir.glob("*.py")):
-                if path.name == "__init__.py":
-                    continue
-                text = path.read_text(encoding="utf-8", errors="replace")
-                if "latest_index.files" in text or '["files"]' in text or "['files']" in text:
-                    raise ValueError(f"{rel(path)} references latest_index.files")
-                if ".read_text(" in text:
-                    raise ValueError(f"{rel(path)} reads files with read_text")
-                if path.name == "history_snapshot_repo.py":
-                    if "assert_history_database_path" not in text or "HISTORY_RUNTIME_DIR" not in text:
-                        raise ValueError("HistorySnapshotRepository must keep Phase 9E runtime DB guard")
-                    continue
-                if "DatabaseService" not in text:
-                    raise ValueError(f"{rel(path)} does not delegate to DatabaseService")
-                if ".execute(" in text or ".executemany(" in text or "session.execute" in text:
-                    raise ValueError(f"{rel(path)} contains direct SQL execution")
-                if not any(marker in text for marker in [".fetch_all(", ".fetch_one(", ".count_table(", ".source_for_module("]):
-                    raise ValueError(f"{rel(path)} does not use DatabaseService read helpers")
-                for blocked in ["PRAGMA", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]:
-                    if re.search(rf"\b{blocked}\b", text, re.IGNORECASE):
-                        raise ValueError(f"{rel(path)} contains blocked SQL verb: {blocked}")
-
-            market_repo = (repo_dir / "market_position_repo.py").read_text(encoding="utf-8", errors="replace")
-            if ".fetch_all(" not in market_repo or ".fetch_one(" not in market_repo:
-                raise ValueError("MarketPositionRepository must use DatabaseService fetch helpers")
-
-            docs = [
-                ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
-                ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
-            ]
-            for doc_path in docs:
-                text = doc_path.read_text(encoding="utf-8", errors="replace").lower()
-                if "phase 9f" not in text or "repository read-only" not in text:
-                    raise ValueError(f"{rel(doc_path)} must document Phase 9F repository read-only baseline")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase9f_repository_baseline_safety", "FAIL", str(exc))
-            self.fail(
-                "phase9f_repository_baseline_safety",
-                "phase9f repository files",
-                f"Phase 9F file failed safety scan: {exc}",
-                "Keep repository reads DatabaseService-backed, with only the documented HistorySnapshot runtime DB exception.",
-            )
-            return
-        self.add_result(
-            "phase9f_repository_baseline_files",
-            "PASS",
-            "Repository read-only baseline is enforced",
-        )
-
-    def check_phase10a_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE10A_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase10a_environment_center_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase10a_environment_center_files",
-                ", ".join(missing),
-                "Phase 10A environment center files are missing.",
-                "Add the read-only environment service, settings page, tests, and docs.",
-            )
-            return
-        try:
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "environment_status.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
-                raise ValueError("EnvironmentStatusService must not use latest_index.files")
-            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant"]:
-                if blocked in service_text.lower():
-                    raise ValueError(f"EnvironmentStatusService contains blocked integration marker: {blocked}")
-            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "environment.html").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            for marker in [
-                "read-only research workbench",
-                "not a trading system",
-                "does not connect to QMT write interfaces",
-                "does not generate orders",
-                "trusted networks only",
-                "environmentCheckRows",
-            ]:
-                if marker not in template_text:
-                    raise ValueError(f"environment template missing marker: {marker}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase10a_environment_center_safety", "FAIL", str(exc))
-            self.fail(
-                "phase10a_environment_center_safety",
-                "phase10a environment center files",
-                f"Phase 10A file failed safety scan: {exc}",
-                "Keep the environment center read-only and limited to sanitized status metadata.",
-            )
-            return
-        self.add_result(
-            "phase10a_environment_center_files",
-            "PASS",
-            "Workbench environment center service/page/tests/docs present",
-        )
-
-    def check_phase10b_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE10B_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase10b_user_preferences_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase10b_user_preferences_files",
-                ", ".join(missing),
-                "Phase 10B user preferences center files are missing.",
-                "Add the read-only preference service, repository, page, tests, and docs.",
-            )
-            return
-        try:
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "user_preferences.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "user_preferences_repo.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            combined = (service_text + "\n" + repo_text).lower()
-            if "latest_index.files" in combined or '["files"]' in combined or "['files']" in combined:
-                raise ValueError("User preferences must not use latest_index.files")
-            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
-                if blocked in combined:
-                    raise ValueError(f"User preferences contains blocked marker: {blocked.strip()}")
-            if "databaseservice" not in combined:
-                raise ValueError("UserPreferencesRepository must use DatabaseService")
-            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "preferences.html").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            for marker in [
-                "Workbench Preferences",
-                "data-preferences-section=\"display\"",
-                "data-preferences-section=\"dashboard\"",
-                "data-preferences-section=\"safety\"",
-                "preferenceRows",
-                "preferenceSourceRows",
-            ]:
-                if marker not in template_text:
-                    raise ValueError(f"preferences template missing marker: {marker}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase10b_user_preferences_safety", "FAIL", str(exc))
-            self.fail(
-                "phase10b_user_preferences_safety",
-                "phase10b user preferences files",
-                f"Phase 10B file failed safety scan: {exc}",
-                "Keep preferences read-only, display-only, and routed through DatabaseService.",
-            )
-            return
-        self.add_result(
-            "phase10b_user_preferences_files",
-            "PASS",
-            "Workbench user preferences service/page/tests/docs present",
-        )
-
-    def check_phase10c_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE10C_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase10c_workbench_analytics_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase10c_workbench_analytics_files",
-                ", ".join(missing),
-                "Phase 10C workbench analytics dashboard files are missing.",
-                "Add the read-only analytics repository, service, dashboard hooks, tests, and docs.",
-            )
-            return
-        try:
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "workbench_analytics.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "workbench_analytics_repo.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            combined = (service_text + "\n" + repo_text).lower()
-            if "latest_index.files" in combined or '["files"]' in combined or "['files']" in combined:
-                raise ValueError("Workbench analytics must not use latest_index.files")
-            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
-                if blocked in combined:
-                    raise ValueError(f"Workbench analytics contains blocked marker: {blocked.strip()}")
-            if "databaseservice" not in combined:
-                raise ValueError("WorkbenchAnalyticsRepository must use DatabaseService")
-            if "historysnapshotrepository" not in combined:
-                raise ValueError("Workbench analytics must route runtime history through HistorySnapshotRepository")
-            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            for marker in [
-                "data-dashboard-section=\"analytics\"",
-                "data-dashboard-window",
-                "dashboardAnalyticsRows",
-                "dashboard_analytics_modules",
-                "dashboard_analytics_history_entries",
-            ]:
-                if marker not in template_text:
-                    raise ValueError(f"dashboard template missing analytics marker: {marker}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase10c_workbench_analytics_safety", "FAIL", str(exc))
-            self.fail(
-                "phase10c_workbench_analytics_safety",
-                "phase10c workbench analytics files",
-                f"Phase 10C file failed safety scan: {exc}",
-                "Keep analytics read-only, ratio-only, and routed through DatabaseService / HistorySnapshotRepository.",
-            )
-            return
-        self.add_result(
-            "phase10c_workbench_analytics_files",
-            "PASS",
-            "Workbench analytics service/API/dashboard/tests/docs present",
-        )
-
-    def check_phase11_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE11_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase11_workbench_integration_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase11_workbench_integration_files",
-                ", ".join(missing),
-                "Phase 11 workbench integration files are missing.",
-                "Add the read-only integration service, dashboard/preference hooks, tests, and docs.",
-            )
-            return
-        try:
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "workbench_integration_service.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            lowered = service_text.lower()
-            if "latest_index.files" in lowered or '["files"]' in lowered or "['files']" in lowered:
-                raise ValueError("Workbench integration must not use latest_index.files")
-            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
-                if blocked in lowered:
-                    raise ValueError(f"Workbench integration contains blocked marker: {blocked.strip()}")
-            for marker in ["WorkbenchAnalyticsService", "UserPreferencesService", "EnvironmentStatusService"]:
-                if marker not in service_text:
-                    raise ValueError(f"Workbench integration missing service marker: {marker}")
-            dashboard_text = (ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            for marker in [
-                "data-dashboard-section=\"workbench-integration\"",
-                "workbenchModuleLinks",
-                "workbenchIntegrationRows",
-            ]:
-                if marker not in dashboard_text:
-                    raise ValueError(f"dashboard template missing integration marker: {marker}")
-            preferences_text = (ROOT / "web" / "backend" / "app" / "templates" / "preferences.html").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            if "data-preferences-section=\"workbench-links\"" not in preferences_text:
-                raise ValueError("preferences template missing workbench links")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase11_workbench_integration_safety", "FAIL", str(exc))
-            self.fail(
-                "phase11_workbench_integration_safety",
-                "phase11 workbench integration files",
-                f"Phase 11 file failed safety scan: {exc}",
-                "Keep integration read-only, ratio-only, current-only, and GET-only.",
-            )
-            return
-        self.add_result(
-            "phase11_workbench_integration_files",
-            "PASS",
-            "Workbench integration service/API/page hooks/tests/docs present",
-        )
-
-    def check_phase12_contract_files(self) -> None:
-        missing = [rel(path) for path in PHASE12_FILES if not path.exists()]
-        if missing:
-            self.add_result("phase12_audit_bundle_files", "FAIL", ", ".join(missing))
-            self.fail(
-                "phase12_audit_bundle_files",
-                ", ".join(missing),
-                "Phase 12 audit bundle files are missing.",
-                "Add the read-only audit bundle repository, service, page, script, tests, and docs.",
-            )
-            return
-        try:
-            service_text = (ROOT / "web" / "backend" / "app" / "services" / "audit_bundle_service.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "audit_bundle_repo.py").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            combined = (service_text + "\n" + repo_text).lower()
-            if "latest_index.files" in combined or '["files"]' in combined or "['files']" in combined:
-                raise ValueError("Audit bundle must not use latest_index.files")
-            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
-                if blocked in combined:
-                    raise ValueError(f"Audit bundle contains blocked marker: {blocked.strip()}")
-            if "databaseservice" not in combined or "historysnapshotrepository" not in combined:
-                raise ValueError("Audit bundle must route through DatabaseService / HistorySnapshotRepository")
-            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "audit.html").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            for marker in [
-                "data-audit-section=\"summary\"",
-                "data-audit-window",
-                "data-audit-module",
-                "auditPreviewChart",
-                "auditBundleRows",
-            ]:
-                if marker not in template_text:
-                    raise ValueError(f"audit template missing marker: {marker}")
-            script_text = (ROOT / "web" / "backend" / "app" / "static" / "audit.js").read_text(
-                encoding="utf-8",
-                errors="replace",
-            )
-            for marker in ["function refreshAudit", "function renderChart", "assertSafe", "/api/audit/bundle"]:
-                if marker not in script_text:
-                    raise ValueError(f"audit script missing marker: {marker}")
-        except Exception as exc:  # noqa: BLE001
-            self.add_result("phase12_audit_bundle_safety", "FAIL", str(exc))
-            self.fail(
-                "phase12_audit_bundle_safety",
-                "phase12 audit bundle files",
-                f"Phase 12 file failed safety scan: {exc}",
-                "Keep audit bundle read-only, ratio-only, current-only, and GET-only.",
-            )
-            return
-        self.add_result(
-            "phase12_audit_bundle_files",
-            "PASS",
-            "Workbench audit bundle service/API/page/script/tests/docs present",
-        )
 
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
@@ -2074,6 +572,58 @@ class WebCheck:
             return ""
         self.add_result("latest_action_plan_path", "PASS", path)
         return str(path)
+
+    def check_api_smoke(self) -> None:
+        try:
+            TestClient = import_test_client()
+
+            from web.backend.app.main import app
+            from web.backend.app.services.ratio_only import RatioOnlyService
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("api_imports", "FAIL", str(exc))
+            self.fail(
+                "api_imports",
+                "web/backend/app",
+                f"Could not import FastAPI app or RatioOnlyService: {exc}",
+                "Install Web dependencies and fix import errors.",
+            )
+            return
+
+        client = TestClient(app)
+        ratio = RatioOnlyService()
+
+        for path in API_SMOKE_PATHS:
+            response = client.get(path)
+            if response.status_code != 200:
+                self.fail(
+                    "api_smoke_status",
+                    path,
+                    f"Expected 200, got {response.status_code}.",
+                    "Fix the endpoint or ingest data source and rerun scripts/web_check.py.",
+                )
+                continue
+            try:
+                data = response.json()
+                if path == "/api/environment/status":
+                    assert_environment_status_payload(data)
+                else:
+                    ratio.assert_safe(data)
+                    assert_safe_payload(data)
+            except Exception as exc:  # noqa: BLE001
+                self.fail(
+                    "api_smoke_safety",
+                    path,
+                    f"API response failed ratio-only or path scan: {exc}",
+                    "Sanitize the endpoint response before returning it.",
+                )
+        api_status = "FAIL" if self.has_fail("api_smoke_status") or self.has_fail("api_smoke_safety") else "PASS"
+        self.add_result("api_smoke", api_status, f"{len(API_SMOKE_PATHS)} endpoints")
+
+        self.check_api_is_read_only(client)
+        self.check_environment_status_api(client)
+        self.check_schema_guard_api(client, ratio)
+        self.check_historical_metrics_guard_api(client, ratio)
+        self.check_workbench_readiness_api(client, ratio)
 
     def check_api_and_export(self) -> None:
         try:
@@ -2160,7 +710,7 @@ class WebCheck:
                 "openapi_read_only",
                 "web/backend/app/routers/current.py",
                 "Mutating /api methods found: " + "; ".join(mutating),
-                "Remove write endpoints from Phase 3 Web milestone.",
+                "Remove write endpoints from the read-only Web API.",
             )
             self.add_result("openapi_read_only", "FAIL", "; ".join(mutating))
         else:
@@ -2171,14 +721,18 @@ class WebCheck:
             response = client.get("/api/environment/status")
             if response.status_code != 200:
                 raise ValueError(f"Expected 200, got {response.status_code}")
-            payload = response.json()
+            envelope = response.json()
+            if envelope.get("ok") is not True:
+                raise ValueError("environment response ok flag is not true")
+            assert_safe_payload(envelope)
+            payload = envelope.get("data") or {}
             assert_environment_status_payload(payload)
             if payload.get("module") != "environment_status":
                 raise ValueError("module mismatch")
             if payload.get("readonly") is not True or payload.get("current_only") is not True:
                 raise ValueError("top-level readonly/current-only flags are not true")
             safety = payload.get("safety") or {}
-            for key in ["no_trading", "no_qmt_write", "no_order_generation", "research_first_gate_required"]:
+            for key in ["no_trading", "no_qmt_write", "no_execution_generation", "research_first_gate_required"]:
                 if safety.get(key) is not True:
                     raise ValueError(f"safety flag is not true: {key}")
             if safety.get("research_current_mutation") is not False:
@@ -3466,6 +2020,32 @@ class WebCheck:
             if source_path != current_path:
                 raise ValueError(f"{module} source mismatch: export={source_path} latest_index.modules={current_path}")
 
+    def check_frontend_smoke(self) -> None:
+        try:
+            TestClient = import_test_client()
+
+            from web.backend.app.main import app
+        except Exception as exc:  # noqa: BLE001
+            self.fail("frontend_imports", "web/backend/app/main.py", f"Could not import app: {exc}", "Fix app imports.")
+            return
+
+        client = TestClient(app)
+        for path in PAGE_PATHS:
+            response = client.get(path)
+            if response.status_code != 200:
+                self.fail("page_status", path, f"Expected 200, got {response.status_code}.", "Fix page route or template.")
+                continue
+            if LOCAL_PATH_RE.search(response.text):
+                self.fail("page_safety", path, "Page contains a local absolute path.", "Remove local absolute paths from templates.")
+
+        for path in ["/static/app.js", "/static/readiness.js"]:
+            response = client.get(path)
+            if response.status_code != 200:
+                self.fail("frontend_static", path, f"Expected 200, got {response.status_code}.", "Fix StaticFiles mount.")
+
+        status = "FAIL" if self.has_fail("page_status") or self.has_fail("page_safety") or self.has_fail("frontend_static") else "PASS"
+        self.add_result("frontend_smoke", status, f"{len(PAGE_PATHS)} pages and static JS")
+
     def check_frontend_interactions(self) -> None:
         try:
             TestClient = import_test_client()
@@ -3630,8 +2210,8 @@ class WebCheck:
             self.fail(
                 "protected_research_logic",
                 ", ".join(sorted(changed)),
-                "Protected research generation logic changed in this milestone.",
-                "Move those changes out of this Web verification milestone.",
+                "Protected research generation logic changed in this release check.",
+                "Move those changes out of this Web verification scope.",
             )
             self.add_result("protected_research_logic", "FAIL", ", ".join(sorted(changed)))
         else:
@@ -3672,7 +2252,7 @@ class WebCheck:
 
     def print_summary(self) -> None:
         status = "FAIL" if self.failures else ("WARN" if self.warnings else "PASS")
-        print("\n=== MyInvest Phase 3 Web Milestone Check ===")
+        print(f"\n=== MyInvest Web Check ({self.mode}) ===")
         print(f"SUMMARY: {status}")
         print("\nChecks:")
         for result in self.results:
@@ -3689,24 +2269,25 @@ class WebCheck:
             for idx, problem in enumerate(self.warnings, 1):
                 print_problem(idx, problem)
 
-        print("\nCommit suggestion:")
-        print(f"  {COMMIT_MESSAGE}")
-        print("\nCommit file list:")
-        files = commit_file_list()
-        if files:
-            for path in files:
-                print(f"  {path}")
-        else:
-            print("  No pending files. Current branch may already contain the milestone commit.")
-        print("\nDo not commit:")
-        print("  temp/, SQLite/DB files, runtime/, caches, node_modules/, build/dist, .env, ZIP/log artifacts")
-        print("\nGit status:")
-        status_lines = git_lines(["git", "status", "-sb", "-uall"])
-        if status_lines:
-            for line in status_lines:
-                print(f"  {line}")
-        else:
-            print("  unavailable")
+        if self.mode == "release":
+            print("\nCommit suggestion:")
+            print(f"  {COMMIT_MESSAGE}")
+            print("\nCommit file list:")
+            files = commit_file_list()
+            if files:
+                for path in files:
+                    print(f"  {path}")
+            else:
+                print("  No pending files. Current branch may already contain the release commit.")
+            print("\nDo not commit:")
+            print("  temp/, SQLite/DB files, runtime/, caches, node_modules/, build/dist, .env, ZIP/log artifacts")
+            print("\nGit status:")
+            status_lines = git_lines(["git", "status", "-sb", "-uall"])
+            if status_lines:
+                for line in status_lines:
+                    print(f"  {line}")
+            else:
+                print("  unavailable")
 
 
 def command_label(args: list[str]) -> str:
@@ -3863,8 +2444,20 @@ def print_problem(idx: int, problem: Problem) -> None:
     print(f"     fix: {problem.fix}")
 
 
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Run MyInvest Web checks.")
+    parser.add_argument(
+        "--mode",
+        choices=sorted(CHECK_MODES),
+        default="smoke",
+        help="smoke is the default daily Web check; release adds export/repo gates.",
+    )
+    return parser
+
+
 def main() -> int:
-    return WebCheck().run()
+    args = build_parser().parse_args()
+    return WebCheck(mode=args.mode).run()
 
 
 if __name__ == "__main__":

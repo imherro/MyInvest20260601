@@ -88,6 +88,7 @@ def test_review_package_build_passes_strict_privacy_scan():
         assert package_path == zip_path
         assert privacy_warnings == []
         assert "scripts/web_check.py" in rels
+        assert "scripts/web_release_check.py" in rels
         assert not any(builder.is_sensitive_research_file(item) for item in rels)
         scan_text = (stage / "SENSITIVE_CONTENT_SCAN.md").read_text(encoding="utf-8")
         assert "## Blocking Secret-Like Hits\n- none" in scan_text

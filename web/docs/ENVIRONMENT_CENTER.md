@@ -75,7 +75,7 @@ All returned paths must be repo-relative, such as `temp/web_db/myinvest.sqlite`,
     "read_only": true,
     "no_trading": true,
     "no_qmt_write": true,
-    "no_order_generation": true,
+    "no_execution_generation": true,
     "ratio_only": true,
     "current_only": true,
     "research_first_gate_required": true,
@@ -93,7 +93,7 @@ All returned paths must be repo-relative, such as `temp/web_db/myinvest.sqlite`,
 }
 ```
 
-The `safety.no_order_generation=true` key is an explicit negative safety declaration. It is the only allowed environment-status key that contains an otherwise blocked word fragment.
+The `safety.no_execution_generation=true` key is an explicit negative safety declaration. It avoids forbidden wording in the API schema while still documenting that the Web workbench does not create execution artifacts.
 
 ## Validation
 
