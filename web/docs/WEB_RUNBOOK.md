@@ -137,6 +137,24 @@ GitHub Actions runs the same strict warning check before `scripts/web_check.py`.
 The workflow uses current Node-runtime-backed major versions for
 `actions/checkout` and `actions/setup-python`.
 
+## Phase 13C Release Handoff Snapshot
+
+Current stable release snapshot:
+
+- Stable commit: `cf0e42cac05ce78f7e108bf41425399514d17e92`
+- Stable tag: `web-workbench-phase10-12-v0.4.2`
+- PR #24 through PR #30 are merged.
+- `web-workbench-phase10-12-v0.4.0`: Phase 10-12 Workbench release.
+- `web-workbench-phase10-12-v0.4.1`: Phase 13A review package privacy scan hygiene.
+- `web-workbench-phase10-12-v0.4.2`: Phase 13B CI/test warning hygiene.
+
+Phase 14 work must start from `main` at or after
+`web-workbench-phase10-12-v0.4.2`. Before Phase 14, read `AGENTS.md`,
+`web/docs/PHASE_HANDOFF.md`, `web/docs/WEB_RUNBOOK.md`,
+`web/docs/SERVICE_LAYER_PLAN.md`, and `web/docs/API_SPEC.md`.
+Default Web boundaries remain read-only, ratio-only, current-only, and
+OpenAPI GET-only.
+
 ## Phase 3 Milestone Check
 
 Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.

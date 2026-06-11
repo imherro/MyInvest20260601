@@ -5,7 +5,8 @@ This handoff file is the durable cross-session starting point for new Codex sess
 ## Current Baseline
 
 - Project: MyInvest
-- Current stable tag: `web-db-repository-readonly-baseline-v0.3.0`
+- Current stable tag: `web-workbench-phase10-12-v0.4.2`
+- Previous read-only repository baseline tag: `web-db-repository-readonly-baseline-v0.3.0`
 - Stable baseline meaning:
   - Web + DB repository read-only baseline.
   - SQLite ingest.
@@ -14,11 +15,42 @@ This handoff file is the durable cross-session starting point for new Codex sess
   - `DatabaseService` read-only facade.
   - Repository read-only consolidation baseline.
   - `HistorySnapshotRepository` is the only documented runtime DB write exception, limited to `temp/web_runtime/history_snapshot.sqlite`.
+  - Phase 10-12 Workbench release is merged and tagged.
+  - Phase 13A release packaging hygiene is merged and tagged.
+  - Phase 13B CI/test warning hygiene is merged and tagged.
 - Current worktree:
   - Phase 10 worktree: local sibling worktree, not the stable production worktree.
 - Stable web port: `8000`
 - Phase 10 development port: `8010`
 - Stable web service and Phase 10 development service must use separate `temp/`, SQLite, and runtime directories.
+
+## Release Snapshot v0.4.2
+
+- Stable commit: `cf0e42cac05ce78f7e108bf41425399514d17e92`
+- Stable tag: `web-workbench-phase10-12-v0.4.2`
+- Release tags:
+  - `web-workbench-phase10-12-v0.4.0`: Phase 10-12 Workbench release.
+  - `web-workbench-phase10-12-v0.4.1`: Phase 13A review package privacy scan hygiene.
+  - `web-workbench-phase10-12-v0.4.2`: Phase 13B CI/test warning hygiene.
+- PR status:
+  - PR #24 through PR #30 are merged.
+  - Phase 13B merge commit is `cf0e42cac05ce78f7e108bf41425399514d17e92`.
+- Current validation baseline:
+  - `python scripts/check_hidden_unicode.py`: PASS.
+  - `python scripts/ingest_current_state.py`: PASS.
+  - `python -m pytest web/backend/tests -q`: PASS.
+  - `python -m pytest web/backend/tests -q -W error`: PASS.
+  - `python scripts/web_check.py`: PASS with 0 WARN.
+  - `python scripts/check_ratio_only.py --path <latest_index.modules.action_plan.path>`: PASS.
+  - `python scripts/check_research_first_gate.py --path <latest_index.modules.action_plan.path>`: PASS.
+  - `python scripts/check_cross_file_allocation_consistency.py`: PASS.
+  - `python scripts/project_check.py --current-only`: PASS.
+  - Strict source review package build: PASS with `privacy_warnings=0`.
+- Next phase entry:
+  - Phase 14 must start from `main` at or after `web-workbench-phase10-12-v0.4.2`.
+  - New sessions must read `AGENTS.md`, this file, `web/docs/WEB_RUNBOOK.md`, `web/docs/SERVICE_LAYER_PLAN.md`, and `web/docs/API_SPEC.md`.
+  - Default boundaries remain read-only, ratio-only, current-only, and OpenAPI GET-only.
+  - Do not start from the older `web-db-repository-readonly-baseline-v0.3.0` tag for Phase 14 work unless explicitly asked to inspect historical state.
 
 ## Hard Boundaries
 
@@ -94,6 +126,25 @@ This handoff file is the durable cross-session starting point for new Codex sess
 - HistorySnapshot runtime DB policy.
 - Repository read-only baseline.
 - Stable tag: `web-db-repository-readonly-baseline-v0.3.0`
+
+### Phase 10-12
+
+- Workbench environment status, user preferences, analytics dashboard, integration, and audit bundle are complete.
+- Stable tag: `web-workbench-phase10-12-v0.4.0`
+
+### Phase 13A
+
+- Source review package privacy scan false-positive hygiene is complete.
+- Hidden Unicode warning risk was triaged and removed from the release packaging changes.
+- Stable tag: `web-workbench-phase10-12-v0.4.1`
+
+### Phase 13B
+
+- CI/test warning hygiene is complete.
+- `pytest -W error` is part of the Web CI gate.
+- Starlette/httpx `TestClient` deprecation handling is narrow and documented.
+- SQLite/file resource cleanup is explicit in warning-sensitive tests.
+- Stable tag: `web-workbench-phase10-12-v0.4.2`
 
 ## Current Architecture Summary
 
@@ -259,6 +310,7 @@ All phases must run:
 python scripts/check_hidden_unicode.py
 python scripts/ingest_current_state.py
 python -m pytest web/backend/tests -q
+python -m pytest web/backend/tests -q -W error
 python scripts/web_check.py
 python scripts/check_ratio_only.py --path <latest_index.modules.action_plan.path>
 python scripts/check_research_first_gate.py --path <latest_index.modules.action_plan.path>
