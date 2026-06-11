@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sqlite3
 import sys
+from contextlib import closing
 from pathlib import Path
 from typing import Any
 
@@ -40,7 +41,7 @@ def load_mapping_json() -> dict[str, Any]:
 def rows_from_db(web_db: Path) -> list[sqlite3.Row]:
     conn = sqlite3.connect(web_db)
     conn.row_factory = sqlite3.Row
-    with conn:
+    with closing(conn):
         return conn.execute(
             """
             SELECT score_min, score_max, equity_min_pct, equity_max_pct,
@@ -94,7 +95,7 @@ def test_market_position_service_matches_old_project_utils(web_db):
 def test_current_market_position_matches_target_allocation_range(web_db):
     conn = sqlite3.connect(web_db)
     conn.row_factory = sqlite3.Row
-    with conn:
+    with closing(conn):
         target = conn.execute(
             """
             SELECT equity_min_pct, equity_max_pct, cash_min_pct, cash_max_pct

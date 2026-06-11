@@ -8,6 +8,7 @@ import subprocess
 import sys
 import time
 import zipfile
+from contextlib import closing
 from pathlib import Path
 from typing import Any
 
@@ -43,7 +44,7 @@ def assert_ratio_only(value: Any) -> None:
 
 
 def current_state_snapshot(web_db: Path) -> dict[str, Any]:
-    with sqlite3.connect(web_db) as connection:
+    with closing(sqlite3.connect(web_db)) as connection:
         connection.row_factory = sqlite3.Row
         modules = [dict(row) for row in connection.execute("SELECT module, artifact_id, updated_at FROM current_modules ORDER BY module")]
         current_artifacts = [
@@ -198,7 +199,7 @@ def test_history_snapshot_cli_json_export(web_db):
         assert payload["live_current_summary"]["shadow_vs_reference"]["matched"] is True
         assert_ratio_only(payload)
         assert HISTORY_DB_PATH.exists()
-        with sqlite3.connect(HISTORY_DB_PATH) as connection:
+        with closing(sqlite3.connect(HISTORY_DB_PATH)) as connection:
             tables = {
                 row[0]
                 for row in connection.execute(

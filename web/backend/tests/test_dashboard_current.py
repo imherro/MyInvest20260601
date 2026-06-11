@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 import subprocess
 import sys
+from pathlib import Path
 from typing import Any
 
 from scripts import run_web
@@ -124,7 +125,7 @@ def test_dashboard_openapi_is_read_only(client):
 
 
 def test_dashboard_service_has_no_direct_file_or_sql_access():
-    source = open("web/backend/app/services/dashboard.py", encoding="utf-8").read()
+    source = Path("web/backend/app/services/dashboard.py").read_text(encoding="utf-8")
     assert ".read_text(" not in source
     assert ".execute(" not in source
     assert "latest_index.files" not in source
