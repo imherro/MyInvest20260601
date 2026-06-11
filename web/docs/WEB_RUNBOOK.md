@@ -137,19 +137,22 @@ GitHub Actions runs the same strict warning check before `scripts/web_check.py`.
 The workflow uses current Node-runtime-backed major versions for
 `actions/checkout` and `actions/setup-python`.
 
-## Phase 13C Release Handoff Snapshot
+## Current Release Handoff Snapshot
 
 Current stable release snapshot:
 
-- Stable commit: `cf0e42cac05ce78f7e108bf41425399514d17e92`
-- Stable tag: `web-workbench-phase10-12-v0.4.2`
-- PR #24 through PR #30 are merged.
+- Stable commit: `107be68b638159e289e638e1c0c3bb0c3a45a8a3`
+- Stable tag: `web-workbench-phase10-12-v0.4.5`
+- PR #24 through PR #37 are merged.
 - `web-workbench-phase10-12-v0.4.0`: Phase 10-12 Workbench release.
 - `web-workbench-phase10-12-v0.4.1`: Phase 13A review package privacy scan hygiene.
 - `web-workbench-phase10-12-v0.4.2`: Phase 13B CI/test warning hygiene.
+- `web-workbench-phase10-12-v0.4.3`: Phase 14C schema guard full read-only enforcement.
+- `web-workbench-phase10-12-v0.4.4`: Phase 15B Historical Metrics guard skeleton.
+- `web-workbench-phase10-12-v0.4.5`: Phase 15C Historical Metrics guard full read-only enforcement.
 
-Phase 14 work must start from `main` at or after
-`web-workbench-phase10-12-v0.4.2`. Before Phase 14, read `AGENTS.md`,
+Phase 16 work must start from `main` at or after
+`web-workbench-phase10-12-v0.4.5`. Before Phase 16, read `AGENTS.md`,
 `web/docs/PHASE_HANDOFF.md`, `web/docs/WEB_RUNBOOK.md`,
 `web/docs/SERVICE_LAYER_PLAN.md`, and `web/docs/API_SPEC.md`.
 Default Web boundaries remain read-only, ratio-only, current-only, and
@@ -300,6 +303,36 @@ Validation:
 python -m pytest web/backend/tests/test_historical_metrics_guard.py -q
 python -m pytest web/backend/tests -q -W error
 python scripts/web_check.py
+```
+
+## Phase 16A Workbench Readiness Design
+
+Phase 16A is a design-only phase for a future Workbench Readiness surface. It
+does not add a page, API, service, repository, template, static JavaScript,
+SQLite table, ingest behavior, runtime writer, or research artifact.
+
+Design goal:
+
+- summarize existing safe diagnostics into a future read-only readiness view
+- keep validation command execution outside Web
+- report only safe status, counts, timestamps, repo-relative source metadata,
+  and links to existing local Web surfaces
+- preserve read-only, ratio-only, current-only, ResearchFirst-neutral, and
+  OpenAPI GET-only boundaries
+
+Candidate future surfaces, pending a later implementation phase:
+
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
+- `GET /readiness`
+
+Phase 16A validation draft:
+
+```bash
+python scripts/check_hidden_unicode.py
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+python scripts/project_check.py --current-only
 ```
 
 Validation:

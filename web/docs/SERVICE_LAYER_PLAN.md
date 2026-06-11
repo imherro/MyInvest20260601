@@ -1,6 +1,6 @@
 # Service Layer Plan
 
-Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. Phase 9 adds a read-only `DatabaseService` facade for current SQLite access and current-module artifact payload fallback. Phase 9B-1 routes `SubjectStatusRepository` DB reads through `DatabaseService` without changing the Subject Status API contract. Phase 9B-2 routes `SubjectGapRepository` DB reads through `DatabaseService` and locks Bucket, Theme, and Dashboard services away from direct file or SQL access. Phase 9B-3 adds read-only DB coverage repositories for allocation drilldown, bucket history, and decision timeline, and quarantines existing history snapshot temp/runtime IO behind `HistorySnapshotRepository`. Phase 9D routes the legacy `CurrentStateRepository` helper through `DatabaseService` while preserving `CurrentStateService` contracts. Phase 9E keeps the existing history snapshot runtime DB write as a guarded temp-only exception at `temp/web_runtime/history_snapshot.sqlite`. Phase 9F establishes the repository read-only baseline across all Web repositories and routes `MarketPositionRepository` through `DatabaseService`. Phase 10A adds a read-only `EnvironmentStatusService` and workbench settings page for sanitized local environment visibility. Phase 10B adds a read-only `UserPreferencesService` and preference page for display-only workbench options. Phase 10C adds a read-only `WorkbenchAnalyticsService` and dashboard analytics section for current workbench metrics. Phase 11 adds a read-only `WorkbenchIntegrationService` for cross-module Workbench navigation and status integration. Phase 12 adds a read-only `AuditBundleService` for Workbench audit preview and JSON bundle review. Phase 14A documents a future Web SQLite read-model schema versioning plan only. It adds no service, table, migration, API, ingest change, or Web behavior. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
+Phase 5A documented service boundaries for future migration. Phase 5C-1 added the read-only `MarketPositionService` baseline. Phase 5C-2 added `TargetAllocationGenerationService` in shadow mode only. Phase 5C-3 adds controlled shadow export. Phase 5D adds multi-scenario shadow replay fixtures. Phase 5E adds a controlled promotion plan and a read-only mode helper. Phase 5F adds candidate/official promotion simulation checks. Phase 5G adds a candidate audit bundle for promotion review. Phase 6 adds a read-only history snapshot for audit consolidation. Phase 7A adds a read-only subject status center for profile, valuation, liquidity, and ResearchFirst gate visibility. Phase 7B adds a read-only subject gap and freshness center. Phase 7D adds a read-only research dashboard landing page. Phase 7E adds a read-only theme research center. Phase 7F adds a read-only bucket explorer for allocation drilldown. Phase 7G adds a read-only history gap dashboard. Phase 7H adds read-only allocation drilldown pages and APIs. Phase 7I adds a read-only decision timeline / review timeline. Phase 8 adds read-only historical metrics dashboard analytics. Phase 9 adds a read-only `DatabaseService` facade for current SQLite access and current-module artifact payload fallback. Phase 9B-1 routes `SubjectStatusRepository` DB reads through `DatabaseService` without changing the Subject Status API contract. Phase 9B-2 routes `SubjectGapRepository` DB reads through `DatabaseService` and locks Bucket, Theme, and Dashboard services away from direct file or SQL access. Phase 9B-3 adds read-only DB coverage repositories for allocation drilldown, bucket history, and decision timeline, and quarantines existing history snapshot temp/runtime IO behind `HistorySnapshotRepository`. Phase 9D routes the legacy `CurrentStateRepository` helper through `DatabaseService` while preserving `CurrentStateService` contracts. Phase 9E keeps the existing history snapshot runtime DB write as a guarded temp-only exception at `temp/web_runtime/history_snapshot.sqlite`. Phase 9F establishes the repository read-only baseline across all Web repositories and routes `MarketPositionRepository` through `DatabaseService`. Phase 10A adds a read-only `EnvironmentStatusService` and workbench settings page for sanitized local environment visibility. Phase 10B adds a read-only `UserPreferencesService` and preference page for display-only workbench options. Phase 10C adds a read-only `WorkbenchAnalyticsService` and dashboard analytics section for current workbench metrics. Phase 11 adds a read-only `WorkbenchIntegrationService` for cross-module Workbench navigation and status integration. Phase 12 adds a read-only `AuditBundleService` for Workbench audit preview and JSON bundle review. Phase 14A documents a future Web SQLite read-model schema versioning plan only. It adds no service, table, migration, API, ingest change, or Web behavior. Phase 15 adds read-only Historical Metrics diagnostics guard reporting. Phase 16A is a design-only Workbench Readiness planning phase. These phases do not replace target allocation artifacts, migrate action plan generation, trading execution, or QMT write access.
 
 ## Existing Read-Only Services
 
@@ -97,10 +97,12 @@ code and tests.
 29. Add a read-only Workbench audit bundle and visualization preview page. Completed in Phase 12.
 30. Document Web SQLite read-model schema versioning before adding a guard. Completed in Phase 14A as design only.
 31. Add a future read-only schema guard only after Phase 14A design review, with separate tests and audit.
-32. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
-33. At each step, extend golden tests to compare old-script output with new-service output.
-34. If any golden test differs, do not replace the old script.
-35. Keep old scripts as reference implementations until migration is stable.
+32. Add a read-only Historical Metrics guard after Phase 15A design review. Completed in Phase 15B and Phase 15C.
+33. Design a Workbench Readiness layer that aggregates existing diagnostics without implementing it. Phase 16A only.
+34. Migrate action plan generation in a future phase only after target allocation promotion remains stable.
+35. At each step, extend golden tests to compare old-script output with new-service output.
+36. If any golden test differs, do not replace the old script.
+37. Keep old scripts as reference implementations until migration is stable.
 
 The old generation scripts include `generate_target_allocation.py` and `generate_action_plan.py`; Phase 5C-2 does not modify their business rules. `scripts/generate_target_allocation.py` remains the target allocation reference implementation. `scripts/project_utils.py::market_position_for_score` remains the reference implementation for score-to-range behavior.
 
@@ -376,6 +378,31 @@ integration payloads, fingerprint mismatches, or diagnostics exceptions report
 fail-closed `mismatch` or `unavailable`. The repository remains a thin
 `DatabaseService` delegate and does not execute write SQL, create tables, write
 SQLite, repair data, or call ingest from request handling.
+
+## Phase 16A Workbench Readiness Design Rules
+
+Phase 16A is documentation only. It designs a future read-only Workbench
+Readiness layer but does not implement services, repositories, routes, pages,
+templates, JavaScript, database schema, ingest behavior, or research outputs.
+
+Candidate future service boundaries:
+
+- `WorkbenchReadinessService`: compose safe status from existing read-only
+  services and diagnostics only.
+- `WorkbenchReadinessRepository`: if later needed, delegate all SQLite reads to
+  `DatabaseService` and expose counts/status metadata only.
+- Future endpoints, if approved in a later phase:
+  - `GET /api/readiness/summary`
+  - `GET /api/readiness/checks`
+  - `GET /readiness`
+
+The readiness layer must not run validation commands from Web, write status
+files, write SQLite, rebuild the read model, generate research artifacts,
+generate target allocations, generate action plans, or connect to trading/QMT
+write behavior. It may only report existing safe metadata from environment
+status, schema diagnostics, Historical Metrics diagnostics, dashboard summary,
+audit bundle readiness, and current validation summaries already present in the
+read-only system.
 
 ## Phase 9 Database Service Rules
 
