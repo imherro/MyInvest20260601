@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
@@ -94,7 +95,7 @@ def test_themes_page_hooks_and_safety(client):
 
 
 def test_theme_status_does_not_use_latest_index_files():
-    source = open("web/backend/app/services/theme_status.py", encoding="utf-8").read()
+    source = Path("web/backend/app/services/theme_status.py").read_text(encoding="utf-8")
     assert "current_artifact_payload" in source
     assert ".read_text(" not in source
     assert ".execute(" not in source

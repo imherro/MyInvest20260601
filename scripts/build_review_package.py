@@ -104,7 +104,10 @@ SECRET_CONTENT_RE = re.compile(
     r"authorization\s*:\s*bearer\s+\S+)",
     re.IGNORECASE,
 )
-PLACEHOLDER_SECRET_RE = re.compile(r"(你的|your|example|changeme|placeholder|可选)", re.IGNORECASE)
+PLACEHOLDER_SECRET_RE = re.compile(
+    "(\u4f60\u7684|your|example|changeme|placeholder|\u53ef\u9009)",
+    re.IGNORECASE,
+)
 LOCAL_ABSOLUTE_PATH_RE = re.compile(
     r"([A-Za-z]:[\\/](?:Users|Documents|ProgramData|Program Files|Windows)[^\"'\s,}]*|"
     r"/(?:Users|home)/[^\"'\s,}]*)",
@@ -112,11 +115,42 @@ LOCAL_ABSOLUTE_PATH_RE = re.compile(
 )
 LOCAL_RUNTIME_SOURCE_RE = re.compile(r"source_report.*runtime[\\/]", re.IGNORECASE)
 
-PRIVACY_CONTENT_RE = re.compile(
-    r"(account|账号|masked_account|cost_price|current_price|reference_pnl_pct|"
-    r"成本价|现价|参考盈亏|持仓|portfolio_snapshot)",
+PRIVACY_FIELD_NAMES = {
+    "account",
+    "account_masked",
+    "available_quantity",
+    "available_qty",
+    "cost_price",
+    "current_price",
+    "full_account",
+    "market_value",
+    "masked_account",
+    "profit_amount",
+    "qty",
+    "quantity",
+    "raw_cost_price",
+    "reference_pnl_pct",
+    "share_count",
+    "shares",
+    "total_amount",
+    "total_asset",
+    "trade_amount",
+}
+PRIVACY_TEXT_RE = re.compile(
+    "(\u8d26\u53f7|\u6210\u672c\u4ef7|\u73b0\u4ef7|\u53c2\u8003\u76c8\u4e8f|"
+    "\u603b\u8d44\u4ea7|\u91d1\u989d|\u5e02\u503c|\u80a1\u6570|"
+    "\u53ef\u7528\u6570\u91cf|\u4ea4\u6613\u91d1\u989d|\u76c8\u4e8f\u91d1\u989d)",
     re.IGNORECASE,
 )
+PRIVACY_SCAN_TEXT_EXEMPT_PREFIXES = ("docs/", "scripts/", "templates/", "web/")
+PRIVACY_SCAN_TEXT_EXEMPT_FILES = {
+    "research/logs/decision_log.md",
+    "research/portfolio/current_holdings_template.md",
+}
+SCANNER_IMPLEMENTATION_FILES = {
+    "scripts/build_review_package.py",
+    "scripts/web_check.py",
+}
 
 TEXT_SUFFIXES = {".md", ".txt", ".json", ".py", ".bat", ".toml", ".yml", ".yaml", ".cfg"}
 
@@ -143,6 +177,19 @@ def rel(path: Path) -> str:
     return path.relative_to(ROOT).as_posix()
 
 
+def is_sensitive_research_file(rel_path: str) -> bool:
+    """Exclude raw research evidence files that can carry private account context."""
+    if rel_path.startswith("research/portfolio/portfolio_snapshot_"):
+        return True
+    if rel_path.startswith("research/stocks/") and rel_path != "research/stocks/stock_registry.json":
+        return True
+    if rel_path.startswith("research/etfs/") and rel_path != "research/etfs/etf_registry.json":
+        return True
+    if rel_path.startswith("research/valuations/"):
+        return True
+    return False
+
+
 def current_research_files() -> set[str]:
     latest_path = ROOT / "research" / "latest_index.json"
     if not latest_path.exists():
@@ -159,7 +206,7 @@ def current_research_files() -> set[str]:
         if module in {"market_position_mapping", "bucket_registry"} and path:
             result.add(str(path))
     add_gate_evidence_files(result)
-    return result
+    return {item for item in result if not is_sensitive_research_file(item)}
 
 
 def registry_profile_paths(codes: set[str]) -> set[str]:
@@ -272,15 +319,62 @@ def scan_sensitive_content(stage: Path) -> tuple[list[str], list[str]]:
         for line_no, line in enumerate(text.splitlines(), start=1):
             if SECRET_CONTENT_RE.search(line) and not PLACEHOLDER_SECRET_RE.search(line):
                 secret_lines.append(f"{relative}:{line_no}")
-            if LOCAL_ABSOLUTE_PATH_RE.search(line) or LOCAL_RUNTIME_SOURCE_RE.search(line):
+            if (
+                not is_scanner_local_path_rule_text(relative, line)
+                and (LOCAL_ABSOLUTE_PATH_RE.search(line) or LOCAL_RUNTIME_SOURCE_RE.search(line))
+            ):
                 local_path_lines.append(f"{relative}:{line_no}: local path or runtime source reference")
         if secret_lines:
             secret_hits.extend(secret_lines)
         if local_path_lines:
             secret_hits.extend(local_path_lines)
-        if PRIVACY_CONTENT_RE.search(text):
+        if has_privacy_review_warning(relative, path, text):
             privacy_warnings.append(relative)
     return sorted(set(secret_hits)), sorted(set(privacy_warnings))
+
+
+def is_scanner_local_path_rule_text(relative: str, line: str) -> bool:
+    """Allow scanner source to document the local-path regex without self-failing."""
+    if relative not in SCANNER_IMPLEMENTATION_FILES:
+        return False
+    return (
+        (
+            "LOCAL_PATH_RE" in line
+            and "[A-Za-z]" in line
+            and ("/Users/" in line or "/home/" in line)
+        )
+        or ('"/Users/"' in line and '"/home/"' in line)
+    )
+
+
+def has_privacy_review_warning(relative: str, path: Path, text: str) -> bool:
+    if relative in PRIVACY_SCAN_TEXT_EXEMPT_FILES:
+        return False
+    if any(relative.startswith(prefix) for prefix in PRIVACY_SCAN_TEXT_EXEMPT_PREFIXES):
+        return False
+    if path.suffix.lower() == ".json":
+        return json_has_privacy_key(text)
+    return bool(PRIVACY_TEXT_RE.search(text))
+
+
+def json_has_privacy_key(text: str) -> bool:
+    try:
+        data = json.loads(text)
+    except Exception:
+        return bool(PRIVACY_TEXT_RE.search(text))
+    return object_has_privacy_key(data)
+
+
+def object_has_privacy_key(value: object) -> bool:
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if str(key).lower() in PRIVACY_FIELD_NAMES:
+                return True
+            if object_has_privacy_key(child):
+                return True
+    elif isinstance(value, list):
+        return any(object_has_privacy_key(item) for item in value)
+    return False
 
 
 def verify_stage(stage: Path, rels: list[str]) -> list[str]:

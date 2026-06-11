@@ -12,9 +12,22 @@ All endpoints are read-only and return:
 }
 ```
 
+Exception: `GET /api/environment/status` returns its environment status object directly to match the Phase 10A workbench contract. It still has a dedicated read-only safety scan and must not expose sensitive fields.
+
 Endpoints:
 
 - `GET /api/health`
+- `GET /api/environment/status`
+- `GET /api/diagnostics/schema`
+- `GET /api/diagnostics/historical-metrics`
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
+- `GET /api/user/preferences`
+- `GET /api/user/preferences/{user_id}`
+- `GET /api/dashboard/summary`
+- `GET /api/dashboard/user_metrics/{user_id}`
+- `GET /api/workbench/integration`
+- `GET /api/audit/bundle`
 - `GET /api/dashboard/current`
 - `GET /api/current`
 - `GET /api/latest-index`
@@ -56,6 +69,167 @@ Endpoints:
 All responses pass `RatioOnlyService` before returning. A sanitizer failure returns HTTP 500.
 
 OpenAPI docs are exposed by FastAPI at `GET /docs` while the local server is running.
+
+## Workbench Readiness API
+
+Phase 16B implements a read-only Workbench Readiness API skeleton:
+
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
+
+The readiness API composes existing safe diagnostics and safe operational
+metadata only:
+
+- environment/settings metadata
+- schema guard diagnostics
+- Historical Metrics guard diagnostics
+- dashboard summary
+- audit bundle readiness
+- current validation summary metadata already present in the read-only system
+
+Responses use the standard API envelope. The `data` object contains:
+
+- `status`: `ok`, `degraded`, `mismatch`, or `unavailable`
+- `checked_at`
+- `checks`
+- `summary`
+- `safety`
+- `degraded_reasons`
+- `fail_closed`
+- `web_smoke_compatible`
+
+`GET /api/readiness/summary` returns compact check summaries. `GET
+/api/readiness/checks` returns the same readiness status with detailed check
+metadata. Both endpoints are GET-only and pass through the standard
+`RatioOnlyService` response wrapper.
+
+The readiness API does not run validation commands from Web, write SQLite,
+write files, rebuild ingest, generate target allocations, generate action
+plans, expose local absolute paths, expose credentials, or add
+POST/PUT/PATCH/DELETE methods. It returns only safe status labels, counts,
+timestamps, boolean safety flags, repo-relative metadata, and local Web links.
+
+Phase 16C adds the read-only page:
+
+- `GET /readiness`
+
+The page renders the Phase 16B readiness summary/checks payloads, supports
+frontend switching between summary and checks, and refreshes by calling only
+the two GET readiness APIs. It does not run validation commands, write files,
+write SQLite, rebuild ingest, or add mutating API methods.
+
+## Workbench Environment Center
+
+Phase 10A adds a read-only workbench environment endpoint:
+
+- `GET /api/environment/status`
+
+The endpoint returns sanitized Git, worktree, runtime path, Web server, safety-boundary, and latest known check-status metadata for the local Web workbench. It does not read `latest_index.files`, write research artifacts, mutate `research/current`, generate target allocations, generate action plans, or connect to trading/QMT write interfaces.
+
+All paths in the response are repo-relative strings such as `temp/web_db/myinvest.sqlite` or safe redacted labels. The response must not expose local absolute paths, `.env` content, tokens, secrets, passwords, API keys, account context, trade records, or execution output.
+
+The environment endpoint uses a dedicated environment safety scan because it includes the negative safety declaration `safety.no_order_generation=true`. That key is allowed only as a boolean safety-boundary statement and must not contain or expose order records.
+
+The same data backs `GET /settings` and `GET /environment`.
+
+## Workbench User Preferences Center
+
+Phase 10B adds read-only workbench preference endpoints:
+
+- `GET /api/user/preferences`
+- `GET /api/user/preferences/{user_id}`
+
+The default endpoint returns the local workbench display profile, dashboard refresh interval, table options, safety flags, and current-module source metadata. Supported named ids such as `default` resolve to the same display-only profile. Unknown ids return a safe 404.
+
+The service reads only the SQLite current read model through `UserPreferencesRepository` and `DatabaseService`. It does not read `latest_index.files`, write research artifacts, mutate current modules, generate target allocations, generate action plans, or connect to trading/QMT write interfaces.
+
+Returned fields are limited to display settings, booleans, counts, timestamps, safe local Web links, and repo-relative source paths. The response passes the standard `RatioOnlyService` wrapper and must not expose local absolute paths, credentials, runtime files, SQLite file contents, or execution output.
+
+The same data backs `GET /preferences`.
+
+## Workbench Analytics Dashboard
+
+Phase 10C extends the existing read-only dashboard with workbench analytics:
+
+- `GET /api/dashboard/summary`
+- `GET /api/dashboard/user_metrics/{user_id}`
+
+`/api/dashboard/summary` returns current-only workbench metrics, gate statuses, time-window metadata, and a read-only history snapshot summary when the guarded runtime history database exists. The `time_window` query parameter accepts `current`, `7d`, or `30d`; all modes remain current-only because no persistent user event store is introduced in this phase.
+
+`/api/dashboard/user_metrics/{user_id}` returns the same ratio-only metrics combined with the selected display preferences for supported local ids such as `default`. Unknown ids return a safe 404.
+
+The analytics repository uses `DatabaseService` for SQLite current-state reads and `HistorySnapshotRepository` for the guarded runtime history snapshot summary. It does not read `latest_index.files`, write research artifacts, generate target allocations, generate action plans, or connect to trading/QMT write interfaces.
+
+The existing `GET /api/dashboard/current` payload now includes `analytics_summary`, and `GET /dashboard` displays the workbench analytics section with a time-window selector.
+
+## Workbench Integration
+
+Phase 11 adds a read-only integration endpoint:
+
+- `GET /api/workbench/integration`
+
+The endpoint summarizes the Workbench module map across Settings, Preferences, Dashboard, and Research Centers. It returns safe local Web links, module statuses, selected time-window metadata, display options, gate statuses, and a compact current metrics summary.
+
+The service composes existing read-only services: `EnvironmentStatusService`, `UserPreferencesService`, and `WorkbenchAnalyticsService`. It does not read `latest_index.files`, write research artifacts, generate target allocations, generate action plans, or add trading/QMT write interfaces.
+
+The existing `GET /dashboard` page uses the same integration payload in its Workbench Modules section. `GET /preferences` links back to the integrated Workbench module surfaces.
+
+## Workbench Audit Bundle
+
+Phase 12 adds a read-only audit bundle endpoint:
+
+- `GET /api/audit/bundle`
+
+The endpoint composes Dashboard analytics, Preferences, Historical Metrics, Workbench Integration, current-module source metadata, and guarded HistorySnapshot availability into a ratio-only review bundle. Query parameters:
+
+- `time_window`: `current`, `7d`, or `30d`; all modes remain current-only in this phase.
+- `module_filter`: `all`, `dashboard`, `preferences`, `historical_metrics`, or `integration`.
+
+The response is intended for JSON preview/download and Web audit review. It does not write files, update runtime state, read `latest_index.files`, generate target allocations, generate action plans, or add trading/QMT write interfaces.
+
+The same data backs `GET /audit`, which renders preview cards, a simple chart, module filtering, and a JSON download link.
+
+## DB Schema Guard Diagnostics
+
+Phase 14A adds `web/docs/DB_SCHEMA_VERSIONING_PLAN.md` as design material.
+Phase 14B adds one read-only diagnostics endpoint. Phase 14C extends the same
+endpoint with full read-only enforcement reporting:
+
+- `GET /api/diagnostics/schema`
+
+The endpoint delegates to `SchemaGuardService` and `SchemaGuardRepository`,
+which read SQLite metadata through `DatabaseService`. It checks the minimum
+current read-model table and column contract, reads `schema_version` or
+`schema_metadata` only if those tables already exist, and never creates,
+alters, drops, migrates, or seeds tables from the request path.
+
+Response data is wrapped in the standard API envelope under
+`data.schema_guard`. Safe fields include `status`, `ok`,
+`expected_schema_name`, `expected_schema_version`,
+`expected_schema_fingerprint`, observed schema name/version/fingerprint,
+fingerprint match status, version source, version-table presence, required
+table/column presence, missing table/column names, schema-contract counts,
+read-only enforcement status, `checked_at`, diagnostics warning codes, and
+read-only safety flags.
+
+Status values:
+
+- `ok`: required read-model tables and columns exist and existing version
+  metadata matches `web_read_model_v1` and the required table/column
+  fingerprint.
+- `degraded`: required read-model tables and columns exist, but no
+  `schema_version` or usable metadata exists yet.
+- `mismatch`: required structure, version metadata, or schema fingerprint does
+  not match.
+- `unavailable`: metadata introspection could not complete.
+
+The current Phase 14C database has no version table, so the endpoint returns
+`degraded` with `missing_version_table` while keeping Web smoke checks green.
+Phase 14C keeps that degraded state Web-smoke compatible, but any required
+table/column gap, existing version mismatch, fingerprint mismatch, or
+introspection failure is reported through `enforcement.fail_closed=true`.
+The endpoint must not expose local absolute paths, SQLite row contents,
+credentials, runtime files, cache contents, or trading/execution records.
 
 ## Research Dashboard
 
@@ -180,6 +354,40 @@ Returned fields include `summary`, `series`, `aggregations`, `entities`, `source
 The endpoints do not read `latest_index.files`, write research artifacts, update `current_modules`, generate target allocations, generate action plans, or connect to execution adapters. Responses are ratio-only and pass `RatioOnlyService`.
 
 The page `GET /historical-metrics` uses the same API and supports refresh, search, entity/status filters, sorting, pagination, bucket gap visualization, tooltips, and expandable details.
+
+Phase 15A documents Historical Metrics audit integration in
+`web/docs/HISTORICAL_METRICS_PLAN.md`. Phase 15B adds a GET-only diagnostics
+endpoint. Phase 15C extends the same endpoint with full read-only enforcement
+reporting:
+
+- `GET /api/diagnostics/historical-metrics`
+
+The endpoint returns `data.historical_metrics_guard` with safe operational
+metadata: status, required input readiness, missing input names, read-model
+table counts, source-module metadata, optional history snapshot availability,
+diagnostics warnings, enforcement status, and safety flags. It does not return
+row-level SQLite contents, write files, write SQLite, read `latest_index.files`,
+generate target allocations, generate action plans, or connect to execution
+adapters.
+
+Phase 15C fields include:
+
+- `contract.contract_version`
+- `contract.required_inputs`, `contract.observed_inputs`, and
+  `contract.missing_inputs`
+- `contract.required_source_modules`, `contract.observed_source_modules`, and
+  `contract.missing_source_modules`
+- `contract.expected_fingerprint`, `contract.observed_fingerprint`, and
+  `contract.fingerprint_match`
+- `enforcement.mode = full_read_only_historical_metrics_guard`
+- `enforcement.fail_closed`
+- `enforcement.read_model_usable`
+- `enforcement.web_smoke_compatible`
+- `enforcement.audit_bundle_compatible`
+
+`mismatch` or `unavailable` means the guard failed closed with sanitized
+metadata only. `degraded` means optional history snapshot state is unavailable
+while the required current read model and contract remain usable.
 
 ## Market Position
 

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Workbench Audit{% endblock %}
+
+{% block content %}
+{% set bundle = audit_bundle or {} %}
+{% set summary = bundle.summary or {} %}
+<section class="dashboard-grid" data-audit-section="summary">
+  <div class="metric ok"><span>Mode</span><strong data-bind="audit_readonly">{{ "read-only" if bundle.read_only else "check" }}</strong></div>
+  <div class="metric ok"><span>Sections</span><strong data-bind="audit_section_count">{{ summary.section_count or 0 }}</strong></div>
+  <div class="metric ok"><span>Modules</span><strong data-bind="audit_current_modules">{{ summary.current_module_count or 0 }}</strong></div>
+  <div class="metric ok"><span>Subjects</span><strong data-bind="audit_subjects">{{ summary.subject_count or 0 }}</strong></div>
+</section>
+
+<section data-audit-section="controls">
+  <div class="table-tools">
+    <select data-audit-window aria-label="Audit time window">
+      <option value="current" selected>Current</option>
+      <option value="7d">7D</option>
+      <option value="30d">30D</option>
+    </select>
+    <select data-audit-module aria-label="Audit module">
+      <option value="all" selected>All</option>
+      <option value="dashboard">Dashboard</option>
+      <option value="preferences">Preferences</option>
+      <option value="historical_metrics">Historical Metrics</option>
+      <option value="integration">Integration</option>
+    </select>
+    <a class="button-link" id="auditDownloadLink" href="/api/audit/bundle">Download JSON</a>
+  </div>
+</section>
+
+<section data-audit-section="preview">
+  <h2>Preview</h2>
+  <div class="gap-chart" id="auditPreviewChart" data-audit-chart></div>
+</section>
+
+<section data-audit-section="bundle">
+  <h2>Bundle Sections</h2>
+  <table data-page-size="12">
+    <thead>
+      <tr>
+        <th>Section</th>
+        <th>Status</th>
+        <th>API</th>
+      </tr>
+    </thead>
+    <tbody id="auditBundleRows">
+      {% for item in bundle.sections or [] %}
+      <tr>
+        <td>{{ item.label }}</td>
+        <td>{{ item.status }}</td>
+        <td>{{ item.api_path }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<script src="/static/audit.js" defer></script>
+{% endblock %}

@@ -21,10 +21,22 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "chore(web): phase 9F full repository read-only consolidation baseline"
+COMMIT_MESSAGE = "feat(web): add workbench readiness page"
 
 API_PATHS = [
     "/api/health",
+    "/api/environment/status",
+    "/api/diagnostics/schema",
+    "/api/diagnostics/historical-metrics",
+    "/api/readiness/summary",
+    "/api/readiness/checks",
+    "/api/user/preferences",
+    "/api/user/preferences/default",
+    "/api/dashboard/summary",
+    "/api/dashboard/user_metrics/default",
+    "/api/workbench/integration",
+    "/api/audit/bundle",
+    "/api/audit/bundle?time_window=7d&module_filter=dashboard",
     "/api/dashboard/current",
     "/api/current",
     "/api/latest-index",
@@ -69,6 +81,11 @@ API_PATHS = [
 PAGE_PATHS = [
     "/",
     "/dashboard",
+    "/settings",
+    "/environment",
+    "/preferences",
+    "/audit",
+    "/readiness",
     "/action-plan",
     "/target-allocation",
     "/research-first",
@@ -88,6 +105,41 @@ PAGE_PATHS = [
 ]
 
 INTERACTIVE_PAGE_CHECKS = {
+    "/settings": [
+        'data-environment-section="git"',
+        'data-environment-section="safety"',
+        'data-status-card="env-readonly"',
+        'data-bind="env_branch"',
+        "environmentCheckRows",
+    ],
+    "/preferences": [
+        'data-preferences-section="display"',
+        'data-preferences-section="dashboard"',
+        'data-preferences-section="safety"',
+        'data-status-card="pref-readonly"',
+        'data-bind="pref_refresh"',
+        "preferenceRows",
+        "preferenceSourceRows",
+    ],
+    "/audit": [
+        'data-audit-section="summary"',
+        "data-audit-window",
+        "data-audit-module",
+        "auditPreviewChart",
+        "auditBundleRows",
+        "/static/audit.js",
+    ],
+    "/readiness": [
+        'data-readiness-section="summary"',
+        'data-readiness-section="signals"',
+        'data-readiness-section="safety"',
+        'data-readiness-view="summary"',
+        'data-readiness-view="checks"',
+        'data-table-search="readinessCheckTable"',
+        "readinessCheckRows",
+        "readinessSafetyRows",
+        "/static/readiness.js",
+    ],
     "/action-plan": ["data-table-search", "data-sort", "actionRows"],
     "/target-allocation": ["data-table-search", "data-sort", "targetRows"],
     "/subjects": ["data-table-search", "data-sort", "subjectsRows"],
@@ -110,8 +162,14 @@ DASHBOARD_CHECKS = [
     'data-dashboard-section="market-position"',
     'data-dashboard-section="action-plan-summary"',
     'data-dashboard-section="allocation-summary"',
+    'data-dashboard-section="workbench-integration"',
+    'data-dashboard-section="analytics"',
     'data-dashboard-section="subject-summaries"',
     'data-dashboard-section="quick-links"',
+    "workbenchIntegrationRows",
+    "workbenchModuleLinks",
+    "dashboardAnalyticsRows",
+    "data-dashboard-window",
     'data-status-card="system"',
     'data-status-card="research-first"',
     'data-status-card="intraday"',
@@ -120,6 +178,11 @@ DASHBOARD_CHECKS = [
 JS_CHECKS = [
     "function assertRatioOnly",
     "function renderPagination",
+    "function renderEnvironment",
+    "function renderUserPreferences",
+    "function renderDashboardAnalytics",
+    "function renderWorkbenchIntegration",
+    "function setupDashboardWindow",
     "function renderDashboardQuickLinks",
     "function renderSubjectStatus",
     "function renderSubjectGap",
@@ -364,6 +427,58 @@ PHASE9F_FILES = [
     ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
 ]
 
+PHASE10A_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "environment_status.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "environment.html",
+    ROOT / "web" / "backend" / "tests" / "test_environment_status.py",
+    ROOT / "web" / "docs" / "ENVIRONMENT_CENTER.md",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE10B_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "user_preferences.py",
+    ROOT / "web" / "backend" / "app" / "repositories" / "user_preferences_repo.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "preferences.html",
+    ROOT / "web" / "backend" / "tests" / "test_user_preferences.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE10C_FILES = [
+    ROOT / "web" / "backend" / "app" / "repositories" / "history_snapshot_repo.py",
+    ROOT / "web" / "backend" / "app" / "repositories" / "workbench_analytics_repo.py",
+    ROOT / "web" / "backend" / "app" / "services" / "workbench_analytics.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html",
+    ROOT / "web" / "backend" / "tests" / "test_workbench_analytics_dashboard.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE11_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "workbench_integration_service.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html",
+    ROOT / "web" / "backend" / "app" / "templates" / "preferences.html",
+    ROOT / "web" / "backend" / "tests" / "test_integration.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
+PHASE12_FILES = [
+    ROOT / "web" / "backend" / "app" / "services" / "audit_bundle_service.py",
+    ROOT / "web" / "backend" / "app" / "repositories" / "audit_bundle_repo.py",
+    ROOT / "web" / "backend" / "app" / "templates" / "audit.html",
+    ROOT / "web" / "backend" / "app" / "static" / "audit.js",
+    ROOT / "web" / "backend" / "tests" / "test_audit_bundle.py",
+    ROOT / "web" / "docs" / "API_SPEC.md",
+    ROOT / "web" / "docs" / "SERVICE_LAYER_PLAN.md",
+    ROOT / "web" / "docs" / "WEB_RUNBOOK.md",
+]
+
 PROTECTED_SIDE_EFFECT_FILES = [
     ROOT / "research" / "latest_index.json",
     ROOT / "research" / "alerts" / "intraday_rules.json",
@@ -437,6 +552,7 @@ FORBIDDEN_KEY_RE = re.compile(
     r"current_price|qmt_timetag)($|_)",
     re.IGNORECASE,
 )
+ALLOWED_FORBIDDEN_KEY_PATHS = {"$.safety.no_order_generation"}
 LOCAL_PATH_RE = re.compile(r"(?:[A-Za-z]:(?!//)[\\/]|\\\\|/Users/|/home/)")
 FORBIDDEN_TEXT_RE = re.compile(
     r"(total asset|market value|profit amount|trade amount|share count|available quantity|"
@@ -616,6 +732,11 @@ class WebCheck:
         self.check_phase9d_contract_files()
         self.check_phase9e_contract_files()
         self.check_phase9f_contract_files()
+        self.check_phase10a_contract_files()
+        self.check_phase10b_contract_files()
+        self.check_phase10c_contract_files()
+        self.check_phase11_contract_files()
+        self.check_phase12_contract_files()
         self.run_ingest()
         self.run_pytest()
         action_path = self.latest_action_plan_path()
@@ -1609,6 +1730,291 @@ class WebCheck:
             "Repository read-only baseline is enforced",
         )
 
+    def check_phase10a_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE10A_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase10a_environment_center_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase10a_environment_center_files",
+                ", ".join(missing),
+                "Phase 10A environment center files are missing.",
+                "Add the read-only environment service, settings page, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "environment_status.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "latest_index.files" in service_text or '["files"]' in service_text or "['files']" in service_text:
+                raise ValueError("EnvironmentStatusService must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant"]:
+                if blocked in service_text.lower():
+                    raise ValueError(f"EnvironmentStatusService contains blocked integration marker: {blocked}")
+            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "environment.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "read-only research workbench",
+                "not a trading system",
+                "does not connect to QMT write interfaces",
+                "does not generate orders",
+                "trusted networks only",
+                "environmentCheckRows",
+            ]:
+                if marker not in template_text:
+                    raise ValueError(f"environment template missing marker: {marker}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase10a_environment_center_safety", "FAIL", str(exc))
+            self.fail(
+                "phase10a_environment_center_safety",
+                "phase10a environment center files",
+                f"Phase 10A file failed safety scan: {exc}",
+                "Keep the environment center read-only and limited to sanitized status metadata.",
+            )
+            return
+        self.add_result(
+            "phase10a_environment_center_files",
+            "PASS",
+            "Workbench environment center service/page/tests/docs present",
+        )
+
+    def check_phase10b_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE10B_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase10b_user_preferences_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase10b_user_preferences_files",
+                ", ".join(missing),
+                "Phase 10B user preferences center files are missing.",
+                "Add the read-only preference service, repository, page, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "user_preferences.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "user_preferences_repo.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            combined = (service_text + "\n" + repo_text).lower()
+            if "latest_index.files" in combined or '["files"]' in combined or "['files']" in combined:
+                raise ValueError("User preferences must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
+                if blocked in combined:
+                    raise ValueError(f"User preferences contains blocked marker: {blocked.strip()}")
+            if "databaseservice" not in combined:
+                raise ValueError("UserPreferencesRepository must use DatabaseService")
+            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "preferences.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "Workbench Preferences",
+                "data-preferences-section=\"display\"",
+                "data-preferences-section=\"dashboard\"",
+                "data-preferences-section=\"safety\"",
+                "preferenceRows",
+                "preferenceSourceRows",
+            ]:
+                if marker not in template_text:
+                    raise ValueError(f"preferences template missing marker: {marker}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase10b_user_preferences_safety", "FAIL", str(exc))
+            self.fail(
+                "phase10b_user_preferences_safety",
+                "phase10b user preferences files",
+                f"Phase 10B file failed safety scan: {exc}",
+                "Keep preferences read-only, display-only, and routed through DatabaseService.",
+            )
+            return
+        self.add_result(
+            "phase10b_user_preferences_files",
+            "PASS",
+            "Workbench user preferences service/page/tests/docs present",
+        )
+
+    def check_phase10c_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE10C_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase10c_workbench_analytics_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase10c_workbench_analytics_files",
+                ", ".join(missing),
+                "Phase 10C workbench analytics dashboard files are missing.",
+                "Add the read-only analytics repository, service, dashboard hooks, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "workbench_analytics.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "workbench_analytics_repo.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            combined = (service_text + "\n" + repo_text).lower()
+            if "latest_index.files" in combined or '["files"]' in combined or "['files']" in combined:
+                raise ValueError("Workbench analytics must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
+                if blocked in combined:
+                    raise ValueError(f"Workbench analytics contains blocked marker: {blocked.strip()}")
+            if "databaseservice" not in combined:
+                raise ValueError("WorkbenchAnalyticsRepository must use DatabaseService")
+            if "historysnapshotrepository" not in combined:
+                raise ValueError("Workbench analytics must route runtime history through HistorySnapshotRepository")
+            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "data-dashboard-section=\"analytics\"",
+                "data-dashboard-window",
+                "dashboardAnalyticsRows",
+                "dashboard_analytics_modules",
+                "dashboard_analytics_history_entries",
+            ]:
+                if marker not in template_text:
+                    raise ValueError(f"dashboard template missing analytics marker: {marker}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase10c_workbench_analytics_safety", "FAIL", str(exc))
+            self.fail(
+                "phase10c_workbench_analytics_safety",
+                "phase10c workbench analytics files",
+                f"Phase 10C file failed safety scan: {exc}",
+                "Keep analytics read-only, ratio-only, and routed through DatabaseService / HistorySnapshotRepository.",
+            )
+            return
+        self.add_result(
+            "phase10c_workbench_analytics_files",
+            "PASS",
+            "Workbench analytics service/API/dashboard/tests/docs present",
+        )
+
+    def check_phase11_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE11_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase11_workbench_integration_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase11_workbench_integration_files",
+                ", ".join(missing),
+                "Phase 11 workbench integration files are missing.",
+                "Add the read-only integration service, dashboard/preference hooks, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "workbench_integration_service.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            lowered = service_text.lower()
+            if "latest_index.files" in lowered or '["files"]' in lowered or "['files']" in lowered:
+                raise ValueError("Workbench integration must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
+                if blocked in lowered:
+                    raise ValueError(f"Workbench integration contains blocked marker: {blocked.strip()}")
+            for marker in ["WorkbenchAnalyticsService", "UserPreferencesService", "EnvironmentStatusService"]:
+                if marker not in service_text:
+                    raise ValueError(f"Workbench integration missing service marker: {marker}")
+            dashboard_text = (ROOT / "web" / "backend" / "app" / "templates" / "dashboard.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "data-dashboard-section=\"workbench-integration\"",
+                "workbenchModuleLinks",
+                "workbenchIntegrationRows",
+            ]:
+                if marker not in dashboard_text:
+                    raise ValueError(f"dashboard template missing integration marker: {marker}")
+            preferences_text = (ROOT / "web" / "backend" / "app" / "templates" / "preferences.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            if "data-preferences-section=\"workbench-links\"" not in preferences_text:
+                raise ValueError("preferences template missing workbench links")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase11_workbench_integration_safety", "FAIL", str(exc))
+            self.fail(
+                "phase11_workbench_integration_safety",
+                "phase11 workbench integration files",
+                f"Phase 11 file failed safety scan: {exc}",
+                "Keep integration read-only, ratio-only, current-only, and GET-only.",
+            )
+            return
+        self.add_result(
+            "phase11_workbench_integration_files",
+            "PASS",
+            "Workbench integration service/API/page hooks/tests/docs present",
+        )
+
+    def check_phase12_contract_files(self) -> None:
+        missing = [rel(path) for path in PHASE12_FILES if not path.exists()]
+        if missing:
+            self.add_result("phase12_audit_bundle_files", "FAIL", ", ".join(missing))
+            self.fail(
+                "phase12_audit_bundle_files",
+                ", ".join(missing),
+                "Phase 12 audit bundle files are missing.",
+                "Add the read-only audit bundle repository, service, page, script, tests, and docs.",
+            )
+            return
+        try:
+            service_text = (ROOT / "web" / "backend" / "app" / "services" / "audit_bundle_service.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            repo_text = (ROOT / "web" / "backend" / "app" / "repositories" / "audit_bundle_repo.py").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            combined = (service_text + "\n" + repo_text).lower()
+            if "latest_index.files" in combined or '["files"]' in combined or "['files']" in combined:
+                raise ValueError("Audit bundle must not use latest_index.files")
+            for blocked in ["generate_action_plan", "generate_target_allocation", "xtquant", "insert ", "update ", "delete "]:
+                if blocked in combined:
+                    raise ValueError(f"Audit bundle contains blocked marker: {blocked.strip()}")
+            if "databaseservice" not in combined or "historysnapshotrepository" not in combined:
+                raise ValueError("Audit bundle must route through DatabaseService / HistorySnapshotRepository")
+            template_text = (ROOT / "web" / "backend" / "app" / "templates" / "audit.html").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in [
+                "data-audit-section=\"summary\"",
+                "data-audit-window",
+                "data-audit-module",
+                "auditPreviewChart",
+                "auditBundleRows",
+            ]:
+                if marker not in template_text:
+                    raise ValueError(f"audit template missing marker: {marker}")
+            script_text = (ROOT / "web" / "backend" / "app" / "static" / "audit.js").read_text(
+                encoding="utf-8",
+                errors="replace",
+            )
+            for marker in ["function refreshAudit", "function renderChart", "assertSafe", "/api/audit/bundle"]:
+                if marker not in script_text:
+                    raise ValueError(f"audit script missing marker: {marker}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("phase12_audit_bundle_safety", "FAIL", str(exc))
+            self.fail(
+                "phase12_audit_bundle_safety",
+                "phase12 audit bundle files",
+                f"Phase 12 file failed safety scan: {exc}",
+                "Keep audit bundle read-only, ratio-only, current-only, and GET-only.",
+            )
+            return
+        self.add_result(
+            "phase12_audit_bundle_files",
+            "PASS",
+            "Workbench audit bundle service/API/page/script/tests/docs present",
+        )
+
     def run_ingest(self) -> None:
         self.run_command("ingest_current_state", [sys.executable, "scripts/ingest_current_state.py"])
         if DB_PATH.exists():
@@ -1671,7 +2077,7 @@ class WebCheck:
 
     def check_api_and_export(self) -> None:
         try:
-            from fastapi.testclient import TestClient
+            TestClient = import_test_client()
 
             from web.backend.app.main import app
             from web.backend.app.services.ratio_only import RatioOnlyService
@@ -1700,8 +2106,11 @@ class WebCheck:
                 continue
             try:
                 data = response.json()
-                ratio.assert_safe(data)
-                assert_safe_payload(data)
+                if path == "/api/environment/status":
+                    assert_environment_status_payload(data)
+                else:
+                    ratio.assert_safe(data)
+                    assert_safe_payload(data)
             except Exception as exc:  # noqa: BLE001
                 self.fail(
                     "api_ratio_only",
@@ -1713,6 +2122,10 @@ class WebCheck:
         self.add_result("api_forbidden_fields", api_status, f"{len(API_PATHS)} endpoints")
 
         self.check_api_is_read_only(client)
+        self.check_environment_status_api(client)
+        self.check_schema_guard_api(client, ratio)
+        self.check_historical_metrics_guard_api(client, ratio)
+        self.check_workbench_readiness_api(client, ratio)
         self.check_subject_status_api(client, ratio)
         self.check_subject_gap_api(client, ratio)
         self.check_dashboard_api(client, ratio)
@@ -1752,6 +2165,247 @@ class WebCheck:
             self.add_result("openapi_read_only", "FAIL", "; ".join(mutating))
         else:
             self.add_result("openapi_read_only", "PASS", "No POST/PUT/PATCH/DELETE under /api")
+
+    def check_environment_status_api(self, client: Any) -> None:
+        try:
+            response = client.get("/api/environment/status")
+            if response.status_code != 200:
+                raise ValueError(f"Expected 200, got {response.status_code}")
+            payload = response.json()
+            assert_environment_status_payload(payload)
+            if payload.get("module") != "environment_status":
+                raise ValueError("module mismatch")
+            if payload.get("readonly") is not True or payload.get("current_only") is not True:
+                raise ValueError("top-level readonly/current-only flags are not true")
+            safety = payload.get("safety") or {}
+            for key in ["no_trading", "no_qmt_write", "no_order_generation", "research_first_gate_required"]:
+                if safety.get(key) is not True:
+                    raise ValueError(f"safety flag is not true: {key}")
+            if safety.get("research_current_mutation") is not False:
+                raise ValueError("research_current_mutation must be false")
+            web = payload.get("web") or {}
+            if web.get("default_host") != "0.0.0.0" or web.get("default_port") != 8000:
+                raise ValueError("default Web host/port changed")
+            paths = payload.get("paths") or {}
+            if paths.get("web_db_path") != "temp/web_db/myinvest.sqlite":
+                raise ValueError("web_db_path must be repo-relative temp/web_db/myinvest.sqlite")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("environment_status_api", "FAIL", str(exc))
+            self.fail(
+                "environment_status_api",
+                "/api/environment/status",
+                f"Environment status API failed safety check: {exc}",
+                "Return sanitized read-only metadata only, with repo-relative paths.",
+            )
+            return
+        self.add_result("environment_status_api", "PASS", "read-only workbench environment status safe")
+
+    def check_schema_guard_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/diagnostics/schema")
+            if response.status_code != 200:
+                raise ValueError(f"Expected 200, got {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            guard = ((payload.get("data") or {}).get("schema_guard") or {})
+            if guard.get("module") != "schema_guard":
+                raise ValueError("module mismatch")
+            if guard.get("current_only") is not True or guard.get("read_only") is not True:
+                raise ValueError("schema guard is not marked current-only/read-only")
+            if guard.get("expected_schema_version") != "web_read_model_v1":
+                raise ValueError("expected schema version mismatch")
+            if guard.get("status") not in {"ok", "degraded", "mismatch", "unavailable"}:
+                raise ValueError(f"unsupported schema guard status: {guard.get('status')}")
+            if guard.get("status") in {"mismatch", "unavailable"}:
+                raise ValueError(f"schema guard reported blocking status: {guard.get('status')}")
+            if not guard.get("expected_schema_fingerprint"):
+                raise ValueError("expected schema fingerprint is empty")
+            if guard.get("observed_schema_fingerprint") and guard.get("schema_fingerprint_match") is not True:
+                raise ValueError("observed schema fingerprint did not match")
+            if guard.get("required_tables_present") is not True or guard.get("required_columns_present") is not True:
+                raise ValueError("required schema contract is not present")
+            if not isinstance(guard.get("missing_required_tables"), list):
+                raise ValueError("missing_required_tables is not a list")
+            if not isinstance(guard.get("missing_required_columns"), dict):
+                raise ValueError("missing_required_columns is not a dict")
+            contract = guard.get("schema_contract") or {}
+            if contract.get("required_table_count", 0) <= 0 or contract.get("required_column_count", 0) <= 0:
+                raise ValueError("schema contract counts are empty")
+            if contract.get("missing_required_table_count") != 0 or contract.get("missing_required_column_count") != 0:
+                raise ValueError("schema contract reports missing structures")
+            enforcement = guard.get("enforcement") or {}
+            if enforcement.get("mode") != "read_only_schema_guard":
+                raise ValueError("schema guard enforcement mode mismatch")
+            if enforcement.get("read_model_usable") is not True:
+                raise ValueError("schema guard reports read model unusable")
+            if enforcement.get("web_smoke_compatible") is not True:
+                raise ValueError("schema guard is not Web-smoke compatible")
+            if enforcement.get("fail_closed") is not False:
+                raise ValueError("schema guard fail_closed is unexpectedly true for current DB")
+            safety = guard.get("safety") or {}
+            for key in ["no_sqlite_writes", "no_migration", "get_only", "ratio_only", "current_only"]:
+                if safety.get(key) is not True:
+                    raise ValueError(f"safety flag is not true: {key}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("schema_guard_api", "FAIL", str(exc))
+            self.fail(
+                "schema_guard_api",
+                "/api/diagnostics/schema",
+                f"Schema guard API failed safety check: {exc}",
+                "Return sanitized read-only schema metadata only.",
+            )
+            return
+        self.add_result("schema_guard_api", "PASS", "read-only schema guard diagnostics safe")
+
+    def check_historical_metrics_guard_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/diagnostics/historical-metrics")
+            if response.status_code != 200:
+                raise ValueError(f"Expected 200, got {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            guard = ((payload.get("data") or {}).get("historical_metrics_guard") or {})
+            if guard.get("module") != "historical_metrics_guard":
+                raise ValueError("module mismatch")
+            if guard.get("current_only") is not True or guard.get("read_only") is not True:
+                raise ValueError("guard is not marked current-only/read-only")
+            if guard.get("ratio_only") is not True:
+                raise ValueError("guard is not marked ratio-only")
+            if guard.get("status") not in {"ok", "degraded", "mismatch", "unavailable"}:
+                raise ValueError(f"unsupported guard status: {guard.get('status')}")
+            if guard.get("status") in {"mismatch", "unavailable"}:
+                raise ValueError(f"historical metrics guard reported blocking status: {guard.get('status')}")
+            if guard.get("required_inputs_present") is not True:
+                raise ValueError("required inputs are not present")
+            if guard.get("missing_inputs") != []:
+                raise ValueError("missing inputs should be empty for current DB")
+            if not isinstance(guard.get("table_counts"), dict) or not guard.get("table_counts"):
+                raise ValueError("table_counts is empty")
+            if not isinstance(guard.get("source_modules"), dict) or not guard.get("source_modules"):
+                raise ValueError("source_modules is empty")
+            contract = guard.get("contract") or {}
+            if contract.get("contract_version") != "historical_metrics_guard_v1":
+                raise ValueError("contract version mismatch")
+            for key in [
+                "required_inputs",
+                "observed_inputs",
+                "missing_inputs",
+                "required_source_modules",
+                "observed_source_modules",
+                "missing_source_modules",
+                "expected_fingerprint",
+                "observed_fingerprint",
+                "fingerprint_match",
+            ]:
+                if key not in contract:
+                    raise ValueError(f"contract field missing: {key}")
+            if not contract.get("expected_fingerprint") or not contract.get("observed_fingerprint"):
+                raise ValueError("contract fingerprint is missing")
+            if contract.get("fingerprint_match") is not True:
+                raise ValueError("contract fingerprint mismatch for current DB")
+            if contract.get("missing_source_modules") != []:
+                raise ValueError("source modules should be complete for current DB")
+            if contract.get("missing_integration_payloads") != []:
+                raise ValueError("integration payloads should be complete for current DB")
+            enforcement = guard.get("enforcement") or {}
+            if enforcement.get("mode") != "full_read_only_historical_metrics_guard":
+                raise ValueError("enforcement mode mismatch")
+            if enforcement.get("fail_closed") is not False:
+                raise ValueError("fail_closed should be false for current DB")
+            if enforcement.get("read_model_usable") is not True:
+                raise ValueError("read model should be usable for current DB")
+            if enforcement.get("web_smoke_compatible") is not True:
+                raise ValueError("guard is not Web-smoke compatible")
+            if enforcement.get("audit_bundle_compatible") is not True:
+                raise ValueError("guard is not audit-bundle compatible")
+            if enforcement.get("contract_match") is not True:
+                raise ValueError("enforcement contract_match should be true")
+            safety = guard.get("safety") or {}
+            for key in ["read_only", "ratio_only", "current_only", "research_first_neutral", "openapi_get_only"]:
+                if safety.get(key) is not True:
+                    raise ValueError(f"safety flag is not true: {key}")
+            if safety.get("uses_latest_index_files") is not False:
+                raise ValueError("latest_index.files safety flag must be false")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("historical_metrics_guard_api", "FAIL", str(exc))
+            self.fail(
+                "historical_metrics_guard_api",
+                "/api/diagnostics/historical-metrics",
+                f"Historical metrics guard API failed safety check: {exc}",
+                "Return sanitized read-only Historical Metrics guard metadata only.",
+            )
+            return
+        self.add_result("historical_metrics_guard_api", "PASS", "read-only Historical Metrics guard diagnostics safe")
+
+    def check_workbench_readiness_api(self, client: Any, ratio: Any) -> None:
+        try:
+            for path in ["/api/readiness/summary", "/api/readiness/checks"]:
+                response = client.get(path)
+                if response.status_code != 200:
+                    raise ValueError(f"{path} expected 200, got {response.status_code}")
+                payload = response.json()
+                ratio.assert_safe(payload)
+                assert_safe_payload(payload)
+                readiness = payload.get("data") or {}
+                if readiness.get("module") != "workbench_readiness":
+                    raise ValueError(f"{path} module mismatch")
+                if readiness.get("status") not in {"ok", "degraded", "mismatch", "unavailable"}:
+                    raise ValueError(f"{path} unsupported status: {readiness.get('status')}")
+                if readiness.get("status") in {"mismatch", "unavailable"}:
+                    raise ValueError(f"{path} reported blocking status: {readiness.get('status')}")
+                if readiness.get("fail_closed") is not False:
+                    raise ValueError(f"{path} fail_closed should be false for current DB")
+                if readiness.get("web_smoke_compatible") is not True:
+                    raise ValueError(f"{path} is not Web-smoke compatible")
+                if not isinstance(readiness.get("checks"), list) or not readiness.get("checks"):
+                    raise ValueError(f"{path} checks are missing")
+                if not isinstance(readiness.get("summary"), dict) or not readiness.get("summary"):
+                    raise ValueError(f"{path} summary is missing")
+                safety = readiness.get("safety") or {}
+                for key in [
+                    "read_only",
+                    "ratio_only",
+                    "current_only",
+                    "research_first",
+                    "get_only",
+                    "no_validation_commands",
+                    "no_file_writes",
+                    "no_sqlite_writes",
+                ]:
+                    if safety.get(key) is not True:
+                        raise ValueError(f"{path} safety flag is not true: {key}")
+                if safety.get("uses_latest_index_files") is not False:
+                    raise ValueError(f"{path} latest_index.files safety flag must be false")
+                names = {str(check.get("name")) for check in readiness.get("checks") or []}
+                required = {
+                    "environment_settings",
+                    "schema_diagnostics",
+                    "historical_metrics_diagnostics",
+                    "dashboard_summary",
+                    "audit_bundle_availability",
+                    "current_validation_summary",
+                }
+                if not required.issubset(names):
+                    raise ValueError(f"{path} missing readiness checks: {sorted(required - names)}")
+                for check in readiness.get("checks") or []:
+                    if check.get("status") not in {"ok", "degraded", "mismatch", "unavailable"}:
+                        raise ValueError(f"{path} unsupported check status: {check.get('name')}")
+                    if check.get("fail_closed") is True:
+                        raise ValueError(f"{path} check failed closed: {check.get('name')}")
+                    if check.get("web_smoke_compatible") is not True:
+                        raise ValueError(f"{path} check is not Web-smoke compatible: {check.get('name')}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("workbench_readiness_api", "FAIL", str(exc))
+            self.fail(
+                "workbench_readiness_api",
+                "/api/readiness/summary",
+                f"Workbench readiness API failed safety check: {exc}",
+                "Return sanitized read-only readiness metadata only.",
+            )
+            return
+        self.add_result("workbench_readiness_api", "PASS", "read-only Workbench readiness APIs safe")
 
     def check_subject_gap_api(self, client: Any, ratio: Any) -> None:
         try:
@@ -1932,6 +2586,58 @@ class WebCheck:
                 link_response = client.get(href)
                 if link_response.status_code != 200:
                     raise ValueError(f"dashboard quick link {href} returned {link_response.status_code}")
+            summary_response = client.get("/api/dashboard/summary?time_window=7d")
+            if summary_response.status_code != 200:
+                raise ValueError(f"dashboard summary API returned {summary_response.status_code}")
+            summary_payload = summary_response.json()
+            ratio.assert_safe(summary_payload)
+            assert_safe_payload(summary_payload)
+            summary_data = summary_payload.get("data") or {}
+            if summary_data.get("module") != "workbench_analytics_dashboard":
+                raise ValueError("dashboard summary payload module mismatch")
+            if summary_data.get("window", {}).get("selected") != "7d":
+                raise ValueError("dashboard summary time window was not honored")
+            if (summary_data.get("metrics") or {}).get("current_module_count", 0) <= 0:
+                raise ValueError("dashboard summary current module count is empty")
+            user_response = client.get("/api/dashboard/user_metrics/default?time_window=30d")
+            if user_response.status_code != 200:
+                raise ValueError(f"dashboard user metrics API returned {user_response.status_code}")
+            user_payload = user_response.json()
+            ratio.assert_safe(user_payload)
+            assert_safe_payload(user_payload)
+            user_data = user_payload.get("data") or {}
+            if user_data.get("module") != "workbench_user_metrics" or user_data.get("user_id") != "default":
+                raise ValueError("dashboard user metrics payload mismatch")
+            missing_response = client.get("/api/dashboard/user_metrics/unknown_user")
+            if missing_response.status_code != 404:
+                raise ValueError("dashboard user metrics unknown id did not return safe 404")
+            integration_response = client.get("/api/workbench/integration?time_window=7d")
+            if integration_response.status_code != 200:
+                raise ValueError(f"workbench integration API returned {integration_response.status_code}")
+            integration_payload = integration_response.json()
+            ratio.assert_safe(integration_payload)
+            assert_safe_payload(integration_payload)
+            integration_data = integration_payload.get("data") or {}
+            if integration_data.get("module") != "workbench_integration":
+                raise ValueError("workbench integration payload module mismatch")
+            labels = {item.get("label") for item in integration_data.get("modules") or []}
+            if not {"Settings", "Preferences", "Dashboard", "Research Centers"}.issubset(labels):
+                raise ValueError("workbench integration missing module links")
+            audit_response = client.get("/api/audit/bundle?time_window=7d&module_filter=dashboard")
+            if audit_response.status_code != 200:
+                raise ValueError(f"audit bundle API returned {audit_response.status_code}")
+            audit_payload = audit_response.json()
+            ratio.assert_safe(audit_payload)
+            assert_safe_payload(audit_payload)
+            audit_data = audit_payload.get("data") or {}
+            if audit_data.get("module") != "workbench_audit_bundle":
+                raise ValueError("audit bundle payload module mismatch")
+            if audit_data.get("window", {}).get("selected") != "7d":
+                raise ValueError("audit bundle time window was not honored")
+            if audit_data.get("module_filter", {}).get("selected") != "dashboard":
+                raise ValueError("audit bundle module filter was not honored")
+            if not audit_data.get("sections"):
+                raise ValueError("audit bundle sections are empty")
         except Exception as exc:  # noqa: BLE001
             self.fail(
                 "dashboard_api",
@@ -1941,7 +2647,7 @@ class WebCheck:
             )
             self.add_result("dashboard_api", "FAIL", str(exc))
         else:
-            self.add_result("dashboard_api", "PASS", "summary, quick links, and cash-equivalent gate safe")
+            self.add_result("dashboard_api", "PASS", "summary, analytics, integration, audit bundle, quick links, and cash-equivalent gate safe")
 
     def check_theme_status_api(self, client: Any, ratio: Any) -> None:
         try:
@@ -2762,7 +3468,7 @@ class WebCheck:
 
     def check_frontend_interactions(self) -> None:
         try:
-            from fastapi.testclient import TestClient
+            TestClient = import_test_client()
 
             from web.backend.app.main import app
         except Exception as exc:  # noqa: BLE001
@@ -2812,7 +3518,46 @@ class WebCheck:
                     "Missing JS behavior markers: " + ", ".join(missing_js),
                     "Restore refresh sanitizer, pagination, and expandable detail logic.",
                 )
-        if not any(item.check in {"frontend_interactions", "dashboard_visuals", "frontend_js", "page_status", "page_safety"} for item in self.failures):
+        readiness_js = client.get("/static/readiness.js")
+        if readiness_js.status_code != 200:
+            self.fail(
+                "readiness_frontend_js",
+                "web/backend/app/static/readiness.js",
+                "Readiness static JS not served.",
+                "Restore the Phase 16C readiness page script.",
+            )
+        else:
+            script = readiness_js.text
+            missing = [
+                marker
+                for marker in [
+                    "function refreshReadiness",
+                    "function renderReadiness",
+                    "function assertSafe",
+                    "/api/readiness/summary",
+                    "/api/readiness/checks",
+                ]
+                if marker not in script
+            ]
+            if missing:
+                self.fail(
+                    "readiness_frontend_js",
+                    "web/backend/app/static/readiness.js",
+                    "Missing readiness JS markers: " + ", ".join(missing),
+                    "Restore readiness page refresh, render, and sanitizer logic.",
+                )
+        if not any(
+            item.check
+            in {
+                "frontend_interactions",
+                "dashboard_visuals",
+                "frontend_js",
+                "readiness_frontend_js",
+                "page_status",
+                "page_safety",
+            }
+            for item in self.failures
+        ):
             self.add_result("frontend_interactions", "PASS", "tables, dashboard, sanitizer hooks")
 
     def check_run_web_script(self) -> None:
@@ -2987,6 +3732,21 @@ def rel(path: Path) -> str:
         return str(path)
 
 
+def import_test_client() -> Any:
+    import warnings
+
+    from starlette.exceptions import StarletteDeprecationWarning
+
+    warnings.filterwarnings(
+        "ignore",
+        message=r"Using `httpx` with `starlette\.testclient` is deprecated; install `httpx2` instead\.",
+        category=StarletteDeprecationWarning,
+    )
+    from starlette.testclient import TestClient
+
+    return TestClient
+
+
 def normalize(path: str) -> str:
     return path.replace("\\", "/").lower()
 
@@ -3066,13 +3826,23 @@ def assert_safe_payload(value: Any) -> None:
     assert_safe_keys(value)
 
 
+def assert_environment_status_payload(value: Any) -> None:
+    serialized = json.dumps(value, ensure_ascii=False, sort_keys=True)
+    if LOCAL_PATH_RE.search(serialized):
+        raise ValueError("environment status contains a local absolute path")
+    if re.search(r"(\.env|token|secret|password|api key)", serialized, re.IGNORECASE):
+        raise ValueError("environment status contains a secret-like term")
+    assert_safe_payload(value)
+
+
 def assert_safe_keys(value: Any, path: str = "$") -> None:
     if isinstance(value, dict):
         for key, item in value.items():
             key_text = str(key)
-            if FORBIDDEN_KEY_RE.search(key_text):
+            key_path = f"{path}.{key_text}"
+            if key_path not in ALLOWED_FORBIDDEN_KEY_PATHS and FORBIDDEN_KEY_RE.search(key_text):
                 raise ValueError(f"forbidden key {path}.{key_text}")
-            assert_safe_keys(item, f"{path}.{key_text}")
+            assert_safe_keys(item, key_path)
     elif isinstance(value, list):
         for idx, item in enumerate(value):
             assert_safe_keys(item, f"{path}[{idx}]")

@@ -10,17 +10,21 @@ from ..config import DB_PATH
 from ..db import get_session
 from ..services.allocation_drilldown import AllocationDrilldownService
 from ..services.allocation_consistency import AllocationConsistencyService
+from ..services.audit_bundle_service import AuditBundleService
 from ..services.bucket_explorer import BucketExplorerService
 from ..services.current_state import CurrentStateService
 from ..services.dashboard import DashboardService
 from ..services.decision_timeline import DecisionTimelineService
+from ..services.environment_status import EnvironmentStatusService
 from ..services.export_package import ReviewPackageExportService
 from ..services.history_gap_dashboard import HistoryGapDashboardService
 from ..services.history_snapshot import HistorySnapshotService
 from ..services.historical_metrics import HistoricalMetricsService
+from ..services.historical_metrics_guard import HistoricalMetricsGuardService
 from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
+from ..services.schema_guard import SchemaGuardService
 from ..services.subject_gap import SubjectGapService
 from ..services.subject_status import SubjectStatusService
 from ..services.system_check import SystemCheckService
@@ -28,6 +32,10 @@ from ..services.target_allocation_candidate_audit import TargetAllocationCandida
 from ..services.target_allocation_export import TargetAllocationControlledExportService
 from ..services.target_allocation_generation import TargetAllocationGenerationService
 from ..services.theme_status import ThemeStatusService
+from ..services.user_preferences import UserPreferencesService
+from ..services.workbench_analytics import WorkbenchAnalyticsService
+from ..services.workbench_integration_service import WorkbenchIntegrationService
+from ..services.workbench_readiness import WorkbenchReadinessService
 
 
 router = APIRouter()
@@ -51,6 +59,60 @@ def health() -> dict[str, Any]:
         "current_only": True,
         "database": "temp/web_db/myinvest.sqlite",
     }
+
+
+@router.get("/environment/status")
+def environment_status() -> dict[str, Any]:
+    return EnvironmentStatusService().status()
+
+
+@router.get("/diagnostics/schema")
+def schema_diagnostics(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        {"schema_guard": SchemaGuardService(session).status()},
+        source={"path": "db.SchemaGuardRepository"},
+    )
+
+
+@router.get("/diagnostics/historical-metrics")
+def historical_metrics_diagnostics(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        {"historical_metrics_guard": HistoricalMetricsGuardService(session).status()},
+        source={"path": "db.HistoricalMetricsGuardRepository"},
+    )
+
+
+@router.get("/readiness/summary")
+def readiness_summary(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        WorkbenchReadinessService(session).summary(),
+        source={"path": "db.WorkbenchReadinessService"},
+    )
+
+
+@router.get("/readiness/checks")
+def readiness_checks(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        WorkbenchReadinessService(session).checks(),
+        source={"path": "db.WorkbenchReadinessService"},
+    )
+
+
+@router.get("/user/preferences")
+def user_preferences(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        {"preferences": UserPreferencesService(session).preferences()},
+        source={"path": "db.UserPreferencesRepository"},
+    )
+
+
+@router.get("/user/preferences/{user_id}")
+def user_preferences_for_user(user_id: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+    try:
+        data = UserPreferencesService(session).preferences(user_id)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="user preferences not found") from exc
+    return respond({"preferences": data}, source={"path": "db.UserPreferencesRepository"})
 
 
 @router.get("/latest-index")
@@ -80,6 +142,47 @@ def current(session: Session = Depends(get_session)) -> dict[str, Any]:
 @router.get("/dashboard/current")
 def dashboard_current(session: Session = Depends(get_session)) -> dict[str, Any]:
     return respond(DashboardService(session).current_dashboard(), source={"path": "db.DashboardService"})
+
+
+@router.get("/dashboard/summary")
+def dashboard_summary(time_window: str = "current", session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        WorkbenchAnalyticsService(session).summary(time_window=time_window),
+        source={"path": "db.WorkbenchAnalyticsRepository"},
+    )
+
+
+@router.get("/dashboard/user_metrics/{user_id}")
+def dashboard_user_metrics(
+    user_id: str,
+    time_window: str = "current",
+    session: Session = Depends(get_session),
+) -> dict[str, Any]:
+    try:
+        data = WorkbenchAnalyticsService(session).user_metrics(user_id=user_id, time_window=time_window)
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail="dashboard user metrics not found") from exc
+    return respond(data, source={"path": "db.WorkbenchAnalyticsRepository"})
+
+
+@router.get("/workbench/integration")
+def workbench_integration(time_window: str = "current", session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        WorkbenchIntegrationService(session).overview(time_window=time_window),
+        source={"path": "db.WorkbenchIntegrationService"},
+    )
+
+
+@router.get("/audit/bundle")
+def audit_bundle(
+    time_window: str = "current",
+    module_filter: str = "all",
+    session: Session = Depends(get_session),
+) -> dict[str, Any]:
+    return respond(
+        AuditBundleService(session).bundle(time_window=time_window, module_filter=module_filter),
+        source={"path": "db.AuditBundleRepository"},
+    )
 
 
 @router.get("/modules/current")

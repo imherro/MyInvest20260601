@@ -12,6 +12,40 @@ def test_pages_include_refresh_export_and_interaction_hooks(client):
     assert "data-no-pagination=\"true\"" in html
 
 
+def test_environment_page_include_refresh_and_status_hooks(client):
+    response = client.get("/settings")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "/api/environment/status" in html
+    assert "data-environment-section=\"git\"" in html
+    assert "data-environment-section=\"safety\"" in html
+    assert "data-status-card=\"env-readonly\"" in html
+    assert "data-bind=\"env_branch\"" in html
+    assert "environmentCheckRows" in html
+    script = client.get("/static/app.js").text
+    assert "function renderEnvironment" in script
+    assert "no_order_generation" in script
+
+
+def test_preferences_page_include_refresh_and_table_hooks(client):
+    response = client.get("/preferences")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "/api/user/preferences" in html
+    assert "data-preferences-section=\"display\"" in html
+    assert "data-preferences-section=\"dashboard\"" in html
+    assert "data-preferences-section=\"safety\"" in html
+    assert "data-status-card=\"pref-readonly\"" in html
+    assert "data-bind=\"pref_refresh\"" in html
+    assert "preferenceRows" in html
+    assert "preferenceSourceRows" in html
+    script = client.get("/static/app.js").text
+    assert "function renderUserPreferences" in script
+    assert "preferences: renderUserPreferences" in script
+
+
 def test_subject_gap_page_include_refresh_and_table_hooks(client):
     response = client.get("/subjects/gap")
     assert response.status_code == 200
@@ -132,6 +166,24 @@ def test_historical_metrics_page_include_refresh_filter_and_table_hooks(client):
     assert "historicalMetricRows" in html
 
 
+def test_readiness_page_include_refresh_switch_and_table_hooks(client):
+    response = client.get("/readiness")
+    assert response.status_code == 200
+    html = response.text
+    assert "data-refresh" in html
+    assert "/api/readiness/summary" in html
+    assert "/api/readiness/checks" in html
+    assert "data-readiness-view=\"summary\"" in html
+    assert "data-readiness-view=\"checks\"" in html
+    assert "data-table-search=\"readinessCheckTable\"" in html
+    assert "readinessCheckRows" in html
+    assert "readinessSafetyRows" in html
+    script = client.get("/static/readiness.js").text
+    assert "function refreshReadiness" in script
+    assert "function renderReadiness" in script
+    assert "function assertSafe" in script
+
+
 def test_dashboard_includes_gap_chart_and_status_cards(client):
     response = client.get("/")
     assert response.status_code == 200
@@ -142,7 +194,13 @@ def test_dashboard_includes_gap_chart_and_status_cards(client):
     assert "data-dashboard-section=\"market-position\"" in html
     assert "data-dashboard-section=\"action-plan-summary\"" in html
     assert "data-dashboard-section=\"allocation-summary\"" in html
+    assert "data-dashboard-section=\"analytics\"" in html
+    assert "data-dashboard-section=\"workbench-integration\"" in html
     assert "data-dashboard-section=\"subject-summaries\"" in html
+    assert "workbenchIntegrationRows" in html
+    assert "workbenchModuleLinks" in html
+    assert "dashboardAnalyticsRows" in html
+    assert "data-dashboard-window" in html
     assert "dashboardQuickLinks" in html
     assert "data-status-card=\"research-first\"" in html
     assert "data-status-card=\"intraday\"" in html
@@ -159,6 +217,10 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function renderSubjectGap" in script
     assert "function renderSubjectGapChart" in script
     assert "function renderDashboardQuickLinks" in script
+    assert "function renderDashboardAnalytics" in script
+    assert "function renderWorkbenchIntegration" in script
+    assert "function setupDashboardWindow" in script
+    assert "function renderEnvironment" in script
     assert "function renderThemes" in script
     assert "function renderBucketDrilldown" in script
     assert "function renderBucketDrilldownChart" in script

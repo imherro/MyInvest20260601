@@ -8,6 +8,10 @@
   {% set allocation = d.allocation_summary or {} %}
   {% set subject_status = d.subject_status_summary or {} %}
   {% set subject_gap = d.subject_gap_summary or {} %}
+  {% set analytics = d.analytics_summary or {} %}
+  {% set analytics_metrics = analytics.metrics or {} %}
+  {% set analytics_gates = analytics.gates or {} %}
+  {% set integration = d.workbench_integration or {} %}
   {% set cash_gate = subject_status.cash_equivalent_gate or {} %}
 
   <section class="dashboard-grid" data-dashboard-section="system-status">
@@ -57,6 +61,73 @@
   <section data-dashboard-section="bucket-gap">
     <h2>Bucket Gap</h2>
     <div class="gap-chart" id="bucketGapChart" data-dashboard-bucket-gap aria-label="Bucket allocation gap chart"></div>
+  </section>
+
+  <section data-dashboard-section="workbench-integration">
+    <h2>Workbench Modules</h2>
+    <div class="quick-links" id="workbenchModuleLinks">
+      {% for item in integration.modules or [] %}
+        <a class="button-link" href="{{ item.href }}">{{ item.label }}</a>
+      {% endfor %}
+    </div>
+    <table data-page-size="12">
+      <thead>
+        <tr>
+          <th>Module</th>
+          <th>Status</th>
+          <th>API</th>
+        </tr>
+      </thead>
+      <tbody id="workbenchIntegrationRows">
+        {% for item in integration.modules or [] %}
+        <tr>
+          <td>{{ item.label }}</td>
+          <td>{{ item.status }}</td>
+          <td>{{ item.api_path }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section data-dashboard-section="analytics">
+    <div class="page-top">
+      <div>
+        <h2>Workbench Analytics</h2>
+        <div class="subtle">DatabaseService / HistorySnapshot read model.</div>
+      </div>
+      <div class="table-tools">
+        <select data-dashboard-window aria-label="Analytics window">
+          <option value="current" selected>Current</option>
+          <option value="7d">7D</option>
+          <option value="30d">30D</option>
+        </select>
+      </div>
+    </div>
+    <div class="metric-grid">
+      <div class="metric"><span>Modules</span><strong data-bind="dashboard_analytics_modules">{{ analytics_metrics.current_module_count or 0 }}</strong></div>
+      <div class="metric"><span>Subjects</span><strong data-bind="dashboard_analytics_subjects">{{ analytics_metrics.subject_count or 0 }}</strong></div>
+      <div class="metric"><span>Actions</span><strong data-bind="dashboard_analytics_actions">{{ analytics_metrics.action_count or 0 }}</strong></div>
+      <div class="metric"><span>ResearchFirst</span><strong data-bind="dashboard_analytics_research_first">{{ analytics_metrics.research_first_count or 0 }}</strong></div>
+      <div class="metric"><span>Large Gaps</span><strong data-bind="dashboard_analytics_large_gaps">{{ analytics_metrics.large_gap_count or 0 }}</strong></div>
+      <div class="metric"><span>History Entries</span><strong data-bind="dashboard_analytics_history_entries">{{ analytics_metrics.history_entry_count or 0 }}</strong></div>
+    </div>
+    <table data-page-size="12">
+      <thead>
+        <tr>
+          <th>Gate</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="dashboardAnalyticsRows">
+        {% for name, status in analytics_gates.items() %}
+        <tr>
+          <td>{{ name }}</td>
+          <td>{{ status }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </section>
 
   <section class="dashboard-grid" data-dashboard-section="subject-summaries">

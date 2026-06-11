@@ -4,6 +4,18 @@ from __future__ import annotations
 def test_required_api_endpoints(client):
     paths = [
         "/api/health",
+        "/api/environment/status",
+        "/api/diagnostics/schema",
+        "/api/diagnostics/historical-metrics",
+        "/api/readiness/summary",
+        "/api/readiness/checks",
+        "/api/user/preferences",
+        "/api/user/preferences/default",
+        "/api/dashboard/summary",
+        "/api/dashboard/user_metrics/default",
+        "/api/workbench/integration",
+        "/api/audit/bundle",
+        "/api/audit/bundle?time_window=7d&module_filter=dashboard",
         "/api/dashboard/current",
         "/api/current",
         "/api/latest-index",

@@ -40,6 +40,10 @@
     return value ? "yes" : "no";
   }
 
+  function isAllowedSafetyKey(path, key) {
+    return key === "no_order_generation" && (path === "$.safety" || path === "$.data.safety");
+  }
+
   function assertRatioOnly(value, path = "$") {
     if (Array.isArray(value)) {
       value.forEach((item, index) => assertRatioOnly(item, `${path}[${index}]`));
@@ -47,7 +51,7 @@
     }
     if (value && typeof value === "object") {
       Object.entries(value).forEach(([key, item]) => {
-        if (forbiddenKeyRe.test(String(key))) {
+        if (forbiddenKeyRe.test(String(key)) && !isAllowedSafetyKey(path, key)) {
           throw new Error(`ratio-only blocked key ${path}.${key}`);
         }
         assertRatioOnly(item, `${path}.${key}`);
@@ -260,6 +264,47 @@
     });
   }
 
+  function renderDashboardAnalytics(analytics) {
+    const metrics = analytics.metrics || {};
+    const gates = analytics.gates || {};
+    const windowInfo = analytics.window || {};
+    setBind("dashboard_analytics_modules", metrics.current_module_count ?? 0);
+    setBind("dashboard_analytics_subjects", metrics.subject_count ?? 0);
+    setBind("dashboard_analytics_actions", metrics.action_count ?? 0);
+    setBind("dashboard_analytics_research_first", metrics.research_first_count ?? 0);
+    setBind("dashboard_analytics_large_gaps", metrics.large_gap_count ?? 0);
+    setBind("dashboard_analytics_history_entries", metrics.history_entry_count ?? 0);
+    const selector = document.querySelector("[data-dashboard-window]");
+    if (selector && windowInfo.selected) selector.value = windowInfo.selected;
+    setRows(
+      "dashboardAnalyticsRows",
+      Object.entries(gates).map(([name, status]) => ({ name, status })),
+      (row) => [row.name, row.status],
+      (row) => `gate: ${row.name || ""} | status: ${row.status || ""}`,
+    );
+  }
+
+  function renderWorkbenchIntegration(integration) {
+    const modules = integration.modules || [];
+    const links = document.getElementById("workbenchModuleLinks");
+    if (links) {
+      links.replaceChildren();
+      modules.forEach((item) => {
+        const link = document.createElement("a");
+        link.className = "button-link";
+        link.href = text(item.href, "#");
+        link.textContent = text(item.label, "");
+        links.appendChild(link);
+      });
+    }
+    setRows(
+      "workbenchIntegrationRows",
+      modules,
+      (row) => [row.label, row.status, row.api_path],
+      (row) => `module: ${row.name || ""} | status: ${row.status || ""} | api: ${row.api_path || ""}`,
+    );
+  }
+
   function renderDashboard(data) {
     const system = data.system_status || {};
     const market = data.market_position || {};
@@ -301,6 +346,8 @@
     setStatusCard("research-first", system.research_first_gate_status === "ok" ? "ok" : "fail");
     setStatusCard("intraday", system.intraday_stale_flag || system.intraday_degraded_flag ? "warn" : "ok");
     renderGapChart(allocation.bucket_gaps || []);
+    renderDashboardAnalytics(data.analytics_summary || {});
+    renderWorkbenchIntegration(data.workbench_integration || {});
     renderDashboardQuickLinks(data.quick_links || []);
   }
 
@@ -925,6 +972,93 @@
     ]);
   }
 
+  function renderEnvironment(data) {
+    const git = data.git || {};
+    const paths = data.paths || {};
+    const web = data.web || {};
+    const checks = data.checks || {};
+    setBind("env_readonly", data.readonly ? "read-only" : "check");
+    setBind("env_current_only", data.current_only ? "current-only" : "check");
+    setBind("env_ratio_only", data.ratio_only ? "ratio-only" : "check");
+    setBind("env_branch", git.branch || git.current_branch);
+    setBind("env_commit", text(git.commit || git.current_commit).slice(0, 12));
+    setBind("env_baseline", git.baseline_tag);
+    setBind("env_is_worktree", yesNo(git.is_worktree));
+    setBind("env_main_repo", git.main_repo_path);
+    setBind("env_dirty_status", git.dirty_status || (git.dirty ? "dirty" : "clean"));
+    setBind("env_project_root", paths.project_root);
+    setBind("env_temp_dir", paths.temp_dir);
+    setBind("env_web_db_path", paths.web_db_path);
+    setBind("env_web_runtime_dir", paths.web_runtime_dir);
+    setBind("env_web_exports_dir", paths.web_exports_dir);
+    setBind("env_candidate_exports_dir", paths.candidate_exports_dir);
+    setBind("env_history_exports_dir", paths.history_exports_dir);
+    setBind("env_default_host", web.default_host);
+    setBind("env_default_port", web.default_port);
+    setBind("env_phase10_port", web.phase10_recommended_port);
+    setBind("env_current_host", web.current_host);
+    setBind("env_current_port", web.current_port);
+    setBind("env_lan_mode", web.lan_mode_enabled ? "enabled" : "disabled");
+    setStatusCard("env-readonly", data.readonly ? "ok" : "fail");
+    setStatusCard("env-current-only", data.current_only ? "ok" : "fail");
+    setStatusCard("env-ratio-only", data.ratio_only ? "ok" : "fail");
+    setRows(
+      "environmentCheckRows",
+      Object.entries(checks).map(([name, status]) => ({ name, status })),
+      (row) => [row.name, row.status],
+      (row) => `check: ${row.name || ""} | status: ${row.status || ""}`,
+    );
+  }
+
+  function renderUserPreferences(data) {
+    const preferences = data.preferences || {};
+    const profile = preferences.profile || {};
+    const display = preferences.display || {};
+    const dashboard = preferences.dashboard || {};
+    const tables = preferences.tables || {};
+    const safety = preferences.safety || {};
+    const sources = preferences.sources || {};
+    setBind("pref_readonly", safety.read_only ? "read-only" : "check");
+    setBind("pref_ratio_only", safety.ratio_only ? "ratio-only" : "check");
+    setBind("pref_current_only", safety.current_only ? "current-only" : "check");
+    setBind("pref_user_id", preferences.user_id);
+    setBind("pref_scope", preferences.scope);
+    setBind("pref_label", profile.label);
+    setBind("pref_role", profile.role);
+    setBind("pref_editable", yesNo(profile.editable));
+    setBind("pref_language", display.language);
+    setBind("pref_theme", display.theme);
+    setBind("pref_density", display.density);
+    setBind("pref_number_format", display.number_format);
+    setBind("pref_basis_date", display.show_basis_date ? "visible" : "hidden");
+    setBind("pref_generated_at_visible", display.show_generated_at ? "visible" : "hidden");
+    setBind("pref_landing", dashboard.landing_page);
+    setBind("pref_refresh", dashboard.refresh_seconds);
+    setBind("pref_show_research_first", dashboard.show_research_first ? "visible" : "hidden");
+    setBind("pref_show_allocation_gap", dashboard.show_allocation_gap ? "visible" : "hidden");
+    setBind("pref_show_history_gap", dashboard.show_history_gap ? "visible" : "hidden");
+    setBind("pref_database_service", yesNo(safety.uses_database_service));
+    setBind("pref_trading_disabled", safety.trading_disabled ? "disabled" : "check");
+    setBind("pref_qmt_write", safety.qmt_write_disabled ? "disabled" : "check");
+    setBind("pref_research_write", safety.research_write_disabled ? "disabled" : "check");
+    setBind("pref_database_write", safety.database_write_disabled ? "disabled" : "check");
+    setStatusCard("pref-readonly", safety.read_only ? "ok" : "fail");
+    setStatusCard("pref-ratio-only", safety.ratio_only ? "ok" : "fail");
+    setStatusCard("pref-current-only", safety.current_only ? "ok" : "fail");
+    setRows(
+      "preferenceRows",
+      Object.entries(tables).map(([name, state]) => ({ name, state })),
+      (row) => [row.name, row.state],
+      (row) => `option: ${row.name || ""} | state: ${text(row.state, "")}`,
+    );
+    setRows(
+      "preferenceSourceRows",
+      Object.entries(sources).map(([name, value]) => ({ name, value })),
+      (row) => [row.name, row.value],
+      (row) => `field: ${row.name || ""} | value: ${text(row.value, "")}`,
+    );
+  }
+
   function renderDecisionLog(data) {
     setRows("decisionRows", data.entries || [], (row) => [row.entry_time, row.summary], (row) => row.ratio_only_text || row.summary || "");
   }
@@ -1277,6 +1411,8 @@
     portfolio: renderPortfolio,
     "intraday-rules": renderIntradayRules,
     "system-checks": renderSystemChecks,
+    environment: renderEnvironment,
+    preferences: renderUserPreferences,
     "decision-log": renderDecisionLog,
     "decision-timeline": renderDecisionTimeline,
     "historical-metrics": renderHistoricalMetrics,
@@ -1293,7 +1429,8 @@
       if (!response.ok || payload.ok === false) {
         throw new Error(payload.detail || "API refresh failed");
       }
-      renderers[page](payload.data);
+      const data = Object.prototype.hasOwnProperty.call(payload, "data") ? payload.data : payload;
+      renderers[page](data);
       updateRefreshStatus(`updated ${new Date().toLocaleTimeString()}`);
     } catch (error) {
       updateRefreshStatus(error.message || "refresh failed", false);
@@ -1388,11 +1525,34 @@
     });
   }
 
+  function setupDashboardWindow() {
+    const selector = document.querySelector("[data-dashboard-window]");
+    if (!selector) return;
+    selector.addEventListener("change", async () => {
+      try {
+        updateRefreshStatus("refreshing analytics...");
+        const response = await fetch(`/api/dashboard/summary?time_window=${encodeURIComponent(selector.value)}`, {
+          cache: "no-store",
+        });
+        const payload = await response.json();
+        assertRatioOnly(payload);
+        if (!response.ok || payload.ok === false) {
+          throw new Error(payload.detail || "Analytics refresh failed");
+        }
+        renderDashboardAnalytics(payload.data || {});
+        updateRefreshStatus(`updated ${new Date().toLocaleTimeString()}`);
+      } catch (error) {
+        updateRefreshStatus(error.message || "analytics refresh failed", false);
+      }
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("[data-refresh]")?.addEventListener("click", refresh);
     setupSearch();
     setupFilters();
     setupSort();
+    setupDashboardWindow();
     setupToolFilters();
     refresh();
     window.setInterval(refresh, 60000);

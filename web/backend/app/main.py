@@ -13,10 +13,12 @@ from .db import get_session
 from .routers.current import router as current_router
 from .routers.operations import router as operations_router
 from .services.allocation_drilldown import AllocationDrilldownService
+from .services.audit_bundle_service import AuditBundleService
 from .services.current_state import CurrentStateService
 from .services.bucket_explorer import BucketExplorerService
 from .services.dashboard import DashboardService
 from .services.decision_timeline import DecisionTimelineService
+from .services.environment_status import EnvironmentStatusService
 from .services.history_gap_dashboard import HistoryGapDashboardService
 from .services.historical_metrics import HistoricalMetricsService
 from .services.subject_gap import SubjectGapService
@@ -24,6 +26,8 @@ from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
 from .services.theme_status import ThemeStatusService
 from .services.tool_console import ToolConsoleService
+from .services.user_preferences import UserPreferencesService
+from .services.workbench_readiness import WorkbenchReadinessService
 
 
 app = FastAPI(title="MyInvest Web", version="0.2.0")
@@ -60,6 +64,63 @@ def dashboard_page(request: Request, session: Session = Depends(get_session)) ->
             "dashboard",
             "/api/dashboard/current",
             dashboard=dashboard,
+        ),
+    )
+
+
+@app.get("/settings", response_class=HTMLResponse)
+@app.get("/environment", response_class=HTMLResponse)
+def environment_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "environment.html",
+        page_context(
+            request,
+            "environment",
+            "/api/environment/status",
+            environment=EnvironmentStatusService().status(),
+        ),
+    )
+
+
+@app.get("/preferences", response_class=HTMLResponse)
+def preferences_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "preferences.html",
+        page_context(
+            request,
+            "preferences",
+            "/api/user/preferences",
+            preferences=UserPreferencesService(session).preferences(),
+        ),
+    )
+
+
+@app.get("/audit", response_class=HTMLResponse)
+def audit_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "audit.html",
+        page_context(
+            request,
+            "audit",
+            "/api/audit/bundle",
+            audit_bundle=AuditBundleService(session).bundle(),
+        ),
+    )
+
+
+@app.get("/readiness", response_class=HTMLResponse)
+def readiness_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "readiness.html",
+        page_context(
+            request,
+            "readiness",
+            "/api/readiness/summary",
+            readiness=WorkbenchReadinessService(session).summary(),
         ),
     )
 

@@ -95,6 +95,290 @@ Safety boundaries:
 pytest web/backend/tests
 ```
 
+## Phase 13B CI And Test Warning Hygiene
+
+The Web test suite is expected to pass with warnings promoted to errors:
+
+```bash
+python -m pytest web/backend/tests -q -W error
+```
+
+The test configuration isolates only the known external Starlette/httpx `TestClient`
+compatibility warning. Other warnings still fail under `-W error`. Tests and
+runtime-history helpers must explicitly close SQLite connections and file handles.
+
+GitHub Actions runs the same strict warning check before `scripts/web_check.py`.
+The workflow uses current Node-runtime-backed major versions for
+`actions/checkout` and `actions/setup-python`.
+
+## Current Release Handoff Snapshot
+
+Current stable release snapshot:
+
+- Stable commit: `107be68b638159e289e638e1c0c3bb0c3a45a8a3`
+- Stable tag: `web-workbench-phase10-12-v0.4.5`
+- PR #24 through PR #37 are merged.
+- `web-workbench-phase10-12-v0.4.0`: Phase 10-12 Workbench release.
+- `web-workbench-phase10-12-v0.4.1`: Phase 13A review package privacy scan hygiene.
+- `web-workbench-phase10-12-v0.4.2`: Phase 13B CI/test warning hygiene.
+- `web-workbench-phase10-12-v0.4.3`: Phase 14C schema guard full read-only enforcement.
+- `web-workbench-phase10-12-v0.4.4`: Phase 15B Historical Metrics guard skeleton.
+- `web-workbench-phase10-12-v0.4.5`: Phase 15C Historical Metrics guard full read-only enforcement.
+
+Phase 16 work must start from `main` at or after
+`web-workbench-phase10-12-v0.4.5`. Before Phase 16, read `AGENTS.md`,
+`web/docs/PHASE_HANDOFF.md`, `web/docs/WEB_RUNBOOK.md`,
+`web/docs/SERVICE_LAYER_PLAN.md`, and `web/docs/API_SPEC.md`.
+Default Web boundaries remain read-only, ratio-only, current-only, and
+OpenAPI GET-only.
+
+## Phase 14A DB Schema Versioning Design
+
+Phase 14A adds only a design document:
+
+- `web/docs/DB_SCHEMA_VERSIONING_PLAN.md`
+
+The plan defines a future Web SQLite read-model schema versioning approach for
+`temp/web_db/myinvest.sqlite`. It does not implement migration behavior, write
+SQLite, change ingest, introduce Alembic, add an API, or modify Web UI
+behavior.
+
+The future guard should fail closed on missing or mismatched schema metadata,
+return only safe status text, avoid destructive migration, and keep the Web
+layer read-only, ratio-only, current-only, and OpenAPI GET-only.
+
+## Phase 14B Read-Only Schema Guard
+
+Phase 14B adds a read-only schema guard skeleton for the local Web SQLite read
+model:
+
+- `GET /api/diagnostics/schema`
+- `SchemaGuardService`
+- `SchemaGuardRepository`
+- `DatabaseService.table_info(...)`
+
+The guard checks the current read-model table and column contract and reads
+`schema_version` or `schema_metadata` only when those tables already exist. It
+does not create, alter, drop, migrate, seed, or write SQLite objects. It does
+not change ingest, research outputs, current module pointers, action-plan
+generation, target-allocation generation, trading/QMT behavior, or review
+package boundaries.
+
+Expected schema version remains:
+
+```text
+web_read_model_v1
+```
+
+Current databases that do not yet have a version table return `degraded` with
+`missing_version_table`. This is safe operational metadata and does not break
+Web smoke checks.
+
+Validation:
+
+```bash
+python -m pytest web/backend/tests/test_schema_guard.py -q
+python scripts/web_check.py
+```
+
+## Phase 14C Schema Guard Enforcement
+
+Phase 14C keeps `GET /api/diagnostics/schema` and strengthens its report:
+
+- deterministic required-schema fingerprint
+- observed fingerprint from existing `schema_version` or `schema_metadata`
+- required table/column counts
+- `schema_fingerprint_match`
+- `enforcement.fail_closed`
+- `enforcement.web_smoke_compatible`
+- `enforcement.read_model_usable`
+
+The current database still has no version table, so the expected local status is
+`degraded` with `missing_version_table`, `read_model_usable=true`, and
+`web_smoke_compatible=true`. If required tables or columns are missing, or if an
+existing version/fingerprint does not match, the guard reports `mismatch` and
+`fail_closed=true` without writing SQLite or changing Web routes.
+
+Validation:
+
+```bash
+python -m pytest web/backend/tests/test_schema_guard.py -q
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+```
+
+## Phase 15A Historical Metrics Audit Design
+
+Phase 15A is documentation only. It adds:
+
+- `web/docs/HISTORICAL_METRICS_PLAN.md`
+
+The plan describes how a future Phase 15B should audit Historical Metrics and
+its Audit Bundle integration without changing current Web behavior. It covers
+current architecture, data sources, audit integration points, safe diagnostics,
+fail-closed behavior, and acceptance commands.
+
+No Python code, SQLite schema, ingest flow, API endpoint, template, static JS,
+research artifact, release package, or tag changes are part of Phase 15A.
+
+## Phase 15B Historical Metrics Guard Skeleton
+
+Phase 15B adds a read-only Historical Metrics guard skeleton:
+
+- `GET /api/diagnostics/historical-metrics`
+- `HistoricalMetricsGuardService`
+- `HistoricalMetricsGuardRepository`
+
+The guard checks required read-model table counts and required current-module
+sources for Historical Metrics. It reports optional history snapshot absence as
+`degraded`, missing required inputs as `mismatch`, and read exceptions as
+`unavailable`. The endpoint returns sanitized operational metadata only and does
+not change existing Historical Metrics, Audit Bundle, ingest, SQLite schema, or
+research generation behavior.
+
+Validation:
+
+```bash
+python -m pytest web/backend/tests/test_historical_metrics_guard.py -q
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+```
+
+## Phase 15C Historical Metrics Guard Enforcement
+
+Phase 15C keeps the same read-only diagnostics endpoint and strengthens the
+report:
+
+- deterministic `historical_metrics_guard_v1` contract
+- expected and observed SHA-256 fingerprints
+- required, observed, and missing read-model inputs
+- required, observed, and missing current-module sources
+- required, observed, and missing integration payload readiness
+- enforcement fields for `fail_closed`, `read_model_usable`,
+  `web_smoke_compatible`, and `audit_bundle_compatible`
+
+Expected interpretation:
+
+- `ok`: required inputs, source modules, integration payloads, and contract
+  fingerprint match; optional history snapshot is available.
+- `degraded`: required inputs and contract fingerprint match, but optional
+  history snapshot state is unavailable.
+- `mismatch`: a required table, current-module source, integration payload, or
+  contract fingerprint is missing or inconsistent.
+- `unavailable`: diagnostics metadata could not be read safely.
+
+The guard is reporting only. It does not create or alter SQLite objects, run
+ingest, repair the read model, write research artifacts, or change dashboard,
+audit bundle, preference, schema diagnostics, or Historical Metrics behavior.
+
+Validation:
+
+```bash
+python -m pytest web/backend/tests/test_historical_metrics_guard.py -q
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+```
+
+## Phase 16A Workbench Readiness Design
+
+Phase 16A is a design-only phase for a future Workbench Readiness surface. It
+does not add a page, API, service, repository, template, static JavaScript,
+SQLite table, ingest behavior, runtime writer, or research artifact.
+
+Design goal:
+
+- summarize existing safe diagnostics into a future read-only readiness view
+- keep validation command execution outside Web
+- report only safe status, counts, timestamps, repo-relative source metadata,
+  and links to existing local Web surfaces
+- preserve read-only, ratio-only, current-only, ResearchFirst-neutral, and
+  OpenAPI GET-only boundaries
+
+Candidate future surfaces, pending a later implementation phase:
+
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
+- `GET /readiness`
+
+Phase 16A validation draft:
+
+```bash
+python scripts/check_hidden_unicode.py
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+python scripts/project_check.py --current-only
+```
+
+Validation:
+
+```bash
+python scripts/check_hidden_unicode.py
+python -m pytest web/backend/tests -q -W error
+python scripts/web_check.py
+python scripts/project_check.py --current-only
+```
+
+## Phase 16B Workbench Readiness API Skeleton
+
+Phase 16B adds an API-only Workbench Readiness skeleton:
+
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
+
+The endpoints aggregate existing safe operational metadata from
+environment/settings metadata, schema diagnostics, Historical Metrics
+diagnostics, dashboard summary, audit bundle availability, and current
+validation summary metadata. They do not add a `/readiness` page, do not run
+validation commands from Web, do not write files, do not write SQLite, do not
+rebuild ingest, and do not generate research artifacts.
+
+Readiness status values:
+
+- `ok`: all checks are available and compatible.
+- `degraded`: one or more non-mutating signals are missing or optional context
+  is unavailable, while Web smoke remains compatible.
+- `mismatch`: a required safety or read-model signal failed closed.
+- `unavailable`: readiness metadata could not be read safely.
+
+Expected local smoke behavior is `ok` or `degraded` with
+`web_smoke_compatible=true` and `fail_closed=false`. `mismatch`,
+`unavailable`, `fail_closed=true`, or `web_smoke_compatible=false` blocks the
+Web gate.
+
+Direct smoke:
+
+```bash
+python -m pytest web/backend/tests/test_workbench_readiness.py -q
+python scripts/web_check.py
+```
+
+## Phase 16C Workbench Readiness Page
+
+Phase 16C adds the read-only page:
+
+- `GET /readiness`
+
+The page renders the Phase 16B readiness summary and checks APIs. It supports
+frontend switching between summary and checks and refreshes by calling only:
+
+- `GET /api/readiness/summary`
+- `GET /api/readiness/checks`
+
+The page is a display surface only. It does not run validation commands from
+Web, write files, write SQLite, rebuild ingest, generate research artifacts,
+generate target allocations, generate action plans, or add mutating APIs.
+
+Smoke checks:
+
+```bash
+python -m pytest web/backend/tests/test_workbench_readiness_page.py -q
+python scripts/web_check.py
+```
+
+Failure interpretation is the same as the API skeleton: `ok` and `degraded`
+are Web-smoke compatible when `fail_closed=false`; `mismatch`, `unavailable`,
+or `fail_closed=true` blocks the gate.
+
 ## Phase 3 Milestone Check
 
 Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.
@@ -127,6 +411,19 @@ Output statuses:
 The script prints a suggested commit message and the files that belong in the commit. Do not commit `temp/`, SQLite/DB files, `runtime/`, caches, `node_modules/`, build/dist outputs, `.env`, ZIP, or log artifacts.
 
 The same gate runs in GitHub Actions via `.github/workflows/web_check.yml` on push and pull request.
+
+## Source Review Package Builder
+
+The source review package builder is a local release and audit helper:
+
+```bash
+python scripts/build_review_package.py --fail-on-privacy
+python scripts/check_review_package_integrity.py temp/review_packages/<package>.zip
+```
+
+The default package is current-only and writes only under ignored `temp/review_packages/`. It includes project logic, scripts, templates, docs, registries, and safe current pointers. It excludes raw portfolio snapshots, raw stock or ETF profile files, and valuation reports because those evidence files can carry private account context or price fields.
+
+The privacy scan still blocks real local paths such as user-home paths and Windows user paths. Scanner implementation files may contain the regex text that defines those checks without self-failing the package build.
 
 ## Phase 9F Repository Read-Only Baseline
 

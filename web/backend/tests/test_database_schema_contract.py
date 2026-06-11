@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+from contextlib import closing
 from pathlib import Path
 from typing import Any
 
@@ -89,19 +90,19 @@ def assert_ratio_only_payload(value: Any, path: str = "$") -> None:
 
 
 def test_all_core_tables_exist(web_db):
-    with connection(web_db) as conn:
+    with closing(connection(web_db)) as conn:
         tables = {row["name"] for row in conn.execute("SELECT name FROM sqlite_master WHERE type = 'table'")}
     assert CORE_TABLES <= tables
 
 
 def test_current_modules_contains_required_current_pointers(web_db):
-    with connection(web_db) as conn:
+    with closing(connection(web_db)) as conn:
         modules = {row["module"] for row in conn.execute("SELECT module FROM current_modules")}
     assert REQUIRED_CURRENT_MODULES <= modules
 
 
 def test_artifact_paths_are_repo_relative(web_db):
-    with connection(web_db) as conn:
+    with closing(connection(web_db)) as conn:
         rows = conn.execute("SELECT path FROM artifacts").fetchall()
     assert rows
     for row in rows:
@@ -112,7 +113,7 @@ def test_artifact_paths_are_repo_relative(web_db):
 
 
 def test_database_rows_and_raw_json_are_ratio_only(web_db):
-    with connection(web_db) as conn:
+    with closing(connection(web_db)) as conn:
         for table in CORE_TABLES:
             columns = table_columns(conn, table)
             for row in conn.execute(f"SELECT * FROM {table}"):
@@ -133,7 +134,7 @@ def test_api_outputs_are_ratio_only(client):
 def test_current_action_plan_source_matches_latest_index_modules(web_db):
     latest = json.loads((ROOT / "research" / "latest_index.json").read_text(encoding="utf-8-sig"))
     expected_path = latest["modules"]["action_plan"]["path"]
-    with connection(web_db) as conn:
+    with closing(connection(web_db)) as conn:
         row = conn.execute(
             """
             SELECT a.path
@@ -160,7 +161,7 @@ def test_current_resolver_does_not_read_latest_index_files():
 
 
 def test_511360_liquidity_gate_contract(web_db):
-    with connection(web_db) as conn:
+    with closing(connection(web_db)) as conn:
         row = conn.execute(
             """
             SELECT s.code, lg.liquidity_status, lg.valuation_status,

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+from contextlib import closing
 from pathlib import Path
 
 from web.backend.app.db import SessionLocal
@@ -32,7 +33,7 @@ def connect(web_db: Path) -> sqlite3.Connection:
 def test_current_modules_is_database_form_of_latest_index_modules(web_db):
     latest = read_latest()
     expected = {module: ref["path"] for module, ref in latest["modules"].items()}
-    with connect(web_db) as conn:
+    with closing(connect(web_db)) as conn:
         actual = {
             row["module"]: row["path"]
             for row in conn.execute(
@@ -48,7 +49,7 @@ def test_current_modules_is_database_form_of_latest_index_modules(web_db):
 
 def test_action_plan_is_split_into_plan_actions_and_research_first(web_db):
     source = read_current_module("action_plan")
-    with connect(web_db) as conn:
+    with closing(connect(web_db)) as conn:
         plan = conn.execute("SELECT generated_at, basis_trade_date FROM action_plans ORDER BY id DESC LIMIT 1").fetchone()
         action_count = conn.execute("SELECT COUNT(*) AS count FROM action_items").fetchone()["count"]
         research_first_count = conn.execute("SELECT COUNT(*) AS count FROM research_first_items").fetchone()["count"]
@@ -61,7 +62,7 @@ def test_action_plan_is_split_into_plan_actions_and_research_first(web_db):
 def test_target_allocation_is_split_into_header_and_buckets(web_db):
     source = read_current_module("target_allocation")
     source_buckets = {row["key"]: row for row in source["actual_allocation_overlay"]["buckets"]}
-    with connect(web_db) as conn:
+    with closing(connect(web_db)) as conn:
         target = conn.execute(
             """
             SELECT generated_at, basis_trade_date, equity_min_pct, equity_max_pct,
@@ -88,7 +89,7 @@ def test_target_allocation_is_split_into_header_and_buckets(web_db):
 def test_intraday_rules_split_and_allocation_consistency(web_db):
     source = read_current_module("intraday_rules")
     source_buckets = {row["key"]: row for row in source["allocation_map"]["buckets"]}
-    with connect(web_db) as conn:
+    with closing(connect(web_db)) as conn:
         rules = conn.execute("SELECT status, risk_mode FROM intraday_rules ORDER BY id DESC LIMIT 1").fetchone()
         buckets = {
             row["bucket"]: row
@@ -108,7 +109,7 @@ def test_intraday_rules_split_and_allocation_consistency(web_db):
 def test_portfolio_snapshot_persists_only_ratio_fields(web_db):
     source = read_current_module("portfolio_snapshot")
     summary = source["summary"]
-    with connect(web_db) as conn:
+    with closing(connect(web_db)) as conn:
         snapshot = conn.execute(
             "SELECT generated_at, equity_pct, cash_short_pct FROM portfolio_snapshots ORDER BY id DESC LIMIT 1"
         ).fetchone()
@@ -127,7 +128,7 @@ def test_portfolio_snapshot_persists_only_ratio_fields(web_db):
 def test_liquidity_gate_registry_maps_to_liquidity_gates(web_db):
     source = read_current_module("liquidity_gate_registry")
     gate = source["instruments"]["511360"]
-    with connect(web_db) as conn:
+    with closing(connect(web_db)) as conn:
         row = conn.execute(
             """
             SELECT lg.liquidity_status, lg.valuation_status,
@@ -158,7 +159,7 @@ def test_research_quality_audit_imports_current_profile_and_valuation_status(web
 
 
 def test_decision_log_maps_to_recent_entries(web_db):
-    with connect(web_db) as conn:
+    with closing(connect(web_db)) as conn:
         count = conn.execute("SELECT COUNT(*) AS count FROM decision_log_entries").fetchone()["count"]
         unsafe_columns = {
             row["name"]

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sqlite3
 import zipfile
+from contextlib import closing
 from pathlib import Path
 from typing import Any
 
@@ -125,7 +126,7 @@ class HistorySnapshotRepository:
     def write_history_database(payload: dict[str, Any]) -> str:
         HistorySnapshotRepository.assert_history_database_path()
         HISTORY_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-        with sqlite3.connect(HISTORY_DB_PATH) as connection:
+        with closing(sqlite3.connect(HISTORY_DB_PATH)) as connection:
             connection.execute("DROP TABLE IF EXISTS history_snapshot_metadata")
             connection.execute("DROP TABLE IF EXISTS history_export_entries")
             connection.execute("DROP TABLE IF EXISTS history_safety_checks")
@@ -205,6 +206,16 @@ class HistorySnapshotRepository:
                 [(key, "OK" if value is True or value == "OK" else str(value)) for key, value in payload["safety"].items()],
             )
         return HISTORY_DB_PATH.relative_to(ROOT).as_posix()
+
+    @staticmethod
+    def runtime_summary() -> dict[str, Any]:
+        HistorySnapshotRepository.assert_history_database_path()
+        return {
+            "available": HISTORY_DB_PATH.exists(),
+            "history_entry_count": 0,
+            "matched_entry_count": 0,
+            "generated_at": None,
+        }
 
     @staticmethod
     def assert_history_database_path(path: Path = HISTORY_DB_PATH) -> None:

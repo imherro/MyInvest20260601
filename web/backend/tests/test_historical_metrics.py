@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+from pathlib import Path
 from typing import Any
 
 
@@ -119,7 +120,7 @@ def test_historical_metrics_openapi_is_read_only(client):
 
 
 def test_historical_metrics_current_only_and_no_hardcoded_timestamps():
-    source = open("web/backend/app/services/historical_metrics.py", encoding="utf-8").read()
+    source = Path("web/backend/app/services/historical_metrics.py").read_text(encoding="utf-8")
     assert "latest_index.files" not in source
     assert "[\"files\"]" not in source
     assert "['files']" not in source

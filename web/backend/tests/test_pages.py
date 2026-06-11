@@ -10,6 +10,11 @@ def test_web_pages_render_without_local_absolute_paths(client):
     paths = [
         "/",
         "/dashboard",
+        "/settings",
+        "/environment",
+        "/preferences",
+        "/audit",
+        "/readiness",
         "/action-plan",
         "/target-allocation",
         "/research-first",
