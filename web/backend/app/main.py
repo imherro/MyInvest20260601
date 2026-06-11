@@ -25,6 +25,7 @@ from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
 from .services.theme_status import ThemeStatusService
 from .services.user_preferences import UserPreferencesService
+from .services.workbench_readiness import WorkbenchReadinessService
 
 
 app = FastAPI(title="MyInvest Web", version="0.2.0")
@@ -98,6 +99,20 @@ def audit_page(request: Request, session: Session = Depends(get_session)) -> HTM
             "audit",
             "/api/audit/bundle",
             audit_bundle=AuditBundleService(session).bundle(),
+        ),
+    )
+
+
+@app.get("/readiness", response_class=HTMLResponse)
+def readiness_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "readiness.html",
+        page_context(
+            request,
+            "readiness",
+            "/api/readiness/summary",
+            readiness=WorkbenchReadinessService(session).summary(),
         ),
     )
 

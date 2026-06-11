@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add workbench readiness API skeleton"
+COMMIT_MESSAGE = "feat(web): add workbench readiness page"
 
 API_PATHS = [
     "/api/health",
@@ -85,6 +85,7 @@ PAGE_PATHS = [
     "/environment",
     "/preferences",
     "/audit",
+    "/readiness",
     "/action-plan",
     "/target-allocation",
     "/research-first",
@@ -127,6 +128,17 @@ INTERACTIVE_PAGE_CHECKS = {
         "auditPreviewChart",
         "auditBundleRows",
         "/static/audit.js",
+    ],
+    "/readiness": [
+        'data-readiness-section="summary"',
+        'data-readiness-section="signals"',
+        'data-readiness-section="safety"',
+        'data-readiness-view="summary"',
+        'data-readiness-view="checks"',
+        'data-table-search="readinessCheckTable"',
+        "readinessCheckRows",
+        "readinessSafetyRows",
+        "/static/readiness.js",
     ],
     "/action-plan": ["data-table-search", "data-sort", "actionRows"],
     "/target-allocation": ["data-table-search", "data-sort", "targetRows"],
@@ -3506,7 +3518,46 @@ class WebCheck:
                     "Missing JS behavior markers: " + ", ".join(missing_js),
                     "Restore refresh sanitizer, pagination, and expandable detail logic.",
                 )
-        if not any(item.check in {"frontend_interactions", "dashboard_visuals", "frontend_js", "page_status", "page_safety"} for item in self.failures):
+        readiness_js = client.get("/static/readiness.js")
+        if readiness_js.status_code != 200:
+            self.fail(
+                "readiness_frontend_js",
+                "web/backend/app/static/readiness.js",
+                "Readiness static JS not served.",
+                "Restore the Phase 16C readiness page script.",
+            )
+        else:
+            script = readiness_js.text
+            missing = [
+                marker
+                for marker in [
+                    "function refreshReadiness",
+                    "function renderReadiness",
+                    "function assertSafe",
+                    "/api/readiness/summary",
+                    "/api/readiness/checks",
+                ]
+                if marker not in script
+            ]
+            if missing:
+                self.fail(
+                    "readiness_frontend_js",
+                    "web/backend/app/static/readiness.js",
+                    "Missing readiness JS markers: " + ", ".join(missing),
+                    "Restore readiness page refresh, render, and sanitizer logic.",
+                )
+        if not any(
+            item.check
+            in {
+                "frontend_interactions",
+                "dashboard_visuals",
+                "frontend_js",
+                "readiness_frontend_js",
+                "page_status",
+                "page_safety",
+            }
+            for item in self.failures
+        ):
             self.add_result("frontend_interactions", "PASS", "tables, dashboard, sanitizer hooks")
 
     def check_run_web_script(self) -> None:
