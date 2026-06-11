@@ -78,6 +78,37 @@ def role_workbench_page(request: Request, role: str, page: str) -> HTMLResponse:
     )
 
 
+def assistant_feature_page(
+    request: Request,
+    session: Session,
+    feature: str,
+    *,
+    query: str = "",
+    code: str = "",
+) -> HTMLResponse:
+    view = DecisionAssistantService(session).feature_view(feature, query=query, code=code)
+    return templates.TemplateResponse(
+        request,
+        "assistant_feature.html",
+        page_context(
+            request,
+            f"assistant-{feature}",
+            _assistant_api_path(feature, query=query, code=code),
+            subtitle="Read-only assistant suite from current modules and history facts.",
+            view=view,
+            columns=DecisionAssistantService.item_columns(view["items"]),
+        ),
+    )
+
+
+def _assistant_api_path(feature: str, *, query: str = "", code: str = "") -> str:
+    if feature == "search":
+        return query_api_path("/api/assistant/search", {"q": query})
+    if feature == "security-center":
+        return f"/api/assistant/securities/{quote(code, safe='')}"
+    return f"/api/assistant/{feature}"
+
+
 @app.get("/", response_class=HTMLResponse)
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
@@ -107,6 +138,56 @@ def assistant_page(request: Request, session: Session = Depends(get_session)) ->
             assistant=DecisionAssistantService(session).daily(),
         ),
     )
+
+
+@app.get("/assistant/risk-center", response_class=HTMLResponse)
+def assistant_risk_center_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "risk-center")
+
+
+@app.get("/assistant/research-tasks", response_class=HTMLResponse)
+def assistant_research_tasks_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "research-tasks")
+
+
+@app.get("/assistant/preferences", response_class=HTMLResponse)
+def assistant_preferences_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "preferences")
+
+
+@app.get("/assistant/scenarios", response_class=HTMLResponse)
+def assistant_scenarios_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "scenarios")
+
+
+@app.get("/assistant/history-visuals", response_class=HTMLResponse)
+def assistant_history_visuals_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "history-visuals")
+
+
+@app.get("/assistant/review-score", response_class=HTMLResponse)
+def assistant_review_score_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "review-score")
+
+
+@app.get("/assistant/premarket", response_class=HTMLResponse)
+def assistant_premarket_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "premarket")
+
+
+@app.get("/assistant/search", response_class=HTMLResponse)
+def assistant_search_page(request: Request, q: str = "", session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "search", query=q)
+
+
+@app.get("/assistant/securities/{code}", response_class=HTMLResponse)
+def assistant_security_center_page(request: Request, code: str, session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "security-center", code=code)
+
+
+@app.get("/assistant/weekly-safety", response_class=HTMLResponse)
+def assistant_weekly_safety_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return assistant_feature_page(request, session, "weekly-safety")
 
 
 @app.get("/settings", response_class=HTMLResponse)

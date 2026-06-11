@@ -1,6 +1,6 @@
 # MyInvest Decision Assistant 设计文档
 
-版本：v0.1
+版本：v0.2
 日期：2026-06-12
 适用范围：MyInvest DB-first worktree / Web 只读决策辅助层
 状态：可执行设计
@@ -191,3 +191,213 @@ python scripts/web_release_check.py
 - 不新增 POST/PUT/PATCH/DELETE API。
 - 不改动研究 JSON/MD，不写交易能力。
 - Web smoke 和 release check 通过。
+
+---
+
+## 9. 第二阶段：完整 Assistant Suite
+
+用户要求把前面讨论过的功能全部进入设计和开发，不只限于风险预警中心、研究任务闭环、标的详情中心。第二阶段采用一个统一套件：
+
+```text
+/assistant/risk-center
+/assistant/research-tasks
+/assistant/preferences
+/assistant/scenarios
+/assistant/history-visuals
+/assistant/review-score
+/assistant/premarket
+/assistant/search
+/assistant/securities/{code}
+/assistant/weekly-safety
+```
+
+对应 API：
+
+```text
+GET /api/assistant/risk-center
+GET /api/assistant/research-tasks
+GET /api/assistant/preferences
+GET /api/assistant/scenarios
+GET /api/assistant/history-visuals
+GET /api/assistant/review-score
+GET /api/assistant/premarket
+GET /api/assistant/search?q=...
+GET /api/assistant/securities/{code}
+GET /api/assistant/weekly-safety
+```
+
+### 9.1 风险预警中心
+
+目标：把每日指挥台里的风险热力图独立成可筛选工作台。
+
+内容：
+
+- 风险等级汇总。
+- 风险类型、原因、影响、下一步入口。
+- 支持按 `category` 聚合：allocation、research、valuation、liquidity、intraday、system、history。
+
+### 9.2 研究任务闭环
+
+目标：把研究优先级升级为任务闭环。
+
+任务状态：
+
+- `pending`：存在 profile/valuation/liquidity/theme 缺口。
+- `blocked`：已被 ResearchFirst 阻塞。
+- `review`：缺口较轻或需要人工复核。
+- `complete`：当前无缺口，仅保留参考。
+
+字段：
+
+- code、name、bucket、priority、status、missing_reasons、why、next_step、影响入口。
+
+### 9.3 偏好模拟
+
+目标：提供保守、平衡、进取三种只读 preview。
+
+规则：
+
+- 不改变正式 target allocation。
+- 保守模式将权益目标区间下移 5pp。
+- 平衡模式使用当前正式目标区间。
+- 进取模式将权益目标区间上移 5pp。
+- 所有区间限制在 0%-100%。
+
+输出仅用于理解风险偏好差异，不作为操作建议。
+
+### 9.4 深度情景推演
+
+目标：在市场分数变化之外，联动展示：
+
+- 权益/现金区间变化。
+- bucket 偏离是否仍是关键风险。
+- ResearchFirst 阻塞是否会限制加仓。
+- 盘中规则是否是关键风险。
+
+### 9.5 历史可视化增强
+
+目标：集中展示当前已有历史图表入口和可用序列。
+
+入口：
+
+- 市场历史。
+- bucket gap 历史。
+- 标的估值历史。
+- ResearchFirst/标的状态趋势。
+- 决策事件趋势。
+
+第一版不新增复杂图形库，先用当前 HTML 表格和现有历史页面承接。
+
+### 9.6 复盘评分
+
+目标：用规则遵守情况评价复盘质量，不评价收益金额。
+
+评分项：
+
+- ResearchFirst discipline。
+- allocation drift control。
+- intraday freshness。
+- system readiness。
+- history readiness。
+
+评分只基于当前状态和历史事实，不生成交易结论。
+
+### 9.7 一键盘前流程
+
+目标：按盘前工作顺序组织页面和工具入口。
+
+步骤：
+
+1. 刷新 Web DB。
+2. 项目 current-only 检查。
+3. 每日指挥台。
+4. 风险预警中心。
+5. 研究任务闭环。
+6. 操作计划。
+7. 盘中规则。
+
+工具入口必须继续走现有工具注册表，不执行任意命令。
+
+### 9.8 全局搜索
+
+目标：搜索页面、工具、标的、bucket、主题和历史入口。
+
+第一版只读实现：
+
+- 从 current Web DB 服务聚合候选。
+- 支持 `q` 参数。
+- 不扫描本地敏感文件，不暴露本地绝对路径。
+
+### 9.9 标的详情中心
+
+目标：每个 ETF/个股有统一入口。
+
+内容：
+
+- 当前 ResearchFirst 状态。
+- profile/valuation/liquidity 状态。
+- 当前 bucket、持仓比例、bucket gap。
+- 历史估值、仓位、动作、档案数量。
+- 相关页面入口。
+
+### 9.10 安全周报
+
+目标：以 ratio-only 方式汇总一周安全状态。
+
+内容：
+
+- 风险预警汇总。
+- 研究任务汇总。
+- 复盘评分。
+- 历史库质量。
+- 下周优先入口。
+
+第一版只做只读页面/API，不生成文件、不写入 research。
+
+## 10. 第二阶段开发计划
+
+### MIV-DA-101 设计升级
+
+- 更新本文档为 v0.2。
+- 明确 10 个功能的 URL、API、边界和验收。
+
+### MIV-DA-102 服务扩展
+
+- 在 `DecisionAssistantService` 增加：
+  - `risk_center()`
+  - `research_tasks()`
+  - `preference_simulation()`
+  - `deep_scenarios()`
+  - `history_visuals_page()`
+  - `review_score()`
+  - `premarket_workflow()`
+  - `global_search(q)`
+  - `security_center(code)`
+  - `weekly_safety()`
+
+### MIV-DA-103 API 和页面
+
+- 为 10 个功能新增 GET API 和页面。
+- 使用现有 FastAPI/Jinja2，不引入新前端框架。
+
+### MIV-DA-104 导航与入口
+
+- 在每日指挥台和 Dashboard 快捷入口加入 Assistant Suite。
+- 在角色工作台加入对应入口。
+
+### MIV-DA-105 测试与验收
+
+- 新增服务/API/页面测试。
+- 更新 `scripts/web_check.py` 的 API、页面和 marker。
+- 浏览器验证桌面和 390px 窄屏。
+
+验收命令：
+
+```bash
+python -m pytest web/backend/tests -q
+python -m pytest tests -q
+python scripts/project_check.py --current-only
+python scripts/db_migrate.py --db temp/history_db/test_myinvest_history.sqlite3 --check
+python scripts/web_check.py
+python scripts/web_release_check.py
+```

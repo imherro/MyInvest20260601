@@ -677,13 +677,14 @@
       <div class="bar">
         <div class="brand">MyInvest Current</div>
         {% set tools_group = request.query_params.get("group", "") if page == "tools" else "" %}
+        {% set assistant_pages = ["assistant", "assistant-risk-center", "assistant-research-tasks", "assistant-preferences", "assistant-scenarios", "assistant-history-visuals", "assistant-review-score", "assistant-premarket", "assistant-search", "assistant-security-center", "assistant-weekly-safety"] %}
         {% set manager_pages = ["manager", "market-history", "target-allocation", "buckets", "buckets-drilldown", "historical-metrics"] %}
         {% set researcher_pages = ["researcher", "research-first", "subjects", "subjects-gap", "subjects-drilldown", "themes", "history-gap-dashboard", "security-history", "valuation-history"] %}
         {% set trader_pages = ["trader", "action-plan", "portfolio", "intraday-rules", "decision-log", "decision-timeline", "position-history", "action-history"] %}
         {% set history_pages = ["history-workbench", "history-quality", "history-coverage"] %}
         {% set system_pages = ["system", "system-checks", "tools", "readiness", "environment", "preferences", "audit"] %}
         <nav aria-label="Main">
-          <a class="{{ 'active' if page in ['dashboard', 'assistant'] else '' }}" href="/">总览</a>
+          <a class="{{ 'active' if page in ['dashboard'] or page in assistant_pages else '' }}" href="/">总览</a>
           <div class="nav-group {{ 'active' if page in manager_pages or tools_group == '基金经理' else '' }}">
             <a class="nav-trigger" href="/manager">基金经理</a>
             <div class="nav-menu" role="menu">

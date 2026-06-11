@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}{{ view.title }}{% endblock %}
+
+{% block content %}
+<section class="metric-grid" data-assistant-suite="{{ view.feature }}">
+  {% for card in view.summary_cards %}
+  <div class="metric">
+    <span class="subtle">{{ card.label }}</span>
+    <strong>{{ card.value }}</strong>
+  </div>
+  {% endfor %}
+</section>
+
+{% if view.feature == "search" %}
+<section class="row-card" data-assistant-suite-search>
+  <form class="table-tools" method="get" action="/assistant/search">
+    <input type="search" name="q" value="{{ view.query }}" placeholder="Search pages, tools, subjects, buckets" aria-label="Search">
+    <button type="submit">Search</button>
+  </form>
+</section>
+{% endif %}
+
+{% if view.links %}
+<section data-assistant-suite-links>
+  <h2>入口</h2>
+  <div class="quick-links">
+    {% for link in view.links %}
+    <a class="button-link" href="{{ link.href }}">{{ link.label }}</a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if view.sections %}
+<section data-assistant-suite-sections>
+  <h2>分区</h2>
+  <div class="dashboard-grid">
+    {% for section in view.sections %}
+    <div class="row-card">
+      <div class="summary-line">
+        <span>{{ section.label }}</span>
+        <strong>{{ section.count if section.count is defined else (section.score if section.score is defined else "") }}</strong>
+      </div>
+      <a class="button-link" href="{{ section.href }}">打开</a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section data-assistant-suite-table>
+  <h2>明细</h2>
+  <table data-page-size="100">
+    <thead>
+      <tr>
+        {% for column in columns %}
+        <th>{{ column }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in view["items"] %}
+      <tr>
+        {% for column in columns %}
+        <td>
+          {% if column == "href" and item.get(column) %}
+          <a class="button-link" href="{{ item.get(column) }}">打开</a>
+          {% else %}
+          {{ item.get(column) if item.get(column) is not none else "n/a" }}
+          {% endif %}
+        </td>
+        {% endfor %}
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="{{ columns|length if columns else 1 }}">No rows.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

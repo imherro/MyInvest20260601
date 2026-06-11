@@ -153,6 +153,56 @@ def assistant_daily(session: Session = Depends(get_session)) -> dict[str, Any]:
     return respond(DecisionAssistantService(session).daily(), source={"path": "db.DecisionAssistantService"})
 
 
+@router.get("/assistant/risk-center")
+def assistant_risk_center(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).risk_center(), source={"path": "db.DecisionAssistantService"})
+
+
+@router.get("/assistant/research-tasks")
+def assistant_research_tasks(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).research_tasks(), source={"path": "db.DecisionAssistantService"})
+
+
+@router.get("/assistant/preferences")
+def assistant_preferences(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).preference_simulation(), source={"path": "db.DecisionAssistantService"})
+
+
+@router.get("/assistant/scenarios")
+def assistant_scenarios(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).deep_scenarios(), source={"path": "db.DecisionAssistantService"})
+
+
+@router.get("/assistant/history-visuals")
+def assistant_history_visuals(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).history_visuals_page(), source={"path": "db.DecisionAssistantService"})
+
+
+@router.get("/assistant/review-score")
+def assistant_review_score(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).review_score(), source={"path": "db.DecisionAssistantService"})
+
+
+@router.get("/assistant/premarket")
+def assistant_premarket(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).premarket_workflow(), source={"path": "db.DecisionAssistantService"})
+
+
+@router.get("/assistant/search")
+def assistant_search(q: str = "", session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).global_search(q), source={"path": "db.DecisionAssistantService"})
+
+
+@router.get("/assistant/securities/{code}")
+def assistant_security_center(code: str, session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).security_center(code), source={"path": "db.DecisionAssistantService"})
+
+
+@router.get("/assistant/weekly-safety")
+def assistant_weekly_safety(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).weekly_safety(), source={"path": "db.DecisionAssistantService"})
+
+
 @router.get("/dashboard/summary")
 def dashboard_summary(time_window: str = "current", session: Session = Depends(get_session)) -> dict[str, Any]:
     return respond(

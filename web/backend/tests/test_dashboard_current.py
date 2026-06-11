@@ -96,6 +96,9 @@ def test_dashboard_quick_links_resolve(client):
     links = data["quick_links"]
     assert {item["label"] for item in links} >= {
         "Daily Command",
+        "Risk Center",
+        "Research Tasks",
+        "Global Search",
         "Action Plan",
         "Target Allocation",
         "Subject Status",

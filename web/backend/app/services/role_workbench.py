@@ -37,6 +37,8 @@ ROLE_WORKBENCHES: dict[str, dict[str, object]] = {
         ],
         "links": [
             {"label": "每日指挥台", "href": "/assistant"},
+            {"label": "偏好模拟", "href": "/assistant/preferences"},
+            {"label": "深度情景推演", "href": "/assistant/scenarios"},
             {"label": "市场历史", "href": "/market/history"},
             {"label": "理想仓位", "href": "/target-allocation"},
             {"label": "仓位框架", "href": "/buckets"},
@@ -82,6 +84,8 @@ ROLE_WORKBENCHES: dict[str, dict[str, object]] = {
         ],
         "links": [
             {"label": "每日指挥台", "href": "/assistant"},
+            {"label": "研究任务闭环", "href": "/assistant/research-tasks"},
+            {"label": "全局搜索", "href": "/assistant/search"},
             {"label": "ResearchFirst", "href": "/research-first"},
             {"label": "标的状态", "href": "/subjects"},
             {"label": "研究缺口", "href": "/subjects/gap"},
@@ -128,6 +132,8 @@ ROLE_WORKBENCHES: dict[str, dict[str, object]] = {
         ],
         "links": [
             {"label": "每日指挥台", "href": "/assistant"},
+            {"label": "风险预警中心", "href": "/assistant/risk-center"},
+            {"label": "一键盘前流程", "href": "/assistant/premarket"},
             {"label": "操作计划", "href": "/action-plan"},
             {"label": "当前仓位", "href": "/portfolio"},
             {"label": "盘中规则", "href": "/intraday-rules"},
@@ -175,6 +181,8 @@ ROLE_WORKBENCHES: dict[str, dict[str, object]] = {
         ],
         "links": [
             {"label": "每日指挥台", "href": "/assistant"},
+            {"label": "复盘评分", "href": "/assistant/review-score"},
+            {"label": "安全周报", "href": "/assistant/weekly-safety"},
             {"label": "系统检查", "href": "/system-checks"},
             {"label": "工具注册表", "href": "/tools"},
             {"label": "Readiness", "href": "/readiness"},

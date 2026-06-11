@@ -149,6 +149,9 @@ class DashboardService:
     def _quick_links() -> list[dict[str, str]]:
         return [
             {"label": "Daily Command", "href": "/assistant"},
+            {"label": "Risk Center", "href": "/assistant/risk-center"},
+            {"label": "Research Tasks", "href": "/assistant/research-tasks"},
+            {"label": "Global Search", "href": "/assistant/search"},
             {"label": "Action Plan", "href": "/action-plan"},
             {"label": "Target Allocation", "href": "/target-allocation"},
             {"label": "Subject Status", "href": "/subjects"},

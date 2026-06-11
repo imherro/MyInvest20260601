@@ -1434,6 +1434,10 @@
     setBind("assistant_system_status", today.system_status || "unknown");
   }
 
+  function renderAssistantFeature(data) {
+    if (!data) return;
+  }
+
   function renderToolCategoryFilter() {
     const filter = document.querySelector("[data-tool-filter]");
     if (!filter || filter.dataset.loaded === "true") return;
@@ -1636,6 +1640,16 @@
     "decision-timeline": renderDecisionTimeline,
     "historical-metrics": renderHistoricalMetrics,
     assistant: renderDecisionAssistant,
+    "assistant-risk-center": renderAssistantFeature,
+    "assistant-research-tasks": renderAssistantFeature,
+    "assistant-preferences": renderAssistantFeature,
+    "assistant-scenarios": renderAssistantFeature,
+    "assistant-history-visuals": renderAssistantFeature,
+    "assistant-review-score": renderAssistantFeature,
+    "assistant-premarket": renderAssistantFeature,
+    "assistant-search": renderAssistantFeature,
+    "assistant-security-center": renderAssistantFeature,
+    "assistant-weekly-safety": renderAssistantFeature,
     tools: renderTools,
   };
 
