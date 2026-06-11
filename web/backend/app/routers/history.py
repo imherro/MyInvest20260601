@@ -18,6 +18,14 @@ def security_valuation_history(code: str) -> dict:
     )
 
 
+@router.get("/securities/{code}/history")
+def security_history(code: str) -> dict:
+    return respond(
+        HistoryWorkbenchService().security_history(code),
+        source={"path": "temp/history_db/myinvest_history.sqlite3", "provider": "HistoryWorkbenchService"},
+    )
+
+
 @router.get("/market/history")
 def market_history(limit: int = 50) -> dict:
     return respond(
@@ -46,5 +54,13 @@ def action_history(code: str | None = None, action_type: str | None = None, limi
 def history_quality() -> dict:
     return respond(
         HistoryWorkbenchService().quality(),
+        source={"path": "temp/history_db/myinvest_history.sqlite3", "provider": "HistoryWorkbenchService"},
+    )
+
+
+@router.get("/history/coverage")
+def history_coverage() -> dict:
+    return respond(
+        HistoryWorkbenchService().coverage(),
         source={"path": "temp/history_db/myinvest_history.sqlite3", "provider": "HistoryWorkbenchService"},
     )

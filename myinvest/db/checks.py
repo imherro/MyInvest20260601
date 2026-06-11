@@ -114,9 +114,18 @@ def check_valuation_zones(conn: sqlite3.Connection, findings: list[DbFinding], s
 
 
 def check_privacy(conn: sqlite3.Connection, findings: list[DbFinding], strict: bool) -> None:
-    blocked = scalar(conn, "SELECT COUNT(*) FROM privacy_scan_results WHERE status != 'passed'")
-    if blocked:
-        findings.append(DbFinding(level(strict), f"DB privacy scan blocked raw_json for {blocked} artifacts"))
+    leaked = scalar(
+        conn,
+        """
+        SELECT COUNT(*)
+        FROM privacy_scan_results p
+        JOIN artifacts a ON a.artifact_id = p.artifact_id
+        WHERE p.status != 'passed'
+          AND a.raw_json IS NOT NULL
+        """,
+    )
+    if leaked:
+        findings.append(DbFinding(level(strict), f"DB privacy scan found {leaked} artifacts storing unsafe raw_json"))
 
     missing_scan = scalar(
         conn,

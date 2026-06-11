@@ -374,11 +374,9 @@ def write_plan(plan: dict[str, Any]) -> tuple[Path, Path]:
 
 
 def ingest_generated_action_plan(db_path: str | Path | None, json_path: Path) -> dict[str, Any] | None:
-    if not db_path:
-        return None
-    from myinvest.db.ingest import ingest_artifacts
+    from myinvest.db.dual_write import ingest_generated_json
 
-    return ingest_artifacts(db_path, [json_path])
+    return ingest_generated_json(db_path, [json_path])
 
 
 def append_decision_log(entry: str, md_path: Path, json_path: Path, deps: list[dict[str, Any]]) -> None:

@@ -1436,11 +1436,9 @@ def generate(codes: list[str] | None = None, history_json: Path | None = None) -
 
 
 def ingest_generated_reports(db_path: str | Path | None, written: list[tuple[dict[str, Any], Path, Path]]) -> dict[str, Any] | None:
-    if not db_path:
-        return None
-    from myinvest.db.ingest import ingest_artifacts
+    from myinvest.db.dual_write import ingest_generated_json
 
-    return ingest_artifacts(db_path, [json_path for _, _, json_path in written])
+    return ingest_generated_json(db_path, [json_path for _, _, json_path in written])
 
 
 def main() -> int:

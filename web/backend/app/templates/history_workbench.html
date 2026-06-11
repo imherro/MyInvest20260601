@@ -25,9 +25,9 @@
 <section class="dashboard-grid">
   <div class="row-card">
     <h2>Security Lookup</h2>
-    <form class="stack" method="get" action="" onsubmit="this.action='/securities/' + encodeURIComponent(this.elements.code.value) + '/valuation'">
+    <form class="stack" method="get" action="" onsubmit="this.action='/securities/' + encodeURIComponent(this.elements.code.value) + '/history'">
       <input type="search" name="code" placeholder="688333.SH" required>
-      <button type="submit">Open Valuation</button>
+      <button type="submit">Open Security</button>
     </form>
   </div>
   <div class="row-card">
@@ -53,6 +53,7 @@
       <a class="button-link" href="/positions/history">Positions</a>
       <a class="button-link" href="/actions/history">Actions</a>
       <a class="button-link" href="/history/quality">Quality</a>
+      <a class="button-link" href="/history/coverage">Coverage</a>
     </div>
   </div>
 </section>

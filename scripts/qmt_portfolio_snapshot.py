@@ -306,7 +306,10 @@ def discover_qmt_paths(site_arg: str | None, userdata_arg: str | None) -> QmtPat
 
 def import_qmt(paths: QmtPaths) -> tuple[Any, Any, Any]:
     sys.path.insert(0, str(paths.site_packages))
-    from xtquant import xtdata, xttrader, xttype  # type: ignore
+    try:
+        from xtquant import xtdata, xttrader, xttype  # type: ignore
+    except ImportError as exc:
+        raise RuntimeError(f"QMT import failed: {exc}. Check QMT client package and Python runtime.") from exc
 
     return xtdata, xttrader, xttype
 
@@ -720,7 +723,7 @@ def sync_intraday_rules(snapshot: dict[str, Any]) -> bool:
     return True
 
 
-def write_snapshot(snapshot: dict[str, Any], sync_rules: bool) -> tuple[Path, Path, bool]:
+def write_snapshot(snapshot: dict[str, Any], sync_rules: bool, *, log_decision: bool = True) -> tuple[Path, Path, bool]:
     assert_no_sensitive_fields(snapshot)
     timestamp = snapshot["generated_at"]
     json_path = PORTFOLIO_DIR / f"portfolio_snapshot_{timestamp}.json"
@@ -728,27 +731,36 @@ def write_snapshot(snapshot: dict[str, Any], sync_rules: bool) -> tuple[Path, Pa
     write_json(json_path, snapshot)
     md_path.write_text(render_markdown(snapshot), encoding="utf-8")
     synced = sync_intraday_rules(snapshot) if sync_rules else False
-    DECISION_LOG.parent.mkdir(parents=True, exist_ok=True)
-    with DECISION_LOG.open("a", encoding="utf-8") as handle:
-        handle.write("\n" + snapshot["decision_log_entry"] + "\n")
+    if log_decision:
+        DECISION_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with DECISION_LOG.open("a", encoding="utf-8") as handle:
+            handle.write("\n" + snapshot["decision_log_entry"] + "\n")
     return md_path, json_path, synced
 
 
 def ingest_generated_snapshot(db_path: str | Path | None, json_path: Path) -> dict[str, Any] | None:
-    if not db_path:
-        return None
-    from myinvest.db.ingest import ingest_artifacts
+    from myinvest.db.dual_write import ingest_generated_json
 
-    return ingest_artifacts(db_path, [json_path])
+    return ingest_generated_json(db_path, [json_path])
 
 
 def probe(args: argparse.Namespace) -> int:
-    paths = discover_qmt_paths(args.qmt_site, args.userdata)
-    trader, account, _xtdata, _xttype = qmt_connection(paths, args.account_id)
+    try:
+        paths = discover_qmt_paths(args.qmt_site, args.userdata)
+        trader, account, _xtdata, _xttype = qmt_connection(paths, args.account_id)
+    except Exception as exc:
+        result = {
+            "status": "unavailable",
+            "reason": str(exc),
+            "privacy": "probe does not print amount, volume, market value, cash, or full account id",
+        }
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 1
     try:
         asset = trader.query_stock_asset(account)
         positions = trader.query_stock_positions(account) or []
         result = {
+            "status": "ok",
             "qmt_site_found": True,
             "userdata_found": True,
             "account_masked": mask_account(getattr(account, "account_id", "")),
@@ -769,6 +781,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--account-id", help="QMT fund account id. Defaults to QMT_ACCOUNT_ID or first discovered account.")
     parser.add_argument("--probe", action="store_true", help="Check read-only connectivity without writing a snapshot.")
     parser.add_argument("--no-sync-rules", action="store_true", help="Do not sync research/alerts/intraday_rules.json.")
+    parser.add_argument("--no-log", action="store_true", help="Do not append research/logs/decision_log.md.")
     parser.add_argument("--dry-run", action="store_true", help="Print sanitized snapshot JSON without writing files.")
     parser.add_argument("--db", type=Path, help="Also ingest the generated JSON artifact into the history SQLite database.")
     args = parser.parse_args(argv)
@@ -788,11 +801,12 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(snapshot, ensure_ascii=False, indent=2))
         return 0
 
-    md_path, json_path, synced = write_snapshot(snapshot, sync_rules=not args.no_sync_rules)
+    md_path, json_path, synced = write_snapshot(snapshot, sync_rules=not args.no_sync_rules, log_decision=not args.no_log)
     db_ingest = ingest_generated_snapshot(args.db, json_path)
     result = {
         "created": [rel_path(md_path), rel_path(json_path)],
         "synced_intraday_rules": synced,
+        "logged": not args.no_log,
         "privacy": "ratio-only; no amount, volume, cash amount, profit amount, or full account id saved",
     }
     if db_ingest is not None:

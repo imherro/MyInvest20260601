@@ -424,6 +424,38 @@ def history_quality_page(request: Request) -> HTMLResponse:
     )
 
 
+@app.get("/history/coverage", response_class=HTMLResponse)
+def history_coverage_page(request: Request) -> HTMLResponse:
+    coverage = HistoryWorkbenchService().coverage()
+    return templates.TemplateResponse(
+        request,
+        "history_coverage.html",
+        page_context(
+            request,
+            "history-coverage",
+            "/api/history/coverage",
+            subtitle="History DB artifact and normalized coverage.",
+            coverage=coverage,
+        ),
+    )
+
+
+@app.get("/securities/{code}/history", response_class=HTMLResponse)
+def security_history_page(request: Request, code: str) -> HTMLResponse:
+    history = HistoryWorkbenchService().security_history(code)
+    return templates.TemplateResponse(
+        request,
+        "security_history.html",
+        page_context(
+            request,
+            "security-history",
+            f"/api/securities/{quote(code, safe='')}/history",
+            subtitle="Read-only security history from temp/history_db.",
+            history=history,
+        ),
+    )
+
+
 @app.get("/securities/{code}/valuation", response_class=HTMLResponse)
 def security_valuation_history_page(request: Request, code: str) -> HTMLResponse:
     history = ValuationHistoryService().history(code)

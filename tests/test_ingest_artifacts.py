@@ -12,6 +12,37 @@ def test_privacy_scanner_flags_exact_amount_key_without_policy_false_positive() 
     assert [item["path"] for item in findings] == ["amount"]
 
 
+def test_privacy_scanner_allows_security_prices() -> None:
+    findings = scan_json_privacy(
+        {
+            "price": 12.34,
+            "current_price": 12.35,
+            "cost_price": 10.1,
+            "current_value": 12.35,
+            "execution_order": 1,
+            "bucket_order": ["core", "watch"],
+            "ideal_segments": ["core"],
+            "ideal_position_range": "0%-5%",
+            "valuation_visual": {"current_value": 12.35},
+        }
+    )
+
+    assert findings == []
+
+
+def test_privacy_scanner_flags_amount_quantity_account_trade_terms() -> None:
+    findings = scan_json_privacy(
+        {
+            "trade_amount": 100,
+            "available_quantity": 200,
+            "full_account": "123456",
+            "fill_record": "x",
+        }
+    )
+
+    assert {item["path"] for item in findings} == {"trade_amount", "available_quantity", "full_account", "fill_record"}
+
+
 def test_privacy_scanner_flags_local_absolute_path() -> None:
     findings = scan_json_privacy({"path": r"C:\Users\kunpeng\Documents\secret.json"})
 

@@ -23,8 +23,8 @@ def test_db_export_report_writes_ratio_only_snapshot(tmp_path) -> None:
         ],
     )
 
-    report = build_report(db_path, code="688333.SH", limit=5)
-    created = write_outputs(report, out_dir, "both")
+    report = build_report(db_path, code="688333.SH", limit=5, since="2026-01-01", until="2099-01-01")
+    created = write_outputs(report, out_dir, "both", zip_output=True)
 
     json_path = out_dir / created["json"].split("/")[-1]
     md_path = out_dir / created["md"].split("/")[-1]
@@ -32,6 +32,7 @@ def test_db_export_report_writes_ratio_only_snapshot(tmp_path) -> None:
 
     assert json_path.exists()
     assert md_path.exists()
+    assert (out_dir / created["zip"].split("/")[-1]).exists()
     assert payload["summary"]["migration_status"] == "ok"
     assert payload["market_history"]
     assert payload["valuation_history"]

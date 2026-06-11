@@ -10,7 +10,11 @@ FORBIDDEN_KEYS = {
     "account",
     "account_id",
     "acct",
+    "full_account",
     "order_id",
+    "order_no",
+    "order_record",
+    "order_records",
     "trade_id",
     "deal_id",
     "quantity",
@@ -21,6 +25,18 @@ FORBIDDEN_KEYS = {
     "cost_amount",
     "cost_value",
     "current_value_amount",
+}
+ALLOWED_PRICE_KEYS = {
+    "price",
+    "last_price",
+    "close",
+    "open",
+    "high",
+    "low",
+    "current_price",
+    "cost_price",
+    "last_reference",
+    "current_value",
 }
 FORBIDDEN_KEY_TERMS = (
     "持仓数量",
@@ -42,7 +58,20 @@ def normalized_key(key: Any) -> str:
 
 def is_forbidden_key(key: Any) -> bool:
     text = normalized_key(key)
+    if text in ALLOWED_PRICE_KEYS:
+        return False
+    if text.endswith("_policy") or text in {"privacy_policy", "amount_policy"}:
+        return False
     if text in FORBIDDEN_KEYS:
+        return True
+    if "share_count" in text:
+        return True
+    tokens = {token for token in re.split(r"[^a-z0-9]+", text) if token}
+    if tokens & {"amount", "quantity", "shares", "account"}:
+        return True
+    if "fill" in tokens and ("record" in tokens or "records" in tokens):
+        return True
+    if "order" in tokens and ("record" in tokens or "records" in tokens):
         return True
     return any(term in str(key) for term in FORBIDDEN_KEY_TERMS)
 

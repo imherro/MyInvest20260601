@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Security History{% endblock %}
+
+{% block content %}
+<section class="metric-grid">
+  <div class="metric">
+    <span class="subtle">Code</span>
+    <strong>{{ history.code }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Latest</span>
+    <strong>{{ history.summary.latest_generated_at or "n/a" }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Valuation Rows</span>
+    <strong>{{ history.summary.valuation_count }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Action Rows</span>
+    <strong>{{ history.summary.action_count }}</strong>
+  </div>
+</section>
+
+<div class="table-tools">
+  <a class="button-link" href="/securities/{{ history.code }}/valuation">Valuation</a>
+  <a class="button-link" href="/positions/history?code={{ history.code }}">Positions</a>
+  <a class="button-link" href="/actions/history?code={{ history.code }}">Actions</a>
+  <a class="button-link" href="/history">History Workspace</a>
+</div>
+
+<p class="subtle">{{ history.note }}</p>
+
+<h2>Valuation</h2>
+<table>
+  <thead>
+    <tr>
+      <th>generated_at</th>
+      <th>basis_date</th>
+      <th>value</th>
+      <th>zone</th>
+      <th>reasonable</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in history.valuation_history %}
+    <tr>
+      <td>{{ row.generated_at }}</td>
+      <td>{{ row.basis_date }}</td>
+      <td>{{ row.current_value }}</td>
+      <td>{{ row.current_zone_label }}</td>
+      <td>{{ row.reasonable_min }} - {{ row.reasonable_max }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5">No valuation history found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Positions</h2>
+<table>
+  <thead>
+    <tr>
+      <th>snapshot_at</th>
+      <th>bucket</th>
+      <th class="num">weight pct</th>
+      <th class="num">day change pct</th>
+      <th>lifecycle</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in history.position_history %}
+    <tr>
+      <td>{{ row.snapshot_at }}</td>
+      <td>{{ row.slot_bucket_key or row.snapshot_bucket_key }}</td>
+      <td class="num">{{ "%.4f"|format(row.weight_pct) if row.weight_pct is not none else "n/a" }}</td>
+      <td class="num">{{ "%.4f"|format(row.day_change_pct) if row.day_change_pct is not none else "n/a" }}</td>
+      <td>{{ row.lifecycle_status or "n/a" }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5">No position history found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Actions</h2>
+<table>
+  <thead>
+    <tr>
+      <th>generated_at</th>
+      <th>action</th>
+      <th>state</th>
+      <th>change</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in history.action_history %}
+    <tr>
+      <td>{{ row.generated_at }}</td>
+      <td>{{ row.action_type }}</td>
+      <td>{{ row.action_state }}</td>
+      <td>{{ row.suggested_change_text or "n/a" }}</td>
+      <td>{{ row.target_position_text or "n/a" }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5">No action history found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Profiles</h2>
+<table>
+  <thead>
+    <tr>
+      <th>generated_at</th>
+      <th>type</th>
+      <th>rating</th>
+      <th class="num">score</th>
+      <th>ResearchFirst</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in history.profile_history %}
+    <tr>
+      <td>{{ row.generated_at }}</td>
+      <td>{{ row.profile_type }}</td>
+      <td>{{ row.action_rating or "n/a" }}</td>
+      <td class="num">{{ row.overall_score if row.overall_score is not none else "n/a" }}</td>
+      <td>{{ row.research_first_status or "n/a" }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5">No profile history found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

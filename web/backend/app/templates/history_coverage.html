@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}History Coverage{% endblock %}
+
+{% block content %}
+<section class="metric-grid">
+  <div class="metric {{ 'ok' if coverage.summary.db_ready else 'warn' }}">
+    <span class="subtle">DB Ready</span>
+    <strong>{{ "yes" if coverage.summary.db_ready else "no" }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Modules</span>
+    <strong>{{ coverage.summary.module_count }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Artifacts</span>
+    <strong>{{ coverage.summary.artifact_count }}</strong>
+  </div>
+  <div class="metric">
+    <span class="subtle">Normalized Modules</span>
+    <strong>{{ coverage.summary.normalized_module_count }}</strong>
+  </div>
+</section>
+
+<table>
+  <thead>
+    <tr>
+      <th>module</th>
+      <th class="num">artifacts</th>
+      <th class="num">normalized</th>
+      <th>first</th>
+      <th>latest</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in coverage.rows %}
+    <tr>
+      <td>{{ row.module }}</td>
+      <td class="num">{{ row.artifact_count }}</td>
+      <td class="num">{{ row.normalized_count }}</td>
+      <td>{{ row.first_generated_at }}</td>
+      <td>{{ row.latest_generated_at }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5">No history DB coverage found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
