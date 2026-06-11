@@ -18,6 +18,7 @@ Endpoints:
 
 - `GET /api/health`
 - `GET /api/environment/status`
+- `GET /api/diagnostics/schema`
 - `GET /api/user/preferences`
 - `GET /api/user/preferences/{user_id}`
 - `GET /api/dashboard/summary`
@@ -137,23 +138,39 @@ The response is intended for JSON preview/download and Web audit review. It does
 
 The same data backs `GET /audit`, which renders preview cards, a simple chart, module filtering, and a JSON download link.
 
-## DB Schema Versioning Design
+## DB Schema Guard Diagnostics
 
-Phase 14A adds `web/docs/DB_SCHEMA_VERSIONING_PLAN.md` as design material only.
-It does not add an endpoint, alter the OpenAPI path list, write SQLite, modify
-ingest, or change any response contract.
+Phase 14A adds `web/docs/DB_SCHEMA_VERSIONING_PLAN.md` as design material.
+Phase 14B adds one read-only diagnostics endpoint:
 
-A future Phase 14B may expose sanitized schema guard status through an existing
-local diagnostics surface such as `GET /api/environment/status`, or through a
-separately reviewed GET-only endpoint. Any future response must contain only
-safe operational metadata such as schema name, expected version, actual version,
-status, and a non-sensitive message.
+- `GET /api/diagnostics/schema`
 
-Future schema mismatch behavior must fail closed without automatic destructive
-migration, without request-time table creation, and without writing research
-artifacts. It must not expose local absolute paths, SQLite contents, account
-context, order records, fill records, credentials, runtime files, or cache
-contents.
+The endpoint delegates to `SchemaGuardService` and `SchemaGuardRepository`,
+which read SQLite metadata through `DatabaseService`. It checks the minimum
+current read-model table and column contract, reads `schema_version` or
+`schema_metadata` only if those tables already exist, and never creates,
+alters, drops, migrates, or seeds tables from the request path.
+
+Response data is wrapped in the standard API envelope under
+`data.schema_guard`. Safe fields include `status`, `ok`,
+`expected_schema_name`, `expected_schema_version`, observed schema name/version,
+version source, version-table presence, required table/column presence, missing
+table/column names, `checked_at`, diagnostics warning codes, and read-only
+safety flags.
+
+Status values:
+
+- `ok`: required read-model tables and columns exist and existing version
+  metadata matches `web_read_model_v1`.
+- `degraded`: required read-model tables and columns exist, but no
+  `schema_version` or usable metadata exists yet.
+- `mismatch`: required structure or existing version metadata does not match.
+- `unavailable`: metadata introspection could not complete.
+
+The current Phase 14B database has no version table, so the endpoint returns
+`degraded` with `missing_version_table` while keeping Web smoke checks green.
+The endpoint must not expose local absolute paths, SQLite row contents,
+credentials, runtime files, cache contents, or trading/execution records.
 
 ## Research Dashboard
 

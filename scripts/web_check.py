@@ -21,11 +21,12 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "chore(ci): clean up web test warnings"
+COMMIT_MESSAGE = "feat(db): add read-only schema guard skeleton"
 
 API_PATHS = [
     "/api/health",
     "/api/environment/status",
+    "/api/diagnostics/schema",
     "/api/user/preferences",
     "/api/user/preferences/default",
     "/api/dashboard/summary",
@@ -2107,6 +2108,7 @@ class WebCheck:
 
         self.check_api_is_read_only(client)
         self.check_environment_status_api(client)
+        self.check_schema_guard_api(client, ratio)
         self.check_subject_status_api(client, ratio)
         self.check_subject_gap_api(client, ratio)
         self.check_dashboard_api(client, ratio)
@@ -2180,6 +2182,42 @@ class WebCheck:
             )
             return
         self.add_result("environment_status_api", "PASS", "read-only workbench environment status safe")
+
+    def check_schema_guard_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/diagnostics/schema")
+            if response.status_code != 200:
+                raise ValueError(f"Expected 200, got {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            guard = ((payload.get("data") or {}).get("schema_guard") or {})
+            if guard.get("module") != "schema_guard":
+                raise ValueError("module mismatch")
+            if guard.get("current_only") is not True or guard.get("read_only") is not True:
+                raise ValueError("schema guard is not marked current-only/read-only")
+            if guard.get("expected_schema_version") != "web_read_model_v1":
+                raise ValueError("expected schema version mismatch")
+            if guard.get("status") not in {"ok", "degraded", "mismatch", "unavailable"}:
+                raise ValueError(f"unsupported schema guard status: {guard.get('status')}")
+            if not isinstance(guard.get("missing_required_tables"), list):
+                raise ValueError("missing_required_tables is not a list")
+            if not isinstance(guard.get("missing_required_columns"), dict):
+                raise ValueError("missing_required_columns is not a dict")
+            safety = guard.get("safety") or {}
+            for key in ["no_sqlite_writes", "no_migration", "get_only", "ratio_only", "current_only"]:
+                if safety.get(key) is not True:
+                    raise ValueError(f"safety flag is not true: {key}")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("schema_guard_api", "FAIL", str(exc))
+            self.fail(
+                "schema_guard_api",
+                "/api/diagnostics/schema",
+                f"Schema guard API failed safety check: {exc}",
+                "Return sanitized read-only schema metadata only.",
+            )
+            return
+        self.add_result("schema_guard_api", "PASS", "read-only schema guard diagnostics safe")
 
     def check_subject_gap_api(self, client: Any, ratio: Any) -> None:
         try:

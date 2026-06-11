@@ -466,6 +466,30 @@ Phase 14A documents `web/docs/DB_SCHEMA_VERSIONING_PLAN.md` only:
 Any implementation of schema version checks belongs to a later phase with
 focused tests for match, missing metadata, and mismatch states.
 
+## Phase 14B Read-Only Schema Guard Rules
+
+Phase 14B introduces the schema guard skeleton only:
+
+- `SchemaGuardService` owns status classification and safe payload shaping.
+- `SchemaGuardRepository` owns read-only schema metadata access.
+- `SchemaGuardRepository` delegates all reads to `DatabaseService`.
+- `DatabaseService.table_info(...)` is the only explicit table-info helper and
+  validates table identifiers before running `PRAGMA table_info(...)`.
+- General `DatabaseService.fetch_all(...)` and `fetch_one(...)` continue to
+  reject `PRAGMA` and write-like SQL.
+- `GET /api/diagnostics/schema` is the only new Web surface and remains GET
+  only.
+- The current database without `schema_version` returns `degraded` with
+  `missing_version_table`; it must not create or seed metadata from request
+  handling.
+- Existing or future `schema_version` / `schema_metadata` tables are read only.
+- The guard returns status strings, version identifiers, missing table/column
+  names, timestamps, and safety flags only.
+
+Phase 14B must not modify ingest, research artifacts, action-plan generation,
+target-allocation generation, trading/QMT behavior, runtime DB writes, or
+package boundaries.
+
 ## Hard Service Boundaries
 
 Services must not:
