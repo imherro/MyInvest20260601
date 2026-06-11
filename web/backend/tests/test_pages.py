@@ -39,6 +39,30 @@ def test_web_pages_render_without_local_absolute_paths(client):
         assert not LOCAL_PATH_RE.search(response.text)
 
 
+def test_main_navigation_is_role_grouped(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    html = response.text
+
+    assert html.count('class="nav-trigger"') == 5
+    for label in ["总览", "基金经理", "研究员", "操盘手", "历史库", "系统"]:
+        assert label in html
+    for href in [
+        "/action-plan",
+        "/target-allocation",
+        "/subjects",
+        "/portfolio",
+        "/history/coverage",
+        "/tools?group=基金经理",
+        "/tools?group=研究员",
+        "/tools?group=操盘手",
+        "/tools?group=历史库与审计",
+        "/tools?group=系统与开发",
+    ]:
+        assert href in html
+    assert not LOCAL_PATH_RE.search(html)
+
+
 def test_action_plan_page_distinguishes_plan_and_market_basis(client):
     response = client.get("/action-plan")
     assert response.status_code == 200

@@ -17,13 +17,17 @@ def test_tool_console_lists_whitelisted_tools_only():
     payload = ToolConsoleService().list_tools()
 
     assert payload["summary"]["tool_count"] >= 20
+    assert payload["groups"] == ["基金经理", "研究员", "操盘手", "历史库与审计", "系统与开发"]
     assert payload["safety"]["whitelist_only"] is True
     assert payload["safety"]["arbitrary_command_input"] is False
     assert payload["safety"]["qmt_write_enabled"] is False
     assert payload["safety"]["trading_enabled"] is False
-    assert any(tool["id"] == "ingest_web_db" for tool in payload["tools"])
-    assert any(tool["id"] == "generate_action_plan" for tool in payload["tools"])
-    assert any(tool["id"] == "market_position_prompt" for tool in payload["tools"])
+    tools = {tool["id"]: tool for tool in payload["tools"]}
+    assert tools["market_position_prompt"]["group"] == "基金经理"
+    assert tools["generate_action_plan"]["group"] == "操盘手"
+    assert tools["theme_research_prompt"]["group"] == "研究员"
+    assert tools["db_history_rebuild"]["group"] == "历史库与审计"
+    assert tools["ingest_web_db"]["group"] == "系统与开发"
     RatioOnlyService.assert_safe(payload)
 
 
@@ -124,10 +128,16 @@ def test_tools_page_and_ops_api_are_safe(client):
     html = response.text
     assert "data-tool-search" in html
     assert "data-tool-filter" in html
+    assert "All roles" in html
+    assert "基金经理" in html
     assert "toolRows" in html
     assert "data-tool-output-row" in html
     assert "tool-result-row" in html
     assert not LOCAL_PATH_RE.search(html)
+
+    response = client.get("/tools?group=研究员")
+    assert response.status_code == 200
+    assert '<option value="研究员" selected>' in response.text
 
     response = client.get("/ops/tools")
     assert response.status_code == 200

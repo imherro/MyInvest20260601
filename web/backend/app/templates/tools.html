@@ -8,6 +8,10 @@
     <span class="subtle">Tools</span>
     <strong data-bind="tool_count">{{ tools.summary.tool_count if tools is defined else "n/a" }}</strong>
   </div>
+  <div class="metric">
+    <span class="subtle">Role Groups</span>
+    <strong>{{ tools.summary.group_count if tools is defined else "n/a" }}</strong>
+  </div>
   <div class="metric ok">
     <span class="subtle">Whitelist</span>
     <strong>on</strong>
@@ -40,11 +44,12 @@
 </section>
 
 <div class="table-tools">
+  {% set selected_group = request.query_params.get("group", "") %}
   <input type="search" placeholder="Search tools" aria-label="Search tools" data-tool-search>
   <select aria-label="Filter tools" data-tool-filter data-loaded="true">
-    <option value="">All groups</option>
+    <option value="" {{ "selected" if not selected_group else "" }}>All roles</option>
     {% for group in tools.groups %}
-    <option value="{{ group }}">{{ group }}</option>
+    <option value="{{ group }}" {{ "selected" if selected_group == group else "" }}>{{ group }}</option>
     {% endfor %}
   </select>
 </div>

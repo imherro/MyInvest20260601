@@ -50,7 +50,8 @@
         gap: 6px;
         justify-content: flex-end;
       }
-      nav a {
+      nav a,
+      .nav-trigger {
         color: var(--muted);
         text-decoration: none;
         padding: 7px 9px;
@@ -58,9 +59,58 @@
         font-size: 14px;
       }
       nav a.active,
-      nav a:hover {
+      nav a:hover,
+      .nav-group.active .nav-trigger,
+      .nav-trigger:hover,
+      .nav-trigger:focus {
         color: var(--ink);
         background: #e9eef6;
+      }
+      .nav-group {
+        position: relative;
+        display: flex;
+      }
+      .nav-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .nav-trigger::after {
+        content: "";
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 5px solid currentColor;
+        opacity: 0.7;
+      }
+      .nav-menu {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 6px);
+        z-index: 20;
+        display: none;
+        min-width: 218px;
+        padding: 7px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 10px 24px rgba(24, 33, 47, 0.14);
+      }
+      .nav-group:hover .nav-menu,
+      .nav-group:focus-within .nav-menu {
+        display: grid;
+        gap: 2px;
+      }
+      .nav-menu a {
+        display: block;
+        padding: 8px 9px;
+      }
+      .nav-menu a.nav-section-link {
+        margin-top: 4px;
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
+        font-weight: 700;
       }
       main {
         max-width: 1200px;
@@ -530,40 +580,88 @@
         .bar { align-items: flex-start; flex-direction: column; }
         .page-top { align-items: flex-start; flex-direction: column; }
         nav { justify-content: flex-start; }
+        .nav-group { position: static; }
+        .nav-menu {
+          left: 0;
+          right: auto;
+          max-width: calc(100vw - 40px);
+        }
         table { display: block; overflow-x: auto; }
       }
     </style>
-    <script src="/static/app.js?v=page100-status-tones-v2-20260611" defer></script>
+    <script src="/static/app.js?v=role-nav-tools-v1-20260611" defer></script>
   </head>
   <body data-page="{{ page }}" data-api-path="{{ api_path }}">
     <header>
       <div class="bar">
         <div class="brand">MyInvest Current</div>
+        {% set manager_pages = ["market-history", "target-allocation", "buckets", "buckets-drilldown", "historical-metrics"] %}
+        {% set researcher_pages = ["research-first", "subjects", "subjects-gap", "subjects-drilldown", "themes", "history-gap-dashboard", "security-history", "valuation-history"] %}
+        {% set trader_pages = ["action-plan", "portfolio", "intraday-rules", "decision-log", "decision-timeline", "position-history", "action-history"] %}
+        {% set history_pages = ["history-workbench", "history-quality", "history-coverage"] %}
+        {% set system_pages = ["system-checks", "tools", "readiness", "environment", "preferences", "audit"] %}
         <nav aria-label="Main">
-          <a class="{{ 'active' if page == 'dashboard' else '' }}" href="/">Dashboard</a>
-          <a class="{{ 'active' if page == 'action-plan' else '' }}" href="/action-plan">Action Plan</a>
-          <a class="{{ 'active' if page == 'target-allocation' else '' }}" href="/target-allocation">Target Allocation</a>
-          <a class="{{ 'active' if page == 'research-first' else '' }}" href="/research-first">ResearchFirst</a>
-          <a class="{{ 'active' if page == 'subjects' else '' }}" href="/subjects">Subject Status</a>
-          <a class="{{ 'active' if page == 'subjects-gap' else '' }}" href="/subjects/gap">Subject Gap</a>
-          <a class="{{ 'active' if page == 'themes' else '' }}" href="/themes">Themes</a>
-          <a class="{{ 'active' if page == 'buckets' else '' }}" href="/buckets">Buckets</a>
-          <a class="{{ 'active' if page == 'history-gap-dashboard' else '' }}" href="/history/gap-dashboard">History Gap</a>
-          <a class="{{ 'active' if page == 'buckets-drilldown' else '' }}" href="/buckets/drilldown">Bucket Drilldown</a>
-          <a class="{{ 'active' if page == 'subjects-drilldown' else '' }}" href="/subjects/drilldown">Subject Drilldown</a>
-          <a class="{{ 'active' if page == 'portfolio' else '' }}" href="/portfolio">Portfolio</a>
-          <a class="{{ 'active' if page == 'intraday-rules' else '' }}" href="/intraday-rules">Intraday Rules</a>
-          <a class="{{ 'active' if page == 'decision-log' else '' }}" href="/decision-log">Decision Log</a>
-          <a class="{{ 'active' if page == 'decision-timeline' else '' }}" href="/decision-timeline">Decision Timeline</a>
-          <a class="{{ 'active' if page == 'historical-metrics' else '' }}" href="/historical-metrics">Historical Metrics</a>
-          <a class="{{ 'active' if page == 'history-workbench' else '' }}" href="/history">History</a>
-          <a class="{{ 'active' if page == 'market-history' else '' }}" href="/market/history">Market History</a>
-          <a class="{{ 'active' if page == 'position-history' else '' }}" href="/positions/history">Position History</a>
-          <a class="{{ 'active' if page == 'action-history' else '' }}" href="/actions/history">Action History</a>
-          <a class="{{ 'active' if page == 'history-quality' else '' }}" href="/history/quality">History Quality</a>
-          <a class="{{ 'active' if page == 'history-coverage' else '' }}" href="/history/coverage">History Coverage</a>
-          <a class="{{ 'active' if page == 'system-checks' else '' }}" href="/system-checks">System Checks</a>
-          <a class="{{ 'active' if page == 'tools' else '' }}" href="/tools">Tools</a>
+          <a class="{{ 'active' if page == 'dashboard' else '' }}" href="/">总览</a>
+          <div class="nav-group {{ 'active' if page in manager_pages else '' }}">
+            <a class="nav-trigger" href="/target-allocation">基金经理</a>
+            <div class="nav-menu" role="menu">
+              <a class="{{ 'active' if page == 'market-history' else '' }}" href="/market/history">市场历史</a>
+              <a class="{{ 'active' if page == 'target-allocation' else '' }}" href="/target-allocation">理想仓位</a>
+              <a class="{{ 'active' if page == 'buckets' else '' }}" href="/buckets">仓位框架</a>
+              <a class="{{ 'active' if page == 'buckets-drilldown' else '' }}" href="/buckets/drilldown">仓位钻取</a>
+              <a class="{{ 'active' if page == 'historical-metrics' else '' }}" href="/historical-metrics">历史指标</a>
+              <a class="nav-section-link" href="/tools?group=基金经理">基金经理工具</a>
+            </div>
+          </div>
+          <div class="nav-group {{ 'active' if page in researcher_pages else '' }}">
+            <a class="nav-trigger" href="/subjects">研究员</a>
+            <div class="nav-menu" role="menu">
+              <a class="{{ 'active' if page == 'research-first' else '' }}" href="/research-first">ResearchFirst</a>
+              <a class="{{ 'active' if page == 'subjects' else '' }}" href="/subjects">标的状态</a>
+              <a class="{{ 'active' if page == 'subjects-gap' else '' }}" href="/subjects/gap">研究缺口</a>
+              <a class="{{ 'active' if page == 'subjects-drilldown' else '' }}" href="/subjects/drilldown">标的钻取</a>
+              <a class="{{ 'active' if page == 'themes' else '' }}" href="/themes">主线研究</a>
+              <a class="{{ 'active' if page == 'history-gap-dashboard' else '' }}" href="/history/gap-dashboard">缺口历史</a>
+              <a class="nav-section-link" href="/tools?group=研究员">研究员工具</a>
+            </div>
+          </div>
+          <div class="nav-group {{ 'active' if page in trader_pages else '' }}">
+            <a class="nav-trigger" href="/action-plan">操盘手</a>
+            <div class="nav-menu" role="menu">
+              <a class="{{ 'active' if page == 'action-plan' else '' }}" href="/action-plan">操作计划</a>
+              <a class="{{ 'active' if page == 'portfolio' else '' }}" href="/portfolio">当前仓位</a>
+              <a class="{{ 'active' if page == 'intraday-rules' else '' }}" href="/intraday-rules">盘中规则</a>
+              <a class="{{ 'active' if page == 'position-history' else '' }}" href="/positions/history">仓位历史</a>
+              <a class="{{ 'active' if page == 'action-history' else '' }}" href="/actions/history">动作历史</a>
+              <a class="{{ 'active' if page == 'decision-timeline' else '' }}" href="/decision-timeline">决策时间线</a>
+              <a class="{{ 'active' if page == 'decision-log' else '' }}" href="/decision-log">决策日志</a>
+              <a class="nav-section-link" href="/tools?group=操盘手">操盘手工具</a>
+            </div>
+          </div>
+          <div class="nav-group {{ 'active' if page in history_pages else '' }}">
+            <a class="nav-trigger" href="/history">历史库</a>
+            <div class="nav-menu" role="menu">
+              <a class="{{ 'active' if page == 'history-workbench' else '' }}" href="/history">历史工作台</a>
+              <a href="/market/history">市场历史</a>
+              <a href="/positions/history">仓位历史</a>
+              <a href="/actions/history">动作历史</a>
+              <a class="{{ 'active' if page == 'history-quality' else '' }}" href="/history/quality">质量检查</a>
+              <a class="{{ 'active' if page == 'history-coverage' else '' }}" href="/history/coverage">覆盖率</a>
+              <a class="nav-section-link" href="/tools?group=历史库与审计">历史库工具</a>
+            </div>
+          </div>
+          <div class="nav-group {{ 'active' if page in system_pages else '' }}">
+            <a class="nav-trigger" href="/system-checks">系统</a>
+            <div class="nav-menu" role="menu">
+              <a class="{{ 'active' if page == 'system-checks' else '' }}" href="/system-checks">系统检查</a>
+              <a class="{{ 'active' if page == 'tools' else '' }}" href="/tools">工具注册表</a>
+              <a class="{{ 'active' if page == 'readiness' else '' }}" href="/readiness">Readiness</a>
+              <a class="{{ 'active' if page == 'environment' else '' }}" href="/environment">环境状态</a>
+              <a class="{{ 'active' if page == 'preferences' else '' }}" href="/preferences">偏好设置</a>
+              <a class="{{ 'active' if page == 'audit' else '' }}" href="/audit">审计导出</a>
+              <a class="nav-section-link" href="/tools?group=系统与开发">系统工具</a>
+            </div>
+          </div>
         </nav>
       </div>
     </header>

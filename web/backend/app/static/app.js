@@ -1421,6 +1421,10 @@
     toolState.groups = data.groups || [];
     setBind("tool_count", summary.tool_count);
     renderToolCategoryFilter();
+    const filter = document.querySelector("[data-tool-filter]");
+    if (filter && filter.value && !toolState.group) {
+      toolState.group = filter.value;
+    }
     renderToolRows();
   }
 
@@ -1730,6 +1734,10 @@
     });
     document.querySelector("[data-tool-filter]")?.addEventListener("change", (event) => {
       toolState.group = event.target.value || "";
+      const url = new URL(window.location.href);
+      if (toolState.group) url.searchParams.set("group", toolState.group);
+      else url.searchParams.delete("group");
+      window.history.replaceState({}, "", url);
       renderToolRows();
     });
   }
