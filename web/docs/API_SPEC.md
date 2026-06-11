@@ -304,6 +304,14 @@ The endpoints do not read `latest_index.files`, write research artifacts, update
 
 The page `GET /historical-metrics` uses the same API and supports refresh, search, entity/status filters, sorting, pagination, bucket gap visualization, tooltips, and expandable details.
 
+Phase 15A documents a future Historical Metrics audit integration in
+`web/docs/HISTORICAL_METRICS_PLAN.md`. No endpoint is added in Phase 15A. A
+future Phase 15B may add a GET-only diagnostics endpoint such as
+`GET /api/diagnostics/historical-metrics` to report safe readiness, source, and
+consistency metadata for Historical Metrics and Audit Bundle integration. Any
+future response must remain current-only, ratio-only, ResearchFirst-neutral,
+read-only, and free of local absolute paths or runtime artifacts.
+
 ## Market Position
 
 Phase 5C-1 adds read-only market-position endpoints backed by SQLite

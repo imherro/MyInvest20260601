@@ -340,6 +340,28 @@ Decision timeline is a review navigation page. It is not a target-allocation gen
 
 Historical metrics is a dashboard analytics page for review. It is not a target-allocation generator, action-plan generator, promotion mechanism, trading page, order workflow, export writer, or QMT write adapter.
 
+## Phase 15A Historical Metrics Audit Design Rules
+
+Phase 15A documents `web/docs/HISTORICAL_METRICS_PLAN.md` only:
+
+- no service, repository, router, template, static JS, ingest, or database code
+  changes
+- no SQLite file is written
+- no table, migration, Alembic setup, or schema version mutation is introduced
+- no API endpoint is added
+- no release package or tag is created
+
+Future Phase 15B implementation should keep Historical Metrics audit behavior
+behind a narrow read-only service. It may expose a GET-only diagnostics endpoint
+such as `GET /api/diagnostics/historical-metrics`, but only after tests confirm
+ratio-only payloads, current-only source resolution, ResearchFirst neutrality,
+and OpenAPI GET-only behavior.
+
+The future audit layer should use existing read-only services and repositories
+that delegate to `DatabaseService`. It must not open raw SQLite connections,
+read `latest_index.files`, write research artifacts, generate action plans,
+generate target allocations, or connect to trading/QMT write behavior.
+
 ## Phase 9 Database Service Rules
 
 `DatabaseService` must:
