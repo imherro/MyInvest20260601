@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(db): add read-only schema guard skeleton"
+COMMIT_MESSAGE = "feat(db): full read-only schema guard enforcement"
 
 API_PATHS = [
     "/api/health",
@@ -2200,10 +2200,32 @@ class WebCheck:
                 raise ValueError("expected schema version mismatch")
             if guard.get("status") not in {"ok", "degraded", "mismatch", "unavailable"}:
                 raise ValueError(f"unsupported schema guard status: {guard.get('status')}")
+            if guard.get("status") in {"mismatch", "unavailable"}:
+                raise ValueError(f"schema guard reported blocking status: {guard.get('status')}")
+            if not guard.get("expected_schema_fingerprint"):
+                raise ValueError("expected schema fingerprint is empty")
+            if guard.get("observed_schema_fingerprint") and guard.get("schema_fingerprint_match") is not True:
+                raise ValueError("observed schema fingerprint did not match")
+            if guard.get("required_tables_present") is not True or guard.get("required_columns_present") is not True:
+                raise ValueError("required schema contract is not present")
             if not isinstance(guard.get("missing_required_tables"), list):
                 raise ValueError("missing_required_tables is not a list")
             if not isinstance(guard.get("missing_required_columns"), dict):
                 raise ValueError("missing_required_columns is not a dict")
+            contract = guard.get("schema_contract") or {}
+            if contract.get("required_table_count", 0) <= 0 or contract.get("required_column_count", 0) <= 0:
+                raise ValueError("schema contract counts are empty")
+            if contract.get("missing_required_table_count") != 0 or contract.get("missing_required_column_count") != 0:
+                raise ValueError("schema contract reports missing structures")
+            enforcement = guard.get("enforcement") or {}
+            if enforcement.get("mode") != "read_only_schema_guard":
+                raise ValueError("schema guard enforcement mode mismatch")
+            if enforcement.get("read_model_usable") is not True:
+                raise ValueError("schema guard reports read model unusable")
+            if enforcement.get("web_smoke_compatible") is not True:
+                raise ValueError("schema guard is not Web-smoke compatible")
+            if enforcement.get("fail_closed") is not False:
+                raise ValueError("schema guard fail_closed is unexpectedly true for current DB")
             safety = guard.get("safety") or {}
             for key in ["no_sqlite_writes", "no_migration", "get_only", "ratio_only", "current_only"]:
                 if safety.get(key) is not True:
