@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{ workbench.title }}{% endblock %}
+
+{% block content %}
+<section class="metric-grid" data-role-workbench="{{ workbench.role }}">
+  {% for item in workbench.metrics %}
+  <div class="metric {{ item.tone or '' }}">
+    <span class="subtle">{{ item.label }}</span>
+    <strong>{{ item.value }}</strong>
+  </div>
+  {% endfor %}
+</section>
+
+<section class="role-section" data-role-workflows>
+  <h2>角色流程</h2>
+  <div class="workflow-grid">
+    {% for flow in workbench.workflows %}
+    <article class="workflow-card" data-workflow-card>
+      <div>
+        <h3>{{ flow.title }}</h3>
+        <ol class="workflow-steps">
+          {% for step in flow.steps %}
+          <li><span>{{ loop.index }}</span>{{ step }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+      <a class="button-link" href="{{ flow.href }}">{{ flow.action }}</a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="role-section" data-role-links>
+  <h2>页面入口</h2>
+  <div class="role-link-grid">
+    {% for item in workbench.links %}
+    <a class="role-link-card" href="{{ item.href }}">{{ item.label }}</a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="role-section" data-role-tools>
+  <div class="section-head">
+    <h2>工具入口</h2>
+    <a class="button-link" href="/tools?group={{ workbench.tool_group }}">打开全部 {{ workbench.tool_group }} 工具</a>
+  </div>
+  <div class="role-link-grid">
+    {% for item in workbench.tool_links %}
+    <a class="role-link-card" href="{{ item.href }}">{{ item.label }}</a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

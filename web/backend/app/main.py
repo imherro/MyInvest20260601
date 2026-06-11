@@ -23,6 +23,7 @@ from .services.environment_status import EnvironmentStatusService
 from .services.history_gap_dashboard import HistoryGapDashboardService
 from .services.history_workbench import HistoryWorkbenchService
 from .services.historical_metrics import HistoricalMetricsService
+from .services.role_workbench import RoleWorkbenchService
 from .services.subject_gap import SubjectGapService
 from .services.subject_status import SubjectStatusService
 from .services.system_check import SystemCheckService
@@ -59,6 +60,21 @@ def service(session: Session) -> CurrentStateService:
 def query_api_path(base: str, params: dict[str, object]) -> str:
     clean = {key: value for key, value in params.items() if value not in (None, "")}
     return base + ("?" + urlencode(clean) if clean else "")
+
+
+def role_workbench_page(request: Request, role: str, page: str) -> HTMLResponse:
+    workbench = RoleWorkbenchService().get(role)
+    return templates.TemplateResponse(
+        request,
+        "role_workbench.html",
+        page_context(
+            request,
+            page,
+            "",
+            subtitle=workbench["subtitle"],
+            workbench=workbench,
+        ),
+    )
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -132,6 +148,26 @@ def readiness_page(request: Request, session: Session = Depends(get_session)) ->
             readiness=WorkbenchReadinessService(session).summary(),
         ),
     )
+
+
+@app.get("/manager", response_class=HTMLResponse)
+def manager_page(request: Request) -> HTMLResponse:
+    return role_workbench_page(request, "manager", "manager")
+
+
+@app.get("/researcher", response_class=HTMLResponse)
+def researcher_page(request: Request) -> HTMLResponse:
+    return role_workbench_page(request, "researcher", "researcher")
+
+
+@app.get("/trader", response_class=HTMLResponse)
+def trader_page(request: Request) -> HTMLResponse:
+    return role_workbench_page(request, "trader", "trader")
+
+
+@app.get("/system", response_class=HTMLResponse)
+def system_page(request: Request) -> HTMLResponse:
+    return role_workbench_page(request, "system", "system")
 
 
 @app.get("/action-plan", response_class=HTMLResponse)

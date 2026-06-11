@@ -15,6 +15,10 @@ def test_web_pages_render_without_local_absolute_paths(client):
         "/preferences",
         "/audit",
         "/readiness",
+        "/manager",
+        "/researcher",
+        "/trader",
+        "/system",
         "/action-plan",
         "/target-allocation",
         "/research-first",
@@ -48,6 +52,10 @@ def test_main_navigation_is_role_grouped(client):
     for label in ["总览", "基金经理", "研究员", "操盘手", "历史库", "系统"]:
         assert label in html
     for href in [
+        "/manager",
+        "/researcher",
+        "/trader",
+        "/system",
         "/action-plan",
         "/target-allocation",
         "/subjects",
@@ -61,6 +69,45 @@ def test_main_navigation_is_role_grouped(client):
     ]:
         assert href in html
     assert not LOCAL_PATH_RE.search(html)
+
+
+def test_role_workbench_pages_are_grouped_and_safe(client):
+    cases = [
+        ("/manager", "manager", "基金经理工作台", "/tools?group=基金经理"),
+        ("/researcher", "researcher", "研究员工作台", "/tools?group=研究员"),
+        ("/trader", "trader", "操盘手工作台", "/tools?group=操盘手"),
+        ("/system", "system", "系统与开发工作台", "/tools?group=系统与开发"),
+    ]
+    for path, role, title, tool_href in cases:
+        response = client.get(path)
+        assert response.status_code == 200, path
+        html = response.text
+        assert f'data-role-workbench="{role}"' in html
+        assert title in html
+        assert 'data-role-workflows' in html
+        assert 'data-workflow-card' in html
+        assert 'data-role-links' in html
+        assert 'data-role-tools' in html
+        assert tool_href in html
+        assert "ratio-only" in html or "ResearchFirst" in html or "temp-only" in html
+        assert not LOCAL_PATH_RE.search(html)
+
+
+def test_tools_filter_highlights_owning_role(client):
+    cases = [
+        ("/tools?group=基金经理", "/manager", "基金经理"),
+        ("/tools?group=研究员", "/researcher", "研究员"),
+        ("/tools?group=操盘手", "/trader", "操盘手"),
+        ("/tools?group=历史库与审计", "/history", "历史库"),
+        ("/tools?group=系统与开发", "/system", "系统"),
+    ]
+    for path, href, label in cases:
+        response = client.get(path)
+        assert response.status_code == 200, path
+        html = response.text
+        pattern = rf'<div class="nav-group active">\s*<a class="nav-trigger" href="{re.escape(href)}">{label}</a>'
+        assert re.search(pattern, html), path
+        assert not LOCAL_PATH_RE.search(html)
 
 
 def test_action_plan_page_distinguishes_plan_and_market_basis(client):

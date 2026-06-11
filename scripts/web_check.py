@@ -22,7 +22,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add workbench readiness page"
+COMMIT_MESSAGE = "feat(web): add role workbench pages"
 CHECK_MODES = {"smoke", "release"}
 
 API_PATHS = [
@@ -105,6 +105,10 @@ PAGE_PATHS = [
     "/preferences",
     "/audit",
     "/readiness",
+    "/manager",
+    "/researcher",
+    "/trader",
+    "/system",
     "/action-plan",
     "/target-allocation",
     "/research-first",
@@ -167,6 +171,10 @@ INTERACTIVE_PAGE_CHECKS = {
         "readinessSafetyRows",
         "/static/readiness.js",
     ],
+    "/manager": ["data-role-workbench", "data-role-workflows", "data-role-links", "data-role-tools", "/tools?group=基金经理"],
+    "/researcher": ["data-role-workbench", "data-role-workflows", "data-role-links", "data-role-tools", "/tools?group=研究员"],
+    "/trader": ["data-role-workbench", "data-role-workflows", "data-role-links", "data-role-tools", "/tools?group=操盘手"],
+    "/system": ["data-role-workbench", "data-role-workflows", "data-role-links", "data-role-tools", "/tools?group=系统与开发"],
     "/action-plan": ["data-table-search", "data-sort", "actionRows"],
     "/target-allocation": ["data-table-search", "data-sort", "targetRows"],
     "/subjects": ["data-table-search", "data-sort", "subjectsRows"],
