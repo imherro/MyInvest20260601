@@ -19,6 +19,7 @@ Endpoints:
 - `GET /api/health`
 - `GET /api/environment/status`
 - `GET /api/diagnostics/schema`
+- `GET /api/diagnostics/historical-metrics`
 - `GET /api/user/preferences`
 - `GET /api/user/preferences/{user_id}`
 - `GET /api/dashboard/summary`
@@ -304,13 +305,19 @@ The endpoints do not read `latest_index.files`, write research artifacts, update
 
 The page `GET /historical-metrics` uses the same API and supports refresh, search, entity/status filters, sorting, pagination, bucket gap visualization, tooltips, and expandable details.
 
-Phase 15A documents a future Historical Metrics audit integration in
-`web/docs/HISTORICAL_METRICS_PLAN.md`. No endpoint is added in Phase 15A. A
-future Phase 15B may add a GET-only diagnostics endpoint such as
-`GET /api/diagnostics/historical-metrics` to report safe readiness, source, and
-consistency metadata for Historical Metrics and Audit Bundle integration. Any
-future response must remain current-only, ratio-only, ResearchFirst-neutral,
-read-only, and free of local absolute paths or runtime artifacts.
+Phase 15A documents Historical Metrics audit integration in
+`web/docs/HISTORICAL_METRICS_PLAN.md`. Phase 15B adds a GET-only diagnostics
+endpoint:
+
+- `GET /api/diagnostics/historical-metrics`
+
+The endpoint returns `data.historical_metrics_guard` with safe operational
+metadata: status, required input readiness, missing input names, read-model
+table counts, source-module metadata, optional history snapshot availability,
+diagnostics warnings, enforcement status, and safety flags. It does not return
+row-level SQLite contents, write files, write SQLite, read `latest_index.files`,
+generate target allocations, generate action plans, or connect to execution
+adapters.
 
 ## Market Position
 

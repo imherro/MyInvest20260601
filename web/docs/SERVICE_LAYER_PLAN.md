@@ -351,16 +351,21 @@ Phase 15A documents `web/docs/HISTORICAL_METRICS_PLAN.md` only:
 - no API endpoint is added
 - no release package or tag is created
 
-Future Phase 15B implementation should keep Historical Metrics audit behavior
-behind a narrow read-only service. It may expose a GET-only diagnostics endpoint
-such as `GET /api/diagnostics/historical-metrics`, but only after tests confirm
-ratio-only payloads, current-only source resolution, ResearchFirst neutrality,
-and OpenAPI GET-only behavior.
+Phase 15B keeps Historical Metrics audit behavior behind a narrow read-only
+service. It exposes `GET /api/diagnostics/historical-metrics` after tests
+confirm ratio-only payloads, current-only source resolution, ResearchFirst
+neutrality, and OpenAPI GET-only behavior.
 
 The future audit layer should use existing read-only services and repositories
 that delegate to `DatabaseService`. It must not open raw SQLite connections,
 read `latest_index.files`, write research artifacts, generate action plans,
 generate target allocations, or connect to trading/QMT write behavior.
+
+`HistoricalMetricsGuardRepository` must use `DatabaseService.count_table(...)`
+and `DatabaseService.source_for_module(...)` for current read-model checks.
+Optional history snapshot availability may be read through the existing guarded
+`HistorySnapshotRepository.runtime_summary()` helper. Missing optional history
+snapshot state is `degraded`; missing required read-model inputs is `mismatch`.
 
 ## Phase 9 Database Service Rules
 

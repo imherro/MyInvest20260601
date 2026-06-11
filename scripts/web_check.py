@@ -21,12 +21,13 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(db): full read-only schema guard enforcement"
+COMMIT_MESSAGE = "feat(historical-metrics): add read-only audit guard skeleton"
 
 API_PATHS = [
     "/api/health",
     "/api/environment/status",
     "/api/diagnostics/schema",
+    "/api/diagnostics/historical-metrics",
     "/api/user/preferences",
     "/api/user/preferences/default",
     "/api/dashboard/summary",
@@ -2109,6 +2110,7 @@ class WebCheck:
         self.check_api_is_read_only(client)
         self.check_environment_status_api(client)
         self.check_schema_guard_api(client, ratio)
+        self.check_historical_metrics_guard_api(client, ratio)
         self.check_subject_status_api(client, ratio)
         self.check_subject_gap_api(client, ratio)
         self.check_dashboard_api(client, ratio)
@@ -2240,6 +2242,57 @@ class WebCheck:
             )
             return
         self.add_result("schema_guard_api", "PASS", "read-only schema guard diagnostics safe")
+
+    def check_historical_metrics_guard_api(self, client: Any, ratio: Any) -> None:
+        try:
+            response = client.get("/api/diagnostics/historical-metrics")
+            if response.status_code != 200:
+                raise ValueError(f"Expected 200, got {response.status_code}")
+            payload = response.json()
+            ratio.assert_safe(payload)
+            assert_safe_payload(payload)
+            guard = ((payload.get("data") or {}).get("historical_metrics_guard") or {})
+            if guard.get("module") != "historical_metrics_guard":
+                raise ValueError("module mismatch")
+            if guard.get("current_only") is not True or guard.get("read_only") is not True:
+                raise ValueError("guard is not marked current-only/read-only")
+            if guard.get("ratio_only") is not True:
+                raise ValueError("guard is not marked ratio-only")
+            if guard.get("status") not in {"ok", "degraded", "mismatch", "unavailable"}:
+                raise ValueError(f"unsupported guard status: {guard.get('status')}")
+            if guard.get("status") in {"mismatch", "unavailable"}:
+                raise ValueError(f"historical metrics guard reported blocking status: {guard.get('status')}")
+            if guard.get("required_inputs_present") is not True:
+                raise ValueError("required inputs are not present")
+            if guard.get("missing_inputs") != []:
+                raise ValueError("missing inputs should be empty for current DB")
+            if not isinstance(guard.get("table_counts"), dict) or not guard.get("table_counts"):
+                raise ValueError("table_counts is empty")
+            if not isinstance(guard.get("source_modules"), dict) or not guard.get("source_modules"):
+                raise ValueError("source_modules is empty")
+            enforcement = guard.get("enforcement") or {}
+            if enforcement.get("mode") != "read_only_historical_metrics_guard":
+                raise ValueError("enforcement mode mismatch")
+            if enforcement.get("fail_closed") is not False:
+                raise ValueError("fail_closed should be false for current DB")
+            if enforcement.get("web_smoke_compatible") is not True:
+                raise ValueError("guard is not Web-smoke compatible")
+            safety = guard.get("safety") or {}
+            for key in ["read_only", "ratio_only", "current_only", "research_first_neutral", "openapi_get_only"]:
+                if safety.get(key) is not True:
+                    raise ValueError(f"safety flag is not true: {key}")
+            if safety.get("uses_latest_index_files") is not False:
+                raise ValueError("latest_index.files safety flag must be false")
+        except Exception as exc:  # noqa: BLE001
+            self.add_result("historical_metrics_guard_api", "FAIL", str(exc))
+            self.fail(
+                "historical_metrics_guard_api",
+                "/api/diagnostics/historical-metrics",
+                f"Historical metrics guard API failed safety check: {exc}",
+                "Return sanitized read-only Historical Metrics guard metadata only.",
+            )
+            return
+        self.add_result("historical_metrics_guard_api", "PASS", "read-only Historical Metrics guard diagnostics safe")
 
     def check_subject_gap_api(self, client: Any, ratio: Any) -> None:
         try:

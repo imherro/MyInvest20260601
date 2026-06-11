@@ -20,6 +20,7 @@ from ..services.export_package import ReviewPackageExportService
 from ..services.history_gap_dashboard import HistoryGapDashboardService
 from ..services.history_snapshot import HistorySnapshotService
 from ..services.historical_metrics import HistoricalMetricsService
+from ..services.historical_metrics_guard import HistoricalMetricsGuardService
 from ..services.market_position import MarketPositionService
 from ..services.ratio_only import RatioOnlyService, RatioOnlyViolation
 from ..services.research_first_gate import ResearchFirstGateService
@@ -69,6 +70,14 @@ def schema_diagnostics(session: Session = Depends(get_session)) -> dict[str, Any
     return respond(
         {"schema_guard": SchemaGuardService(session).status()},
         source={"path": "db.SchemaGuardRepository"},
+    )
+
+
+@router.get("/diagnostics/historical-metrics")
+def historical_metrics_diagnostics(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(
+        {"historical_metrics_guard": HistoricalMetricsGuardService(session).status()},
+        source={"path": "db.HistoricalMetricsGuardRepository"},
     )
 
 
