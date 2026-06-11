@@ -148,6 +148,7 @@ class DashboardService:
     @staticmethod
     def _quick_links() -> list[dict[str, str]]:
         return [
+            {"label": "Daily Command", "href": "/assistant"},
             {"label": "Action Plan", "href": "/action-plan"},
             {"label": "Target Allocation", "href": "/target-allocation"},
             {"label": "Subject Status", "href": "/subjects"},

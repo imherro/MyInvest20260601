@@ -95,6 +95,7 @@ def test_dashboard_quick_links_resolve(client):
     data = client.get("/api/dashboard/current").json()["data"]
     links = data["quick_links"]
     assert {item["label"] for item in links} >= {
+        "Daily Command",
         "Action Plan",
         "Target Allocation",
         "Subject Status",

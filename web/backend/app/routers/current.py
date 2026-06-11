@@ -15,6 +15,7 @@ from ..services.bucket_explorer import BucketExplorerService
 from ..services.current_state import CurrentStateService
 from ..services.dashboard import DashboardService
 from ..services.decision_timeline import DecisionTimelineService
+from ..services.decision_assistant import DecisionAssistantService
 from ..services.environment_status import EnvironmentStatusService
 from ..services.export_package import ReviewPackageExportService
 from ..services.history_gap_dashboard import HistoryGapDashboardService
@@ -145,6 +146,11 @@ def current(session: Session = Depends(get_session)) -> dict[str, Any]:
 @router.get("/dashboard/current")
 def dashboard_current(session: Session = Depends(get_session)) -> dict[str, Any]:
     return respond(DashboardService(session).current_dashboard(), source={"path": "db.DashboardService"})
+
+
+@router.get("/assistant/daily")
+def assistant_daily(session: Session = Depends(get_session)) -> dict[str, Any]:
+    return respond(DecisionAssistantService(session).daily(), source={"path": "db.DecisionAssistantService"})
 
 
 @router.get("/dashboard/summary")

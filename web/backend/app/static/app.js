@@ -1428,6 +1428,12 @@
     renderToolRows();
   }
 
+  function renderDecisionAssistant(data) {
+    const today = data.today || {};
+    setBind("assistant_market_score", today.market_score ?? "n/a");
+    setBind("assistant_system_status", today.system_status || "unknown");
+  }
+
   function renderToolCategoryFilter() {
     const filter = document.querySelector("[data-tool-filter]");
     if (!filter || filter.dataset.loaded === "true") return;
@@ -1629,6 +1635,7 @@
     "decision-log": renderDecisionLog,
     "decision-timeline": renderDecisionTimeline,
     "historical-metrics": renderHistoricalMetrics,
+    assistant: renderDecisionAssistant,
     tools: renderTools,
   };
 

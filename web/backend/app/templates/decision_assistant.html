@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}每日指挥台{% endblock %}
+
+{% block content %}
+{% set a = assistant or {} %}
+{% set today = a.today or {} %}
+
+<section class="metric-grid" data-assistant-section="today">
+  <div class="metric">
+    <span class="subtle">Market</span>
+    <strong data-bind="assistant_market_score">{{ today.market_score if today.market_score is not none else "n/a" }}</strong>
+    <span class="subtle">{{ today.market_label or "unknown" }}</span>
+  </div>
+  <div class="metric {{ 'ok' if today.equity_status == 'ok' else ('warn' if today.equity_status in ['watch', 'warn'] else 'fail') }}">
+    <span class="subtle">Equity</span>
+    <strong>{{ "%.2f"|format(today.equity_pct) if today.equity_pct is not none else "n/a" }}%</strong>
+    <span class="subtle">{{ "%.2f"|format(today.equity_target_min_pct) if today.equity_target_min_pct is not none else "n/a" }}-{{ "%.2f"|format(today.equity_target_max_pct) if today.equity_target_max_pct is not none else "n/a" }}%</span>
+  </div>
+  <div class="metric {{ 'ok' if today.cash_status == 'ok' else ('warn' if today.cash_status in ['watch', 'warn'] else 'fail') }}">
+    <span class="subtle">Cash Short</span>
+    <strong>{{ "%.2f"|format(today.cash_short_pct) if today.cash_short_pct is not none else "n/a" }}%</strong>
+    <span class="subtle">{{ "%.2f"|format(today.cash_target_min_pct) if today.cash_target_min_pct is not none else "n/a" }}-{{ "%.2f"|format(today.cash_target_max_pct) if today.cash_target_max_pct is not none else "n/a" }}%</span>
+  </div>
+  <div class="metric {{ 'ok' if today.research_first_count == 0 else 'warn' }}">
+    <span class="subtle">ResearchFirst</span>
+    <strong>{{ today.research_first_count or 0 }}</strong>
+    <span class="subtle">blocked {{ today.blocked_count or 0 }}</span>
+  </div>
+  <div class="metric {{ 'ok' if not today.intraday_stale_flag and not today.intraday_degraded_flag else 'warn' }}">
+    <span class="subtle">Intraday</span>
+    <strong>{{ today.intraday_status or "unknown" }}</strong>
+    <span class="subtle">stale {{ "yes" if today.intraday_stale_flag else "no" }}</span>
+  </div>
+  <div class="metric {{ 'ok' if today.system_status == 'ok' else 'warn' }}">
+    <span class="subtle">System</span>
+    <strong data-bind="assistant_system_status">{{ today.system_status or "unknown" }}</strong>
+    <span class="subtle">current-only</span>
+  </div>
+</section>
+
+<section data-assistant-section="next-steps">
+  <h2>下一步</h2>
+  <div class="dashboard-grid">
+    {% for item in a.next_steps or [] %}
+    <div class="row-card">
+      <div class="summary-line">
+        <span>{{ item.phase }}</span>
+        <strong><span class="status {{ 'fail' if item.status == 'block' else ('warn' if item.status in ['warn', 'watch'] else 'ok') }}">{{ item.status }}</span></strong>
+      </div>
+      <h2>{{ item.label }}</h2>
+      <p class="subtle">{{ item.why }}</p>
+      <p>{{ item.next_step }}</p>
+      <a class="button-link" href="{{ item.href }}">打开</a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section data-assistant-section="risk-heatmap">
+  <h2>风险热力图</h2>
+  <div class="dashboard-grid">
+    {% for item in a.risk_heatmap["items"] or [] %}
+    <div class="row-card {{ 'fail' if item.severity == 'block' else ('warn' if item.severity in ['warn', 'watch'] else 'ok') }}">
+      <div class="summary-line">
+        <span>{{ item.label }}</span>
+        <strong><span class="status {{ 'fail' if item.severity == 'block' else ('warn' if item.severity in ['warn', 'watch'] else 'ok') }}">{{ item.severity }}</span></strong>
+      </div>
+      <p>{{ item.why }}</p>
+      <p class="subtle">{{ item.next_step }}</p>
+      <a class="button-link" href="{{ item.href }}">查看</a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section data-assistant-section="research-priorities">
+  <h2>研究优先级</h2>
+  <table data-page-size="12">
+    <thead>
+      <tr>
+        <th>Priority</th>
+        <th>Subject</th>
+        <th>Bucket</th>
+        <th>Missing</th>
+        <th class="num">Position</th>
+        <th class="num">Gap</th>
+        <th>Why</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in a.research_priorities["items"] or [] %}
+      <tr>
+        <td><span class="status {{ 'fail' if item.priority_level == 'high' else ('warn' if item.priority_level == 'medium' else 'ok') }}">{{ item.priority_level }} {{ item.priority_score }}</span></td>
+        <td>{{ item.code }} {{ item.name or "" }}</td>
+        <td>{{ item.bucket or "n/a" }}</td>
+        <td>{{ item.missing_reasons|join(", ") if item.missing_reasons else "n/a" }}</td>
+        <td class="num">{{ "%.2f"|format(item.position_pct) if item.position_pct is not none else "n/a" }}%</td>
+        <td class="num">{{ "%.2f"|format(item.bucket_gap_pct) if item.bucket_gap_pct is not none else "n/a" }}pp</td>
+        <td>{{ item.why }}</td>
+        <td><a class="button-link" href="{{ item.href }}">打开</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8">No research priority item.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section data-assistant-section="scenario-simulation">
+  <h2>情景推演</h2>
+  <table data-page-size="10">
+    <thead>
+      <tr>
+        <th>Score</th>
+        <th>Label</th>
+        <th>Equity Range</th>
+        <th>Cash Range</th>
+        <th>Equity Delta</th>
+        <th>Next</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in a.scenario_simulation["items"] or [] %}
+      <tr>
+        <td>{{ item.score }}{% if item.is_current %} <span class="status ok">current</span>{% endif %}</td>
+        <td>{{ item.label or "unknown" }}</td>
+        <td>{{ "%.2f"|format(item.equity_min_pct) if item.equity_min_pct is not none else "n/a" }}-{{ "%.2f"|format(item.equity_max_pct) if item.equity_max_pct is not none else "n/a" }}%</td>
+        <td>{{ "%.2f"|format(item.cash_min_pct) if item.cash_min_pct is not none else "n/a" }}-{{ "%.2f"|format(item.cash_max_pct) if item.cash_max_pct is not none else "n/a" }}%</td>
+        <td>{{ "%.2f"|format(item.equity_min_delta_pp) if item.equity_min_delta_pp is not none else "n/a" }} / {{ "%.2f"|format(item.equity_max_delta_pp) if item.equity_max_delta_pp is not none else "n/a" }}pp</td>
+        <td>{{ item.next_step }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6">No scenario mapping found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section data-assistant-section="allocation-drift">
+  <h2>仓位偏离</h2>
+  <table data-page-size="20">
+    <thead>
+      <tr>
+        <th>Bucket</th>
+        <th class="num">Actual</th>
+        <th class="num">Target</th>
+        <th class="num">Gap</th>
+        <th>Status</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in a.allocation_drift["items"] or [] %}
+      <tr>
+        <td>{{ item.bucket }}</td>
+        <td class="num">{{ "%.2f"|format(item.actual_pct) if item.actual_pct is not none else "n/a" }}%</td>
+        <td class="num">{{ "%.2f"|format(item.target_pct) if item.target_pct is not none else "n/a" }}%</td>
+        <td class="num">{{ "%.2f"|format(item.gap_pct) if item.gap_pct is not none else "n/a" }}pp</td>
+        <td><span class="status {{ 'fail' if item.severity == 'block' else ('warn' if item.severity in ['warn', 'watch'] else 'ok') }}">{{ item.severity }}</span></td>
+        <td><a class="button-link" href="{{ item.href }}">钻取</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6">No allocation drift row.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="dashboard-grid">
+  <div class="row-card" data-assistant-section="review-loop">
+    <h2>复盘线索</h2>
+    {% for item in a.review_loop["items"] or [] %}
+    <div class="summary-line">
+      <span>{{ item.event_type }} · {{ item.timestamp or "n/a" }}</span>
+      <strong><a href="{{ item.href }}">{{ item.status or "open" }}</a></strong>
+    </div>
+    <p class="subtle">{{ item.review_focus }}</p>
+    {% else %}
+    <p class="empty">No review event found.</p>
+    {% endfor %}
+  </div>
+  <div class="row-card" data-assistant-section="history-visuals">
+    <h2>历史可视化</h2>
+    <div class="quick-links">
+      {% for item in a.history_visuals or [] %}
+      <a class="button-link" href="{{ item.href }}">{{ item.label }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="row-card" data-assistant-section="explanations">
+    <h2>解释层</h2>
+    {% for item in a.explanations or [] %}
+    <div class="summary-line">
+      <span>{{ item.topic }}</span>
+      <strong>{{ item.text }}</strong>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -36,6 +36,7 @@ ROLE_WORKBENCHES: dict[str, dict[str, object]] = {
             },
         ],
         "links": [
+            {"label": "每日指挥台", "href": "/assistant"},
             {"label": "市场历史", "href": "/market/history"},
             {"label": "理想仓位", "href": "/target-allocation"},
             {"label": "仓位框架", "href": "/buckets"},
@@ -80,6 +81,7 @@ ROLE_WORKBENCHES: dict[str, dict[str, object]] = {
             },
         ],
         "links": [
+            {"label": "每日指挥台", "href": "/assistant"},
             {"label": "ResearchFirst", "href": "/research-first"},
             {"label": "标的状态", "href": "/subjects"},
             {"label": "研究缺口", "href": "/subjects/gap"},
@@ -125,6 +127,7 @@ ROLE_WORKBENCHES: dict[str, dict[str, object]] = {
             },
         ],
         "links": [
+            {"label": "每日指挥台", "href": "/assistant"},
             {"label": "操作计划", "href": "/action-plan"},
             {"label": "当前仓位", "href": "/portfolio"},
             {"label": "盘中规则", "href": "/intraday-rules"},
@@ -171,6 +174,7 @@ ROLE_WORKBENCHES: dict[str, dict[str, object]] = {
             },
         ],
         "links": [
+            {"label": "每日指挥台", "href": "/assistant"},
             {"label": "系统检查", "href": "/system-checks"},
             {"label": "工具注册表", "href": "/tools"},
             {"label": "Readiness", "href": "/readiness"},

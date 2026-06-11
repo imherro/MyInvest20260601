@@ -22,7 +22,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add role workbench pages"
+COMMIT_MESSAGE = "feat(web): add decision assistant dashboard"
 CHECK_MODES = {"smoke", "release"}
 
 API_PATHS = [
@@ -36,6 +36,7 @@ API_PATHS = [
     "/api/user/preferences/default",
     "/api/dashboard/summary",
     "/api/dashboard/user_metrics/default",
+    "/api/assistant/daily",
     "/api/workbench/integration",
     "/api/audit/bundle",
     "/api/audit/bundle?time_window=7d&module_filter=dashboard",
@@ -100,6 +101,7 @@ API_SMOKE_PATHS = [
 PAGE_PATHS = [
     "/",
     "/dashboard",
+    "/assistant",
     "/settings",
     "/environment",
     "/preferences",
@@ -171,6 +173,17 @@ INTERACTIVE_PAGE_CHECKS = {
         "readinessSafetyRows",
         "/static/readiness.js",
     ],
+    "/assistant": [
+        'data-assistant-section="today"',
+        'data-assistant-section="next-steps"',
+        'data-assistant-section="risk-heatmap"',
+        'data-assistant-section="research-priorities"',
+        'data-assistant-section="scenario-simulation"',
+        'data-assistant-section="allocation-drift"',
+        'data-assistant-section="review-loop"',
+        'data-assistant-section="history-visuals"',
+        'data-assistant-section="explanations"',
+    ],
     "/manager": ["data-role-workbench", "data-role-workflows", "data-role-links", "data-role-tools", "/tools?group=基金经理"],
     "/researcher": ["data-role-workbench", "data-role-workflows", "data-role-links", "data-role-tools", "/tools?group=研究员"],
     "/trader": ["data-role-workbench", "data-role-workflows", "data-role-links", "data-role-tools", "/tools?group=操盘手"],
@@ -219,6 +232,7 @@ JS_CHECKS = [
     "function renderWorkbenchIntegration",
     "function setupDashboardWindow",
     "function renderDashboardQuickLinks",
+    "function renderDecisionAssistant",
     "function renderSubjectStatus",
     "function renderSubjectGap",
     "function renderThemes",

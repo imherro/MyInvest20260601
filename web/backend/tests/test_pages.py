@@ -10,6 +10,7 @@ def test_web_pages_render_without_local_absolute_paths(client):
     paths = [
         "/",
         "/dashboard",
+        "/assistant",
         "/settings",
         "/environment",
         "/preferences",
@@ -52,6 +53,7 @@ def test_main_navigation_is_role_grouped(client):
     for label in ["总览", "基金经理", "研究员", "操盘手", "历史库", "系统"]:
         assert label in html
     for href in [
+        "/assistant",
         "/manager",
         "/researcher",
         "/trader",

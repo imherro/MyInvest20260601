@@ -19,6 +19,7 @@ from .services.current_state import CurrentStateService
 from .services.bucket_explorer import BucketExplorerService
 from .services.dashboard import DashboardService
 from .services.decision_timeline import DecisionTimelineService
+from .services.decision_assistant import DecisionAssistantService
 from .services.environment_status import EnvironmentStatusService
 from .services.history_gap_dashboard import HistoryGapDashboardService
 from .services.history_workbench import HistoryWorkbenchService
@@ -89,6 +90,21 @@ def dashboard_page(request: Request, session: Session = Depends(get_session)) ->
             "dashboard",
             "/api/dashboard/current",
             dashboard=dashboard,
+        ),
+    )
+
+
+@app.get("/assistant", response_class=HTMLResponse)
+def assistant_page(request: Request, session: Session = Depends(get_session)) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "decision_assistant.html",
+        page_context(
+            request,
+            "assistant",
+            "/api/assistant/daily",
+            subtitle="Read-only daily command center from current modules and history facts.",
+            assistant=DecisionAssistantService(session).daily(),
         ),
     )
 

@@ -670,7 +670,7 @@
         table { display: block; overflow-x: auto; }
       }
     </style>
-    <script src="/static/app.js?v=role-workbench-v1-20260611" defer></script>
+    <script src="/static/app.js?v=decision-assistant-v1-20260612" defer></script>
   </head>
   <body data-page="{{ page }}" data-api-path="{{ api_path }}">
     <header>
@@ -683,7 +683,7 @@
         {% set history_pages = ["history-workbench", "history-quality", "history-coverage"] %}
         {% set system_pages = ["system", "system-checks", "tools", "readiness", "environment", "preferences", "audit"] %}
         <nav aria-label="Main">
-          <a class="{{ 'active' if page == 'dashboard' else '' }}" href="/">总览</a>
+          <a class="{{ 'active' if page in ['dashboard', 'assistant'] else '' }}" href="/">总览</a>
           <div class="nav-group {{ 'active' if page in manager_pages or tools_group == '基金经理' else '' }}">
             <a class="nav-trigger" href="/manager">基金经理</a>
             <div class="nav-menu" role="menu">
