@@ -121,6 +121,22 @@ The audit bundle does not write files, write runtime state, write the Web databa
 pytest web/backend/tests
 ```
 
+## Phase 13B CI And Test Warning Hygiene
+
+The Web test suite is expected to pass with warnings promoted to errors:
+
+```bash
+python -m pytest web/backend/tests -q -W error
+```
+
+The test configuration isolates only the known external Starlette/httpx `TestClient`
+compatibility warning. Other warnings still fail under `-W error`. Tests and
+runtime-history helpers must explicitly close SQLite connections and file handles.
+
+GitHub Actions runs the same strict warning check before `scripts/web_check.py`.
+The workflow uses current Node-runtime-backed major versions for
+`actions/checkout` and `actions/setup-python`.
+
 ## Phase 3 Milestone Check
 
 Phase 3 is frozen as a read-only Web milestone. It is not a trading system and does not expose order, execution, or QMT write interfaces.

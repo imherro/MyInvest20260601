@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 import sqlite3
+from contextlib import closing
 from pathlib import Path
 
 from web.backend.app.db import SessionLocal
@@ -51,7 +52,7 @@ def test_current_state_matches_golden_research_json(web_db):
     intraday_json = read_module(latest, "intraday_rules")
     liquidity_json = read_module(latest, "liquidity_gate_registry")
 
-    with conn(web_db) as db:
+    with closing(conn(web_db)) as db:
         action_source = db.execute(
             """
             SELECT a.path

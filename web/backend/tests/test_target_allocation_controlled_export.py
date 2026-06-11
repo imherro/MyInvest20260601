@@ -6,6 +6,7 @@ import sqlite3
 import subprocess
 import sys
 import zipfile
+from contextlib import closing
 from pathlib import Path
 from typing import Any
 
@@ -31,7 +32,7 @@ def conn(web_db: Path) -> sqlite3.Connection:
 
 
 def current_state_snapshot(web_db: Path) -> dict[str, Any]:
-    with conn(web_db) as db:
+    with closing(conn(web_db)) as db:
         modules = [dict(row) for row in db.execute("SELECT module, artifact_id, updated_at FROM current_modules ORDER BY module")]
         current_artifacts = [
             dict(row)

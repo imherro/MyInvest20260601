@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+from contextlib import closing
 from pathlib import Path
 from typing import Any
 
@@ -36,7 +37,7 @@ def assert_ratio_only(value: Any) -> None:
 
 
 def current_db_state(web_db: Path) -> dict[str, Any]:
-    with conn(web_db) as db:
+    with closing(conn(web_db)) as db:
         modules = [dict(row) for row in db.execute("SELECT module, artifact_id, updated_at FROM current_modules ORDER BY module")]
         current_artifacts = [
             dict(row)
@@ -115,7 +116,7 @@ def test_shadow_vs_current_json_golden_compare(web_db):
 def test_shadow_bucket_values_match_intraday_rules(web_db):
     with SessionLocal() as session:
         shadow = TargetAllocationGenerationService(session).generate_shadow_current()
-    with conn(web_db) as db:
+    with closing(conn(web_db)) as db:
         rows = db.execute(
             """
             SELECT ibr.bucket, ibr.actual_pct, ibr.target_pct, ibr.gap_pct

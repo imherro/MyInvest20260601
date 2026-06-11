@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any
 
 
@@ -139,7 +140,7 @@ def test_bucket_openapi_is_read_only(client):
 
 
 def test_bucket_explorer_current_only_and_no_hardcoded_timestamps():
-    source = open("web/backend/app/services/bucket_explorer.py", encoding="utf-8").read()
+    source = Path("web/backend/app/services/bucket_explorer.py").read_text(encoding="utf-8")
     assert ".read_text(" not in source
     assert ".execute(" not in source
     assert "latest_index.files" not in source

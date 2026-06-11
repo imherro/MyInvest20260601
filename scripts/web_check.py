@@ -21,7 +21,7 @@ HISTORY_DB_PATH = ROOT / "temp" / "web_runtime" / "history_snapshot.sqlite"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-COMMIT_MESSAGE = "feat(web): add workbench audit bundle and visualization enhancements"
+COMMIT_MESSAGE = "chore(ci): clean up web test warnings"
 
 API_PATHS = [
     "/api/health",
@@ -2061,7 +2061,7 @@ class WebCheck:
 
     def check_api_and_export(self) -> None:
         try:
-            from fastapi.testclient import TestClient
+            TestClient = import_test_client()
 
             from web.backend.app.main import app
             from web.backend.app.services.ratio_only import RatioOnlyService
@@ -3242,7 +3242,7 @@ class WebCheck:
 
     def check_frontend_interactions(self) -> None:
         try:
-            from fastapi.testclient import TestClient
+            TestClient = import_test_client()
 
             from web.backend.app.main import app
         except Exception as exc:  # noqa: BLE001
@@ -3465,6 +3465,21 @@ def rel(path: Path) -> str:
         return path.resolve().relative_to(ROOT).as_posix()
     except ValueError:
         return str(path)
+
+
+def import_test_client() -> Any:
+    import warnings
+
+    from starlette.exceptions import StarletteDeprecationWarning
+
+    warnings.filterwarnings(
+        "ignore",
+        message=r"Using `httpx` with `starlette\.testclient` is deprecated; install `httpx2` instead\.",
+        category=StarletteDeprecationWarning,
+    )
+    from starlette.testclient import TestClient
+
+    return TestClient
 
 
 def normalize(path: str) -> str:
