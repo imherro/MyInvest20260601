@@ -39,10 +39,61 @@
         justify-content: space-between;
         gap: 18px;
       }
-      .brand {
-        font-size: 18px;
-        font-weight: 700;
-        white-space: nowrap;
+      .brand-logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 38px;
+        color: inherit;
+        text-decoration: none;
+      }
+      .brand-logo:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 3px;
+        border-radius: 8px;
+      }
+      .logo-mark {
+        position: relative;
+        display: block;
+        width: 40px;
+        height: 32px;
+        border: 1px solid #b8c5d7;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #f8fbff 0%, #eef5ff 100%);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75);
+      }
+      .logo-mark::before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        top: 18px;
+        height: 2px;
+        background: var(--blue);
+        transform: rotate(-18deg);
+        transform-origin: left center;
+      }
+      .logo-bar {
+        position: absolute;
+        bottom: 7px;
+        width: 5px;
+        border-radius: 2px 2px 0 0;
+      }
+      .logo-bar.a {
+        left: 9px;
+        height: 9px;
+        background: var(--green);
+      }
+      .logo-bar.b {
+        left: 18px;
+        height: 15px;
+        background: var(--blue);
+      }
+      .logo-bar.c {
+        left: 27px;
+        height: 20px;
+        background: #c17a12;
       }
       nav {
         display: flex;
@@ -130,6 +181,48 @@
         max-width: 1200px;
         margin: 0 auto;
         padding: 22px 20px 48px;
+      }
+      .site-footer {
+        border-top: 1px solid var(--line);
+        background: var(--panel);
+      }
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 14px 20px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .footer-identity {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #344052;
+        font-weight: 700;
+      }
+      .footer-mark {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--green);
+        box-shadow: 14px 0 0 var(--blue), 28px 0 0 #c17a12;
+      }
+      .footer-boundary {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .footer-boundary span {
+        padding: 3px 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #f8fafc;
       }
       h1 {
         margin: 0 0 16px;
@@ -581,6 +674,12 @@
         cursor: default;
         opacity: 0.55;
       }
+      .tools-table {
+        min-width: 980px;
+      }
+      .tools-table td {
+        overflow-wrap: anywhere;
+      }
       .tool-impact {
         white-space: nowrap;
       }
@@ -670,8 +769,80 @@
       .role-link-card:hover {
         background: #e9eef6;
       }
+      @media (max-width: 900px) {
+        .tools-table,
+        .tools-table thead,
+        .tools-table tbody,
+        .tools-table tr,
+        .tools-table td {
+          display: block;
+          width: 100%;
+        }
+        .tools-table {
+          min-width: 0;
+          border: 0;
+          background: transparent;
+          overflow: visible;
+        }
+        .tools-table thead {
+          display: none;
+        }
+        .tools-table tbody {
+          display: grid;
+          gap: 10px;
+        }
+        .tools-table .tool-group-row td {
+          border: 0;
+          background: transparent;
+          color: var(--muted);
+          font-weight: 700;
+          padding: 12px 0 2px;
+        }
+        .tools-table tr[data-tool-row] {
+          border: 1px solid var(--line);
+          border-radius: 8px;
+          background: var(--panel);
+          padding: 12px;
+        }
+        .tools-table tr[data-tool-row] td {
+          display: grid;
+          grid-template-columns: 92px minmax(0, 1fr);
+          gap: 10px;
+          border: 0;
+          background: transparent !important;
+          padding: 5px 0;
+        }
+        .tools-table tr[data-tool-row] td::before {
+          color: var(--muted);
+          font-weight: 700;
+        }
+        .tools-table tr[data-tool-row] td:nth-child(1)::before { content: "Tool"; }
+        .tools-table tr[data-tool-row] td:nth-child(2)::before { content: "Group"; }
+        .tools-table tr[data-tool-row] td:nth-child(3)::before { content: "Category"; }
+        .tools-table tr[data-tool-row] td:nth-child(4)::before { content: "When"; }
+        .tools-table tr[data-tool-row] td:nth-child(5)::before { content: "Impact"; }
+        .tools-table tr[data-tool-row] td:nth-child(6)::before { content: "Description"; }
+        .tools-table tr[data-tool-row] td:nth-child(7)::before { content: "Command"; }
+        .tools-table tr[data-tool-row] td:nth-child(8)::before { content: "Action"; }
+        .tools-table .tool-actions {
+          align-items: center;
+        }
+        .tools-table .tool-actions button {
+          width: fit-content;
+        }
+        .tools-table .tool-result-row[hidden] {
+          display: none;
+        }
+        .tools-table .tool-result-row td {
+          border: 0;
+          background: transparent;
+          padding: 0 0 8px;
+        }
+      }
       @media (max-width: 720px) {
         .bar { align-items: flex-start; flex-direction: column; }
+        .footer-inner { align-items: flex-start; flex-direction: column; }
+        .footer-boundary { justify-content: flex-start; }
         .page-top { align-items: flex-start; flex-direction: column; }
         .section-head { align-items: flex-start; flex-direction: column; }
         nav { justify-content: flex-start; }
@@ -682,7 +853,7 @@
           right: auto;
           max-width: calc(100vw - 40px);
         }
-        table { display: block; overflow-x: auto; }
+        table:not(.tools-table) { display: block; overflow-x: auto; }
       }
     </style>
     <script src="/static/app.js?v=nav-pagination-v1-20260612" defer></script>
@@ -690,7 +861,13 @@
   <body data-page="{{ page }}" data-api-path="{{ api_path }}">
     <header>
       <div class="bar">
-        <div class="brand">MyInvest Current</div>
+        <a class="brand-logo" href="/" aria-label="MyInvest Current">
+          <span class="logo-mark" aria-hidden="true">
+            <span class="logo-bar a"></span>
+            <span class="logo-bar b"></span>
+            <span class="logo-bar c"></span>
+          </span>
+        </a>
         {% set tools_group = request.query_params.get("group", "") if page == "tools" else "" %}
         {% set assistant_pages = ["assistant", "assistant-risk-center", "assistant-research-tasks", "assistant-preferences", "assistant-scenarios", "assistant-history-visuals", "assistant-review-score", "assistant-premarket", "assistant-search", "assistant-security-center", "assistant-weekly-safety"] %}
         {% set manager_pages = ["manager", "market-history", "target-allocation", "buckets", "buckets-drilldown", "historical-metrics"] %}
@@ -774,12 +951,24 @@
           <div class="subtle">{{ subtitle }}</div>
         </div>
         <div class="page-actions">
-          <button type="button" data-refresh>Refresh</button>
-          <a class="button-link" href="/api/export/review_package">Export Review Package</a>
+          <button type="button" data-refresh title="刷新当前页面数据">Refresh</button>
           <span class="refresh-status" data-refresh-status>waiting</span>
         </div>
       </div>
       {% block content %}{% endblock %}
     </main>
+    <footer class="site-footer" aria-label="System boundary">
+      <div class="footer-inner">
+        <div class="footer-identity" title="本地投资研究系统" aria-label="MyInvest">
+          <span class="footer-mark" aria-hidden="true"></span>
+        </div>
+        <div class="footer-boundary">
+          <span title="只使用当前索引指向的数据">Current-only</span>
+          <span title="只展示比例和百分点，隐藏敏感字段">Ratio-only</span>
+          <span title="研究资料不完整时先阻断操作建议">ResearchFirst</span>
+          <span title="本地只读页面，不自动交易">Local read-only</span>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

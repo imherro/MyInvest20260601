@@ -169,6 +169,172 @@
     return String(value);
   }
 
+  const hoverTitleMap = new Map([
+    ["Research Dashboard", "研究总览"],
+    ["Read-only current state from latest_index.modules.", "只读当前状态，来源为 latest_index.modules 当前索引。"],
+    ["Read-only assistant suite from current modules and history facts.", "只读助手套件，来源为当前模块和历史事实。"],
+    ["Read-only daily command center from current modules and history facts.", "只读每日指挥台，来源为当前模块和历史事实。"],
+    ["Read-only history workspace from temp/history_db.", "只读历史工作区，来源为 temp/history_db。"],
+    ["Read-only market history from temp/history_db.", "只读市场历史，来源为 temp/history_db。"],
+    ["Read-only position history from temp/history_db.", "只读仓位历史，来源为 temp/history_db。"],
+    ["Read-only action history from temp/history_db.", "只读操作历史，来源为 temp/history_db。"],
+    ["Read-only security history from temp/history_db.", "只读标的历史，来源为 temp/history_db。"],
+    ["Read-only valuation history from temp/history_db.", "只读估值历史，来源为 temp/history_db。"],
+    ["History DB quality checks.", "历史库质量检查。"],
+    ["History DB artifact and normalized coverage.", "历史库文件与标准化覆盖情况。"],
+    ["Local whitelisted tools. Script buttons run only fixed repo commands.", "本地白名单工具，脚本按钮只运行固定仓库命令。"],
+    ["Action Plan", "操作计划"],
+    ["Target Allocation", "目标仓位"],
+    ["ResearchFirst Gate", "ResearchFirst 闸门"],
+    ["Subject Research Status / 标的研究状态中心", "标的研究状态中心"],
+    ["Data Freshness & Gap Center", "数据新鲜度与缺口中心"],
+    ["Theme Research Center", "主题研究中心"],
+    ["Bucket Explorer", "仓位桶浏览"],
+    ["Bucket Allocation Drilldown", "仓位桶配置下钻"],
+    ["Subject Allocation Drilldown", "标的配置下钻"],
+    ["Portfolio Ratio Snapshot", "组合比例快照"],
+    ["Intraday Rules", "盘中规则"],
+    ["Decision Log", "决策日志"],
+    ["Decision Timeline", "决策时间线"],
+    ["Historical Metrics", "历史指标"],
+    ["Workbench Audit", "工作台审计"],
+    ["Workbench Readiness", "工作台就绪状态"],
+    ["Workbench Settings", "工作台设置"],
+    ["Workbench Preferences", "工作台偏好"],
+    ["History", "历史库"],
+    ["History Coverage", "历史覆盖"],
+    ["History Quality", "历史质量"],
+    ["History Gap Dashboard", "历史缺口看板"],
+    ["Tools", "工具"],
+    ["Market History", "市场历史"],
+    ["Action History", "操作历史"],
+    ["Position History", "仓位历史"],
+    ["Security History", "标的历史"],
+    ["Valuation History", "估值历史"],
+    ["System Checks", "系统检查"],
+    ["Dashboard", "总览"],
+    ["Manager", "基金经理"],
+    ["Researcher", "研究员"],
+    ["Trader", "操盘手"],
+    ["System", "系统"],
+    ["System Workbench", "系统工作台"],
+    ["Tool Registry", "工具注册表"],
+    ["Audit Export", "审计导出"],
+    ["System Tools", "系统工具"],
+    ["Refresh", "刷新当前页面数据"],
+    ["Clear", "清空筛选"],
+    ["Prev", "上一页"],
+    ["Next", "下一页"],
+    ["Download JSON", "下载 JSON 数据"],
+    ["Export Review Package", "导出当前只读评审包"],
+    ["History Tools", "打开历史库与审计工具"],
+    ["Copy Prompt", "复制提示词"],
+    ["Run", "运行固定白名单工具"],
+    ["Run log", "运行日志"],
+    ["Codex prompt", "Codex 提示词"],
+    ["Click to expand details", "点击展开详情"],
+    ["No additional details.", "没有更多详情。"],
+    ["Market Position", "市场仓位"],
+    ["Action Plan Summary", "操作计划摘要"],
+    ["Allocation Summary", "配置摘要"],
+    ["Bucket Gap", "仓位桶偏离"],
+    ["Subject Research Status", "标的研究状态"],
+    ["Subject Gap Summary", "标的缺口摘要"],
+    ["Quick Links", "快捷入口"],
+    ["System Status", "系统状态"],
+    ["Mode", "模式"],
+    ["Sections", "分区数量"],
+    ["Modules", "模块数量"],
+    ["Subjects", "标的数量"],
+    ["Score", "分数"],
+    ["Label", "标签"],
+    ["Equity Target", "权益目标"],
+    ["Cash Target", "现金目标"],
+    ["Generated", "生成时间"],
+    ["Actions", "动作数量"],
+    ["ResearchFirst", "研究优先"],
+    ["Manual Review", "人工复核"],
+    ["Equity Current", "当前权益比例"],
+    ["Cash Current", "当前现金比例"],
+    ["Pass", "通过"],
+    ["Blocked", "阻断"],
+    ["511360 Gate", "511360 检查"],
+    ["Current-only", "只使用当前索引指向的数据"],
+    ["Ratio-only", "只展示比例和百分点，隐藏敏感字段"],
+    ["Local read-only", "本地只读页面，不自动交易"],
+    ["Current", "当前"],
+    ["All", "全部"],
+    ["Other", "其他"],
+    ["Preview", "预览"],
+    ["Bundle Sections", "审计包分区"],
+    ["Section", "分区"],
+    ["Status", "状态"],
+    ["API", "接口"],
+    ["Title", "标题"],
+    ["Group", "分组"],
+    ["Category", "类别"],
+    ["When to Use", "使用时机"],
+    ["Impact", "影响"],
+    ["Description", "说明"],
+    ["Command", "命令"],
+  ]);
+
+  const hoverSelector = [
+    "h1",
+    "h2",
+    "h3",
+    ".subtle",
+    ".metric span",
+    ".metric strong",
+    ".summary-line span",
+    ".summary-line strong",
+    ".status",
+    ".status-cell",
+    ".status-inline",
+    "th",
+    "button",
+    "a.button-link",
+    "a.nav-trigger",
+    "nav a",
+    "label",
+    "select",
+    "input",
+    ".refresh-status",
+    ".footer-boundary span",
+    ".tool-result-label",
+    ".pagination span",
+  ].join(",");
+
+  function normalizeHoverText(value) {
+    return text(value, "").replace(/\s+/g, " ").trim();
+  }
+
+  function hasChinese(value) {
+    return /[\u3400-\u9fff]/.test(text(value, ""));
+  }
+
+  function hoverTitleFor(value) {
+    const normalized = normalizeHoverText(value);
+    if (!normalized) return "";
+    if (hoverTitleMap.has(normalized)) return hoverTitleMap.get(normalized);
+    if (/^updated\b/i.test(normalized)) return "最近刷新时间";
+    if (/^refreshing/i.test(normalized)) return "正在刷新数据";
+    if (/^Page \d+\/\d+ - \d+ rows$/i.test(normalized)) return "当前页码和总行数";
+    return "";
+  }
+
+  function decorateChineseHover(root = document) {
+    root.querySelectorAll(hoverSelector).forEach((node) => {
+      const existingTitle = node.getAttribute("title") || "";
+      if (hasChinese(existingTitle) && !node.matches(".refresh-status")) return;
+      const candidate = normalizeHoverText(
+        node.textContent || node.getAttribute("aria-label") || node.getAttribute("placeholder") || existingTitle,
+      );
+      const title = hoverTitleFor(candidate || existingTitle);
+      if (title) node.setAttribute("title", title);
+    });
+  }
+
   function pct(value) {
     if (value === null || value === undefined || value === "") return "";
     const num = Number(value);
@@ -376,9 +542,11 @@
     });
     if (state.noPagination) {
       removePagination(id);
+      decorateChineseHover(table || tbody);
       return;
     }
     renderPagination(table, id, rows.length, totalPages);
+    decorateChineseHover(table || tbody);
   }
 
   function renderPagination(table, id, totalRows, totalPages) {
@@ -1527,6 +1695,7 @@
       resultRow.appendChild(resultCell);
       tbody.appendChild(resultRow);
     });
+    decorateChineseHover(tbody.closest("table") || tbody);
   }
 
   async function copyToolPrompt(tool, button) {
@@ -1664,6 +1833,8 @@
       }
       const data = Object.prototype.hasOwnProperty.call(payload, "data") ? payload.data : payload;
       renderers[page](data);
+      decorateExistingStatusTone();
+      decorateChineseHover();
       updateRefreshStatus(`updated ${new Date().toLocaleTimeString()}`);
     } catch (error) {
       updateRefreshStatus(error.message || "refresh failed", false);
@@ -1674,6 +1845,7 @@
     if (!statusEl) return;
     statusEl.textContent = message;
     statusEl.className = ok ? "refresh-status" : "refresh-status warn";
+    statusEl.title = hoverTitleFor(message) || (ok ? "刷新状态" : "刷新失败");
   }
 
   function setupSearch() {
@@ -1777,6 +1949,7 @@
           throw new Error(payload.detail || "Analytics refresh failed");
         }
         renderDashboardAnalytics(payload.data || {});
+        decorateChineseHover();
         updateRefreshStatus(`updated ${new Date().toLocaleTimeString()}`);
       } catch (error) {
         updateRefreshStatus(error.message || "analytics refresh failed", false);
@@ -1792,6 +1965,7 @@
     setupDashboardWindow();
     setupToolFilters();
     decorateExistingStatusTone();
+    decorateChineseHover();
     refresh();
     window.setInterval(refresh, 60000);
   });

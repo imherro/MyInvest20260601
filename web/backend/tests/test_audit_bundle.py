@@ -76,6 +76,9 @@ def test_audit_page_and_script_hooks(client):
     assert "data-audit-section=\"summary\"" in html
     assert "data-audit-window" in html
     assert "data-audit-module" in html
+    assert "Export Review Package" in html
+    assert "/api/export/review_package" in html
+    assert "History Tools" in html
     assert "auditPreviewChart" in html
     assert "auditBundleRows" in html
     assert "/static/audit.js" in html

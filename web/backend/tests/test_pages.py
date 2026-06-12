@@ -59,6 +59,21 @@ def test_main_navigation_is_role_grouped(client):
     assert response.status_code == 200
     html = response.text
 
+    assert 'class="brand-logo"' in html
+    assert 'aria-label="MyInvest Current"' in html
+    assert 'class="site-footer"' in html
+    assert 'title="刷新当前页面数据"' in html
+    assert "Export Review Package" not in html
+    assert "/api/export/review_package" not in html
+    assert '<span>MyInvest</span>' not in html
+    assert "Current-only" in html
+    assert "Ratio-only" in html
+    assert "ResearchFirst" in html
+    assert "Local read-only" in html
+    assert 'title="只使用当前索引指向的数据"' in html
+    assert 'title="只展示比例和百分点，隐藏敏感字段"' in html
+    assert 'title="研究资料不完整时先阻断操作建议"' in html
+    assert 'title="本地只读页面，不自动交易"' in html
     assert html.count('class="nav-trigger"') == 5
     for label in ["Dashboard", "Manager", "Researcher", "Trader", "History", "System"]:
         assert label in html

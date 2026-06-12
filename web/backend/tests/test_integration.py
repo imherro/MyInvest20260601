@@ -58,9 +58,9 @@ def test_dashboard_page_includes_integration_hooks(client):
     response = client.get("/dashboard")
     assert response.status_code == 200
     html = response.text
-    assert "data-dashboard-section=\"workbench-integration\"" in html
-    assert "workbenchModuleLinks" in html
-    assert "workbenchIntegrationRows" in html
+    assert "data-dashboard-section=\"workbench-integration\"" not in html
+    assert "workbenchModuleLinks" not in html
+    assert "workbenchIntegrationRows" not in html
     assert not LOCAL_PATH_RE.search(html)
 
 

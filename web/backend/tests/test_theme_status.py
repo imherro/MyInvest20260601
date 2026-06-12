@@ -62,6 +62,9 @@ def test_theme_status_api_structure_and_safety(client):
             "data_quality_status",
         }
         assert theme["status"] not in ACTION_STATUSES
+        assert theme.get("basis_trade_date") is None or isinstance(theme["basis_trade_date"], str)
+        assert theme.get("basis_trade_date") != "[object Object]"
+        assert isinstance(theme.get("basis_sources", []), list)
         for row in [*theme["associated_etfs"], *theme["associated_stocks"]]:
             assert row.get("gate_conclusion") not in ACTION_STATUSES
 

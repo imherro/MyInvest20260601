@@ -80,12 +80,12 @@ def test_dashboard_pages_render_and_use_dashboard_api(client):
         assert "data-dashboard-section=\"market-position\"" in html
         assert "data-dashboard-section=\"action-plan-summary\"" in html
         assert "data-dashboard-section=\"allocation-summary\"" in html
-        assert "data-dashboard-section=\"analytics\"" in html
-        assert "data-dashboard-section=\"workbench-integration\"" in html
         assert "data-dashboard-section=\"subject-summaries\"" in html
         assert "data-dashboard-section=\"quick-links\"" in html
-        assert "workbenchIntegrationRows" in html
-        assert "dashboardAnalyticsRows" in html
+        assert "data-dashboard-section=\"analytics\"" not in html
+        assert "data-dashboard-section=\"workbench-integration\"" not in html
+        assert "workbenchIntegrationRows" not in html
+        assert "dashboardAnalyticsRows" not in html
         assert "bucketGapChart" in html
         assert not LOCAL_PATH_RE.search(html)
         assert not FORBIDDEN_TEXT_RE.search(html)

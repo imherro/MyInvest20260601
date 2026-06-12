@@ -84,11 +84,11 @@ def test_dashboard_page_includes_workbench_analytics_hooks(client):
     response = client.get("/dashboard")
     assert response.status_code == 200
     html = response.text
-    assert "data-dashboard-section=\"analytics\"" in html
-    assert "data-dashboard-window" in html
-    assert "dashboardAnalyticsRows" in html
-    assert "data-bind=\"dashboard_analytics_modules\"" in html
-    assert "data-bind=\"dashboard_analytics_history_entries\"" in html
+    assert "data-dashboard-section=\"analytics\"" not in html
+    assert "data-dashboard-window" not in html
+    assert "dashboardAnalyticsRows" not in html
+    assert "data-bind=\"dashboard_analytics_modules\"" not in html
+    assert "data-bind=\"dashboard_analytics_history_entries\"" not in html
     assert not LOCAL_PATH_RE.search(html)
 
 

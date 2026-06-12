@@ -81,13 +81,16 @@ class ThemeStatusService:
         conflicts = self._conflicts(theme, leader_theme)
         data_quality_status = "fresh" if theme else "missing"
         status = self._status(theme, leader_theme, data_quality_status, conflicts)
+        data_basis = theme.get("data_basis")
         payload = {
             "theme_name": theme_name,
             "strategic_rating": theme.get("strategic_rating") or theme.get("rating") or leader_theme.get("strategic_rating"),
             "tactical_rating": theme.get("tactical_rating") or leader_theme.get("tactical_rating"),
             "stage": theme.get("stage") or theme.get("current_a_share_trading_stage") or leader_theme.get("stage"),
             "status": status,
-            "basis_trade_date": theme.get("data_basis"),
+            "basis_trade_date": self._basis_trade_date(data_basis),
+            "basis_note": self._basis_note(data_basis),
+            "basis_sources": self._basis_sources(data_basis),
             "generated_at": theme.get("updated_at") or theme_leaders.get("generated_at"),
             "associated_etfs": associated_etfs,
             "associated_stocks": associated_stocks,
@@ -134,6 +137,29 @@ class ThemeStatusService:
     def _safe_gate(value: Any) -> str:
         candidate = str(value or "unknown").strip().lower()
         return "watch" if candidate in ACTION_STATUSES else (candidate or "unknown")
+
+    @staticmethod
+    def _basis_trade_date(data_basis: Any) -> str | None:
+        if isinstance(data_basis, dict):
+            value = data_basis.get("basis_trade_date") or data_basis.get("trade_date") or data_basis.get("date")
+            return str(value) if value else None
+        if data_basis in (None, ""):
+            return None
+        return str(data_basis)
+
+    @staticmethod
+    def _basis_note(data_basis: Any) -> str | None:
+        if not isinstance(data_basis, dict):
+            return None
+        value = data_basis.get("basis_note") or data_basis.get("note")
+        return str(value) if value else None
+
+    @staticmethod
+    def _basis_sources(data_basis: Any) -> list[str]:
+        if not isinstance(data_basis, dict):
+            return []
+        sources = data_basis.get("sources") or []
+        return [str(item) for item in sources if item]
 
     @staticmethod
     def _leader_theme(theme_leaders: dict[str, Any], theme_name: str) -> dict[str, Any]:

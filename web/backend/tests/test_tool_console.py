@@ -129,6 +129,7 @@ def test_tools_page_and_ops_api_are_safe(client):
     assert "data-tool-search" in html
     assert "data-tool-filter" in html
     assert "All roles" in html
+    assert 'class="tools-table"' in html
     assert "基金经理" in html
     assert "toolRows" in html
     assert "data-tool-output-row" in html

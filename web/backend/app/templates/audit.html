@@ -14,19 +14,21 @@
 
 <section data-audit-section="controls">
   <div class="table-tools">
-    <select data-audit-window aria-label="Audit time window">
+    <select data-audit-window aria-label="Audit time window" title="审计时间窗口">
       <option value="current" selected>Current</option>
       <option value="7d">7D</option>
       <option value="30d">30D</option>
     </select>
-    <select data-audit-module aria-label="Audit module">
+    <select data-audit-module aria-label="Audit module" title="审计模块">
       <option value="all" selected>All</option>
       <option value="dashboard">Dashboard</option>
       <option value="preferences">Preferences</option>
       <option value="historical_metrics">Historical Metrics</option>
       <option value="integration">Integration</option>
     </select>
-    <a class="button-link" id="auditDownloadLink" href="/api/audit/bundle">Download JSON</a>
+    <a class="button-link" id="auditDownloadLink" href="/api/audit/bundle" title="下载当前审计摘要 JSON">Download JSON</a>
+    <a class="button-link" href="/api/export/review_package" title="导出当前只读评审包">Export Review Package</a>
+    <a class="button-link" href="/tools?group=历史库与审计" title="打开历史库与审计工具">History Tools</a>
   </div>
 </section>
 

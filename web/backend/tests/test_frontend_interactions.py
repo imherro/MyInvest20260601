@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 
-def test_pages_include_refresh_export_and_interaction_hooks(client):
+def test_pages_include_refresh_and_interaction_hooks(client):
     response = client.get("/portfolio")
     assert response.status_code == 200
     html = response.text
     assert "data-refresh" in html
-    assert "/api/export/review_package" in html
+    assert "Export Review Package" not in html
+    assert "/api/export/review_package" not in html
     assert "data-table-search=\"portfolioTable\"" in html
     assert "data-sort=\"number\"" in html
     assert "data-no-pagination=\"true\"" in html
@@ -195,13 +196,11 @@ def test_dashboard_includes_gap_chart_and_status_cards(client):
     assert "data-dashboard-section=\"market-position\"" in html
     assert "data-dashboard-section=\"action-plan-summary\"" in html
     assert "data-dashboard-section=\"allocation-summary\"" in html
-    assert "data-dashboard-section=\"analytics\"" in html
-    assert "data-dashboard-section=\"workbench-integration\"" in html
     assert "data-dashboard-section=\"subject-summaries\"" in html
-    assert "workbenchIntegrationRows" in html
-    assert "workbenchModuleLinks" in html
-    assert "dashboardAnalyticsRows" in html
-    assert "data-dashboard-window" in html
+    assert "data-dashboard-section=\"analytics\"" not in html
+    assert "data-dashboard-section=\"workbench-integration\"" not in html
+    assert "workbenchIntegrationRows" not in html
+    assert "dashboardAnalyticsRows" not in html
     assert "dashboardQuickLinks" in html
     assert "data-status-card=\"research-first\"" in html
     assert "data-status-card=\"intraday\"" in html
@@ -212,6 +211,9 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert response.status_code == 200
     script = response.text
     assert "function assertRatioOnly" in script
+    assert "function decorateChineseHover" in script
+    assert "Research Dashboard" in script
+    assert "Read-only current state from latest_index.modules." in script
     assert "function renderPagination" in script
     assert "const DEFAULT_PAGE_SIZE = 100" in script
     assert "return DEFAULT_PAGE_SIZE;" in script
