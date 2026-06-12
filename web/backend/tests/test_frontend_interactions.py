@@ -214,6 +214,8 @@ def test_frontend_script_has_refresh_sanitizer_pagination_and_expand_logic(clien
     assert "function assertRatioOnly" in script
     assert "function renderPagination" in script
     assert "const DEFAULT_PAGE_SIZE = 100" in script
+    assert "return DEFAULT_PAGE_SIZE;" in script
+    assert "dataset.pageSize" not in script
     assert "noPagination" in script
     assert "function removePagination" in script
     assert "function statusTone" in script

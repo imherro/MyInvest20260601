@@ -60,8 +60,15 @@ def test_main_navigation_is_role_grouped(client):
     html = response.text
 
     assert html.count('class="nav-trigger"') == 5
-    for label in ["总览", "基金经理", "研究员", "操盘手", "历史库", "系统"]:
+    for label in ["Dashboard", "Manager", "Researcher", "Trader", "History", "System"]:
         assert label in html
+    for title in ["总览", "基金经理", "研究员", "操盘手", "历史库", "系统"]:
+        assert f'title="{title}"' in html
+    for submenu in ["Target Allocation", "Research Gaps", "Intraday Rules", "Tool Registry"]:
+        assert submenu in html
+    assert ".nav-group::after" in html
+    assert "height: 10px" in html
+    assert "top: 100%" in html
     for href in [
         "/assistant",
         "/manager",
@@ -107,19 +114,27 @@ def test_role_workbench_pages_are_grouped_and_safe(client):
 
 def test_tools_filter_highlights_owning_role(client):
     cases = [
-        ("/tools?group=基金经理", "/manager", "基金经理"),
-        ("/tools?group=研究员", "/researcher", "研究员"),
-        ("/tools?group=操盘手", "/trader", "操盘手"),
-        ("/tools?group=历史库与审计", "/history", "历史库"),
-        ("/tools?group=系统与开发", "/system", "系统"),
+        ("/tools?group=基金经理", "/manager", "基金经理", "Manager"),
+        ("/tools?group=研究员", "/researcher", "研究员", "Researcher"),
+        ("/tools?group=操盘手", "/trader", "操盘手", "Trader"),
+        ("/tools?group=历史库与审计", "/history", "历史库", "History"),
+        ("/tools?group=系统与开发", "/system", "系统", "System"),
     ]
-    for path, href, label in cases:
+    for path, href, title, label in cases:
         response = client.get(path)
         assert response.status_code == 200, path
         html = response.text
-        pattern = rf'<div class="nav-group active">\s*<a class="nav-trigger" href="{re.escape(href)}">{label}</a>'
+        pattern = rf'<div class="nav-group active">\s*<a class="nav-trigger" href="{re.escape(href)}" title="{title}">{label}</a>'
         assert re.search(pattern, html), path
         assert not LOCAL_PATH_RE.search(html)
+
+
+def test_table_pagination_page_size_is_100(client):
+    for path in ["/", "/assistant", "/audit", "/readiness", "/preferences", "/tools"]:
+        response = client.get(path)
+        assert response.status_code == 200, path
+        for value in re.findall(r'data-page-size="([^"]+)"', response.text):
+            assert value == "100", path
 
 
 def test_action_plan_page_distinguishes_plan_and_market_basis(client):

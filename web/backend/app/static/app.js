@@ -267,8 +267,7 @@
 
   function pageSizeFor(table, rows, noPagination) {
     if (noPagination) return Math.max(1, (rows || []).length);
-    const configured = Number(table?.dataset.pageSize || DEFAULT_PAGE_SIZE);
-    return Number.isFinite(configured) && configured > 0 ? configured : DEFAULT_PAGE_SIZE;
+    return DEFAULT_PAGE_SIZE;
   }
 
   function rowSearchText(item) {
